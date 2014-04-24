@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Http
 {
-    class HttpCrawler
+    public class HttpParameter
     {
-
+        public String Name { get; set; }
+        public String Value { get; set; }
     }
+
 }
