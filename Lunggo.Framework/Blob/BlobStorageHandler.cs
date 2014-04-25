@@ -95,10 +95,7 @@ namespace Lunggo.Framework.Blob
         private void checkContainerAndGenerateNewBlobName()
         {
             declareContainerAndCreateIfNotExist(this.containerName);
-            //string GUID = Guid.NewGuid().ToString();
-            //string extensionName = this.uploadFileModel.FileName;
-            //string newBlobName = string.Format("{0}/file_{1}{2}", containerName, GUID, Path.GetExtension(extensionName));
-            string newBlobName = string.Format("{0}/{1}", containerName, uploadFileModel.FileName);
+            string newBlobName = string.Format("{0}/{1}", this.containerName, this.uploadFileModel.FileName);
             this.newBlobName = newBlobName;
         }
         private CloudBlobContainer declareContainerAndCreateIfNotExist(string wantedContainerName)
