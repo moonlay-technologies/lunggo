@@ -76,6 +76,7 @@
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedModel\FileInfo.cs" />
+    <Compile Include="SharedModel\PersonIdentity.cs" />
     <Compile Include="TableStorage\AzureTableStorageClient.cs" />
     <Compile Include="TableStorage\ITableStorageClient.cs" />
     <Compile Include="TableStorage\TableStorageService.cs" />

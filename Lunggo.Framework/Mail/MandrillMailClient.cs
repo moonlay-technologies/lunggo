@@ -12,6 +12,8 @@ namespace Lunggo.Framework.Mail
     {
         MandrillApi apiOfMandrill;
         string _defaultMandrillTemplate = "MyTemplate";
+        string _defaultFromName = "Lunggo System";
+        string _defaultFromMail = "bayu.alvian@moonlay.com";
         public void init(string mandrillAPIKey)
         {
             this.apiOfMandrill = new MandrillApi(mandrillAPIKey, true);
@@ -30,35 +32,38 @@ namespace Lunggo.Framework.Mail
         }
         private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
         {
-            IEnumerable<attachment> attachmentsToSend = convertHTTPFilesToAttachmentFiles(mailModel.ListFileInfo);
-            IMailTemplateEngine templateEngine = new MailTemplateEngine();
+            IEnumerable<attachment> attachmentsToSend = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.preserve_recipients = true;
-            emailMessage.html = templateEngine.GetEmailTemplate(objectParam, partitionKey);
+            emailMessage.subject = mailModel.Subject;
+            emailMessage.from_email = mailModel.From_Mail;
+            emailMessage.from_name = mailModel.From_Name;
+            emailMessage.html = new MailTemplateEngine().GetEmailTemplate(objectParam, partitionKey);
             emailMessage.to = GenerateMessageAddressTo(mailModel);
-            emailMessage.attachments = attachmentsToSend;
+            if (attachmentsToSend!=null)
+                emailMessage.attachments = attachmentsToSend;
             return emailMessage;
         }
         private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
         {
             List<EmailAddress> addresses = new List<EmailAddress>();
-            addresses.AddRange(GenerateAddressTo(mailModel.ListRecepient));
-            addresses.AddRange(GenerateAddressCC(mailModel.ListCC));
-            addresses.AddRange(GenerateAddressBCC(mailModel.ListBCC));
+            addresses.AddRange(GenerateAddressTo(mailModel.RecipientList));
+            addresses.AddRange(GenerateAddressCC(mailModel.CCList));
+            addresses.AddRange(GenerateAddressBCC(mailModel.BCCList));
             return addresses;
 
         }
-        private List<EmailAddress> GenerateAddressTo(List<string> listTo)
+        private List<EmailAddress> GenerateAddressTo(List<string> RecipientList)
         {
-            return GenerateRecepient(listTo, "to");
+            return GenerateRecepient(RecipientList, "to");
         }
-        private List<EmailAddress> GenerateAddressCC(List<string> listCC)
+        private List<EmailAddress> GenerateAddressCC(List<string> CCList)
         {
-            return GenerateRecepient(listCC, "cc");
+            return GenerateRecepient(CCList, "cc");
         }
-        private List<EmailAddress> GenerateAddressBCC(List<string> listBCC)
+        private List<EmailAddress> GenerateAddressBCC(List<string> BCCList)
         {
-            return GenerateRecepient(listBCC, "bcc");
+            return GenerateRecepient(BCCList, "bcc");
         }
         private List<EmailAddress> GenerateRecepient(List<string> listAddress, string sendingType)
         {
@@ -69,8 +74,12 @@ namespace Lunggo.Framework.Mail
             }
             return addresses;
         }
-        private IEnumerable<attachment> convertHTTPFilesToAttachmentFiles(List<FileInfo> files)
+        private IEnumerable<attachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
         {
+            if (files == null || files.Count < 1)
+            {
+                yield break;
+            }
             foreach (FileInfo file in files)
             {
                 var base64OfAttachmentFile = Convert.ToBase64String(file.ArrayData, 0, file.ArrayData.Length);

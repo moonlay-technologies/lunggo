@@ -20,15 +20,34 @@ namespace Lunggo.Framework.TableStorage
 
         public CloudTable GetTableByReference(string reference)
         {
-            CloudTable table = _cloudTableClient.GetTableReference(reference);
-            table.CreateIfNotExists();
-            return table;
+            try
+            {
+                CloudTable table = _cloudTableClient.GetTableReference(reference);
+                return table;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private CloudTable GetTableByReferenceAndCreateIfNotExist(string reference)
+        {
+            try
+            {
+                CloudTable table = _cloudTableClient.GetTableReference(reference);
+                table.CreateIfNotExists();
+                return table;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public void InsertEntityToTableStorage<T>(T ObjectParam, string mailReference) where T : ITableEntity, new()
         {
             try
             {
-                CloudTable table = GetTableByReference(mailReference);
+                CloudTable table = GetTableByReferenceAndCreateIfNotExist(mailReference);
                 TableOperation insertOp = TableOperation.Insert(ObjectParam);
                 table.Execute(insertOp);
             }
