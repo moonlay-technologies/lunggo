@@ -71,9 +71,9 @@ namespace Lunggo.Framework.Blob
             try
             {
                 BlobModel newBlobModel = CheckContainerAndGenerateNewBlobModel(blobWriteDTO.FileBlobModel.FilePath, wantedContainerName);
-                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDTO.FileBlobModel.ContentType);
+                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDTO.FileBlobModel.FileInfo.ContentType);
                 newBlob = FinalBlockBlobBySaveMethod(newBlob, newBlobModel.BlobName, blobWriteDTO.SaveMethod);
-                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDTO.FileBlobModel.FileByte);
+                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDTO.FileBlobModel.FileInfo.ArrayData);
             }
             catch (Exception ex)
             {

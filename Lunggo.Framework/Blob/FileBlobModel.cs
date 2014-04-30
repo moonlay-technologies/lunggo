@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lunggo.Framework.SharedModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,7 @@ namespace Lunggo.Framework.Blob
     public class FileBlobModel
     {
         public string FilePath { get; set; }
-        public string ContentType { get; set; }
-        public byte[] FileByte { get; set; }
+        public FileInfo FileInfo { get; set; }
 
     }
     
