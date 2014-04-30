@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Mail
 {
-    public class MailTemplateEngine : IMailTemplateEngine
+    public class RazorMailTemplateEngine : IMailTemplateEngine
     {
         private string _defaultMailTable = "mailtemplate";
         private string _defaultRowKey = "default";
@@ -20,7 +20,7 @@ namespace Lunggo.Framework.Mail
             try 
             {
                 string template = GetEmailTemplateByPartitionKey(partitionKey);
-                string result = Razor.Parse(template, objectParam);
+                string result = Razor.Parse(template, objectParam, partitionKey);
                 return result;
             }
             catch (Exception ex)

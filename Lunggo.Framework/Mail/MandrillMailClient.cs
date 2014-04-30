@@ -12,8 +12,14 @@ namespace Lunggo.Framework.Mail
     {
         MandrillApi apiOfMandrill;
         string _defaultMandrillTemplate = "MyTemplate";
-        string _defaultFromName = "Lunggo System";
-        string _defaultFromMail = "bayu.alvian@moonlay.com";
+        bool enablingOtherEmailAddressVisibilityForRecipient = true;
+        IMailTemplateEngine mailTemplateEngine = new RazorMailTemplateEngine();
+        enum RecipientTypeEnum
+        {
+            to,
+            cc,
+            bcc
+        }
         public void init(string mandrillAPIKey)
         {
             this.apiOfMandrill = new MandrillApi(mandrillAPIKey, true);
@@ -32,40 +38,39 @@ namespace Lunggo.Framework.Mail
         }
         private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
         {
-            IEnumerable<attachment> attachmentsToSend = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
             EmailMessage emailMessage = new EmailMessage();
-            emailMessage.preserve_recipients = true;
+            emailMessage.preserve_recipients = this.enablingOtherEmailAddressVisibilityForRecipient;
             emailMessage.subject = mailModel.Subject;
             emailMessage.from_email = mailModel.From_Mail;
             emailMessage.from_name = mailModel.From_Name;
-            emailMessage.html = new MailTemplateEngine().GetEmailTemplate(objectParam, partitionKey);
             emailMessage.to = GenerateMessageAddressTo(mailModel);
-            if (attachmentsToSend!=null)
-                emailMessage.attachments = attachmentsToSend;
+            emailMessage.html = this.mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey);
+            if (mailModel.ListFileInfo != null || mailModel.ListFileInfo.Count>0)
+                emailMessage.attachments = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
             return emailMessage;
         }
         private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
         {
             List<EmailAddress> addresses = new List<EmailAddress>();
-            addresses.AddRange(GenerateAddressTo(mailModel.RecipientList));
-            addresses.AddRange(GenerateAddressCC(mailModel.CCList));
-            addresses.AddRange(GenerateAddressBCC(mailModel.BCCList));
+            addresses.AddRange(GenerateAddressToByListString(mailModel.RecipientList));
+            addresses.AddRange(GenerateAddressCCByListString(mailModel.CCList));
+            addresses.AddRange(GenerateAddressBCCByListString(mailModel.BCCList));
             return addresses;
 
         }
-        private List<EmailAddress> GenerateAddressTo(List<string> RecipientList)
+        private List<EmailAddress> GenerateAddressToByListString(List<string> RecipientList)
         {
-            return GenerateRecepient(RecipientList, "to");
+            return GenerateRecipientTypeByListString(RecipientList, RecipientTypeEnum.to.ToString());
         }
-        private List<EmailAddress> GenerateAddressCC(List<string> CCList)
+        private List<EmailAddress> GenerateAddressCCByListString(List<string> CCList)
         {
-            return GenerateRecepient(CCList, "cc");
+            return GenerateRecipientTypeByListString(CCList, RecipientTypeEnum.cc.ToString());
         }
-        private List<EmailAddress> GenerateAddressBCC(List<string> BCCList)
+        private List<EmailAddress> GenerateAddressBCCByListString(List<string> BCCList)
         {
-            return GenerateRecepient(BCCList, "bcc");
+            return GenerateRecipientTypeByListString(BCCList, RecipientTypeEnum.bcc.ToString());
         }
-        private List<EmailAddress> GenerateRecepient(List<string> listAddress, string sendingType)
+        private List<EmailAddress> GenerateRecipientTypeByListString(List<string> listAddress, string sendingType)
         {
             List<EmailAddress> addresses = new List<EmailAddress>();
             foreach (string address in listAddress)
