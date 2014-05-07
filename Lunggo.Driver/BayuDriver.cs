@@ -1,5 +1,4 @@
 ﻿using Lunggo.Framework.Blob;
-using Microsoft.WindowsAzure.StorageClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,10 +12,10 @@ namespace Lunggo.Driver
     {
         static void Main(string[] args)
         {
-            new BayuDriver().getBlobsFromContainer();
+            //new BayuDriver().getBlobsFromContainer();
         }
 
-        void deleteBlob()
+        /*void deleteBlob()
         {
             string fileName = "test/Capture.PNG";
             string containerName = "testdirectory/";
@@ -55,5 +54,6 @@ namespace Lunggo.Driver
             }
             Console.ReadLine();
         }
+         */
     }
 }
