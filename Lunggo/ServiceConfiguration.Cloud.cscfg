@@ -3,7 +3,7 @@
   <Role name="Lunggo.CustomerWeb">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lunggodiagprod;AccountKey=3XVwYETKAwP4MT5Qa9fbrUCf/HNihmI7pA2zCfiBHWCQgxlS+YRaCYRBPqFEfpT/9op7xd49ffWJHjHOTaXUhw==" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>
