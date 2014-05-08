@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="Lunggo" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-10.2.2">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Lunggo" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2014-01.2.3">
   <Role name="Lunggo.CustomerWeb">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lunggodiagprod;AccountKey=3XVwYETKAwP4MT5Qa9fbrUCf/HNihmI7pA2zCfiBHWCQgxlS+YRaCYRBPqFEfpT/9op7xd49ffWJHjHOTaXUhw==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="ramaadhitia" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBpQYJKoZIhvcNAQcDoIIBljCCAZICAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEDDCKYz3hs6kR+kRH9r0kqUwDQYJKoZIhvcNAQEBBQAEggEAeTVzycwBF5DVwy1WCYvJZDnDAyteNJKkIGLfZF6pyIGpXc6uiHgYEN7N8Mf/uQ3nnVCyi2MFnDqmLB6RegLNRCAxefqFHFCUtdU/wpn1F03hFQKlEC1GaWR32pQUOHaDxICbnDRV/pGpL/Ras7Gnr3ItOx8KmzPQ7+LMHumjExZDdLAk5RTbNKrm19UUc+9kcgyd3OtY/YWBU04fF0Yvdj1behlHkkIHiMyXZtiN3ZKFn6q23glRT5lCa9BYSSWg59i1bltjwPakVV4mtujcJYo6lGYJRzlUJPmjA6wByGKCkwO3650QriEAhjgd2qxDHS0uvcJRyXDJToPtayjAfzA7BgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECI+7UGnKGTB8gBh8ogBwdYxmwo/rpn7ks2tUWnVKxmKED3Y=" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-05-07T23:59:59.0000000+07:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="F14D11ADBFB8FF4F69BAB9A0FAF27EB1176707D2" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>
