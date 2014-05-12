@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data;
+using Lunggo.Framework.Util;
 
 namespace Lunggo.Framework.Database
 {
@@ -19,7 +20,7 @@ namespace Lunggo.Framework.Database
 
         protected void InsertInternal(IDbConnection connection, TableRecord record)
         {
-            throw new NotImplementedException();
+            SqlMapper.Query<T>(connection, sql, param as object, transaction, buffered, commandTimeout);
         }
         protected void DeleteInternal(IDbConnection connection, TableRecord record)
         {
@@ -36,6 +37,24 @@ namespace Lunggo.Framework.Database
         protected void DeleteAllInternal(IDbConnection connection)
         {
             throw new NotImplementedException();
+        }
+
+        private String CreateInsertQuery(TableRecord record)
+        {
+
+            var  = (object) record;
+            
+            List<string> paramNames = ReflectionUtil.GetPropertyNameList();
+            paramNames.Remove("Id");
+
+            string cols = string.Join(",", paramNames);
+            string cols_params = string.Join(",", paramNames.Select(p => "@" + p));
+            var sql = "set nocount on insert " + TableName + " (" + cols + ") values (" + cols_params + ") select cast(scope_identity() as int)";
+
+
+
+
+            return SqlMapper.Query<T>(connection, sql, param as object, transaction, buffered, commandTimeout);
         }
     }
 }

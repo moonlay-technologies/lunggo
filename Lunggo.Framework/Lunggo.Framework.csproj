@@ -122,8 +122,10 @@
     <Compile Include="TableStorage\AzureTableStorageClient.cs" />
     <Compile Include="TableStorage\ITableStorageClient.cs" />
     <Compile Include="TableStorage\TableStorageService.cs" />
+    <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />
+    <Compile Include="Util\TypeConversionUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -14,7 +14,7 @@ namespace Lunggo.Repository.TableRepository
         private static PersonTableRepo _instance = new PersonTableRepo("PERSON");
         private PersonTableRepo(String tableName) : base(tableName)
         {
-            
+            ;
         }
         public static PersonTableRepo GetInstance()
         {

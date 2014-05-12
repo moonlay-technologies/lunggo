@@ -12,6 +12,9 @@ using System.IO;
 using System.Drawing;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Http.Rest;
+using Lunggo.Framework.Util;
+using System.Dynamic;
+using System.Reflection;
 
 
 namespace Lunggo.Driver
@@ -24,7 +27,25 @@ namespace Lunggo.Driver
             //TestTakeAndSkip();
             //TestDistinct();
             //TestSelect();
-            TestHttp();
+            //TestHttp();
+            TestDynamic();
+        }
+
+        static void TestDynamic()
+        {
+            JustOnlyAPoco poco = new JustOnlyAPoco
+            {
+                LastName = "Adhitia",
+                FirstName = "Rama",
+                HireDate = new DateTime(2014, 1, 1),
+                EnrollmentDate = new DateTime(2014,3,8)
+            };
+
+            var obj = TypeConversionUtil.ToAnonymousType(poco);
+            Console.WriteLine(obj.LastName);
+            Console.WriteLine(obj.FirstName);
+            Console.WriteLine(obj.HireDate);
+            Console.WriteLine(obj.EnrollmentDate);
         }
 
         static void TestHttp()
@@ -326,5 +347,15 @@ namespace Lunggo.Driver
     {
         public List<HttpFile> Files { get; set; }
     }
+
+    class JustOnlyAPoco
+    {
+        public String LastName {get; set;}
+        public String FirstName {get; set;}
+        public DateTime HireDate {get; set;}
+        public DateTime EnrollmentDate {get; set;}
+    }
+
+     
 
 }
