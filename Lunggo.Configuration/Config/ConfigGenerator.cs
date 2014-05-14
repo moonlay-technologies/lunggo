@@ -11,30 +11,37 @@ namespace Lunggo.Configuration.Config
 {
     public class ConfigGenerator
     {
-        Dictionary<string, int> ValueIndex = new Dictionary<string, int>() { { "local", 5 }, { "development", 6 }, { "production", 7 } };
+        Dictionary<string, int> VersionIndex = new Dictionary<string, int>() { { "local", 5 }, { "development", 6 }, { "production", 7 } };
         string usedVersion = "local";
         static string parentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        static string parentConfigPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName+@"\Config";
+        static string parentConfigPath = parentPath + @"\Config";
         static string parentResultPath = @"\ConfigLog";
         string pathExcel = parentPath + @"\Lunggo_Config.xlsx";
         string[] directoryPaths = { @"\CustomerWeb", @"\Framework" };
         string fileExtension = "*.properties";
-        int ColumnGeneratedNameIndex = 4;
-        int RowDefaultStart = 2;
-        int SheetNumber = 1;
+        int ExcelColumnGeneratedNameIndex = 4;
+        int ExcelRowDefaultStart = 2;
+        int ExcelSheetNumber = 1;
         string formatDate = "ddMMyyyyhhmmss";
         public void startConfig()
         {
-            Microsoft.Office.Interop.Excel.Range TheExcelFile = GetExcelFile();
-            Dictionary<string, string> DictionaryConfig = readAllRowOfExcel(TheExcelFile);
-            DateTime Date = DateTime.Now;
-            ReadAndCopyProcess(DictionaryConfig, Date.ToString(formatDate));
+            try
+            {
+                Microsoft.Office.Interop.Excel.Range TheExcelFile = GetExcelFile();
+                Dictionary<string, string> DictionaryConfig = readAllRowOfExcel(TheExcelFile);
+                DateTime Date = DateTime.Now;
+                ReadAndCopyProcess(DictionaryConfig, Date.ToString(formatDate));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         Microsoft.Office.Interop.Excel.Range GetExcelFile()
         {
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(this.pathExcel);
-            Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[this.SheetNumber];
+            Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[this.ExcelSheetNumber];
             Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
             return xlRange;
         }
@@ -44,10 +51,10 @@ namespace Lunggo.Configuration.Config
             {
                 Dictionary<string, string> DictionaryConfig = new Dictionary<string, string>();
                 int excelRowCount = xlRange.Rows.Count;
-                int ColumnValueIndex = ValueIndex[this.usedVersion];
-                for (int row = this.RowDefaultStart; row <= excelRowCount; row++)
+                int ColumnValueIndex = VersionIndex[this.usedVersion];
+                for (int row = this.ExcelRowDefaultStart; row <= excelRowCount; row++)
                 {
-                    string VariableName = xlRange.Cells[row, this.ColumnGeneratedNameIndex].Value2;
+                    string VariableName = xlRange.Cells[row, this.ExcelColumnGeneratedNameIndex].Value2;
                     string ResultValue = xlRange.Cells[row, ColumnValueIndex].Value2;
                     if (isCellsNotNull(VariableName, ResultValue))
                         DictionaryConfig.Add(VariableName, ResultValue);

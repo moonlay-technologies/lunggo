@@ -36,11 +36,22 @@ namespace Lunggo.Framework.TableStorage
                 throw ex;
             }
         }
-        public void InsertEntityToTableStorage<T>(T ObjectParam, string mailReference) where T : ITableEntity, new()
+        public void InsertEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
         {
             try
             {
-                _tableStorageClient.InsertEntityToTableStorage(ObjectParam, mailReference);
+                _tableStorageClient.InsertEntityToTableStorage(ObjectParam, NameReference);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void InsertOrReplaceEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
+        {
+            try
+            {
+                _tableStorageClient.InsertOrReplaceEntityToTableStorage(ObjectParam, NameReference);
             }
             catch (Exception ex)
             {

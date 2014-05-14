@@ -30,12 +30,19 @@ namespace Lunggo.Framework.Mail
         }
         private string GetEmailTemplateByPartitionKey(string partitionKey)
         {
-            CloudTable table = TableStorageService.GetInstance().GetTableByReference(this._defaultMailTable);
-            var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                         where tabel.PartitionKey == partitionKey && tabel.RowKey == this._defaultRowKey
-                         select tabel).FirstOrDefault();
-            string mailTemplate = (query as MailTemplateModel).Template;
-            return mailTemplate;
+            try
+            {
+                CloudTable table = TableStorageService.GetInstance().GetTableByReference(this._defaultMailTable);
+                var query = (from tabel in table.CreateQuery<MailTemplateModel>()
+                             where tabel.PartitionKey == partitionKey && tabel.RowKey == this._defaultRowKey
+                             select tabel).FirstOrDefault();
+                string mailTemplate = (query as MailTemplateModel).Template;
+                return mailTemplate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occured when get mail template from table");
+            }
         }
     }
 }

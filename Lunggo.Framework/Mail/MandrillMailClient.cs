@@ -45,32 +45,35 @@ namespace Lunggo.Framework.Mail
             emailMessage.from_name = mailModel.From_Name;
             emailMessage.to = GenerateMessageAddressTo(mailModel);
             emailMessage.html = this.mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey);
-            if (mailModel.ListFileInfo != null || mailModel.ListFileInfo.Count>0)
+            if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count>0)
                 emailMessage.attachments = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
             return emailMessage;
         }
         private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
         {
             List<EmailAddress> addresses = new List<EmailAddress>();
-            addresses.AddRange(GenerateAddressToByListString(mailModel.RecipientList));
-            addresses.AddRange(GenerateAddressCCByListString(mailModel.CCList));
-            addresses.AddRange(GenerateAddressBCCByListString(mailModel.BCCList));
+            if (mailModel.RecipientList!=null)
+                addresses.AddRange(GenerateAddressToByListString(mailModel.RecipientList));
+            if (mailModel.CCList != null)
+                addresses.AddRange(GenerateAddressCCByListString(mailModel.CCList));
+            if (mailModel.BCCList != null)
+                addresses.AddRange(GenerateAddressBCCByListString(mailModel.BCCList));
             return addresses;
 
         }
-        private List<EmailAddress> GenerateAddressToByListString(List<string> RecipientList)
+        private List<EmailAddress> GenerateAddressToByListString(string[] RecipientList)
         {
             return GenerateRecipientTypeByListString(RecipientList, RecipientTypeEnum.to.ToString());
         }
-        private List<EmailAddress> GenerateAddressCCByListString(List<string> CCList)
+        private List<EmailAddress> GenerateAddressCCByListString(string[] CCList)
         {
             return GenerateRecipientTypeByListString(CCList, RecipientTypeEnum.cc.ToString());
         }
-        private List<EmailAddress> GenerateAddressBCCByListString(List<string> BCCList)
+        private List<EmailAddress> GenerateAddressBCCByListString(string[] BCCList)
         {
             return GenerateRecipientTypeByListString(BCCList, RecipientTypeEnum.bcc.ToString());
         }
-        private List<EmailAddress> GenerateRecipientTypeByListString(List<string> listAddress, string sendingType)
+        private List<EmailAddress> GenerateRecipientTypeByListString(string[] listAddress, string sendingType)
         {
             List<EmailAddress> addresses = new List<EmailAddress>();
             foreach (string address in listAddress)

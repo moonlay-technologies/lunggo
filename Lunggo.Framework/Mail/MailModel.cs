@@ -9,9 +9,9 @@ namespace Lunggo.Framework.Mail
 {
     public class MailModel
     {
-        public List<string> RecipientList { get; set; }
-        public List<string> CCList { get; set; }
-        public List<string> BCCList { get; set; }
+        public string[] RecipientList { get; set; }
+        public string[] CCList { get; set; }
+        public string[] BCCList { get; set; }
         public List<FileInfo> ListFileInfo { get; set; }
         public string Subject { get; set; }
         private string _from_Mail = "System@Lunggo.com";
