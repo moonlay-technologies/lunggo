@@ -6,8 +6,24 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Database
 {
-    public class TableRecord
+    public abstract class TableRecord
     {
+        protected static List<ColumnMetadata> _recordMetadata;
+        protected static List<ColumnMetadata> _primaryKeys;
+        protected static String _tableName;
         
+
+        public List<ColumnMetadata> GetMetadata()
+        {
+            return _recordMetadata;
+        }
+        public String GetTableName()
+        {
+            return _tableName;
+        }
+        public List<ColumnMetadata> GetPrimaryKeys()
+        {
+            return _primaryKeys;
+        }
     }
 }

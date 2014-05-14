@@ -11,7 +11,7 @@ namespace Lunggo.Repository.TableRepository
 {
     public class PersonTableRepo : TableDao<PersonTableRecord>, IDBTableRepository<PersonTableRecord> 
     {
-        private static PersonTableRepo _instance = new PersonTableRepo("PERSON");
+        private static PersonTableRepo _instance = new PersonTableRepo("PersonReplica");
         private PersonTableRepo(String tableName) : base(tableName)
         {
             ;
@@ -20,17 +20,17 @@ namespace Lunggo.Repository.TableRepository
         {
             return _instance;
         }
-        public void Insert(IDbConnection connection, PersonTableRecord record)
+        public int Insert(IDbConnection connection, PersonTableRecord record)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(IDbConnection connection, PersonTableRecord record)
+        public int Delete(IDbConnection connection, PersonTableRecord record)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(IDbConnection connection, PersonTableRecord record)
+        public int Update(IDbConnection connection, PersonTableRecord record)
         {
             throw new NotImplementedException();
         }
@@ -40,9 +40,36 @@ namespace Lunggo.Repository.TableRepository
             throw new NotImplementedException();
         }
 
-        public void DeleteAll(IDbConnection connection)
+        public int DeleteAll(IDbConnection connection)
         {
             throw new NotImplementedException();
         }
+
+        public int Insert(IDbConnection connection, PersonTableRecord record, CommandDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Delete(IDbConnection connection, PersonTableRecord record, CommandDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(IDbConnection connection, PersonTableRecord record, CommandDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<PersonTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int DeleteAll(IDbConnection connection, CommandDefinition definition)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

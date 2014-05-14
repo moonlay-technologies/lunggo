@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
 using System.Data;
 using Lunggo.Framework.Util;
 
@@ -12,49 +11,63 @@ namespace Lunggo.Framework.Database
     public abstract class TableDao<T> where T : TableRecord
     {
         private String _tableName;
+        private static IDBWrapper _dbWrapper = DapperDBWrapper.GetInstance();
+        
+        public String TableName
+        { 
+            get
+            {
+                return _tableName;
+            }
+            set
+            {
+                throw new InvalidOperationException("Table name can only be set using constructor");
+            }
+        }
 
         protected TableDao(String tableName)
         {
             _tableName = tableName;
         }
 
-        protected void InsertInternal(IDbConnection connection, TableRecord record)
+        protected int InsertInternal(IDbConnection connection, TableRecord record)
         {
-            SqlMapper.Query<T>(connection, sql, param as object, transaction, buffered, commandTimeout);
+            return _dbWrapper.Insert(connection, record);
         }
-        protected void DeleteInternal(IDbConnection connection, TableRecord record)
+
+        protected int InsertInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
-            throw new NotImplementedException();
+            return _dbWrapper.Insert(connection, record, definition);
         }
-        protected void UpdateInternal(IDbConnection connection, TableRecord record)
+
+        protected int DeleteInternal(IDbConnection connection, TableRecord record)
         {
-            throw new NotImplementedException();
+            return _dbWrapper.Delete(connection, record);
         }
+
+        protected int DeleteInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
+        {
+            return _dbWrapper.Delete(connection, record, definition);
+        }
+
+        protected int UpdateInternal(IDbConnection connection, TableRecord record)
+        {
+            return _dbWrapper.Delete(connection, record);
+        }
+
+        protected int UpdateInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
+        {
+            return _dbWrapper.Delete(connection, record, definition);
+        }
+
         protected IEnumerable<T> FindAllInternal(IDbConnection connection)
         {
             throw new NotImplementedException();
         }
-        protected void DeleteAllInternal(IDbConnection connection)
+
+        protected int DeleteAllInternal(IDbConnection connection)
         {
             throw new NotImplementedException();
-        }
-
-        private String CreateInsertQuery(TableRecord record)
-        {
-
-            var  = (object) record;
-            
-            List<string> paramNames = ReflectionUtil.GetPropertyNameList();
-            paramNames.Remove("Id");
-
-            string cols = string.Join(",", paramNames);
-            string cols_params = string.Join(",", paramNames.Select(p => "@" + p));
-            var sql = "set nocount on insert " + TableName + " (" + cols + ") values (" + cols_params + ") select cast(scope_identity() as int)";
-
-
-
-
-            return SqlMapper.Query<T>(connection, sql, param as object, transaction, buffered, commandTimeout);
-        }
+        }  
     }
 }

@@ -82,7 +82,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\ColumnMetadata.cs" />
+    <Compile Include="Database\CommandDefinition.cs" />
+    <Compile Include="Database\DapperDBWrapper.cs" />
     <Compile Include="Database\IDBTableRepository.cs" />
+    <Compile Include="Database\IDBWrapper.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Http\Http.cs" />
@@ -125,7 +129,7 @@
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />
-    <Compile Include="Util\TypeConversionUtil.cs" />
+    <Compile Include="Util\TypeUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

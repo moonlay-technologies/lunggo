@@ -41,7 +41,7 @@ namespace Lunggo.Driver
                 EnrollmentDate = new DateTime(2014,3,8)
             };
 
-            var obj = TypeConversionUtil.ToAnonymousType(poco);
+            var obj = TypeUtil.ToAnonymousType(poco);
             Console.WriteLine(obj.LastName);
             Console.WriteLine(obj.FirstName);
             Console.WriteLine(obj.HireDate);

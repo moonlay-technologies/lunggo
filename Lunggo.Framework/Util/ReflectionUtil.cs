@@ -17,7 +17,15 @@ namespace Lunggo.Framework.Util
 
         public static IEnumerable<String> GetPropertyNameList(Type type)
         {
+            BindingFlags defaultBindingFlags = BindingFlags.Instance | BindingFlags.Public;
+            return GetPropertyNameList(type, defaultBindingFlags);
+        }
 
+        public static IEnumerable<String> GetPropertyNameList(Type type,BindingFlags bindingFlags)
+        {
+            List<String> propertyNameList = new List<String>();
+            FillPropertyNameList(propertyNameList, type, bindingFlags);
+            return propertyNameList;
         }
 
         public static IEnumerable<String> GetPropertyNameList(Object source,BindingFlags bindingFlags)
@@ -29,7 +37,12 @@ namespace Lunggo.Framework.Util
 
         private static void FillPropertyNameList(List<String> propertyNameList, Object source,BindingFlags bindingFlags)
         {
-            foreach (var property in source.GetType().GetProperties(bindingFlags))
+            FillPropertyNameList(propertyNameList, source.GetType(), bindingFlags);
+        }
+
+        private static void FillPropertyNameList(List<String> propertyNameList, Type type, BindingFlags bindingFlags)
+        {
+            foreach (var property in type.GetProperties(bindingFlags))
             {
                 propertyNameList.Add(property.Name);
             }
