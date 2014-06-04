@@ -10,8 +10,8 @@ namespace Lunggo.Framework.Database
 {
     public abstract class TableDao<T> where T : TableRecord
     {
-        private String _tableName;
-        private static IDBWrapper _dbWrapper = DapperDBWrapper.GetInstance();
+        private readonly String _tableName;
+        private static readonly IDbWrapper<T> _dbWrapper = DapperDbWrapper<T>.GetInstance();
         
         public String TableName
         { 
@@ -30,19 +30,9 @@ namespace Lunggo.Framework.Database
             _tableName = tableName;
         }
 
-        protected int InsertInternal(IDbConnection connection, TableRecord record)
-        {
-            return _dbWrapper.Insert(connection, record);
-        }
-
         protected int InsertInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
             return _dbWrapper.Insert(connection, record, definition);
-        }
-
-        protected int DeleteInternal(IDbConnection connection, TableRecord record)
-        {
-            return _dbWrapper.Delete(connection, record);
         }
 
         protected int DeleteInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
@@ -50,24 +40,20 @@ namespace Lunggo.Framework.Database
             return _dbWrapper.Delete(connection, record, definition);
         }
 
-        protected int UpdateInternal(IDbConnection connection, TableRecord record)
-        {
-            return _dbWrapper.Delete(connection, record);
-        }
-
         protected int UpdateInternal(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
-            return _dbWrapper.Delete(connection, record, definition);
+            return _dbWrapper.Update(connection, record, definition);
         }
 
-        protected IEnumerable<T> FindAllInternal(IDbConnection connection)
+        protected IEnumerable<T> FindAllInternal(IDbConnection connection, CommandDefinition definition)
         {
-            throw new NotImplementedException();
+            return _dbWrapper.FindAll(connection, _tableName, definition);
         }
 
-        protected int DeleteAllInternal(IDbConnection connection)
+
+        protected int DeleteAllInternal(IDbConnection connection, CommandDefinition definition)
         {
-            throw new NotImplementedException();
-        }  
+            return _dbWrapper.DeleteAll(connection, _tableName, definition);
+        }
     }
 }

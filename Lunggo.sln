@@ -11,6 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CustomerWeb", "Lungg
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Driver", "Lunggo.Driver\Lunggo.Driver.csproj", "{151669CE-58C5-4FC6-8286-F1353AAC474E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{50B8C0C0-6B28-46FD-BA90-771D8C9F12A1} = {50B8C0C0-6B28-46FD-BA90-771D8C9F12A1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Framework", "Lunggo.Framework\Lunggo.Framework.csproj", "{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}"
 EndProject

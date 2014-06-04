@@ -7,8 +7,8 @@
     <ProjectGuid>{50B8C0C0-6B28-46FD-BA90-771D8C9F12A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lunggo.Repo</RootNamespace>
-    <AssemblyName>Lunggo.Repo</AssemblyName>
+    <RootNamespace>Lunggo.Repository</RootNamespace>
+    <AssemblyName>Lunggo.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,6 +18,8 @@ using System.Drawing;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Http.Rest;
 using Lunggo.Framework.Util;
+using Dapper;
+using Lunggo.Repository;
 using System.Dynamic;
 using System.Reflection;
 
@@ -28,7 +35,91 @@ namespace Lunggo.Driver
             //TestDistinct();
             //TestSelect();
             //TestHttp();
-            TestDynamic();
+            //TestDynamic();
+            TestDB();
+        }
+
+        static void TestDB()
+        {
+            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
+            using (var con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                var repo = PersonTableRepo.GetInstance();
+                var newPersonRecord = new PersonTableRecord
+                {
+                    FirstName = "Rama",
+                    LastName = "Adhitia",
+                    PersonID = 134,
+                    EnrollmentDate = new DateTime(2013, 12, 2),
+                    HireDate = new DateTime(2012, 12, 1)
+                };
+
+                /*
+                try
+                {
+                    var insert = repo.Insert(con, newPersonRecord);
+                    Console.WriteLine("insert {0} record successfully", insert);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                */
+                
+                /*try
+                {
+                    newPersonRecord.FirstName = "Amar";
+                    newPersonRecord.LastName = "Dithia";
+                    newPersonRecord.EnrollmentDate = new DateTime(1970,12,1);
+                    newPersonRecord.HireDate = new DateTime(1970, 12, 2);
+                    var update = repo.Update(con, newPersonRecord);
+                    Console.WriteLine("update {0} record successfully", update);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                */
+
+                try
+                {
+                    newPersonRecord.PersonID = 134;
+                    var delete = repo.Delete(con, newPersonRecord);
+                    Console.WriteLine("delete {0} record successfully", delete);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+                try
+                {
+                    List<PersonTableRecord> personList = repo.FindAll(con).ToList();
+                    foreach (var p in personList)
+                    {
+                        Console.Write("{0} {1} {2} {3} {4}", p.PersonID, p.FirstName, p.LastName, p.HireDate, p.EnrollmentDate);
+                        Console.WriteLine();
+                    }
+                }
+                catch (Exception ex)
+                {   
+                    Console.WriteLine(ex);
+                }
+
+                try
+                {
+                    var delete = repo.DeleteAll(con);
+                    Console.WriteLine("delete {0} record successfully", delete);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+                con.Close();
+            }
+            Console.WriteLine("Finished");
         }
 
         static void TestDynamic()

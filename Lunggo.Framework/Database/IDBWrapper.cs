@@ -7,13 +7,13 @@ using System.Data;
 
 namespace Lunggo.Framework.Database
 {
-    public interface IDBWrapper
+    public interface IDbWrapper<out T> where T : TableRecord
     {
-        int Insert(IDbConnection connection, TableRecord record);
         int Insert(IDbConnection connection, TableRecord record, CommandDefinition definition);
-        int Delete(IDbConnection connection, TableRecord record);
         int Delete(IDbConnection connection, TableRecord record, CommandDefinition definition);
-        int Update(IDbConnection connection, TableRecord record);
         int Update(IDbConnection connection, TableRecord record, CommandDefinition definition);
+        IEnumerable<T> FindAll(IDbConnection connection, String tableName, CommandDefinition definition);
+        int DeleteAll(IDbConnection connection, String tableName, CommandDefinition definition);
+
     }
 }

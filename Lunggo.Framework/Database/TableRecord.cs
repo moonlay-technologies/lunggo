@@ -8,22 +8,22 @@ namespace Lunggo.Framework.Database
 {
     public abstract class TableRecord
     {
-        protected static List<ColumnMetadata> _recordMetadata;
-        protected static List<ColumnMetadata> _primaryKeys;
-        protected static String _tableName;
+        protected static List<ColumnMetadata> RecordMetadata;
+        protected static List<ColumnMetadata> PrimaryKeys;
+        protected static String TableName;
         
-
         public List<ColumnMetadata> GetMetadata()
         {
-            return _recordMetadata;
+            return RecordMetadata;
         }
+
         public String GetTableName()
         {
-            return _tableName;
+            return TableName;
         }
         public List<ColumnMetadata> GetPrimaryKeys()
         {
-            return _primaryKeys;
+            return PrimaryKeys;
         }
     }
 }

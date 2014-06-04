@@ -85,8 +85,8 @@
     <Compile Include="Database\ColumnMetadata.cs" />
     <Compile Include="Database\CommandDefinition.cs" />
     <Compile Include="Database\DapperDBWrapper.cs" />
-    <Compile Include="Database\IDBTableRepository.cs" />
-    <Compile Include="Database\IDBWrapper.cs" />
+    <Compile Include="Database\IDbTableRepository.cs" />
+    <Compile Include="Database\IDbWrapper.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Http\Http.cs" />

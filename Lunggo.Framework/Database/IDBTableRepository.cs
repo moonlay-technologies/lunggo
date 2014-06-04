@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Lunggo.Framework.Database
 {
-    public interface IDBTableRepository<T> where T : TableRecord
+    public interface IDbTableRepository<T> where T : TableRecord
     {
         int Insert(IDbConnection connection, T record);
         int Insert(IDbConnection connection, T record, CommandDefinition definition);
