@@ -9,13 +9,11 @@ namespace Lunggo.Framework.Database
     public class ColumnMetadata
     {
         public String ColumnName { get; set; }
-        public int Sequence { get; set; }
         public bool IsPrimaryKey { get; set; }
 
-        public ColumnMetadata(String columnName, int sequence, bool isPrimaryKey)
+        public ColumnMetadata(String columnName, bool isPrimaryKey)
         {
             ColumnName = columnName;
-            Sequence = sequence;
             IsPrimaryKey = isPrimaryKey;
         }
     }

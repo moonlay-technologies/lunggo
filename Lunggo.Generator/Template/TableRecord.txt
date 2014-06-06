@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Lunggo.Framework.Database;
+
+namespace Lunggo.Repository.TableRecord
+{
+    public class $TableName$TableRecord : Lunggo.Framework.Database.TableRecord
+    {
+		
+		$orders: {order|
+		public $order.ColumnType$ $order.OriginDefinition.COLUMN_NAME$ {get; set;}
+		}$
+
+        static $TableName$TableRecord()
+        {
+            InitTableName();
+            InitRecordMetadata();
+            InitPrimaryKeysMetadata();
+        }
+
+        private static void InitTableName()
+        {
+            TableName = "$TableName$";
+        }
+
+        private static void InitRecordMetadata()
+        {
+            RecordMetadata = new List<ColumnMetadata>
+            {
+				$orders: {order|
+				$if(order.OriginDefinition.IsPrimaryKey)$
+				new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", true),
+				$else$
+				new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", false),
+				$endif$
+				}$
+            };
+        }
+
+        private static void InitPrimaryKeysMetadata()
+        {
+            PrimaryKeys = RecordMetadata.Where(p => p.IsPrimaryKey).ToList();
+        }
+    }
+}

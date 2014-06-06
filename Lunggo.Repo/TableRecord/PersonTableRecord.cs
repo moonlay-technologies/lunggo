@@ -29,11 +29,11 @@ namespace Lunggo.Repository.TableRecord
         {
             RecordMetadata = new List<ColumnMetadata>
             {
-                new ColumnMetadata("PersonID", 1, true),
-                new ColumnMetadata("LastName", 2, false),
-                new ColumnMetadata("FirstName", 3, false),
-                new ColumnMetadata("HireDate", 4, false),
-                new ColumnMetadata("EnrollmentDate", 5, false)
+                new ColumnMetadata("PersonID", true),
+                new ColumnMetadata("LastName", false),
+                new ColumnMetadata("FirstName",false),
+                new ColumnMetadata("HireDate", false),
+                new ColumnMetadata("EnrollmentDate", false)
             };
         }
 
