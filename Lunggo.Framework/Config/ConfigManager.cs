@@ -14,15 +14,23 @@ namespace Lunggo.Framework.Config
         private static readonly ConfigManager Instance = new ConfigManager();
         private Dictionary<string, PropertyConfig> _configDictionary;
         private readonly string FileExtension = "*properties";
+        private bool _isInitialized;
         private ConfigManager()
         {
 
         }
         public void Init(string directoryPath)
         {
-            var allFilesInPath = GetAllFilesInPath(directoryPath);
-            var dictionary = ReadAndWriteAllFilesToDictionary(AllFilesInPath);
-            _configDictionary = dictionary;
+            if (!_isInitialized)
+            {
+                var allFilesInPath = GetAllFilesInPath(directoryPath);
+                _configDictionary = ReadAndWriteAllFilesToDictionary(allFilesInPath);
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("Config Manager is already initialized");
+            }
         }
         public static ConfigManager GetInstance()
         {
