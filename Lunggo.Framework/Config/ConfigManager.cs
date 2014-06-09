@@ -11,43 +11,49 @@ namespace Lunggo.Framework.Config
 {
     public class ConfigManager
     {
-        ConfigManager _configManager;
-        private static ConfigManager instance = new ConfigManager();
-        Dictionary<string, PropertyConfig> ConfigDictionary;
-        string fileExtension = "*properties";
+        private static readonly ConfigManager Instance = new ConfigManager();
+        private Dictionary<string, PropertyConfig> _configDictionary;
+        private readonly string FileExtension = "*properties";
         private ConfigManager()
         {
 
         }
-        public void init(string directoryPath)
+        public void Init(string directoryPath)
         {
-            string[] AllFilesInPath = getAllFilesInPath(directoryPath);
-            Dictionary<string, PropertyConfig> dictionary = ReadAndWriteAllFilesToDictionary(AllFilesInPath);
-            ConfigDictionary = dictionary;
+            var allFilesInPath = GetAllFilesInPath(directoryPath);
+            var dictionary = ReadAndWriteAllFilesToDictionary(AllFilesInPath);
+            _configDictionary = dictionary;
         }
         public static ConfigManager GetInstance()
         {
-            return instance;
+            return Instance;
         }
-        public string GetConfigValue(string FileName, string KeyName)
+        public string GetConfigValue(string fileName, string keyName)
         {
-            PropertyConfig propertyConfig = ConfigDictionary[FileName];
-            return propertyConfig.Dictionary[KeyName];
+            var propertyConfig = _configDictionary[fileName];
+            if (propertyConfig != null)
+            {
+                return propertyConfig.Dictionary[keyName];
+            }
+            else
+            {
+                throw new ArgumentException(String.Format("Configuration File {0}.properties is not exist",fileName));
+            }
         }
 
-        private string[] getAllFilesInPath(string directoryPath)
+        private string[] GetAllFilesInPath(string directoryPath)
         {
-            string[] AllFilesInPath = System.IO.Directory.GetFiles(directoryPath, this.fileExtension);
-            return AllFilesInPath;
+            var allFilesInPath = System.IO.Directory.GetFiles(directoryPath, this.FileExtension);
+            return allFilesInPath;
         }
-        private Dictionary<string, PropertyConfig> ReadAndWriteAllFilesToDictionary(string[] AllFilesInPath)
+        private Dictionary<string, PropertyConfig> ReadAndWriteAllFilesToDictionary(string[] allFilesInPath)
         {
-            Dictionary<string, PropertyConfig> dictionary =  new Dictionary<string,PropertyConfig>();
-            foreach (string aFilePath in AllFilesInPath)
+            var dictionary =  new Dictionary<string,PropertyConfig>();
+            foreach (string aFilePath in allFilesInPath)
             {
                 PropertyConfig propertyConfig = GeneratePropertyConfigFromAFile(aFilePath);
-                string FileName = GetFileNameWithoutExtension(aFilePath);
-                dictionary.Add(FileName, propertyConfig);
+                string fileName = GetFileNameWithoutExtension(aFilePath);
+                dictionary.Add(fileName, propertyConfig);
             }
             return dictionary;
         }
@@ -57,8 +63,10 @@ namespace Lunggo.Framework.Config
         }
         private PropertyConfig GeneratePropertyConfigFromAFile(string aFilePath)
         {
-            PropertyConfig propertyConfig = new PropertyConfig();
-            propertyConfig.Dictionary = getAllKeyAndValueFromFileInPath(aFilePath);
+            var propertyConfig = new PropertyConfig
+            {
+                Dictionary = getAllKeyAndValueFromFileInPath(aFilePath)
+            };
             return propertyConfig;
         }
         private Dictionary<string, string> getAllKeyAndValueFromFileInPath(string aFilePath)
@@ -71,7 +79,7 @@ namespace Lunggo.Framework.Config
 
         private class PropertyConfig
         {
-            public Dictionary<string,string> Dictionary{get;set;}
+            public Dictionary<string,string> Dictionary { get; set;}
         }
     }
 }
