@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,20 +13,26 @@ namespace Lunggo.Framework.Config
 {
     public class ConfigManager
     {
+        private static readonly String ConfigFileName = @"application.properties";
         private static readonly ConfigManager Instance = new ConfigManager();
         private Dictionary<string, PropertyConfig> _configDictionary;
-        private readonly string FileExtension = "*properties";
         private bool _isInitialized;
+       
         private ConfigManager()
         {
 
         }
+
+        public static ConfigManager GetInstance()
+        {
+            return Instance;
+        }
+
         public void Init(string directoryPath)
         {
             if (!_isInitialized)
             {
-                var allFilesInPath = GetAllFilesInPath(directoryPath);
-                _configDictionary = ReadAndWriteAllFilesToDictionary(allFilesInPath);
+                _configDictionary = LoadConfigFileToDictionary(Path.Combine(directoryPath,ConfigFileName));
                 _isInitialized = true;
             }
             else
@@ -32,10 +40,7 @@ namespace Lunggo.Framework.Config
                 throw new InvalidOperationException("Config Manager is already initialized");
             }
         }
-        public static ConfigManager GetInstance()
-        {
-            return Instance;
-        }
+        
         public string GetConfigValue(string fileName, string keyName)
         {
             var propertyConfig = _configDictionary[fileName];
@@ -49,40 +54,35 @@ namespace Lunggo.Framework.Config
             }
         }
 
-        private string[] GetAllFilesInPath(string directoryPath)
+        private Dictionary<string, PropertyConfig> LoadConfigFileToDictionary(String filePath)
         {
-            var allFilesInPath = System.IO.Directory.GetFiles(directoryPath, this.FileExtension);
-            return allFilesInPath;
+            var configDoc = LoadConfigurationFile(filePath);
+            return ConfigToDictionary(configDoc);   
         }
-        private Dictionary<string, PropertyConfig> ReadAndWriteAllFilesToDictionary(string[] allFilesInPath)
+        
+
+        private XElement LoadConfigurationFile(String filePath)
         {
-            var dictionary =  new Dictionary<string,PropertyConfig>();
-            foreach (string aFilePath in allFilesInPath)
-            {
-                PropertyConfig propertyConfig = GeneratePropertyConfigFromAFile(aFilePath);
-                string fileName = GetFileNameWithoutExtension(aFilePath);
-                dictionary.Add(fileName, propertyConfig);
-            }
-            return dictionary;
+            return XElement.Load(filePath);
         }
-        private string GetFileNameWithoutExtension(string aFilePath)
+        
+        private Dictionary<string, PropertyConfig> ConfigToDictionary(XElement doc)
         {
-            return Path.GetFileNameWithoutExtension(aFilePath);
-        }
-        private PropertyConfig GeneratePropertyConfigFromAFile(string aFilePath)
-        {
-            var propertyConfig = new PropertyConfig
-            {
-                Dictionary = getAllKeyAndValueFromFileInPath(aFilePath)
-            };
-            return propertyConfig;
-        }
-        private Dictionary<string, string> getAllKeyAndValueFromFileInPath(string aFilePath)
-        {
-            var doc = XDocument.Load(aFilePath);
-            var rootNodes = doc.Root.DescendantNodes().OfType<XElement>();
-            var allItems = rootNodes.ToDictionary(n => n.Attribute("name").Value, n => n.Value);
-            return allItems;
+            var configNodes = doc.Elements();
+            var configDictionary = configNodes.
+                GroupBy
+                (
+                    n => n.Attribute("file").Value
+                ).
+                ToDictionary
+                (
+                    @group => @group.Key.ToString(CultureInfo.InvariantCulture), 
+                    @group => new PropertyConfig
+                    {
+                        Dictionary = @group.ToDictionary(n => n.Attribute("name").Value, n => n.Value)
+                    }
+                );
+            return configDictionary;
         }
 
         private class PropertyConfig
