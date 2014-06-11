@@ -154,3 +154,12 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
+# Lunggo.Configuration Log Directory
+Lunggo.Configuration/Log/
+
+# Lunggo.CustomerWeb Config Directory
+Lunggo.CustomerWeb/Config/
+
+# Lunggo.Driver Log Directory
+Lunggo.Driver/Config/
