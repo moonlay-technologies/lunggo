@@ -31,6 +31,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -68,14 +72,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ConfigGenerator.cs" />
+    <Compile Include="ConfigGenerator.cs" />
     <Compile Include="MailTemplate\MailTemplateGenerator.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Config\Framework\services.properties" />
+    <None Include="Config\Driver\blob.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\Driver\db.properties" />
+    <None Include="Config\CustomerWeb\blob.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />
     <None Include="packages.config" />

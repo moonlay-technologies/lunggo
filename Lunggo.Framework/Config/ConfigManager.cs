@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Linq;
 
 namespace Lunggo.Framework.Config
 {
     public class ConfigManager
     {
-        private static readonly String ConfigFileName = @"application.properties";
+        private const String ConfigFileName = @"application.properties";
         private static readonly ConfigManager Instance = new ConfigManager();
         private Dictionary<string, PropertyConfig> _configDictionary;
         private bool _isInitialized;
