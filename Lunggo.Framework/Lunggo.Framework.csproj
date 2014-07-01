@@ -124,6 +124,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedModel\FileInfo.cs" />
     <Compile Include="SharedModel\PersonIdentity.cs" />
+    <Compile Include="SnowMaker\BlobOptimisticDataStore.cs" />
+    <Compile Include="SnowMaker\DebugOnlyFileDataStore.cs" />
+    <Compile Include="SnowMaker\DictionaryExtensions.cs" />
+    <Compile Include="SnowMaker\IOptimisticDataStore.cs" />
+    <Compile Include="SnowMaker\IUniqueIdGenerator.cs" />
+    <Compile Include="SnowMaker\ScopeState.cs" />
+    <Compile Include="SnowMaker\UniqueIdGenerationException.cs" />
+    <Compile Include="SnowMaker\UniqueIdGenerator.cs" />
     <Compile Include="TableStorage\AzureTableStorageClient.cs" />
     <Compile Include="TableStorage\ITableStorageClient.cs" />
     <Compile Include="TableStorage\TableStorageService.cs" />
