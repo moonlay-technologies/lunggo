@@ -7,17 +7,48 @@ namespace Lunggo.Framework.SnowMaker
 {
     public class UniqueIdGenerator : IUniqueIdGenerator
     {
-        readonly IOptimisticDataStore _optimisticDataStore;
+        private static readonly UniqueIdGenerator Instance = new UniqueIdGenerator();
+        
+        private IOptimisticDataStore _optimisticDataStore;
+        private readonly IDictionary<string, ScopeState> _states = new Dictionary<string, ScopeState>();
+        private readonly object _statesLock = new object();
+        private readonly IDictionary<String, long> _initialValueDictionary = new Dictionary<String, long>(); 
+        private int _batchSize = 100;
+        private int _maxWriteAttempts = 25;
 
-        readonly IDictionary<string, ScopeState> _states = new Dictionary<string, ScopeState>();
-        readonly object _statesLock = new object();
-
-        int _batchSize = 100;
-        int _maxWriteAttempts = 25;
-
-        public UniqueIdGenerator(IOptimisticDataStore optimisticDataStore)
+        private UniqueIdGenerator()
         {
-            this._optimisticDataStore = optimisticDataStore;
+            ;
+        }
+
+        public static UniqueIdGenerator GetInstance()
+        {
+            return Instance;
+        }
+
+        public void Init (IOptimisticDataStore optimisticDataStore)
+        {
+            lock (this)
+            {
+                if (_optimisticDataStore == null)
+                {
+                    this._optimisticDataStore = optimisticDataStore;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Data Store is already initialized");
+                }    
+            }
+        }
+
+        public void SetIdInitialValue(String name, long value)
+        {
+            _initialValueDictionary[name] = value;
+        }
+
+        public long GetIdInitialValue(String name)
+        {
+            return _initialValueDictionary[name];
         }
 
         public int BatchSize

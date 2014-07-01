@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -9,12 +11,14 @@ namespace Lunggo.Framework.SnowMaker
 {
     public class BlobOptimisticDataStore : IOptimisticDataStore
     {
-        const string SeedValue = "1";
+        const string DefaultSeedValue = "1";
 
         readonly CloudBlobContainer _blobContainer;
 
         readonly IDictionary<string, ICloudBlob> _blobReferences;
         readonly object _blobReferencesLock = new object();
+
+        public Func<String, long> SeedValueInitializer { get; set; }
 
         public BlobOptimisticDataStore(CloudStorageAccount account, string containerName)
         {
@@ -70,9 +74,11 @@ namespace Lunggo.Framework.SnowMaker
             if (blobReference.Exists())
                 return blobReference;
 
+            var seedValue = SeedValueInitializer == null ? DefaultSeedValue : SeedValueInitializer.Invoke(blockName).ToString(CultureInfo.InvariantCulture);
+
             try
             {
-                UploadText(blobReference, SeedValue, AccessCondition.GenerateIfNoneMatchCondition("*"));
+                UploadText(blobReference, seedValue, AccessCondition.GenerateIfNoneMatchCondition("*"));
             }
             catch (StorageException uploadException)
             {

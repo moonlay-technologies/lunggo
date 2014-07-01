@@ -18,6 +18,8 @@ using System.Drawing;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Http.Rest;
 using Lunggo.Framework.Util;
+using Lunggo.Framework.SnowMaker;
+using Microsoft.WindowsAzure.Storage;
 using Dapper;
 using Lunggo.Repository;
 using System.Dynamic;
@@ -36,7 +38,41 @@ namespace Lunggo.Driver
             //TestSelect();
             //TestHttp();
             //TestDynamic();
-            TestDB();
+            //TestDB();
+            TestSnowMaker();
+        }
+
+        static void TestSnowMaker()
+        {
+            /*
+            var account = CloudStorageAccount.DevelopmentStorageAccount;
+
+            var optimisticData = new BlobOptimisticDataStore(account, "RamaTestId");
+
+            var generator = new UniqueIdGenerator(optimisticData);
+
+            generator.BatchSize = 10;
+            
+            for (var i = 0; i < 50; i++)
+            {
+                Console.WriteLine(string.Format("id: {0}", generator.NextId("sequence1")));
+            }
+            */
+
+            var generator = UniqueIdGenerator.GetInstance();
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.DevelopmentStorageAccount, "RamaTestId");
+            /*{
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+            };*/
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
+            generator.SetIdInitialValue("PersonRepo",1001);
+
+            for (var i = 0; i < 50; i++)
+            {
+                Console.WriteLine(string.Format("id: {0}", generator.NextId("KonteRepo")));
+            }
+
         }
 
         static void TestDB()
