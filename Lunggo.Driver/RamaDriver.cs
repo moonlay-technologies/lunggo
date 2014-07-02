@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+using Lunggo.Framework.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Newtonsoft.Json;
@@ -60,17 +61,17 @@ namespace Lunggo.Driver
             */
 
             var generator = UniqueIdGenerator.GetInstance();
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.DevelopmentStorageAccount, "RamaTestId");
-            /*{
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.DevelopmentStorageAccount, "RamaTestId")
+            {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
-            };*/
+            };
             generator.Init(optimisticData);
             generator.BatchSize = 100;
-            generator.SetIdInitialValue("PersonRepo",1001);
+            
 
             for (var i = 0; i < 50; i++)
             {
-                Console.WriteLine(string.Format("id: {0}", generator.NextId("KonteRepo")));
+                Console.WriteLine(string.Format("id: {0}", TestSequence.GetNext()));
             }
 
         }
@@ -483,6 +484,23 @@ namespace Lunggo.Driver
         public DateTime EnrollmentDate {get; set;}
     }
 
-     
+    public class TestSequence : SequenceBase
+    {
+        private static readonly SequenceProperties Properties;
+        static TestSequence()
+        {
+            Properties = new SequenceProperties
+            {
+                Name = "HotelVoucher2",
+                InitialValue = 43
+            };
+            Init(Properties);
+        }
+
+        public static long GetNext()
+        {
+            return GetNextNumber(Properties);
+        }
+    }
 
 }
