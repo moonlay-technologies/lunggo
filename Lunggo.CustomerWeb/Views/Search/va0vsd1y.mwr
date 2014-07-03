@@ -1,0 +1,555 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="id" lang="id">
+<head>
+    <title>Tiket Pesawat Murah: Lunggo - Cari Tiket Pesawat Promo?</title>
+    <meta name="msvalidate.01" content="DC24AA969323905518BF120A6F990CE3" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Temukan harga Tiket Pesawat PROMO paling MURAH di sini dari semua harga maskapai RESMI dengan teknologi Traveloka." />
+
+    <meta property="fb:page_id" content="522781537751456" />
+    <link href="https://plus.google.com/113574218345324552539" rel="publisher" />
+    <link href="~/Assets/css/tv-desktop-300019.css" media="screen" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/png" href="http://asset.traveloka.com/assets/images/logo/favicon-300000.ico">
+    
+    <meta property="og:title" content="Tiket Pesawat Murah: Lunggo - Cari Tiket Pesawat Promo?" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://sphotos-h.ak.fbcdn.net/hphotos-ak-ash3/550103_522781577751452_1506322248_n.png" />
+
+    <script type="text/javascript">
+        window.lang = "id";
+        window.country = "ID";
+        window.locale = "id-ID";
+        window.routePrefix = "";
+        window.travelokaHost = "http://www.traveloka.com";
+        window.mobileDomain = "m.traveloka.com";
+        window.travelokaDomain = "www.traveloka.com";
+        window.apiDomain = "api.traveloka.com";
+    </script>
+    <script src="~/Assets/script/jquery-1.7.2.min-300018.js"></script>
+    <script src="~/Assets/script/commonexternal-15.js"></script>
+    <script src="~/Assets/script/common-15.js"></script>
+    <script src="~/Assets/script/i18n-15.js"></script>
+    <script src="~/Assets/script/jquery.ui.core-300004.js"></script>
+    <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.ui.position-300004.js" type="text/javascript"></script>
+    <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.ui.widget-300004.js" type="text/javascript"></script>
+    <script src="~/Assets/script/jquery.ui.dialog.min-300004.js"></script>>
+    <script src="http://asset.traveloka.com/assets/javascripts/le-mtagconfig-300018.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var serverTime = {
+            millis: 1404262310255,
+            dayOfWeek: 2,
+            minuteOfDay: 471
+        };
+    </script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29776811-1']);
+        _gaq.push(['_trackPageview']);
+    </script>
+
+    <link href="~/Assets/css/tv-style-front-300019.css" rel="stylesheet" media="screen" />
+
+
+    <link rel="canonical" href="http://www.traveloka.com/">
+
+
+
+
+</head>
+<body>
+    <div id="generalError" class="">
+        <div id="generalErrorCntr">
+            <div id="generalErrorFrame">
+                <div id="generalErrorIcon"></div><div id="generalErrorMsg">peringatan</div>
+            </div>
+        </div>
+    </div>
+    <ul id="tvAlert" style="display: none">
+        <li id="tvAlertImageCntr"><div id="tvAlertImageHolder"></div><div id="tvAlertImage" class="cs0"></div></li>
+        <li id="tvAlertMsgCntr">
+            <div id="tvAlertHeaderCntr">
+                <div id="tvIconInDialog" class=""></div>
+                <div class="tvCloseGreyIcon"></div>
+            </div>
+            <div id="tvAlertTitle"></div>
+            <div id="tvAlertContent"></div>
+            <img id="tvAlertLoadingImg" width="190" height="30" alt="..." src="http://asset.traveloka.com/assets/images/misc/redirect-300000.gif">
+        </li>
+    </ul>
+    <div class="tvGeneralLayout" id="homePage">
+        <div id="tv-top-layout"></div>
+        <noscript>
+            Situs ini membutuhkan Javascript. Silakan aktifkan Javascript untuk melanjutkan.
+        </noscript>
+        <!--[if lte IE 6]>
+          <div id="badBrowser">Browser ini tidak mendukung! Silakan gunakan browser yang lebih baru seperti <a href="http://www.mozilla.org/id/firefox/fx/" rel="nofollow">Firefox</a>, <a href="http://www.google.com/intl/id/chrome/browser/" rel="nofollow">Chrome</a> atau <a href="http://www.apple.com/safari/" rel="nofollow">Safari</a></div>
+        <![endif]-->
+        <div id="tv-topbar">
+            <div class="tv-topbar-container">
+                <a id="brand" href="http://www.traveloka.com/">
+                    <div id="tv-top-logo" title="Lunggo.com"></div>
+                </a>
+                <div id="tv-userInfo-content">
+                    <a title="Login Register akun Anda" id="LoginRegister" rel="nofollow">
+                        <span id="loginId">
+                            Log In / Register
+                        </span>
+                        <div class="UserActionIcon"></div>
+                    </a>
+                    <div id="loginOptions">
+                        <ul>
+                            <li><a id="loginPopup" href="/simplelogin" title="login" rel="nofollow">Log In</a></li>
+                            <li><a id="registerPopup" href="/simpleregister" title="register" rel="nofollow">Register</a></li>
+                            <li><a id="bookingHistoryPopup" href="http://www.traveloka.com/user/flightbookinghistory" title="booking history">Pemesanan Saya</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="tv-topbar-content">
+                    <ul id="tv-topbar-links">
+                        <li class="homeLink"><a href="http://www.traveloka.com/">Home</a></li>
+                        <li class="howToLink"><a href="http://www.traveloka.com/howto">Cara Pakai</a></li>
+                        <li class="faqLink"><a href="http://www.traveloka.com/faq">FAQ</a></li>
+                        <li class="checkBookingLink"><a href="http://www.traveloka.com/my/booking">Cek Pemesanan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="container">
+            <div class="tv-search-container ">
+                <div class="tvSearchFrameCntr">
+                    <div class="tvFrontPageSliderContainer"></div>
+
+                    <div class="tvSearchContainer">
+                        <div class="tvFrontPageButtons"></div>
+                        <div class="tvFrontPagePrev"></div>
+                        <div class="tvFrontPageNext"></div>
+
+                        <div class="tvSearchFrame tvFrontPageSearchFrame tvMainSearchFrame">
+                            <div id="tvSearchTagLine" class="clearfix">
+                                <div class="tvSearchTagLineText"><div class="tvSearchTagLineIcon"></div><h1>Cari tiket murah &amp; promo dengan cepat dan mudah di sini!</h1></div>
+                            </div>
+                            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                <ul id="tv-search-table">
+                                    <li id="tvFirstSearchCol" class="searchCol">
+
+                                        <div class="searchColTop">
+                                            <div class="guideArrowIcon"></div>
+                                        </div>
+                                        <div class="searchColContent">
+                                            <ul class="searchHeaderCntr">
+                                                <li class="tv-step-number"></li>
+                                                <li class="tv-tbl-hdr-label">Tujuan Penerbangan</li>
+                                                <li class="searchLabelArw"></li>
+                                            </ul>
+                                            <div class="searchBoxCntr">
+                                                <div class="searchBox">
+                                                    <div class="tv-control-group ">
+                                                        <table cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <label class="tv-control-label" for="sourceAirportOrArea" style="align: left">Kota Asal:</label>
+                                                                        <div class="tv-controls">
+                                                                            <input type="text" id="sourceAirportOrArea" name="sourceAirportOrArea" class="tv-input-field tv-first-input-field fs-first-col-input" value="" />
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div id="sourceAirportOrArea_err" class="errorMessage"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div id="sourceAirportOrAreaTooltip"></div>
+                                                    <div id="swapFlightDestination" class="tvBtn" title="Tukar"></div>
+                                                    <div class="tv-control-group ">
+                                                        <table cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <label class="tv-control-label" for="destinationAirportOrArea" style="align: left">Kota Tujuan:</label>
+                                                                        <div class="tv-controls">
+                                                                            <input type="text" id="destinationAirportOrArea" name="destinationAirportOrArea" class="tv-input-field tv-first-input-field fs-first-col-input" value="" />
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div id="destinationAirportOrArea_err" class="errorMessage"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div id="destinationAirportOrAreaTooltip"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="tvSecondSearchCol" class="searchCol">
+                                        <div class="searchColTop">
+                                            <div class="guideArrowIcon"></div>
+                                        </div>
+                                        <div class="searchColContent">
+                                            <ul class="searchHeaderCntr">
+                                                <li class="tv-step-number"></li>
+                                                <li class="tv-tbl-hdr-label">Waktu Penerbangan</li>
+                                                <li class="searchLabelArw"></li>
+                                            </ul>
+                                            <div class="searchBoxCntr">
+                                                <div class="searchBox">
+                                                    <div class="tv-control-group ">
+                                                        <table cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <label class="tv-control-label" for="flightDate" style="align: left">Tanggal Berangkat:</label>
+                                                                        <div class="tv-controls">
+                                                                            <input type="text" id="flightDate" name="flightDate" class="tv-input-field tv-date-field tv-second-input-field fs-second-col-input" value="" />
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div id="flightDate_err" class="errorMessage"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="tv-hidden"><span id="alternateFlightDate" type="text" name="alternateFlightDate" class="tv-static-field tv-alternateDateFormat tv-hidden">&nbsp;</span></div>
+                                                    <div class="tv-hidden">
+                                                        <div class="tv-control-group ">
+                                                            <table cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <label class="tv-control-label" for="alternateFlightDateHolder" style="align: left"></label>
+                                                                            <div class="tv-controls">
+                                                                                <input type="text" id="alternateFlightDateHolder" name="alternateFlightDateHolder" class="tv-input-field " value="" />
+
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div id="alternateFlightDateHolder_err" class="errorMessage"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tv-control-group twoWayRadio">
+                                                        <table cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <label class="tv-control-label" for="flightOption" style="align: left"></label>
+                                                                        <div class="tv-controls">
+                                                                            <label class="radio" for="optionsRadios1">
+                                                                                <input id="optionsRadios1" type="radio" checked="" value="option1" name="optionsRadios"> Sekali Jalan
+                                                                            </label>
+                                                                            <label class="radio" for="optionsRadios2">
+                                                                                <input id="optionsRadios2" type="radio" value="option2" name="optionsRadios"> Pulang Pergi
+                                                                            </label>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div id="flightOption_err" class="errorMessage"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div id="tv-returnDateContainer">
+                                                        <div class="tv-control-group ">
+                                                            <table cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <label class="tv-control-label" for="returnDate" style="align: left">Tanggal Pulang:</label>
+                                                                            <div class="tv-controls">
+                                                                                <input type="text" id="returnDate" name="returnDate" class="tv-input-field tv-date-field tv-second-input-field fs-second-col-input" value="" />
+
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div id="returnDate_err" class="errorMessage"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="tv-hidden"><span id="alternateReturnDate" type="text" name="alternateReturnDate" class="tv-static-field tv-alternateDateFormat tv-hidden">&nbsp;</span></div>
+                                                        <div class="tv-hidden">
+                                                            <div class="tv-control-group ">
+                                                                <table cellspacing="0" cellpadding="0">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td>
+                                                                                <label class="tv-control-label" for="alternateReturnDateHolder" style="align: left"></label>
+                                                                                <div class="tv-controls">
+                                                                                    <input type="text" id="alternateReturnDateHolder" name="alternateReturnDateHolder" class="tv-input-field " value="" />
+
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <div id="alternateReturnDateHolder_err" class="errorMessage"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li id="tvThirdSearchCol" class="searchCol">
+                                        <div class="searchColTop">
+                                            <div class="guideArrowIcon"></div>
+                                        </div>
+                                        <div class="searchColContent">
+                                            <ul class="searchHeaderCntr">
+                                                <li class="tv-step-number"></li>
+                                                <li class="tv-tbl-hdr-label">Cari Tiket</li>
+                                            </ul>
+                                            <div class="searchBoxCntr">
+                                                <div class="searchBox">
+                                                    <div class="tv-control-group ">
+                                                        <table cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <label class="tv-control-label" for="passengerNumberCntr" style="align: left">Jumlah Penumpang:</label>
+                                                                        <div class="tv-controls">
+                                                                            <ul id="passengerNumber" class=" ">
+                                                                                <li id="adultPassengerCntr">
+                                                                                    <div id="adultPassengerIcon" title="Dewasa"></div>
+                                                                                    <select id="adultPassenger" name="adultPassenger">
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                        <option value="7">7</option>
+                                                                                    </select>
+
+                                                                                </li>
+                                                                                <li id="childPassengerCntr">
+                                                                                    <div id="childPassengerIcon" title="Anak"></div>
+                                                                                    <select id="childPassenger" name="childPassenger">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                        <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                        <option value="7">7</option>
+                                                                                    </select>
+                                                                                </li>
+                                                                                <li id="infantPassengerCntr">
+                                                                                    <div id="infantPassengerIcon" title="Bayi"></div>
+                                                                                    <select id="infantPassenger" name="infantPassenger">
+                                                                                        <option value="0">0</option>
+                                                                                        <option value="1">1</option>
+                                                                                        <option value="2">2</option>
+                                                                                        <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                    </select>
+                                                                                </li>
+                                                                            </ul>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div id="passengerNumberCntr_err" class="errorMessage"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <button id="submitFlightSearch">
+                                                        <div id="searchIcon"></div>
+                                                        <span>Cari Tiket</span>
+                                                    </button>
+                                                    <span id="searchBtnSubtitle">mencari lebih dari <span id="searchBtnSubtitleRed">5.769</span> rute</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <script type="text/javascript" charset="utf-8">
+                autoFocusSearchField = true;
+                _gaq.push(['_setCustomVar', 1, 'VisitorID', 1471962966214574092, 1]);
+            </script>
+            <script type="text/javascript">
+                setTimeout(function () {
+                    var a = document.createElement("script");
+                    var b = document.getElementsByTagName("script")[0];
+                    a.src = document.location.protocol + "//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/9300.js?" + Math.floor(new Date().getTime() / 3600000);
+                    a.async = true; a.type = "text/javascript"; b.parentNode.insertBefore(a, b)
+                }, 1);
+            </script>
+
+        </div>
+        <div class="push"></div>
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- Browser support check -->
+        <script src="~/Assets/script/jquery.qtip-300004.js"></script>
+        <script src="~/Assets/script/tv-common-300004.js"></script>
+        <script src="~/Assets/script/monitordesktop-12.js"></script>
+
+
+        <script type="text/javascript">
+            initCommon();
+
+            // make the top menu bar fixed when scroll
+            $(window).bind('scroll', function () {
+                var toolbar = $('#tv-topbar'),
+                    userLoginRegister = $('#LoginRegister');
+                if ($(window).scrollTop() > 30) {
+                    toolbar.addClass('simpleTopBar');
+                } else {
+                    toolbar.removeClass('simpleTopBar');
+                }
+                if (userLoginRegister.attr('stat') == "down") {
+                    var tooltip = $('#' + userLoginRegister.attr('aria-describedby'));
+                    tooltip.css('top', toolbar.css("height"));
+                }
+            });
+
+        </script>
+
+        <script src="~/Assets/script/data.js"></script>
+        <script type="text/javascript">
+            window.searchContainerData = { "id": "SearchContainerJs_id_ID", "map": { "international": { "value": "Internasional", "type": "static", "escape": "true", "key": "international" }, "unpickedFlightDate": { "value": "Silakan pilih tanggal kepergian Anda", "type": "static", "escape": "false", "key": "unpickedFlightDate" }, "destSourceCityEqual": { "value": "Kota asal dan kota tujuan tidak boleh sama", "type": "static", "escape": "false", "key": "destSourceCityEqual" }, "chooseDestinationAirport": { "value": "Pilih Kota Tujuan Penerbangan Anda", "type": "static", "escape": "true", "key": "chooseDestinationAirport" }, "unpickedSourceCity": { "value": "Silakan pilih kota asal penerbangan Anda", "type": "static", "escape": "false", "key": "unpickedSourceCity" }, "unpickedReturnDate": { "value": "Silakan pilih tanggal kepulangan Anda", "type": "static", "escape": "false", "key": "unpickedReturnDate" }, "psgAdultChildMaxed": { "value": "Jumlah dewasa dan anak tidak boleh melebihi {num}", "type": "icu", "escape": "false", "key": "psgAdultChildMaxed" }, "chooseDepartureAirport": { "value": "Pilih Kota Asal Penerbangan Anda", "type": "static", "escape": "true", "key": "chooseDepartureAirport" }, "psgAdultMoreThanBaby": { "value": "Jumlah dewasa tidak boleh kurang dari jumlah bayi", "type": "static", "escape": "false", "key": "psgAdultMoreThanBaby" }, "domestic": { "value": "Domestik", "type": "static", "escape": "true", "key": "domestic" }, "unpickedDestinationCity": { "value": "Silakan pilih kota tujuan penerbangan Anda", "type": "static", "escape": "false", "key": "unpickedDestinationCity" } } };
+            window.newsletterFormData = { "id": "NewsletterForm_id_ID", "map": { "title": { "value": "Info Promo Terbaik dari Traveloka.com ", "type": "static", "escape": "true", "key": "title" }, "button": { "value": "Daftar", "type": "static", "escape": "true", "key": "button" }, "placeholder": { "value": "Masukkan email anda di sini", "type": "static", "escape": "true", "key": "placeholder" }, "emptyEmail": { "value": "Anda belum memasukkan email", "type": "static", "escape": "true", "key": "emptyEmail" }, "blurb": { "value": "Daftarkan email Anda untuk info tiket PROMO dan semua diskon spesial Traveloka.com!", "type": "static", "escape": "true", "key": "blurb" }, "registerFailure": { "value": "Kami tidak berhasil mendaftarkan email Anda, silakan coba beberapa saat lagi", "type": "static", "escape": "true", "key": "registerFailure" } } };
+
+            window.frontPageImage = [
+                              "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-blitz.jpg", "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-bni2.jpg", "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-scb-cicilan-2.jpg", "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-anz-cicilan.jpg", "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-mega-cicilan-2.jpg", "http:\/\/da8hvrloj7e7d.cloudfront.net\/sliders\/fp-visa-sj.jpg"];
+
+            window.destinationLink = [
+                                "http:\/\/www.traveloka.com\/blitz", "http:\/\/www.traveloka.com\/bni", "http:\/\/www.traveloka.com\/scb", "http:\/\/www.traveloka.com\/anz", "http:\/\/www.traveloka.com\/mega", "http:\/\/www.traveloka.com\/happyfridaywithvisa"];
+        </script>
+        <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.ui.autocomplete-300004.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.ui.datepicker-300004.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.ui.effect.min-300004.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/common/tv-ui-form-300004.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/front/tv-front-300008.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/front/tv-rangeSearch-300008.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/front/tv-live-feed-300008.js" type="text/javascript"></script>
+        <script src="http://asset.traveloka.com/assets/javascripts/libs/jquery.bxslider.min-300004.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            (function () {
+                var s = document.createElement('script');
+                var x = document.getElementsByTagName('script')[0];
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = ('https:' == document.location.protocol ? 'https://' : 'http://')
+                        + 'ap-sonar.sociomantic.com/js/2010-07-01/adpan/traveloka-id';
+                x.parentNode.insertBefore(s, x);
+            })();
+        </script>
+        <!-- Google Code for Remarketing tag -->
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            var google_conversion_id = 979729410;
+            var google_conversion_label = "qp_QCMb2-gQQgviV0wM";
+            var google_custom_params = window.google_tag_params;
+            var google_remarketing_only = true;
+            /* ]]> */
+        </script>
+        <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+        </script>
+        <noscript>
+            <div style="display:inline;">
+                <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/979729410/?value=0&amp;label=qp_QCMb2-gQQgviV0wM&amp;guid=ON&amp;script=0" />
+            </div>
+        </noscript>
+
+        <!-- Chat widget stuff
+        ================== -->
+        <!--Start of Zopim Live Chat Script-->
+        <script type="text/javascript">
+            var lang = 'id';
+            var zopimCallback = function () {
+                $zopim.livechat.hideAll();
+                $zopim.livechat.setLanguage(lang);
+                setTimeout(function () {
+                    $zopim.livechat.button.show();
+                }, 10000);
+            }
+
+            $(window).on('load', function () {
+                window.$zopim || (function (d, s) {
+                    var z = $zopim = function (c) { z._.push(c) }, $ = z.s =
+                    d.createElement(s), e = d.getElementsByTagName(s)[0]; z.set = function (o) {
+                        z.set.
+                        _.push(o)
+                    }; z._ = []; z.set._ = []; $.async = !0; $.setAttribute('charset', 'utf-8');
+                    $.src = '//v2.zopim.com/?1gjifOMGc3BHYCbLTfE8LZ6DE7wVyfPg'; z.t = +new Date; $.
+                    type = 'text/javascript'; e.parentNode.insertBefore($, e)
+                })(document, 'script');
+                $zopim(zopimCallback);
+            });
+
+        </script>
+        <!--End of Zopim Live Chat Script-->
+        <script>
+            $(window).on('load', function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            });
+        </script>
+</body>
+</html>
+
