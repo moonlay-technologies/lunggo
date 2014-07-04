@@ -39,27 +39,13 @@ namespace Lunggo.Driver
             //TestSelect();
             //TestHttp();
             //TestDynamic();
-            //TestDB();
-            TestSnowMaker();
+            TestDB();
+            //TestSnowMaker();
+            //TestDB1();
         }
 
         static void TestSnowMaker()
         {
-            /*
-            var account = CloudStorageAccount.DevelopmentStorageAccount;
-
-            var optimisticData = new BlobOptimisticDataStore(account, "RamaTestId");
-
-            var generator = new UniqueIdGenerator(optimisticData);
-
-            generator.BatchSize = 10;
-            
-            for (var i = 0; i < 50; i++)
-            {
-                Console.WriteLine(string.Format("id: {0}", generator.NextId("sequence1")));
-            }
-            */
-
             var generator = UniqueIdGenerator.GetInstance();
             var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.DevelopmentStorageAccount, "RamaTestId")
             {
@@ -76,35 +62,85 @@ namespace Lunggo.Driver
 
         }
 
+        static void TestDB1()
+        {
+            var connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
+            using (var con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                var simplyRedList = SqlMapper.Query<SimplyRed>(con,"SELECT FirstName, LastName FROM Person ");
+
+                foreach (var simplyRed in simplyRedList)
+                {
+                    Console.WriteLine("{0} {1} {2} {3}",simplyRed.FirstName,simplyRed.LastName, simplyRed.GetFirstChanged(), simplyRed.GetLastChanged());
+                }
+            }
+        }
+
         static void TestDB()
         {
-            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
+            
+            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\Documents\Visual Studio 2013\Projects\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True";
             using (var con = new SqlConnection(connectionString))
             {
                 con.Open();
                 var repo = PersonTableRepo.GetInstance();
-                var newPersonRecord = new PersonTableRecord
-                {
-                    FirstName = "Rama",
-                    LastName = "Adhitia",
-                    PersonID = 134,
-                    EnrollmentDate = new DateTime(2013, 12, 2),
-                    HireDate = new DateTime(2012, 12, 1)
-                };
-
+                PersonTableRecord newPersonRecord = null;
+                
                 /*
                 try
                 {
-                    var insert = repo.Insert(con, newPersonRecord);
-                    Console.WriteLine("insert {0} record successfully", insert);
+                    var insert = 0;
+                    newPersonRecord = PersonTableRecord.CreateNewInstance();
+                    newPersonRecord.PersonID = 72;
+                    newPersonRecord.FirstName = "Jon";
+                    newPersonRecord.LastName = "Connington";
+                    //newPersonRecord.EnrollmentDate = new DateTime(2013, 12, 2);
+                    //newPersonRecord.HireDate = new DateTime(2012, 12, 1);
+                    insert = repo.Insert(con, newPersonRecord);
+                    Console.WriteLine("insert {0} records successfully", insert);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }*/
+                
+                try
+                {
+                    newPersonRecord = PersonTableRecord.CreateNewInstance();
+                    newPersonRecord.FirstName = "Oberyn";
+                    newPersonRecord.LastName = "Martell"; 
+                    newPersonRecord.PersonID = 67;
+                    var update = repo.Update(con, newPersonRecord);
+                    Console.WriteLine("update {0} records successfully", update);
+                    newPersonRecord.FirstName = "Doran";
+                    update = repo.Update(con, newPersonRecord);
+                    Console.WriteLine("update {0} records successfully", update);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
                 }
-                */
-                
-                /*try
+
+                /* 
+                try
+                {
+                    newPersonRecord = PersonTableRecord.CreateNewInstance();
+                    newPersonRecord.PersonID = 71;
+                    var delete = repo.Delete(con, newPersonRecord);
+                    Console.WriteLine("delete {0} records successfully", delete);
+                    newPersonRecord.PersonID = 72;
+                    delete = repo.Delete(con, newPersonRecord);
+                    Console.WriteLine("delete {0} records successfully", delete);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                 */ 
+
+                /*
+                try
                 {
                     newPersonRecord.FirstName = "Amar";
                     newPersonRecord.LastName = "Dithia";
@@ -117,7 +153,7 @@ namespace Lunggo.Driver
                 {
                     Console.WriteLine(ex);
                 }
-                */
+                
 
                 try
                 {
@@ -153,10 +189,13 @@ namespace Lunggo.Driver
                 {
                     Console.WriteLine(ex);
                 }
-
+                
+                
+                 */
                 con.Close();
             }
             Console.WriteLine("Finished");
+                  
         }
 
         static void TestDynamic()
@@ -500,6 +539,55 @@ namespace Lunggo.Driver
         public static long GetNext()
         {
             return GetNextNumber(Properties);
+        }
+    }
+
+    public class SimplyRed
+    {
+        private bool _firstChanged = false;
+        private bool _lastChanged = false;
+
+        private String _firstName;
+        private String _lastName;
+
+        private SimplyRed()
+        {
+            ;
+        }
+
+        public static SimplyRed GetNewInstance()
+        {
+            return new SimplyRed();
+        }
+
+        public String FirstName
+        {
+            get { return _firstName; }
+            set
+            {
+                _firstName = value;
+                _firstChanged = true;
+            }
+        }
+
+        public String LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                _lastName = value;
+                _lastChanged = true;
+            }
+        }
+
+        public bool GetFirstChanged()
+        {
+            return _firstChanged;
+        }
+
+        public bool GetLastChanged()
+        {
+            return _lastChanged;
         }
     }
 

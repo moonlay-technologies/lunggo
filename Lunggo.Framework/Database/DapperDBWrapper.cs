@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 using Dapper;
 using System.Data;
 using Lunggo.Framework.Util;
@@ -26,7 +26,7 @@ namespace Lunggo.Framework.Database
         public int Insert(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
             var queryString = CreateInsertQuery(record);
-            var queryParams = CreateQueryParams(record);
+            var queryParams = CreateInsertQueryParams(record);
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
@@ -40,7 +40,7 @@ namespace Lunggo.Framework.Database
         public int Update(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
             var queryString = CreateUpdateQuery(record);
-            var queryParams = CreateQueryParams(record);
+            var queryParams = CreateUpdateQueryParams(record);
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
@@ -88,8 +88,9 @@ namespace Lunggo.Framework.Database
 
         private String CreateSetClause(TableRecord record)
         {
+            var iRecord = (ITableRecord) record;
             var clauseBuilder = new StringBuilder();
-            var columnAssignmentClause =  String.Join(",",record.GetMetadata().Where(p => !p.IsPrimaryKey).Select(p => p.ColumnName + "=@" + p.ColumnName));
+            var columnAssignmentClause =  String.Join(",",record.GetMetadata().Where(p => (!p.IsPrimaryKey) && (iRecord.IsChanged(p.ColumnName))).Select(p => p.ColumnName + "=@" + p.ColumnName));
             clauseBuilder.AppendFormat("SET {0} ",columnAssignmentClause);
             return clauseBuilder.ToString();
         }
@@ -175,12 +176,15 @@ namespace Lunggo.Framework.Database
 
         private String CreateColumnNamesForQuery(TableRecord record)
         {
-            return String.Join(",", record.GetMetadata().Select(p => p.ColumnName));
+            var iRecord = (ITableRecord) record;
+            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsChanged(p.ColumnName)).Select(p => p.ColumnName));
+
         }
 
         private String CreateParamsForQuery(TableRecord record)
         {
-            return String.Join(",", record.GetMetadata().Select(p => "@" + p.ColumnName));
+            var iRecord = (ITableRecord) record;
+            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsChanged(p.ColumnName)).Select(p => "@" + p.ColumnName));
         }
 
         
@@ -191,9 +195,14 @@ namespace Lunggo.Framework.Database
             return queryBuilder.ToString();
         }
 
-        private DynamicParameters CreateQueryParams(TableRecord record)
+        private DynamicParameters CreateInsertQueryParams(TableRecord record)
         {
-            return CreateDynamicParameters(record);
+            return CreateDynamicParametersForInsert(record);
+        }
+
+        private DynamicParameters CreateUpdateQueryParams(TableRecord record)
+        {
+            return CreateDynamicParameterForUpdate(record);
         }
 
         private DynamicParameters CreatePrimaryKeyQueryParams(TableRecord record)
@@ -201,24 +210,43 @@ namespace Lunggo.Framework.Database
             return CreateDynamicParameters(record, record.GetPrimaryKeys().Select(p => p.ColumnName));
         }
 
-        private DynamicParameters CreateDynamicParameters(TableRecord record)
+        private DynamicParameters CreateDynamicParameterForUpdate(TableRecord record)
         {
+            var iRecord = record.AsInterface();
             var parameters = new DynamicParameters();
-            foreach (var property in record.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
-            {
-                parameters.Add(property.Name, property.GetValue(record));
-            }
+            var propertyList =
+                record.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(property => iRecord.IsChanged(property.Name) || record.GetPrimaryKeys().Any(p => p.ColumnName == property.Name));
+            AddToDynamicParameters(parameters, propertyList, record);
+            return parameters;
+        }
+
+        private DynamicParameters CreateDynamicParametersForInsert(TableRecord record)
+        {
+            var iRecord = record.AsInterface();
+            var parameters = new DynamicParameters();
+            var propertyList =
+                record.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            AddToDynamicParameters(parameters,propertyList,record);
             return parameters;
         }
 
         private DynamicParameters CreateDynamicParameters(TableRecord record, IEnumerable<String> columnNames)
         {
             var parameters = new DynamicParameters();
-            foreach (var property in columnNames.Select(columnName => record.GetType().GetProperty(columnName)))
-            {
-                parameters.Add(property.Name, property.GetValue(record));
-            }
+            var propertyList = columnNames.Select(columnName => record.GetType().GetProperty(columnName));
+            AddToDynamicParameters(parameters, propertyList, record);
             return parameters;
+        }
+
+        private void AddToDynamicParameters(DynamicParameters param, IEnumerable<PropertyInfo> propertyList, TableRecord record)
+        {
+            foreach (var property in propertyList)
+            {
+                param.Add(property.Name, property.GetValue(record));
+            }
         }
     }
 }
