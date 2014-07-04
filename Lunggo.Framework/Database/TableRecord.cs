@@ -75,5 +75,14 @@ namespace Lunggo.Framework.Database
         {
             _changeLog.Clear();   
         }
+
+
+        bool ITableRecord.IsSet(string columnName)
+        {
+            var iRecord = AsInterface();
+            byte logValue;
+
+            return _changeLog.TryGetValue(columnName, out logValue) && logValue > 0; 
+        }
     }
 }

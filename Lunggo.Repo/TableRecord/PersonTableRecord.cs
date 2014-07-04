@@ -57,6 +57,16 @@ namespace Lunggo.Repository.TableRecord
             }
         }
 
+        public DateTime LalaDate
+        {
+            get { return _LalaDate; }
+            set
+            {
+                _LalaDate = value;
+                IncrementLog("LalaDate");
+            }
+        }
+
         public static PersonTableRecord CreateNewInstance()
         {
             var record = new PersonTableRecord();
@@ -70,6 +80,7 @@ namespace Lunggo.Repository.TableRecord
         private String _FirstName;
         private DateTime _HireDate;
         private DateTime _EnrollmentDate;
+        private DateTime _LalaDate;
 
         private PersonTableRecord()
         {
@@ -96,7 +107,8 @@ namespace Lunggo.Repository.TableRecord
                 new ColumnMetadata("LastName", false),
                 new ColumnMetadata("FirstName",false),
                 new ColumnMetadata("HireDate", false),
-                new ColumnMetadata("EnrollmentDate", false)
+                new ColumnMetadata("EnrollmentDate", false),
+                new ColumnMetadata("LalaDate", false)
             };
         }
 

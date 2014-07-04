@@ -33,7 +33,7 @@ namespace Lunggo.Framework.Database
         public int Delete(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
             var queryString = CreateDeleteQuery(record);
-            var queryParams = CreatePrimaryKeyQueryParams(record);
+            var queryParams = CreatePrimaryKeyQueryParamsForDelete(record);
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
@@ -90,7 +90,7 @@ namespace Lunggo.Framework.Database
         {
             var iRecord = (ITableRecord) record;
             var clauseBuilder = new StringBuilder();
-            var columnAssignmentClause =  String.Join(",",record.GetMetadata().Where(p => (!p.IsPrimaryKey) && (iRecord.IsChanged(p.ColumnName))).Select(p => p.ColumnName + "=@" + p.ColumnName));
+            var columnAssignmentClause =  String.Join(",",record.GetMetadata().Where(p => (!p.IsPrimaryKey) && (iRecord.IsSet(p.ColumnName))).Select(p => p.ColumnName + "=@" + p.ColumnName));
             clauseBuilder.AppendFormat("SET {0} ",columnAssignmentClause);
             return clauseBuilder.ToString();
         }
@@ -148,14 +148,7 @@ namespace Lunggo.Framework.Database
             var columnMetadatas = primaryKeyColumns.ToList();
             foreach (var column in columnMetadatas)
             {
-                if (column == columnMetadatas.Last())
-                {
-                    constraintBuilder.AppendFormat("{0} = @{1}", column.ColumnName, column.ColumnName);
-                }
-                else
-                {
-                    constraintBuilder.AppendFormat("{0} = @{1} AND ", column.ColumnName, column.ColumnName);
-                }
+                constraintBuilder.AppendFormat(column == columnMetadatas.Last() ? "{0} = @{1}" : "{0} = @{1} AND ", column.ColumnName, column.ColumnName);
             }
             return constraintBuilder.ToString();
         }
@@ -169,22 +162,21 @@ namespace Lunggo.Framework.Database
 
         private String CreateInsertQuery(TableRecord record)
         {
-            var columnNames = CreateColumnNamesForQuery(record);
-            var columnParams = CreateParamsForQuery(record);
+            var columnNames = CreateColumnNamesForInsertQuery(record);
+            var columnParams = CreateParamsForInsertQuery(record);
             return GetAssembledInsertQuery(record.GetTableName(), columnNames, columnParams);
         }
 
-        private String CreateColumnNamesForQuery(TableRecord record)
+        private String CreateColumnNamesForInsertQuery(TableRecord record)
         {
-            var iRecord = (ITableRecord) record;
-            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsChanged(p.ColumnName)).Select(p => p.ColumnName));
-
+            var iRecord = record.AsInterface();
+            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName));
         }
 
-        private String CreateParamsForQuery(TableRecord record)
+        private String CreateParamsForInsertQuery(TableRecord record)
         {
             var iRecord = (ITableRecord) record;
-            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsChanged(p.ColumnName)).Select(p => "@" + p.ColumnName));
+            return String.Join(",", record.GetMetadata().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => "@" + p.ColumnName));
         }
 
         
@@ -205,9 +197,10 @@ namespace Lunggo.Framework.Database
             return CreateDynamicParameterForUpdate(record);
         }
 
-        private DynamicParameters CreatePrimaryKeyQueryParams(TableRecord record)
+        private DynamicParameters CreatePrimaryKeyQueryParamsForDelete(TableRecord record)
         {
-            return CreateDynamicParameters(record, record.GetPrimaryKeys().Select(p => p.ColumnName));
+            var iRecord = record.AsInterface();
+            return CreateDynamicParameters(record, record.GetPrimaryKeys().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName));
         }
 
         private DynamicParameters CreateDynamicParameterForUpdate(TableRecord record)
@@ -217,7 +210,7 @@ namespace Lunggo.Framework.Database
             var propertyList =
                 record.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(property => iRecord.IsChanged(property.Name) || record.GetPrimaryKeys().Any(p => p.ColumnName == property.Name));
+                .Where(property => iRecord.IsSet(property.Name));
             AddToDynamicParameters(parameters, propertyList, record);
             return parameters;
         }
@@ -228,7 +221,9 @@ namespace Lunggo.Framework.Database
             var parameters = new DynamicParameters();
             var propertyList =
                 record.GetType()
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => iRecord.IsSet(p.Name));
+
             AddToDynamicParameters(parameters,propertyList,record);
             return parameters;
         }

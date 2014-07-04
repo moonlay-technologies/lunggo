@@ -84,27 +84,9 @@ namespace Lunggo.Driver
             using (var con = new SqlConnection(connectionString))
             {
                 con.Open();
-                var repo = PersonTableRepo.GetInstance();
-                PersonTableRecord newPersonRecord = null;
-                
+                //TestInsert(con);
+                TestSelect(con);
                 /*
-                try
-                {
-                    var insert = 0;
-                    newPersonRecord = PersonTableRecord.CreateNewInstance();
-                    newPersonRecord.PersonID = 72;
-                    newPersonRecord.FirstName = "Jon";
-                    newPersonRecord.LastName = "Connington";
-                    //newPersonRecord.EnrollmentDate = new DateTime(2013, 12, 2);
-                    //newPersonRecord.HireDate = new DateTime(2012, 12, 1);
-                    insert = repo.Insert(con, newPersonRecord);
-                    Console.WriteLine("insert {0} records successfully", insert);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }*/
-                
                 try
                 {
                     newPersonRecord = PersonTableRecord.CreateNewInstance();
@@ -121,7 +103,7 @@ namespace Lunggo.Driver
                 {
                     Console.WriteLine(ex);
                 }
-
+                */
                 /* 
                 try
                 {
@@ -196,6 +178,47 @@ namespace Lunggo.Driver
             }
             Console.WriteLine("Finished");
                   
+        }
+
+        static void TestInsert(IDbConnection con)
+        {
+            try
+            {
+                var repo = PersonTableRepo.GetInstance();
+                var insert = 0;
+                var newPersonRecord = PersonTableRecord.CreateNewInstance();
+                newPersonRecord.PersonID = 78;
+                newPersonRecord.FirstName = "Jon";
+                newPersonRecord.LastName = "Connington";
+                newPersonRecord.EnrollmentDate = new DateTime(2013, 12, 2);
+                newPersonRecord.HireDate = new DateTime(2012, 12, 1);
+                newPersonRecord.LalaDate = new DateTime(2012, 12, 3);
+                insert = repo.Insert(con, newPersonRecord);
+                Console.WriteLine("insert {0} records successfully", insert);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }    
+        }
+
+        static void TestSelect(IDbConnection con)
+        {
+            try
+            {
+                var repo = PersonTableRepo.GetInstance();
+                List<PersonTableRecord> personList = repo.FindAll(con).ToList();
+                foreach (var p in personList)
+                {
+                    var iRecord = p.AsInterface();
+                    Console.Write("{0} {1} {2} {3} {4} {5} {6} {7}", p.PersonID, p.FirstName, p.LastName, p.HireDate, p.EnrollmentDate, iRecord.ManuallyCreated, iRecord.IsSet("FirstName"), iRecord.IsSet("LalaDate"));
+                    Console.WriteLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         static void TestDynamic()
