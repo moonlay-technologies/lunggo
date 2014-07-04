@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Office.Interop.Excel;
-using System.IO;
 
 namespace Lunggo.Configuration
 {
