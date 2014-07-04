@@ -10,15 +10,15 @@ using Lunggo.Framework.Util;
 
 namespace Lunggo.Framework.Database
 {
-    public class DapperDbWrapper<T>  : IDbWrapper<T> where T : TableRecord
+    public class DapperDbWrapper  : IDbWrapper
     {
-        private static readonly DapperDbWrapper<T> Instance = new DapperDbWrapper<T>();
+        private static readonly DapperDbWrapper Instance = new DapperDbWrapper();
         private DapperDbWrapper()
         {
             ;
         }
 
-        public static DapperDbWrapper<T> GetInstance()
+        public static DapperDbWrapper GetInstance()
         {
             return Instance;
         }
@@ -44,7 +44,7 @@ namespace Lunggo.Framework.Database
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
-        public IEnumerable<T> FindAll(IDbConnection connection, String tableName, CommandDefinition definition)
+        public IEnumerable<T> FindAll<T>(IDbConnection connection, String tableName, CommandDefinition definition) where T : TableRecord
         {
             var queryString = CreateFindAllQuery(tableName);
             return SqlMapper.Query<T>(connection, queryString , null, null, true, definition.CommandTimeout, definition.CommandType);

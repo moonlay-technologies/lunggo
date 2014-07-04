@@ -11,7 +11,7 @@ namespace Lunggo.Framework.Database
     public abstract class TableDao<T> where T : TableRecord
     {
         private readonly String _tableName;
-        private static readonly IDbWrapper<T> DbWrapper = DapperDbWrapper<T>.GetInstance();
+        private static readonly IDbWrapper DbWrapper = DapperDbWrapper.GetInstance();
         
         public String TableName
         { 
@@ -47,9 +47,8 @@ namespace Lunggo.Framework.Database
 
         protected IEnumerable<T> FindAllInternal(IDbConnection connection, CommandDefinition definition)
         {
-            return DbWrapper.FindAll(connection, _tableName, definition);
+            return DbWrapper.FindAll<T>(connection, _tableName, definition);
         }
-
 
         protected int DeleteAllInternal(IDbConnection connection, CommandDefinition definition)
         {
