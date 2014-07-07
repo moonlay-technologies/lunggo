@@ -22,6 +22,9 @@ namespace Lunggo.Flight.Model
         public TicketType AdultTicket { get; set; }
         public TicketType ChildTicket { get; set; }
         public TicketType InfantTicket { get; set; }
+        public string TimeDiff { get; set; }
+        public string StringDepartTime { get; set; }
+        public string StringArrivedTime { get; set; }
     }
     public class TicketType
     {

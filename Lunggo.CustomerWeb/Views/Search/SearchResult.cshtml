@@ -1,0 +1,183 @@
+﻿@model Lunggo.CustomerWeb.Models.StringSearchParam
+
+@{
+    
+}
+<script src="~/Scripts/jquery-2.1.0.min.js"></script>
+<script src="~/Scripts/json2.js"></script>
+<script src="~/Scripts/jquery.signalR-2.1.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<h2>Test</h2>
+<input type="button" id="longRunningMethodButton" value="Long Running Method" />
+<div id="responsesDiv">
+</div>
+<div id="progressbar"></div>
+depart
+<table id="TableDepart" style="width:100%">
+    <tr>
+        <th>Maskapai</th>
+        <th>Berangkat</th>
+        <th>Tiba</th>
+        <th>Durasi</th>
+        <th>Transit</th>
+        <th>Harga</th>
+    </tr>
+</table>
+<br />
+returning
+<table id="TableReturn" style="width:100%">
+    <tr>
+        <th>Maskapai</th>
+        <th>Berangkat</th>
+        <th>Tiba</th>
+        <th>Durasi</th>
+        <th>Transit</th>
+        <th>Harga</th>
+    </tr>
+</table>
+@using (Html.BeginScripts())
+{ 
+    
+    <script type="text/javascript">
+        var progress = 0;
+        var hub = $.connection.testHub;
+        $("#responsesDiv").text('Progress: '+progress+'%');
+        var json = '@Html.Raw(Json.Encode(Model))';
+        hub.client.showMessage = function (message) {
+            alert(message);
+            $("#responsesDiv").append(message + "<br/>");
+        };
+        //hub.client.ListTicket = function (object) {
+        //    json_data = jQuery.parseJSON(JSON.stringify(object));
+        //    for (var i = 0; i < json_data.length; i++) {
+        //        var obj = json_data[i];
+        //        var harga;
+        //        if (obj.AdultTicket.PromoPrice != null)
+        //            harga = obj.AdultTicket.PromoPrice;
+        //        else if (obj.AdultTicket.EconomicPrice != null)
+        //            harga = obj.AdultTicket.EconomicPrice;
+        //        else if (obj.AdultTicket.BusinessPrice != null)
+        //            harga = obj.AdultTicket.BusinessPrice;
+        //        else
+        //            continue;
+        //        if (!obj.returning) {
+        //            $("#TableDepart").append(harga);
+        //            for (var key in obj) {
+        //                var attrValue = obj[key];
+        //                if(key=="returning")
+        //                    continue;
+        //                $("#TableDepart").append(attrValue);
+        //            }
+        //            var DepartTime = obj.ListDepartDetail[0].DepartTime;
+        //            var transitplus1 = obj.ListDepartDetail.length;
+        //            var ArrivedTime = obj.ListDepartDetail[transitplus1 - 1].ArrivedTime;
+        //            $("#TableDepart").append(DepartTime + "-" + ArrivedTime);
+        //            $("#TableDepart").append("transit" + (transitplus1-1));
+        //            $("#TableDepart").append("<br/>");
+        //        }
+        //        else {
+        //            $("#TableReturn").append(harga);
+        //            for (var key in obj) {
+        //                var attrValue = obj[key];
+        //                $("#TableReturn").append(attrValue);
+        //            }
+        //            var DepartTime = obj.ListDepartDetail[0].DepartTime;
+        //            var transitplus1 = obj.ListDepartDetail.length;
+        //            var ArrivedTime = obj.ListDepartDetail[transitplus1 - 1].ArrivedTime;
+        //            $("#TableReturn").append(DepartTime + "-" + ArrivedTime);
+        //            $("#TableReturn").append("transit" + (transitplus1 - 1));
+        //            $("#TableReturn").append("<br/>");
+        //        }
+        //    }
+        //    //$("#TableDepart").append(json_data + "<br/>");
+        //};
+        $.connection.hub.start();
+        $.connection.hub.start().done(function () {
+            $(function () {
+                hub.server.searchFlightHub('@Model.sourceAirportOrArea', '@Model.destinationAirportOrArea', '@Model.flightDate', '@Model.optionsRadios', '@Model.returnDate', '@Model.adultPassenger', '@Model.childPassenger', '@Model.infantPassenger', 'AirAsia').done(function (FlightTicket) {
+                    ProgressAdd();
+                    $.each(FlightTicket, function () {
+
+                        HandleRow(this);
+
+                    });
+                });
+                hub.server.searchFlightHub('@Model.sourceAirportOrArea', '@Model.destinationAirportOrArea', '@Model.flightDate', '@Model.optionsRadios', '@Model.returnDate', '@Model.adultPassenger', '@Model.childPassenger', '@Model.infantPassenger', 'LionAir').done(function (FlightTicket) {
+                    ProgressAdd();
+                    $.each(FlightTicket, function () {
+                        HandleRow(this);
+                    });
+                });
+                hub.server.searchFlightHub('@Model.sourceAirportOrArea', '@Model.destinationAirportOrArea', '@Model.flightDate', '@Model.optionsRadios', '@Model.returnDate', '@Model.adultPassenger', '@Model.childPassenger', '@Model.infantPassenger', 'Sriwijaya').done(function (FlightTicket) {
+                    ProgressAdd();
+                    $.each(FlightTicket, function () {
+                        HandleRow(this);
+                    });
+                });
+                hub.server.searchFlightHub('@Model.sourceAirportOrArea', '@Model.destinationAirportOrArea', '@Model.flightDate', '@Model.optionsRadios', '@Model.returnDate', '@Model.adultPassenger', '@Model.childPassenger', '@Model.infantPassenger', 'Citilink').done(function (FlightTicket) {
+                    ProgressAdd();
+                    $.each(FlightTicket, function () {
+                        HandleRow(this);
+                    });
+                });
+                @*hub.server.searchFlightHub('@Model.sourceAirportOrArea', '@Model.destinationAirportOrArea', '@Model.flightDate', '@Model.optionsRadios', '@Model.returnDate', '@Model.adultPassenger', '@Model.childPassenger', '@Model.infantPassenger');*@
+            });
+            $("#longRunningMethodButton").click(function () {
+                hub.server.longRunningMethod();
+            });
+        });
+        function ProgressAdd()
+        {
+            progress = progress + 25;
+            $("#responsesDiv").text('Progress: ' + progress + '%');
+        }
+        function HandleRow(Object)
+        {
+            if (Object.returning == false)
+                AppendRow(Object, "TableDepart");
+            else
+                AppendRow(Object, "TableReturn");
+        }
+        function AppendRow(Object, TableName) {
+            var harga;
+            if (Object.AdultTicket.PromoPrice != null)
+                harga = Object.AdultTicket.PromoPrice;
+            else if (Object.AdultTicket.EconomicPrice != null)
+                harga = Object.AdultTicket.EconomicPrice;
+            else if (Object.AdultTicket.BusinessPrice != null)
+                harga = Object.AdultTicket.BusinessPrice;
+            else
+                return;
+            var table = document.getElementById(TableName);
+
+            var row = table.insertRow(1);
+
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+
+            cell1.innerHTML = Object.AirlineName;
+            if (Object.returning == false) {
+                cell2.innerHTML = '@Model.sourceAirportOrArea' + ' ' + Object.StringDepartTime;
+                cell3.innerHTML = Object.StringArrivedTime + ' ' + '@Model.destinationAirportOrArea';
+            }
+            else {
+                cell2.innerHTML = '@Model.destinationAirportOrArea' + ' ' + Object.StringDepartTime;
+                cell3.innerHTML = Object.StringArrivedTime + ' ' + '@Model.sourceAirportOrArea';
+            }
+            cell4.innerHTML = Object.TimeDiff;
+            var transitplus1 = Object.ListDepartDetail.length;
+            if (transitplus1 < 2)
+                cell5.innerHTML = "langsung";
+            else
+                cell5.innerHTML = (transitplus1 - 1) + " transit";
+            cell6.innerHTML = harga;
+
+        }
+    </script>
+}
+@Html.PageScripts()
+

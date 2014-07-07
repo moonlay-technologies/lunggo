@@ -25,25 +25,8 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 if(SearchParam.optionsRadios!="option1"&&SearchParam.optionsRadios!="option2")
                     return View();
-                TicketSearch ticketSearchParam = new TicketSearch();
-                if (SearchParam.sourceAirportOrArea.Contains("Jakarta (JKTA) - Semua Bandara"))
-                    ticketSearchParam.DepartFromCode = "CGK";
-                else
-                    ticketSearchParam.DepartFromCode = SearchParam.sourceAirportOrArea.Substring(SearchParam.sourceAirportOrArea.Length - 4, 3);
-
-                if (SearchParam.destinationAirportOrArea.Contains("Jakarta (JKTA) - Semua Bandara"))
-                    ticketSearchParam.DepartToCode = "CGK";
-                else
-                    ticketSearchParam.DepartToCode = SearchParam.destinationAirportOrArea.Substring(SearchParam.destinationAirportOrArea.Length - 4, 3);
-                ticketSearchParam.DepartDate = DateTime.ParseExact(SearchParam.flightDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                if (SearchParam.returnDate!=null)
-                    ticketSearchParam.ReturnDate = DateTime.ParseExact(SearchParam.returnDate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                ticketSearchParam.IsReturn = SearchParam.optionsRadios == "option1" ? false : true;
-                ticketSearchParam.Adult = Convert.ToInt32(SearchParam.adultPassenger);
-                ticketSearchParam.Child = Convert.ToInt32(SearchParam.childPassenger);
-                ticketSearchParam.Infant = Convert.ToInt32(SearchParam.infantPassenger);
-                List<FlightTicket> ListTicket = SearchAll(ticketSearchParam);
-                return View("View1", ListTicket);
+                //List<FlightTicket> ListTicket = SearchAll(ticketSearchParam);
+                return RedirectToAction("SearchResult", SearchParam);
             }
             return View();
         }
@@ -65,6 +48,15 @@ namespace Lunggo.CustomerWeb.Controllers
             ListTicket.AddRange(ListTicketSriwijaya);
             ListTicket.AddRange(ListTicketCitilink);
             return ListTicket;
+        }
+
+        public ActionResult SearchResult(StringSearchParam SearchParam)
+        {
+            return View(SearchParam);
+        }
+        public ActionResult Test()
+        {
+            return View();
         }
 	}
 }
