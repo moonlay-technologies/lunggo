@@ -79,31 +79,24 @@ namespace Lunggo.Driver
 
         static void TestDB()
         {
-            
-            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\Documents\Visual Studio 2013\Projects\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True";
+
+            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""D:\Bayu\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True";
             using (var con = new SqlConnection(connectionString))
             {
                 con.Open();
                 //TestInsert(con);
                 TestSelect(con);
-                /*
-                try
-                {
-                    newPersonRecord = PersonTableRecord.CreateNewInstance();
-                    newPersonRecord.FirstName = "Oberyn";
-                    newPersonRecord.LastName = "Martell"; 
-                    newPersonRecord.PersonID = 67;
-                    var update = repo.Update(con, newPersonRecord);
-                    Console.WriteLine("update {0} records successfully", update);
-                    newPersonRecord.FirstName = "Doran";
-                    update = repo.Update(con, newPersonRecord);
-                    Console.WriteLine("update {0} records successfully", update);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                */
+                //try
+                //{
+                //    TableCobaSemuaTableRecord cobarecord = TableCobaSemuaTableRecord.CreateNewInstance();
+                //    TableCobaSemuaRepository repo = TableCobaSemuaRepository.GetInstance();
+                //    var get = repo.FindAll(con);
+                //    Console.WriteLine("update {0} records successfully", get);
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex);
+                //}
                 /* 
                 try
                 {

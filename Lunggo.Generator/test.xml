@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="dummy" />
-  <table name="Person" />
+  <table name="tablecobasemua" />
+  <table name="person" />
 </tables> 
