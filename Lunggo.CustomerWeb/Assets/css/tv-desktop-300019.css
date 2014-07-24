@@ -1,0 +1,5786 @@
+﻿/**
+ * CONSOLIDATION OF ALL CSS PROPERTIES INTO ONE FILE.
+ * THIS IS AN ONGOING PROCESS.
+ * --------------------------------------------------------------------------
+ * Author: Ricky Christie <ricky@traveloka.com>
+ *
+ * REASONING:
+ * ----------
+ * Combining all CSS files into one will reduce the number of requests
+ * needed to run the whole site. This is one of the page load bottleneck.
+ * Ideally when everything is combined in this one file we can think of
+ * minifying and compressing this file. Having all styles in one page will
+ * also make it easier to search and modify selectors. Development should
+ * be easier.
+ *
+ * PLAN OF ACTION:
+ * ---------------
+ * There is no time for a complete refactor, so we will do it bit by bit.
+ * Every new style will be placed in this file. As requests for modification
+ * comes, I will move selectors one by one to this file.
+ */
+/**
+ * Sections are marked with the "@!" prefix. Subsections are marked with
+ * colon character. Search the section name to quickly go to it.
+ *
+ * GENERIC
+ * -------
+ * @!Imports
+ * @!Mixins
+ * @!Versioning
+ * @!Common
+ * @!Common:FieldsForms
+ * @!Common:GeneralError
+ * @!Common:TopBar
+ * @!Common:Footer
+ * @!Variables
+ * @!JqueryQtip
+ * @!LayoutTools
+ * @!FontTools
+ * @!BackgroundTools
+ * @!BoxWidgetTools
+ * @!MiscTools
+ * @!TabsTools
+ * @!SliderTools
+ * @!DialogTools
+ *
+ * SEO
+ * ---
+ * @!Seo:AirlineRefund
+ *
+ * REFUND
+ * ------
+ * @!Refund:Form
+ * @!Refund:Faq
+ *
+ * REUSABLES
+ * ---------
+ * @!Clearfix
+ * @!Dropdown
+ * @!CenterBulletList
+ * @!Content:TwoColumn
+ * @!Content:NormalText
+ * @!Content:SidebarText
+ *
+ * GENERIC FORMS
+ * -------------
+ * @!Form:ErrorMessage
+ * @!Form:ErrorSummary
+ * @!Form:Container
+ * @!Form:NewContainer
+ * @!Form:NewErrorSummary
+ * @!Form:TermsAgreement
+ * @!Form:VerticalFields
+ * @!Form:NewVerticalFields
+ * @!Form:HorizontalFields
+ * @!Buttons:CallToAction
+ * @!Buttons:NewCallToAction
+ *
+ * PAYMENT
+ * -------
+ * @!Payment:Hotel
+ *
+ * MISC
+ * ----
+ * @!AirlineSearchPanoramicBanner
+ * @!Profile
+ *
+ * PAGES
+ * -----
+ * @!Newsletter
+ * @!NewsletterBar
+ * @!Refund:Form
+ * @!Refund:Faq
+ * @!FAQ
+ * @!RetrieveBooking
+ * @!FullPageSlider
+ * @!PopularHotelWidget
+ * @!MyBooking
+ * @!SalesOrder
+ *
+ * WIDGETS
+ * -------
+ * @!Widget:Autocomplete
+ */
+/* @!Imports */
+/* @!Variables */
+/**
+ * @!Mixins
+ *
+ * Contain shortcut to make your life easier
+ */
+/**
+ * @!Common
+ *
+ * Styles for selectors with no classes and IDs.
+ */
+body {
+  font-family: Segoe UI, Helvetica, Arial, Sans-Serif;
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;
+}
+li {
+  list-style: none;
+  zoom: 1;
+  *display: inline;
+}
+ul, ol, dl {
+  padding: 0;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: #434343;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+p {
+  margin-top: 0px;
+  color: #434343;
+}
+a img {
+  border: none;
+}
+a:link {
+  color: #434343;
+  text-decoration: underline;
+}
+a:visited {
+  color: #222;
+  text-decoration: underline;
+}
+a:hover, a:focus {
+  color: #f97b0c;
+  text-decoration: none;
+}
+a:active {
+  color: #FFB37F;
+  text-decoration: none;
+}
+table th {
+  font-size: 15px;
+  font-weight: normal;
+  padding: 0;
+}
+input,
+textarea,
+input.ui-state-default,
+textarea.ui-state-default {
+  -webkit-border-radius: 0;
+}
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input.ui-state-default[type='text'],
+input.ui-state-default[type='email'],
+input.ui-state-default[type='password'] {
+  width: 240px;
+  height: 24px;
+  line-height: 24px;
+  color: #333333;
+  font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #BABABA;
+  padding: 5px 6px 5px 9px;
+  vertical-align: middle;
+  background-color: #FFFFFF;
+}
+input[type='text']:focus,
+input[type='text']:hover,
+input[type='email']:focus,
+input[type='email']:hover,
+input[type='password']:focus,
+input[type='password']:hover {
+  border-color: #5C5C5C;
+}
+.accountModal .tv-control-group {
+  margin-left: 28px;
+  margin-top: 3px;
+  width: auto;
+  text-align: left;
+  color: #444444;
+}
+input[type='checkbox'] {
+  background-color: #FFFFFF;
+  opacity: 0;
+  /*   use opacity so that on IE8, 7 it will fall back to checkbox */
+
+  position: absolute;
+  padding: 4px;
+  margin: 4px 0 0 4px;
+}
+input[type='checkbox'] + label {
+  cursor: pointer;
+  color: #434343;
+  padding-left: 30px\9;
+}
+input[type="checkbox"] + label .general-checkbox {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -315px -175px no-repeat;
+  height: 18px;
+  width: 17px;
+  margin: 5px;
+  float: left;
+  display: none\9;
+}
+input[type="checkbox"]:checked + label .general-checkbox {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -315px -150px no-repeat;
+  height: 18px;
+  width: 17px;
+}
+input[type=checkbox][disabled] + label .general-checkbox {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -314px -250px no-repeat;
+  color: #E8E8E8;
+}
+span.italic {
+  font-style: italic;
+  font-size: 1em;
+}
+span.tvBold {
+  font-weight: 700;
+  font-size: 1em;
+}
+/*
+ * @!Common:FieldsForms
+ *
+ * General fields and forms
+ */
+/* ~~these are the fields and forms~~ */
+.tvBtn {
+  cursor: pointer;
+}
+.tvBtn.disabled {
+  cursor: auto;
+}
+.tvGreenBtn {
+  background-color: #34B442;
+  color: #FFFFFF;
+}
+.tvGreenBtn:hover {
+  background-color: #45E95A;
+}
+.tvGreenBtn.disabled {
+  background-color: #6BC871;
+}
+.tvRedBtn {
+  color: #FFFFFF;
+  background-color: #ED1C24;
+}
+.tvRedBtn:hover {
+  background-color: #FF626A;
+}
+.tvRedBtn.disabled {
+  background-color: #E29095;
+}
+.tvOrangeBtn {
+  color: #FFFFFF;
+  background-color: #f97b0c;
+}
+.tvOrangeBtn:hover {
+  background-color: #FF954C;
+}
+.tvOrangeBtn.disabled {
+  background-color: #E7956C;
+}
+.tvBlueBtn {
+  color: #FFFFFF;
+  background-color: #006FA1;
+}
+.tvBlueBtn:hover {
+  background-color: #4093B8;
+}
+.tvBlueBtn.disabled {
+  background-color: #5888A6;
+}
+.tvYellowBtn {
+  color: #555555;
+  background-color: #F8E500;
+}
+.tvYellowBtn:hover {
+  background-color: #FFF874;
+}
+.tvYellowBtn.disabled {
+  background-color: #E1E3A2;
+}
+.tvCheckBox label {
+  cursor: pointer;
+}
+.tvCheckBox label:hover {
+  font-weight: 550;
+}
+/*
+ * @!Common:GeneralError
+ *
+ * display global error message
+ */
+#generalError {
+  top: 0;
+  width: 100%;
+  height: auto;
+  z-index: 50000;
+  /* make sure that its always on top */
+
+  display: none;
+  background-color: #F8E500;
+  /* default is yellow */
+
+  -moz-box-shadow: 0 0 5px 0px #a1ccf6;
+  -webkit-box-shadow: 0 0 5px 0px #a1ccf6;
+  box-shadow: 0 0 5px 0px #a1ccf6;
+  /* For IE 8 */
+
+  /* -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='@color')"; */
+
+  /* For IE 5.5 - 7 */
+
+  /* filter: ~"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color=@color)"; */
+
+}
+#generalErrorCntr {
+  width: 960px;
+  height: auto;
+  margin: 0 auto;
+  text-align: center;
+}
+#generalErrorFrame {
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  display: table;
+}
+#generalErrorIcon {
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-right: 15px;
+}
+#generalError.float {
+  position: fixed;
+}
+#generalError.tvInfo {
+  background-color: #B0E3F4;
+}
+#generalError.tvInfo #generalErrorIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") 0px -140px no-repeat;
+}
+#generalError.tvInfo #generalErrorMsg {
+  color: #333333;
+}
+#generalError.tvSuccess {
+  background-color: #34B442;
+}
+#generalError.tvSuccess #generalErrorIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") -40px -140px no-repeat;
+}
+#generalError.tvSuccess #generalErrorMsg {
+  color: #FFFFFF;
+}
+#generalError.tvWarning {
+  background-color: #F8E500;
+}
+#generalError.tvWarning #generalErrorIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") -80px -140px no-repeat;
+}
+#generalError.tvWarning #generalErrorMsg {
+  color: #333333;
+}
+#generalError.tvError {
+  background-color: #F91616;
+}
+#generalError.tvError #generalErrorIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") -120px -140px no-repeat;
+}
+#generalError.tvError #generalErrorMsg {
+  color: #FFFFFF;
+}
+#generalErrorMsg {
+  width: auto;
+  height: auto;
+  text-align: center;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+}
+#generalErrorFrame #generalErrorMsg {
+  font-size: 20px;
+  line-height: 35px;
+  height: 45px;
+}
+/* field error message */
+.fieldErrorMessage {
+  color: #EE7F7F;
+  font-size: 15px;
+  line-height: 15px;
+  clear: both;
+  float: left;
+}
+.dateField .fieldErrorMessage {
+  margin: -8px 0 0 5px;
+}
+input.fieldError, input.ui-state-default.fieldError {
+  background-color: #FFF2F2;
+  border-color: #DD0000;
+  color: #DD0000;
+}
+/* ~~this contains elements that displays global popup alert message ~~ */
+#tvAlert {
+  background-color: #E8E8E8;
+  border-top: 3px solid #555555;
+}
+#tvAlertImageCntr {
+  width: 122px;
+  float: left;
+}
+#tvAlertImage {
+  width: 122px;
+  height: 174px;
+  position: absolute;
+  bottom: 0;
+}
+#tvAlertImage.cs0 {
+  background-image: url("/assets/stylesheets/images/misc/cs-loading0-20001.png");
+}
+#tvAlertImage.cs1 {
+  background-image: url("/assets/stylesheets/images/misc/cs-loading1-20001.png");
+}
+#tvAlertImageHolder {
+  width: 122px;
+  height: 174px;
+}
+.tvAlertDialog.ui-dialog .ui-dialog-buttonpane button {
+  margin: 10px;
+  width: auto;
+  background-color: #f97b0c;
+  color: #FFFFFF;
+  float: right;
+  border: 1px solid #f97b0c;
+}
+.tvAlertDialog.ui-dialog .ui-dialog-buttonpane button:hover {
+  background-color: #FFFFFF;
+  color: #f97b0c;
+}
+.tvAlertDialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.accept {
+  padding: 0 15px;
+  font-size: 16px;
+}
+.tvAlertDialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.cancel {
+  background-color: #E8E8E8;
+  border: 1px solid #E8E8E8;
+  color: #434343;
+}
+.tvAlertDialog.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button.cancel:hover {
+  background-color: #CCCCCC;
+  border: 1px solid #CCCCCC;
+}
+.tvAlertDialog.ui-widget-content {
+  border: none;
+}
+#tvAlert .tvCloseGreyIcon {
+  margin: 10px 8px 0 0;
+  right: 0;
+  top: 0;
+}
+#tvAlertMsgCntr {
+  float: left;
+  text-align: left;
+  color: #222222;
+  padding: 0 0 10px 10px;
+  width: 316px;
+}
+.wide #tvAlertMsgCntr {
+  width: 100%;
+}
+#tvAlertMsgCntr .error {
+  color: #DD0000;
+}
+#tvAlertMsgCntr p {
+  margin: 0;
+  padding: 0;
+}
+#tvAlertMsgCntr #tvAlertTitle, #tvAlertMsgCntr h5 {
+  color: #333333;
+  font-size: 19px;
+  font-weight: 400;
+  padding: 7px 0 0;
+  text-align: left;
+}
+#tvAlertTitle {
+  text-align: left;
+  float: left;
+}
+#tvAlertContent {
+  float: left;
+  text-align: left;
+  display: table;
+  padding: 5px 2px;
+  clear: both;
+}
+#tvAlertLoadingImg {
+  float: left;
+  margin: 5px 0;
+  clear: both;
+}
+#tvIconInDialog {
+  margin: 5px 0 0;
+}
+/* ~~this fixed width container surrounds the other divs~~ */
+#container {
+  min-height: 488px;
+  height: 100%;
+  width: 960px;
+  margin: 0 auto;
+  /* the auto value on the sides, coupled with the width, centers the layout.  */
+
+  height: auto !important;
+  padding-bottom: 20px;
+  /* background-color: #FFFFFF; */
+
+}
+/* ~~ Javascript detection ~~ */
+noscript, #badBrowser {
+  background-color: #DD0000;
+  color: #FFFFFF;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100000;
+}
+/*
+ * @!Common:TopBar
+ *
+ * TopBar Style
+ */
+#tv-topbar {
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #555555;
+  height: 70px;
+  line-height: 65px;
+  position: absolute;
+  z-index: 20000;
+  overflow: hidden;
+}
+#tv-topbar.simpleTopBar {
+  position: fixed;
+  background-color: #FFFFFF;
+  height: 34px;
+  border-bottom: 1px solid #999999;
+  -moz-box-shadow: 0 0 3px 0 #999999;
+  -webkit-box-shadow: 0 0 3px 0 #999999;
+  box-shadow: 0 0 3px 0 #999999;
+}
+.newFeatureIcon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat 0 -949px;
+  width: 35px;
+  height: 22px;
+  position: absolute;
+  margin-left: 200px;
+  *margin-left: 230px;
+  display: block;
+}
+#tv-topbar.simpleTopBar .newFeatureIcon {
+  display: none;
+}
+#tv-topbar.slim-topbar {
+  height: 60px;
+  position: static;
+}
+#tv-topbar-decor {
+  bottom: 0;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') 0px -1px repeat-x;
+  width: 100%;
+  height: 3px;
+  font-size: 2px;
+  /* IE issue */
+
+  line-height: 2px;
+  /* IE issue */
+
+}
+.tv-topbar-container {
+  background-color: #FFFFFF;
+  font-size: 12px;
+  line-height: 20px;
+  margin: auto;
+  position: relative;
+  width: 960px;
+  height: 70px;
+  /* .tv-background-rgba(255, 255, 255, .9); */
+
+}
+.simpleTopBar .tv-topbar-container {
+  height: 34px;
+}
+#tv-top-logo {
+  margin: 7px 0 0 20px;
+  float: left;
+  height: 54px;
+  width: 204px;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') 0px -607px no-repeat scroll transparent;
+}
+#agentBanner #tv-top-logo {
+  margin: 0 0 0 26px;
+}
+#tv-topbar.simpleTopBar #tv-top-logo {
+  height: 34px;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') -125px -567px no-repeat scroll transparent;
+  margin: 0;
+}
+#hutRI68 #tv-top-logo {
+  background: url("/assets/stylesheets/images/logo/traveloka-logo-hut-ri-20001.png") no-repeat;
+}
+#lebaran #tv-top-logo {
+  background: url("/assets/stylesheets/images/logo/traveloka-lebaran-logo-20001.png") no-repeat;
+  width: 270px;
+  height: 75px;
+  margin: 12px 0 0 16px;
+}
+.tvGreyLogo {
+  width: 150px;
+  height: 30px;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  margin: 0 10px;
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") 0px -420px no-repeat scroll;
+}
+.tvWhiteLogo {
+  width: 150px;
+  height: 30px;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  margin: 0 10px;
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") 0px -450px no-repeat scroll;
+}
+#tv-slim-logo {
+  background-color: #FFFFFF;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') 0px -607px no-repeat scroll transparent;
+  margin: 10px auto;
+  position: relative;
+  height: 42px;
+  width: 204px;
+}
+#tv-userInfo-content {
+  display: block;
+  right: 0;
+  position: absolute;
+  z-index: 5;
+  top: 20px;
+  float: right;
+  font-size: 16px;
+  margin: 9px 10px 0 0;
+  cursor: pointer;
+}
+.simpleTopBar #tv-userInfo-content {
+  top: 0;
+}
+.simpleTopBar ul#tv-userInfo-links li {
+  margin-top: 0;
+}
+ul#tv-userInfo-links {
+  display: block;
+  float: right;
+  width: auto;
+  font-size: 1.1em;
+  text-decoration: none;
+}
+ul#tv-userInfo-links li {
+  float: right;
+  margin: 4px 4px 0 0;
+}
+ul#tv-userInfo-links li a {
+  color: #006FA1;
+  cursor: pointer;
+  float: left;
+  padding: 5px 6px;
+  text-decoration: none;
+  width: 186px;
+  display: block;
+  text-align: right;
+}
+ul#tv-userInfo-links li span {
+  font-size: 15px;
+}
+#tv-topbar-content {
+  bottom: 0;
+  display: block;
+  padding: 0 0 0 0;
+  position: absolute;
+  right: 0;
+  width: 666px;
+}
+.simpleTopBar #tv-topbar-content {
+  top: 0;
+}
+ul#tv-topbar-links {
+  display: block;
+  float: left;
+  width: auto;
+  font-size: 17px;
+  text-decoration: none;
+  overflow: hidden;
+}
+ul#tv-topbar-links li {
+  display: block;
+  float: left;
+  margin: 0;
+  height: 100%;
+}
+ul#tv-topbar-links li a {
+  padding: 16px 8px;
+  color: #1ba0e2;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 400;
+  margin: 0 10px;
+  display: block;
+  border-bottom: 5px solid #FFFFFF;
+}
+.simpleTopBar ul#tv-topbar-links li a {
+  padding: 6px 8px 6px 8px;
+}
+#homePage ul#tv-topbar-links li.homeLink a,
+#howToPage ul#tv-topbar-links li.howToLink a,
+#faqPage ul#tv-topbar-links li.faqLink a,
+#bookingHistoryPage ul#tv-topbar-links li.bookingHistoryLink a,
+#checkBookingPage ul#tv-topbar-links li.checkBookingLink a {
+  border-bottom: 5px solid #1ba0e2;
+}
+ul#tv-topbar-links li a:hover, ul#tv-topbar-links li a.active {
+  color: #f97b0c;
+}
+.UserActionIcon {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-left: 3px;
+}
+.UserActionIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") -118px 0px no-repeat scroll transparent;
+}
+#LoginRegister[stat="down"] .UserActionIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") -138px 0px no-repeat scroll transparent;
+}
+#LoginRegister span#loginId {
+  float: left;
+  color: #1ba0e2;
+}
+.hDividerCntr {
+  float: left;
+  height: auto;
+  margin-left: 30px;
+  width: 280px;
+}
+.hDivider {
+  border-bottom: 1px solid #CCCCCC;
+  height: 20px;
+  line-height: 20px;
+  width: 100%;
+}
+.hDividerLabel {
+  background-color: #FFFFFF;
+  color: #434343;
+  margin: -15px auto 0;
+  text-align: center;
+  width: 62px;
+  display: block;
+}
+.accountModal .altenateLink {
+  float: right;
+  line-height: 30px;
+  margin: 15px 10px 0 0;
+}
+.accountModal {
+  padding: 10px;
+  float: left;
+}
+.accountModal .errorMessage, .accountModal .loadingMessage {
+  color: #FFFFFF;
+  margin: 5px 0 0 10px;
+  width: 320px;
+  float: left;
+}
+.accountModal .errorMessage {
+  background-color: #f97b0c;
+}
+.accountModal .loadingMessage {
+  background-color: #619FDB;
+}
+.accountModal h2 {
+  float: left;
+  clear: left;
+  font-weight: 400;
+  padding: 0;
+  margin: 10px 0 0 38px;
+  font-size: 26px;
+}
+.accountModal a.button.facebook {
+  background: url("/assets/stylesheets/images/sprite/share-20011.png") no-repeat scroll 0 -2px #215387;
+  color: #FFFFFF;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
+.accountModal .facebookCntr {
+  clear: both;
+  float: left;
+  margin: 20px 10px 0;
+  width: 320px;
+}
+.accountModal .facebookFrame {
+  margin: 15px 0 15px 28px;
+  width: 260px;
+}
+.accountModal .submitBtnCntr {
+  margin-top: 25px;
+  float: right;
+}
+.accountModal .submitBtn {
+  padding: 0 12px;
+  width: auto;
+  height: 32px;
+  font-size: 17px;
+  background-color: #006FA1;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+}
+.accountModal .submitBtn:hover {
+  background-color: #4093B8;
+}
+.accountModal .submitBtn.disabled {
+  background-color: transparent;
+  color: #999999;
+}
+.accountModal .bodyCntr {
+  float: left;
+  padding: 15px 10px;
+}
+.accountModal .termsAndConditions {
+  float: left;
+  font-size: 12px;
+  color: #b6b6b6;
+  text-align: right;
+  margin: 5px 0;
+}
+.accountModal .termsAndConditions a {
+  color: #b6b6b6;
+}
+.accountModal .homeAirport {
+  width: 280px;
+}
+.ui-dialog.loginDialog,
+.ui-dialog.loginDialog .ui-dialog-content,
+.ui-dialog.registerDialog,
+.ui-dialog.registerDialog .ui-dialog-content {
+  overflow: visible;
+}
+#LoginRegister, #UserAction {
+  color: #006FA1;
+  border: 1px solid #FFFFFF;
+}
+#LoginRegister:hover, #UserAction:hover {
+  /* border: 1px solid #006FA1; */
+
+}
+#IndonesiaTravelCntr {
+  float: left;
+  background-color: #FFFFFF;
+  margin: 10px 0 0 10px;
+}
+#IndonesiaTravelLogo {
+  width: 160px;
+  height: 50px;
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") 0px -40px no-repeat scroll transparent;
+}
+#loginOptions {
+  border: 1px solid #619FDB;
+  width: 180px;
+  padding-right: 5px;
+  display: none;
+}
+#loginOptions li a {
+  width: 180px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  color: #FFFFFF;
+  text-align: right;
+  list-style: none;
+  display: block;
+  text-decoration: none;
+  padding-right: 10px;
+}
+#loginOptions li:hover,
+#loginOptions li:active,
+#loginOptions li:focus,
+#loginOptions li:hover a,
+#loginOptions li:active a,
+#loginOptions li:focus a {
+  background-color: #FFFFFF;
+  color: #006FA1;
+}
+/* ~~ These are the columns for the layout. NOT IN USE CURRENTLY! ~~ */
+.tv-sidebar-container {
+  float: right;
+  width: 210px;
+  background: #EADCAE;
+  margin-bottom: 10px;
+}
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.tv-flight-content ul, .tv-flight-content ol {
+  padding: 0 15px 15px 40px;
+  /* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+
+}
+/* ~~ The navigation list styles (can be removed if you choose to use a premade flyout menu like Spry) ~~ */
+ul.nav {
+  list-style: none;
+  /* this removes the list marker */
+
+  border-top: 1px solid #666;
+  /* this creates the top border for the links - all others are placed using a bottom border on the LI */
+
+  margin-bottom: 15px;
+  /* this creates the space between the navigation on the content below */
+
+}
+ul.nav li {
+  border-bottom: 1px solid #666;
+}
+ul.nav a, ul.nav a:visited {
+  /* grouping these selectors makes sure that your links retain their button look even after being visited */
+
+  padding: 5px 5px 5px 15px;
+  display: block;
+  /* this gives the link block properties causing it to fill the whole LI containing it. This causes the entire area to react to a mouse click. */
+
+  width: 160px;
+  /*this width makes the entire button clickable for IE6. If you don't need to support IE6, it can be removed. Calculate the proper width by subtracting the padding on this link from the width of your sidebar container. */
+
+  text-decoration: none;
+  background: #C6D580;
+}
+ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
+  /* this changes the background and text color for both mouse and keyboard navigators */
+
+  background: #ADB96E;
+  color: #FFF;
+}
+/*
+ * @!Common:Footer
+ *
+ * Style footer
+ */
+#tv-bar-decor {
+  top: 0;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') 0px -1px repeat-x;
+  width: 100%;
+  height: 3px;
+  font-size: 2px;
+  /* IE issue */
+
+  line-height: 2px;
+  /* IE issue */
+
+}
+#footer, .push {
+  width: 100%;
+  position: relative;
+  clear: both;
+  /* this clear property forces the .container to understand where the columns end and contain them */
+
+  bottom: 0;
+  height: 20px;
+  /* Height of the footer .push must be the same height as #footer */
+
+  text-align: center;
+  padding-top: 10px;
+  color: #ffffff;
+}
+#footer {
+  /* background: #1ba0e2; */
+
+  background: #f0f0f0 url("/assets/stylesheets/images/background/footer-blue-20001.png") 50% 0;
+  height: auto;
+  overflow: hidden;
+  padding-bottom: 40px;
+  text-align: center;
+  color: #ffffff;
+}
+.footer-left {
+  width: 110px;
+  float: left;
+  text-align: left;
+}
+img.footer-verisign {
+  margin-bottom: 5px;
+}
+.footer-left p {
+  text-align: left;
+  padding: 0px;
+  margin: 50px 0 5px 0;
+  font-size: 14px;
+}
+.footer-right {
+  padding-top: 10px;
+  width: 750px;
+  float: right;
+}
+#footer .breadcrumb {
+  font-size: 12px;
+  margin: auto;
+  width: 960px;
+  display: table;
+  padding-top: 5px;
+}
+#footer .breadcrumb ul {
+  display: block;
+  float: left;
+  width: 170px;
+  height: auto;
+  margin-left: 5px;
+  text-align: left;
+}
+#footer .breadcrumb ul#footer-tujuan-populer {
+  width: 190px;
+}
+#footer .breadcrumb ul#footer-rute-populer {
+  width: 190px;
+}
+#footer .breadcrumb ul#footer-tentang-traveloka {
+  width: 140px;
+}
+#footer .breadcrumb ul#footer-lainnya {
+  width: 140px;
+}
+#footer .breadcrumb ul li {
+  text-align: left;
+  display: block;
+  margin: 3px 0;
+}
+#footer .breadcrumb ul li.head {
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+#footer .breadcrumb ul li a {
+  font-size: 12px;
+  color: #ffffff;
+  text-decoration: none;
+}
+#footer .breadcrumb ul li a:hover {
+  text-decoration: underline;
+}
+#footer .breadcrumb ul li.head a:focus, #footer .breadcrumb ul li.head a:hover {
+  color: #f97b0c;
+}
+.footer-logo {
+  margin-bottom: 10px;
+}
+.footer-traveloka-logo {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -222px -606px;
+  width: 203px;
+  height: 55px;
+  float: left;
+  display: block;
+}
+.footer-asita-logo {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -163px -901px;
+  width: 37px;
+  height: 37px;
+  float: left;
+  display: block;
+  margin: 15px 20px 0 20px;
+}
+.footer-cs {
+  float: left;
+  width: 220px;
+}
+.footer-cs p {
+  color: white;
+  text-align: left;
+  margin: 0px;
+}
+.footer-cs p.footer-cs-text {
+  font-size: 14px;
+  margin-top: 5px;
+}
+.footer-cs p.footer-cs-telephone {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 16px;
+}
+.footer-24-hour {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -100px -898px;
+  width: 54px;
+  height: 55px;
+  float: left;
+  margin-right: 5px;
+}
+.footer-social {
+  padding-top: 5px;
+  width: 170px;
+  float: left;
+}
+.tvContactIcon {
+  width: 37px;
+  height: 35px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  float: left;
+}
+.tvContactFBIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") no-repeat -280px -1px;
+}
+.tvContactGPlusIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") no-repeat -320px -1px;
+}
+.tvContactTwitterIcon {
+  background: url("/assets/stylesheets/images/sprite/common-20011.png") no-repeat -361px -1px;
+}
+.footer-options {
+  margin-bottom: 10px;
+}
+#copyright {
+  width: 690px;
+  float: left;
+  border-top: 1px solid #ffffff;
+  margin-top: 15px;
+  text-align: left;
+  padding-top: 10px;
+  text-align: center;
+}
+.copyright-managed {
+  float: left;
+  margin-top: 10px;
+}
+.copyright-text {
+  float: left;
+  margin-top: 10px;
+}
+.trinusa-icon {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") no-repeat -208px -901px;
+  width: 61px;
+  height: 23px;
+  float: left;
+  overflow: hidden;
+  margin-right: 5px;
+}
+.trinusa-icon span {
+  margin-left: 61px;
+}
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {
+  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+
+  float: right;
+  margin-left: 8px;
+}
+.fltlft {
+  /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+
+  float: left;
+  margin-right: 8px;
+}
+.clearfloat {
+  /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the #footer is removed or taken out of the #container */
+
+  clear: both;
+  height: 0;
+  font-size: 1px;
+  line-height: 0px;
+}
+.tv-hidden {
+  visibility: hidden;
+  display: none;
+}
+.priceBig {
+  font-size: 1.1em;
+}
+.priceSmall {
+  font-size: 0.9em;
+  margin-left: -4px;
+}
+.tvCloseWhiteIcon {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -68px -107px no-repeat scroll;
+  cursor: pointer;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  float: right;
+  height: 20px;
+  width: 20px;
+}
+.tvCloseGreyIcon {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -68px -87px no-repeat scroll;
+  cursor: pointer;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  float: right;
+  height: 20px;
+  width: 20px;
+}
+/* ~~ These are the jquery ~~ */
+/*!
+ * jQuery UI Autocomplete 1.8.21
+ *
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Autocomplete#theming
+ */
+.ui-autocomplete {
+  position: absolute;
+  cursor: default;
+  max-height: 500px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+
+  padding-right: 20px;
+  -moz-box-shadow: 0 0 5px 0px #619fdb;
+  -webkit-box-shadow: 0 0 5px 0px #619fdb;
+  box-shadow: 0 0 5px 0px #619fdb;
+  /* For IE 8 */
+
+  /* -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='@color')"; */
+
+  /* For IE 5.5 - 7 */
+
+  /* filter: ~"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color=@color)"; */
+
+}
+/* workarounds */
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+  height: 210px;
+  width: 1px;
+  /* without this, the menu expands to 100% in IE6 */
+
+}
+/*
+ * jQuery UI Menu 1.8.21
+ *
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Menu#theming
+ */
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  float: left;
+}
+.ui-menu .ui-menu {
+  margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+  float: left;
+  clear: left;
+  width: 100%;
+  text-align: left;
+}
+.ui-menu .ui-menu-item a {
+  text-decoration: none;
+  display: block;
+  padding: .2em .4em;
+  line-height: 1.5;
+  zoom: 1;
+}
+.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active {
+  font-weight: normal;
+  margin: -1px;
+}
+/* ~~ jQuery THEMES ~~  */
+.ui-autocomplete-category {
+  color: #999999;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 1px;
+  padding-bottom: 3px;
+}
+.ui-combobox {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+}
+.ui-combobox-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: -1px;
+  padding: 0;
+  /* adjust styles for IE 6/7 */
+
+  *height: 1.7em;
+  *top: 0.1em;
+}
+/* Component containers
+----------------------------------*/
+.ui-widget .ui-widget {
+  font-size: 1em;
+}
+.ui-widget-content {
+  border: 1px solid #dddddd;
+  background: #ffffff 50% top repeat-x;
+  color: #619FDB;
+}
+.ui-widget-content a {
+  color: #619FDB;
+}
+.ui-widget-header {
+  border: 1px solid #1ba0e2;
+  background: #1ba0e2 50% 50% repeat-x;
+  color: #ffffff;
+  font-weight: bold;
+}
+.ui-widget-header a {
+  color: #ffffff;
+}
+/* Interaction states
+----------------------------------*/
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  border: 1px solid #FFFFFF;
+  background: #f6f6f6 50% 50% repeat-x;
+  font-weight: bold;
+  color: #1c94c4;
+}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+  color: #1c94c4;
+  text-decoration: none;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  border: 1px solid #6CB5F9;
+  background: #9ed2ef 50% 50% repeat-x;
+  font-weight: bold;
+  color: #006FA1;
+}
+.ui-state-hover a, .ui-state-hover a:hover {
+  color: #006FA1;
+  text-decoration: none;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  border: 1px solid #6CB5F9;
+  background: #ffffff 50% 50% repeat-x;
+  font-weight: bold;
+  color: #006FA1;
+}
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+  color: #006FA1;
+  text-decoration: none;
+}
+.ui-widget :active {
+  outline: none;
+}
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  border: 1px solid #61A6E4;
+  background: #6fb9ff 50% top repeat-x;
+  color: #363636;
+}
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {
+  color: #363636;
+}
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
+  border: 1px solid #cd0a0a;
+  background: #b81900  50% 50% repeat;
+  color: #ffffff;
+}
+.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a {
+  color: #ffffff;
+}
+.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text {
+  color: #ffffff;
+}
+.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary {
+  font-weight: bold;
+}
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary {
+  opacity: .7;
+  filter: Alpha(Opacity=70);
+  font-weight: normal;
+}
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+  opacity: .35;
+  filter: Alpha(Opacity=35);
+  background-image: none;
+}
+/* select field highlight */
+.ui-state-default-select {
+  border: 1px solid #6CB5F9;
+  background: #9ed2ef 50% 50% repeat-x;
+  font-weight: bold;
+  color: #006FA1;
+}
+.ui-menu-item a.ui-state-hover + .ui-state-default-select {
+  border: none;
+  background: none;
+}
+/*!
+ * jQuery UI CSS Framework 1.8.21
+ *
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Theming/API
+ */
+/* Layout helpers
+----------------------------------*/
+.ui-helper-hidden {
+  display: none;
+}
+.ui-helper-hidden-accessible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+.ui-helper-reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 1.3;
+  text-decoration: none;
+  font-size: 100%;
+  list-style: none;
+}
+.ui-helper-clearfix:before, .ui-helper-clearfix:after {
+  content: "";
+  display: table;
+}
+.ui-helper-clearfix:after {
+  clear: both;
+}
+.ui-helper-clearfix {
+  zoom: 1;
+}
+.ui-helper-zfix {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  filter: Alpha(Opacity=0);
+}
+/* Interaction Cues
+----------------------------------*/
+.ui-state-disabled {
+  cursor: default !important;
+}
+/* Icons
+----------------------------------*/
+.bankIcon_mandiri {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px 0px no-repeat scroll;
+}
+.bankIcon_atmbersama {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -30px no-repeat scroll;
+}
+.bankIcon_bca {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -60px no-repeat scroll;
+}
+.bankIcon_prima {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -90px no-repeat scroll;
+}
+.bankIcon_bni {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -120px no-repeat scroll;
+}
+.bankIcon_atmPrima {
+  width: 42px !important;
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -15px -90px no-repeat scroll;
+}
+.bankIcon_atmAlto {
+  width: 40px !important;
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -13px -270px no-repeat scroll;
+}
+.CCIcon_Visa {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -70px -40px no-repeat scroll;
+}
+.CCIcon_MasterCard {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -140px -40px no-repeat scroll;
+}
+.EBIcon_MandiriClickPay {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -150px no-repeat scroll;
+}
+.EBIcon_BCAKlikPay {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -180px no-repeat scroll;
+}
+.EBIcon_CIMBClicks {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -210px no-repeat scroll;
+}
+.EBIcon_MandiriEMoney {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") 0px -300px no-repeat scroll;
+}
+.DBIcon_MandiriDebit {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -77px -211px no-repeat scroll;
+}
+.DBIcon_BNIDebit {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -75px -182px no-repeat scroll;
+}
+.DBIcon_VerifiedByVisa {
+  background: url("/assets/stylesheets/images/sprite/bank-20011.png") -75px -241px no-repeat scroll;
+}
+/* states and images */
+.ui-icon {
+  display: block;
+  text-indent: -99999px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}
+/* Misc visuals
+----------------------------------*/
+/* Overlays */
+.ui-widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Dialog visuals
+----------------------------------*/
+/* Overlays */
+.ui-widget-overlay {
+  background-image: url("/assets/stylesheets/images/background/dialog-overlay-20001.png");
+  z-index: 30000 !important;
+}
+.ui-widget-shadow {
+  margin: -5px 0 0 -5px;
+  padding: 5px;
+  background: #000000 url("/assets/stylesheets/images/background/dialog-shadow-20001.png") 50% 50% repeat-x;
+  opacity: .20;
+  filter: Alpha(Opacity=20);
+  -moz-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/*!
+ * jQuery UI Dialog 1.8.23
+ *
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Dialog#theming
+ */
+.ui-dialog {
+  position: absolute;
+  overflow: hidden;
+  z-index: 30001 !important;
+}
+.ui-dialog .ui-dialog-titlebar {
+  padding: .4em 1em;
+  position: relative;
+  visibility: hidden;
+  display: none;
+}
+.ui-dialog .ui-dialog-title {
+  float: left;
+  margin: .1em 16px .1em 0;
+  visibility: hidden;
+  display: none;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  position: absolute;
+  right: .3em;
+  top: 50%;
+  width: 19px;
+  margin: -10px 0 0 0;
+  padding: 1px;
+  height: 18px;
+  visibility: hidden;
+  display: none;
+}
+.ui-dialog .ui-dialog-titlebar-close span {
+  display: block;
+  margin: 1px;
+  visibility: hidden;
+  display: none;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
+  padding: 0;
+  visibility: hidden;
+  display: none;
+}
+.ui-dialog .ui-dialog-content {
+  position: relative;
+  border: 0;
+  overflow: auto;
+  zoom: 1;
+  text-align: center;
+}
+.ui-dialog .ui-dialog-buttonpane {
+  text-align: center;
+  border: none;
+  padding: 0;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+  margin: .5em .4em .5em 0;
+  cursor: pointer;
+  width: 70px;
+  height: 34px;
+  border: 1px solid #555555;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  margin: 10px 0 18px;
+}
+.ui-dialog .ui-resizable-se {
+  width: 14px;
+  height: 14px;
+  right: 3px;
+  bottom: 3px;
+}
+.ui-draggable .ui-dialog-titlebar {
+  cursor: move;
+}
+/* ~ airline icons sprites ~ */
+/* -------------------------*/
+.airlineIcon {
+  height: 25px;
+  margin-right: 8px;
+  width: 25px;
+  float: left;
+}
+.airlineIconGA {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px 0px no-repeat scroll;
+}
+/* Garuda */
+.airlineIconMZ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -25px no-repeat scroll;
+}
+/* Merpati */
+.airlineIconJT {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -50px no-repeat scroll;
+}
+/* Lion Air */
+.airlineIconOD {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -50px no-repeat scroll;
+}
+/* Malindo Air */
+.airlineIconQG {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -75px no-repeat scroll;
+}
+/* Citilink */
+.airlineIconRI {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -100px no-repeat scroll;
+}
+/* Mandala */
+.airlineIconAirAsia {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -125px no-repeat scroll;
+}
+/* Air Asia */
+.airlineIconKD {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -200px no-repeat scroll;
+}
+/* KalStar */
+.airlineIconJQ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -250px no-repeat scroll;
+}
+/* JetStar */
+.airlineIconVF {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -877px no-repeat scroll;
+}
+/* ValuAir */
+.airlineIconXN {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -275px no-repeat scroll;
+}
+/* EXPRESSAIR */
+.airlineIconSY {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -325px no-repeat scroll;
+}
+/* Sky Aviation */
+.airlineIconIW {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -375px no-repeat scroll;
+}
+/* Wings Air */
+.airlineIconSI {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -400px no-repeat scroll;
+}
+/* Susi Air */
+.airlineIconSJ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -425px no-repeat scroll;
+}
+/* Sriwijaya */
+.airlineIconTR {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -450px no-repeat scroll;
+}
+/* Tiger */
+.airlineIconID {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -475px no-repeat scroll;
+}
+/* Batik */
+.airlineIconNM {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -500px no-repeat scroll;
+}
+/* Nam Air */
+.airlineIconCX {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -525px no-repeat scroll;
+}
+/* Cathay Pacific */
+.airlineIconSQ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -550px no-repeat scroll;
+}
+/* Singapore Airlines */
+.airlineIconMH {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -575px no-repeat scroll;
+}
+/* Malaysia Airlines */
+.airlineIconTG {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -600px no-repeat scroll;
+}
+/* Thai Airlines */
+.airlineIconVN {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -625px no-repeat scroll;
+}
+/* Vietnam Airlines */
+.airlineIconPR {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -650px no-repeat scroll;
+}
+/* Philippine Airlines */
+.airlineIcon5J {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -675px no-repeat scroll;
+}
+/* Cebu Pacific */
+.airlineIconCZ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -700px no-repeat scroll;
+}
+/* Southern China */
+.airlineIconOZ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -725px no-repeat scroll;
+}
+/* Asiana Airlines */
+.airlineIconCI {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -750px no-repeat scroll;
+}
+/* China Airlines */
+.airlineIconQF {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -775px no-repeat scroll;
+}
+/* Qantas */
+.airlineIconBR {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -800px no-repeat scroll;
+}
+/* Eva Air */
+.airlineIconNH {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -825px no-repeat scroll;
+}
+/* ANA */
+.airlineIconCA {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -850px no-repeat scroll;
+}
+/* Air China */
+.airlineIconVF {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -875px no-repeat scroll;
+}
+/* Valuair */
+.airlineIconTZ {
+  background: url("/assets/stylesheets/images/sprite/airline-icons-20011.png") 0px -900px no-repeat scroll;
+}
+/* Scoot */
+.airlineLabel {
+  height: 30px;
+  margin: 0 22px;
+  width: 50px;
+}
+.airline .airlineLabel {
+  margin: 0px 5px;
+}
+.airlineLabelGA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px 0px no-repeat scroll;
+}
+/* Garuda */
+.airlineLabelMZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -30px no-repeat scroll;
+}
+/* Merpati */
+.airlineLabelJT {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -60px no-repeat scroll;
+}
+/* Lion Air */
+.airlineLabelQG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -90px no-repeat scroll;
+}
+/* Citilink */
+.airlineLabelRI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -120px no-repeat scroll;
+}
+/* Mandala */
+.airlineLabelAirAsia {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -150px no-repeat scroll;
+}
+/* Air Asia */
+.airlineLabelNM {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -180px no-repeat scroll;
+}
+/* Nam Air */
+.airlineLabelSL {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -210px no-repeat scroll;
+}
+/* Thai Lion Air */
+.airlineLabelKD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -240px no-repeat scroll;
+}
+/* KalStar */
+.airlineLabelTN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -270px no-repeat scroll;
+}
+/* Trigana */
+.airlineLabelJQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -300px no-repeat scroll;
+}
+/* JetStar */
+.airlineLabelXN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -330px no-repeat scroll;
+}
+/* EXPRESSAIR */
+.airlineLabelOD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -360px no-repeat scroll;
+}
+/* Malindo Air */
+.airlineLabelSY {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -390px no-repeat scroll;
+}
+/* Sky Aviation */
+.airlineLabelM8 {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -420px no-repeat scroll;
+}
+/* TransNusa */
+.airlineLabelIW {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -450px no-repeat scroll;
+}
+/* Wings Air */
+.airlineLabelVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -1023px no-repeat scroll;
+}
+/* Valuair */
+.airlineLabelSI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -480px no-repeat scroll;
+}
+/* Susi Air */
+.airlineLabelSJ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -510px no-repeat scroll;
+}
+/* Sriwijaya */
+.airlineLabelTR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -540px no-repeat scroll;
+}
+/* Tiger */
+.airlineLabelID {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -570px no-repeat scroll;
+}
+/* Batik */
+.airlineLabelCX {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -600px no-repeat scroll;
+}
+/* Cathay Pacific */
+.airlineLabelSQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -630px no-repeat scroll;
+}
+/* Singapore Air */
+.airlineLabelMH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -660px no-repeat scroll;
+}
+/* Malaysia Air */
+.airlineLabelTG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -690px no-repeat scroll;
+}
+/* Thai Ailines */
+.airlineLabelVN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -720px no-repeat scroll;
+}
+/* Vietnam Air */
+.airlineLabelPR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -750px no-repeat scroll;
+}
+/* Philippine Airlines */
+.airlineLabel5J {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -780px no-repeat scroll;
+}
+/* Cebu Pacific */
+.airlineLabelCZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -810px no-repeat scroll;
+}
+/* Southern China */
+.airlineLabelOZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -840px no-repeat scroll;
+}
+/* Asiana Airlines */
+.airlineLabelCI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -870px no-repeat scroll;
+}
+/* China Airlines */
+.airlineLabelQF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -900px no-repeat scroll;
+}
+/* Qantas */
+.airlineLabelBR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -930px no-repeat scroll;
+}
+/* Eva Air */
+.airlineLabelNH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -960px no-repeat scroll;
+}
+/* ANA */
+.airlineLabelCA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -990px no-repeat scroll;
+}
+/* Air China */
+.airlineLabelVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -1020px no-repeat scroll;
+}
+/* Valuair */
+.airlineLabelTZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") 0px -1050px no-repeat scroll;
+}
+/* Scoot*/
+.airlineLabelWGA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px 0px no-repeat scroll;
+}
+/* Garuda */
+.airlineLabelWMZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -30px no-repeat scroll;
+}
+/* Merpati */
+.airlineLabelWJT {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -60px no-repeat scroll;
+}
+/* Lion Air */
+.airlineLabelWQG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -90px no-repeat scroll;
+}
+/* Citilink */
+.airlineLabelWRI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -120px no-repeat scroll;
+}
+/* Mandala */
+.airlineLabelWAirAsia {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -150px no-repeat scroll;
+}
+/* Air Asia */
+.airlineLabelWNM {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -180px no-repeat scroll;
+}
+/* Nam Air */
+.airlineLabelWSL {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -210px no-repeat scroll;
+}
+/* Thai Lion Air */
+.airlineLabelWKD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -240px no-repeat scroll;
+}
+/* KalStar */
+.airlineLabelWTN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -270px no-repeat scroll;
+}
+/* Trigana */
+.airlineLabelWJQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -300px no-repeat scroll;
+}
+/* JetStar */
+.airlineLabelWXN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -330px no-repeat scroll;
+}
+/* EXPRESSAIR */
+.airlineLabelWOD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -360px no-repeat scroll;
+}
+/* Malindo Air */
+.airlineLabelWSY {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -390px no-repeat scroll;
+}
+/* Sky Aviation */
+.airlineLabelWM8 {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -420px no-repeat scroll;
+}
+/* TransNusa */
+.airlineLabelWIW {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -450px no-repeat scroll;
+}
+/* Wings Air */
+.airlineLabelWVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -1023px no-repeat scroll;
+}
+/* Valuair */
+.airlineLabelWSI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -480px no-repeat scroll;
+}
+/* Susi Air */
+.airlineLabelWSJ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -510px no-repeat scroll;
+}
+/* Sriwijaya */
+.airlineLabelWTR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -540px no-repeat scroll;
+}
+/* Tiger */
+.airlineLabelWID {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -570px no-repeat scroll;
+}
+/* Batik */
+.airlineLabelWCX {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -600px no-repeat scroll;
+}
+/* Cathay Pacific */
+.airlineLabelWSQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -630px no-repeat scroll;
+}
+/* Singapore Air */
+.airlineLabelWMH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -660px no-repeat scroll;
+}
+/* Malaysia Air */
+.airlineLabelWTG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -690px no-repeat scroll;
+}
+/* Thai Ailines */
+.airlineLabelWVN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -720px no-repeat scroll;
+}
+/* Vietnam Air */
+.airlineLabelWPR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -750px no-repeat scroll;
+}
+/* Philippine Airlines */
+.airlineLabelW5J {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -780px no-repeat scroll;
+}
+/* Cebu Pacific */
+.airlineLabelWCZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -810px no-repeat scroll;
+}
+/* Southern China */
+.airlineLabelWOZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -840px no-repeat scroll;
+}
+/* Asiana Airlines */
+.airlineLabelWCI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -870px no-repeat scroll;
+}
+/* China Airlines */
+.airlineLabelWQF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -900px no-repeat scroll;
+}
+/* Qantas */
+.airlineLabelWBR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -930px no-repeat scroll;
+}
+/* Eva Air */
+.airlineLabelWNH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -960px no-repeat scroll;
+}
+/* ANA */
+.airlineLabelWCA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -990px no-repeat scroll;
+}
+/* Air China */
+.airlineLabelWVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -1020px no-repeat scroll;
+}
+/* Valuair */
+.airlineLabelWTZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -50px -1050px no-repeat scroll;
+}
+/* Scoot */
+/* Garuda */
+.airlineLabelGGA, .unavailable .resultTable .airlineLabelGA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px 0px no-repeat scroll;
+}
+/* Merpati */
+.airlineLabelGMZ, .unavailable .resultTable .airlineLabelMZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -30px no-repeat scroll;
+}
+/* Lion Air */
+.airlineLabelGJT, .unavailable .resultTable .airlineLabelJT {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -60px no-repeat scroll;
+}
+/* Citilink */
+.airlineLabelGQG, .unavailable .resultTable .airlineLabelQG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -90px no-repeat scroll;
+}
+/* Mandala */
+.airlineLabelGRI, .unavailable .resultTable .airlineLabelRI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -120px no-repeat scroll;
+}
+/* Air Asia */
+.airlineLabelGAirAsia, .unavailable .resultTable .airlineLabelAirAsia {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -150px no-repeat scroll;
+}
+/* Nam Air */
+.airlineLabelGNM, .unavailable .resultTable .airlineLabelNM {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -180px no-repeat scroll;
+}
+/* Thai Lion Air */
+.airlineLabelGSL, .unavailable .resultTable .airlineLabelSL {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -210px no-repeat scroll;
+}
+/* .airlineLabelGAVIASTAR {background: url("/assets/stylesheets/images/airline-logo/labels-@{airline-logo-version}.png") -100px -210px no-repeat scroll;} /* AviaStar */
+/* KalStar */
+.airlineLabelGKD, .unavailable .resultTable .airlineLabelKD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -240px no-repeat scroll;
+}
+/* .airlineLabelGTrigana {background: url("/assets/stylesheets/images/airline-logo/labels-@{airline-logo-version}.png") -100px -270px no-repeat scroll;} /* Trigana */
+/* JetStar */
+.airlineLabelGJQ, .unavailable .resultTable .airlineLabelJQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -300px no-repeat scroll;
+}
+/* EXPRESSAIR */
+.airlineLabelGXN, .unavailable .resultTable .airlineLabelXN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -330px no-repeat scroll;
+}
+/* Malindo Air */
+.airlineLabelGOD, .unavailable .resultTable .airlineLabelOD {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -360px no-repeat scroll;
+}
+/* Sky Aviation */
+.airlineLabelGSY, .unavailable .resultTable .airlineLabelSY {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -390px no-repeat scroll;
+}
+/* .airlineLabelGPacificRoyale {background: url("/assets/stylesheets/images/airline-logo/labels-@{airline-logo-version}.png") -100px -360px no-repeat scroll;} /* PacificRoyale */
+/* .airlineLabelGTransNusa {background: url("/assets/stylesheets/images/airline-logo/labels-@{airline-logo-version}.png") -100px -420px no-repeat scroll;} /* TransNusa */
+/* Wings Air */
+.airlineLabelGIW, .unavailable .resultTable .airlineLabelIW {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -450px no-repeat scroll;
+}
+/* Susi Air */
+.airlineLabelGSI, .unavailable .resultTable .airlineLabelSI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -480px no-repeat scroll;
+}
+/* Sriwijaya */
+.airlineLabelGSJ, .unavailable .resultTable .airlineLabelSJ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -510px no-repeat scroll;
+}
+/* Tiger */
+.airlineLabelGTR, .unavailable .resultTable .airlineLabelTR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -540px no-repeat scroll;
+}
+/* Batik */
+.airlineLabelGID, .unavailable .resultTable .airlineLabelID {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -570px no-repeat scroll;
+}
+.airlineLabelGCX, .unavailable .resultTable .airlineLabelCX {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -600px no-repeat scroll;
+}
+/* Cathay Pacific */
+.airlineLabelGSQ, .unavailable .resultTable .airlineLabelSQ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -630px no-repeat scroll;
+}
+/* Singapore Air */
+.airlineLabelGMH, .unavailable .resultTable .airlineLabelMH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -660px no-repeat scroll;
+}
+/* Malaysia Air */
+.airlineLabelGTG, .unavailable .resultTable .airlineLabelTG {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -690px no-repeat scroll;
+}
+/* Thai Ailines */
+.airlineLabelGVN, .unavailable .resultTable .airlineLabelVN {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -720px no-repeat scroll;
+}
+/* Vietnam Air */
+.airlineLabelGPR, .unavailable .resultTable .airlineLabelPR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -750px no-repeat scroll;
+}
+/* Philippine Airlines */
+.airlineLabelG5J, .unavailable .resultTable .airlineLabel5J {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -780px no-repeat scroll;
+}
+/* Cebu Pacific */
+.airlineLabelGCZ, .unavailable .resultTable .airlineLabelCZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -810px no-repeat scroll;
+}
+/* Southern China */
+.airlineLabelGOZ, .unavailable .resultTable .airlineLabelOZ {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -840px no-repeat scroll;
+}
+/* Asiana Airlines */
+.airlineLabelGCI, .unavailable .resultTable .airlineLabelCI {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -870px no-repeat scroll;
+}
+/* China Airlines */
+.airlineLabelGQF, .unavailable .resultTable .airlineLabelQF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -900px no-repeat scroll;
+}
+/* Qantas */
+.airlineLabelGBR, .unavailable .resultTable .airlineLabelBR {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -930px no-repeat scroll;
+}
+/* Eva Air */
+.airlineLabelGNH, .unavailable .resultTable .airlineLabelNH {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -960px no-repeat scroll;
+}
+/* ANA */
+.airlineLabelGCA, .unavailable .resultTable .airlineLabelCA {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -990px no-repeat scroll;
+}
+/* Air China */
+.airlineLabelGVF, .unavailable .resultTable .airlineLabelVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -1020px no-repeat scroll;
+}
+/* Valuair */
+.airlineLabelGTZ, .unavailable .resultTable .airlineLabelVF {
+  background: url("/assets/stylesheets/images/airline-logo/labels-20003.png") -100px -1050px no-repeat scroll;
+}
+/* Scoot */
+.airlineLogo {
+  width: 125px;
+  height: 25px;
+}
+.airlineLogoGA {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoGA-20003.png") no-repeat scroll;
+}
+.airlineLogoSJ {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoSJ-20003.png") no-repeat scroll;
+}
+.airlineLogoJT {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoJT-20003.png") no-repeat scroll;
+}
+.airlineLogoOD {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoOD-20003.png") no-repeat scroll;
+}
+.airlineLogoY6 {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoY6-20003.png") no-repeat scroll;
+}
+.airlineLogoAirAsia {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoAirAsia-20003.png") no-repeat scroll;
+}
+.airlineLogoSY {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoSY-20003.png") no-repeat scroll;
+}
+.airlineLogoQG {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoQG-20003.png") no-repeat scroll;
+}
+.airlineLogoRI {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoRI-20003.png") no-repeat scroll;
+}
+.airlineLogoTR {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoTR-20003.png") no-repeat scroll;
+}
+.airlineLogoMZ {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoMZ-20003.png") no-repeat scroll;
+}
+.airlineLogoKD {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoKD-20003.png") no-repeat scroll;
+}
+.airlineLogoJQ {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoJQ-20003.png") no-repeat scroll;
+}
+.airlineLogoIW {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoIW-20003.png") no-repeat scroll;
+}
+.airlineLogoSI {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoSI-20003.png") no-repeat scroll;
+}
+.airlineLogoID {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoID-20003.png") no-repeat scroll;
+}
+.airlineLogoVF {
+  background: url("/assets/stylesheets/images/airline-logo/airlineLogoVF-20003.png") no-repeat scroll;
+}
+.airlineLogoGGA {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoGA-20003.png") no-repeat scroll;
+}
+.airlineLogoGSJ {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoSJ-20003.png") no-repeat scroll;
+}
+.airlineLogoGJT {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoJT-20003.png") no-repeat scroll;
+}
+.airlineLogoGOD {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoOD-20003.png") no-repeat scroll;
+}
+.airlineLogoGY6 {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoY6-20003.png") no-repeat scroll;
+}
+.airlineLogoGAirAsia {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoAirAsia-20003.png") no-repeat scroll;
+}
+.airlineLogoGSY {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoSY-20003.png") no-repeat scroll;
+}
+.airlineLogoGQG {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoQG-20003.png") no-repeat scroll;
+}
+.airlineLogoGRI {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoRI-20003.png") no-repeat scroll;
+}
+.airlineLogoGTR {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoTR-20003.png") no-repeat scroll;
+}
+.airlineLogoGMZ {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoMZ-20003.png") no-repeat scroll;
+}
+.airlineLogoGKD {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoKD-20003.png") no-repeat scroll;
+}
+.airlineLogoGJQ {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoJQ-20003.png") no-repeat scroll;
+}
+.airlineLogoGIW {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoIW-20003.png") no-repeat scroll;
+}
+.airlineLogoGSI {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoSI-20003.png") no-repeat scroll;
+}
+.airlineLogoGID {
+  background: url("/assets/stylesheets/images/airline-logo/grey/airlineLogoID-20003.png") no-repeat scroll;
+}
+.tvConnectIcon {
+  width: 33px;
+  height: 33px;
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -69px -162px no-repeat;
+  vertical-align: middle;
+}
+.tvConnectLabel,
+.verisignIcon,
+.rapidSSLIcon,
+.secureIcon {
+  display: inline-block;
+  *display: inline;
+  /* HACK for IE7 ONLY */
+
+  zoom: 1;
+  /* HACK for IE7 ONLY */
+
+  vertical-align: -5%;
+}
+.secureIcon {
+  cursor: pointer;
+  float: left;
+}
+.tab {
+  float: left;
+  width: 750px;
+  padding: 5px;
+  background-color: #EEE;
+  margin-left: -20px;
+}
+.tab tr {
+  font-size: 19px;
+  height: 30px;
+}
+.tab tr td {
+  cursor: pointer;
+  width: 155px;
+  padding-right: 5px;
+}
+.tab tr td.nolink {
+  cursor: auto;
+}
+.tab tr td span {
+  margin-left: 10px;
+}
+.tab td.selected {
+  background-color: #CCC;
+  color: #000;
+}
+/* for "down arrow" on tab
+.tab td.selected:after {
+   content: "";
+   position: relative;
+   top: 37px;
+   right: 45%;
+   border-top: 10px solid #CCC;
+   border-left: 10px solid transparent;
+   border-right: 10px solid transparent;
+}
+*/
+div#kotaPopuler {
+  float: left;
+  border-right: solid 3px #72C6F6;
+  height: 550px;
+  width: 175px;
+  background-color: #EEE;
+  margin: 0 20px -5px -9px;
+  padding-top: 10px;
+}
+#kota-populer-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -369px 0;
+  margin-top: -2px;
+}
+div#kotaPopuler:hover #kota-populer-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -399px 0;
+}
+#domestik-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -369px -29px;
+  margin-left: 15px;
+}
+.tab td:hover #domestik-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -399px -29px;
+}
+#internasional-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -369px -58px;
+}
+.tab td:hover #internasional-icon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -399px -58px;
+}
+.airport-icon {
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+}
+#getawayBanner {
+  width: 960px;
+  heigth: 70px;
+  margin-top: 80px;
+}
+#ui-tooltip-2, #ui-tooltip-3 {
+  margin-left: 10px;
+}
+#totalAmount {
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") no-repeat -428px -67px;
+  padding-left: 40px !important;
+  width: 210px !important;
+}
+/* ~~ These are the jquery ~~ */
+/*!
+ * jQuery UI Datepicker 1.8.21
+ *
+ * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Datepicker#theming
+ */
+.ui-datepicker {
+  width: 17em;
+  padding: .2em .2em 0;
+  display: none;
+  position: relative;
+  z-index: 9999 !important;
+}
+.ui-datepicker .ui-datepicker-header {
+  position: relative;
+  padding: .2em 0;
+}
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+  position: absolute;
+  top: 2px;
+  width: 1.8em;
+  height: 1.8em;
+}
+.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover {
+  top: 1px;
+}
+.ui-datepicker .ui-datepicker-prev {
+  left: 2px;
+}
+.ui-datepicker .ui-datepicker-next {
+  right: 2px;
+}
+.ui-datepicker .ui-datepicker-prev-hover {
+  left: 1px;
+}
+.ui-datepicker .ui-datepicker-next-hover {
+  right: 1px;
+}
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -8px;
+  top: 50%;
+  margin-top: -8px;
+}
+.ui-datepicker .ui-datepicker-title {
+  margin: 0 2.3em;
+  line-height: 1.8em;
+  text-align: center;
+}
+.ui-datepicker .ui-datepicker-title select {
+  font-size: 1em;
+  margin: 1px 0;
+}
+.ui-datepicker select.ui-datepicker-month-year {
+  width: 100%;
+}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+  width: 40%;
+}
+.ui-datepicker table {
+  width: 100%;
+  font-size: .9em;
+  border-collapse: collapse;
+  margin: 0 0 .4em;
+}
+.ui-datepicker th {
+  padding: .7em .3em;
+  text-align: center;
+  font-weight: bold;
+  border: 0;
+}
+.ui-datepicker td {
+  border: 0;
+  padding: 1px;
+}
+.ui-datepicker td span, .ui-datepicker td a {
+  display: block;
+  padding: .2em;
+  text-align: right;
+  text-decoration: none;
+}
+.ui-datepicker .ui-datepicker-buttonpane {
+  background-image: none;
+  margin: .7em 0 0 0;
+  padding: 0 .2em;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.ui-datepicker .ui-datepicker-buttonpane button {
+  float: right;
+  margin: .5em .2em .4em;
+  cursor: pointer;
+  padding: .2em .6em .3em .6em;
+  width: auto;
+  overflow: visible;
+}
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
+  float: left;
+}
+.ui-datepicker td.red a {
+  color: #d60944;
+}
+/* with multiple calendars */
+.ui-datepicker.ui-datepicker-multi {
+  width: auto;
+}
+.ui-datepicker-multi .ui-datepicker-group {
+  float: left;
+}
+.ui-datepicker-multi .ui-datepicker-group table {
+  width: 95%;
+  margin: 0 auto .4em;
+}
+.ui-datepicker-multi-2 .ui-datepicker-group {
+  width: 50%;
+}
+.ui-datepicker-multi-3 .ui-datepicker-group {
+  width: 33.3%;
+}
+.ui-datepicker-multi-4 .ui-datepicker-group {
+  width: 25%;
+}
+.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header {
+  border-left-width: 0;
+}
+.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
+  border-left-width: 0;
+}
+.ui-datepicker-multi .ui-datepicker-buttonpane {
+  clear: left;
+}
+.ui-datepicker-row-break {
+  clear: both;
+  width: 100%;
+  font-size: 0em;
+}
+/* RTL support */
+.ui-datepicker-rtl {
+  direction: rtl;
+}
+.ui-datepicker-rtl .ui-datepicker-prev {
+  right: 2px;
+  left: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-next {
+  left: 2px;
+  right: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-prev:hover {
+  right: 1px;
+  left: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-next:hover {
+  left: 1px;
+  right: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane {
+  clear: right;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane button {
+  float: left;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current {
+  float: right;
+}
+.ui-datepicker-rtl .ui-datepicker-group {
+  float: right;
+}
+.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header {
+  border-right-width: 0;
+  border-left-width: 1px;
+}
+.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
+  border-right-width: 0;
+  border-left-width: 1px;
+}
+/* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
+.ui-datepicker-cover {
+  display: block;
+  /*sorry for IE5*/
+
+  position: absolute;
+  /*must have*/
+
+  z-index: -1;
+  /*must have*/
+
+  filter: mask();
+  /*must have*/
+
+  top: -4px;
+  /*must have*/
+
+  left: -4px;
+  /*must have*/
+
+  width: 200px;
+  /*must have*/
+
+  height: 200px;
+  /*must have*/
+
+}
+.ui-datepicker {
+  font-size: 15px;
+}
+.ui-datepicker-week-end {
+  color: #d60944;
+}
+.ui-widget-header .ui-icon {
+  background-image: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png');
+  width: 16px;
+  height: 16px;
+}
+.ui-icon-circle-triangle-e {
+  background-position: -84px -70px;
+}
+.ui-icon-circle-triangle-w {
+  background-position: -68px -70px;
+}
+textarea {
+  border-color: #bababa;
+}
+textarea:hover {
+  border-color: #5c5c5c;
+}
+/* @!LayoutTools */
+.tv-r-shifterFromTop {
+  padding-top: 295px;
+  z-index: 1;
+  position: relative;
+}
+.tv-r-shifterFromTop.withBreadcrumbs {
+  padding-top: 160px;
+}
+.tv-r {
+  width: 100%;
+  float: left;
+}
+.tv-c {
+  position: relative;
+  float: left;
+}
+.tv-c-10 {
+  width: 10%;
+}
+.tv-c-12 {
+  width: 12%;
+}
+.tv-c-15 {
+  width: 15%;
+}
+.tv-c-17 {
+  width: 17%;
+}
+.tv-c-20 {
+  width: 20%;
+}
+.tv-c-22 {
+  width: 22%;
+}
+.tv-c-25 {
+  width: 25%;
+}
+.tv-c-27 {
+  width: 27%;
+}
+.tv-c-30 {
+  width: 30%;
+}
+.tv-c-32 {
+  width: 32%;
+}
+.tv-c-35 {
+  width: 35%;
+}
+.tv-c-37 {
+  width: 37%;
+}
+.tv-c-40 {
+  width: 40%;
+}
+.tv-c-42 {
+  width: 42%;
+}
+.tv-c-45 {
+  width: 45%;
+}
+.tv-c-47 {
+  width: 47%;
+}
+.tv-c-50 {
+  width: 50%;
+}
+.tv-c-52 {
+  width: 52%;
+}
+.tv-c-55 {
+  width: 55%;
+}
+.tv-c-57 {
+  width: 57%;
+}
+.tv-c-60 {
+  width: 60%;
+}
+.tv-c-62 {
+  width: 62%;
+}
+.tv-c-65 {
+  width: 65%;
+}
+.tv-c-67 {
+  width: 67%;
+}
+.tv-c-70 {
+  width: 70%;
+}
+.tv-c-72 {
+  width: 72%;
+}
+.tv-c-75 {
+  width: 75%;
+}
+.tv-c-77 {
+  width: 77%;
+}
+.tv-c-80 {
+  width: 80%;
+}
+.tv-c-82 {
+  width: 82%;
+}
+.tv-c-85 {
+  width: 85%;
+}
+.tv-c-87 {
+  width: 87%;
+}
+.tv-c-90 {
+  width: 90%;
+}
+.tv-c-92 {
+  width: 92%;
+}
+.tv-c-95 {
+  width: 95%;
+}
+.tv-c-97 {
+  width: 97%;
+}
+.tv-c-100 {
+  width: 100%;
+}
+.tv-sl-15 {
+  margin-left: 15px;
+}
+.tv-sl-20 {
+  margin-left: 20px;
+}
+.tv-sl-10 {
+  margin-left: 10px;
+}
+.tv-sl-5 {
+  margin-left: 5px;
+}
+.tv-sr-15 {
+  margin-right: 15px;
+}
+.tv-sr-10 {
+  margin-right: 10px;
+}
+.tv-sr-5 {
+  margin-right: 5px;
+}
+.tv-st-15 {
+  margin-top: 15px;
+}
+.tv-st-10 {
+  margin-top: 10px;
+}
+.tv-st-5 {
+  margin-top: 5px;
+}
+.tv-clr {
+  clear: both;
+}
+.tv-clr-pad {
+  height: 10px;
+  clear: both;
+}
+/* @!FontTools */
+.tv-txt {
+  font-family: "Segoe UI";
+}
+.tv-al-center {
+  text-align: center;
+}
+.tv-al-right {
+  text-align: right;
+}
+.tv-al-left {
+  text-align: left;
+}
+.tv-pull-right {
+  float: right;
+}
+.tv-pull-left {
+  float: left;
+}
+.tv-txt-lbl {
+  padding-bottom: 10px;
+  font-weight: 100;
+}
+.tv-tc-lightBlue {
+  color: #1ba0e2;
+}
+.tv-tc-gray {
+  color: #f0f0f0;
+}
+.tv-tc-green {
+  color: #04aa0c;
+}
+.tv-tc-strongGray {
+  color: #434343;
+}
+.tv-tc-white {
+  color: #ffffff;
+}
+.tv-tc-red {
+  color: #c91111;
+}
+.tv-ts-mini {
+  font-size: 10pt;
+  font-weight: 100;
+}
+.tv-ts-veryMini {
+  font-size: 9pt;
+  font-weight: 100;
+}
+.tv-ts-ultraMini {
+  font-size: 8pt;
+  font-weight: 100;
+}
+.tv-ts-small {
+  font-size: 11pt;
+  font-weight: 100;
+}
+.tv-ts-normal {
+  font-size: 1.12em;
+  font-weight: 400;
+}
+.tv-ts-bigger {
+  font-size: 24px;
+  font-weight: 200;
+}
+.tv-tst-underline {
+  text-decoration: none !important;
+}
+.tv-tst-underline {
+  text-decoration: underline;
+}
+.tv-tst-italic {
+  font-style: italic;
+}
+.tv-fw-slim {
+  font-weight: 100;
+}
+.tv-fw-bold {
+  font-weight: 900;
+}
+/* @!BackgroundTools */
+.tv-bg-gray {
+  background-color: #f0f0f0;
+}
+.tv-bg-lightBlue {
+  background-color: #1ba0e2;
+}
+.tv-bg-strongGray {
+  background-color: #434343;
+}
+.tv-bg-orange {
+  background-color: #f97b0c;
+}
+.tv-bg-alertWarning {
+  background-color: #faebcc;
+  color: #8a6d3b;
+}
+.tv-bg-alertError {
+  background-color: #ebccd1;
+  color: #a94442;
+}
+.tv-bg-blackGray {
+  color: white;
+  background-color: #434343;
+}
+/* @!BoxWidgetTools */
+.tv-boxNoPadding {
+  padding: 0px;
+  position: relative;
+}
+.tv-box {
+  padding: 3px;
+  position: relative;
+}
+.tv-boxLargePadding {
+  padding: 12px;
+  position: relative;
+}
+.tv-box-close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background: url("/assets/stylesheets/images/sprite/traveloka-main-20011.png") -68px -87px no-repeat scroll;
+  cursor: pointer;
+}
+.tv-box-leftBorder {
+  border-left: 3px solid;
+  padding-left: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+.tv-box-rightBorder {
+  border-right: 3px solid;
+  padding-left: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+.tv-box-fullBorder {
+  padding: 8px;
+  border: 2px solid;
+}
+.tv-box-formSection {
+  border: 1px solid #BABABA;
+  border-left: 3px solid #1ba0e2;
+  padding-left: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+.tv-box-slimBorder {
+  border-width: 1px;
+}
+.tv-dropDown-flat {
+  height: 32px;
+  overflow: hidden;
+  font-size: 11pt;
+  background-color: white;
+  border: 1px solid #f0f0f0;
+}
+.tv-actionButton {
+  width: 60px;
+  height: 30px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+.tv-actionButtonBlue {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -95px 0px no-repeat scroll;
+  color: #ffffff;
+}
+.tv-planeActionButton {
+  width: 80px;
+  height: 20px;
+  padding-left: 17px;
+  padding-top: 3px;
+}
+.tv-planeActionButton {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -168px 0px no-repeat scroll;
+  color: #ffffff;
+}
+.tv-generalButton {
+  padding: 8px;
+  cursor: pointer;
+}
+.tv-smallButton {
+  padding: 4px;
+}
+.tv-alertButton {
+  float: right;
+  width: 140px;
+  text-align: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.tv-brandButton {
+  float: right;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #fff;
+  padding: 3px 20px;
+  color: #ffffff;
+  margin-top: 5px;
+}
+#tv-topbar.hasBreadcrumb {
+  height: 118px;
+  z-index: 15000;
+}
+#tv-topbar.hasBreadcrumb.simpleTopBar {
+  height: 34px;
+  z-index: 20000;
+}
+.tv-breadcrumb-container {
+  background-color: #FFFFFF;
+  line-height: 20px;
+  padding: 0px 0px 0px 10px;
+  margin: auto;
+  width: 950px;
+  position: relative;
+  z-index: 100;
+  background-color: rgba(240, 240, 240, 0.7);
+  height: 36px;
+}
+.tv-breadcrumb-container .breadcrumb-item {
+  font-size: 12px;
+  float: left;
+  padding: 4px;
+  text-decoration: underline;
+  color: #636363;
+  line-height: 22px;
+}
+.tv-breadcrumb-container .breadcrumb-item.slim {
+  font-weight: 100;
+  color: #434343;
+}
+.tv-breadcrumb-container .breadcrumb-item.noUnderline {
+  text-decoration: none;
+  line-height: 22px;
+}
+.tv-breadcrumb-container .bradcrumb-item.slim.noUnderline a {
+  text-decoration: none;
+}
+.tv-breadcrumb-container .breadcrumb-arrow {
+  float: left;
+  line-height: 30px;
+}
+.tv-breadcrumb-container .breadcrumb-item .breadcrumb-info {
+  font-size: 9pt;
+  font-style: italic;
+  color: #434343;
+  padding: 4px;
+  padding-top: 0px;
+  padding-left: 0px;
+  margin-top: -3px;
+}
+/* @!MiscTools */
+.tv-asBullet {
+  list-style: disc;
+  margin-left: 15px;
+}
+.tv-backgroundTopContainer {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 450px;
+  z-index: 0;
+}
+.tv-backgroundTopContainer img {
+  width: 100%;
+  height: 100%;
+}
+.tv-inRound {
+  float: left;
+  background-image: url("/assets/stylesheets/images/misc/roundround-20001.png");
+  width: 120px;
+  height: 120px;
+  color: white;
+  z-index: 100;
+}
+.tv-inRound-mini {
+  float: left;
+  background-size: contain;
+  background-image: url("/assets/stylesheets/images/misc/roundround-20001.png");
+  width: 60px;
+  height: 60px;
+  color: white;
+  font-size: 9pt;
+  z-index: 100;
+}
+.tv-inRound .lblText {
+  font-size: 24pt;
+  margin-top: 43px;
+  margin-left: 28px;
+}
+.tv-inRound-mini .lblText {
+  font-size: 12pt;
+  margin-top: 22px;
+  margin-left: 14px;
+}
+.tv-planeRender {
+  float: left;
+  background-image: url("/assets/stylesheets/images/misc/plane-20001.png");
+  width: 76px;
+  height: 68px;
+}
+.tv-planeRender-mini {
+  float: left;
+  background-image: url("/assets/stylesheets/images/misc/plane-20001.png");
+  width: 48px;
+  height: 44px;
+}
+.tv-checkbox-container {
+  position: relative;
+  float: left;
+  margin-top: 3px;
+  margin-right: 25px;
+}
+.tv-checkbox-unchecked {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -315px -175px;
+  width: 17px;
+  height: 18px;
+}
+.tv-checkbox-checked {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -315px -150px;
+  width: 17px;
+  height: 18px;
+}
+.tv-checkbox-unchecked.black {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -315px -225px;
+  width: 17px;
+  height: 18px;
+}
+.tv-checkbox-checked.black {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -315px -200px;
+  width: 17px;
+  height: 18px;
+}
+/* @!TabsTools */
+.tv-tabs {
+  margin-top: 10px;
+  width: 100%;
+  float: left;
+  background-color: #f0f0f0;
+}
+.tv-tab-item {
+  float: left;
+  min-width: 140px;
+  padding: 5px;
+  border: 3px solid #f0f0f0;
+}
+.tv-tab-item.tv-tab-selected {
+  background-color: #dfdfdf;
+  border: 3px solid #f0f0f0;
+}
+.tv-tab-content {
+  float: left;
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+.tv-tab-content div.tab-content-area {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+/* @!SliderTools */
+.tv-slider-container {
+  margin-top: 8px;
+  margin-bottom: 5px;
+  position: relative;
+}
+.tv-slider-full {
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  background: url("images/slider/slider-full-20002.png");
+  height: 8px;
+  width: 317px;
+}
+.tv-slider-empty {
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  background: url("images/slider/slider-empty-20002.png");
+  height: 8px;
+  width: 317px;
+}
+.tv-slider-marker {
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  width: 11px;
+  height: 18px;
+  background: url("images/slider/slider-button-20002.png");
+}
+/* @!DialogTools */
+.tv-dialog {
+  position: absolute;
+  z-index: 9999;
+  background-color: white;
+  display: block;
+}
+.tv-dialog-overlay {
+  position: fixed;
+  background-color: black;
+  opacity: 0.3;
+  z-index: 9998;
+}
+.tv-dialog-header {
+  position: relative;
+}
+.tv.dialog-body {
+  position: relative;
+}
+.tv-dialog-content {
+  padding: 10px;
+}
+.tv-dialog-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.tv-alert-dialog {
+  position: absolute;
+  z-index: 9999;
+  background-color: white;
+  display: block;
+}
+.tv-alert-dialog-overlay {
+  position: fixed;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 9998;
+}
+/* @!Seo:AirlineRefund */
+#seoRefundAirlineRules h4 {
+  font-size: 20px;
+  clear: left;
+  margin: 10px 0;
+}
+#seoRefundAirlineRules h5 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+#airlineDetailCntr #seoRefundAirlineRules ul, #airlineDetailCntr #seoRefundAirlineRules ol, #airlineDetailCntr #seoRefundAirlineRules p {
+  float: none;
+  margin: 15px 0;
+}
+#airlineDetailCntr #seoRefundAirlineRules ul li {
+  margin: 5px 0;
+  list-style-type: disc;
+}
+/*
+ * @!JqueryQtip
+ *
+ * Somebody else jquery to modify qtip when hovered
+ * ! qTip2 - Pretty powerful tooltips - v2.0.0 - 2012-07-29
+ * http://craigsworks.com/projects/qtip2/
+ * Copyright (c) 2012 Craig Michael Thompson; Licensed MIT, GPL
+ */
+/* Core qTip styles */
+.ui-tooltip, .qtip {
+  position: absolute;
+  left: -28000px;
+  top: -28000px;
+  display: none;
+  max-width: auto;
+  border-width: 1px;
+  border-style: solid;
+  -moz-box-shadow: 0 0 5px 0 #cccccc;
+  -webkit-box-shadow: 0 0 5px 0 #cccccc;
+  box-shadow: 0 0 5px 0 #cccccc;
+  /* For IE 8 */
+
+  /* -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='@color')"; */
+
+  /* For IE 5.5 - 7 */
+
+  /* filter: ~"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color=@color)"; */
+
+}
+/* Fluid class for determining actual width in IE */
+.ui-tooltip-fluid {
+  display: block;
+  visibility: hidden;
+  position: static !important;
+  float: left !important;
+}
+.ui-tooltip-content {
+  position: relative;
+  padding: 5px 9px;
+  overflow: hidden;
+  text-align: left;
+  word-wrap: break-word;
+}
+.ui-tooltip-titlebar {
+  position: relative;
+  min-height: 14px;
+  padding: 5px 35px 5px 10px;
+  overflow: hidden;
+  border-width: 0 0 1px;
+}
+.ui-tooltip-titlebar + .ui-tooltip-content {
+  border-top-width: 0 !important;
+}
+/* Default close button class */
+.ui-tooltip-titlebar .ui-state-default {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  margin-top: -9px;
+  cursor: pointer;
+  outline: medium none;
+}
+* html .ui-tooltip-titlebar .ui-state-default {
+  top: 16px;
+}
+/* IE fix */
+.ui-tooltip-titlebar .ui-icon, .ui-tooltip-icon .ui-icon {
+  display: block;
+  text-indent: -1000em;
+  direction: ltr;
+}
+.ui-tooltip-icon, .ui-tooltip-icon .ui-icon {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.ui-tooltip-icon .ui-icon {
+  width: 18px;
+  height: 14px;
+  text-align: center;
+  text-indent: 0;
+  font: normal bold 10px/13px Tahoma, sans-serif;
+  color: inherit;
+  background: transparent none no-repeat -100em -100em;
+}
+/* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
+/* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
+/* Default tooltip style */
+.ui-tooltip-default {
+  border-color: #F1D031;
+  background-color: #1ba0e2;
+  color: #619FDB;
+}
+.ui-tooltip-default .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  color: #619FDB;
+  font-size: 22px;
+}
+.ui-tooltip-default .ui-tooltip-icon {
+  padding-right: 6px;
+}
+.ui-tooltip-default .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #AAA;
+  color: #111;
+}
+/*! Light tooltip style */
+.ui-tooltip-light {
+  background-color: white;
+  border-color: #CCCCCC;
+  color: #666666;
+}
+.ui-tooltip-light .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+}
+/*! Dark tooltip style */
+.ui-tooltip-dark {
+  background-color: #505050;
+  border-color: #303030;
+  color: #f3f3f3;
+}
+.ui-tooltip-dark .ui-tooltip-titlebar {
+  background-color: #404040;
+}
+.ui-tooltip-dark .ui-tooltip-icon {
+  border-color: #444;
+}
+.ui-tooltip-dark .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #303030;
+}
+/*! Cream tooltip style */
+.ui-tooltip-cream {
+  background-color: #FBF7AA;
+  border-color: #F9E98E;
+  color: #A27D35;
+}
+.ui-tooltip-cream .ui-tooltip-titlebar {
+  background-color: #F0DE7D;
+}
+.ui-tooltip-cream .ui-state-default .ui-tooltip-icon {
+  background-position: -82px 0;
+}
+/*! Grey tooltip grey */
+.ui-tooltip-grey {
+  background-color: #FFFFFF;
+  border-color: #666666;
+  color: #666666;
+}
+.ui-tooltip-grey .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  color: #434343;
+  font-size: 30px;
+  font-weight: normal;
+  padding: 5px 35px 0 10px;
+}
+.ui-tooltip-grey .ui-state-default .ui-tooltip-icon {
+  background-position: -2px 0;
+}
+/*! Red tooltip style */
+.ui-tooltip-red {
+  background-color: #F78B83;
+  border-color: #D95252;
+  color: #912323;
+}
+.ui-tooltip-red .ui-tooltip-titlebar {
+  background-color: #F06D65;
+}
+.ui-tooltip-red .ui-state-default .ui-tooltip-icon {
+  background-position: -102px 0;
+}
+.ui-tooltip-red .ui-tooltip-icon {
+  border-color: #D95252;
+}
+.ui-tooltip-red .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #D95252;
+}
+/*! Green tooltip style */
+.ui-tooltip-green {
+  background-color: #FFFFFF;
+  border-color: #90D93F;
+  color: #3F6219;
+}
+.ui-tooltip-green .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  color: #99CC00;
+  font-size: 30px;
+  font-weight: normal;
+  margin: 10px 5px 0;
+  padding: 5px 35px 0 10px;
+}
+.ui-tooltip-green .ui-state-default .ui-tooltip-icon {
+  background-position: -42px 0;
+}
+/*! Blue tooltip style */
+.ui-tooltip-blue {
+  background-color: #FFFFFF;
+  border-color: #999999;
+  color: #5E99BD;
+}
+.ui-tooltip-blue .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  color: #619FDB;
+  font-size: 30px;
+  font-weight: normal;
+  padding: 5px 35px 0 10px;
+}
+.ui-tooltip-blue .ui-state-default .ui-tooltip-icon {
+  background-position: -2px 0;
+}
+/*! Dark Blue tooltip style */
+.ui-tooltip-dblue {
+  background-color: #1ba0e2;
+  border-color: #CCCCCC;
+  color: #FFFFFF;
+}
+.ui-tooltip-dblue .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+}
+.ui-tooltip-dblue .ui-tooltip-content {
+  padding: 0px;
+  margin: 0px;
+}
+.ui-tooltip-dblue.ui-tooltip {
+  border-width: 0;
+}
+.ui-tooltip-dblue .ui-state-default .ui-tooltip-icon {
+  background-position: -2px 0;
+}
+/*! Light Blue tooltip style */
+.ui-tooltip-lblue {
+  background-color: #1ba0e2;
+  border-color: #CCCCCC;
+  color: #FFFFFF;
+}
+.ui-tooltip-lblue .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+}
+.ui-tooltip-lblue .ui-tooltip-content {
+  padding: 0px;
+  margin: 0px;
+}
+.ui-tooltip-lblue.ui-tooltip {
+  border-width: 0;
+}
+.ui-tooltip-lblue .ui-state-default .ui-tooltip-icon {
+  background-position: -2px 0;
+}
+/*! Orange tooltip style */
+.ui-tooltip-orange {
+  background-color: #FFFFFF;
+  border-color: #f97b0c;
+  color: #f97b0c;
+}
+.ui-tooltip-orange .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  color: #f97b0c;
+  font-size: 30px;
+  font-weight: normal;
+  padding: 5px 35px 0 10px;
+}
+.ui-tooltip-orange .ui-tooltip-content {
+  margin: 0px;
+}
+.ui-tooltip-orange.ui-tooltip {
+  border-width: 1;
+}
+/*! Filters tooltip style */
+.ui-tooltip-filters {
+  background-color: #FFFFFF;
+  border-color: #1ba0e2;
+}
+.ui-tooltip-filters .ui-tooltip-titlebar {
+  background-color: #FFFFFF;
+  font-size: 2px;
+  min-height: 0px;
+  overflow: visible;
+  padding: 0px;
+}
+.ui-tooltip-filters.ui-tooltip {
+  border-width: 1;
+}
+.ui-tooltip-filters .ui-state-default.ui-tooltip-icon {
+  margin: 10px 0 0;
+  position: absolute;
+  z-index: 11;
+  /*to make sure close button clickable */
+
+}
+/* qtip property for userOptions */
+.ui-tooltip.ui-tooltip-userOptions {
+  position: fixed;
+}
+/* Add shadows to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+ */
+.ui-tooltip-shadow {
+  -webkit-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+/* Add rounded corners to your tooltips in: FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+ */
+.ui-tooltip-rounded, .ui-tooltip-tipsy, .ui-tooltip-bootstrap {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* Youtube tooltip style */
+.ui-tooltip-youtube {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 3px #333;
+  -moz-box-shadow: 0 0 3px #333;
+  box-shadow: 0 0 3px #333;
+  color: white;
+  border-width: 0;
+  background: #4A4A4A;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4a4a4a), color-stop(100%, #000000));
+  background-image: -webkit-linear-gradient(top, #4a4a4a 0, #000000 100%);
+  background-image: -moz-linear-gradient(top, #4a4a4a 0, #000000 100%);
+  background-image: -ms-linear-gradient(top, #4a4a4a 0, #000000 100%);
+  background-image: -o-linear-gradient(top, #4a4a4a 0, #000000 100%);
+}
+.ui-tooltip-youtube .ui-tooltip-titlebar {
+  background-color: #4A4A4A;
+  background-color: rgba(0, 0, 0, 0);
+}
+.ui-tooltip-youtube .ui-tooltip-content {
+  padding: .75em;
+  font: 12px arial, sans-serif;
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4a4a4a,EndColorStr=#000000);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4a4a4a,EndColorStr=#000000);";
+}
+.ui-tooltip-youtube .ui-tooltip-icon {
+  border-color: #222;
+}
+.ui-tooltip-youtube .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #303030;
+}
+/* jQuery TOOLS Tooltip style */
+.ui-tooltip-jtools {
+  background: #232323;
+  background: rgba(0, 0, 0, 0.7);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#717171), to(#232323));
+  background-image: -moz-linear-gradient(top, #717171, #232323);
+  background-image: -webkit-linear-gradient(top, #717171, #232323);
+  background-image: -ms-linear-gradient(top, #717171, #232323);
+  background-image: -o-linear-gradient(top, #717171, #232323);
+  border: 2px solid #ddd;
+  border: 2px solid #f1f1f1;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 12px #333;
+  -moz-box-shadow: 0 0 12px #333;
+  box-shadow: 0 0 12px #333;
+}
+/* IE Specific */
+.ui-tooltip-jtools .ui-tooltip-titlebar {
+  background-color: transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171,endColorstr=#4A4A4A);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171,endColorstr=#4A4A4A)";
+}
+.ui-tooltip-jtools .ui-tooltip-content {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A,endColorstr=#232323);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A,endColorstr=#232323)";
+}
+.ui-tooltip-jtools .ui-tooltip-titlebar, .ui-tooltip-jtools .ui-tooltip-content {
+  background: transparent;
+  color: white;
+  border: 0 dashed transparent;
+}
+.ui-tooltip-jtools .ui-tooltip-icon {
+  border-color: #555;
+}
+.ui-tooltip-jtools .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #333;
+}
+/* Cluetip style */
+.ui-tooltip-cluetip {
+  -webkit-box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  background-color: #D9D9C2;
+  color: #111;
+  border: 0 dashed transparent;
+}
+.ui-tooltip-cluetip .ui-tooltip-titlebar {
+  background-color: #87876A;
+  color: white;
+  border: 0 dashed transparent;
+}
+.ui-tooltip-cluetip .ui-tooltip-icon {
+  border-color: #808064;
+}
+.ui-tooltip-cluetip .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #696952;
+  color: #696952;
+}
+/* Tipsy style */
+.ui-tooltip-tipsy {
+  background: black;
+  background: rgba(0, 0, 0, 0.87);
+  color: white;
+  border: 0 solid transparent;
+  font-size: 11px;
+  font-family: 'Lucida Grande', sans-serif;
+  font-weight: bold;
+  line-height: 16px;
+  text-shadow: 0 1px black;
+}
+.ui-tooltip-tipsy .ui-tooltip-titlebar {
+  padding: 6px 35px 0 10;
+  background-color: transparent;
+}
+.ui-tooltip-tipsy .ui-tooltip-content {
+  padding: 6px 10;
+}
+.ui-tooltip-tipsy .ui-tooltip-icon {
+  border-color: #222;
+  text-shadow: none;
+}
+.ui-tooltip-tipsy .ui-tooltip-titlebar .ui-state-hover {
+  border-color: #303030;
+}
+/* Tipped style */
+.ui-tooltip-tipped {
+  border: 3px solid #959FA9;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #F9F9F9;
+  color: #454545;
+  font-weight: normal;
+  font-family: serif;
+}
+.ui-tooltip-tipped .ui-tooltip-titlebar {
+  border-bottom-width: 0;
+  color: white;
+  background: #3A79B8;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3a79b8), to(#2e629d));
+  background-image: -webkit-linear-gradient(top, #3a79b8, #2e629d);
+  background-image: -moz-linear-gradient(top, #3a79b8, #2e629d);
+  background-image: -ms-linear-gradient(top, #3a79b8, #2e629d);
+  background-image: -o-linear-gradient(top, #3a79b8, #2e629d);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8,endColorstr=#2E629D);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8,endColorstr=#2E629D)";
+}
+.ui-tooltip-tipped .ui-tooltip-icon {
+  border: 2px solid #285589;
+  background: #285589;
+}
+.ui-tooltip-tipped .ui-tooltip-icon .ui-icon {
+  background-color: #FBFBFB;
+  color: #555;
+}
+.ui-tooltip-bootstrap {
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+.ui-tooltip-bootstrap .ui-tooltip-titlebar {
+  font-size: 18px;
+  line-height: 22px;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+}
+.ui-tooltip-bootstrap .ui-tooltip-titlebar .ui-state-default {
+  right: 9px;
+  top: 49%;
+  border-style: none;
+}
+.ui-tooltip-bootstrap .ui-tooltip-icon {
+  background: white;
+}
+.ui-tooltip-bootstrap .ui-tooltip-icon .ui-icon {
+  width: auto;
+  height: auto;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 18px;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+.ui-tooltip-bootstrap .ui-tooltip-icon .ui-icon:hover {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+/* IE9 fix - removes all filters */
+.ui-tooltip:not(.ie9haxors) div.ui-tooltip-content, .ui-tooltip:not(.ie9haxors) div.ui-tooltip-titlebar {
+  filter: none;
+  -ms-filter: none;
+}
+/* Tips plugin */
+.ui-tooltip .ui-tooltip-tip {
+  margin: 0 auto;
+  overflow: hidden;
+  z-index: 10;
+}
+.ui-tooltip .ui-tooltip-tip, .ui-tooltip .ui-tooltip-tip * {
+  position: absolute;
+  line-height: 0.1px !important;
+  font-size: 0.1px !important;
+  color: #123456;
+  background: transparent;
+  border: 0 dashed transparent;
+}
+.ui-tooltip .ui-tooltip-tip canvas {
+  top: 0;
+  left: 0;
+}
+/* Modal plugin */
+#qtip-overlay {
+  position: fixed;
+  left: -10000em;
+  top: -10000em;
+}
+/* Applied to modals with show.modal.blur set to true */
+#qtip-overlay.blurs {
+  cursor: pointer;
+}
+/* Change opacity of overlay here */
+#qtip-overlay div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+/* @!AirlineSearchPanoramicBanner */
+#panoramicBoxHolder,
+#panoramicBoxContainer,
+#panoramicBoxFrame,
+#panoramicBoxContainer .panoramicImg {
+  height: 440px;
+}
+#panoramicBoxHolder.compact,
+.compact #panoramicBoxContainer,
+.compact #panoramicBoxFrame,
+.compact #panoramicBoxContainer .panoramicImg {
+  height: 320px;
+}
+#panoramicBoxHolder, #panoramicBoxContainer {
+  width: 100%;
+}
+#panoramicBoxHolder {
+  padding-bottom: 20px;
+}
+#panoramicBoxHolder h1 {
+  color: #FFFFFF;
+  font-size: 3.5em;
+  padding-left: 30px;
+}
+#panoramicBoxContainer {
+  left: 0;
+  position: absolute;
+  background-color: #1ba0e2;
+}
+#panoramicBoxContainer .panoramicImg {
+  width: 100%;
+  position: absolute;
+}
+#panoramicContentFrame {
+  position: relative;
+  padding: 80px 0 0 0;
+}
+.fullContent #panoramicContentFrame {
+  padding: 0;
+}
+#panoramicContent {
+  width: 960px;
+  margin: auto;
+}
+#sliderContainer {
+  clear: both;
+  float: left;
+  margin: 20px 0 0 10px;
+  width: 940px;
+  height: 240px;
+  background-color: #2A9FD9;
+}
+.slider-wrapper.theme-default .ribbon {
+  position: relative;
+}
+.bx-wrapper {
+  position: relative;
+  margin: 0 auto 60px;
+  padding: 0;
+  *zoom: 1;
+}
+.bx-wrapper img {
+  max-width: 100%;
+  display: block;
+}
+.bx-wrapper .bx-viewport {
+  background: #1BA0E2;
+  z-index: 1;
+}
+.bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  z-index: 2;
+}
+.bx-wrapper .bx-loading {
+  min-height: 50px;
+  background: url("/assets/stylesheets/images/misc/loading-20001.gif") center center no-repeat #ffffff;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+.bx-wrapper .bx-pager {
+  text-align: center;
+  font-size: .85em;
+  font-family: Arial;
+  font-weight: bold;
+  color: #666;
+  padding-top: 20px;
+}
+.bx-wrapper .bx-pager .bx-pager-item, .bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+}
+.bx-wrapper .bx-pager.bx-default-pager a {
+  background: #666;
+  text-indent: -9999px;
+  display: block;
+  width: 22px;
+  height: 22px;
+  outline: 0;
+  background: url("/assets/stylesheets/images/sprite/bullets-20011.png") no-repeat;
+  margin-right: 4px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a.active {
+  background-position: 0 -22px;
+}
+.bx-wrapper .bx-controls-direction a {
+  width: 36px;
+  height: 107px;
+  background: url("/assets/stylesheets/images/misc/arrows-20001.png") no-repeat;
+  text-indent: -9999px;
+  border: 0;
+  opacity: 0;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  position: absolute;
+  top: 50%;
+  margin-top: -16px;
+  outline: 0;
+  text-indent: -9999px;
+  z-index: 9999;
+}
+.bx-wrapper:hover .bx-controls-direction a {
+  opacity: 1;
+}
+.bx-wrapper .bx-next {
+  background-position: -38px 0px !important;
+  right: 15px;
+}
+.bx-wrapper .bx-prev {
+  left: 15px;
+}
+.bx-wrapper .bx-controls-auto {
+  text-align: center;
+}
+.bx-wrapper .bx-controls-auto .bx-start {
+  display: block;
+  text-indent: -9999px;
+  width: 10px;
+  height: 11px;
+  outline: 0;
+  background: url("/assets/stylesheets/images/misc/controls-20001.png") -86px -11px no-repeat;
+  margin: 0 3px;
+}
+.bx-wrapper .bx-controls-auto .bx-start:hover, .bx-wrapper .bx-controls-auto .bx-start.active {
+  background-position: -86px 0;
+}
+.bx-wrapper .bx-controls-auto .bx-stop {
+  display: block;
+  text-indent: -9999px;
+  width: 9px;
+  height: 11px;
+  outline: 0;
+  background: url("/assets/stylesheets/images/misc/controls-20001.png") -86px -44px no-repeat;
+  margin: 0 3px;
+}
+.bx-wrapper .bx-controls-auto .bx-stop:hover, .bx-wrapper .bx-controls-auto .bx-stop.active {
+  background-position: -86px -33px;
+}
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+  text-align: left;
+  width: 80%;
+}
+.bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+  right: 0;
+  width: 35px;
+}
+.bx-wrapper .bx-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #666\9;
+  background: rgba(80, 80, 80, 0.75);
+  width: 100%;
+}
+.bx-wrapper .bx-caption span {
+  color: #fff;
+  font-family: Arial;
+  display: block;
+  font-size: .85em;
+  padding: 10px;
+}
+/* @!Profile */
+#loginCntr.accountModal, #signUpCntr.accountModal {
+  width: 336px;
+}
+#loginCntr.accountModal .bodyCntr, #signUpCntr.accountModal .bodyCntr {
+  width: 315px;
+}
+.tv-controls input[type="text"], .tv-controls input[type="password"] {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/* @!Newsletter */
+#newsletterDetails {
+  margin-top: 470px;
+  float: left;
+}
+#newsletterSubscriptionForm {
+  width: 440px;
+  float: left;
+  margin: 70px 30px 0;
+  background: #ffffff;
+  /* Fall-back for browsers that don't support rgba */
+
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+}
+#newsletterSubscriptionForm h2 {
+  padding: 0 0 5px 0;
+  color: #000000;
+}
+#newsletterMsgIcon {
+  width: 100px;
+  height: 60px;
+  background: url("/assets/stylesheets/images/misc/newsletterIcon-20001.png") 0px 0px no-repeat scroll transparent;
+  float: left;
+}
+#newsletterMsgContent {
+  padding: 8px 0;
+  color: #333333;
+}
+#newsletterSubscriptionEmailCntr {
+  background-color: #DDDDDD;
+  padding: 15px 20px;
+}
+#newsletterSubscriptionEmailCntr .tv-control-group {
+  float: left;
+}
+#newsletterSubscriptionEmailCntr button {
+  float: right;
+  height: 36px;
+  width: 120px;
+  background-color: #f97b0c;
+  border: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+}
+#newsletterListSubtitle {
+  font-size: 14px;
+  width: 100%;
+  padding-top: 10px;
+}
+#newsletterDetailCntr {
+  width: 960px;
+  text-align: center;
+  color: #666666;
+  padding-bottom: 50px;
+}
+#newsletterDetailCntr li {
+  list-style: disc inside none;
+}
+#newsletterDetailCntr h3 {
+  font-size: 25px;
+  padding: 7px;
+}
+#newsletterDetailCntr h4 {
+  padding-bottom: 17px;
+}
+#newsletterDetailCntr strong {
+  color: #000000;
+}
+.newsletterFeatures .featureContentHolder {
+  height: 350px;
+}
+.newsletterFeatures img {
+  display: block;
+}
+.newsletterFeatures .coloredBg img {
+  float: right;
+}
+.newsletterFeatures .textStyle.rightHalfFeatureContainer, .newsletterFeatures .textStyle.leftHalfFeatureContainer {
+  padding: 100px 40px 100px 140px;
+  width: 300px;
+  color: #666666;
+  font-size: 14px;
+}
+.newsletterFeatures .textStyle.rightHalfFeatureContainer h3, .newsletterFeatures .textStyle.leftHalfFeatureContainer h3 {
+  padding: 17px 0;
+  color: #444444;
+  font-size: 25px;
+}
+.newsletterFeatures .coloredBg .textStyle.rightHalfFeatureContainer,
+.newsletterFeatures .coloredBg .textStyle.leftHalfFeatureContainer,
+.newsletterFeatures .coloredBg .textStyle.rightHalfFeatureContainer h3,
+.newsletterFeatures .coloredBg .textStyle.leftHalfFeatureContainer h3 {
+  color: #FFFFFF;
+}
+.newsletterFeatures .coloredBg .textStyle.rightHalfFeatureContainer, .newsletterFeatures .coloredBg .textStyle.leftHalfFeatureContainer {
+  padding: 100px 140px 110px 40px;
+}
+#registerNewsletterFooterBox {
+  padding: 80px;
+  margin: auto;
+  text-align: center;
+}
+#registerNewsletterFooterBox h3 {
+  font-size: 25px;
+  padding: 10px;
+}
+#newsletterInputClearBox {
+  width: 100%;
+}
+#registerNewsletterFooterBox button {
+  height: 36px;
+  width: 120px;
+  background-color: #f97b0c;
+  border: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto 0;
+}
+.coloredBg .featureContentFrame {
+  background-color: #019CD5;
+}
+.featureContentHolder, .featureContentFrame {
+  width: 100%;
+}
+.featureContentFrame {
+  position: absolute;
+  left: 0;
+}
+.featureContentContainer {
+  width: 960px;
+  margin: auto;
+}
+.leftHalfFeatureContainer {
+  width: 50%;
+  float: left;
+}
+.rightHalfFeatureContainer {
+  width: 50%;
+  float: right;
+}
+#newsletterBackgroundBox {
+  background: url("/assets/stylesheets/images/background/newsletter-20001.jpg");
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  width: 100%;
+  left: 0;
+  height: 440px;
+  position: absolute;
+}
+#newsletterBackgroundContainer {
+  width: 960px;
+  margin: 50px auto 0 auto;
+}
+/* @!NewsletterBar */
+#emailNewsLetter {
+  background-color: #1ba0e2;
+  color: #FFFFFF;
+  float: left;
+  font-size: 17px;
+  line-height: 20px;
+  padding: 10px 10px 10px 15px;
+  width: 935px;
+  margin: 15px 0;
+  z-index: 0;
+  position: relative;
+}
+#emailNewsLetter span.barTitle {
+  width: 200px;
+  float: left;
+  font-size: 20px;
+  line-height: 22px;
+}
+#emailNewsLetter span.mainText {
+  float: left;
+  padding-left: 10px;
+  font-size: 14px;
+  line-height: 17px;
+  width: 340px;
+  margin-top: 6px;
+}
+#emailNewsLetter input#emailSubscribe {
+  border: none;
+  height: 20px;
+  width: 235px;
+  margin-top: 8px;
+  float: right;
+  font-size: 13px;
+}
+#emailNewsLetter button {
+  background-color: #f97b0c;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  float: right;
+  font-size: 16px;
+  height: 30px;
+  margin: 8px;
+}
+#emailNewsLetter .tv-control-group {
+  float: right;
+}
+/* @!Refund:Form */
+.refundCheckboxAgreement {
+  padding: 0 0 10px 10px;
+}
+#refundContent {
+  margin: 120px 30px 0 30px;
+}
+#refundContent .errorSummary {
+  margin-top: 0;
+  text-align: center;
+}
+#refundContent .formContainer {
+  width: 260px;
+  margin: 0 auto 0 auto;
+}
+#refundContent .formContainer {
+  width: 600px;
+  margin: 0 auto 0 auto;
+}
+#refundTerms .callToAction, #refundAirlineRules .callToAction, #refundHasCancelled .callToAction {
+  width: 170px;
+  margin: 0 auto 0 auto;
+}
+#refundTerms .termsAgreement {
+  width: 500px;
+  margin: 20px auto 30px auto;
+}
+#refundForm .callToAction {
+  width: 170px;
+  cursor: pointer;
+  border: none;
+  margin: 0 auto 0 auto;
+}
+#refundForm .callToAction.disabled {
+  cursor: auto;
+}
+#refundForm .formContainer .field p, #refundComplete .formContainer .field p {
+  padding: 0;
+  margin-bottom: 0;
+}
+#refundForm .formContainer {
+  width: 480px;
+}
+#refundComplete .formContainer {
+  width: 530px;
+}
+#refundForm .fieldLabel {
+  width: 150px;
+}
+#refundComplete .fieldLabel {
+  width: 220px;
+}
+#refundForm .fieldLabel label, #refundComplete .fieldLabel label {
+  text-align: left;
+}
+#refundForm #refundReason, #refundForm #refundNotes {
+  width: 290px;
+  height: 80px;
+}
+#refundContent .refundText {
+  margin: 25px 0;
+}
+#refundContent .refundText h3 {
+  font-size: 24px;
+  color: #434343;
+  margin: 10px 0;
+  padding: 0;
+  text-align: center;
+}
+#refundContent .refundText h4 {
+  font-size: 19px;
+  margin: 10px 0;
+  color: #434343;
+  padding: 0;
+}
+#refundContent .refundText h5 {
+  font-size: 17px;
+  color: #333333;
+  margin: 7px 0;
+  padding: 0;
+}
+#refundContent .refundText p {
+  margin: 7px 0;
+  font-size: 14px;
+  color: #434343;
+  line-height: 1.5;
+  padding: 0;
+}
+#refundContent .refundText ul, #refundContent .refundText ol {
+  padding-left: 50px;
+  margin: 8px 0;
+}
+#refundContent .refundText ul li, #refundContent .refundText ol li {
+  list-style-type: disc;
+  font-size: 14px;
+  color: #434343;
+  line-height: 1.5;
+  padding: 0;
+  margin: 2px 0;
+}
+#refundContent .refundText ol li {
+  list-style-type: decimal;
+}
+#refundContent strong {
+  font-weight: normal;
+  color: #333333;
+}
+#refundHasCancelled .formContainer {
+  width: 500px;
+}
+#refundComplete h1 {
+  font-size: 25px;
+  color: #434343;
+  margin-bottom: 20px;
+}
+#refundComplete .tv-main-logo {
+  height: 42px;
+  width: 204px;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') 0px -607px no-repeat scroll transparent;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* @!Refund:Faq */
+#refundFaq {
+  margin: 80px 0 30px 0;
+}
+#refundFaq .leftSidebar {
+  margin-top: 30px;
+  padding: 20px 25px;
+  width: 250px;
+  background: #EFF5FC;
+}
+#refundFaq .leftSidebar h1 {
+  line-height: 1.3;
+  font-size: 22px;
+  color: #434343;
+  margin-bottom: 15px;
+  padding: 0;
+}
+#refundFaq .leftSidebar ol {
+  padding-left: 45px;
+  color: #434343;
+}
+#refundFaq .leftSidebar li {
+  margin: 7px 0;
+  list-style-type: decimal;
+}
+#refundFaq .leftSidebar a {
+  color: #1ba0e2;
+}
+#refundFaq .rightText h1 {
+  padding-top: 40px;
+  margin-top: -40px;
+}
+#refundFaq ul, #refundFaq ol {
+  margin: 8px 0;
+}
+#refundFaq ul li, #refundFaq ul ol {
+  margin: 3px 0;
+}
+/**
+ * @!Clearfix
+ *
+ * Clearfix is a very popular hack that forces a parent element
+ * to self clear its children.
+ *
+ * @see http://css-tricks.com/snippets/css/clear-fix/
+ */
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  display: inline-block;
+}
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+/* close commented backslash hack */
+/* @!CenterBulletList */
+.centerBulletList {
+  margin: 15px 60px;
+}
+.centerBulletList h3 {
+  text-align: center;
+  font-size: 23px;
+  color: #333;
+  margin: 15px 0;
+}
+.centerBulletList ul, .centerBulletList ol {
+  color: #434343;
+}
+.centerBulletList ul li {
+  list-style-type: disc;
+  margin: 15px 0;
+}
+.centerBulletList ol li {
+  list-style-type: decimal;
+  margin: 15px 0;
+}
+/**
+ * @!Dropdown
+ *
+ * custom dropdown
+ */
+.dropdown .selected::after, .dropdown.scrollable div::after {
+  -webkit-pointer-events: none;
+  -moz-pointer-events: none;
+  -ms-pointer-events: none;
+  pointer-events: none;
+}
+.dropdown {
+  position: relative;
+  width: 160px;
+  border: 1px solid #bababa;
+  cursor: pointer;
+  background: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+}
+.dropdown.open {
+  z-index: 2;
+}
+.dropdown .button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  margin-top: -4px;
+  border: 6px solid transparent;
+  border-top: 8px solid #434343;
+}
+.dropdown.open .button {
+  margin-top: -10px;
+  border-top: 6px solid transparent;
+  border-bottom: 8px solid #000;
+}
+.dropdown.disabled .button {
+  border-top-color: #999;
+}
+.dropdown .old {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+.dropdown select {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.dropdown.touch .old {
+  width: 100%;
+  height: 100%;
+}
+.dropdown.touch select {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.dropdown .selected, .dropdown li {
+  display: block;
+  line-height: 1;
+  padding: 10px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.dropdown.disabled .selected {
+  color: #999;
+}
+.dropdown .selected::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+}
+.dropdown div {
+  position: absolute;
+  height: 0;
+  left: -1px;
+  right: -1px;
+  top: 100%;
+  margin-top: -1px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 3px 3px;
+  overflow: hidden;
+  opacity: 0;
+}
+.dropdown.open div {
+  opacity: 1;
+  z-index: 2;
+}
+.dropdown.scrollable div::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  box-shadow: inset 0 -50px 30px -35px #ffffff;
+}
+.dropdown.scrollable.bottom div::after {
+  opacity: 0;
+}
+.dropdown ul {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  overflow: hidden;
+}
+.dropdown.scrollable.open ul {
+  overflow-y: auto;
+}
+.dropdown li {
+  list-style: none;
+  padding: 8px 12px;
+}
+.dropdown li.focus {
+  background: #1ba0e2;
+  position: relative;
+  z-index: 3;
+  color: #fff;
+}
+.dropdown li.active {
+  font-weight: 700;
+}
+/**
+ * @!Form:ErrorMessage
+ *
+ * Generic style for error message
+ */
+.errorMessage {
+  color: #dd0000;
+}
+.errorIcon {
+  display: block;
+  float: left;
+  height: 21px;
+  width: 21px;
+  margin: 0 5px 3px 0;
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') -1px -800px no-repeat scroll transparent;
+}
+.errorText {
+  float: left;
+  line-height: 20px;
+}
+/**
+ * @!Form:ErrorSummary
+ *
+ * Used to display form-wide error.
+ *
+ */
+.errorSummary {
+  background: red;
+  color: white;
+  padding: 15px;
+  margin: 15px 0;
+}
+/**
+ * @!Form:Container
+ *
+ * Containers used for fieldset and the entire form.
+ *
+ */
+.simpleFormContainer {
+  border: 1px solid #666;
+}
+.simpleFormContainer .formHeader {
+  color: #434343;
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px dotted #999;
+}
+.simpleFormContainer .formFooter {
+  padding: 15px;
+  border-top: 1px dotted #999;
+}
+.fieldHeader {
+  text-align: center;
+  margin: 28px 0 18px;
+  font-size: 20px;
+  color: #000;
+}
+.finePrintContainer {
+  padding: 15px;
+  border-top: 1px solid #999;
+}
+.finePrintContainer h4 {
+  text-align: center;
+  margin: 5px 0;
+}
+.finePrintContainer p {
+  color: #434343;
+  font-size: 9px;
+}
+/**
+ * @!Form:NewContainer
+ *
+ * Containers new style used for fieldset and the entire form.
+ */
+.newFormContainer {
+  border: 1px solid #c7c7c7;
+  color: #434343;
+  padding: 20px;
+}
+.newFormContainer h3 {
+  margin: 0 0 15px 0;
+  padding: 0px;
+  font-size: 23px;
+}
+.newFormContainer p {
+  color: #434343;
+  line-height: 24px;
+  font-size: 16px;
+  margin: 0 0 15px 0;
+  padding: 0px;
+}
+.newFormContainer label {
+  font-size: 20px;
+}
+.newFormContainer a {
+  color: #1ba0e2;
+  text-decoration: none;
+}
+.newFormContainer ul {
+  margin-left: 0px;
+  padding-left: 20px;
+}
+.newFormContainer ul li {
+  list-style-type: disc;
+}
+.newFormContainer .columnLeft {
+  float: left;
+  padding: 30px 30px 30px 10px;
+}
+.newFormContainer .columnRight {
+  float: right;
+  padding: 30px 10px 30px 30px;
+}
+/**
+ * @!Form:NewErrorSummary
+ *
+ * Used to display form-wide error.
+ *
+ */
+.newErrorSummary {
+  background: #dd0000;
+  color: white;
+  min-height: 30px;
+  padding: 15px;
+  margin: 0 0 15px 0;
+}
+.newErrorIcon {
+  background: url('/assets/stylesheets/images/sprite/traveloka-main-20011.png') no-repeat -1px -847px;
+  width: 29px;
+  height: 29px;
+  position: absolute;
+}
+.newErrorSummaryText {
+  margin-left: 40px;
+}
+/**
+ * @!Buttons:NewCallToAction
+ *
+ * This supposed to change old button style .callToAction
+ *
+ * Styles for buttons, call to actions or otherwise, to be consistent.
+ */
+.newCallToAction, .newCallToAction:link {
+  display: block;
+  background-color: #f97b0c;
+  padding: 10px 15px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+.newCallToAction:hover {
+  background-color: #e23c03;
+}
+a.newCallToAction {
+  color: #fff;
+}
+/**
+ * @!Payment:Hotel
+ *
+ * Hotel product specific styling.
+ */
+#hotelBookingPaymentSummary {
+  clear: both;
+  border-color: #1ba0e2;
+  margin: 15px 0 0 27px;
+}
+#hotelBookingPaymentSummary ul {
+  margin: 0 0 15px 15px;
+}
+.hotelPostPaymentHeader {
+  margin: 56px 0 0 0;
+}
+.hotelBookingCntr dl#hotelDetail {
+  margin-left: 30px;
+}
+/**
+ * @!Form:NewVerticalFields
+ *
+ * This supposed to replace verticalFields on new CSS standard style
+ *
+ * Vertical fields in generic forms. They are to be used on simple
+ * and straightforward forms. Normal width for these fields are 500px.
+ * You may override them by changing the width value of these selectors:
+ *
+ * .verticalField
+ */
+.newVerticalField {
+  margin: 0px;
+  padding: 0px;
+}
+.newVerticalField .fieldLabel {
+  margin-bottom: 7px;
+  color: #333;
+}
+.newVerticalField label {
+  font-size: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+.newVerticalField .field input[type="text"] {
+  width: 233px;
+  margin-bottom: 5px;
+}
+.newVerticalField .field select {
+  width: 250px;
+}
+.newVerticalField .field {
+  float: left;
+  margin-bottom: 15px;
+}
+.newVerticalField .fieldError {
+  display: none;
+}
+.newVerticalField.error .fieldError {
+  display: block;
+  font-size: 14px;
+  color: #dd0000;
+  width: 300px;
+}
+.newVerticalField.error input[type=text] {
+  background: #fff2f2;
+  color: #dd0000;
+  border: 1px solid #dd0000;
+}
+.newVerticalField .helpText {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+/**
+ * @!FAQ
+ *
+ * moving FAQ page style from tv-style-faq
+ */
+#faqPage #sliderFaq {
+  background: url("/assets/stylesheets/images/background/faq-20001.jpg");
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 330px;
+}
+#faqPage #tvFAQfull {
+  margin-top: 350px;
+  font-size: 16px;
+}
+#faqPage #tvFAQfull h1 {
+  margin-bottom: 15px;
+}
+#faqPage #tvFAQfull p {
+  margin-bottom: 25px;
+  line-height: 24px;
+}
+#faqPage #tvFAQfull #indexTable {
+  float: left;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 15px 30px 15px;
+  width: 250px;
+  border: 1px solid #dededd;
+  margin-left: 15px;
+}
+#faqPage #tvFAQfull #indexTable ul {
+  margin-left: 10px;
+}
+#faqPage #tvFAQfull #indexTable li {
+  float: left;
+  margin: 5px 30px;
+  list-style: initial;
+  clear: left;
+  color: #434343;
+}
+#faqPage #tvFAQfull #indexTable a, #faqPage #tvFAQfull #indexTable a:visited {
+  color: #1ba0e2;
+}
+#faqPage #tvFAQfull #indexTable h2 {
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+#faqPage .faq {
+  margin: 5px 0;
+}
+#faqPage #faqContent {
+  float: right;
+  text-align: left;
+  width: 600px;
+  margin-top: -20px;
+  color: #434343;
+}
+#faqPage #faqContent a {
+  color: #1ba0e2;
+}
+#faqPage .faqTopic {
+  float: left;
+  padding: 5px 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+#faqPage .floatingCategory {
+  position: fixed;
+  top: 50px;
+}
+#faqPage .bottomCategory {
+  position: absolute;
+  margin-top: 6700px;
+}
+#faqPage #faqContent h2 {
+  color: #434343;
+  display: block;
+  font-size: 25px;
+  font-weight: 400;
+  padding: 60px 0 0 0;
+  margin: -40px 0 20px 0;
+  line-height: 36px;
+}
+#faqPage #faqContent dl .tvQ {
+  color: #000000;
+  font-weight: bold;
+}
+#faqPage #faqContent dt {
+  float: left;
+  width: 70px;
+  font-weight: bold;
+}
+#faqPage #faqContent dd {
+  float: right;
+  width: 470px;
+}
+#faqPage #faqContent dd span.tvHigh {
+  color: #333333;
+}
+#faqPage #faqContent dl p {
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+#faqPage #letUsKnow {
+  font-size: 18px;
+  padding-top: 20px;
+  padding-left: 15px;
+  clear: both;
+  display: block;
+}
+#faqPage #letUsKnow a {
+  color: #1ba0e2;
+}
+/**
+ * @!RetrieveBooking
+ *
+ * Retrieve booking features normal styles.
+ *
+ * notes : new general form style should be implemented to simplify things
+ */
+h2.retrieveBookingTitle {
+  margin: 100px 0 15px 30px;
+  color: #434343;
+  font-size: 30px;
+}
+#retrieveBooking.newFormContainer {
+  margin: 0 auto 0 auto;
+  width: 850px;
+}
+#retrieveBooking.newFormContainer.userRetrieveBooking {
+  width: 650px;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+#retrieveBooking .columnWrapper {
+  background: url("/assets/stylesheets/images/background/border-20001.png") 450px repeat-y;
+}
+#retrieveBooking.userRetrieveBooking .columnWrapper {
+  background: none;
+}
+#retrieveBooking button {
+  float: left;
+}
+#retrieveBooking .columnLeft {
+  width: 410px;
+}
+#retrieveBooking.userRetrieveBooking .columnLeft {
+  width: 600px;
+  padding: 30px 0 0 20px;
+  margin: 0px;
+}
+#retrieveBooking .columnRight {
+  width: 360px;
+}
+#retrieveBooking.userRetrieveBooking .columnRight {
+  width: 400px;
+  float: left;
+  margin: 0px;
+  padding: 10px 0 30px 25px;
+}
+#retrieveBookingResult h3 {
+  margin: 0 0 15px 0;
+  padding: 0px;
+  font-size: 20px;
+}
+#retrieveBookingResult .bookingInstruction {
+  float: left;
+  width: 480px;
+  border: 1px solid #c7c7c7;
+  margin: 10px 0 0 40px;
+  padding: 30px 30px 45px 30px;
+}
+#retrieveBookingResult.userRetrieveBooking .bookingInstruction {
+  width: 600px;
+  margin: 30px 0 20px 20px;
+  padding: 20px;
+}
+#retrieveBookingResult .bookingInstruction p {
+  padding: 0px;
+  line-height: 24px;
+  color: #434343;
+}
+#retrieveBookingResult .flightDetailBox {
+  float: right;
+  width: 350px;
+}
+#retrieveBookingResult.userRetrieveBooking .flightDetailBox {
+  float: left;
+  width: 350px;
+  margin: 0 0 30px 30px;
+}
+#retrieveBookingResult .flightDetail {
+  border-left: 4px solid #1ba0e2;
+  padding: 0 0 0 10px;
+  margin-bottom: 20px;
+}
+#retrieveBookingResult .airlineLabel {
+  float: left;
+  margin: 0 10px 0 0;
+}
+#retrieveBookingResult .flightDetail p.flightDetailTitle {
+  margin: 0 0 0 5px;
+  padding: 0px;
+  font-size: 20px;
+  color: #434343;
+}
+#retrieveBookingResult .flightDetail p.flightDetailDate {
+  margin-left: 5px;
+  padding: 0px;
+}
+#retrieveBookingResult .airlineDetailBox {
+  background: #F0F0F0;
+  margin-top: 15px;
+  padding: 10px;
+}
+#retrieveBookingResult .connectingIcon {
+  background: url("/assets/stylesheets/images/sprite/flight-search-20011.png") no-repeat -60px -730px;
+  width: 10px;
+  height: 28px;
+}
+#retrieveBookingResult .airlineDetailBox p {
+  font-size: 16px;
+  font-weight: bold;
+}
+#retrieveBookingResult .airlineDetailBox table {
+  margin: 5px 0 10px 10px;
+}
+#retrieveBookingResult .airlineDetailBox table tr td {
+  font-size: 14px;
+}
+#retrieveBookingResult .airlineDetailBox table tr td.airportId {
+  font-weight: bold;
+  width: 40px;
+}
+#retrieveBookingResult .airlineDetailBox table tr td.airportLocation {
+  width: 150px;
+}
+#retrieveBookingResult .hotelDetailBox p, #retrieveBookingResult .hotelDetailBox h4 {
+  margin: 0px;
+  padding: 0px;
+}
+#retrieveBookingResult .hotelDetailBox h4 {
+  font-weight: bold;
+  font-size: 18px;
+}
+#retrieveBookingResult .hotelDetailBox table tr td {
+  color: #434343;
+}
+#retrieveBookingResult .hotelDetailBox table tr td.hotelDetailTitle {
+  width: 200px;
+}
+/**
+ * @!Form:TermsAgreement
+ *
+ * Terms and agreement normal styles.
+ */
+.termsAgreement {
+  margin: 20px 0 30px 0;
+  background: #F0F0F0;
+  border: 1px solid #434343;
+}
+.termsAgreement p {
+  padding: 0;
+  margin: 15px;
+}
+.termsAgreement.error {
+  border-color: red;
+}
+.termsAgreement.error p.error {
+  background: red;
+  color: white;
+  margin: 0;
+  padding: 6px 12px;
+}
+/**
+ * @!Form:VerticalFields
+ *
+ * Vertical fields in generic forms. They are to be used on simple
+ * and straightforward forms. Normal width for these fields are 500px.
+ * You may override them by changing the width value of these selectors:
+ *
+ * .verticalField
+ *
+ * @see http://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php
+ */
+.verticalField {
+  margin: 15px 0;
+  width: 260px;
+}
+.verticalField .fieldLabel {
+  margin-bottom: 4px;
+  color: #333;
+}
+.verticalField.error label {
+  background: red;
+  color: white;
+  padding: 0 5px;
+  font-size: 16px;
+}
+.verticalField .field input[type="text"] {
+  width: 233px;
+}
+.verticalField .field select {
+  width: 250px;
+}
+.verticalField .field {
+  float: left;
+  width: 250px;
+}
+.verticalField.error .fieldError {
+  display: block;
+  color: red;
+  padding: 0;
+  font-size: 14px;
+}
+.verticalField.error input[type=text].fieldText {
+  background: #fff2f2;
+  color: #dd0000;
+  border: 1px solid #dd0000;
+}
+.verticalField .helpText {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+/**
+ * @!Form:HorizontalFields
+ *
+ * Fields with labels aligned right for generic forms. You may change the
+ * size of the field by changing:
+ *
+ * - .horizontalField .fieldLabel
+ * - .horizontalField .field
+ *
+ * @see http://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php
+ */
+.horizontalField {
+  margin: 15px 0;
+}
+.horizontalField .fieldLabel {
+  float: left;
+  width: 185px;
+  text-align: right;
+}
+.horizontalField label {
+  margin-top: 4px;
+  color: #333;
+}
+.horizontalField.error label {
+  background: red;
+  color: white;
+  padding: 0 5px;
+  font-size: 16px;
+}
+.horizontalField .field {
+  width: 300px;
+  float: right;
+}
+.horizontalField.error .fieldError {
+  display: block;
+  color: red;
+  padding: 0;
+  font-size: 14px;
+}
+.horizontalField .prefilled {
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+.horizontalField .helpText {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+/**
+ * @!Buttons:CallToAction
+ *
+ * Styles for buttons, call to actions or otherwise, to be consistent.
+ */
+/* Primary, call to action buttons */
+.callToAction, .callToAction:link {
+  display: block;
+  background-color: #f97b0c;
+  padding: 10px 15px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+}
+.callToAction:hover {
+  background-color: #e23c03;
+}
+/* Secondary action */
+/**
+ * @!Content:TwoColumn
+ *
+ * Layout styling for two column content.
+ */
+.twoColumnContent .leftSidebar {
+  width: 300px;
+  float: left;
+}
+.twoColumnContent .rightText {
+  width: 630px;
+  float: right;
+}
+/**
+ * @!Content:NormalText
+ *
+ * Styling for normal text.
+ */
+.normalText {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.normalText a {
+  color: #1ba0e2;
+}
+.normalText a:visited {
+  color: #619fdb;
+}
+.normalText h1 {
+  padding: 0 0 6px 0;
+  font-size: 36px;
+  color: #434343;
+  border-bottom: 2px solid #ccc;
+  margin: 25px 0;
+}
+.normalText h2 {
+  padding: 0;
+}
+.normalText h4 {
+  padding: 0;
+  color: #434343;
+  margin: 15px 0;
+  font-size: 20px;
+}
+.normalText h5 {
+  padding: 0;
+  color: #333333;
+  font-size: 17px;
+  margin: 15px 0;
+}
+.normalText p {
+  padding: 0;
+  margin: 12px 0;
+  color: #434343;
+}
+.normalText strong {
+  color: #434343;
+  font-weight: normal;
+}
+.normalText ul {
+  margin: 12px 0;
+  padding-left: 45px;
+  color: #434343;
+}
+.normalText ul li {
+  list-style-type: disc;
+  margin: 5px 0;
+}
+.normalText ol {
+  margin: 12px 0;
+  padding-left: 45px;
+  color: #434343;
+}
+.normalText ol li {
+  list-style-type: decimal;
+}
+/**
+ * @!Widget:Autocomplete
+ *
+ * More info: tv.ui.widget.autocomplete.Autocomplete
+ */
+.widgetAutocomplete {
+  position: relative;
+}
+.widgetAutocomplete .widgetAcInput {
+  display: block;
+  height: 20px;
+  color: #333;
+}
+.widgetAutocomplete .widgetAcInput.showingHelperText {
+  color: #999;
+}
+.widgetAutocomplete .widgetAcResult {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 300px;
+  padding: 5px;
+  background: white;
+  border: 1px solid #CCCCCC;
+  color: #666666;
+  -moz-box-shadow: 0 0 5px 0 #cccccc;
+  -webkit-box-shadow: 0 0 5px 0 #cccccc;
+  box-shadow: 0 0 5px 0 #cccccc;
+}
+.widgetAutocomplete .widgetAcResult .widgetAcResultGroupHeader {
+  font-size: 14px;
+  color: #999;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 10px 8px 6px 8px;
+}
+.widgetAutocomplete .widgetAcResult .widgetAcResultRow {
+  display: block;
+  padding: 6px 8px;
+  margin: 0;
+  line-height: 1;
+  border: 1px solid #fff;
+}
+.widgetAutocomplete .widgetAcResult .widgetAcResultRow.active {
+  border: 1px solid #6CB5F9;
+  background: #9ED2EF;
+  color: #006FA1;
+}
+.widgetAutocomplete .widgetAcHelpBox {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #CCCCCC;
+  color: #666666;
+  -moz-box-shadow: 0 0 5px 0 #cccccc;
+  -webkit-box-shadow: 0 0 5px 0 #cccccc;
+  box-shadow: 0 0 5px 0 #cccccc;
+}
+.widgetAutocomplete .widgetAcHelpBoxGroup {
+  margin: 13px;
+  float: left;
+  display: block;
+  width: 200px;
+}
+.widgetAutocomplete .widgetAcHelpBoxGroup h3 {
+  padding: 0;
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.widgetAutocomplete .widgetAcHelpBoxGroup a {
+  display: block;
+}
+/**
+ * @!fullPageSlider
+ */
+.tvFrontPageSlider {
+  left: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  height: 439px;
+  cursor: pointer;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+}
+.tvFrontPageButtons {
+  z-index: 10;
+  position: absolute;
+  margin-top: 290px;
+}
+.tvFrontPageButton {
+  display: block;
+  width: 14px;
+  height: 13px;
+  background: url("/assets/stylesheets/images/sprite/bullets2-20011.png") no-repeat -4px -3px;
+  float: left;
+  margin: 3px;
+  cursor: pointer;
+}
+.tvFrontPageButton.selected {
+  background: url("/assets/stylesheets/images/sprite/bullets2-20011.png") no-repeat -4px -25px;
+}
+.tvFrontPagePrev {
+  background: url("/assets/stylesheets/images/misc/arrows2-20001.png") no-repeat 0px -1px;
+  width: 36px;
+  height: 107px;
+  position: absolute;
+  z-index: 10;
+  margin-top: 165px;
+  cursor: pointer;
+  display: none;
+}
+.tvFrontPageNext {
+  background: url("/assets/stylesheets/images/misc/arrows2-20001.png") no-repeat -38px -1px;
+  width: 36px;
+  height: 100px;
+  position: absolute;
+  z-index: 10;
+  margin-top: 165px;
+  margin-left: 920px;
+  cursor: pointer;
+  display: none;
+}
+/**
+ * @!PopularHotelWidget
+ */
+#popularHotelWidget, #topHotelWidget {
+  width: 600px;
+  float: right;
+  padding: 0px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+#popularHotelWidget h2, #topHotelWidget h2 {
+  padding: 0px;
+  margin: 10px 0;
+}
+.hotelFrontPageBox {
+  border: 1px solid #cccccc;
+  width: 165px;
+  height: 245px;
+  float: left;
+  padding: 15px;
+}
+.hotelFrontPageBox p {
+  margin: 0px;
+  padding: 0px;
+}
+.hotelFrontPageBox p span {
+  font-size: 18px;
+  font-weight: bold;
+}
+.hotelNameLocation {
+  height: 70px;
+}
+.hotelNameLocation p.hotelName a {
+  color: #1ba0e2;
+  font-weight: bold;
+  font-size: 16px;
+}
+.hotelFrontPageBox p.hotelPrice {
+  margin-bottom: 10px;
+}
+.hotelBoxImage {
+  background: #cccccc;
+  width: 165px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+#popularHotel1, #topHotel1 {
+  border-right: none;
+  border-bottom: none;
+}
+#popularHotel2, #topHotel2 {
+  border-bottom: none;
+}
+#popularHotel3, #topHotel3 {
+  border-left: none;
+  border-bottom: none;
+}
+#popularHotel4, #topHotel4 {
+  border-right: none;
+}
+#popularHotel6, #topHotel6 {
+  border-left: none;
+}
+.hotelSeePriceBg {
+  background: url('/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png') no-repeat -95px 0;
+  width: 55px;
+  height: 29px;
+  color: white;
+  padding-left: 10px;
+}
+a.hotelSeePrice {
+  text-decoration: none;
+  line-height: 27px;
+}
+h2#popularCityTitle {
+  padding: 0px;
+  margin: 0px 0px 10px 0px;
+}
+#popularCityList {
+  background: #F0F0F0;
+  border-left: 3px solid #1ba0e2;
+  padding: 17px 20px 20px 20px;
+  float: left;
+  width: 294px;
+}
+.popularCityBox {
+  width: 294px;
+  margin-bottom: 21px;
+}
+.popularCityImage {
+  width: 90px;
+  height: 90px;
+  background: #cccccc;
+  float: left;
+}
+.popularCityName {
+  margin-left: 5px;
+  float: left;
+}
+.popularCityName p a {
+  color: #1ba0e2;
+  font-weight: bold;
+  font-size: 16px;
+}
+/**
+ * @!MyBooking
+ */
+#myBookingContent {
+  margin-left: 20px;
+  padding-bottom: 20px;
+  color: #434343;
+}
+#myBookingContent .yellowTriangle {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") 0px -214px no-repeat;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+#myBookingContent .greyTriangle {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -34px -214px no-repeat;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  margin-left: -15px;
+  margin-top: -15px;
+}
+#myBookingContent .tinyHotelAirplaneIcon {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -70px -220px no-repeat;
+  width: 15px;
+  height: 8px;
+  margin: 5px;
+}
+#myBookingContent .tinyAirplaneIcon {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -94px -220px no-repeat;
+  width: 9px;
+  height: 9px;
+  margin: 5px;
+}
+#myBookingContent .tinyHotelIcon {
+  background: url("/assets/stylesheets/images/sprite/travelokahotel-sprite-20011.png") -115px -220px no-repeat;
+  width: 6px;
+  height: 8px;
+  margin: 5px 7px;
+}
+#myBookingPage #bookingListTitle {
+  border-bottom: 1px solid #434343;
+  padding-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+#myBookingPage #bookingListTitle h2 {
+  padding: 0px;
+  margin: 0px;
+}
+#myBookingPage .bookingItem {
+  background: #f0f0f0;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+#myBookingPage .airlineIconList {
+  width: 30px;
+  float: left;
+}
+#myBookingPage .airlineNameList {
+  width: 100px;
+  float: left;
+}
+#myBookingPage .airlineName {
+  height: 25px;
+  color: #434343;
+  line-height: 25px;
+}
+#myBookingPage .bookingItem h3 {
+  margin: 0px 0px 5px 0px;
+  padding: 0px;
+  font-size: 18px;
+}
+#myBookingPage .bookingItemInfo {
+  width: 480px;
+  float: left;
+}
+#myBookingPage .bookingItemAction {
+  width: 144px;
+  float: right;
+}
+#myBookingPage .bookingItemAirlines {
+  float: left;
+  width: 195px;
+  font-size: 14px;
+  color: #434343;
+}
+#myBookingPage .bookingItemDetail {
+  border-left: 2px solid #6D6D6D;
+  width: 80px;
+  float: left;
+  display: block;
+  position: relative;
+  padding: 5px 5px 5px 7px;
+  font-size: 13px;
+}
+#myBookingPage .bookingItemDetail p {
+  margin: 0px;
+  padding: 0px;
+}
+#myBookingPage .bookingItemDetail.notAvailable {
+  border-left: none;
+}
+#myBookingPage .bookingItemId {
+  font-size: 14px;
+  margin: 15px 0 15px 0;
+}
+#myBookingPage .bookingItemButtons {
+  text-align: right;
+}
+#myBookingPage a.bookingItemButton {
+  background: #0082bc;
+  text-decoration: none;
+  padding: 4px 8px;
+  color: white;
+  margin-left: 5px;
+}
+#myBookingPage span.bookingItemButtonInactive {
+  background: #c7c7c7;
+  padding: 5px 10px;
+  color: white;
+}
+/**
+ * @!SalesOrder
+ */
+#salesOrderContent {
+  margin-left: 20px;
+  color: #434343;
+}
+h2.salesOrderTitle {
+  margin: 25px 0 10px 0;
+  padding: 0px;
+  font-size: 20px;
+  color: #434343;
+}
+#salesOrderPage .salesOrderDetail {
+  background: #f0f0f0;
+  padding: 15px 20px 20px 20px;
+}
+#salesOrderPage .salesOrderDetail p {
+  padding: 0px;
+}
+#salesOrderPage .salesOrderDetail a {
+  color: #1ba0e2;
+}
+#salesOrderPage .salesOrderItineraryTitle {
+  font-size: 20px;
+  padding: 10px 0;
+}
+#salesOrderPage table tr td {
+  color: #434343;
+  vertical-align: top;
+}
+#salesOrderPage table tr td p {
+  margin: 0px;
+  padding: 0px;
+}
+#salesOrderPage .itineraryFlightTitle .airlineLabel {
+  float: left;
+  margin: 0px;
+  color: #434343;
+}
+#salesOrderPage .itineraryFlightTitle .airlineNameCode {
+  float: left;
+  color: #434343;
+  margin-left: 5px;
+}
+#salesOrderPage .salesOrderItineraryContent {
+  margin-bottom: 30px;
+}
+#salesOrderPage .detailItinerary {
+  padding: 15px;
+  border-top: 1px solid #434343;
+}
+#salesOrderPage .salesOrderButton {
+  background: #006FA1;
+  width: 150px;
+  float: right;
+  border: none;
+  padding: 7px;
+  color: white;
+  font-size: 14px;
+}

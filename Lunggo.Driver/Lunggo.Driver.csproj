@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Driver.RamaDriver</StartupObject>
+    <StartupObject>Lunggo.Driver.BayuDriver</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper">
@@ -109,6 +109,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
+      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
+      <Name>Lunggo.Flight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>

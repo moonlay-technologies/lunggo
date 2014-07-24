@@ -1,0 +1,316 @@
+﻿using CsQuery;
+using Lunggo.Flight.Model;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lunggo.Flight.Crawler
+{
+    public class AirAsiaCrawler : ICrawler
+    {
+        string AirAsiaBaseUrl = "https://booking.airasia.com/";
+        string AirLineName = "Air Asia";
+        int AirLineCode = 2;
+        public List<FlightTicket> Search(TicketSearch SearchParam)
+        {
+            try
+            {
+                CQ TableResult = CsQueryGetTbodyFromTableFlightIdAirAsia(SearchParam);
+                List<FlightTicket> ListFlightTicket = new List<FlightTicket>();
+                List<List<string>> ResultListOfTable = TableResult.First().Find("tr").Select(tr => tr.Cq().Find("td").Select(td => td.InnerHTML).ToList()).ToList();
+                ListFlightTicket.AddRange(ConvertHTMLTableToFlightTicketClass(ResultListOfTable, SearchParam, false));
+
+                if (TableResult.Count() > 1)
+                {
+                    List<List<string>> ResultListOfTable2 = TableResult.Last().Find("tr").Select(tr => tr.Cq().Find("td").Select(td => td.InnerHTML).ToList()).ToList();
+                    ListFlightTicket.AddRange(ConvertHTMLTableToFlightTicketClass(ResultListOfTable, SearchParam,true));
+                }
+                return ListFlightTicket;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        CQ CsQueryGetTbodyFromTableFlightIdAirAsia(TicketSearch SearchParam)
+        {
+            CQ CsQueryContentPencarianAirAsia = GetCsQueryHTMLContentPencarianAirAsia(SearchParam);
+            CQ CsQueryTable = CsQueryContentPencarianAirAsia[".RadGrid.RadGrid_AirAsiaBooking>table>tbody"];
+            return CsQueryTable;
+        }
+        CQ GetCsQueryHTMLContentPencarianAirAsia(TicketSearch SearchParam)
+        {
+            string HTMLContentPencarianAirAsia = GetStringHTMLContentPencarianAirAsia(SearchParam);
+            CQ CsQueryContentPencarianAirAsia = CQ.Create(HTMLContentPencarianAirAsia);
+            return CsQueryContentPencarianAirAsia;
+        }
+        string GetStringHTMLContentPencarianAirAsia(TicketSearch SearchParam)
+        {
+            RestClient RestClientAirAsia = GetRestClientForAirAsia();
+            RestRequest RestRequestAirAsia = GetRestRequestForSearchPage();
+            IRestResponse ResponseSearchPage = RestClientAirAsia.Execute(RestRequestAirAsia);
+            string ViewStateFromSearchPage = GetViewStateFromSearchPage(ResponseSearchPage);
+            IRestResponse ResponsePencarianTicket = RestResponseAirAsiaPencarianTicket(RestClientAirAsia, SearchParam, ViewStateFromSearchPage);
+            return ResponsePencarianTicket.Content;
+        }
+        RestClient GetRestClientForAirAsia()
+        {
+            RestClient RestClientAirAsia = new RestClient();
+            RestClientAirAsia.BaseUrl = this.AirAsiaBaseUrl;
+            RestClientAirAsia.CookieContainer = new CookieContainer();
+            return RestClientAirAsia;
+        }
+        RestRequest GetRestRequestForSearchPage()
+        {
+            RestRequest RestRequestForSearchPage = new RestRequest(Method.GET);
+            RestRequestForSearchPage.Resource = "Search.aspx";
+            return RestRequestForSearchPage;
+        }
+        string GetViewStateFromSearchPage(IRestResponse ResponseSearchPage)
+        {
+            CQ CsQueryContentSearchPage = CQ.Create(ResponseSearchPage.Content);
+            CQ CsQueryIDViewState = CsQueryContentSearchPage["#viewState"];
+            return CsQueryIDViewState.Val();
+        }
+        IRestResponse RestResponseAirAsiaPencarianTicket(RestClient RestClientAirAsia, TicketSearch SearchParam, string ViewStateFromSearchPage)
+        {
+            try
+            {
+                RestRequest RestRequestForPencarianTicket = ConvertRestRequestForPencarianTicket(SearchParam, ViewStateFromSearchPage);
+                IRestResponse ResponsePencarianTicket = RestClientAirAsia.Execute(RestRequestForPencarianTicket);
+                return ResponsePencarianTicket;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        RestRequest ConvertRestRequestForPencarianTicket(TicketSearch SearchParam, string ViewStateFromSearchPage)
+        {
+            RestRequest request = new RestRequest(Method.POST);
+            request.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.Resource = "Search.aspx";
+            request.AddParameter("__VIEWSTATE", ViewStateFromSearchPage);
+            request.AddParameter("MemberLoginSearchView$HFTimeZone", 420);
+            request.AddParameter("ControlGroupSearchView_AvailabilitySearchInputSearchVieworiginStation1", SearchParam.DepartFromCode);
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$TextBoxMarketOrigin1", SearchParam.DepartFromCode);
+            request.AddParameter("ControlGroupSearchView_AvailabilitySearchInputSearchViewdestinationStation1", SearchParam.DepartToCode);
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$TextBoxMarketDestination1", SearchParam.DepartToCode);
+            request.AddParameter("date_picker", SearchParam.DepartDate.ToString("MM/dd/yyyy"));
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListMarketDay1", SearchParam.DepartDate.ToString("dd"));
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListMarketMonth1", SearchParam.DepartDate.ToString("yyyy-MM"));
+            if (SearchParam.IsReturn)
+            {
+                request.AddParameter("date_picker", SearchParam.ReturnDate.ToString("MM/dd/yyyy"));
+                request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListMarketDay2", SearchParam.ReturnDate.ToString("dd"));
+                request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListMarketMonth2", SearchParam.ReturnDate.ToString("yyyy-MM"));
+                request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$RadioButtonMarketStructure", "RoundTrip");
+            }
+            else
+            {
+                request.AddParameter("oneWayOnly", 1);
+                request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$RadioButtonMarketStructure", "OneWay");
+            }
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListPassengerType_ADT", SearchParam.Adult);
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListPassengerType_CHD", SearchParam.Child);
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListPassengerType_INFANT", SearchParam.Infant);
+            request.AddParameter("ControlGroupSearchView$AvailabilitySearchInputSearchView$DropDownListSearchBy", "columnView");
+            request.AddParameter("ControlGroupSearchView$ButtonSubmit", "Search");
+            return request;
+
+        }
+        List<FlightTicket> ConvertHTMLTableToFlightTicketClass(List<List<string>> ResultListOfTable, TicketSearch SearchParam, bool returning)
+        {
+            try
+            {
+                List<FlightTicket> ListFlightTicket = new List<FlightTicket>();
+                for (int TableRow = 0; TableRow < ResultListOfTable.Count(); TableRow++)
+                {
+                    if (isRowHeaderThatDoesntContainAnyData(ResultListOfTable[TableRow]))
+                        continue;
+                    FlightTicket Ticket = new FlightTicket();
+                    for (int TableColumn = 0; TableColumn < ResultListOfTable[TableRow].Count(); TableColumn++)
+                    {
+                        Ticket = ReadFlightTicketFromCellInTable(ResultListOfTable[TableRow][TableColumn], SearchParam, TableColumn, Ticket);
+                    }
+                    Ticket.AirlineName = this.AirLineName;
+                    Ticket.AirlineCode = this.AirLineCode;
+                    Ticket.returning = returning;
+                    ListFlightTicket.Add(Ticket);
+                }
+                return ListFlightTicket;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        FlightTicket ReadFlightTicketFromCellInTable(string CellHtml, TicketSearch SearchParam, int TableColumn, FlightTicket Ticket)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(CellHtml))
+                    CellHtml = ReplaceUnnecessaryHTMLTag(CellHtml);
+                else
+                    CellHtml = "";
+                if (TableColumn == 0)
+                {
+                    string[] ValueinArray = FirstColumnToArrayString(CellHtml);
+                    List<DepartDetail> ListDepartDetail = GetDepartDetailFromArrayValue(ValueinArray);
+                    Ticket.ListDepartDetail.AddRange(ListDepartDetail);
+                }
+                else if (TableColumn == 1 || TableColumn == 2)
+                {
+                    CQ temp = CQ.Create(CellHtml);
+                    string ClassNameForPrice = ".price";
+                    bool promo = isPromo(temp);
+                    List<string> ListPrice = temp.Find(ClassNameForPrice).Select(tr => tr.InnerHTML).ToList();
+                    int counterForDecidingTicketType = 0;
+                    for (int i = 0; i < ListPrice.Count(); i++)
+                    {
+                        ListPrice[i] = GetPrice(ListPrice[i]);
+                    }
+                    if (TableColumn == 1)
+                    {
+                        if (SearchParam.Adult > 0)
+                        {
+                            Ticket.AdultTicket.EconomicPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            if (promo)
+                                Ticket.AdultTicket.PromoPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                        if (SearchParam.Child > 0)
+                        {
+                            Ticket.ChildTicket.EconomicPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            if (promo)
+                                Ticket.ChildTicket.PromoPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                        if (SearchParam.Infant > 0)
+                        {
+                            Ticket.InfantTicket.EconomicPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            if (promo)
+                                Ticket.InfantTicket.PromoPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                    }
+                    else
+                    {
+                        if (SearchParam.Adult > 0)
+                        {
+                            Ticket.AdultTicket.BusinessPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                        if (SearchParam.Child > 0)
+                        {
+                            Ticket.ChildTicket.BusinessPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                        if (SearchParam.Infant > 0)
+                        {
+                            Ticket.InfantTicket.BusinessPrice = Convert.ToInt32(ListPrice[counterForDecidingTicketType]);
+                            counterForDecidingTicketType++;
+                        }
+                    }
+
+                }
+                return Ticket;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        List<DepartDetail> GetDepartDetailFromArrayValue(string[] FirstColumnValue)
+        {
+            List<DepartDetail> ListDepartDetail = new List<DepartDetail>();
+            DepartDetail FlightDetail = new DepartDetail();
+            for (int i = 0; i < FirstColumnValue.Count(); i++)
+            {
+                if (i % 4 > 1)
+                {
+                    if (i % 4 == 2)
+                    {
+                        ListDepartDetail.Add(FlightDetail);
+                        FlightDetail = new DepartDetail();
+                    }
+                    continue;
+                }
+                if (i % 4 == 0)
+                {
+                    FlightDetail.FlightCode = FirstColumnValue[i];
+                }
+                else if (i % 4 == 1)
+                {
+                    string[] SplitDepart = FirstColumnValue[i].Split('-');
+                    FlightDetail.DepartTime = ConvertStringTimeToTimeSpan(SplitDepart[0].Substring(0, 4));
+                    FlightDetail.DepartFrom = SplitDepart[0].Substring(5, 3);
+                    FlightDetail.ArrivedTime = ConvertStringTimeToTimeSpan(SplitDepart[1].Substring(1, 4));
+                    FlightDetail.ArrivedAt = SplitDepart[1].Substring(6, 3);
+                }
+
+            }
+            return ListDepartDetail;
+        }
+        bool isRowHeaderThatDoesntContainAnyData(List<string> ListColumn)
+        {
+            return ListColumn.Count() < 1 ? true : false;
+        }
+        string[] FirstColumnToArrayString(string HTMLOfFirstColumn)
+        {
+            CQ HTMLElementOfFlightCode = CQ.Create(HTMLOfFirstColumn);
+            CQ dom = HTMLElementOfFlightCode[".hotspot"];
+            string StringHTML = dom.ToString();
+            string[] split = ReplaceUnnecessaryHTMLTagForFirstColumnAndSplit(StringHTML);
+            return split;
+        }
+        string[] ReplaceUnnecessaryHTMLTagForFirstColumnAndSplit(string StringHTML)
+        {
+            StringHTML = StringHTML.Replace("<div class=\"hotspot\" onmouseover=\"javascript:SKYSALES.tooltip.show(", "");
+            StringHTML = StringHTML.Replace("<span class=\"hotspot\" onmouseover=\"javascript:SKYSALES.tooltip.show(", "");
+            StringHTML = StringHTML.Replace(");\" onmouseout=\"javascript:SKYSALES.tooltip.hide();\">...</div>", "");
+            StringHTML = StringHTML.Replace(");\" onmouseout=\"javascript:SKYSALES.tooltip.hide();\">...</span>", "");
+            StringHTML = StringHTML.Replace("<b>", "");
+            StringHTML = StringHTML.Replace("</b>", "");
+            StringHTML = StringHTML.Replace("<br/><br/>", "<br/>").Replace("<br/>", "§");
+            return StringHTML.Split('§');
+        }
+        string ReplaceUnnecessaryHTMLTag(string StringHTML)
+        {
+            StringHTML = StringHTML.Replace("\n", "");
+            StringHTML = StringHTML.Replace("/n", "");
+            StringHTML = StringHTML.Replace("\t", "");
+            StringHTML = StringHTML.Replace("/t", "");
+            return StringHTML.ToString().Trim();
+        }
+        bool isPromo(CQ temp)
+        {
+            string ClassNameForPromo = ".classofservice";
+            var x = temp.Find(ClassNameForPromo).Select(tr => tr.InnerHTML).ToList();
+            if (x.Count()>0)
+                return true;
+            else
+                return false;
+        }
+        string GetPrice(string StringHTML)
+        {
+            StringHTML = StringHTML.Replace("<div>", "");
+            StringHTML = StringHTML.Replace("</div>", "");
+            StringHTML = StringHTML.Replace("<span>", "");
+            StringHTML = StringHTML.Replace("</span>", "");
+            StringHTML = StringHTML.Replace(".", "");
+            StringHTML = StringHTML.Replace(",", "");
+            return StringHTML.Split(' ')[0].Trim();
+        }
+        TimeSpan ConvertStringTimeToTimeSpan(string stringTime)
+        {
+            return TimeSpan.ParseExact(stringTime, @"hhmm", CultureInfo.InvariantCulture);
+        }
+    }
+}
