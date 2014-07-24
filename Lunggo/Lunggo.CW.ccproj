@@ -11,7 +11,7 @@
     <RootNamespace>Lunggo</RootNamespace>
     <AssemblyName>Lunggo</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
-    <Name>Lunggo</Name>
+    <Name>Lunggo.CW</Name>
     <UseEmulatorExpressByDefault>False</UseEmulatorExpressByDefault>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

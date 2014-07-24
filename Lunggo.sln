@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo", "Lunggo\Lunggo.ccproj", "{F3A0985F-4551-44DA-9C54-3E593F6ADCF2}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CW", "Lunggo\Lunggo.CW.ccproj", "{F3A0985F-4551-44DA-9C54-3E593F6ADCF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CustomerWeb", "Lunggo.CustomerWeb\Lunggo.CustomerWeb.csproj", "{C6C677D1-BB06-45C7-94DE-C9BB2603907B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -24,6 +24,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Generator", "Lunggo.Generator\Lunggo.Generator.csproj", "{0D1AAD8E-16D5-4B52-9CB3-AB6E91537510}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Hotel", "Lunggo.Hotel\Lunggo.Hotel.csproj", "{9F226318-0164-4D44-8B2D-4139CACA98D2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Flight", "Lunggo.Flight\Lunggo.Flight.csproj", "{DB1D6DF9-ACA2-41A0-8E5F-513A376DE8D3}"
 EndProject
 Global
