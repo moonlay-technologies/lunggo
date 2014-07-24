@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lunggo.Framework.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         public ActionResult Index()
         {
+            string val= MessageReader.GetInstance().GetMessageValue("VAL0001", "en_US");
             return View();
         }
 

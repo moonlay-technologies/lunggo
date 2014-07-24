@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Messages>
+ <Message code="VAL0001" lang="ja_JP" value="ユーザーID" />
+ <Message code="VAL0001" lang="en_US" value="User ID" />
+ <Message code="VAL0001" lang="zh_CN" value="用户ID" />
+ <Message code="VAL0001" lang="zh_TW" value="用戶ID" />
+ <Message code="VAL0001" lang="ko_KR" value="사용자 아이디" />
+ <Message code="VAL0002" lang="ja_JP" value="パスワード" />
+ <Message code="VAL0002" lang="en_US" value="Password" />
+ <Message code="VAL0002" lang="zh_CN" value="密码" />
+ <Message code="VAL0002" lang="zh_TW" value="密碼" />
+ <Message code="VAL0002" lang="ko_KR" value="비밀번호" />
+</Messages>
