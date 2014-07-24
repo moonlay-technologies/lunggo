@@ -48,7 +48,7 @@ namespace Lunggo.Generator.TableRepo
         
         static void Main(string[] args)
         {
-            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
+            String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""D:\Bayu\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True;";
             String destinationPath = String.Empty;
             String configurationXmlPath = @"test.xml";
             
@@ -177,7 +177,7 @@ namespace Lunggo.Generator.TableRepo
 
         private void SaveFile(String fileContent, String destinationPath)
         {
-            //File.WriteAllText(@"..\..\" + destinationPath,fileContent);
+            File.WriteAllText(@"..\..\" + destinationPath,fileContent);
         }
 
         private IEnumerable<ColumnDefinition> GetMappedColumnsDefinition(IEnumerable<InformationSchemaColumnDefinition> originColumnsDefinition )
@@ -286,6 +286,10 @@ namespace Lunggo.Generator.TableRepo
                 clrType = "Guid?";
             }
             else if (sqlType.Equals("varbinary", StringComparison.InvariantCultureIgnoreCase))
+            {
+                clrType = "Byte[]";
+            }
+            else if (sqlType.Equals("timestamp", StringComparison.InvariantCultureIgnoreCase))
             {
                 clrType = "Byte[]";
             }

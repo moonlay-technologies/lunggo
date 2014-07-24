@@ -7,10 +7,34 @@ namespace Lunggo.Repository.TableRecord
 {
     public class $TableName$TableRecord : Lunggo.Framework.Database.TableRecord
     {
+		$orders: {order|
+public $order.ColumnType$ $order.OriginDefinition.COLUMN_NAME$
+{
+    get { return _$order.OriginDefinition.COLUMN_NAME$; }
+    set
+    {
+        _$order.OriginDefinition.COLUMN_NAME$ = value;
+        IncrementLog("$order.OriginDefinition.COLUMN_NAME$");
+    }
+}
+}$
 		
 		$orders: {order|
-		public $order.ColumnType$ $order.OriginDefinition.COLUMN_NAME$ {get; set;}
-		}$
+private $order.ColumnType$ _$order.OriginDefinition.COLUMN_NAME$;
+}$
+
+		public static $TableName$TableRecord CreateNewInstance()
+        {
+            var record = new $TableName$TableRecord();
+            var iRecord = record.AsInterface();
+            iRecord.ManuallyCreated = true;
+            return record;
+        }
+
+		private $TableName$TableRecord()
+        {
+            ;
+        }
 
         static $TableName$TableRecord()
         {
@@ -29,12 +53,13 @@ namespace Lunggo.Repository.TableRecord
             RecordMetadata = new List<ColumnMetadata>
             {
 				$orders: {order|
-				$if(order.OriginDefinition.IsPrimaryKey)$
-				new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", true),
-				$else$
-				new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", false),
-				$endif$
-				}$
+$if(order.OriginDefinition.IsPrimaryKey)$
+new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", true),
+$else$
+new ColumnMetadata("$order.OriginDefinition.COLUMN_NAME$", false),
+$endif$
+
+}$
             };
         }
 
