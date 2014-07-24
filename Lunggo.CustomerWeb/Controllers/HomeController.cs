@@ -11,7 +11,7 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         public ActionResult Index()
         {
-            string val= MessageReader.GetInstance().GetMessageValue("VAL0001", "en_US");
+            string val= MessageManager.GetInstance().GetMessageValue("VAL0001", "en_US");
             return View();
         }
 

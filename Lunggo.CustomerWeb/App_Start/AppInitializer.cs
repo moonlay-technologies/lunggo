@@ -11,7 +11,8 @@ namespace Lunggo.CustomerWeb
     {
         public static void Init()
         {
-            InitConfigurationManager();       
+            InitConfigurationManager();
+            InitI18NMessageManager();
         }
 
         private static void InitConfigurationManager()
@@ -19,9 +20,14 @@ namespace Lunggo.CustomerWeb
             var configManager = ConfigManager.GetInstance();
             var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
             configManager.Init(configDirectoryPath);
-
-            var MessageManager = MessageReader.GetInstance();
-            MessageManager.Init(configDirectoryPath);
         }
+
+        private static void InitI18NMessageManager()
+        {
+            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
+            var messageManager = MessageManager.GetInstance();
+            messageManager.Init(configDirectoryPath);
+        }
+
     }
 }
