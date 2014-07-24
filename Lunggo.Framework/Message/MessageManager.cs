@@ -9,7 +9,7 @@ namespace Lunggo.Framework.Message
 {
     public class MessageManager
     {
-        private const String MessageXmlUrl = @"Message.xml";
+        private const String MessageXmlUrl = @"i18n_message.xml";
         private const String NotFoundMessage = @"Message is not found";
         private static readonly MessageManager Instance = new MessageManager();
         private Dictionary<string, I18NMessage> _messageDictionary;
