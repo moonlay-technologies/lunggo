@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "UW400Index";
+}
+@using(Html.BeginForm("UW400Book","UW400Booking",FormMethod.Post))
+{ 
+<form action="url booking controller">
+    <input type="text" name="cc_no" />
+    <input type="text" name="cvv" />
+    <!--
+        Other required data for credit card payment
+    -->
+    <input type="hidden" name="cc_token" />
+    <input type="hidden" value="creditcard" name="payment_type">
+    <input type="submit" value="submit" />
+</form>
+}
+<form action="url booking controller">
+    <input type="text" name="token_1" />
+    <input type="text" name="token_2" />
+    <!--
+        Other required data for mandiri clickpay payment
+    -->
+    <input type="hidden" value="clickpay" name="payment_type">
+    <input type="submit" value="submit" />
+</form>
+
+<form action="url booking controller">
+    <input type="text" name="user_id" />
+    <input type="text" name="password" />
+    <!--
+        Other required data for cimb clicks payment
+    -->
+    <input type="hidden" name="cc_token" />
+    <input type="hidden" value="cimb_clicks" name="payment_type">
+    <input type="submit" value="submit" />
+</form>
+
+
+

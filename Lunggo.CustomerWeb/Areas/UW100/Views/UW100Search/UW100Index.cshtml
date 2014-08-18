@@ -1,0 +1,71 @@
+﻿@model Lunggo.CustomerWeb.Areas.UW100.Models.UW100SearchResultViewModel
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Hotel List</h2>
+<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="padding:0px;">
+    @foreach (var item in Model.ListHotel)
+    {
+        string urlHotel = Url.RouteUrl("UW200HotelDetail", new
+                       {
+                           CountryArea = item.CountryArea,
+                           ProvinceArea = item.ProvinceArea,
+                           HotelName = item.HotelName,
+                           HotelId = item.HotelId,
+                           GuestCount = Model.SearchViewModel.GuestCount,
+                           StringChkInDate = Model.SearchViewModel.StringChkInDate,
+                           StringChkOutDate = Model.SearchViewModel.StringChkOutDate,
+                           RoomCount = Model.SearchViewModel.RoomCount,
+                           Keyword = Model.SearchViewModel.Keyword
+                       });
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 5px; padding: 5px; border: 2px solid #EEE; min-height: 100px;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="min-height: 100px; ">
+                <a href="@urlHotel">
+                    <img src="http://cdn-3.happyholiday.travel/img/hotels/873/873/medium/48669_main_TMB.jpg" style="height:100%;width:100%" />
+                </a>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12" style="min-height: 100px; border-right: 1px solid #EEE; ">
+                <a href="@urlHotel">
+                    @Html.DisplayFor(modelItem => item.HotelName)
+                </a>
+                <br />
+                <p>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </p>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="min-height: 100px; ">
+                @if (item.Discount != null && item.Discount > 0)
+                {
+                    <strike>Rp.@((double)item.MinimumPrice)</strike><br />
+                    @:Rp.@((double)item.MinimumPrice - (((double)item.MinimumPrice)*item.Discount/100))
+                }
+                else
+                {
+                     @:Rp.@((double)item.MinimumPrice)
+                }
+                
+                <br/>
+                <a href="@Url.Action("UW400Index", "UW400Booking", new
+                    {
+                        area = "UW400",
+                        CountryArea = item.CountryArea,
+                        ProvinceArea = item.ProvinceArea,
+                        HotelName = item.HotelName,
+                        HotelId = item.HotelId,
+                        GuestCount = Model.SearchViewModel.GuestCount,
+                        StringChkInDate = Model.SearchViewModel.StringChkInDate,
+                        StringChkOutDate = Model.SearchViewModel.StringChkOutDate,
+                        RoomCount = Model.SearchViewModel.RoomCount,
+                        Keyword = Model.SearchViewModel.Keyword
+                    })">
+                    <input type="button" class="btn btn-danger" value="Book Now">
+
+                </a>
+            </div>
+        </div>
+    }
+</div>
+    
