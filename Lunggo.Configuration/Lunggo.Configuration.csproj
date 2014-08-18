@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\Driver\blob.properties">
       <SubType>Designer</SubType>
     </None>

@@ -180,7 +180,9 @@
     <Compile Include="Areas\UW300\Controllers\UW300RoomDetailController.cs" />
     <Compile Include="Areas\UW300\UW300AreaRegistration.cs" />
     <Compile Include="Areas\UW400\Controllers\UW400BookingController.cs" />
+    <Compile Include="Areas\UW400\Logic\UW400BookingLogic.cs" />
     <Compile Include="Areas\UW400\Logic\UW400SaveOrderSessionLogic.cs" />
+    <Compile Include="Areas\UW400\Models\UW400BookViewModel.cs" />
     <Compile Include="Areas\UW400\UW400AreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -1405,7 +1407,6 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
-    <Folder Include="Areas\UW400\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
