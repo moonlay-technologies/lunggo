@@ -44,24 +44,6 @@ namespace Lunggo.Driver
             //TestDB1();
         }
 
-        static void TestSnowMaker()
-        {
-            var generator = UniqueIdGenerator.GetInstance();
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.DevelopmentStorageAccount, "RamaTestId")
-            {
-                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
-            };
-            generator.Init(optimisticData);
-            generator.BatchSize = 100;
-            
-
-            for (var i = 0; i < 50; i++)
-            {
-                Console.WriteLine(string.Format("id: {0}", TestSequence.GetNext()));
-            }
-
-        }
-
         static void TestDB1()
         {
             var connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
@@ -539,24 +521,6 @@ namespace Lunggo.Driver
         public DateTime EnrollmentDate {get; set;}
     }
 
-    public class TestSequence : SequenceBase
-    {
-        private static readonly SequenceProperties Properties;
-        static TestSequence()
-        {
-            Properties = new SequenceProperties
-            {
-                Name = "HotelVoucher2",
-                InitialValue = 43
-            };
-            Init(Properties);
-        }
-
-        public static long GetNext()
-        {
-            return GetNextNumber(Properties);
-        }
-    }
 
     public class SimplyRed
     {

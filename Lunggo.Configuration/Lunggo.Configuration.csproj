@@ -78,11 +78,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CustomerWeb\general.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Driver\blob.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Driver\db.properties" />
-    <None Include="Config\CustomerWeb\blob.properties">
+    <None Include="Config\CustomerWeb\azurestorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Lunggo_Config.xlsx" />
