@@ -19,6 +19,40 @@ namespace Lunggo.Framework.Payment.Data
             ItemDetails = new List<ItemDetail>();
         }
         public abstract PaymentDataDummy ConvertToDummyObject();
+        public static PaymentDataDummy ConvertPaymentDataToPaymentDataDummy(PaymentDataDummy Dummy, PaymentData Origin)
+        {
+            Dummy.payment_type = Origin.PaymentType;
+
+            Dummy.customer_details.billing_address.address = Origin.CustomerDetails.BillingAddress.Address;
+            Dummy.customer_details.billing_address.city = Origin.CustomerDetails.BillingAddress.City;
+            Dummy.customer_details.billing_address.country_code = Origin.CustomerDetails.BillingAddress.CountryCode;
+            Dummy.customer_details.billing_address.email = Origin.CustomerDetails.BillingAddress.Email;
+            Dummy.customer_details.billing_address.first_name = Origin.CustomerDetails.BillingAddress.FirstName;
+            Dummy.customer_details.billing_address.last_name = Origin.CustomerDetails.BillingAddress.LastName;
+            Dummy.customer_details.billing_address.phone = Origin.CustomerDetails.BillingAddress.Phone;
+            Dummy.customer_details.billing_address.postal_code = Origin.CustomerDetails.BillingAddress.PostalCode;
+
+            Dummy.customer_details.email = Origin.CustomerDetails.Email;
+            Dummy.customer_details.first_name = Origin.CustomerDetails.FirstName;
+            Dummy.customer_details.last_name = Origin.CustomerDetails.LastName;
+            Dummy.customer_details.phone = Origin.CustomerDetails.Phone;
+
+            List<ItemDetailDummy> ListItemDetailDummy = new List<ItemDetailDummy>();
+            foreach (ItemDetail itemDetail in Origin.ItemDetails)
+            {
+                ItemDetailDummy detailDummy = new ItemDetailDummy();
+                detailDummy.id = itemDetail.Id;
+                detailDummy.name = itemDetail.Name;
+                detailDummy.price = itemDetail.Price;
+                detailDummy.quantity = itemDetail.Quantity;
+                ListItemDetailDummy.Add(detailDummy);
+            }
+            Dummy.item_details = ListItemDetailDummy;
+
+            Dummy.transaction_details.order_id = Origin.TransactionDetails.OrderId;
+            Dummy.transaction_details.gross_amount = Origin.TransactionDetails.GrossAmount;
+            return Dummy;
+        }
     }
     public class TransactionDetail
     {

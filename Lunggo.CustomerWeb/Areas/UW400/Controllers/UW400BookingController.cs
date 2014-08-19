@@ -20,7 +20,6 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Controllers
         [HttpPost]
         public ActionResult UW400Book(UW400BookViewModel vm)
         {
-            vm.payment_type = "cimbclicks";
             return new UW400BookingLogic().Book(vm);
         }
 	}

@@ -1,5 +1,6 @@
 ﻿using Lunggo.Framework.Config;
 using Lunggo.Framework.Payment.Data;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,56 @@ namespace Lunggo.Framework.Payment
 {
     public abstract class PaymentProcessor
     {
-        protected string VeritransClientUrl = "https://api.sandbox.veritrans.co.id";
+        protected string VeritransClientUrl = "https://api.sandbox.veritrans.co.id/";
         protected string VeritransRequestUrl = "v2/charge";
         public abstract PaymentResult PaymentResult(PaymentData paymentData);
-        public string GenerateServerKey(string serverKey)
+        public string GetVeriTransHeaderKey()
         {
-            string base64Key = EncodeTo64(serverKey+":");
+            try
+            {
+                var configManager = ConfigManager.GetInstance();
+                string VeritransServerKey = configManager.GetConfigValue("veritrans", "Authorization");
+                string generatedServerKey = GenerateServerKey(VeritransServerKey);
+                return generatedServerKey;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        string GenerateServerKey(string serverKey)
+        {
+            string base64Key = Base64Encode(serverKey + ":");
             string ResultGenerated = "Basic " + base64Key;
             return ResultGenerated;
         }
-        public string GetVeriTransHeaderKey()
+        static string Base64Encode(string plainText)
         {
-            var configManager = ConfigManager.GetInstance();
-            string VeritransServerKey = configManager.GetConfigValue("veritrans", "Authorization");
-            string generatedServerKey = GenerateServerKey(VeritransServerKey);
-            return generatedServerKey;
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
-        static public string EncodeTo64(string toEncode)
+
+        public IRestResponse RequestToVeritransByJson(string json)
         {
-            byte[] toEncodeAsBytes
-                  = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
-            string returnValue
-                  = System.Convert.ToBase64String(toEncodeAsBytes);
-            return returnValue;
+            try
+            {
+                var client = new RestClient(VeritransClientUrl);
+
+                var request = new RestRequest(VeritransRequestUrl, Method.POST);
+
+                request.AddHeader("Authorization", GetVeriTransHeaderKey());
+                request.AddHeader("Accept", "application/json");
+                request.AddHeader("Content-Type", "application/json");
+                request.RequestFormat = DataFormat.Json;
+                request.AddParameter("application/json", json, ParameterType.RequestBody);
+                request.XmlSerializer.ContentType = "application/json";
+                var responses = client.Execute(request);
+                return responses;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
