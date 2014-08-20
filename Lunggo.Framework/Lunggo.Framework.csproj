@@ -86,6 +86,7 @@
     <Compile Include="Database\ColumnMetadata.cs" />
     <Compile Include="Database\CommandDefinition.cs" />
     <Compile Include="Database\DapperDBWrapper.cs" />
+    <Compile Include="Database\DbService.cs" />
     <Compile Include="Database\IDbTableRepository.cs" />
     <Compile Include="Database\IDbWrapper.cs" />
     <Compile Include="Database\IQuery.cs" />
