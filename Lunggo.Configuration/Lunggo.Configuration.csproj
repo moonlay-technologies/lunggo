@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\general.properties">
       <SubType>Designer</SubType>
     </None>

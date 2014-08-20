@@ -40,7 +40,7 @@ namespace Lunggo.Configuration
         private String _currentExecutionDir;
         private Dictionary<String, String> _configDictionary; 
 
-        static void Main(String[] args)
+        public static void Main(String[] args)
         {
             String[] projectList = { "CustomerWeb", "Driver" };
             Console.WriteLine("####################Starting Configuration Generation");

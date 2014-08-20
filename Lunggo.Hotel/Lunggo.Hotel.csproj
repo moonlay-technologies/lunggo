@@ -45,6 +45,11 @@
     <Compile Include="Search\Object\SearchServiceRequest.cs" />
     <Compile Include="Search\Object\SearchServiceResponse.cs" />
     <Compile Include="Search\SearchService.cs" />
+    <Compile Include="ViewModels\HotelBookDetail.cs" />
+    <Compile Include="ViewModels\HotelDetailBase.cs" />
+    <Compile Include="ViewModels\HotelFacilities.cs" />
+    <Compile Include="ViewModels\HotelRoomDetailBase.cs" />
+    <Compile Include="ViewModels\HotelSearchBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
