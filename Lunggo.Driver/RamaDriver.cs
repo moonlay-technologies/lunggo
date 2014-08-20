@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -39,22 +40,22 @@ namespace Lunggo.Driver
             //TestSelect();
             //TestHttp();
             //TestDynamic();
-            TestDB();
+            TestDB1();
             //TestSnowMaker();
             //TestDB1();
         }
 
         static void TestDB1()
         {
-            var connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\rama.mdf"";Integrated Security=True;";
+            const string connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""C:\Users\Rama.Adhitia\documents\visual studio 2013\Projects\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True;";
             using (var con = new SqlConnection(connectionString))
             {
                 con.Open();
-                var simplyRedList = SqlMapper.Query<SimplyRed>(con,"SELECT FirstName, LastName FROM Person ");
+                var simplyRedList = SampleQuery.GetInstance().Execute(con, null);
 
                 foreach (var simplyRed in simplyRedList)
                 {
-                    Console.WriteLine("{0} {1} {2} {3}",simplyRed.FirstName,simplyRed.LastName, simplyRed.GetFirstChanged(), simplyRed.GetLastChanged());
+                    Console.WriteLine("{0} {1}",simplyRed.FirstName,simplyRed.LastName);
                 }
             }
         }
@@ -571,4 +572,36 @@ namespace Lunggo.Driver
         }
     }
 
+    public class SampleQuery : QueryBase,IQuery<SampleQueryRecord>
+    {
+        private static readonly SampleQuery Instance = new SampleQuery();
+
+        private SampleQuery()
+        {
+            
+        }
+
+        public static SampleQuery GetInstance()
+        {
+            return Instance;
+        }
+
+        public IEnumerable<SampleQueryRecord> Execute(IDbConnection conn, Object condition)
+        {
+            return conn.Query<SampleQueryRecord>(GetQuery(), condition);
+        }
+
+        protected override string GetQuery()
+        {
+            var queryBuilder = new StringBuilder();
+            queryBuilder.Append("SELECT FirstName,LastName FROM Person");
+            return queryBuilder.ToString();
+        }
+    }
+
+    public class SampleQueryRecord : QueryRecord
+    {
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+    }
 }

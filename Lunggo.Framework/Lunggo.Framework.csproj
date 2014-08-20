@@ -88,7 +88,10 @@
     <Compile Include="Database\DapperDBWrapper.cs" />
     <Compile Include="Database\IDbTableRepository.cs" />
     <Compile Include="Database\IDbWrapper.cs" />
+    <Compile Include="Database\IQuery.cs" />
     <Compile Include="Database\ITableRecord.cs" />
+    <Compile Include="Database\QueryBase.cs" />
+    <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Http\Http.cs" />
