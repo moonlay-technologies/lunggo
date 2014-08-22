@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="tablecobasemua" />
-  <table name="person" />
+  <table name="AspNetRoles" />
+  <table name="AspNetUserClaims" />
+  <table name="AspNetUserLogins" />
+  <table name="AspNetUserRoles" />
+  <table name="AspNetUsers" />
 </tables> 
