@@ -7,6 +7,12 @@ using Lunggo.Framework.Sequence;
 
 namespace Lunggo.ApCommon.Sequence
 {
+    /**
+     * 
+     * This class is intended as example how to build class for sequence
+     * 
+     * */
+
     public class SampleSequence : SequenceBase
     {
         private static readonly SampleSequence Instance = new SampleSequence();

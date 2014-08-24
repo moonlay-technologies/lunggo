@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Driver.BayuDriver</StartupObject>
+    <StartupObject>Lunggo.Driver.RamaDriver</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper">

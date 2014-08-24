@@ -38,7 +38,7 @@ namespace Lunggo.Framework.Message
                 throw new InvalidOperationException("Message Manager is already initialized");
             }
         }
-        
+
         public string GetMessageValue(string MessageCode, string CultureCode)
         {
             var messageValue = _messageDictionary[MessageCode];
@@ -55,15 +55,15 @@ namespace Lunggo.Framework.Message
         private Dictionary<string, CultureAndValue> LoadConfigFileToDictionary(String filePath)
         {
             XElement configDoc = LoadConfigurationFile(filePath);
-            return ConfigToDictionary(configDoc);   
+            return ConfigToDictionary(configDoc);
         }
-        
+
 
         private XElement LoadConfigurationFile(String filePath)
         {
             return XElement.Load(filePath);
         }
-        
+
         private Dictionary<string, CultureAndValue> ConfigToDictionary(XElement doc)
         {
             var configNodes = doc.Elements();
@@ -74,7 +74,7 @@ namespace Lunggo.Framework.Message
                 ).
                 ToDictionary
                 (
-                    @group => @group.Key.ToString(CultureInfo.InvariantCulture), 
+                    @group => @group.Key.ToString(CultureInfo.InvariantCulture),
                     @group => new CultureAndValue
                     {
                         Dictionary = @group.ToDictionary(n => n.Attribute("lang").Value, n => n.Attribute("value").Value)
@@ -85,7 +85,7 @@ namespace Lunggo.Framework.Message
 
         private class CultureAndValue
         {
-            public Dictionary<string,string> Dictionary { get; set;}
+            public Dictionary<string, string> Dictionary { get; set; }
         }
     }
 }
