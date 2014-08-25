@@ -575,6 +575,11 @@ namespace Lunggo.Driver
 
     public class SampleQuery : QueryBase<SampleQuery,SampleQueryRecord>
     {
+        private SampleQuery()
+        {
+            
+        }
+
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
