@@ -126,6 +126,7 @@
     <Compile Include="Mail\RazorMailTemplateEngine.cs" />
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="Message\MessageReader.cs" />
+    <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />
     <Compile Include="Payment\Data\CIMBPaymentData.cs" />

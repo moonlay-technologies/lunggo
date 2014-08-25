@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Pattern;
 using Lunggo.Framework.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -572,20 +573,8 @@ namespace Lunggo.Driver
         }
     }
 
-    public class SampleQuery : QueryBase<SampleQueryRecord>
+    public class SampleQuery : QueryBase<SampleQuery,SampleQueryRecord>
     {
-        private static readonly SampleQuery Instance = new SampleQuery();
-
-        private SampleQuery()
-        {
-            
-        }
-
-        public static SampleQuery GetInstance()
-        {
-            return Instance;
-        }
-
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();

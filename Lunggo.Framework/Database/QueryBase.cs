@@ -5,17 +5,20 @@ using Dapper;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Pattern;
 
 namespace Lunggo.Framework.Database
 {
-    public abstract class QueryBase<T> where T : QueryRecord
+    
+    public abstract class QueryBase<TQuery, TQueryRecord> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+                                                                                  where TQueryRecord : QueryRecord
     {
         protected abstract String GetQuery();
-
-        public IEnumerable<T> Execute(IDbConnection conn, dynamic condition)
+        public IEnumerable<TQueryRecord> Execute(IDbConnection conn, dynamic condition)
         {
-            return SqlMapper.Query<T>(conn, GetQuery(), condition);
+            return SqlMapper.Query<TQueryRecord>(conn, GetQuery(), condition);
         }
-
     }
+
+
 }
