@@ -6,6 +6,8 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Message;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
+using Lunggo.Framework.Database;
+using System.Configuration;
 
 namespace Lunggo.CustomerWeb
 {
@@ -16,6 +18,7 @@ namespace Lunggo.CustomerWeb
             InitConfigurationManager();
             InitI18NMessageManager();
             InitUniqueIdGenerator();
+            InitDatabaseService();
         }
 
         private static void InitConfigurationManager()
@@ -43,6 +46,13 @@ namespace Lunggo.CustomerWeb
             };
             generator.Init(optimisticData);
             generator.BatchSize = 100;
+        }
+
+        private static void InitDatabaseService()
+        {
+            var database = DbService.GetInstance();
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            database.Init(connectionString);
         }
 
     }
