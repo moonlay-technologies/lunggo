@@ -572,7 +572,7 @@ namespace Lunggo.Driver
         }
     }
 
-    public class SampleQuery : QueryBase,IQuery<SampleQueryRecord>
+    public class SampleQuery : QueryBase<SampleQueryRecord>
     {
         private static readonly SampleQuery Instance = new SampleQuery();
 
@@ -584,11 +584,6 @@ namespace Lunggo.Driver
         public static SampleQuery GetInstance()
         {
             return Instance;
-        }
-
-        public IEnumerable<SampleQueryRecord> Execute(IDbConnection conn, Object condition)
-        {
-            return conn.Query<SampleQueryRecord>(GetQuery(), condition);
         }
 
         protected override string GetQuery()
