@@ -49,7 +49,7 @@ namespace Lunggo.Generator.TableRepo
         static void Main(string[] args)
         {
 
-            String connectionString = @"Data Source=(LocalDb)\v11.0;Initial Catalog=IdentitySample-2-1-alpha1;Integrated Security=SSPI;";
+            String connectionString = @"Data Source=MARINABAY\SQL2012DC;Initial Catalog=Lunggo;User ID=sa;Password=Admin-pwd";
             //String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""D:\Bayu\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True;";
             String destinationPath = String.Empty;
             String configurationXmlPath = @"test.xml";

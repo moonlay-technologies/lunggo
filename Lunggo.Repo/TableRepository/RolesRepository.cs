@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class AspNetRolesTableRepo : TableDao<AspNetRolesTableRecord>, IDbTableRepository<AspNetRolesTableRecord> 
+	public class RolesTableRepo : TableDao<RolesTableRecord>, IDbTableRepository<RolesTableRecord> 
     {
-		private static readonly AspNetRolesTableRepo Instance = new AspNetRolesTableRepo("AspNetRoles");
+		private static readonly RolesTableRepo Instance = new RolesTableRepo("Roles");
         
-        private AspNetRolesTableRepo(String tableName) : base(tableName)
+        private RolesTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static AspNetRolesTableRepo GetInstance()
+		public static RolesTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, AspNetRolesTableRecord record)
+        public int Insert(IDbConnection connection, RolesTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, AspNetRolesTableRecord record)
+        public int Delete(IDbConnection connection, RolesTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, AspNetRolesTableRecord record)
+		public int Update(IDbConnection connection, RolesTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<AspNetRolesTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<RolesTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, AspNetRolesTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, RolesTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, AspNetRolesTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, RolesTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, AspNetRolesTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, RolesTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<AspNetRolesTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<RolesTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

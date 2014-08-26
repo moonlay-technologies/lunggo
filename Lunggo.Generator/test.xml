@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="AspNetRoles" />
-  <table name="AspNetUserClaims" />
-  <table name="AspNetUserLogins" />
-  <table name="AspNetUserRoles" />
-  <table name="AspNetUsers" />
+  <table name="Users" />
+  <table name="UserRoles" />
+  <table name="UserLogins" />
+  <table name="UserClaims" />
+  <table name="Roles" />
 </tables> 

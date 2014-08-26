@@ -5,46 +5,46 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class AspNetRolesTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserRolesTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public String Id
+		public long? UserId
 		{
-		    get { return _Id; }
+		    get { return _UserId; }
 		    set
 		    {
-		        _Id = value;
-		        IncrementLog("Id");
+		        _UserId = value;
+		        IncrementLog("UserId");
 		    }
 		}
-		public String Name
+		public int? RoleId
 		{
-		    get { return _Name; }
+		    get { return _RoleId; }
 		    set
 		    {
-		        _Name = value;
-		        IncrementLog("Name");
+		        _RoleId = value;
+		        IncrementLog("RoleId");
 		    }
 		}
 
 		
-		private String _Id;
-		private String _Name;
+		private long? _UserId;
+		private int? _RoleId;
 
 
-		public static AspNetRolesTableRecord CreateNewInstance()
+		public static UserRolesTableRecord CreateNewInstance()
         {
-            var record = new AspNetRolesTableRecord();
+            var record = new UserRolesTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		private AspNetRolesTableRecord()
+		public UserRolesTableRecord()
         {
             ;
         }
 
-        static AspNetRolesTableRecord()
+        static UserRolesTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -53,15 +53,15 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            TableName = "AspNetRoles";
+            TableName = "UserRoles";
         }
 
         private static void InitRecordMetadata()
         {
             RecordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Id", true),
-				new ColumnMetadata("Name", false),
+				new ColumnMetadata("UserId", true),
+				new ColumnMetadata("RoleId", true),
 
             };
         }

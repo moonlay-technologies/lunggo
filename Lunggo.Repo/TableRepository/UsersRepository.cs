@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class AspNetUserClaimsTableRepo : TableDao<AspNetUserClaimsTableRecord>, IDbTableRepository<AspNetUserClaimsTableRecord> 
+	public class UsersTableRepo : TableDao<UsersTableRecord>, IDbTableRepository<UsersTableRecord> 
     {
-		private static readonly AspNetUserClaimsTableRepo Instance = new AspNetUserClaimsTableRepo("AspNetUserClaims");
+		private static readonly UsersTableRepo Instance = new UsersTableRepo("Users");
         
-        private AspNetUserClaimsTableRepo(String tableName) : base(tableName)
+        private UsersTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static AspNetUserClaimsTableRepo GetInstance()
+		public static UsersTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, AspNetUserClaimsTableRecord record)
+        public int Insert(IDbConnection connection, UsersTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, AspNetUserClaimsTableRecord record)
+        public int Delete(IDbConnection connection, UsersTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, AspNetUserClaimsTableRecord record)
+		public int Update(IDbConnection connection, UsersTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<AspNetUserClaimsTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<UsersTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, AspNetUserClaimsTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, UsersTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, AspNetUserClaimsTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, UsersTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, AspNetUserClaimsTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, UsersTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<AspNetUserClaimsTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<UsersTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

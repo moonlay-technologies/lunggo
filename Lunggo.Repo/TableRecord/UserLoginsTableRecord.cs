@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class AspNetUserLoginsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserLoginsTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		public String LoginProvider
 		{
@@ -25,7 +25,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ProviderKey");
 		    }
 		}
-		public String UserId
+		public long? UserId
 		{
 		    get { return _UserId; }
 		    set
@@ -38,23 +38,23 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _LoginProvider;
 		private String _ProviderKey;
-		private String _UserId;
+		private long? _UserId;
 
 
-		public static AspNetUserLoginsTableRecord CreateNewInstance()
+		public static UserLoginsTableRecord CreateNewInstance()
         {
-            var record = new AspNetUserLoginsTableRecord();
+            var record = new UserLoginsTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		private AspNetUserLoginsTableRecord()
+		public UserLoginsTableRecord()
         {
             ;
         }
 
-        static AspNetUserLoginsTableRecord()
+        static UserLoginsTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -63,7 +63,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            TableName = "AspNetUserLogins";
+            TableName = "UserLogins";
         }
 
         private static void InitRecordMetadata()

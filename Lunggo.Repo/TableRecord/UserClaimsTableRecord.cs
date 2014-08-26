@@ -5,9 +5,9 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class AspNetUserClaimsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UserClaimsTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public int? Id
+		public long? Id
 		{
 		    get { return _Id; }
 		    set
@@ -16,7 +16,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
-		public String UserId
+		public long? UserId
 		{
 		    get { return _UserId; }
 		    set
@@ -45,26 +45,26 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private int? _Id;
-		private String _UserId;
+		private long? _Id;
+		private long? _UserId;
 		private String _ClaimType;
 		private String _ClaimValue;
 
 
-		public static AspNetUserClaimsTableRecord CreateNewInstance()
+		public static UserClaimsTableRecord CreateNewInstance()
         {
-            var record = new AspNetUserClaimsTableRecord();
+            var record = new UserClaimsTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		private AspNetUserClaimsTableRecord()
+		public UserClaimsTableRecord()
         {
             ;
         }
 
-        static AspNetUserClaimsTableRecord()
+        static UserClaimsTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -73,7 +73,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            TableName = "AspNetUserClaims";
+            TableName = "UserClaims";
         }
 
         private static void InitRecordMetadata()

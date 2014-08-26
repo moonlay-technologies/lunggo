@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">
       <HintPath>..\packages\Antlr3.StringTemplate.3.4.1.9005\lib\net35\Antlr3.StringTemplate.dll</HintPath>

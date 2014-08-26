@@ -5,9 +5,9 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class AspNetUsersTableRecord : Lunggo.Framework.Database.TableRecord
+    public class UsersTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public String Id
+		public long? Id
 		{
 		    get { return _Id; }
 		    set
@@ -117,7 +117,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private String _Id;
+		private long? _Id;
 		private String _Email;
 		private Boolean? _EmailConfirmed;
 		private String _PasswordHash;
@@ -131,20 +131,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UserName;
 
 
-		public static AspNetUsersTableRecord CreateNewInstance()
+		public static UsersTableRecord CreateNewInstance()
         {
-            var record = new AspNetUsersTableRecord();
+            var record = new UsersTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		private AspNetUsersTableRecord()
+		public UsersTableRecord()
         {
             ;
         }
 
-        static AspNetUsersTableRecord()
+        static UsersTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -153,7 +153,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            TableName = "AspNetUsers";
+            TableName = "Users";
         }
 
         private static void InitRecordMetadata()

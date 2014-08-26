@@ -31,7 +31,7 @@ private $order.ColumnType$ _$order.OriginDefinition.COLUMN_NAME$;
             return record;
         }
 
-		private $TableName$TableRecord()
+		public $TableName$TableRecord()
         {
             ;
         }

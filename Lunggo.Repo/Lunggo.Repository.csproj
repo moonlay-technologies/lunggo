@@ -40,20 +40,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableRecord\AspNetRolesTableRecord.cs" />
-    <Compile Include="TableRecord\AspNetUserClaimsTableRecord.cs" />
-    <Compile Include="TableRecord\AspNetUserLoginsTableRecord.cs" />
-    <Compile Include="TableRecord\AspNetUserRolesTableRecord.cs" />
-    <Compile Include="TableRecord\AspNetUsersTableRecord.cs" />
     <Compile Include="TableRecord\PersonTableRecord.cs" />
+    <Compile Include="TableRecord\RolesTableRecord.cs" />
     <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs" />
-    <Compile Include="TableRepository\AspNetRolesRepository.cs" />
-    <Compile Include="TableRepository\AspNetUserClaimsRepository.cs" />
-    <Compile Include="TableRepository\AspNetUserLoginsRepository.cs" />
-    <Compile Include="TableRepository\AspNetUserRolesRepository.cs" />
-    <Compile Include="TableRepository\AspNetUsersRepository.cs" />
+    <Compile Include="TableRecord\UserClaimsTableRecord.cs" />
+    <Compile Include="TableRecord\UserLoginsTableRecord.cs" />
+    <Compile Include="TableRecord\UserRolesTableRecord.cs" />
+    <Compile Include="TableRecord\UsersTableRecord.cs" />
     <Compile Include="TableRepository\PersonRepository.cs" />
+    <Compile Include="TableRepository\RolesRepository.cs" />
     <Compile Include="TableRepository\TableCobaSemuaRepository.cs" />
+    <Compile Include="TableRepository\UserClaimsRepository.cs" />
+    <Compile Include="TableRepository\UserLoginsRepository.cs" />
+    <Compile Include="TableRepository\UserRolesRepository.cs" />
+    <Compile Include="TableRepository\UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
