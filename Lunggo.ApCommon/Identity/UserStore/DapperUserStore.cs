@@ -209,9 +209,25 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute("insert into AspNetUserLogins(Id, LoginProvider, ProviderKey) values(@Id, @loginProvider, @providerKey)",
-                        new { Id = user.Id, loginProvider = login.LoginProvider, providerKey = login.ProviderKey });
+                {
+                    var repo = UserLoginsTableRepo.GetInstance();
+                    var toBeInsertedRecord = ToUserLoginsTableRecord(user, login);
+                    repo.Insert(connection, toBeInsertedRecord);
+                }
+                    
             });
+        }
+
+        private UserLoginsTableRecord ToUserLoginsTableRecord(TUser user, UserLoginInfo login)
+        {
+            var record = new UserLoginsTableRecord
+            {
+                LoginProvider = login.LoginProvider,
+                ProviderKey = login.ProviderKey,
+                UserId = user.Id
+            };
+
+            return record;
         }
 
         public virtual Task<TUser> FindAsync(UserLoginInfo login)
@@ -222,8 +238,13 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    return connection.Query<TUser>("select u.* from AspNetUsers u inner join AspNetUserLogins l on l.Id = u.Id where l.LoginProvider = @loginProvider and l.ProviderKey = @providerKey",
-                        login).SingleOrDefault();
+                {
+                    var query = GetUserByLoginInfoQuery.GetInstance();
+                    var record = query.Execute(connection, login).SingleOrDefault();
+                    var user = ToUser(record);
+                    return user;
+                }
+                    
             });
         }
 
@@ -235,8 +256,22 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    return (IList<UserLoginInfo>)connection.Query<UserLoginInfo>("select LoginProvider, ProviderKey from AspNetUserLogins where UserId = @Id", new { user.Id }).ToList();
+                {
+                    var query = GetLoginInfoByUserIdQuery.GetInstance();
+                    var recordList = query.Execute(connection, new {user.Id});
+                    return ToUserLoginInfoList(recordList);
+                }
             });
+        }
+
+        private IList<UserLoginInfo> ToUserLoginInfoList(IEnumerable<GetUserLoginInfoByAnyQueryRecord> list)
+        {
+            var outputList = new List<UserLoginInfo>();
+            foreach (var info in outputList)
+            {
+                outputList.Add(new UserLoginInfo(info.LoginProvider, info.ProviderKey));
+            }
+            return outputList;
         }
 
         public virtual Task RemoveLoginAsync(TUser user, UserLoginInfo login)
@@ -250,10 +285,27 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute("delete from AspNetUserLogins where Id = @Id and LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                        new { user.Id, login.LoginProvider, login.ProviderKey });
+                {
+                    var repo = UserLoginsTableRepo.GetInstance();
+                    var toBeDeletedRecord = ToUserLoginTableRecordPkOnly(user,login);
+                    repo.Delete(connection, toBeDeletedRecord);
+                }
+                    
             });
         }
+
+        private UserLoginsTableRecord ToUserLoginTableRecordPkOnly(TUser user, UserLoginInfo login)
+        {
+            var record = new UserLoginsTableRecord
+            {
+                UserId = user.Id,
+                ProviderKey = login.ProviderKey,
+                LoginProvider = login.LoginProvider
+            };
+
+            return record;
+        }
+
         #endregion
  
         #region IUserPasswordStore
@@ -673,5 +725,5 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 throw new ObjectDisposedException(GetType().Name);
             }
         }
-    }
+    }				
 }
