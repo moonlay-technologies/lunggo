@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Lunggo.Framework.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Query
 {
 
-    public class GetAllUserQuery : QueryBase<GetAllUserQuery,GetUserByAnyQueryRecord>
+    public class GetUserByEmailQuery : QueryBase<GetUserByEmailQuery, GetUserByAnyQueryRecord>
     {
-        private GetAllUserQuery()
+        private GetUserByEmailQuery()
         {
 
         }
@@ -18,12 +18,7 @@ namespace Lunggo.ApCommon.Query
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
-
-            /***
-            * Create Your Query Here
-            queryBuilder.Append("SELECT FirstName,LastName FROM Person");
-            **/
-
+            queryBuilder.Append("select * from Users where Email = @Email");
             return queryBuilder.ToString();
         }
     }

@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Lunggo.Framework.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Query
 {
-
-    public class GetAllUserQuery : QueryBase<GetAllUserQuery,GetUserByAnyQueryRecord>
+    public class GetListRoleByUserIdQuery : QueryBase<GetListRoleByUserIdQuery, String>
     {
-        private GetAllUserQuery()
+        private GetListRoleByUserIdQuery()
         {
 
         }
@@ -18,12 +17,7 @@ namespace Lunggo.ApCommon.Query
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
-
-            /***
-            * Create Your Query Here
-            queryBuilder.Append("SELECT FirstName,LastName FROM Person");
-            **/
-
+            queryBuilder.Append("select b.Name from UserRoles a left join AspNetRoles b on a.RoleId = b.Id where a.UserId = @UserId");
             return queryBuilder.ToString();
         }
     }

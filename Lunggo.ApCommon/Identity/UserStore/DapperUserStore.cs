@@ -34,7 +34,6 @@ namespace Lunggo.ApCommon.Identity.UserStore
         IUserPhoneNumberStore<TUser, long>,
         IUserTwoFactorStore<TUser, long>,
         IUserLockoutStore<TUser, long>
-        where TKey : IEquatable<long>
         where TUser : UserBase<long>,new()
     {   
         private bool _disposed;
@@ -94,6 +93,25 @@ namespace Lunggo.ApCommon.Identity.UserStore
                SecurityStamp = user.SecurityStamp,
                TwoFactorEnabled = user.TwoFactorEnabled,
                UserName = user.UserName
+            };
+            return record;
+        }
+        private UserRolesTableRecord ToUserRolesTableRecord(int roleId, long userId)
+        {
+            var record = new UserRolesTableRecord
+            {
+                RoleId = roleId,
+                UserId = userId
+            };
+            return record;
+        }
+        private UserClaimsTableRecord ToUserClaimsTableRecord(long userId, string claimValue, string claimType)
+        {
+            var record = new UserClaimsTableRecord
+            {
+                UserId = userId,
+                ClaimType = claimType,
+                ClaimValue = claimValue
             };
             return record;
         }
@@ -347,8 +365,12 @@ namespace Lunggo.ApCommon.Identity.UserStore
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    return connection.Query<TUser>("select * from AspNetUsers where Email = @Email",
-                        new { Email }).SingleOrDefault();
+                {
+                    var query = GetUserByEmailQuery.GetInstance();
+                    var record = query.Execute(connection, new { Email = Email }).SingleOrDefault();
+                    var user = ToUser(record);
+                    return user;
+                }
             }
             );
         }
@@ -375,11 +397,6 @@ namespace Lunggo.ApCommon.Identity.UserStore
         }
 
 
-        public virtual Task<TUser> FindByIdAsync(TKey userId)
-        {
-            ThrowIfDisposed();
-            return FindByIdAsync(userId.ToString());
-        }
 
         public Task<IList<System.Security.Claims.Claim>> GetClaimsAsync(TUser user)
         {
@@ -391,9 +408,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
             IList<System.Security.Claims.Claim> result = new List<System.Security.Claims.Claim>();
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                var query = connection.Query("select * from AspNetUserClaims where UserId = @Id",
-                    new {user.Id}).ToList();
-                foreach (dynamic row in query)
+                var query = GetListClaimByUserIdQuery.GetInstance();
+                var claims = query.Execute(connection, new { Id = user.Id }).ToList();
+                foreach (dynamic row in claims)
                 {
                     result.Add(new System.Security.Claims.Claim(row.ClaimType, row.ClaimValue));
                 }
@@ -413,8 +430,11 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 throw new ArgumentNullException("claim");
             }
             using (var connection = DbService.GetInstance().GetOpenConnection())
-                connection.Execute("insert into AspNetUserClaims(UserId, ClaimType, ClaimValue) values(@Id, @Type, @Value)",
-                    new { UserId = user.Id, ClaimType = claim.Type, ClaimValue = claim.Value });
+            {
+                var repo = UserClaimsTableRepo.GetInstance();
+                var toUserClaimsTableRecord = ToUserClaimsTableRecord(user.Id, claim.Value, claim.Type);
+                repo.Insert(connection, toUserClaimsTableRecord);
+            }
             return Task.FromResult(0);
         }
 
@@ -429,15 +449,12 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 throw new ArgumentNullException("claim");
             }
-            var claims =
-                user.Claims.Where(uc => uc.ClaimValue == claim.Value && uc.ClaimType == claim.Type).ToList();
-            foreach (var c in claims)
-            {
-                user.Claims.Remove(c);
-            }
             using (var connection = DbService.GetInstance().GetOpenConnection())
-                connection.Execute("delete from AspNetUserClaims where UserId = @Id and ClaimType = @Type and ClaimValue = @Value",
-                    new { user.Id, claim.Value, claim.Type });
+            {
+                var repo = UserClaimsTableRepo.GetInstance();
+                var toUserClaimsTableRecord = ToUserClaimsTableRecord(user.Id, claim.Value, claim.Type);
+                repo.Delete(connection, toUserClaimsTableRecord);
+            }
             return Task.FromResult(0);
         }
 
@@ -456,18 +473,20 @@ namespace Lunggo.ApCommon.Identity.UserStore
             dynamic roleEntity;
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                roleEntity = connection.Query("select * from AspNetRoles where Upper(Name) = Upper(@Name)",
-                    new { Name = roleName }).SingleOrDefault();
+                var query = GetRoleByNameQuery.GetInstance();
+                roleEntity = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
             }
-
             if (roleEntity == null)
             {
                 throw new Exception("Role name not found");
                 //Role not found
             }
             using (var connection = DbService.GetInstance().GetOpenConnection())
-                connection.Execute("insert into AspNetUserRoles(UserId, RoleId) values(convert(nvarchar(128),@UserId), convert(nvarchar(128),@RoleId))",
-                    new { UserId = user.Id, RoleId = roleEntity.Id.ToString() });
+            {
+                var repo = UserRolesTableRepo.GetInstance();
+                var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
+                repo.Insert(connection, toUserRolesTableRecord);
+            }
             return Task.FromResult(0);
         }
 
@@ -485,16 +504,19 @@ namespace Lunggo.ApCommon.Identity.UserStore
             dynamic roleEntity;
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
-                roleEntity = connection.Query("select * from AspNetRoles where Upper(Name) = Upper(@Name)",
-                    new { Name = roleName }).SingleOrDefault();
+                var query = GetRoleByNameQuery.GetInstance();
+                roleEntity = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
             }
             if (roleEntity != null)
             {
                 var roleId = roleEntity.Id;
                 var userId = user.Id;
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute("delete from AspNetUserRoles where UserId = @userId and RoleID = @roleId",
-                        new { roleId, userId });
+                {
+                    var repo = UserRolesTableRepo.GetInstance();
+                    var toUserRolesTableRecord = ToUserRolesTableRecord(roleEntity.Id, user.Id);
+                    repo.Delete(connection, toUserRolesTableRecord);
+                }
             }
             return Task.FromResult(0);
         }
@@ -509,8 +531,10 @@ namespace Lunggo.ApCommon.Identity.UserStore
             }
             IList<string> listRole = new List<string>();
             using (var connection = DbService.GetInstance().GetOpenConnection())
-                listRole = connection.Query<string>("select b.Name from AspNetUserRoles a left join  AspNetRoles b on a.RoleId = b.Id where a.UserId =@UserId",
-                    new { UserId = user.Id }).ToList();
+            {
+                var query = GetListRoleByUserIdQuery.GetInstance();
+                listRole = query.Execute(connection, new { UserId = user.Id }).ToList();
+            }
             return Task.FromResult<IList<string>>(listRole);
         }
 
@@ -528,17 +552,18 @@ namespace Lunggo.ApCommon.Identity.UserStore
 
             var any = false;
             dynamic role,recordAny;
+
             using (var connection = DbService.GetInstance().GetOpenConnection())
-                role = connection.Query("select * from AspNetRoles where Upper(Name) =@Name",
-                    new { Name = roleName }).SingleOrDefault();
+            {
+                var query = GetRoleByNameQuery.GetInstance();
+                role = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
+            }
             if (role != null)
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    recordAny = connection.Query(
-                            "select * from AspNetUserRoles where RoleId = @RoleId and UserId = @UserId",
-                            new {RoleId = role.Id, UserId = user.Id}).SingleOrDefault();
-
+                    var query = GetUserRolesByRoleIdAndUserId.GetInstance();
+                    recordAny = query.Execute(connection, new { RoleId = role.Id, UserId = user.Id }).SingleOrDefault();
                     if (recordAny == null)
                         any = false;
                     else

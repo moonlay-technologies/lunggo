@@ -11,7 +11,6 @@ namespace Lunggo.Framework.Database
 {
     
     public abstract class QueryBase<TQuery, TQueryRecord> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
-                                                                                  where TQueryRecord : QueryRecord
     {
         protected abstract String GetQuery();
         public IEnumerable<TQueryRecord> Execute(IDbConnection conn, dynamic condition)

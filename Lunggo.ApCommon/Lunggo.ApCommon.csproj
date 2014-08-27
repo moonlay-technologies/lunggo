@@ -67,9 +67,16 @@
     <Compile Include="Identity\User\UserBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />
+    <Compile Include="Query\GetListClaimByUserIdQuery.cs" />
+    <Compile Include="Query\GetListRoleByUserIdQuery.cs" />
+    <Compile Include="Query\GetRoleByAnyQueryRecord.cs" />
+    <Compile Include="Query\GetRoleByNameQuery.cs" />
+    <Compile Include="Query\GetUserByEmailQuery.cs" />
     <Compile Include="Query\GetUserByIdQuery.cs" />
     <Compile Include="Query\GetUserByAnyQueryRecord.cs" />
     <Compile Include="Query\GetUserByNameQuery.cs" />
+    <Compile Include="Query\GetUserRolesByAnyQueryRecord.cs" />
+    <Compile Include="Query\GetUserRolesByRoleIdAndUserId.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
   </ItemGroup>
   <ItemGroup>
