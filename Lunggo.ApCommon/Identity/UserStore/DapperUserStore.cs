@@ -1,33 +1,19 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using Lunggo.ApCommon.Identity.User;
+using Lunggo.ApCommon.Query;
+using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using Lunggo.Framework.Database;
-namespace Lunggo.CustomerWeb.Models
+
+namespace Lunggo.ApCommon.Identity.UserStore
 {
-    public class CustomUser : IdentityUser
-    {
-        public Guid UserId { get; set; }
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<CustomUser> manager)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
-            return userIdentity;
-        }
-    }
-    public class DapperUserStore<TUser> :
+    
+    /*public class DapperUserStore<TUser> :
         DapperUserStore<TUser, IdentityRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>,
         IUserStore<TUser> where TUser : IdentityUser
     { 
@@ -36,25 +22,21 @@ namespace Lunggo.CustomerWeb.Models
             DisposeContext = true;
         }
 
-    }
-    public class DapperUserStore<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim> :
-        IUserLoginStore<TUser, TKey>,
-        IUserClaimStore<TUser, TKey>,
-        IUserRoleStore<TUser, TKey>,
-        IUserPasswordStore<TUser, TKey>,
-        IUserSecurityStampStore<TUser, TKey>,
-        IUserEmailStore<TUser, TKey>,
-        IQueryableUserStore<TUser, TKey>,
-        IUserPhoneNumberStore<TUser, TKey>,
-        IUserTwoFactorStore<TUser, TKey>,
-        IUserLockoutStore<TUser, TKey>
-        where TKey : IEquatable<TKey>
-        where TUser : IdentityUser<TKey, TUserLogin, TUserRole, TUserClaim>
-        where TRole : IdentityRole<TKey, TUserRole>
-        where TUserLogin : IdentityUserLogin<TKey>, new()
-        where TUserRole : IdentityUserRole<TKey>, new()
-        where TUserClaim : IdentityUserClaim<TKey>, new()
-    {
+    }*/
+
+    public class DapperUserStore<TUser> :
+        IUserLoginStore<TUser, long>,
+        IUserClaimStore<TUser, long>,
+        IUserRoleStore<TUser, long>,
+        IUserPasswordStore<TUser, long>,
+        IUserSecurityStampStore<TUser, long>,
+        IUserEmailStore<TUser, long>,
+        IUserPhoneNumberStore<TUser, long>,
+        IUserTwoFactorStore<TUser, long>,
+        IUserLockoutStore<TUser, long>
+        where TKey : IEquatable<long>
+        where TUser : UserBase<long>,new()
+    {   
         private bool _disposed;
         public bool DisposeContext { get; set; }
         public DapperUserStore()
@@ -69,70 +51,116 @@ namespace Lunggo.CustomerWeb.Models
         {
             _disposed = true;
         }
+        
+        /*
         public IQueryable<TUser> Users
         {
             get { using (var connection = DbService.GetInstance().GetOpenConnection())
                     return connection.Query<TUser>("select * from AspNetUsers").AsQueryable(); }
         }
+        */
         #region IUserStore
         public virtual Task CreateAsync(TUser user)
         {
             if (user == null)
+            {
                 throw new ArgumentNullException("user");
-
-            return Task.Factory.StartNew(() => {
+            }
+                
+            return Task.Factory.StartNew(() =>
+            {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute(
-                        "insert into AspNetUsers(Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, " +
-                        "PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, " +
-                        "AccessFailedCount, UserName)" +
-                        "values(@Id, @Email, @Emailconfirmed, @PasswordHash, @SecurityStamp, " +
-                        "@PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, " +
-                        "@AccessFailedCount, @UserName)", 
-                        new
-                        {
-                            Id = user.Id,
-                            Email = user.Email,
-                            EmailConfirmed = user.EmailConfirmed,
-                            PasswordHash = user.PasswordHash,
-                            SecurityStamp = user.SecurityStamp,
-                            PhoneNumber = user.PhoneNumber,
-                            PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-                            TwoFactorEnabled = user.TwoFactorEnabled,
-                            LockoutEndDateUtc = user.LockoutEndDateUtc,
-                            LockoutEnabled = user.LockoutEnabled,
-                            AccessFailedCount = user.AccessFailedCount,
-                            UserName = user.UserName
-                        });
+                {
+                    var repo = UsersTableRepo.GetInstance();
+                    var newUserRecord = ToUsersTableRecordForInsert(user);
+                    repo.Insert(connection, newUserRecord);                                                      
+                }    
             });
         }
+
+        private UsersTableRecord ToUsersTableRecordForInsert(TUser user)
+        {
+            var record = new UsersTableRecord
+            {
+               AccessFailedCount = user.AccessFailedCount,
+               Email = user.Email,
+               EmailConfirmed = user.EmailConfirmed,
+               Id = user.Id,
+               LockoutEnabled = user.LockoutEnabled,
+               LockoutEndDateUtc = user.LockoutEndDateUtc,
+               PasswordHash = user.PasswordHash,
+               PhoneNumber = user.PhoneNumber,
+               PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+               SecurityStamp = user.SecurityStamp,
+               TwoFactorEnabled = user.TwoFactorEnabled,
+               UserName = user.UserName
+            };
+            return record;
+        }
+
+        private UsersTableRecord ToUsersTableRecordPkOnly(TUser user)
+        {
+            var record = new UsersTableRecord
+            {
+                Id = user.Id
+            };
+            return record;
+        }
+
 
         public virtual Task DeleteAsync(TUser user)
         {
             if (user == null)
+            {
                 throw new ArgumentNullException("user");
- 
+            }
+                
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute("delete from AspNetUsers where Id = @Id", new { user.Id });
+                {
+                    var repo = UsersTableRepo.GetInstance();
+                    var toBeDeletedUserRecord = ToUsersTableRecordPkOnly(user);
+                    repo.Delete(connection, toBeDeletedUserRecord);
+                }
+                    
             });
         }
 
-        public virtual Task<TUser> FindByIdAsync(string userId)
-        {
-            if (string.IsNullOrWhiteSpace(userId))
-                throw new ArgumentNullException("userId");
- 
-            Guid parsedUserId;
-            if (!Guid.TryParse(userId, out parsedUserId))
-                throw new ArgumentOutOfRangeException("Id", string.Format("'{0}' is not a valid GUID.", new { userId }));
- 
+        public virtual Task<TUser> FindByIdAsync(long userId)
+        { 
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    return connection.Query<TUser>("select * from AspNetUsers where Id = @Id", new { Id = userId }).SingleOrDefault();
+                {
+                    var query = GetUserByIdQuery.GetInstance();
+                    var record = query.Execute(connection, new { Id = userId }).SingleOrDefault();
+                    var user = ToUser(record);
+                    return user;
+                }
+                    
             });
+        }
+
+        private TUser ToUser(GetUserByAnyQueryRecord record)
+        {
+            var user = new TUser
+            {
+                Email = record.Email,
+                AccessFailedCount = record.AccessFailedCount,
+                UserName = record.UserName,
+                EmailConfirmed = record.EmailConfirmed,
+                Id = record.Id,
+                LockoutEnabled = record.LockoutEnabled,
+                LockoutEndDateUtc = record.LockoutEndDateUtc,
+                PasswordHash = record.PasswordHash,
+                PhoneNumber = record.PhoneNumber,
+                PhoneNumberConfirmed = record.PhoneNumberConfirmed,
+                SecurityStamp = record.SecurityStamp,
+                TwoFactorEnabled = record.TwoFactorEnabled
+
+            };
+            return user;
         }
 
         public virtual Task<TUser> FindByNameAsync(string userName)
@@ -144,8 +172,10 @@ namespace Lunggo.CustomerWeb.Models
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    return connection.Query<TUser>("select * from AspNetUsers where lower(UserName) = lower(@userName)",
-                    new {userName}).SingleOrDefault();
+                    var query = GetUserByNameQuery.GetInstance();
+                    var record = query.Execute(connection, new {userName = userName}).SingleOrDefault();
+                    var user = ToUser(record);
+                    return user;
                 }
             });
         }
@@ -158,13 +188,11 @@ namespace Lunggo.CustomerWeb.Models
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
-                    connection.Execute(
-                        "update AspNetUsers set Email = @Email, Emailconfirmed = @Emailconfirmed, " +
-                        "PasswordHash = @PasswordHash, SecurityStamp = @SecurityStamp, " +
-                        "PhoneNumber = @PhoneNumber, PhoneNumberConfirmed = @PhoneNumberConfirmed, " +
-                        "TwoFactorEnabled = @TwoFactorEnabled, LockoutEndDateUtc = @LockoutEndDateUtc, " +
-                        "LockoutEnabled = @LockoutEnabled, AccessFailedCount = @AccessFailedCount, " +
-                        "UserName = @UserName where Id = @Id", user);
+                {
+                    var repo = UsersTableRepo.GetInstance();
+                    var toBeUpdatedUserRecord = ToUsersTableRecordForInsert(user);
+                    repo.Update(connection, toBeUpdatedUserRecord); 
+                } 
             });
         }
         #endregion
@@ -353,27 +381,27 @@ namespace Lunggo.CustomerWeb.Models
             return FindByIdAsync(userId.ToString());
         }
 
-        public Task<IList<Claim>> GetClaimsAsync(TUser user)
+        public Task<IList<System.Security.Claims.Claim>> GetClaimsAsync(TUser user)
         {
             ThrowIfDisposed();
             if (user == null)
             {
                 throw new ArgumentNullException("user");
             }
-            IList<Claim> result = new List<Claim>();
+            IList<System.Security.Claims.Claim> result = new List<System.Security.Claims.Claim>();
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = connection.Query("select * from AspNetUserClaims where UserId = @Id",
                     new {user.Id}).ToList();
                 foreach (dynamic row in query)
                 {
-                    result.Add(new Claim(row.ClaimType, row.ClaimValue));
+                    result.Add(new System.Security.Claims.Claim(row.ClaimType, row.ClaimValue));
                 }
             }
             return Task.FromResult(result);
         }
 
-        public Task AddClaimAsync(TUser user, Claim claim)
+        public Task AddClaimAsync(TUser user, System.Security.Claims.Claim claim)
         {
             ThrowIfDisposed();
             if (user == null)
@@ -390,7 +418,7 @@ namespace Lunggo.CustomerWeb.Models
             return Task.FromResult(0);
         }
 
-        public virtual Task RemoveClaimAsync(TUser user, Claim claim)
+        public virtual Task RemoveClaimAsync(TUser user, System.Security.Claims.Claim claim)
         {
             ThrowIfDisposed();
             if (user == null)
