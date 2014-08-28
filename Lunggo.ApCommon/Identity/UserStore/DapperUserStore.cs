@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -82,6 +83,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var repo = UsersTableRepo.GetInstance();
+                    user.Id = UserIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                     var newUserRecord = ToUsersTableRecordForInsert(user);
                     repo.Insert(connection, newUserRecord);
                 }

@@ -42,9 +42,6 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -59,7 +56,10 @@
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
     <Compile Include="Identity\ExternalLogin\UserExternalLogin.cs" />
+    <Compile Include="Identity\RoleStore\DapperRoleStore.cs" />
+    <Compile Include="Identity\Role\IdentityRole.cs" />
     <Compile Include="Identity\Role\IdentityUserRole.cs" />
+    <Compile Include="Identity\Role\Role.cs" />
     <Compile Include="Identity\Role\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
     <Compile Include="Identity\User\CustomUser.cs" />
@@ -71,6 +71,7 @@
     <Compile Include="Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Query\GetListRoleByUserIdQuery.cs" />
     <Compile Include="Query\GetRoleByAnyQueryRecord.cs" />
+    <Compile Include="Query\GetRoleByIdQuery.cs" />
     <Compile Include="Query\GetRoleByNameQuery.cs" />
     <Compile Include="Query\GetUserByEmailQuery.cs" />
     <Compile Include="Query\GetUserByIdQuery.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Query\GetUserRolesByAnyQueryRecord.cs" />
     <Compile Include="Query\GetUserRolesByRoleIdAndUserId.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
+    <Compile Include="Sequence\RoleIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />
   </ItemGroup>
   <ItemGroup>

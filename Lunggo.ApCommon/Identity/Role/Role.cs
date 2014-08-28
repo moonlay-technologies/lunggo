@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Identity.Role
 {
-    public class UserRole : IdentityUserRole<String>
+    public class Role : IdentityRole<String>
     {
-        
+
     }
 }

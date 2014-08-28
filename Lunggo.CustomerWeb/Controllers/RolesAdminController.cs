@@ -1,7 +1,7 @@
-﻿using Lunggo.ApCommon.Identity.User;
+﻿using Lunggo.ApCommon.Identity.Role;
+using Lunggo.ApCommon.Identity.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -98,7 +98,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = new IdentityRole(roleViewModel.Name);
+                var role = new Role()
+                {
+                    Name = roleViewModel.Name
+                };
                 var roleresult = await RoleManager.CreateAsync(role);
                 if (!roleresult.Succeeded)
                 {

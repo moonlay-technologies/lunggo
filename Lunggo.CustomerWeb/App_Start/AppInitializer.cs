@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Message;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
-using System.Configuration;
+
 
 namespace Lunggo.CustomerWeb
 {
@@ -51,7 +48,7 @@ namespace Lunggo.CustomerWeb
         private static void InitDatabaseService()
         {
             var database = DbService.GetInstance();
-            string connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             database.Init(connectionString);
         }
 

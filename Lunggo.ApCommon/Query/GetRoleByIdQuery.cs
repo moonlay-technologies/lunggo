@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Lunggo.ApCommon.Query
 {
 
-    public class GetRoleByNameQuery : QueryBase<GetRoleByNameQuery, GetRoleByAnyQueryRecord>
+    public class GetRoleByIdQuery : QueryBase<GetRoleByIdQuery, GetRoleByAnyQueryRecord>
     {
-        private GetRoleByNameQuery()
+        private GetRoleByIdQuery()
         {
 
         }
@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Query
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM Roles WHERE Upper(Name) = Upper(@Name)");
+            queryBuilder.Append("SELECT * FROM Roles WHERE Id = @Id");
             return queryBuilder.ToString();
         }
     }

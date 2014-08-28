@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+﻿using Lunggo.ApCommon.Identity.User;
+using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Lunggo.CustomerWeb.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    
+    /*
     public class ApplicationUsers : IdentityUser
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUsers> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<CustomUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -17,24 +18,5 @@ namespace Lunggo.CustomerWeb.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationDbContexts : IdentityDbContext<ApplicationUsers>
-    {
-        public ApplicationDbContexts()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        static ApplicationDbContexts()
-        {
-            // Set the database intializer which is run once during application start
-            // This seeds the database with admin user credentials and admin role
-            Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
-        }
-
-        public static ApplicationDbContexts Create()
-        {
-            return new ApplicationDbContexts();
-        }
-    }
+     */
 }

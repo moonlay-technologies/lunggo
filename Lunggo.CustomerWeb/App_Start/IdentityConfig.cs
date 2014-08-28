@@ -1,7 +1,8 @@
-﻿using Lunggo.ApCommon.Identity.User;
+﻿using Lunggo.ApCommon.Identity.Role;
+using Lunggo.ApCommon.Identity.RoleStore;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
@@ -70,16 +71,17 @@ namespace Lunggo.CustomerWeb.Models
     }
 
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
-    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    public class ApplicationRoleManager : RoleManager<Role>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+        public ApplicationRoleManager(IRoleStore<Role, string> roleStore)
             : base(roleStore)
         {
+
         }
 
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
         {
-            return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
+            return new ApplicationRoleManager(new DapperRoleStore<Role>());
         }
     }
 
@@ -99,18 +101,6 @@ namespace Lunggo.CustomerWeb.Models
             // Plug in your sms service here to send a text message.
             return Task.FromResult(0);
         }
-    }
-
-    // This is useful if you do not want to tear down the database each time you run the application.
-    // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
-    // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
-    {
-        protected override void Seed(ApplicationDbContext context)
-        {
-            base.Seed(context);
-        }
-
     }
 
     public class ApplicationSignInManager : SignInManager<CustomUser, string>
