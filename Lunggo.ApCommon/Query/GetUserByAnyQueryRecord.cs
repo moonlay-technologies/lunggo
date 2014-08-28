@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Query
         
         public int AccessFailedCount { get; set; }
 
-        public virtual long Id { get; set; }
+        public virtual string Id { get; set; }
 
         public string UserName { get; set; }
     }

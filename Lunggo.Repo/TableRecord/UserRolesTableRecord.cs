@@ -7,7 +7,7 @@ namespace Lunggo.Repository.TableRecord
 {
     public class UserRolesTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public long? UserId
+		public String UserId
 		{
 		    get { return _UserId; }
 		    set
@@ -16,7 +16,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
-		public int? RoleId
+		public String RoleId
 		{
 		    get { return _RoleId; }
 		    set
@@ -27,8 +27,8 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _UserId;
-		private int? _RoleId;
+		private String _UserId;
+		private String _RoleId;
 
 
 		public static UserRolesTableRecord CreateNewInstance()

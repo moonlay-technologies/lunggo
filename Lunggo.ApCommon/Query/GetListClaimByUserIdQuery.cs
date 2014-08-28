@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Lunggo.ApCommon.Query
 {
 
-    public class GetListClaimByUserIdQuery : QueryBase<GetListClaimByUserIdQuery, Claim>
+    public class GetListClaimByUserIdQuery : QueryBase<GetListClaimByUserIdQuery, dynamic>
     {
         private GetListClaimByUserIdQuery()
         {

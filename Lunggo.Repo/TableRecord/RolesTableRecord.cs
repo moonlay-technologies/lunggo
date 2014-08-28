@@ -7,7 +7,7 @@ namespace Lunggo.Repository.TableRecord
 {
     public class RolesTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public int? Id
+		public String Id
 		{
 		    get { return _Id; }
 		    set
@@ -27,7 +27,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private int? _Id;
+		private String _Id;
 		private String _Name;
 
 

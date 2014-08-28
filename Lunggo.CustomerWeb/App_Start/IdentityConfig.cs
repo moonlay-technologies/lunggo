@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Identity.UserStore;
+﻿using Lunggo.ApCommon.Identity.User;
+using Lunggo.ApCommon.Identity.UserStore;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

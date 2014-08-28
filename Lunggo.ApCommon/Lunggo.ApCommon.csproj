@@ -81,6 +81,7 @@
     <Compile Include="Query\GetUserRolesByAnyQueryRecord.cs" />
     <Compile Include="Query\GetUserRolesByRoleIdAndUserId.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
+    <Compile Include="Sequence\UserIdSequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">

@@ -16,7 +16,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
-		public long? UserId
+		public String UserId
 		{
 		    get { return _UserId; }
 		    set
@@ -46,7 +46,7 @@ namespace Lunggo.Repository.TableRecord
 
 		
 		private long? _Id;
-		private long? _UserId;
+		private String _UserId;
 		private String _ClaimType;
 		private String _ClaimValue;
 

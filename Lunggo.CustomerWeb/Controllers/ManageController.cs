@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.ApCommon.Identity.User;
 namespace Lunggo.CustomerWeb.Controllers
 {
     [Authorize]

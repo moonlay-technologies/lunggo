@@ -7,7 +7,7 @@ namespace Lunggo.Repository.TableRecord
 {
     public class UsersTableRecord : Lunggo.Framework.Database.TableRecord
     {
-		public long? Id
+		public String Id
 		{
 		    get { return _Id; }
 		    set
@@ -117,7 +117,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _Id;
+		private String _Id;
 		private String _Email;
 		private Boolean? _EmailConfirmed;
 		private String _PasswordHash;

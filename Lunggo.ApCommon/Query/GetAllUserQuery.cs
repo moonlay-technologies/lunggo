@@ -18,12 +18,7 @@ namespace Lunggo.ApCommon.Query
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
-
-            /***
-            * Create Your Query Here
-            queryBuilder.Append("SELECT FirstName,LastName FROM Person");
-            **/
-
+            queryBuilder.Append("select * from Users");
             return queryBuilder.ToString();
         }
     }

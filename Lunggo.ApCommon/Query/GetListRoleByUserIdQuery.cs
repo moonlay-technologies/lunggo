@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Query
         protected override string GetQuery()
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("select b.Name from UserRoles a left join AspNetRoles b on a.RoleId = b.Id where a.UserId = @UserId");
+            queryBuilder.Append("select b.Name from UserRoles a left join Roles b on a.RoleId = b.Id where a.UserId = @UserId");
             return queryBuilder.ToString();
         }
     }

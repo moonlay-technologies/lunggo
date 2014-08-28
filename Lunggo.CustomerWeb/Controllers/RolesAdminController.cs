@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Lunggo.ApCommon.Identity.User;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using Lunggo.CustomerWeb.Models;
 namespace Lunggo.CustomerWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         public RolesAdminController()

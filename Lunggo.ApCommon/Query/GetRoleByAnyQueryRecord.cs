@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Query
 {
     public class GetRoleByAnyQueryRecord : QueryRecord
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

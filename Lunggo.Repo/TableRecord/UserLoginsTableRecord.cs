@@ -25,7 +25,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ProviderKey");
 		    }
 		}
-		public long? UserId
+		public String UserId
 		{
 		    get { return _UserId; }
 		    set
@@ -38,7 +38,7 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _LoginProvider;
 		private String _ProviderKey;
-		private long? _UserId;
+		private String _UserId;
 
 
 		public static UserLoginsTableRecord CreateNewInstance()

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Query;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -25,55 +26,65 @@ namespace Lunggo.ApCommon.Identity.UserStore
     }*/
 
     public class DapperUserStore<TUser> :
-        IUserLoginStore<TUser, long>,
-        IUserClaimStore<TUser, long>,
-        IUserRoleStore<TUser, long>,
-        IUserPasswordStore<TUser, long>,
-        IUserSecurityStampStore<TUser, long>,
-        IUserEmailStore<TUser, long>,
-        IUserPhoneNumberStore<TUser, long>,
-        IUserTwoFactorStore<TUser, long>,
-        IUserLockoutStore<TUser, long>
-        where TUser : UserBase<long>,new()
-    {   
+    IUserLoginStore<TUser, string>,
+    IUserClaimStore<TUser, string>,
+    IUserRoleStore<TUser, string>,
+    IUserPasswordStore<TUser, string>,
+    IUserSecurityStampStore<TUser, string>,
+    IUserEmailStore<TUser, string>,
+    IUserPhoneNumberStore<TUser, string>,
+    IUserTwoFactorStore<TUser, string>,
+    IQueryableUserStore<TUser>,
+    IUserLockoutStore<TUser, string>, IUserStore<TUser> where TUser : UserBase<string>, new()
+    {
         private bool _disposed;
         public bool DisposeContext { get; set; }
+
         public DapperUserStore()
         {
         }
- 
+
         public void Dispose()
         {
- 
+
         }
+
         protected virtual void Dispose(bool disposing)
         {
             _disposed = true;
         }
-        
-        /*
+
         public IQueryable<TUser> Users
         {
-            get { using (var connection = DbService.GetInstance().GetOpenConnection())
-                    return connection.Query<TUser>("select * from AspNetUsers").AsQueryable(); }
+            get
+            {
+                using (var connection = DbService.GetInstance().GetOpenConnection())
+                {
+                    var query = GetAllUserQuery.GetInstance();
+                    var record = query.Execute(connection,new{});
+                    List<TUser> ListData = new List<TUser>();
+                    return record.Select(x => ToUser(x)).AsQueryable();
+                }
+            }
         }
-        */
+
         #region IUserStore
+
         public virtual Task CreateAsync(TUser user)
         {
             if (user == null)
             {
                 throw new ArgumentNullException("user");
             }
-                
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var repo = UsersTableRepo.GetInstance();
                     var newUserRecord = ToUsersTableRecordForInsert(user);
-                    repo.Insert(connection, newUserRecord);                                                      
-                }    
+                    repo.Insert(connection, newUserRecord);
+                }
             });
         }
 
@@ -81,22 +92,23 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             var record = new UsersTableRecord
             {
-               AccessFailedCount = user.AccessFailedCount,
-               Email = user.Email,
-               EmailConfirmed = user.EmailConfirmed,
-               Id = user.Id,
-               LockoutEnabled = user.LockoutEnabled,
-               LockoutEndDateUtc = user.LockoutEndDateUtc,
-               PasswordHash = user.PasswordHash,
-               PhoneNumber = user.PhoneNumber,
-               PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-               SecurityStamp = user.SecurityStamp,
-               TwoFactorEnabled = user.TwoFactorEnabled,
-               UserName = user.UserName
+                AccessFailedCount = user.AccessFailedCount,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                Id = user.Id,
+                LockoutEnabled = user.LockoutEnabled,
+                LockoutEndDateUtc = user.LockoutEndDateUtc,
+                PasswordHash = user.PasswordHash,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                SecurityStamp = user.SecurityStamp,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                UserName = user.UserName
             };
             return record;
         }
-        private UserRolesTableRecord ToUserRolesTableRecord(int roleId, long userId)
+
+        private UserRolesTableRecord ToUserRolesTableRecord(string roleId, string userId)
         {
             var record = new UserRolesTableRecord
             {
@@ -105,7 +117,8 @@ namespace Lunggo.ApCommon.Identity.UserStore
             };
             return record;
         }
-        private UserClaimsTableRecord ToUserClaimsTableRecord(long userId, string claimValue, string claimType)
+
+        private UserClaimsTableRecord ToUserClaimsTableRecord(string userId, string claimValue, string claimType)
         {
             var record = new UserClaimsTableRecord
             {
@@ -132,7 +145,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 throw new ArgumentNullException("user");
             }
-                
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
@@ -141,27 +154,29 @@ namespace Lunggo.ApCommon.Identity.UserStore
                     var toBeDeletedUserRecord = ToUsersTableRecordPkOnly(user);
                     repo.Delete(connection, toBeDeletedUserRecord);
                 }
-                    
+
             });
         }
 
-        public virtual Task<TUser> FindByIdAsync(long userId)
-        { 
+        public virtual Task<TUser> FindByIdAsync(string userId)
+        {
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var query = GetUserByIdQuery.GetInstance();
-                    var record = query.Execute(connection, new { Id = userId }).SingleOrDefault();
+                    var record = query.Execute(connection, new {Id = userId}).SingleOrDefault();
                     var user = ToUser(record);
                     return user;
                 }
-                    
+
             });
         }
 
         private TUser ToUser(GetUserByAnyQueryRecord record)
         {
+            if (record == null)
+                return null;
             var user = new TUser
             {
                 Email = record.Email,
@@ -185,7 +200,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (string.IsNullOrWhiteSpace(userName))
                 throw new ArgumentNullException("userName");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
@@ -202,28 +217,30 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var repo = UsersTableRepo.GetInstance();
                     var toBeUpdatedUserRecord = ToUsersTableRecordForInsert(user);
-                    repo.Update(connection, toBeUpdatedUserRecord); 
-                } 
+                    repo.Update(connection, toBeUpdatedUserRecord);
+                }
             });
         }
+
         #endregion
- 
+
         #region IUserLoginStore
+
         public virtual Task AddLoginAsync(TUser user, UserLoginInfo login)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             if (login == null)
                 throw new ArgumentNullException("login");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
@@ -232,7 +249,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                     var toBeInsertedRecord = ToUserLoginsTableRecord(user, login);
                     repo.Insert(connection, toBeInsertedRecord);
                 }
-                    
+
             });
         }
 
@@ -252,7 +269,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (login == null)
                 throw new ArgumentNullException("login");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
@@ -262,7 +279,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                     var user = ToUser(record);
                     return user;
                 }
-                    
+
             });
         }
 
@@ -270,7 +287,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
@@ -296,19 +313,19 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             if (login == null)
                 throw new ArgumentNullException("login");
- 
+
             return Task.Factory.StartNew(() =>
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var repo = UserLoginsTableRepo.GetInstance();
-                    var toBeDeletedRecord = ToUserLoginTableRecordPkOnly(user,login);
+                    var toBeDeletedRecord = ToUserLoginTableRecordPkOnly(user, login);
                     repo.Delete(connection, toBeDeletedRecord);
                 }
-                    
+
             });
         }
 
@@ -325,13 +342,14 @@ namespace Lunggo.ApCommon.Identity.UserStore
         }
 
         #endregion
- 
+
         #region IUserPasswordStore
+
         public virtual Task<string> GetPasswordHashAsync(TUser user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             return Task.FromResult(user.PasswordHash);
         }
 
@@ -344,20 +362,21 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             user.PasswordHash = passwordHash;
- 
+
             return Task.FromResult(0);
         }
- 
+
         #endregion
- 
+
         #region IUserSecurityStampStore
+
         public virtual Task<string> GetSecurityStampAsync(TUser user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             return Task.FromResult(user.SecurityStamp);
         }
 
@@ -365,12 +384,12 @@ namespace Lunggo.ApCommon.Identity.UserStore
         {
             if (user == null)
                 throw new ArgumentNullException("user");
- 
+
             user.SecurityStamp = stamp;
- 
+
             return Task.FromResult(0);
         }
- 
+
         #endregion
 
         public Task SetEmailAsync(TUser user, string email)
@@ -419,12 +438,12 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var query = GetUserByEmailQuery.GetInstance();
-                    var record = query.Execute(connection, new { Email = Email }).SingleOrDefault();
+                    var record = query.Execute(connection, new {Email = Email}).SingleOrDefault();
                     var user = ToUser(record);
                     return user;
                 }
             }
-            );
+                );
         }
 
         public Task<bool> GetTwoFactorEnabledAsync(TUser user)
@@ -461,7 +480,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = GetListClaimByUserIdQuery.GetInstance();
-                var claims = query.Execute(connection, new { Id = user.Id }).ToList();
+                dynamic claims = query.Execute(connection, new {Id = user.Id}).ToList();
                 foreach (dynamic row in claims)
                 {
                     result.Add(new System.Security.Claims.Claim(row.ClaimType, row.ClaimValue));
@@ -526,7 +545,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = GetRoleByNameQuery.GetInstance();
-                roleEntity = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
+                roleEntity = query.Execute(connection, new {Name = roleName}).SingleOrDefault();
             }
             if (roleEntity == null)
             {
@@ -557,7 +576,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = GetRoleByNameQuery.GetInstance();
-                roleEntity = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
+                roleEntity = query.Execute(connection, new {Name = roleName}).SingleOrDefault();
             }
             if (roleEntity != null)
             {
@@ -585,7 +604,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = GetListRoleByUserIdQuery.GetInstance();
-                listRole = query.Execute(connection, new { UserId = user.Id }).ToList();
+                listRole = query.Execute(connection, new {UserId = user.Id}).ToList();
             }
             return Task.FromResult<IList<string>>(listRole);
         }
@@ -603,19 +622,19 @@ namespace Lunggo.ApCommon.Identity.UserStore
             }
 
             var any = false;
-            dynamic role,recordAny;
+            dynamic role, recordAny;
 
             using (var connection = DbService.GetInstance().GetOpenConnection())
             {
                 var query = GetRoleByNameQuery.GetInstance();
-                role = query.Execute(connection, new { Name = roleName }).SingleOrDefault();
+                role = query.Execute(connection, new {Name = roleName}).SingleOrDefault();
             }
             if (role != null)
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var query = GetUserRolesByRoleIdAndUserId.GetInstance();
-                    recordAny = query.Execute(connection, new { RoleId = role.Id, UserId = user.Id }).SingleOrDefault();
+                    recordAny = query.Execute(connection, new {RoleId = role.Id, UserId = user.Id}).SingleOrDefault();
                     if (recordAny == null)
                         any = false;
                     else
@@ -687,7 +706,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 throw new ArgumentNullException("user");
             }
-            user.LockoutEndDateUtc = lockoutEnd == DateTimeOffset.MinValue ? (DateTime?)null : lockoutEnd.UtcDateTime;
+            user.LockoutEndDateUtc = lockoutEnd == DateTimeOffset.MinValue ? (DateTime?) null : lockoutEnd.UtcDateTime;
             return Task.FromResult(0);
         }
 
@@ -743,6 +762,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             user.LockoutEnabled = enabled;
             return Task.FromResult(0);
         }
+
         private void ThrowIfDisposed()
         {
             if (_disposed)
@@ -750,5 +770,5 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 throw new ObjectDisposedException(GetType().Name);
             }
         }
-    }				
+    }
 }
