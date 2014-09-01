@@ -1,12 +1,11 @@
-﻿using Lunggo.CustomerWeb.Areas.UW400.Models;
+﻿using System.Globalization;
+using Lunggo.ApCommon.Constant;
+using Lunggo.CustomerWeb.Areas.UW400.Models;
 using Lunggo.Framework.Payment;
 using Lunggo.Framework.Payment.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Runtime.Remoting;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Areas.UW400.Logic
@@ -15,41 +14,22 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
     {
         public ActionResult Book(UW400BookViewModel vm)
 	    {
-		    dynamic paymentProcessor;
-            if (vm.PaymentType == "cimb_clicks")
-		    {
-			    paymentProcessor = new CIMBProcessor();
-		    }
-            else if (vm.PaymentType == "credit_card")
-            {
-                paymentProcessor = new CreditCardProcessor();
-            }
-            else if (vm.PaymentType == "mandiri_clickpay")
-            {
-                paymentProcessor = new MandiriClickPayProcessor();
-            }
-            else
-            {
-                throw new Exception("Illegal payment type, no payment type matched");
-            }
-
-		    var paymentData = CreatePaymentData(vm);
-            PaymentResult paymentResult = paymentProcessor.PaymentResult(paymentData);
-
-
+            var paymentData = CreatePaymentData(vm);
+            var paymentProcessor = CreatePaymentProcessor(vm);
+            var paymentResult = paymentProcessor.PaymentResult(paymentData);
 
             if (IsPaymentSuccess(paymentResult))
             {
-
+                //booking logic here
             }
 
-            if (String.IsNullOrEmpty( paymentResult.RedirectUrl))
+            if (String.IsNullOrEmpty(paymentResult.RedirectUrl))
             {
-                var result = new ViewResult()
+                var result = new ViewResult
                 {
-                    ViewName = "../UW100Search/UW100Index"
+                    ViewName = "../UW100Search/UW100Index",
+                    ViewData = {Model = paymentResult}
                 };
-                result.ViewData.Model = paymentResult;
                 return result;
 		    }
 		    else
@@ -57,25 +37,46 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
                 return new RedirectResult(paymentResult.RedirectUrl);
 		    }
 	    }
+
         private bool IsPaymentSuccess(PaymentResult paymentResult)
         {
-            return paymentResult.Result == ((int)HttpStatusCode.OK).ToString() || paymentResult.Result == ((int)HttpStatusCode.Created).ToString();
+            return paymentResult.Result == ((int)HttpStatusCode.OK).ToString(CultureInfo.InvariantCulture) || paymentResult.Result == ((int)HttpStatusCode.Created).ToString(CultureInfo.InvariantCulture);
         }
 
+
+        private PaymentProcessor CreatePaymentProcessor(UW400BookViewModel vm)
+        {
+            if (vm.PaymentType == PaymentConstant.CimbClicks)
+            {
+                paymentProcessor = new CIMBProcessor();
+            }
+            else if (vm.PaymentType == PaymentConstant.CreditCard)
+            {
+                paymentProcessor = new CreditCardProcessor();
+            }
+            else if (vm.PaymentType == PaymentConstant.MandiriClickpay)
+            {
+                paymentProcessor = new MandiriClickPayProcessor();
+            }
+            else
+            {
+                throw new Exception("Illegal payment type, no payment type matched");
+            }
+        }
 
 
         private PaymentData CreatePaymentData(UW400BookViewModel vm)
         {
             PaymentData data;
-            if (vm.PaymentType == "cimb_clicks")
+            if (vm.PaymentType == PaymentConstant.CimbClicks)
             {
                 data = CreateCIMBData(vm);
             }
-            else if (vm.PaymentType == "mandiri_clickpay")
+            else if (vm.PaymentType == PaymentConstant.CreditCard)
             {
                 data = CreateClickPayData(vm);
             }
-            else if (vm.PaymentType == "credit_card")
+            else if (vm.PaymentType == PaymentConstant.MandiriClickpay)
             {
                 data = CreateCreditCardPayData(vm);
             }
