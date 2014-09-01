@@ -19,7 +19,7 @@ namespace Lunggo.Framework.Payment.Data
 
             try
             {
-                CIMBPaymentDataDummy dummy = new CIMBPaymentDataDummy();
+                var dummy = new CIMBPaymentDataDummy();
                 ConvertPaymentDataToPaymentDataDummy(dummy, this);
 
                 dummy.cimb_clicks.description = this.CIMBClicks.Description;

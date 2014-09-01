@@ -30,8 +30,9 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
             }
             else
             {
-                throw new Exception("No payment type matched");
+                throw new Exception("Illegal payment type, no payment type matched");
             }
+
 		    var paymentData = CreatePaymentData(vm);
             PaymentResult paymentResult = paymentProcessor.PaymentResult(paymentData);
 
@@ -60,6 +61,9 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
         {
             return paymentResult.Result == ((int)HttpStatusCode.OK).ToString() || paymentResult.Result == ((int)HttpStatusCode.Created).ToString();
         }
+
+
+
         private PaymentData CreatePaymentData(UW400BookViewModel vm)
         {
             PaymentData data;
@@ -85,9 +89,10 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
         CIMBPaymentData CreateCIMBData(UW400BookViewModel vm)
         {
 
-            CIMBPaymentData data = new CIMBPaymentData();
-            data.PaymentType = "cimb_clicks";
-
+            var data = new CIMBPaymentData
+            {
+                PaymentType = "cimb_clicks"
+            };
 
             data.CustomerDetails.BillingAddress.Address = "jalan";
             data.CustomerDetails.BillingAddress.City = "jakarta";
@@ -103,24 +108,28 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
             data.CustomerDetails.LastName = "jakarta";
             data.CustomerDetails.Phone = "jakarta";
 
-            List<ItemDetail> ListItemDetailDummy = new List<ItemDetail>();
+            var listItemDetailDummy = new List<ItemDetail>();
 
 
-            ItemDetail detailDummy = new ItemDetail();
-            detailDummy.Id = "123213";
-            detailDummy.Name = "asdsad";
-            detailDummy.Price = 100;
-            detailDummy.Quantity = 1;
+            var detailDummy = new ItemDetail
+            {
+                Id = "123213", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            ItemDetail detailDummy2 = new ItemDetail();
-            detailDummy2.Id = "1232123";
-            detailDummy2.Name = "asdsad";
-            detailDummy2.Price = 100;
-            detailDummy2.Quantity = 1;
+            var detailDummy2 = new ItemDetail
+            {
+                Id = "1232123", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            ListItemDetailDummy.Add(detailDummy);
-            ListItemDetailDummy.Add(detailDummy2);
-            data.ItemDetails = ListItemDetailDummy;
+            listItemDetailDummy.Add(detailDummy);
+            listItemDetailDummy.Add(detailDummy2);
+            data.ItemDetails = listItemDetailDummy;
 
             data.TransactionDetails.OrderId = vm.OrderId;
             data.TransactionDetails.GrossAmount = 200;
@@ -131,41 +140,40 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
         MandiriClickPayPaymentData CreateClickPayData(UW400BookViewModel vm)
         {
 
-            MandiriClickPayPaymentData data = new MandiriClickPayPaymentData();
-            data.PaymentType = "mandiri_clickpay";
+            var data = new MandiriClickPayPaymentData
+            {
+                PaymentType = "mandiri_clickpay",
+                CustomerDetails =
+                {
+                    Email = "jakarta@as.com",
+                    FirstName = "jakarta",
+                    LastName = "jakarta",
+                    Phone = "jakarta",
+                }
+            };
 
-            //data.CustomerDetails.BillingAddress.Address = "jalan";
-            //data.CustomerDetails.BillingAddress.City = "jakarta";
-            //data.CustomerDetails.BillingAddress.CountryCode = "jakarta";
-            //data.CustomerDetails.BillingAddress.Email = "bayualvian@hotmail.com";
-            //data.CustomerDetails.BillingAddress.FirstName = "jakarta";
-            //data.CustomerDetails.BillingAddress.LastName = "jakarta";
-            //data.CustomerDetails.BillingAddress.Phone = "jakarta";
-            //data.CustomerDetails.BillingAddress.PostalCode = "jakarta";
-
-            data.CustomerDetails.Email = "jakarta@as.com";
-            data.CustomerDetails.FirstName = "jakarta";
-            data.CustomerDetails.LastName = "jakarta";
-            data.CustomerDetails.Phone = "jakarta";
-
-            List<ItemDetail> ListItemDetailDummy = new List<ItemDetail>();
+            var listItemDetailDummy = new List<ItemDetail>();
 
 
-            ItemDetail detailDummy = new ItemDetail();
-            detailDummy.Id = "123213";
-            detailDummy.Name = "asdsad";
-            detailDummy.Price = 100;
-            detailDummy.Quantity = 1;
+            var detailDummy = new ItemDetail
+            {
+                Id = "123213", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            ItemDetail detailDummy2 = new ItemDetail();
-            detailDummy2.Id = "1232123";
-            detailDummy2.Name = "asdsad";
-            detailDummy2.Price = 100;
-            detailDummy2.Quantity = 1;
+            var detailDummy2 = new ItemDetail
+            {
+                Id = "1232123", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            ListItemDetailDummy.Add(detailDummy);
-            ListItemDetailDummy.Add(detailDummy2);
-            data.ItemDetails = ListItemDetailDummy;
+            listItemDetailDummy.Add(detailDummy);
+            listItemDetailDummy.Add(detailDummy2);
+            data.ItemDetails = listItemDetailDummy;
 
             data.TransactionDetails.OrderId = vm.OrderId;
             data.TransactionDetails.GrossAmount = 200;
@@ -180,42 +188,51 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
         CreditCardPaymentData CreateCreditCardPayData(UW400BookViewModel vm)
         {
 
-            CreditCardPaymentData data = new CreditCardPaymentData();
-            data.PaymentType = "credit_card";
+            var data = new CreditCardPaymentData
+            {
+                PaymentType = "credit_card",
+                CustomerDetails =
+                {
+                    Email = "jakarta@as.com",
+                    FirstName = "jakarta",
+                    LastName = "jakarta",
+                    Phone = "jakarta",
+                    BillingAddress =
+                    {
+                        Address = "jalan",
+                        City = "jakarta",
+                        CountryCode = "IDN",
+                        Email = "bayualvian@hotmail.com",
+                        FirstName = "jakarta",
+                        LastName = "jakarta",
+                        Phone = "jakarta",
+                        PostalCode = "jakarta"
+                    }    
+                }
+                
+            };
 
+            var listItemDetailDummy = new List<ItemDetail>();
 
-            data.CustomerDetails.BillingAddress.Address = "jalan";
-            data.CustomerDetails.BillingAddress.City = "jakarta";
-            data.CustomerDetails.BillingAddress.CountryCode = "IDN";
-            data.CustomerDetails.BillingAddress.Email = "bayualvian@hotmail.com";
-            data.CustomerDetails.BillingAddress.FirstName = "jakarta";
-            data.CustomerDetails.BillingAddress.LastName = "jakarta";
-            data.CustomerDetails.BillingAddress.Phone = "jakarta";
-            data.CustomerDetails.BillingAddress.PostalCode = "jakarta";
+            var detailDummy = new ItemDetail
+            {
+                Id = "123213", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            data.CustomerDetails.Email = "jakarta@as.com";
-            data.CustomerDetails.FirstName = "jakarta";
-            data.CustomerDetails.LastName = "jakarta";
-            data.CustomerDetails.Phone = "jakarta";
+            var detailDummy2 = new ItemDetail
+            {
+                Id = "1232123", 
+                Name = "asdsad", 
+                Price = 100, 
+                Quantity = 1
+            };
 
-            List<ItemDetail> ListItemDetailDummy = new List<ItemDetail>();
-
-
-            ItemDetail detailDummy = new ItemDetail();
-            detailDummy.Id = "123213";
-            detailDummy.Name = "asdsad";
-            detailDummy.Price = 100;
-            detailDummy.Quantity = 1;
-
-            ItemDetail detailDummy2 = new ItemDetail();
-            detailDummy2.Id = "1232123";
-            detailDummy2.Name = "asdsad";
-            detailDummy2.Price = 100;
-            detailDummy2.Quantity = 1;
-
-            ListItemDetailDummy.Add(detailDummy);
-            ListItemDetailDummy.Add(detailDummy2);
-            data.ItemDetails = ListItemDetailDummy;
+            listItemDetailDummy.Add(detailDummy);
+            listItemDetailDummy.Add(detailDummy2);
+            data.ItemDetails = listItemDetailDummy;
 
             data.TransactionDetails.OrderId = vm.OrderId;
             data.TransactionDetails.GrossAmount = 200;

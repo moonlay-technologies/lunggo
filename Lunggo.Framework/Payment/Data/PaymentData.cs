@@ -12,7 +12,8 @@ namespace Lunggo.Framework.Payment.Data
         public List<ItemDetail> ItemDetails { get; set; }
         public TransactionDetail TransactionDetails { get; set; }
         public CustomerDetails CustomerDetails { get; set; }
-        public PaymentData()
+
+        protected PaymentData()
         {
             TransactionDetails = new TransactionDetail();
             CustomerDetails = new CustomerDetails();
