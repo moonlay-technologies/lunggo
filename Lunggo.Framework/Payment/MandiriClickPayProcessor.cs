@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.Config;
+﻿using System.Globalization;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Payment.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,15 +19,15 @@ namespace Lunggo.Framework.Payment
         {
             try
             {
-                MandiriClickPayPaymentData paymentData = (MandiriClickPayPaymentData)paymentParamData;
-                PaymentResult result = new PaymentResult();
-                string json = JsonConvert.SerializeObject(paymentData.ConvertToDummyObject());
+                var paymentData = (MandiriClickPayPaymentData)paymentParamData;
+                var result = new PaymentResult();
+                var json = JsonConvert.SerializeObject(paymentData.ConvertToDummyObject());
 
-                IRestResponse responses = RequestToVeritransByJson(json);
+                var responses = RequestToVeritransByJson(json);
                 dynamic data = JObject.Parse(responses.Content);
 
                 result.Result = (string)data.status_code;
-                if (result.Result == ((int)HttpStatusCode.OK).ToString())
+                if (result.Result == ((int)HttpStatusCode.OK).ToString(CultureInfo.InvariantCulture))
                     result.OrderId = (string)data.order_id;
                 else
                     result.StatusMessage = (string)data.status_message;
@@ -35,7 +36,7 @@ namespace Lunggo.Framework.Payment
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
     }

@@ -19,20 +19,20 @@ namespace Lunggo.Framework.Payment
             try
             {
                 var configManager = ConfigManager.GetInstance();
-                string VeritransServerKey = configManager.GetConfigValue("veritrans", "Authorization");
-                string generatedServerKey = GenerateServerKey(VeritransServerKey);
+                var veritransServerKey = configManager.GetConfigValue("veritrans", "Authorization");
+                var generatedServerKey = GenerateServerKey(veritransServerKey);
                 return generatedServerKey;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         string GenerateServerKey(string serverKey)
         {
-            string base64Key = Base64Encode(serverKey + ":");
-            string ResultGenerated = "Basic " + base64Key;
-            return ResultGenerated;
+            var base64Key = Base64Encode(serverKey + ":");
+            var resultGenerated = "Basic " + base64Key;
+            return resultGenerated;
         }
         static string Base64Encode(string plainText)
         {
@@ -59,7 +59,7 @@ namespace Lunggo.Framework.Payment
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
     }
