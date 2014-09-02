@@ -46,6 +46,7 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
 
         private PaymentProcessor CreatePaymentProcessor(UW400BookViewModel vm)
         {
+            PaymentProcessor paymentProcessor;
             if (vm.PaymentType == PaymentConstant.CimbClicks)
             {
                 paymentProcessor = new CIMBProcessor();
@@ -62,6 +63,7 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
             {
                 throw new Exception("Illegal payment type, no payment type matched");
             }
+            return paymentProcessor;
         }
 
 
