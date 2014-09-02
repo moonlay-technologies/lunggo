@@ -1,10 +1,5 @@
-﻿using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Message;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using System.Diagnostics;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -12,7 +7,7 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.sequence = SampleSequence.GetInstance().GetNext();
+            Trace.TraceWarning("Trace.TraceWarning");
             return View();
         }
 

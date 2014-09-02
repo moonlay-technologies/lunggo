@@ -57,7 +57,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\dodolgarutProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\dodolgarutProduction1.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
