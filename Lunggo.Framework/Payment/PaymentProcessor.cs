@@ -11,8 +11,6 @@ namespace Lunggo.Framework.Payment
 {
     public abstract class PaymentProcessor
     {
-        protected string VeritransClientUrl = "https://api.sandbox.veritrans.co.id/";
-        protected string VeritransRequestUrl = "v2/charge";
         public abstract PaymentResult PaymentResult(PaymentData paymentData);
         public string GetVeriTransHeaderKey()
         {
@@ -44,9 +42,12 @@ namespace Lunggo.Framework.Payment
         {
             try
             {
-                var client = new RestClient(VeritransClientUrl);
+                var configManager = ConfigManager.GetInstance();
+                var veritransRestSharpClientUrl = configManager.GetConfigValue("veritrans", "RestSharpClientUrl");
+                var veritransRestSharpRequestUrl = configManager.GetConfigValue("veritrans", "RestSharpRequestUrl");
+                var client = new RestClient(veritransRestSharpClientUrl);
 
-                var request = new RestRequest(VeritransRequestUrl, Method.POST);
+                var request = new RestRequest(veritransRestSharpRequestUrl, Method.POST);
 
                 request.AddHeader("Authorization", GetVeriTransHeaderKey());
                 request.AddHeader("Accept", "application/json");
