@@ -6,6 +6,7 @@ using Lunggo.Framework.Pattern;
 using Lunggo.Framework.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -41,10 +42,53 @@ namespace Lunggo.Driver
             //TestSelect();
             //TestHttp();
             //TestDynamic();
-            TestDB1();
+            //TestDB1();
             //TestSnowMaker();
             //TestDB1();
+            //TestQueue();
+            TestLoop();
+
         }
+
+        static void TestLoop()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
+        }
+
+        static void TestQueue()
+        {
+            var connectionString = "UseDevelopmentStorage=true";
+            var account = CloudStorageAccount.Parse(connectionString);
+            var queueClient = account.CreateCloudQueueClient();
+
+            var queue = queueClient.GetQueueReference("testqueue");
+
+            //queue.DeleteIfExists();
+            queue.CreateIfNotExists();
+            
+
+
+            var message = new CloudQueueMessage("Hello, World 1");
+            queue.AddMessage(message);
+            message = new CloudQueueMessage("Hello, World 2");
+            queue.AddMessage(message);
+
+            /*
+            for (int i = 0; i < 2; i++)
+            {
+                var retrievedMessage = queue.GetMessage();
+                
+                Console.WriteLine(retrievedMessage.AsString);
+                //queue.DeleteMessage(retrievedMessage);
+            }
+            */
+            
+
+        }
+
 
         static void TestDB1()
         {
