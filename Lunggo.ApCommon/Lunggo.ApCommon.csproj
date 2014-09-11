@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base36Encoder">
+      <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.22\lib\net45\Dapper.dll</HintPath>
     </Reference>
@@ -52,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
@@ -82,6 +86,8 @@
     <Compile Include="Query\GetUserLoginInfoByAnyQueryRecord.cs" />
     <Compile Include="Query\GetUserRolesByAnyQueryRecord.cs" />
     <Compile Include="Query\GetUserRolesByRoleIdAndUserId.cs" />
+    <Compile Include="Sequence\FlightReservationSequence.cs" />
+    <Compile Include="Sequence\HotelReservationSequence.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />

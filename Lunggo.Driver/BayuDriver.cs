@@ -1,7 +1,12 @@
 ﻿using Lunggo.Flight.Crawler;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Blob;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.Message;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Framework.SnowMaker;
+using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -16,55 +21,69 @@ namespace Lunggo.Driver
 {
     class BayuDriver
     {
+        public enum coba
+        {
+            test=1,
+            test2=2
+        }
+
+        public string cobaEnum(coba tipe)
+        {
+            object val = Convert.ChangeType(tipe, tipe.GetTypeCode());
+            return val.ToString();
+        }
+
         static void Main(string[] args)
         {
-            CIMBPaymentData data = new CIMBPaymentData();
-            data.PaymentType="cimb";
+            string result = new BayuDriver().cobaEnum(coba.test);
+            Console.WriteLine(result);
+            //CIMBPaymentData data = new CIMBPaymentData();
+            //data.PaymentType="cimb";
 
 
-            data.CustomerDetails.BillingAddress.Address="jalan";
-            data.CustomerDetails.BillingAddress.City="jakarta";
-            data.CustomerDetails.BillingAddress.CountryCode = "jakarta";
-            data.CustomerDetails.BillingAddress.Email = "jakarta";
-            data.CustomerDetails.BillingAddress.FirstName = "jakarta";
-            data.CustomerDetails.BillingAddress.LastName = "jakarta";
-            data.CustomerDetails.BillingAddress.Phone = "jakarta";
-            data.CustomerDetails.BillingAddress.PostalCode = "jakarta";
+            //data.CustomerDetails.BillingAddress.Address="jalan";
+            //data.CustomerDetails.BillingAddress.City="jakarta";
+            //data.CustomerDetails.BillingAddress.CountryCode = "jakarta";
+            //data.CustomerDetails.BillingAddress.Email = "jakarta";
+            //data.CustomerDetails.BillingAddress.FirstName = "jakarta";
+            //data.CustomerDetails.BillingAddress.LastName = "jakarta";
+            //data.CustomerDetails.BillingAddress.Phone = "jakarta";
+            //data.CustomerDetails.BillingAddress.PostalCode = "jakarta";
 
-            data.CustomerDetails.Email = "jakarta";
-            data.CustomerDetails.FirstName = "jakarta";
-            data.CustomerDetails.LastName = "jakarta";
-            data.CustomerDetails.Phone = "jakarta";
+            //data.CustomerDetails.Email = "jakarta";
+            //data.CustomerDetails.FirstName = "jakarta";
+            //data.CustomerDetails.LastName = "jakarta";
+            //data.CustomerDetails.Phone = "jakarta";
 
-            List<ItemDetail> ListItemDetailDummy = new List<ItemDetail>();
+            //List<ItemDetail> ListItemDetailDummy = new List<ItemDetail>();
 
 
-            ItemDetail detailDummy = new ItemDetail();
-            detailDummy.Id ="123213";
-            detailDummy.Name="asdsad";
-            detailDummy.Price=123;
-            detailDummy.Quantity=123;
+            //ItemDetail detailDummy = new ItemDetail();
+            //detailDummy.Id ="123213";
+            //detailDummy.Name="asdsad";
+            //detailDummy.Price=123;
+            //detailDummy.Quantity=123;
 
-            ItemDetail detailDummy2 = new ItemDetail();
-            detailDummy2.Id = "1232123";
-            detailDummy2.Name = "asdsad";
-            detailDummy2.Price = 123;
-            detailDummy2.Quantity = 123;
+            //ItemDetail detailDummy2 = new ItemDetail();
+            //detailDummy2.Id = "1232123";
+            //detailDummy2.Name = "asdsad";
+            //detailDummy2.Price = 123;
+            //detailDummy2.Quantity = 123;
 
-            ListItemDetailDummy.Add(detailDummy);
-            ListItemDetailDummy.Add(detailDummy2);
-            data.ItemDetails = ListItemDetailDummy;
+            //ListItemDetailDummy.Add(detailDummy);
+            //ListItemDetailDummy.Add(detailDummy2);
+            //data.ItemDetails = ListItemDetailDummy;
 
-            data.TransactionDetails.OrderId = "jakarta";
-            data.TransactionDetails.GrossAmount = 2;
+            //data.TransactionDetails.OrderId = "jakarta";
+            //data.TransactionDetails.GrossAmount = 2;
 
-            data.CIMBClicks.Description = "jakarta";
-            string json = JsonConvert.SerializeObject(data);
-            string json2 = JsonConvert.SerializeObject(data.ConvertToDummyObject());
+            //data.CIMBClicks.Description = "jakarta";
+            //string json = JsonConvert.SerializeObject(data);
+            //string json2 = JsonConvert.SerializeObject(data.ConvertToDummyObject());
 
-            Console.WriteLine(json);
+            //Console.WriteLine(json);
 
-            Console.WriteLine(json2);
+            //Console.WriteLine(json2);
 
             Console.ReadLine();
             //TicketSearch SearchParam = new TicketSearch();

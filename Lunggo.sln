@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CW", "Lunggo\Lunggo.CW.ccproj", "{F3A0985F-4551-44DA-9C54-3E593F6ADCF2}"
 EndProject
@@ -31,6 +31,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.ApCommon", "Lunggo.ApCommon\Lunggo.ApCommon.csproj", "{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED} = {E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB4B-DEF1-41E6-A599-D9794769FC31}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
