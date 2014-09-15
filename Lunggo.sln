@@ -38,6 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.APIBookingFailed", "Lunggo.WebJob.APIBookingFailed\Lunggo.WebJob.APIBookingFailed.csproj", "{3801D932-F341-4C5B-B39A-145F26EA8129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EmailSuccessBooking", "Lunggo.WebJob.EmailSuccessBooking\Lunggo.WebJob.EmailSuccessBooking.csproj", "{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +88,14 @@ Global
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3801D932-F341-4C5B-B39A-145F26EA8129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3801D932-F341-4C5B-B39A-145F26EA8129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3801D932-F341-4C5B-B39A-145F26EA8129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3801D932-F341-4C5B-B39A-145F26EA8129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

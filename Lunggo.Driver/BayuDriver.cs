@@ -1,11 +1,17 @@
-﻿using Lunggo.Flight.Crawler;
+﻿using System.Net.Mime;
+using System.Web;
+using Lunggo.Flight.Crawler;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Blob;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Message;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Framework.Queue;
+using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.SnowMaker;
+using Lunggo.Framework.TicketSupport;
+using Lunggo.Framework.TicketSupport.ZendeskClass;
 using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
 using RestSharp;
@@ -17,26 +23,47 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ZendeskApi_v2.Models.AccountsAndActivities;
+using ZendeskApi_v2.Models.Constants;
+using ZendeskApi_v2.Models.Tickets;
+using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
+
 namespace Lunggo.Driver
 {
     class BayuDriver
     {
-        public enum coba
-        {
-            test=1,
-            test2=2
-        }
-
-        public string cobaEnum(coba tipe)
-        {
-            object val = Convert.ChangeType(tipe, tipe.GetTypeCode());
-            return val.ToString();
-        }
 
         static void Main(string[] args)
         {
-            string result = new BayuDriver().cobaEnum(coba.test);
-            Console.WriteLine(result);
+            //string test = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+            //              "\\BayuDriver.cs";
+            List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
+            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            {
+                ContentType = "text/plain",
+                FileName = "BayuDriver.cs",
+                FileData =
+                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\BayuDriver.cs")
+            });
+            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            {
+                ContentType = "text/plain",
+                FileName = "RamaDriver.cs",
+                FileData =
+                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\RamaDriver.cs")
+            });
+            new BayuDriver().Init();
+            var ticket = new ZendeskTicket()
+            {
+                Subject = "ticket with attachments",
+                Comment = new ZendeskComment() { Body = "testing requester" },
+                Priority = TicketPriorities.Normal,
+                Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "Bayu" }
+            };
+            //TicketSupportService.GetInstance().CreateTicketAndReturnResponseStatus(ticket);
+            TicketSupportService.GetInstance().CreateTicketWithAttachmentAndReturnResponseStatus(ticket,files);
             //CIMBPaymentData data = new CIMBPaymentData();
             //data.PaymentType="cimb";
 
@@ -151,6 +178,70 @@ namespace Lunggo.Driver
 
             //new BayuDriver().getBlobsFromContainer();
         }
+
+        public void Init()
+        {
+            InitConfigurationManager();
+            InitUniqueIdGenerator();
+            InitDatabaseService();
+            InitTicketService();
+            //InitQueueService();
+        }
+
+        private static void InitConfigurationManager()
+        {
+            var configManager = ConfigManager.GetInstance();
+            string serverMapPath = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +"\\Config\\";
+            var configDirectoryPath = serverMapPath;
+            configManager.Init(configDirectoryPath);
+        }
+
+
+        private static void InitUniqueIdGenerator()
+        {
+            var generator = UniqueIdGenerator.GetInstance();
+            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            {
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+            };
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
+        }
+
+        private static void InitDatabaseService()
+        {
+            var database = DbService.GetInstance();
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            database.Init(connectionString);
+        }
+        private static void InitQueueService()
+        {
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("AzureWebJobsStorage", "connectionString");
+            IQueueClient queueClient = new AzureQueueClient();
+            queueClient.init(connectionString);
+            var queue = QueueService.GetInstance();
+            queue.Init(queueClient);
+        }
+        private static void InitTicketService()
+        {
+            var TicketService = TicketSupportService.GetInstance();
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
+            TicketService.Init(apiKey);
+        }
+
+        //public enum coba
+        //{
+        //    test = 1,
+        //    test2 = 2
+        //}
+
+        //public string cobaEnum(coba tipe)
+        //{
+        //    object val = Convert.ChangeType(tipe, tipe.GetTypeCode());
+        //    return val.ToString();
+        //}
         /*void deleteBlob()
         {
             string fileName = "test/Capture.PNG";

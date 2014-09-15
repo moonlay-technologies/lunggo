@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Message;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
@@ -16,6 +17,7 @@ namespace Lunggo.CustomerWeb
             InitI18NMessageManager();
             InitUniqueIdGenerator();
             InitDatabaseService();
+            InitQueueService();
         }
 
         private static void InitConfigurationManager()
@@ -50,6 +52,14 @@ namespace Lunggo.CustomerWeb
             var database = DbService.GetInstance();
             var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             database.Init(connectionString);
+        }
+        private static void InitQueueService()
+        {
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("AzureWebJobsStorage", "connectionString");
+            IQueueClient queueClient = new AzureQueueClient();
+            queueClient.init(connectionString);
+            var queue = QueueService.GetInstance();
+            queue.Init(queueClient);
         }
 
     }

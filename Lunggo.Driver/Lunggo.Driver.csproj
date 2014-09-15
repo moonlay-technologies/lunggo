@@ -103,6 +103,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="ZendeskApi_v2">
+      <HintPath>..\packages\ZendeskApi_v2.2.6.0\lib\net45\ZendeskApi_v2.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BayuDriver.cs" />

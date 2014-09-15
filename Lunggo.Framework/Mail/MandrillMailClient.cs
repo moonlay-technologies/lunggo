@@ -90,10 +90,10 @@ namespace Lunggo.Framework.Mail
             }
             foreach (FileInfo file in files)
             {
-                var base64OfAttachmentFile = Convert.ToBase64String(file.ArrayData, 0, file.ArrayData.Length);
+                var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
                 attachment attachmentToSend = new attachment
                 {
-                    name = file.Name,
+                    name = file.FileName,
                     type = file.ContentType,
                     content = base64OfAttachmentFile
                 };

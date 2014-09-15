@@ -8,8 +8,8 @@ namespace Lunggo.Framework.SharedModel
 {
     public class FileInfo
     {
-        public string Name { get; set; }
+        public string FileName { get; set; }
         public string ContentType { get; set; }
-        public byte[] ArrayData { get; set; }
+        public byte[] FileData { get; set; }
     }
 }

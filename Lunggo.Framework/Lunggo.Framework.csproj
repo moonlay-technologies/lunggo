@@ -142,10 +142,36 @@
     <Compile Include="Payment\PaymentResult.cs" />
     <Compile Include="Message\MessageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queue\AzureQueueClient.cs" />
+    <Compile Include="Queue\IQueueClient.cs" />
+    <Compile Include="Queue\QueueService.cs" />
     <Compile Include="Sequence\SequenceBase.cs" />
     <Compile Include="Sequence\SequenceProperties.cs" />
+    <Compile Include="SharedModel\BaseTicket.cs" />
     <Compile Include="SharedModel\FileInfo.cs" />
+    <Compile Include="SharedModel\FreshdeskTicket.cs" />
     <Compile Include="SharedModel\PersonIdentity.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskComment.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskCore.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskCustom.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskCustomField.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskEvent.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskIndividualTicketResponse.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskMetaData.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskRequestAttachment.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskRequester.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskRequestResult.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskRequestTickets.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskSatisfactionRating.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskSource.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskSystem.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskThumbnail.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskTicket.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskUpload.cs" />
+    <Compile Include="TicketSupport\ZendeskClass\ZendeskVia.cs" />
     <Compile Include="SnowMaker\BlobOptimisticDataStore.cs" />
     <Compile Include="SnowMaker\DebugOnlyFileDataStore.cs" />
     <Compile Include="SnowMaker\DictionaryExtensions.cs" />
@@ -157,6 +183,11 @@
     <Compile Include="TableStorage\AzureTableStorageClient.cs" />
     <Compile Include="TableStorage\ITableStorageClient.cs" />
     <Compile Include="TableStorage\TableStorageService.cs" />
+    <Compile Include="TicketSupport\FreshdeskClient.cs" />
+    <Compile Include="TicketSupport\IFreshdeskClient.cs" />
+    <Compile Include="TicketSupport\IZendeskClient.cs" />
+    <Compile Include="TicketSupport\TicketSupportService.cs" />
+    <Compile Include="TicketSupport\ZendeskClient.cs" />
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />
@@ -169,6 +200,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

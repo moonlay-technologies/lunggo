@@ -42,7 +42,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "CustomerWeb", "Driver" };
+            String[] projectList = { "CustomerWeb", "Driver", "WebJob.APIBookingFailed", "WebJob.EmailSuccessBooking" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
