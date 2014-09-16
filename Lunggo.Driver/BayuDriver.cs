@@ -13,6 +13,7 @@ using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -35,35 +36,134 @@ namespace Lunggo.Driver
 
         static void Main(string[] args)
         {
-            //string test = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-            //              "\\BayuDriver.cs";
-            List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
-            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
-            {
-                ContentType = "text/plain",
-                FileName = "BayuDriver.cs",
-                FileData =
-                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-                          "\\BayuDriver.cs")
-            });
-            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
-            {
-                ContentType = "text/plain",
-                FileName = "RamaDriver.cs",
-                FileData =
-                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-                          "\\RamaDriver.cs")
-            });
             new BayuDriver().Init();
-            var ticket = new ZendeskTicket()
+            new BayuDriver().testAddQueue();
+            
+
+            //Console.WriteLine(json);
+
+            //Console.WriteLine(json2);
+
+            Console.ReadLine();
+            
+
+            //new BayuDriver().getBlobsFromContainer();
+        }
+
+        public void Init()
+        {
+            InitConfigurationManager();
+            InitUniqueIdGenerator();
+            InitDatabaseService();
+            InitTicketService();
+            InitQueueService();
+        }
+
+        private static void InitConfigurationManager()
+        {
+            var configManager = ConfigManager.GetInstance();
+            string serverMapPath = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +"\\Config\\";
+            var configDirectoryPath = serverMapPath;
+            configManager.Init(configDirectoryPath);
+        }
+
+
+        private static void InitUniqueIdGenerator()
+        {
+            var generator = UniqueIdGenerator.GetInstance();
+            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
             {
-                Subject = "ticket with attachments",
-                Comment = new ZendeskComment() { Body = "testing requester" },
-                Priority = TicketPriorities.Normal,
-                Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "Bayu" }
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
             };
-            //TicketSupportService.GetInstance().CreateTicketAndReturnResponseStatus(ticket);
-            TicketSupportService.GetInstance().CreateTicketWithAttachmentAndReturnResponseStatus(ticket,files);
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
+        }
+
+        private static void InitDatabaseService()
+        {
+            var database = DbService.GetInstance();
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            database.Init(connectionString);
+        }
+        private static void InitQueueService()
+        {
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            IQueueClient queueClient = new AzureQueueClient();
+            queueClient.init(connectionString);
+            var queue = QueueService.GetInstance();
+            queue.Init(queueClient);
+        }
+        private static void InitTicketService()
+        {
+            var TicketService = TicketSupportService.GetInstance();
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
+            TicketService.Init(apiKey);
+        }
+
+        public void testAddQueue()
+        {
+            var queueService = QueueService.GetInstance();
+            var _queue = queueService.GetQueueByReference("apibookingfailed");
+            _queue.CreateIfNotExists();
+
+            for (int i = 0; i < 10; i++)
+            {
+                PersonIdentity TestClass = new PersonIdentity();
+                TestClass.Name = "nama"+i;
+                TestClass.Email = "Email"+i;
+                TestClass.DynamicTesting = 1;
+                _queue.AddMessage(AzureQueueExtension.Serialize(TestClass));
+            }
+            
+
+
+            CloudQueue queue = queueService.GetQueueByReference("initialorder");
+            queue.CreateIfNotExists();
+
+            Order person = new Order()
+            {
+                Name = "Alex",
+                OrderId = Guid.NewGuid().ToString("N").ToLower()
+            };
+
+            queue.AddMessage(new CloudQueueMessage(JsonConvert.SerializeObject(person)));
+        }
+        public class Order
+        {
+            public string Name { get; set; }
+
+            public string OrderId { get; set; }
+        }
+
+        //public void testDeserialize()
+        //{
+        //    PersonIdentity TestClass = new PersonIdentity();
+        //    TestClass.Name = "nama";
+        //    TestClass.Email = "Email";
+        //    TestClass.DynamicTesting = 1;
+
+        //    PersonIdentity TestClass2 = new PersonIdentity();
+        //    TestClass2.Name = "nama";
+        //    TestClass2.Email = "Email";
+        //    FileInfo Testticket = new FileInfo();
+        //    Testticket.FileName = "FileName";
+        //    Testticket.ContentType = "empty";
+        //    TestClass2.DynamicTesting = Testticket;
+
+
+
+        //    CloudQueueMessage TestCloudQueue = AzureQueueExtension.Serialize(TestClass);
+        //    CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);
+        //    var Hasil = TestCloudQueue.Deserialize();
+        //    var Hasil2 = TestCloudQueue2.Deserialize();
+        //    Console.WriteLine(Hasil.GetType());
+        //    Console.WriteLine(Hasil2.GetType());
+        //}
+
+        public void testBooking()
+        {
             //CIMBPaymentData data = new CIMBPaymentData();
             //data.PaymentType="cimb";
 
@@ -107,12 +207,10 @@ namespace Lunggo.Driver
             //data.CIMBClicks.Description = "jakarta";
             //string json = JsonConvert.SerializeObject(data);
             //string json2 = JsonConvert.SerializeObject(data.ConvertToDummyObject());
+        }
 
-            //Console.WriteLine(json);
-
-            //Console.WriteLine(json2);
-
-            Console.ReadLine();
+        public void testCrawl()
+        {
             //TicketSearch SearchParam = new TicketSearch();
             //SearchParam.IsReturn = true;
             //SearchParam.DepartFromCode = "CGK";
@@ -122,7 +220,7 @@ namespace Lunggo.Driver
             //SearchParam.Adult = 1;
             //SearchParam.Child = 1;
             //SearchParam.Infant = 1;
-            
+
             //ICrawler AirAsiaCrawler = new AirAsiaCrawler();
             //ICrawler CitilinkCrawler = new CitilinkCrawler();
             //ICrawler SriwijayaCrawler = new SriwijayaCrawler();
@@ -175,60 +273,45 @@ namespace Lunggo.Driver
             //TimeSpan sriwijaya = SriwijayaStopWatch.Elapsed;
             //TimeSpan citilink = CitilinkStopWatch.Elapsed;
             //int a = 1;
-
-            //new BayuDriver().getBlobsFromContainer();
         }
 
-        public void Init()
+        public void testTicket()
         {
-            InitConfigurationManager();
-            InitUniqueIdGenerator();
-            InitDatabaseService();
-            InitTicketService();
-            //InitQueueService();
-        }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            string serverMapPath = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +"\\Config\\";
-            var configDirectoryPath = serverMapPath;
-            configManager.Init(configDirectoryPath);
-        }
-
-
-        private static void InitUniqueIdGenerator()
-        {
-            var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            //string test = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+            //              "\\BayuDriver.cs";
+            //List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
+            //files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            //{
+            //    ContentType = "text/plain",
+            //    FileName = "BayuDriver.cs",
+            //    FileData =
+            //        File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+            //              "\\BayuDriver.cs")
+            //});
+            //files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            //{
+            //    ContentType = "text/plain",
+            //    FileName = "RamaDriver.cs",
+            //    FileData =
+            //        File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+            //              "\\RamaDriver.cs")
+            //});
+            //var ticket = new ZendeskTicket()
+            //{
+            //    Subject = "ticket with attachments",
+            //    Comment = new ZendeskComment() { Body = "testing requester" },
+            //    Priority = TicketPriorities.Normal,
+            //    Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "Bayu" }
+            //};
+            var ticket = new ZendeskTicket()
             {
-                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+                Subject = "Failed booking attempt",
+                Comment = new ZendeskComment() { Body = "Failed booking attempt for a member named:" + "nama" },
+                Priority = TicketPriorities.Normal,
+                Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "nama" }
             };
-            generator.Init(optimisticData);
-            generator.BatchSize = 100;
-        }
-
-        private static void InitDatabaseService()
-        {
-            var database = DbService.GetInstance();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            database.Init(connectionString);
-        }
-        private static void InitQueueService()
-        {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("AzureWebJobsStorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            queueClient.init(connectionString);
-            var queue = QueueService.GetInstance();
-            queue.Init(queueClient);
-        }
-        private static void InitTicketService()
-        {
-            var TicketService = TicketSupportService.GetInstance();
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
-            TicketService.Init(apiKey);
+            TicketSupportService.GetInstance().CreateTicketAndReturnResponseStatus(ticket);
+            //TicketSupportService.GetInstance().CreateTicketWithAttachmentAndReturnResponseStatus(ticket,files);
         }
 
         //public enum coba

@@ -8,7 +8,14 @@ namespace Lunggo.Framework.SharedModel
 {
     public class PersonIdentity
     {
+        public PersonIdentity()
+        {
+        }
+
         public string Name { get; set; }
-        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string DetailBooking { get; set; }
+        public dynamic DynamicTesting { get; set; }
     }
 }

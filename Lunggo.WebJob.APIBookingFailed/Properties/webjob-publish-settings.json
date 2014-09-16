@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
   "webJobName": "APIBookingFailed",
-  "startTime": "2014-09-15T00:00:00+07:00",
+  "startTime": "2014-09-15T01:00:00+07:00",
   "endTime": null,
   "jobRecurrenceFrequency": "Minute",
   "interval": 1,
