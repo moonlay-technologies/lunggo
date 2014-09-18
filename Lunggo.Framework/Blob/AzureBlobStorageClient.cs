@@ -22,7 +22,7 @@ namespace Lunggo.Framework.Blob
         {
             
         }
-        public void init(string connString)
+        public void Init(string connString)
         {
             CloudStorageAccount blobStorageAccount = CloudStorageAccount.Parse(connString);
             this._blobStorageClient = blobStorageAccount.CreateCloudBlobClient();
@@ -247,7 +247,7 @@ namespace Lunggo.Framework.Blob
             }
         }
 
-        public Image GetImageFromBlobByFileURIName(string fileUriName)
+        public Image GetImageFromBlobByFileUriName(string fileUriName)
         {
             Image returnImage = Image.FromStream(GetStreamFromBlobByFileUriName(fileUriName));
             return returnImage;
@@ -259,7 +259,7 @@ namespace Lunggo.Framework.Blob
             blobToGet.DownloadToStream(memoryStream);
             return memoryStream;
         }
-        public byte[] GetByteArrayByFileURIName(string fileUriName)
+        public byte[] GetByteArrayByFileUriName(string fileUriName)
         {
             CloudBlockBlob blobToGet = GetBlobFromStorage(fileUriName);
             Stream streamOfBlob = new MemoryStream();

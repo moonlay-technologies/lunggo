@@ -46,7 +46,7 @@ namespace Lunggo.Framework.Blob
         }
         public byte[] GetByteArrayByFileUriName(string fileUriName)
         {
-            return _blobStorageClient.GetByteArrayByFileURIName(fileUriName);
+            return _blobStorageClient.GetByteArrayByFileUriName(fileUriName);
         }
         public List<string> GetDirectoryList(string directoryName)
         {

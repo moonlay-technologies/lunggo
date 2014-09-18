@@ -10,13 +10,13 @@ namespace Lunggo.Framework.Blob
 {
     public interface IBlobStorageClient
     {
-        void init(string connString);
+        void Init(string connString);
         string WriteFileToBlob(BlobWriteDto fileDto);
         void RenameBlobs(string previousFileUriName, string newFileUriName);
         void CopyBlob(string previousFileUriName, string newFileUriName);
         void DeleteBlob(string fileUriName);
-        Image GetImageFromBlobByFileURIName(string fileUriName);
-        byte[] GetByteArrayByFileURIName(string fileUriName);
+        Image GetImageFromBlobByFileUriName(string fileUriName);
+        byte[] GetByteArrayByFileUriName(string fileUriName);
         List<string> GetDirectoryList(string directoryName);
     }
 }
