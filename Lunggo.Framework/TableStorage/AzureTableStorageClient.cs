@@ -27,7 +27,7 @@ namespace Lunggo.Framework.TableStorage
             }
             catch(Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         private CloudTable GetTableByReferenceAndCreateIfNotExist(string reference)
@@ -43,25 +43,25 @@ namespace Lunggo.Framework.TableStorage
                 throw ex;
             }
         }
-        public void InsertEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
+        public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
             try
             {
-                CloudTable table = GetTableByReferenceAndCreateIfNotExist(NameReference);
-                TableOperation insertOp = TableOperation.Insert(ObjectParam);
+                CloudTable table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                TableOperation insertOp = TableOperation.Insert(objectParam);
                 table.Execute(insertOp);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
-        public void InsertOrReplaceEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
+        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
             try
             {
-                CloudTable table = GetTableByReferenceAndCreateIfNotExist(NameReference);
-                TableOperation insertOp = TableOperation.InsertOrReplace(ObjectParam);
+                CloudTable table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                TableOperation insertOp = TableOperation.InsertOrReplace(objectParam);
                 table.Execute(insertOp);
             }
             catch (Exception ex)

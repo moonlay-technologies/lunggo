@@ -11,7 +11,7 @@ namespace Lunggo.Framework.TableStorage
     {
         void init(string connString);
         CloudTable GetTableByReference(string reference);
-        void InsertEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new();
-        void InsertOrReplaceEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new();
+        void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new();
+        void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new();
     }
 }

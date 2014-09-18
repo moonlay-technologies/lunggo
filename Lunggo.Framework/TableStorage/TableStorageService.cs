@@ -10,7 +10,7 @@ namespace Lunggo.Framework.TableStorage
     public class TableStorageService
     {
         ITableStorageClient _tableStorageClient;
-        private static TableStorageService instance = new TableStorageService();
+        private static readonly TableStorageService Instance = new TableStorageService();
 
 
         private TableStorageService()
@@ -23,7 +23,7 @@ namespace Lunggo.Framework.TableStorage
         }
         public static TableStorageService GetInstance()
         {
-            return instance;
+            return Instance;
         }
         public CloudTable GetTableByReference(string reference)
         {
@@ -33,25 +33,25 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
-        public void InsertEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
+        public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
             try
             {
-                _tableStorageClient.InsertEntityToTableStorage(ObjectParam, NameReference);
+                _tableStorageClient.InsertEntityToTableStorage(objectParam, nameReference);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void InsertOrReplaceEntityToTableStorage<T>(T ObjectParam, string NameReference) where T : ITableEntity, new()
+        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
             try
             {
-                _tableStorageClient.InsertOrReplaceEntityToTableStorage(ObjectParam, NameReference);
+                _tableStorageClient.InsertOrReplaceEntityToTableStorage(objectParam, nameReference);
             }
             catch (Exception ex)
             {
