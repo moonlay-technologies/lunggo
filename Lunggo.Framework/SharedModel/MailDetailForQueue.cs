@@ -22,6 +22,7 @@ namespace Lunggo.Framework.SharedModel
     public enum MailTemplateEnum
     {
         SuccessBooking,
-        ApalagiGitu
+        ApalagiGitu,
+        TestHtml
     }
 }

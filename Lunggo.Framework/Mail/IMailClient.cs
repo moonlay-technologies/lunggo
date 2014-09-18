@@ -9,6 +9,8 @@ namespace Lunggo.Framework.Mail
     public interface IMailClient
     {
         void init(string mandrillAPIKey);
+
+        void init(string mandrillAPIKey, string defaultMandrillTemplate, IMailTemplateEngine _mailTemplateEngine);
         void sendEmail<T>(T objectParam, MailModel mailModel, string partitionKey);
     }
 }

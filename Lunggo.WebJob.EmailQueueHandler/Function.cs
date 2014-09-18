@@ -29,10 +29,24 @@ namespace Lunggo.WebJob.EmailQueueHandler
                     break;
                 case MailTemplateEnum.ApalagiGitu:
                     break;
+                case MailTemplateEnum.TestHtml:
+                    TestHtml(mailDetailInQueue);
+                    break;
             }
 
         }
         public static void SuccessBooking(MailDetailForQueue mailDetail)
+        {
+            try
+            {
+                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, mailDetail.MailTemplate.convertToString());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static void TestHtml(MailDetailForQueue mailDetail)
         {
             try
             {

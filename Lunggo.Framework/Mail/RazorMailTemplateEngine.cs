@@ -12,9 +12,13 @@ namespace Lunggo.Framework.Mail
 {
     public class RazorMailTemplateEngine : IMailTemplateEngine
     {
-        private string _defaultMailTable = "mailtemplate";
-        private string _defaultRowKey = "default";
-
+        private string _defaultMailTable;
+        private string _defaultRowKey;
+        public void init(string mailTableName, string mailRowKey)
+        {
+            _defaultMailTable = mailTableName;
+            _defaultRowKey = mailRowKey;
+        }
         public string GetEmailTemplate<T>(T objectParam , string partitionKey)
         {
             try 

@@ -12,6 +12,7 @@ using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.SnowMaker;
+using Lunggo.Framework.TableStorage;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
 using Microsoft.Azure.WebJobs;
@@ -32,16 +33,12 @@ namespace Lunggo.WebJob.EmailQueueHandler
             var _queue = queueService.GetQueueByReference("emailqueue");
             _queue.CreateIfNotExists();
 
-            foreach (var cloudQueueMessage in _queue.GetMessages(200, TimeSpan.FromMinutes(5)))
-            {
-                MailDetailForQueue messageContent = cloudQueueMessage.Deserialize<MailDetailForQueue>();
+            JobHostConfiguration configuration = new JobHostConfiguration();
+            configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
+            configuration.Queues.MaxDequeueCount = 10;
 
-
-                //Email Process
-
-
-                _queue.DeleteMessage(cloudQueueMessage);
-            }
+            JobHost host = new JobHost(configuration);
+            host.RunAndBlock();
 
         }
         public void Init()
@@ -49,6 +46,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitConfigurationManager();
             InitQueueService();
             InitMailService();
+            InitTableStorageService();
         }
 
         private static void InitConfigurationManager()
@@ -91,11 +89,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitMailService()
         {
-            var mailApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apikey");
+            string defaultMailTable = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailTableName");
+            string defaultRowKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailRowName");
+            string mandrillTemplate = ConfigManager.GetInstance().GetConfigValue("mandrill", "templateOfMandrill");
+            string mailApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apikey");
+
+            IMailTemplateEngine mailTemplate = new RazorMailTemplateEngine();
+            mailTemplate.init(defaultMailTable, defaultRowKey);
             IMailClient mailClient = new MandrillMailClient();
             try
             {
-                mailClient.init(mailApiKey);
+                mailClient.init(mailApiKey, mandrillTemplate, mailTemplate);
             }
             catch (Exception ex)
             {
@@ -112,6 +116,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
                 throw new Exception("gagal init queue");
             }
 
+        }
+
+        private static void InitMailTemplate()
+        {
+        }
+        public static void InitTableStorageService()
+        {
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            ITableStorageClient tableStorageClient = new AzureTableStorageClient();
+            tableStorageClient.init(connectionString);
+            TableStorageService.GetInstance().init(tableStorageClient);
         }
     }
 }

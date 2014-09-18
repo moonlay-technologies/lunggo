@@ -40,7 +40,7 @@ namespace Lunggo.Driver
         static void Main(string[] args)
         {
             new BayuDriver().Init();
-            new BayuDriver().testDeserialize();
+            new BayuDriver().testQueueEmailHandler();
             
 
             //Console.WriteLine(json);
@@ -126,6 +126,27 @@ namespace Lunggo.Driver
             public string Name { get; set; }
 
             public string OrderId { get; set; }
+        }
+
+        public void testQueueEmailHandler()
+        {
+            BookingDetail TestClass = new BookingDetail();
+            TestClass.Name = "nama";
+            TestClass.Email = "Email@email.com";
+            TestClass.DynamicTesting = 1;
+            MailDetailForQueue testEmail = new MailDetailForQueue();
+            testEmail.From_Name = "Bayu";
+            testEmail.From_Mail = "bayualvian@hotmail.com";
+            testEmail.RecipientList = new string[] { "Bayualvian@hotmail.com" };
+            testEmail.Subject = "testing";
+            testEmail.MailTemplate = MailTemplateEnum.TestHtml;
+            testEmail.MailObjectDetail = TestClass;
+
+            CloudQueueMessage TestCloudQueue = testEmail.SerializeToQueueMessage();
+            var queueService = QueueService.GetInstance();
+            var _queue = queueService.GetQueueByReference("emailqueue");
+            _queue.CreateIfNotExists();
+            _queue.AddMessage(TestCloudQueue);
         }
 
         public void testDeserialize()
