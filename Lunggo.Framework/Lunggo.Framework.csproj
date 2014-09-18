@@ -153,7 +153,7 @@
     <Compile Include="Mail\MailTemplateModel.cs" />
     <Compile Include="Mail\RazorMailTemplateEngine.cs" />
     <Compile Include="Mail\MandrillMailClient.cs" />
-    <Compile Include="Message\LangToISOCodeMapper.cs" />
+    <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Payment\MandiriClickPayProcessor.cs" />
     <Compile Include="Payment\PaymentProcessor.cs" />
     <Compile Include="Payment\PaymentResult.cs" />
-    <Compile Include="Message\MessageManager.cs" />
+    <Compile Include="I18nMessage\MessageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence\SequenceBase.cs" />
     <Compile Include="Sequence\SequenceProperties.cs" />

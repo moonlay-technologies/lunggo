@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.Framework.Constant;
-using Microsoft.SqlServer.Server;
 
-namespace Lunggo.Framework.Message
+namespace Lunggo.Framework.I18nMessage
 {
     public static class LangToIsoCodeMapper
     {

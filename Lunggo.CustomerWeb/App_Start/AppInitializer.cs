@@ -1,6 +1,6 @@
 ﻿using System.Web;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Message;
+using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;

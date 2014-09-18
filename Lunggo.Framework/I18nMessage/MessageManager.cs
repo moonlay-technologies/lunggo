@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Lunggo.Framework.Message
+namespace Lunggo.Framework.I18nMessage
 {
     public class MessageManager
     {

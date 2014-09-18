@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.Framework.Context;
-using Lunggo.Framework.Message;
+using Lunggo.Framework.I18nMessage;
 
 namespace Lunggo.Framework.HtmlHelperExtension
 {

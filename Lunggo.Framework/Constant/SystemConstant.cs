@@ -19,6 +19,5 @@ namespace Lunggo.Framework.Constant
         public static readonly String IndonesianLanguageCode = "id";
         public static readonly String EnglishLanguageCode = "en";
         //End of LanguageCode
-
     }
 }
