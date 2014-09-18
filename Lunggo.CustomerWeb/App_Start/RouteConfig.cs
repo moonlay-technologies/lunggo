@@ -66,10 +66,11 @@ namespace Lunggo.CustomerWeb
             ).DataTokens = new RouteValueDictionary(new { area = "UW300" });
 
             routes.MapRoute(
+                name: "UW100RouteSearchHotelResult",
                 url: "{langCode}/Hotel/{CountryArea}/{ProvinceArea}/{LargeArea}",
                 defaults: new { controller = "UW100Router", action = "UW100Index", CountryArea = UrlParameter.Optional, LargeArea = UrlParameter.Optional }
             ).DataTokens = new RouteValueDictionary(new { area = "UW100" });
-                name: "UW100RouteSearchHotelResult",
+                
             //TODO End of Todo
 
 
