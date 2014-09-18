@@ -16,7 +16,7 @@ namespace Lunggo.Framework.Blob
 {
     public class AzureBlobStorageClient : IBlobStorageClient
     {
-        string defaultContainerName = "temp";
+        private const string DefaultContainerName = "temp";
         CloudBlobClient _blobStorageClient;
         public AzureBlobStorageClient()
         {
@@ -28,68 +28,59 @@ namespace Lunggo.Framework.Blob
             this._blobStorageClient = blobStorageAccount.CreateCloudBlobClient();
 
         }
-        public string WriteFileToBlob(BlobWriteDTO fileDTO)
+        public string WriteFileToBlob(BlobWriteDTO fileDto)
         {
             try
             {
                 bool ForceUsingDefaultContainerIfContainerNotDefined = true;
-                string containerInPath = ParseContainerFromFileUri(fileDTO.FileBlobModel.FilePath, ForceUsingDefaultContainerIfContainerNotDefined);
-                return ProcessingWriteFileToBlob(fileDTO, containerInPath);
+                string containerInPath = ParseContainerFromFileUri(fileDto.FileBlobModel.FilePath, ForceUsingDefaultContainerIfContainerNotDefined);
+                return ProcessingWriteFileToBlob(fileDto, containerInPath);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
-        private string ParseContainerFromFileUri(string FileURI, bool ForceUsingDefaultContainerIfContainerNotDefined)
+        private string ParseContainerFromFileUri(string fileUri, bool forceUsingDefaultContainerIfContainerNotDefined)
         {
             try
             {
-                string containerName = FileURI.Substring(0, FileURI.IndexOf(@"/"));
+                string containerName = fileUri.Substring(0, fileUri.IndexOf(@"/"));
                 return containerName;
             }
-            catch (ArgumentOutOfRangeException NotFoundDirectoryException)
+            catch (ArgumentOutOfRangeException notFoundDirectoryException)
             {
-                if (ForceUsingDefaultContainerIfContainerNotDefined)
-                    return this.defaultContainerName;
+                if (forceUsingDefaultContainerIfContainerNotDefined)
+                    return DefaultContainerName;
                 else
                     return string.Empty;
             }
         }
-        private string removeBaseUri(string FileURI)
-        {
-            int IndexAfterContainerInFileName = (this._blobStorageClient.BaseUri.ToString() + @"/").Length;
-            string newFileURI = FileURI.Substring(IndexAfterContainerInFileName);
-            return newFileURI;
-        }
-        private bool isPathHasContainer(string containerInPath)
-        {
-            return (string.IsNullOrEmpty(containerInPath) ? false : true);
-        }
-        private string ProcessingWriteFileToBlob(BlobWriteDTO blobWriteDTO, string wantedContainerName)
+        
+        private string ProcessingWriteFileToBlob(BlobWriteDTO blobWriteDto, string wantedContainerName)
         {
             try
             {
-                BlobModel newBlobModel = CheckContainerAndGenerateNewBlobModel(blobWriteDTO.FileBlobModel.FilePath, wantedContainerName);
-                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDTO.FileBlobModel.FileInfo.ContentType);
-                newBlob = FinalBlockBlobBySaveMethod(newBlob, newBlobModel.BlobName, blobWriteDTO.SaveMethod);
-                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDTO.FileBlobModel.FileInfo.ArrayData);
+                BlobModel newBlobModel = CheckContainerAndGenerateNewBlobModel(blobWriteDto.FileBlobModel.FilePath, wantedContainerName);
+                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDto.FileBlobModel.FileInfo.ContentType);
+                newBlob = FinalBlockBlobBySaveMethod(newBlob, newBlobModel.BlobName, blobWriteDto.SaveMethod);
+                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDto.FileBlobModel.FileInfo.ArrayData);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
+
         private BlobModel CheckContainerAndGenerateNewBlobModel(string fileName, string wantedContainerName)
         {
             DeclareContainerAndCreateIfNotExist(wantedContainerName);
             fileName = RemoveContainerFromUriFile(fileName,wantedContainerName);
-            BlobModel newBlobModel = new BlobModel();
+            var newBlobModel = new BlobModel {BlobName = fileName, BlobContainer = wantedContainerName};
 
-            newBlobModel.BlobName = fileName;
-            newBlobModel.BlobContainer = wantedContainerName;
             return newBlobModel;
         }
+
         private void DeclareContainerAndCreateIfNotExist(string wantedContainerName)
         {
             CloudBlobContainer wantedContainer = this._blobStorageClient.GetContainerReference(wantedContainerName);
@@ -97,7 +88,7 @@ namespace Lunggo.Framework.Blob
         }
         private string RemoveContainerFromUriFile(string filePath, string containerInPath)
         {
-            bool isFileHasDirectory = Path.GetDirectoryName(filePath) == "" ? false : true;
+            bool isFileHasDirectory = Path.GetDirectoryName(filePath) != "";
             if (isFileHasDirectory)
                 filePath = filePath.Substring((containerInPath + @"/").Length);
             return filePath;
@@ -111,11 +102,11 @@ namespace Lunggo.Framework.Blob
                 wantedContainer.SetPermissions(permissions);
             }
         }
-        private CloudBlockBlob GenerateNewBlockBlob(BlobModel newBlobModel, string ContentType)
+        private CloudBlockBlob GenerateNewBlockBlob(BlobModel newBlobModel, string contentType)
         {
             CloudBlobContainer wantedContainer = this._blobStorageClient.GetContainerReference(newBlobModel.BlobContainer);
             CloudBlockBlob newBlob = wantedContainer.GetBlockBlobReference(newBlobModel.BlobName);
-            newBlob.Properties.ContentType = ContentType;
+            newBlob.Properties.ContentType = contentType;
             return newBlob;
         }
         private CloudBlockBlob FinalBlockBlobBySaveMethod(CloudBlockBlob newBlob, string newBlobName, SaveMethod saveMethod)
@@ -128,21 +119,21 @@ namespace Lunggo.Framework.Blob
                     }
                 case SaveMethod.SKIP:
                     {
-                        if (!isBlobExists(newBlob))
+                        if (!IsBlobExists(newBlob))
                             return newBlob;
                         else
                             return null;
                     }
                 case SaveMethod.EXCEPTION:
                     {
-                        if (!isBlobExists(newBlob))
+                        if (!IsBlobExists(newBlob))
                             return newBlob;
                         else
                             throw new FileAlreadyExistException("File with requested name already exist");
                     }
                 case SaveMethod.GENERATE_NEW_NAME:
                     {
-                        if (!isBlobExists(newBlob))
+                        if (!IsBlobExists(newBlob))
                             return newBlob;
                         else
                         {
@@ -153,27 +144,27 @@ namespace Lunggo.Framework.Blob
             throw new Exception("Save Method cannot be identified");
 
         }
-        private CloudBlockBlob GetNewNameForBlob(string CurrentWantedBlobName, CloudBlockBlob newBlob)
+        private CloudBlockBlob GetNewNameForBlob(string currentWantedBlobName, CloudBlockBlob newBlob)
         {
             int count = 1;
 
-            string fileNameOnly = Path.GetFileNameWithoutExtension(CurrentWantedBlobName);
-            string extension = Path.GetExtension(CurrentWantedBlobName);
-            string path = Path.GetDirectoryName(CurrentWantedBlobName);
-            string newFullName = CurrentWantedBlobName;
+            var fileNameOnly = Path.GetFileNameWithoutExtension(currentWantedBlobName);
+            var extension = Path.GetExtension(currentWantedBlobName);
+            var path = Path.GetDirectoryName(currentWantedBlobName);
+            var newFullName = currentWantedBlobName;
 
-            CloudBlobContainer blobContainer = this._blobStorageClient.GetContainerReference(newBlob.Container.Name);
-            CloudBlockBlob BlobWithNewName;
+            var blobContainer = this._blobStorageClient.GetContainerReference(newBlob.Container.Name);
+            CloudBlockBlob blobWithNewName;
             do
             {
-                string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
+                var tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
                 newFullName = Path.Combine(path, tempFileName + extension);
-                BlobWithNewName = blobContainer.GetBlockBlobReference(newFullName);
-                BlobWithNewName.Properties.ContentType = newBlob.Properties.ContentType;
-            } while (isBlobExists(BlobWithNewName));
-            return BlobWithNewName;
+                blobWithNewName = blobContainer.GetBlockBlobReference(newFullName);
+                blobWithNewName.Properties.ContentType = newBlob.Properties.ContentType;
+            } while (IsBlobExists(blobWithNewName));
+            return blobWithNewName;
         }
-        private static bool isBlobExists(CloudBlockBlob blob)
+        private static bool IsBlobExists(CloudBlockBlob blob)
         {
             try
             {
@@ -199,12 +190,13 @@ namespace Lunggo.Framework.Blob
             else
                 return null;
         }
-        public void RenameBlobs(string previousFileURIName, string newFileURIName)
+
+        public void RenameBlobs(string previousFileUriName, string newFileUriName)
         {
             try
             {
-                CloudBlockBlob previousBlob = GetBlobFromStorage(previousFileURIName);
-                CloudBlockBlob newBlob = GetBlobFromStorage(newFileURIName);
+                CloudBlockBlob previousBlob = GetBlobFromStorage(previousFileUriName);
+                CloudBlockBlob newBlob = GetBlobFromStorage(newFileUriName);
 
                 CheckContainerAndCreateIfNotExist(newBlob.Container);
 
@@ -217,15 +209,16 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
-        public void CopyBlob(string previousFileURIName, string newFileURIName)
+
+        public void CopyBlob(string previousFileUriName, string newFileUriName)
         {
             try
             {
-                CloudBlockBlob previousBlob = GetBlobFromStorage(previousFileURIName);
-                CloudBlockBlob newBlob = GetBlobFromStorage(newFileURIName);
+                CloudBlockBlob previousBlob = GetBlobFromStorage(previousFileUriName);
+                CloudBlockBlob newBlob = GetBlobFromStorage(newFileUriName);
 
                 CheckContainerAndCreateIfNotExist(newBlob.Container);
 
@@ -237,15 +230,15 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
-        public void DeleteBlob(string FileURIName)
+        public void DeleteBlob(string fileUriName)
         {
             try
             {
-                CloudBlockBlob blobToDelete = GetBlobFromStorage(FileURIName);
+                CloudBlockBlob blobToDelete = GetBlobFromStorage(fileUriName);
                 blobToDelete.Delete();
             }
             catch (Exception ex)
@@ -254,39 +247,38 @@ namespace Lunggo.Framework.Blob
             }
         }
 
-        public Image GetImageFromBlobByFileURIName(string FileURIName)
+        public Image GetImageFromBlobByFileURIName(string fileUriName)
         {
-            Image returnImage = Image.FromStream(GetStreamFromBlobByFileURIName(FileURIName));
+            Image returnImage = Image.FromStream(GetStreamFromBlobByFileUriName(fileUriName));
             return returnImage;
         }
-        public MemoryStream GetStreamFromBlobByFileURIName(string FileURIName)
+        public MemoryStream GetStreamFromBlobByFileUriName(string fileUriName)
         {
-            CloudBlockBlob blobToGet = GetBlobFromStorage(FileURIName);
-            MemoryStream memoryStream = new MemoryStream();
+            var blobToGet = GetBlobFromStorage(fileUriName);
+            var memoryStream = new MemoryStream();
             blobToGet.DownloadToStream(memoryStream);
             return memoryStream;
         }
-        public byte[] GetByteArrayByFileURIName(string FileURIName)
+        public byte[] GetByteArrayByFileURIName(string fileUriName)
         {
-            CloudBlockBlob blobToGet = GetBlobFromStorage(FileURIName);
+            CloudBlockBlob blobToGet = GetBlobFromStorage(fileUriName);
             Stream streamOfBlob = new MemoryStream();
             blobToGet.DownloadToStream(streamOfBlob);
             byte[] byteArrayOfBlob = new StreamUtil().StreamToByteArray(streamOfBlob);
             return byteArrayOfBlob;
         }
-        public CloudBlockBlob GetBlobFromStorage(string FileURIName)
+        public CloudBlockBlob GetBlobFromStorage(string fileUriName)
         {
             try
             {
-                CloudBlobContainer wantedContainer;
                 bool ForceUsingDefaultContainer = false;
-                string containerName = ParseContainerFromFileUri(FileURIName, ForceUsingDefaultContainer);
-                wantedContainer = this._blobStorageClient.GetContainerReference(containerName);
-                if (!isFileUriContainBaseUri(FileURIName))
+                string containerName = ParseContainerFromFileUri(fileUriName, ForceUsingDefaultContainer);
+                CloudBlobContainer wantedContainer = this._blobStorageClient.GetContainerReference(containerName);
+                if (!IsFileUriContainBaseUri(fileUriName))
                 {
-                    FileURIName = FileURIName.Substring((containerName + @"/").Length);
+                    fileUriName = fileUriName.Substring((containerName + @"/").Length);
                 }
-                CloudBlockBlob theBlob = wantedContainer.GetBlockBlobReference(FileURIName);
+                CloudBlockBlob theBlob = wantedContainer.GetBlockBlobReference(fileUriName);
                 return theBlob;
             }
             catch (ArgumentException ex)
@@ -294,14 +286,14 @@ namespace Lunggo.Framework.Blob
                 if (ex.Source == "Microsoft.WindowsAzure.Storage")
                     throw new ArgumentException("Container Not Found!");
                 else
-                    throw ex;
+                    throw;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
-        private bool isFileUriContainBaseUri(string FileURIName)
+        private bool IsFileUriContainBaseUri(string FileURIName)
         {
             return FileURIName.Contains(this._blobStorageClient.BaseUri.ToString());
         }
@@ -316,7 +308,7 @@ namespace Lunggo.Framework.Blob
         {
             try
             {
-                IEnumerable<IListBlobItem> listBlob = getListBlob(directoryName);
+                IEnumerable<IListBlobItem> listBlob = GetListBlob(directoryName);
                 List<string> listUri = new List<string>();
                 foreach (IListBlobItem BlobItem in listBlob)
                 {
@@ -329,7 +321,7 @@ namespace Lunggo.Framework.Blob
                 throw ex;
             }
         }
-        private IEnumerable<IListBlobItem> getListBlob(string directoryName)
+        private IEnumerable<IListBlobItem> GetListBlob(string directoryName)
         {
             bool ForceUsingDefaultContainerIfContainerNotDefined = false;
             string containerInPath = ParseContainerFromFileUri(directoryName, ForceUsingDefaultContainerIfContainerNotDefined);

@@ -11,12 +11,12 @@ namespace Lunggo.Framework.Blob
     public interface IBlobStorageClient
     {
         void init(string connString);
-        string WriteFileToBlob(BlobWriteDTO fileDTO);
-        void RenameBlobs(string previousFileURIName, string newFileURIName);
-        void CopyBlob(string previousFileURIName, string newFileURIName);
-        void DeleteBlob(string FileURIName);
-        Image GetImageFromBlobByFileURIName(string FileURIName);
-        byte[] GetByteArrayByFileURIName(string FileURIName);
+        string WriteFileToBlob(BlobWriteDTO fileDto);
+        void RenameBlobs(string previousFileUriName, string newFileUriName);
+        void CopyBlob(string previousFileUriName, string newFileUriName);
+        void DeleteBlob(string fileUriName);
+        Image GetImageFromBlobByFileURIName(string fileUriName);
+        byte[] GetByteArrayByFileURIName(string fileUriName);
         List<string> GetDirectoryList(string directoryName);
     }
 }
