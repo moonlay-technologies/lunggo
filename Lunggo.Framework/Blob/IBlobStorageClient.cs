@@ -11,7 +11,7 @@ namespace Lunggo.Framework.Blob
     public interface IBlobStorageClient
     {
         void init(string connString);
-        string WriteFileToBlob(BlobWriteDTO fileDto);
+        string WriteFileToBlob(BlobWriteDto fileDto);
         void RenameBlobs(string previousFileUriName, string newFileUriName);
         void CopyBlob(string previousFileUriName, string newFileUriName);
         void DeleteBlob(string fileUriName);

@@ -32,7 +32,7 @@ namespace Lunggo.Framework.Blob
         {
             return Instance;
         }
-        public string WriteFileToBlob(BlobWriteDTO fileDto)
+        public string WriteFileToBlob(BlobWriteDto fileDto)
         {
             return _blobStorageClient.WriteFileToBlob(fileDto);
         }

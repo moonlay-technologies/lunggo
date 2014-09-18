@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Blob
 {
-    public class BlobWriteDTO
+    public class BlobWriteDto
     {
         public FileBlobModel FileBlobModel { get; set; }
-        private SaveMethod _saveMethod = SaveMethod.SKIP;
+        private SaveMethod _saveMethod = SaveMethod.Skip;
         public SaveMethod SaveMethod
         {
             get { return _saveMethod; }
@@ -19,9 +19,9 @@ namespace Lunggo.Framework.Blob
     }
     public enum SaveMethod
     {
-        FORCE,
-        SKIP,
-        EXCEPTION,
-        GENERATE_NEW_NAME
+        Force,
+        Skip,
+        Exception,
+        GenerateNewName
     };
 }

@@ -28,7 +28,7 @@ namespace Lunggo.Framework.Blob
             this._blobStorageClient = blobStorageAccount.CreateCloudBlobClient();
 
         }
-        public string WriteFileToBlob(BlobWriteDTO fileDto)
+        public string WriteFileToBlob(BlobWriteDto fileDto)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Lunggo.Framework.Blob
             }
         }
         
-        private string ProcessingWriteFileToBlob(BlobWriteDTO blobWriteDto, string wantedContainerName)
+        private string ProcessingWriteFileToBlob(BlobWriteDto blobWriteDto, string wantedContainerName)
         {
             try
             {
@@ -113,25 +113,25 @@ namespace Lunggo.Framework.Blob
         {
             switch (saveMethod)
             {
-                case SaveMethod.FORCE:
+                case SaveMethod.Force:
                     {
                         return newBlob;
                     }
-                case SaveMethod.SKIP:
+                case SaveMethod.Skip:
                     {
                         if (!IsBlobExists(newBlob))
                             return newBlob;
                         else
                             return null;
                     }
-                case SaveMethod.EXCEPTION:
+                case SaveMethod.Exception:
                     {
                         if (!IsBlobExists(newBlob))
                             return newBlob;
                         else
                             throw new FileAlreadyExistException("File with requested name already exist");
                     }
-                case SaveMethod.GENERATE_NEW_NAME:
+                case SaveMethod.GenerateNewName:
                     {
                         if (!IsBlobExists(newBlob))
                             return newBlob;
