@@ -29,7 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             new Program().Init();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("apibookingsuccess");
+            var _queue = queueService.GetQueueByReference("emailqueue");
             _queue.CreateIfNotExists();
 
             foreach (var cloudQueueMessage in _queue.GetMessages(200, TimeSpan.FromMinutes(5)))

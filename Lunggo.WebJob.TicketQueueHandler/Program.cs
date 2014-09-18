@@ -18,7 +18,7 @@ namespace Lunggo.WebJob.TicketQueueHandler
         {
             new Program().Init();
             var queueService = QueueService.GetInstance();
-            CloudQueue _queue = queueService.GetQueueByReference("apibookingfailed");
+            CloudQueue _queue = queueService.GetQueueByReference("ticketqueue");
             _queue.CreateIfNotExists();
 
             JobHostConfiguration configuration = new JobHostConfiguration();
