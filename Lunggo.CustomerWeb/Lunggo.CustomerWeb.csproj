@@ -219,7 +219,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\HtmlExtension.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -248,7 +247,9 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
-    <Content Include="Config\i18n_message.xml" />
+    <Content Include="Config\i18n_message.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1461,6 +1462,7 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
