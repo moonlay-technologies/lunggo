@@ -19,36 +19,34 @@ namespace Lunggo.Framework.Blob
     {
 
         IBlobStorageClient _blobStorageClient;
-        private static BlobStorageService instance = new BlobStorageService();
-
-
+        private static readonly BlobStorageService Instance = new BlobStorageService();
         private BlobStorageService()
         {
             
         }
-        public void init(IBlobStorageClient client)
+        public void Init(IBlobStorageClient client)
         {
             _blobStorageClient = client;
         }
         public static BlobStorageService GetInstance()
         {
-            return instance;
+            return Instance;
         }
-        public string WriteFileToBlob(BlobWriteDTO fileDTO)
+        public string WriteFileToBlob(BlobWriteDTO fileDto)
         {
-            return _blobStorageClient.WriteFileToBlob(fileDTO);
+            return _blobStorageClient.WriteFileToBlob(fileDto);
         }
-        public void RenameBlobs(string previousFileURIName, string newFileURIName)
+        public void RenameBlobs(string previousFileUriName, string newFileUriName)
         {
-            _blobStorageClient.RenameBlobs(previousFileURIName, newFileURIName);
+            _blobStorageClient.RenameBlobs(previousFileUriName, newFileUriName);
         }
-        public void DeleteBlob(string FileURIName)
+        public void DeleteBlob(string fileUriName)
         {
-            _blobStorageClient.DeleteBlob(FileURIName);
+            _blobStorageClient.DeleteBlob(fileUriName);
         }
-        public byte[] GetByteArrayByFileURIName(string FileURIName)
+        public byte[] GetByteArrayByFileUriName(string fileUriName)
         {
-            return _blobStorageClient.GetByteArrayByFileURIName(FileURIName);
+            return _blobStorageClient.GetByteArrayByFileURIName(fileUriName);
         }
         public List<string> GetDirectoryList(string directoryName)
         {
