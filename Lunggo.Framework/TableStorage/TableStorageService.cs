@@ -17,7 +17,7 @@ namespace Lunggo.Framework.TableStorage
         {
             
         }
-        public void init(ITableStorageClient client)
+        public void Init(ITableStorageClient client)
         {
             _tableStorageClient = client;
         }
@@ -44,7 +44,7 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
@@ -55,7 +55,7 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
     }
