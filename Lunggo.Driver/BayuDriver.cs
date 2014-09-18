@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using System.Reflection;
 using System.Web;
 using Lunggo.Flight.Crawler;
 using Lunggo.Flight.Model;
@@ -12,9 +13,11 @@ using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
+using Lunggo.Framework.Util;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -37,7 +40,7 @@ namespace Lunggo.Driver
         static void Main(string[] args)
         {
             new BayuDriver().Init();
-            new BayuDriver().testAddQueue();
+            new BayuDriver().testDeserialize();
             
 
             //Console.WriteLine(json);
@@ -110,25 +113,13 @@ namespace Lunggo.Driver
 
             for (int i = 0; i < 10; i++)
             {
-                PersonIdentity TestClass = new PersonIdentity();
+                BookingDetail TestClass = new BookingDetail();
                 TestClass.Name = "nama"+i;
                 TestClass.Email = "Email"+i;
                 TestClass.DynamicTesting = 1;
                 _queue.AddMessage(AzureQueueExtension.Serialize(TestClass));
             }
             
-
-
-            CloudQueue queue = queueService.GetQueueByReference("initialorder");
-            queue.CreateIfNotExists();
-
-            Order person = new Order()
-            {
-                Name = "Alex",
-                OrderId = Guid.NewGuid().ToString("N").ToLower()
-            };
-
-            queue.AddMessage(new CloudQueueMessage(JsonConvert.SerializeObject(person)));
         }
         public class Order
         {
@@ -137,31 +128,39 @@ namespace Lunggo.Driver
             public string OrderId { get; set; }
         }
 
-        //public void testDeserialize()
-        //{
-        //    PersonIdentity TestClass = new PersonIdentity();
-        //    TestClass.Name = "nama";
-        //    TestClass.Email = "Email";
-        //    TestClass.DynamicTesting = 1;
+        public void testDeserialize()
+        {
+            TicketQueueMessage TestQueue = new TicketQueueMessage(){TicketPurpose = TicketPurpose.ApiBookingFailed};
+            BookingDetail TestClass = new BookingDetail();
+            TestClass.Name = "nama";
+            TestClass.Email = "Email@email.com";
+            TestClass.DynamicTesting = 1;
 
-        //    PersonIdentity TestClass2 = new PersonIdentity();
-        //    TestClass2.Name = "nama";
-        //    TestClass2.Email = "Email";
-        //    FileInfo Testticket = new FileInfo();
-        //    Testticket.FileName = "FileName";
-        //    Testticket.ContentType = "empty";
-        //    TestClass2.DynamicTesting = Testticket;
+            TestQueue.TicketObjectDetail = TestClass;
+
+            //BookingDetail TestClass2 = new BookingDetail();
+            //TestClass2.Name = "nama";
+            //TestClass2.Email = "Email";
+            //FileInfo Testticket = new FileInfo();
+            //Testticket.FileName = "FileName";
+            //Testticket.ContentType = "empty";
+            //TestClass2.DynamicTesting = Testticket;
 
 
 
-        //    CloudQueueMessage TestCloudQueue = AzureQueueExtension.Serialize(TestClass);
-        //    CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);
-        //    var Hasil = TestCloudQueue.Deserialize();
-        //    var Hasil2 = TestCloudQueue2.Deserialize();
-        //    Console.WriteLine(Hasil.GetType());
-        //    Console.WriteLine(Hasil2.GetType());
-        //}
-
+            CloudQueueMessage TestCloudQueue = TestQueue.SerializeToQueueMessage();
+            var queueService = QueueService.GetInstance();
+            var _queue = queueService.GetQueueByReference("ticketqueue");
+            _queue.CreateIfNotExists();
+            _queue.AddMessage(TestCloudQueue);
+            //CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);
+            var Hasil = JsonConvert.DeserializeObject<TicketQueueMessage>(TestCloudQueue.AsString);
+            BookingDetail asd = (Hasil.TicketObjectDetail as JObject).ToObject<BookingDetail>();
+            //var Hasil2 = TestCloudQueue2.Deserialize();
+            Console.WriteLine(asd.DetailBooking);
+            //Console.WriteLine(Hasil2.GetType());
+        }
+        
         public void testBooking()
         {
             //CIMBPaymentData data = new CIMBPaymentData();
@@ -277,41 +276,41 @@ namespace Lunggo.Driver
 
         public void testTicket()
         {
-            //string test = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-            //              "\\BayuDriver.cs";
-            //List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
-            //files.Add(new Lunggo.Framework.SharedModel.FileInfo()
-            //{
-            //    ContentType = "text/plain",
-            //    FileName = "BayuDriver.cs",
-            //    FileData =
-            //        File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-            //              "\\BayuDriver.cs")
-            //});
-            //files.Add(new Lunggo.Framework.SharedModel.FileInfo()
-            //{
-            //    ContentType = "text/plain",
-            //    FileName = "RamaDriver.cs",
-            //    FileData =
-            //        File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
-            //              "\\RamaDriver.cs")
-            //});
-            //var ticket = new ZendeskTicket()
-            //{
-            //    Subject = "ticket with attachments",
-            //    Comment = new ZendeskComment() { Body = "testing requester" },
-            //    Priority = TicketPriorities.Normal,
-            //    Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "Bayu" }
-            //};
+            string test = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\BayuDriver.cs";
+            List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
+            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            {
+                ContentType = "text/plain",
+                FileName = "BayuDriver.cs",
+                FileData =
+                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\BayuDriver.cs")
+            });
+            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            {
+                ContentType = "text/plain",
+                FileName = "RamaDriver.cs",
+                FileData =
+                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\RamaDriver.cs")
+            });
             var ticket = new ZendeskTicket()
+            {
+                Subject = "ticket with attachments",
+                Comment = new ZendeskComment() { Body = "testing requester" },
+                Priority = TicketPriorities.Normal,
+                Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "Bayu" }
+            };
+            var ticket2 = new ZendeskTicket()
             {
                 Subject = "Failed booking attempt",
                 Comment = new ZendeskComment() { Body = "Failed booking attempt for a member named:" + "nama" },
                 Priority = TicketPriorities.Normal,
                 Requester = new ZendeskRequester() { Email = "Bayualvian@hotmail.com", Name = "nama" }
             };
-            TicketSupportService.GetInstance().CreateTicketAndReturnResponseStatus(ticket);
-            //TicketSupportService.GetInstance().CreateTicketWithAttachmentAndReturnResponseStatus(ticket,files);
+            TicketSupportService.GetInstance().CreateTicketAndReturnResponseStatus(ticket2);
+            TicketSupportService.GetInstance().CreateTicketWithAttachmentAndReturnResponseStatus(ticket, files);
         }
 
         //public enum coba

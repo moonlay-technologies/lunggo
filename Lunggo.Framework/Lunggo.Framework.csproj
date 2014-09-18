@@ -147,9 +147,11 @@
     <Compile Include="Sequence\SequenceBase.cs" />
     <Compile Include="Sequence\SequenceProperties.cs" />
     <Compile Include="SharedModel\BaseTicket.cs" />
+    <Compile Include="SharedModel\BookingDetail.cs" />
     <Compile Include="SharedModel\FileInfo.cs" />
     <Compile Include="SharedModel\FreshdeskTicket.cs" />
-    <Compile Include="SharedModel\PersonIdentity.cs" />
+    <Compile Include="SharedModel\MailDetailForQueue.cs" />
+    <Compile Include="SharedModel\TicketQueueMessage.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="TicketSupport\IZendeskClient.cs" />
     <Compile Include="TicketSupport\TicketSupportService.cs" />
     <Compile Include="TicketSupport\ZendeskClient.cs" />
+    <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />

@@ -1,16 +1,22 @@
 ﻿using System;
 using System.IO;
+//using Lunggo.Framework.Mail;
+//using Lunggo.Framework.SharedModel;
+//using Lunggo.Framework.TicketSupport;
+//using Lunggo.Framework.TicketSupport.ZendeskClass;
+//using Microsoft.Azure.WebJobs;
+//using Microsoft.WindowsAzure.Storage.Queue;
+//using Newtonsoft.Json.Linq;
+//using ZendeskApi_v2.Models.Constants;
+//using Lunggo.Framework.Queue;
+//using Lunggo.Framework.Util;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
-using Lunggo.Framework.TicketSupport;
-using Lunggo.Framework.TicketSupport.ZendeskClass;
-using Microsoft.Azure.WebJobs;
-using Microsoft.WindowsAzure.Storage.Queue;
-using Newtonsoft.Json.Linq;
-using ZendeskApi_v2.Models.Constants;
-using Lunggo.Framework.Queue;
 using Lunggo.Framework.Util;
-namespace Lunggo.WebJob.EmailSuccessBooking
+using Microsoft.Azure.WebJobs;
+using Newtonsoft.Json.Linq;
+
+namespace Lunggo.WebJob.EmailQueueHandler
 {
     public class Function
     {
@@ -18,13 +24,13 @@ namespace Lunggo.WebJob.EmailSuccessBooking
         {
             switch (mailDetailInQueue.MailTemplate)
             {
-                case MailTemplateEnum.SuccessBooking: 
+                case MailTemplateEnum.SuccessBooking:
                     SuccessBooking(mailDetailInQueue);
                     break;
                 case MailTemplateEnum.ApalagiGitu:
                     break;
             }
-            
+
         }
         public static void SuccessBooking(MailDetailForQueue mailDetail)
         {
@@ -37,6 +43,5 @@ namespace Lunggo.WebJob.EmailSuccessBooking
                 throw;
             }
         }
-
     }
 }

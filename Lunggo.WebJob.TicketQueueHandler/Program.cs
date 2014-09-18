@@ -4,44 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
-using Lunggo.Framework.SharedModel;
-using Lunggo.Framework.TicketSupport;
-using Lunggo.Framework.TicketSupport.ZendeskClass;
+using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Queue;
-using ZendeskApi_v2.Models.Constants;
+using Lunggo.Framework.TicketSupport;
 
-namespace Lunggo.WebJob.EmailSuccessBooking
+namespace Lunggo.WebJob.TicketQueueHandler
 {
     // To learn more about Microsoft Azure WebJobs, please see http://go.microsoft.com/fwlink/?LinkID=401557
     class Program
     {
-        static void Main()
+        private static void Main()
         {
             new Program().Init();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("apibookingsuccess");
+            CloudQueue _queue = queueService.GetQueueByReference("apibookingfailed");
             _queue.CreateIfNotExists();
 
-            foreach (var cloudQueueMessage in _queue.GetMessages(200, TimeSpan.FromMinutes(5)))
-            {
-                MailDetailForQueue messageContent = cloudQueueMessage.Deserialize<MailDetailForQueue>();
+            JobHostConfiguration configuration = new JobHostConfiguration();
+            configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
+            configuration.Queues.MaxDequeueCount = 10;
 
-
-                //Email Process
-
-
-                _queue.DeleteMessage(cloudQueueMessage);
-            }
+            JobHost host = new JobHost(configuration);
+            host.RunAndBlock();
 
         }
         public void Init()
         {
             InitConfigurationManager();
             InitQueueService();
-            InitMailService();
+            InitTicketService();
         }
+
 
         private static void InitConfigurationManager()
         {
@@ -80,30 +74,18 @@ namespace Lunggo.WebJob.EmailSuccessBooking
                 throw new Exception("gagal init queue");
             }
         }
-
-        private static void InitMailService()
+        private static void InitTicketService()
         {
-            var mailApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apikey");
-            IMailClient mailClient = new MandrillMailClient();
+            var TicketService = TicketSupportService.GetInstance();
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
             try
             {
-                mailClient.init(mailApiKey);
+                TicketService.Init(apiKey);
             }
             catch (Exception ex)
             {
-                throw new Exception("gagal init queueClient");
+                throw new Exception("gagal init TicketService");
             }
-            var mailService = MailService.GetInstance();
-
-            try
-            {
-                mailService.init(mailClient);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("gagal init queue");
-            }
-            
         }
     }
 }

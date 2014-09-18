@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FAA7B50B-FF69-4FB5-862B-9296F3645DDE}</ProjectGuid>
+    <ProjectGuid>{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lunggo.WebJob.EmailSuccessBooking</RootNamespace>
-    <AssemblyName>Lunggo.WebJob.EmailSuccessBooking</AssemblyName>
+    <RootNamespace>Lunggo.WebJob.EmailQueueHandler</RootNamespace>
+    <AssemblyName>Lunggo.WebJob.EmailQueueHandler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,7 +35,8 @@
     <Reference Include="Mandrill">
       <HintPath>..\packages\Mandrill.1.0.75\lib\net40\Mandrill.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.WebJobs">
+    <Reference Include="Microsoft.Azure.WebJobs, Version=0.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Azure.WebJobs.Core.0.5.0-beta\lib\net45\Microsoft.Azure.WebJobs.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.WebJobs.Host">
@@ -75,7 +76,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZendeskApi_v2">
+    <Reference Include="ZendeskApi_v2, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ZendeskApi_v2.2.6.0\lib\net45\ZendeskApi_v2.dll</HintPath>
     </Reference>
   </ItemGroup>

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+//using Lunggo.Framework.SharedModel;
+//using Lunggo.Framework.TicketSupport;
+//using Lunggo.Framework.TicketSupport.ZendeskClass;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
@@ -7,8 +10,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json.Linq;
 using ZendeskApi_v2.Models.Constants;
-using Lunggo.Framework.Queue;
-namespace Lunggo.WebJob.APIBookingFailed
+//using Lunggo.Framework.Queue;
+namespace Lunggo.WebJob.TicketQueueHandler
 {
     public class Function
     {
@@ -43,4 +46,5 @@ namespace Lunggo.WebJob.APIBookingFailed
         {
         }
     }
+    
 }

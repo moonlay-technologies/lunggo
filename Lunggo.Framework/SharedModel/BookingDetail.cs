@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.SharedModel
 {
-    public class PersonIdentity
+    public class BookingDetail
     {
-        public PersonIdentity()
-        {
-        }
-
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
+using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
+using Microsoft.Azure.WebJobs;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
 using ZendeskApi_v2.Models.Constants;
-
-namespace Lunggo.WebJob.EmailSuccessBooking
+namespace Lunggo.WebJob.EmailQueueHandler
 {
     // To learn more about Microsoft Azure WebJobs, please see http://go.microsoft.com/fwlink/?LinkID=401557
     class Program
@@ -103,7 +111,7 @@ namespace Lunggo.WebJob.EmailSuccessBooking
             {
                 throw new Exception("gagal init queue");
             }
-            
+
         }
     }
 }
