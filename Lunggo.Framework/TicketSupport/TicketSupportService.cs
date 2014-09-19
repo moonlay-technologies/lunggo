@@ -10,7 +10,7 @@ namespace Lunggo.Framework.TicketSupport
 {
     public class TicketSupportService
     {
-        private IZendeskClient _Client;
+        private ITicketSupportClient _Client;
         private static TicketSupportService instance = new TicketSupportService();
 
 
@@ -19,17 +19,16 @@ namespace Lunggo.Framework.TicketSupport
 
         }
 
-        public void Init(string apikey)
+        public void Init(ITicketSupportClient ticketClient)
         {
-            _Client = new ZendeskClient();
-            _Client.init(apikey);
+            _Client = ticketClient;
         }
 
         public static TicketSupportService GetInstance()
         {
             return instance;
         }
-        public string CreateTicketAndReturnResponseStatus(ZendeskTicket TicketInClass)
+        public string CreateTicketAndReturnResponseStatus(BaseTicket TicketInClass)
         {
             try
             {
@@ -40,7 +39,7 @@ namespace Lunggo.Framework.TicketSupport
                 throw;
             }
         }
-        public string CreateTicketWithAttachmentAndReturnResponseStatus(ZendeskTicket TicketInClass, List<FileInfo> files)
+        public string CreateTicketWithAttachmentAndReturnResponseStatus(BaseTicket TicketInClass, List<FileInfo> files)
         {
             try
             {

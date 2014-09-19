@@ -32,14 +32,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
                 case MailTemplateEnum.TestHtml:
                     TestHtml(mailDetailInQueue);
                     break;
+                case MailTemplateEnum.TestHtmlWithAttachment:
+                    TestHtmlWithAttachment(mailDetailInQueue);
+                    break;
             }
-
         }
         public static void SuccessBooking(MailDetailForQueue mailDetail)
         {
             try
             {
-                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, mailDetail.MailTemplate.convertToString());
+                string emailTemplateName = "SuccessBooking";
+                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
             }
             catch (Exception)
             {
@@ -50,7 +53,20 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             try
             {
-                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, mailDetail.MailTemplate.convertToString());
+                string emailTemplateName = "TestHtml";
+                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static void TestHtmlWithAttachment(MailDetailForQueue mailDetail)
+        {
+            try
+            {
+                string emailTemplateName = "TestHtml";
+                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
             }
             catch (Exception)
             {

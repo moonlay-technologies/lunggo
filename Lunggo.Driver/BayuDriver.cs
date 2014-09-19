@@ -40,7 +40,7 @@ namespace Lunggo.Driver
         static void Main(string[] args)
         {
             new BayuDriver().Init();
-            new BayuDriver().testQueueEmailHandler();
+            new BayuDriver().testTicket();
             
 
             //Console.WriteLine(json);
@@ -100,9 +100,11 @@ namespace Lunggo.Driver
         }
         private static void InitTicketService()
         {
-            var TicketService = TicketSupportService.GetInstance();
             var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
-            TicketService.Init(apiKey);
+            ITicketSupportClient ticket = new ZendeskTicketClient();
+            ticket.init(apiKey);
+            var TicketService = TicketSupportService.GetInstance();
+            TicketService.Init(ticket);
         }
 
         public void testAddQueue()
@@ -134,13 +136,27 @@ namespace Lunggo.Driver
             TestClass.Name = "nama";
             TestClass.Email = "Email@email.com";
             TestClass.DynamicTesting = 1;
+
+
+            List<Lunggo.Framework.SharedModel.FileInfo> files = new List<Lunggo.Framework.SharedModel.FileInfo>();
+            files.Add(new Lunggo.Framework.SharedModel.FileInfo()
+            {
+                ContentType = "text/plain",
+                FileName = "BayuDriver.cs",
+                FileData =
+                    File.ReadAllBytes(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName +
+                          "\\BayuDriver.cs")
+            });
+
+
             MailDetailForQueue testEmail = new MailDetailForQueue();
             testEmail.From_Name = "Bayu";
             testEmail.From_Mail = "bayualvian@hotmail.com";
             testEmail.RecipientList = new string[] { "Bayualvian@hotmail.com" };
             testEmail.Subject = "testing";
-            testEmail.MailTemplate = MailTemplateEnum.TestHtml;
+            testEmail.MailTemplate = MailTemplateEnum.TestHtmlWithAttachment;
             testEmail.MailObjectDetail = TestClass;
+            testEmail.ListFileInfo = files;
 
             CloudQueueMessage TestCloudQueue = testEmail.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();

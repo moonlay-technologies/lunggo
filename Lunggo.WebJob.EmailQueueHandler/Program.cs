@@ -96,15 +96,18 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
             IMailTemplateEngine mailTemplate = new RazorMailTemplateEngine();
             mailTemplate.init(defaultMailTable, defaultRowKey);
-            IMailClient mailClient = new MandrillMailClient();
+            MandrillMailClient mandrillClient = new MandrillMailClient();
+            
+            
             try
             {
-                mailClient.init(mailApiKey, mandrillTemplate, mailTemplate);
+                mandrillClient.init(mailApiKey, mandrillTemplate, mailTemplate);
             }
             catch (Exception ex)
             {
-                throw new Exception("gagal init queueClient");
+                throw new Exception("gagal init mandrillClient");
             }
+            IMailClient mailClient = mandrillClient;
             var mailService = MailService.GetInstance();
 
             try
@@ -113,7 +116,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             }
             catch (Exception ex)
             {
-                throw new Exception("gagal init queue");
+                throw new Exception("gagal init mail");
             }
 
         }

@@ -23,6 +23,7 @@ namespace Lunggo.Framework.SharedModel
     {
         SuccessBooking,
         ApalagiGitu,
-        TestHtml
+        TestHtml,
+        TestHtmlWithAttachment
     }
 }

@@ -191,9 +191,9 @@
     <Compile Include="TableStorage\TableStorageService.cs" />
     <Compile Include="TicketSupport\FreshdeskClient.cs" />
     <Compile Include="TicketSupport\IFreshdeskClient.cs" />
-    <Compile Include="TicketSupport\IZendeskClient.cs" />
+    <Compile Include="TicketSupport\ITicketSupportClient.cs" />
     <Compile Include="TicketSupport\TicketSupportService.cs" />
-    <Compile Include="TicketSupport\ZendeskClient.cs" />
+    <Compile Include="TicketSupport\ZendeskTicketClient.cs" />
     <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />

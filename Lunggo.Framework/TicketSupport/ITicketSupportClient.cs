@@ -8,11 +8,11 @@ using Lunggo.Framework.TicketSupport.ZendeskClass;
 
 namespace Lunggo.Framework.TicketSupport
 {
-    interface IZendeskClient
+    public interface ITicketSupportClient
     {
 
         void init(string apikey);
-        string CreateTicketAndReturnResponseStatus(ZendeskTicket TicketInClass);
-        string CreateTicketWithAttachmentAndReturnResponseStatus(ZendeskTicket TicketInClass, List<FileInfo> files);
+        string CreateTicketAndReturnResponseStatus(BaseTicket TicketInClass);
+        string CreateTicketWithAttachmentAndReturnResponseStatus(BaseTicket TicketInClass, List<FileInfo> files);
     }
 }

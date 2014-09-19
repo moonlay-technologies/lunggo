@@ -76,11 +76,13 @@ namespace Lunggo.WebJob.TicketQueueHandler
         }
         private static void InitTicketService()
         {
-            var TicketService = TicketSupportService.GetInstance();
             var apiKey = ConfigManager.GetInstance().GetConfigValue("zendesk", "apikey");
+            ITicketSupportClient ticket = new ZendeskTicketClient();
+            ticket.init(apiKey);
+            var TicketService = TicketSupportService.GetInstance();
             try
             {
-                TicketService.Init(apiKey);
+                TicketService.Init(ticket);
             }
             catch (Exception ex)
             {
