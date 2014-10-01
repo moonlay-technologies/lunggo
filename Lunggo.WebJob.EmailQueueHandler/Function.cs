@@ -10,6 +10,8 @@ using System.IO;
 //using ZendeskApi_v2.Models.Constants;
 //using Lunggo.Framework.Queue;
 //using Lunggo.Framework.Util;
+using log4net;
+using Lunggo.Framework.Core;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.Util;
@@ -46,6 +48,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             }
             catch (Exception)
             {
+                LunggoLogger.Info("message");
                 throw;
             }
         }

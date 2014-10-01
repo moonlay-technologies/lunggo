@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using System.Reflection;
+using System.Threading;
 using System.Web;
 using Lunggo.Flight.Crawler;
 using Lunggo.Flight.Model;
@@ -40,14 +41,14 @@ namespace Lunggo.Driver
         static void Main(string[] args)
         {
             new BayuDriver().Init();
-            new BayuDriver().testTicket();
-            
+            new BayuDriver().testDeserialize();
+            //new BayuDriver().testasync().Start();
 
             //Console.WriteLine(json);
 
             //Console.WriteLine(json2);
 
-            Console.ReadLine();
+            //Console.ReadLine();
             
 
             //new BayuDriver().getBlobsFromContainer();
@@ -106,6 +107,22 @@ namespace Lunggo.Driver
             var TicketService = TicketSupportService.GetInstance();
             TicketService.Init(ticket);
         }
+        public async Task testasync()
+        {
+            Task<string> s = testTaskString();
+            string a = s.Result;
+            Thread.Sleep(3000);
+            Thread.Sleep(3000);
+            Thread.Sleep(3000);
+            Thread.Sleep(3000);
+            Thread.Sleep(3000);
+        }
+
+        private async Task<string> testTaskString()
+        {
+            Thread.Sleep(3000);
+            return "";
+        }
 
         public void testAddQueue()
         {
@@ -121,7 +138,6 @@ namespace Lunggo.Driver
                 TestClass.DynamicTesting = 1;
                 _queue.AddMessage(AzureQueueExtension.Serialize(TestClass));
             }
-            
         }
         public class Order
         {
@@ -167,7 +183,7 @@ namespace Lunggo.Driver
 
         public void testDeserialize()
         {
-            TicketQueueMessage TestQueue = new TicketQueueMessage(){TicketPurpose = TicketPurpose.ApiBookingFailed};
+            TicketQueueMessage TestQueue = new TicketQueueMessage() { TicketPurpose = TicketPurpose.ApalagiGitu };
             BookingDetail TestClass = new BookingDetail();
             TestClass.Name = "nama";
             TestClass.Email = "Email@email.com";

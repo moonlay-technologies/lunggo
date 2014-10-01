@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.SharedModel;
+﻿using Lunggo.Framework.Core;
+using Lunggo.Framework.SharedModel;
 using Mandrill;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,8 @@ namespace Lunggo.Framework.Mail
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)

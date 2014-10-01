@@ -1,4 +1,5 @@
 ﻿using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
 using Lunggo.Framework.Payment.Data;
 using RestSharp;
 using System;
@@ -60,6 +61,7 @@ namespace Lunggo.Framework.Payment
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }

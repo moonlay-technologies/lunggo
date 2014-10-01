@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Framework.Queue
@@ -33,7 +34,8 @@ namespace Lunggo.Framework.Queue
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         public bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
@@ -42,8 +44,9 @@ namespace Lunggo.Framework.Queue
             {
                 return _cloudQueueClient.CreateIfNotExistsQueueAndAddMessage(reference, message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }

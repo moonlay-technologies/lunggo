@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.Exceptions;
+﻿using Lunggo.Framework.Core;
+using Lunggo.Framework.Exceptions;
 using Lunggo.Framework.Util;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -38,7 +39,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message,ex);
+                throw;
             }
         }
         private string ParseContainerFromFileUri(string FileURI, bool ForceUsingDefaultContainerIfContainerNotDefined)
@@ -77,7 +79,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private BlobModel CheckContainerAndGenerateNewBlobModel(string fileName, string wantedContainerName)
@@ -186,7 +189,8 @@ namespace Lunggo.Framework.Blob
             }
             catch(Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private string UploadFromStreamIfBlobNotNull(CloudBlockBlob newBlob, byte[] fileByte)
@@ -217,7 +221,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         public void CopyBlob(string previousFileURIName, string newFileURIName)
@@ -237,7 +242,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -250,7 +256,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -294,11 +301,12 @@ namespace Lunggo.Framework.Blob
                 if (ex.Source == "Microsoft.WindowsAzure.Storage")
                     throw new ArgumentException("Container Not Found!");
                 else
-                    throw ex;
+                    throw;
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private bool isFileUriContainBaseUri(string FileURIName)
@@ -326,7 +334,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private IEnumerable<IListBlobItem> getListBlob(string directoryName)

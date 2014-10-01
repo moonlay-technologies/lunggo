@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
 using RestSharp;
@@ -35,6 +36,7 @@ namespace Lunggo.Framework.TicketSupport
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -52,6 +54,7 @@ namespace Lunggo.Framework.TicketSupport
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }

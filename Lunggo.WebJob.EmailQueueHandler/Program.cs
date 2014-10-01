@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using log4net;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
+using Lunggo.Framework.Core.CustomTraceListener;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
@@ -47,6 +50,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitQueueService();
             InitMailService();
             InitTableStorageService();
+            InitTraceListener();
         }
 
         private static void InitConfigurationManager()
@@ -130,6 +134,21 @@ namespace Lunggo.WebJob.EmailQueueHandler
             ITableStorageClient tableStorageClient = new AzureTableStorageClient();
             tableStorageClient.init(connectionString);
             TableStorageService.GetInstance().init(tableStorageClient);
+        }
+        private static void InitTraceListener()
+        {
+            Trace.Listeners.Clear();
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            string traceName = typeof(TableTraceListener).Name;
+            var listener =
+                new TableTraceListener(connectionString, "webjobTrace")
+                {
+                    Name = traceName
+                };
+            Trace.Listeners.Add(listener);
+            log4net.Config.XmlConfigurator.Configure();
+            ILog Log = log4net.LogManager.GetLogger("Log");
+            LunggoLogger.GetInstance().init(Log);
         }
     }
 }

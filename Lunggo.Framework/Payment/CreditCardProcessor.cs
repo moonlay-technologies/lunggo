@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
 using Lunggo.Framework.Payment.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,8 +22,8 @@ namespace Lunggo.Framework.Payment
             {
                 var paymentData = (CreditCardPaymentData)paymentParamData;
                 var result = new PaymentResult();
-                var json = JsonConvert.SerializeObject(paymentData.ConvertToDummyObject());
-
+                //var json = JsonConvert.SerializeObject(paymentData.ConvertToDummyObject());
+                var json = JsonConvert.SerializeObject(paymentData);
                 var responses = RequestToVeritransByJson(json);
                 dynamic data = JObject.Parse(responses.Content);
 
@@ -36,6 +37,7 @@ namespace Lunggo.Framework.Payment
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }

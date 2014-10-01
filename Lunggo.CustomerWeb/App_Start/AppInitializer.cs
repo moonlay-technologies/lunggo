@@ -1,5 +1,7 @@
 ﻿using System.Web;
+using log4net;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
 using Lunggo.Framework.Message;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SnowMaker;
@@ -18,6 +20,7 @@ namespace Lunggo.CustomerWeb
             InitUniqueIdGenerator();
             InitDatabaseService();
             InitQueueService();
+            InitLogger();
         }
 
         private static void InitConfigurationManager()
@@ -55,11 +58,16 @@ namespace Lunggo.CustomerWeb
         }
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("AzureWebJobsStorage", "connectionString");
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
             IQueueClient queueClient = new AzureQueueClient();
             queueClient.init(connectionString);
             var queue = QueueService.GetInstance();
             queue.Init(queueClient);
+        }
+        private static void InitLogger()
+        {
+            ILog Log = log4net.LogManager.GetLogger("Log");
+            LunggoLogger.GetInstance().init(Log);
         }
 
     }

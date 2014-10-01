@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.TableStorage;
+﻿using Lunggo.Framework.Core;
+using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Table;
 using RazorEngine;
 using RazorEngine.Templating;
@@ -29,7 +30,8 @@ namespace Lunggo.Framework.Mail
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private string GetEmailTemplateByPartitionKey(string partitionKey)
@@ -45,7 +47,8 @@ namespace Lunggo.Framework.Mail
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occured when get mail template from table");
+                LunggoLogger.Error("Error occured when get mail template from table", ex);
+                throw;
             }
         }
     }

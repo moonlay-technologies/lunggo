@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.Framework.Payment.Data
 {
     public abstract class PaymentData
     {
+        [JsonProperty("payment_type")]
         public String PaymentType { get; set; }
+        [JsonProperty("item_details")]
         public List<ItemDetail> ItemDetails { get; set; }
+        [JsonProperty("transaction_details")]
         public TransactionDetail TransactionDetails { get; set; }
+        [JsonProperty("customer_details")]
         public CustomerDetails CustomerDetails { get; set; }
 
         protected PaymentData()
@@ -19,7 +24,10 @@ namespace Lunggo.Framework.Payment.Data
             CustomerDetails = new CustomerDetails();
             ItemDetails = new List<ItemDetail>();
         }
+        [Obsolete("use jsonproperty attribute instead")]
         public abstract PaymentDataDummy ConvertToDummyObject();
+
+        [Obsolete("use jsonproperty attribute instead")]
         public static PaymentDataDummy ConvertPaymentDataToPaymentDataDummy(PaymentDataDummy Dummy, PaymentData Origin)
         {
             Dummy.payment_type = Origin.PaymentType;
@@ -57,22 +65,33 @@ namespace Lunggo.Framework.Payment.Data
     }
     public class TransactionDetail
     {
+        [JsonProperty("order_id")]
         public String OrderId { get; set; }
+        [JsonProperty("gross_amount")]
         public decimal GrossAmount { get; set; }
     }
     public class ItemDetail
     {
+        [JsonProperty("id")]
         public String Id { get; set; }
+        [JsonProperty("price")]
         public decimal Price { get; set; }
+        [JsonProperty("quantity")]
         public decimal Quantity { get; set; }
+        [JsonProperty("name")]
         public String Name { get; set; }
     }
     public class CustomerDetails
     {
+        [JsonProperty("first_name")]
         public String FirstName { get; set; }
+        [JsonProperty("last_name")]
         public String LastName { get; set; }
+        [JsonProperty("email")]
         public String Email { get; set; }
+        [JsonProperty("phone")]
         public String Phone { get; set; }
+        [JsonProperty("billing_address")]
         public BillingAddress BillingAddress { get; set; }
         public CustomerDetails()
         {
@@ -81,13 +100,21 @@ namespace Lunggo.Framework.Payment.Data
     }
     public class BillingAddress
     {
+        [JsonProperty("first_name")]
         public String FirstName { get; set; }
+        [JsonProperty("last_name")]
         public String LastName { get; set; }
+        [JsonProperty("email")]
         public String Email { get; set; }
+        [JsonProperty("address")]
         public String Address { get; set; }
+        [JsonProperty("city")]
         public String City { get; set; }
+        [JsonProperty("postal_code")]
         public String PostalCode { get; set; }
+        [JsonProperty("phone")]
         public String Phone { get; set; }
+        [JsonProperty("country_code")]
         public String CountryCode { get; set; }
     }
 }

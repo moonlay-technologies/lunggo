@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 
@@ -27,8 +28,9 @@ namespace Lunggo.Framework.Queue
                 CloudQueue queue = _cloudQueueClient.GetQueueReference(reference);
                 return queue;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -40,8 +42,9 @@ namespace Lunggo.Framework.Queue
                 queue.AddMessage(message);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }

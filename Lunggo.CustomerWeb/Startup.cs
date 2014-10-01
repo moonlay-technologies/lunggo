@@ -1,6 +1,5 @@
 ﻿using Microsoft.Owin;
 using Owin;
-
 [assembly: OwinStartupAttribute(typeof(Lunggo.CustomerWeb.Startup))]
 namespace Lunggo.CustomerWeb
 {
