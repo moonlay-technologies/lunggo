@@ -56,6 +56,8 @@ namespace Lunggo.CustomerWeb.Models
                 optionsRadios, returnDate, adultPassenger,
                 childPassenger, infantPassenger);
 
+                //Task.Factory.StartNew(()=> GetAirAsia(SearchParam));
+
                 List<FlightTicket> ListTicket = new List<FlightTicket>();
                 if (airline == "AirAsia")
                     ListTicket = (await GetAirAsia(SearchParam));

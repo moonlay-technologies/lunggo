@@ -1,5 +1,9 @@
-﻿using System.Net.Mime;
+﻿using System.CodeDom;
+using System.Collections.Specialized;
+using System.Net.Mime;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using Lunggo.Flight.Crawler;
@@ -40,18 +44,184 @@ namespace Lunggo.Driver
 
         static void Main(string[] args)
         {
-            new BayuDriver().Init();
-            new BayuDriver().testDeserialize();
+
+            Console.WriteLine( Regex.IsMatch("-100.00", @"^(-)?\d+(\.\d\d)?$"));
+            Regex rex = new Regex(@"^\d+(\.\d\d)?$");
+            Console.WriteLine(rex.IsMatch("-100.00"));
+            TryNameValueCOllection();
+            //new BayuDriver().Init();
+            //new BayuDriver().testDeserialize();
             //new BayuDriver().testasync().Start();
 
-            //Console.WriteLine(json);
+            //var evaluator = new Regex("",RegexOptions.Compiled);
 
-            //Console.WriteLine(json2);
+            Console.ReadLine();
 
-            //Console.ReadLine();
-            
 
             //new BayuDriver().getBlobsFromContainer();
+        }
+
+        public class CustomData
+        {
+            public long CreationTime;
+            public int Name;
+            public int ThreadNum;
+        }
+
+        public static void TryPerformanceCounter()
+        {
+            if (!PerformanceCounterCategory.Exists("test"))
+            {
+                var counters = new CounterCreationDataCollection();
+                var ccdCounter1 = new CounterCreationData()
+                {
+                    CounterName = "counter1",
+                    CounterType = PerformanceCounterType.SampleFraction
+                };
+                counters.Add(ccdCounter1);
+                PerformanceCounterCategory.Create("test", "Help String", PerformanceCounterCategoryType.SingleInstance,
+                    counters);
+
+
+
+            }
+            var perform = PerformanceCounterCategory.GetCategories("test");
+            
+        }
+        //public static void WriteObjectContentInDocument(string path)
+        //{
+        //    // Create the object to serialize.
+        //    Person p = new Person("Lynn", "Tsoflias", 9876);
+
+        //    // Create the writer object.
+        //    FileStream fs = new FileStream(path, FileMode.Create);
+        //    XmlDictionaryWriter writer =
+        //        XmlDictionaryWriter.CreateTextWriter(fs);
+
+        //    DataContractSerializer ser =
+        //        new DataContractSerializer(typeof(Person));
+
+        //    // Use the writer to start a document.
+        //    writer.WriteStartDocument(true);
+
+        //    // Use the writer to write the root element.
+        //    writer.WriteStartElement("Company");
+
+        //    // Use the writer to write an element.
+        //    writer.WriteElementString("Name", "Microsoft");
+
+        //    // Use the serializer to write the start, 
+        //    // content, and end data.
+        //    ser.WriteStartObject(writer, p);
+        //    ser.WriteObjectContent(writer, p);
+        //    ser.WriteEndObject(writer);
+
+        //    // Use the writer to write the end element and 
+        //    // the end of the document.
+        //    writer.WriteEndElement();
+        //    writer.WriteEndDocument();
+
+        //    // Close and release the writer resources.
+        //    writer.Flush();
+        //    fs.Flush();
+        //    fs.Close();
+        //}
+        public static void TryCodeTypeDeclaration()
+        {
+            var ctd = new CodeTypeDeclaration("sd");
+            ctd.Attributes = MemberAttributes.Public;
+            ctd.IsStruct = true;
+            ctd.IsClass = true;
+        }
+
+        public static void TryNameValueCOllection()
+        {
+            var nvc = new NameValueCollection() {{"a", 1.ToString()}};
+            List<DateTime?> ldt = new List<DateTime?>();
+            DateTime? dt = DateTime.Now;
+            ldt.Add(dt);
+
+                int i3 = 2147483647;
+                Console.WriteLine(i3);
+        }
+
+        public static void TryCatch()
+        {
+            try
+            {
+                List<string> strings = new List<string>();
+                Task[] taskArray = new Task[10];
+                int nomorTest = 0;
+                object lockob =  new object();
+                for (int i = 0; i < taskArray.Length; i++)
+                {
+                    taskArray[i] = Task.Factory.StartNew((Object obj) =>
+                    {
+                        var data = new CustomData() { Name = i, CreationTime = DateTime.Now.Ticks };
+                        data.ThreadNum = Thread.CurrentThread.ManagedThreadId;
+                        Thread.Sleep(100);
+                        lock (lockob)
+                        {
+                            nomorTest += 1;
+                        strings.Add(string.Format ("Task #{0} created at {1} on thread #{2}. task id = {3}. nomor Test = {4}",
+                                          data.Name, data.CreationTime, data.ThreadNum, Task.CurrentId, nomorTest));
+                        }
+                        
+                    },
+                                                         i);
+                }
+                Task.WhenAll(taskArray).ContinueWith(task => Console.WriteLine("endline"));
+                Task.WaitAll(taskArray);
+                foreach (string st in (from list in strings select list).AsParallel())
+                {
+                    Console.WriteLine(st);
+                }
+                var parent = Task.Factory.StartNew(() =>
+                {
+                    Console.WriteLine("Parent task beginning.");
+                    Task[] taskArray2 = new Task[10];
+                    for (int i = 0; i < taskArray.Length; i++)
+                    {
+                        taskArray2[i] = Task.Factory.StartNew((Object obj ) =>
+                        {
+                            var data = new CustomData() { Name = i, CreationTime = DateTime.Now.Ticks };
+                            data.ThreadNum = Thread.CurrentThread.ManagedThreadId;
+                            Console.WriteLine("Task #{0} created at {1} on thread #{2}. task id = {3}",
+                                              data.Name, data.CreationTime, data.ThreadNum, Task.CurrentId);
+                        }, i, TaskCreationOptions.AttachedToParent);
+                    }
+
+                    Task.WhenAny(taskArray2).ContinueWith(task => Console.WriteLine("ada yang selesai"));
+                    //Task.WaitAll(taskArray2);
+                });
+
+                parent.Wait();
+                Console.WriteLine("Parent task completed.");
+                //XmlWriterTraceListener listener = new XmlWriterTraceListener("error.log");
+                //listener.WriteLine("error log");
+                //listener.Flush();
+                //listener.Close();
+
+                //TraceSource trace = new TraceSource("traceClass");
+                //trace.Listeners.Add(listener);
+                //trace.TraceTransfer(1,"",new Guid());
+
+                //trace.TraceEvent(TraceEventType.Start, 1);
+
+                //CancellationToken token = new CancellationToken(){};
+                //token.ThrowIfCancellationRequested();
+                //throw new ArgumentNullException();
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                int.Parse("ds");
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         public void Init()

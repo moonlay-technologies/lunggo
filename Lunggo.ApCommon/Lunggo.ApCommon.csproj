@@ -70,6 +70,7 @@
     <Compile Include="Identity\User\CustomUser.cs" />
     <Compile Include="Identity\User\IdentityUserBase.cs" />
     <Compile Include="Identity\User\UserBase.cs" />
+    <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />
     <Compile Include="Query\GetLoginInfoByUserIdQuery.cs" />
