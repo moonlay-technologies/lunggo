@@ -215,6 +215,7 @@
     <Compile Include="Areas\UW100\Models\UW100SearchParamViewModel.cs" />
     <Compile Include="Areas\UW100\UW100AreaRegistration.cs" />
     <Compile Include="Areas\UW200\Controllers\UW200HotelDetailController.cs" />
+    <Compile Include="Areas\UW200\Logic\UW200GetHotelDetail.cs" />
     <Compile Include="Areas\UW200\Logic\UW200GetPlacesNearHotel.cs" />
     <Compile Include="Areas\UW200\Models\UW200PlacesNearHotelViewModel.cs" />
     <Compile Include="Areas\UW200\Models\UW200HotelDetailViewModel.cs" />

@@ -7,10 +7,6 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Query
 {
-    class GetUserByLoginInfo
-    {
-    }
-
 
     public class GetUserByLoginInfoQuery : QueryBase<GetUserByLoginInfoQuery, GetUserByAnyQueryRecord>
     {
@@ -19,7 +15,7 @@ namespace Lunggo.ApCommon.Query
 
         }
 
-        protected override string GetQuery()
+        protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(

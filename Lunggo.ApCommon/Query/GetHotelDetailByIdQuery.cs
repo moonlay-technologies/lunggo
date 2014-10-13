@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.Database;
+using Lunggo.Hotel.ViewModels;
 
 namespace Lunggo.ApCommon.Query
 {
-
-    public class GetUserByNameQuery : QueryBase<GetUserByNameQuery, GetUserByAnyQueryRecord>
+    public class GetHotelDetailByIdQuery: QueryBase<GetHotelDetailBySearchParamQuery, HotelDetailBase>
     {
-        private GetUserByNameQuery()
+        private GetHotelDetailByIdQuery()
         {
 
         }
 
         protected override string GetQuery(dynamic condition = null)
         {
+            //Not implemented yet
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM Users WHERE LOWER(UserName) = LOWER(@userName)");
+            queryBuilder.Append("");
             return queryBuilder.ToString();
         }
     }
-}			
-
+}

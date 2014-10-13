@@ -20,8 +20,8 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
-                LunggoLogger.Info("test aja");
-                LunggoLogger.Error("error boong");
+                //LunggoLogger.Info("test aja");
+                //LunggoLogger.Error("error boong");
                 return View();
             }
             catch (Exception exception)
