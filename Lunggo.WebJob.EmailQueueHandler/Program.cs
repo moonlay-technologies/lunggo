@@ -133,7 +133,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
             ITableStorageClient tableStorageClient = new AzureTableStorageClient();
             tableStorageClient.init(connectionString);
-            TableStorageService.GetInstance().init(tableStorageClient);
+            TableStorageService.GetInstance().Init(tableStorageClient);
         }
         private static void InitTraceListener()
         {

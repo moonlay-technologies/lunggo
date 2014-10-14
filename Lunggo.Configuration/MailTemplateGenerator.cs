@@ -57,7 +57,7 @@ namespace Lunggo.Configuration.MailTemplate
             var emp = new MailTemplateModel() { Template = FileNameAndTemplate.Value, PartitionKey = FileNameAndTemplate.Key, RowKey = this.DefaultRowKey };
             ITableStorageClient tableStorageClient =  new AzureTableStorageClient();
             tableStorageClient.init("UseDevelopmentStorage=true");
-            TableStorageService.GetInstance().init(tableStorageClient);
+            TableStorageService.GetInstance().Init(tableStorageClient);
             TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, this.DefaultTableName);
         }
     }

@@ -624,7 +624,7 @@ namespace Lunggo.Driver
             
         }
 
-        protected override string GetQuery()
+        protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append("SELECT FirstName,LastName FROM Person");

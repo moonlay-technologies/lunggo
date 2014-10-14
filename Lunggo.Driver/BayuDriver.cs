@@ -12,7 +12,6 @@ using Lunggo.Flight.Model;
 using Lunggo.Framework.Blob;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Message;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;

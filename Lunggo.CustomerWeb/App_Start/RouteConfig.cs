@@ -73,6 +73,11 @@ namespace Lunggo.CustomerWeb
                 
             //TODO End of Todo
 
+            routes.MapRoute(
+                name: "toppage",
+                url: "",
+                defaults: new { controller = "Home", action = "Index", langCode = "id" }
+            );
 
             routes.MapRoute(
                 name: "Default",
