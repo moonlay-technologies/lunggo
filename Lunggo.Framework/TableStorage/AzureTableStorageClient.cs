@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using Lunggo.Framework.Core;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Lunggo.Framework.TableStorage
             }
             catch(Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -40,7 +42,8 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
@@ -53,6 +56,7 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -66,7 +70,8 @@ namespace Lunggo.Framework.TableStorage
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
     }

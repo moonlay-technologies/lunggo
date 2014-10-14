@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.Exceptions;
+﻿using Lunggo.Framework.Core;
+using Lunggo.Framework.Exceptions;
 using Lunggo.Framework.Util;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -38,6 +39,7 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message,ex);
                 throw;
             }
         }
@@ -61,13 +63,14 @@ namespace Lunggo.Framework.Blob
         {
             try
             {
-                BlobModel newBlobModel = CheckContainerAndGenerateNewBlobModel(blobWriteDto.FileBlobModel.FilePath, wantedContainerName);
-                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDto.FileBlobModel.FileInfo.ContentType);
-                newBlob = FinalBlockBlobBySaveMethod(newBlob, newBlobModel.BlobName, blobWriteDto.SaveMethod);
-                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDto.FileBlobModel.FileInfo.ArrayData);
+                BlobModel newBlobModel = CheckContainerAndGenerateNewBlobModel(blobWriteDTO.FileBlobModel.FilePath, wantedContainerName);
+                CloudBlockBlob newBlob = GenerateNewBlockBlob(newBlobModel, blobWriteDTO.FileBlobModel.FileInfo.ContentType);
+                newBlob = FinalBlockBlobBySaveMethod(newBlob, newBlobModel.BlobName, blobWriteDTO.SaveMethod);
+                return UploadFromStreamIfBlobNotNull(newBlob, blobWriteDTO.FileBlobModel.FileInfo.FileData);
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -177,7 +180,8 @@ namespace Lunggo.Framework.Blob
             }
             catch(Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private string UploadFromStreamIfBlobNotNull(CloudBlockBlob newBlob, byte[] fileByte)
@@ -209,6 +213,7 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -230,6 +235,7 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -243,7 +249,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -290,6 +297,7 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
+                LunggoLogger.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -318,7 +326,8 @@ namespace Lunggo.Framework.Blob
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private IEnumerable<IListBlobItem> GetListBlob(string directoryName)

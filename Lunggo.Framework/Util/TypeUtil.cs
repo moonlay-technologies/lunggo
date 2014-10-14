@@ -15,12 +15,12 @@ namespace Lunggo.Framework.Util
             return CreateExpandableObject(source); 
         }
 
-        public static dynamic ToAnonymousType(Object source, Func<PropertyInfo,bool> typeFilter)
+        public static dynamic ToAnonymousType(Object source, Func<PropertyInfo, bool> typeFilter)
         {
             return CreateExpandableObject(source, typeFilter);
         }
 
-        public static dynamic ToAnonymousType(Object source, IEnumerable<String> propertyNames)
+        public static dynamic ToAnonymousType(Object source, IEnumerable<string> propertyNames)
         {
             return CreateExpandableObject(source, propertyNames);
         }
@@ -32,16 +32,16 @@ namespace Lunggo.Framework.Util
             return expandableObject;
         }
 
-        private static ExpandoObject CreateExpandableObject(Object source, IEnumerable<String> propertyNames)
+        private static ExpandoObject CreateExpandableObject(Object source, IEnumerable<string> propertyNames)
         {
             ExpandoObject expandableObject = new ExpandoObject();
             FillExpandableObject(expandableObject, source, propertyNames);
             return expandableObject;
         }
 
-        private static void FillExpandableObject(ExpandoObject expandableObject, Object source, IEnumerable<String> propertyNames)
+        private static void FillExpandableObject(ExpandoObject expandableObject, Object source, IEnumerable<string> propertyNames)
         {
-            IDictionary<String, Object> expandableObjectAsDictionary = expandableObject;
+            IDictionary<string, object> expandableObjectAsDictionary = expandableObject;
             foreach(var propertyName in propertyNames)
             {
                 var property = source.GetType().GetProperty(propertyName);
@@ -51,7 +51,7 @@ namespace Lunggo.Framework.Util
 
         private static void FillExpandableObject(ExpandoObject expandableObject, Object source, Func<PropertyInfo, bool> typeFilter)
         {
-            IDictionary<String, Object> expandableObjectAsDictionary = expandableObject;
+            IDictionary<string, object> expandableObjectAsDictionary = expandableObject;
             foreach (var property in source.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 if(typeFilter != null)

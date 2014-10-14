@@ -16,5 +16,10 @@ namespace Lunggo.CustomerWeb
 
             return base.OnStart();
         }
+        public override void Run()
+        {
+            log4net.Config.XmlConfigurator.Configure();
+            base.Run();
+        }
     }
 }

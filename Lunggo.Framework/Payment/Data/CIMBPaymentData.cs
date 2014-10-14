@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.Framework.Payment.Data
 {
     public class CIMBPaymentData : PaymentData
     {
+
+        [JsonProperty("cimb_clicks")]
         public CIMBClick CIMBClicks { get; set; }
         public CIMBPaymentData()
         {
@@ -38,6 +41,7 @@ namespace Lunggo.Framework.Payment.Data
     }
     public class CIMBClick 
     {
+        [JsonProperty("description")]
         public string Description { get; set; }
     }
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.Framework.Payment.Data
 {
     public class CreditCardPaymentData : PaymentData
     {
+        [JsonProperty("credit_card")]
         public CreditCard CreditCard { get; set; }
         public CreditCardPaymentData()
         {
@@ -34,7 +36,9 @@ namespace Lunggo.Framework.Payment.Data
 
     public class CreditCard
     {
+        [JsonProperty("token_id")]
         public String TokenId { get; set; }
+        [JsonProperty("bank")]
         public String Bank { get; set; }
     }
 }

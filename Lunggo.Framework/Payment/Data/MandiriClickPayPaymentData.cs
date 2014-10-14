@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lunggo.Framework.Payment.Data
 {
     public class MandiriClickPayPaymentData : PaymentData
     {
+        [JsonProperty("mandiri_clickpay")]
         public MandiriClickpay MandiriClickpay { get; set; }
         public MandiriClickPayPaymentData()
         {
@@ -36,10 +38,15 @@ namespace Lunggo.Framework.Payment.Data
 
     public class MandiriClickpay
     {
+        [JsonProperty("card_number")]
         public string CardNumber { get; set; }
+        [JsonProperty("input1")]
         public string Input1 { get; set; }
+        [JsonProperty("input2")]
         public string Input2 { get; set; }
+        [JsonProperty("input3")]
         public string Input3 { get; set; }
+        [JsonProperty("token")]
         public string Token { get; set; }
     }
 }

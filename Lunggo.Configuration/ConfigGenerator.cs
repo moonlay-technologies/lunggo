@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Lunggo.Configuration.MailTemplate;
 using Microsoft.Office.Interop.Excel;
 
 namespace Lunggo.Configuration
@@ -42,7 +43,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "CustomerWeb", "Driver" };
+            String[] projectList = { "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -54,7 +55,7 @@ namespace Lunggo.Configuration
 
             var generator = ConfigGenerator.GetInstance();
             generator.StartConfig(DeploymentEnvironment.Local, projectList);
-            
+            //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CW", "Lunggo\Lunggo.CW.ccproj", "{F3A0985F-4551-44DA-9C54-3E593F6ADCF2}"
 EndProject
@@ -32,6 +32,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.ApCommon", "Lunggo.A
 	ProjectSection(ProjectDependencies) = postProject
 		{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED} = {E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB4B-DEF1-41E6-A599-D9794769FC31}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.TicketQueueHandler", "Lunggo.WebJob.TicketQueueHandler\Lunggo.WebJob.TicketQueueHandler.csproj", "{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EmailQueueHandler", "Lunggo.WebJob.EmailQueueHandler\Lunggo.WebJob.EmailQueueHandler.csproj", "{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +88,14 @@ Global
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

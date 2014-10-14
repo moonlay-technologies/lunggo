@@ -76,11 +76,11 @@ namespace Lunggo.CustomerWeb.Areas.UW400.Logic
             }
             else if (vm.PaymentType == PaymentConstant.CreditCard)
             {
-                data = CreateClickPayData(vm);
+                data = CreateCreditCardPayData(vm);
             }
             else if (vm.PaymentType == PaymentConstant.MandiriClickpay)
             {
-                data = CreateCreditCardPayData(vm);
+                data = CreateClickPayData(vm);
             }
             else
             {

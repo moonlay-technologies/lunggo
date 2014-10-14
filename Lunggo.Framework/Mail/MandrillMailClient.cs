@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.SharedModel;
+﻿using Lunggo.Framework.Core;
+using Lunggo.Framework.SharedModel;
 using Mandrill;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Lunggo.Framework.Mail
     public class MandrillMailClient : IMailClient
     {
         MandrillApi apiOfMandrill;
-        string _defaultMandrillTemplate = "MyTemplate";
+        string _mandrillTemplate;
         bool enablingOtherEmailAddressVisibilityForRecipient = true;
-        IMailTemplateEngine mailTemplateEngine = new RazorMailTemplateEngine();
+        IMailTemplateEngine mailTemplateEngine;
         enum RecipientTypeEnum
         {
             to,
@@ -22,18 +23,25 @@ namespace Lunggo.Framework.Mail
         }
         public void init(string mandrillAPIKey)
         {
+            init(mandrillAPIKey, "MyTemplate", new RazorMailTemplateEngine());
+        }
+        public void init(string mandrillAPIKey, string mandrillTemplate, IMailTemplateEngine _mailTemplateEngine)
+        {
             this.apiOfMandrill = new MandrillApi(mandrillAPIKey, true);
+            _mandrillTemplate = mandrillTemplate;
+            mailTemplateEngine = _mailTemplateEngine;
         }
         public void sendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
         {
             try
             {
                 EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, partitionKey);
-                var returnvalue = apiOfMandrill.SendMessage(emailMessage, this._defaultMandrillTemplate, null);
+                var returnvalue = apiOfMandrill.SendMessage(emailMessage, this._mandrillTemplate, null);
             }
             catch (Exception ex)
             {
-                throw ex;
+                LunggoLogger.Error(ex.Message, ex);
+                throw;
             }
         }
         private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
@@ -82,7 +90,7 @@ namespace Lunggo.Framework.Mail
             }
             return addresses;
         }
-        private IEnumerable<attachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
+        private IEnumerable<email_attachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
         {
             if (files == null || files.Count < 1)
             {
@@ -90,10 +98,10 @@ namespace Lunggo.Framework.Mail
             }
             foreach (FileInfo file in files)
             {
-                var base64OfAttachmentFile = Convert.ToBase64String(file.ArrayData, 0, file.ArrayData.Length);
-                attachment attachmentToSend = new attachment
+                var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
+                email_attachment attachmentToSend = new email_attachment
                 {
-                    name = file.Name,
+                    name = file.FileName,
                     type = file.ContentType,
                     content = base64OfAttachmentFile
                 };
