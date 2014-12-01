@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd16" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.FareInfo" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfFlightLegRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightLegRequest" nillable="true" type="tns:FlightLegRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightLegRequest" nillable="true" type="tns:ArrayOfFlightLegRequest" />
+  <xs:complexType name="FlightLegRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DepartDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DestinationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationNearbyCities" type="xs:boolean" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="DestinationType" type="q1:LocationType" />
+      <xs:element minOccurs="0" name="OriginCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginNearbyCities" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="OriginType" type="q2:LocationType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightLegRequest" nillable="true" type="tns:FlightLegRequest" />
+  <xs:complexType name="ArrayOfRateInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RateInfo" nillable="true" type="tns:RateInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRateInfo" nillable="true" type="tns:ArrayOfRateInfo" />
+  <xs:complexType name="RateInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FareBasisCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FareBasisFull" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FareType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PassengerType" type="PersonType" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="TravelClass" type="q3:FlightClassType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RateInfo" nillable="true" type="tns:RateInfo" />
+  <xs:complexType name="FlightCancelPnrResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BookCancelID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CancellationComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CancellationFee" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="CancellationFeeNet" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightCancelPnrResponse" nillable="true" type="tns:FlightCancelPnrResponse" />
+  <xs:complexType name="ArrayOfFlightRouteGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightRouteGroup" nillable="true" type="tns:FlightRouteGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightRouteGroup" nillable="true" type="tns:ArrayOfFlightRouteGroup" />
+  <xs:complexType name="FlightRouteGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Flights" nillable="true" type="tns:ArrayOfFlightRoute" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightRouteGroup" nillable="true" type="tns:FlightRouteGroup" />
+  <xs:complexType name="ArrayOfFlightRoute">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightRoute" nillable="true" type="tns:FlightRoute" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightRoute" nillable="true" type="tns:ArrayOfFlightRoute" />
+  <xs:complexType name="FlightRoute">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="DetailsChanged" type="xs:boolean">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.FareInfo" minOccurs="0" name="FareRules" nillable="true" type="q4:ArrayOfFareRulesSet">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="IsEticketable" type="xs:boolean">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="LegList" nillable="true" type="tns:ArrayOfFlightLeg">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Price" nillable="true" type="tns:TotalFlightPrice">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="Refundability" type="q5:Refundability">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="RouteId" type="ser:guid">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="SupplierName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightRoute" nillable="true" type="tns:FlightRoute" />
+  <xs:complexType name="ArrayOfFlightLeg">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightLeg" nillable="true" type="tns:FlightLeg" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightLeg" nillable="true" type="tns:ArrayOfFlightLeg" />
+  <xs:complexType name="FlightLeg">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Price" nillable="true" type="tns:TotalFlightPrice" />
+      <xs:element minOccurs="0" name="Segments" nillable="true" type="tns:ArrayOfFlightLegSegment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightLeg" nillable="true" type="tns:FlightLeg" />
+  <xs:complexType name="TotalFlightPrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Breakdown" nillable="true" type="tns:ArrayOfFlightPriceBreakdownDetail" />
+      <xs:element minOccurs="0" name="TotalPrice" nillable="true" type="Price" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TotalFlightPrice" nillable="true" type="tns:TotalFlightPrice" />
+  <xs:complexType name="ArrayOfFlightPriceBreakdownDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightPriceBreakdownDetail" nillable="true" type="tns:FlightPriceBreakdownDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightPriceBreakdownDetail" nillable="true" type="tns:ArrayOfFlightPriceBreakdownDetail" />
+  <xs:complexType name="FlightPriceBreakdownDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BaggagePiecesNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MaxBaggageWeight" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PassengersNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="PersonType" type="PersonType" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="Price" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightPriceBreakdownDetail" nillable="true" type="tns:FlightPriceBreakdownDetail" />
+  <xs:complexType name="ArrayOfFlightLegSegment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightLegSegment" nillable="true" type="tns:FlightLegSegment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightLegSegment" nillable="true" type="tns:ArrayOfFlightLegSegment" />
+  <xs:complexType name="FlightLegSegment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AircraftType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Airline" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ArriveDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AvailableSeats" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DestinationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationTerminal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Distance" type="xs:int" />
+      <xs:element minOccurs="0" name="Duration" type="ser:duration" />
+      <xs:element minOccurs="0" name="FlightNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="OperatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginTerminal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="Price" />
+      <xs:element minOccurs="0" name="RateInfo" nillable="true" type="tns:ArrayOfRateInfo" />
+      <xs:element minOccurs="0" name="Transfer" nillable="true" type="tns:Transfer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightLegSegment" nillable="true" type="tns:FlightLegSegment" />
+  <xs:complexType name="Transfer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Duration" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Transfer" nillable="true" type="tns:Transfer" />
+</xs:schema>
