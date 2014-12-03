@@ -19,45 +19,58 @@
 		}
     </style>
 </head>
-<body>
-    <!-- NAV SECTION -->
-    <div class="container" style=" height: 117px;">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 col-centered" style="text-align: center;">
-            <div class="row">
-                <a href="@Url.RouteUrl("UW100SearchHotel")">
-                    <h1>
-                        Header
-                    </h1>
-                </a>
+    <body>
+        
+        <!--***********************************-->
+        <!-- SITE HEADER START -->
+        <header class="site-header">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="/" class="navbar-brand">
+                            Travorama
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="@Url.RouteUrl("UW100SearchHotel")">Hotel</a></li>
+                        <li><a href="#">Flight</a></li>
+                        <li><a href="#">Tour and Day Trips</a></li>
+                    </ul>
+                    <ul class="nav navbar-right">
+                        @Html.Partial("_LoginPartial") @*Login | IDR | ENG*@
+                    </ul>
+                </div>
             </div>
-            <div class="row">
-                Hotels | Flight | Tour & Day Trips
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 col-centered" style="text-align: center;">
-            <div class="row HeaderMenu">
-                @Html.Partial("_LoginPartial") @*Login | IDR | ENG*@
-            </div>
-        </div>
-    </div>
-
-    <!--END NAV SECTION -->
-    <div id="home-sec" style="min-height:500px">
-        <div class="container">
+        </header>
+        <!-- SITE HEADER END -->
+        <!--***********************************-->
+        
+        <!--***********************************-->
+        <!-- SITE CONTENT START -->
+        <div class="site-content" style="min-height:500px;">
             @RenderBody()
         </div>
-    </div>
-    <div class="container" style=" height: 117px;">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 col-centered" style="text-align: center;">
-            <div class="row">
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <!-- SITE CONTENT END -->
+        <!--***********************************-->
+        
+        <!--***********************************-->
+        <!-- SITE FOOTER START -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>2015 - Travelmadezy</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/bootstrap/pluginjs")
-    @RenderSection("scripts", required: false)
-    @Html.PageScripts()
-</body>
+        </footer>
+        <!-- SITE FOOTER END -->
+        <!--***********************************-->
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/bootstrap/pluginjs")
+        @RenderSection("scripts", required: false)
+        @Html.PageScripts()
+    </body>
 </html>
