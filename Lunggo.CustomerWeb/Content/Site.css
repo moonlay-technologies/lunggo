@@ -9,6 +9,12 @@ body img { max-width: 100%;}
 
 .btn.btn-gray {color:#fff; background:#ccc;}
 
+.site-header {}
+
+.site-content { padding-bottom: 30px;}
+
+.site-footer {}
+
 /*-----------------------------------*/
 /* page */
 .page {}
@@ -109,4 +115,47 @@ body img { max-width: 100%;}
 .hotel-detail .hotel-facilities {padding:20px; padding-left:10px;}
 .hotel-detail .hotel-facilities h3 {margin-top:0;}
 
+
+/*-----------------------------------*/
+/* flight section */
+.flight-section {}
+
+.flight-list-page {}
+
+.flight-list-page .flight-list-filter {}
+.flight-list-page .flight-list-filter .filter-flight-transit, .filter-list-page .flight-list-filter .filter-flight-facilities, .filter-flight-schedule {}
+.flight-list-page .flight-list-filter .filter-flight-transit label, .filter-list-page .flight-list-filter .filter-flight-facilities, .filter-flight-schedule label {display:block; font-weight:normal;}
+.flight-list-page .flight-list-filter .filter-flight-transit input[type="checkbox"] ,.filter-list-page .flight-list-filter .filter-flight-facilities .filter-flight-schedule input[type="checkbox"] {margin-right:5px;}
+
+.flight-list-page .flight-list {}
+.flight-list-page .flight-list .flight-list-header {}
+.flight-list-page .flight-list .flight-list-header .flight-row {}
+.flight-list-page .flight-list .flight-list-header .flight-row>div {float:left; text-align:center; font-weight:bold; padding:10px;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-airline {width:20%; text-align:left;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-departure {width:15%;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-arrival {width:15%;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-facilities {width:15%;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-duration {width:15%;}
+.flight-list-page .flight-list .flight-list-header .flight-row .flight-price {width:20%; text-align:right;}
+
+.flight-list-page .flight-list-body {padding:0; margin:0; list-style:none;}
+.flight-list-page .flight-list-body .flight {border:1px solid #ddd; margin-bottom:20px; padding:10px;}
+.flight-list-page .flight-list-body .flight	table {width:100%;}
+.flight-list-page .flight-list-body .flight	table tr {border-top:1px dashed #aaa;}
+.flight-list-page .flight-list-body .flight	table tr:first-child {border-top:0;}
+.flight-list-page .flight-list-body .flight	table td {text-align:center;}
+.flight-list-page .flight-list-body .flight	table .flight-airline {width:20%;}
+.flight-list-page .flight-list-body .flight	table .flight-airline img {max-height:30px; width:auto;}
+.flight-list-page .flight-list-body .flight	table .flight-airline span {display:block;}
+
+.flight-list-page .flight-list-body .flight	table .flight-departure {width:15%;}
+.flight-list-page .flight-list-body .flight	table .flight-departure h4 {font-weight:bold;}
+
+.flight-list-page .flight-list-body .flight	table .flight-arrival {width:15%;}
+.flight-list-page .flight-list-body .flight	table .flight-arrival h4 {font-weight:bold;}
+
+.flight-list-page .flight-list-body .flight	table .flight-facilities {width:15%;}
+.flight-list-page .flight-list-body .flight	table .flight-duration {width:15%;}
+.flight-list-page .flight-list-body .flight	table .flight-price {width:20%; text-align:right;}
+.flight-list-page .flight-list-body .flight	table .flight-price sup {font-size:12px;}
 

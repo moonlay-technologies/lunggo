@@ -256,6 +256,11 @@
     </Content>
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
+    <Content Include="Assets\images\airline\airasia.png" />
+    <Content Include="Assets\images\airline\citilink.png" />
+    <Content Include="Assets\images\airline\garuda.png" />
+    <Content Include="Assets\images\airline\lionair.png" />
+    <Content Include="Assets\images\airline\sriwijaya.png" />
     <Content Include="Assets\images\hotel-1.jpg" />
     <Content Include="Assets\images\hotel-2.jpg" />
     <Content Include="Assets\images\hotel-3.jpg" />
