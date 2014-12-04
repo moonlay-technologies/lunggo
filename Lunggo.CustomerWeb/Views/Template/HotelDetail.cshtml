@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Hotel Detail";
+}
+<div class="page hotel-detail-page hotel-section">
+
+    <div class="container">
+        <!-- breadcrumb start -->
+        <div class="row">
+            <section class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Hotel</a></li>
+                    <li><a href="#">Jakarta</a></li>
+                    <li class="active">Grand Hyatt Hotel Jakarta</li>
+                </ol>
+            </section>
+        </div>
+        <!-- breadcrumb end -->
+        <!-- main-content start -->
+        <div class="row">
+            <div class="col-sm-3">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-sm-9">
+                <!-- .hotel-detail start -->
+                <article class="hotel-detail">
+
+                    <header class="hotel-header">
+                        <h1 class="hotel-name">Grand Hyatt Hotel Jakarta <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span></h1>
+                        <address class="hotel-address">Jalan M. H. Thamrin Kav. 28-30, Jakarta 10350, Indonesia</address>
+                        <nav class="hotel-nav">
+                            <a href="#top" class="active">Main</a>
+                            <a href="#hotel-photo" class="">Photos</a>
+                            <a href="#hotel-rooms" class="">Rooms</a>
+                            <a href="#hotel-location" class="">Location</a>
+                            <a href="#hotel-details" class="">Details and Facilities</a>
+                            <a href="#hotel-reviews" class="">Reviews</a>
+                        </nav>
+                    </header>
+                    <section class="hotel-images">
+                        <div class="image-main">
+                            <img src="/assets/images/hotel-1.jpg" alt="">
+                        </div>
+                        <div class="image-slide">
+                            <img src="/assets/images/hotel-1.jpg" alt="">
+                            <img src="/assets/images/hotel-2.jpg" alt="">
+                            <img src="/assets/images/hotel-3.jpg" alt="">
+                            <img src="/assets/images/hotel-4.jpg" alt="">
+                        </div>
+                    </section>
+                    <section class="hotel-rate">
+                        <h2 class="section-title">Room Rates</h2>
+                        <div class="hotel-rate-search"></div>
+                        <div class="hotel-rate-list">
+                            <div class="hotel-rate-list-header">
+                                <div class="hotel-room-name"><span>room package</span></div>
+                                <div class="hotel-room-guest"><span>max guest per room</span></div>
+                                <div class="hotel-room-price"><span>room rate per night</span></div>
+                            </div>
+                            <ul class="hotel-rate-list-content">
+                                @for( var i=1; i<6 ; i++ ){
+                                    <li class="hotel-room">
+                                        <div class="hotel-room-name">
+                                            <h3 class="hotel-rate-room-name">Standard Room</h3>
+                                            <div class="hotel-rate-room-desc">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis numquam nesciunt, voluptatem quis sequi odio eos eius aliquid temporibus minima voluptates nisi alias sit quae quisquam quaerat, totam vel magnam!</p>
+                                            </div>
+                                        </div>
+                                        <div class="hotel-room-guest">
+                                            <span>2 adults</span>
+                                        </div>
+                                        <div class="hotel-room-price">
+                                            <h3>Rp. 1.200.000</h3>
+                                            <span>per night</span>
+                                            <a href="#" class="btn btn-primary btn-book">Book Now</a>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="hotel-location">
+                        <h2 class="section-title">Location</h2>
+                        <div class="section-content">
+                            <img src="/assets/images/map.jpg" alt="Location">
+                        </div>
+                    </section>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <section class="hotel-description">
+                                <h3>Grand Hyatt Jakarta Hotel</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa enim necessitatibus perspiciatis similique quibusdam pariatur dolores vero nisi facere, non assumenda. Sed quod, et fuga asperiores voluptatibus dolorum nisi, distinctio.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam aspernatur obcaecati magnam veniam voluptatum! Quia, quaerat officiis. Amet reiciendis possimus, ducimus illum suscipit accusantium autem exercitationem nemo praesentium perferendis est!</p>
+                            </section>
+                        </div>
+                        <div class="col-sm-6">
+                            <section class="hotel-facilities">
+                                <h3>Hotel Facilities</h3>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <ul>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <ul>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                </article>
+                <!-- .hotel-detail end -->
+            </div>
+        </div>
+        <!-- main-content end -->
+    </div>
+
+</div>

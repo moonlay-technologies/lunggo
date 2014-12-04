@@ -112,10 +112,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -256,6 +256,12 @@
     </Content>
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
+    <Content Include="Assets\images\hotel-1.jpg" />
+    <Content Include="Assets\images\hotel-2.jpg" />
+    <Content Include="Assets\images\hotel-3.jpg" />
+    <Content Include="Assets\images\hotel-4.jpg" />
+    <Content Include="Assets\images\hotel-preview.jpg" />
+    <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
     <Content Include="Assets\script\data.js" />
@@ -1477,6 +1483,14 @@
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\Template\HotelSearchList.cshtml" />
+    <Content Include="Views\Template\FlightSearchList.cshtml" />
+    <Content Include="Views\Template\HotelDetail.cshtml" />
+    <Content Include="Views\Template\HotelCheckout.cshtml" />
+    <Content Include="Views\Template\HotelCheckoutPayment.cshtml" />
+    <Content Include="Views\Template\HotelCheckoutThankyou.cshtml" />
+    <Content Include="Views\Template\FlightCheckout.cshtml" />
+    <Content Include="Views\Template\FlightCheckoutPayment.cshtml" />
+    <Content Include="Views\Template\FlightCheckoutThankyou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

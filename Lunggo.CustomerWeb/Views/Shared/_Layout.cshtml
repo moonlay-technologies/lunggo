@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/bundles/bootstrap/plugincss")
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <style>
         body{
             padding-top:0px;
@@ -32,9 +33,9 @@
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><a href="@Url.RouteUrl("UW100SearchHotel")">Hotel</a></li>
-                        <li><a href="#">Flight</a></li>
-                        <li><a href="#">Tour and Day Trips</a></li>
+                        <li><a href="/id/Template/HotelSearchList">Hotel</a></li>
+                        <li><a href="/id/Template/FlightSearchList">Flight</a></li>
+                        <li><a href="/id/Template/Trips">Tour and Day Trips</a></li>
                     </ul>
                     <ul class="nav navbar-right">
                         @Html.Partial("_LoginPartial") @*Login | IDR | ENG*@
