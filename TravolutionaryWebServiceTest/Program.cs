@@ -17,7 +17,7 @@ namespace TravolutionaryWebServiceTest
 
 
             //Before doing a search perform a login to abtain a session.
-            string session = Login(userName, password);
+            /*string session = Login(userName, password);
 
             if (session == null)
             {
@@ -28,17 +28,18 @@ namespace TravolutionaryWebServiceTest
             {
                 Console.WriteLine("session id adalah " + session);
             }
+            */
 
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
 
-                var searchRequest = new HotelsServiceSearchRequest()
+                /*var searchRequest = new HotelsServiceSearchRequest()
                 {
                     CheckIn = DateTime.Now.AddDays(5),
                     CheckOut = DateTime.Now.AddDays(7),
                     Nights = 2,
                     DesiredResultCurrency = "USD",
-                    DetailLevel = SearchDetailLevel.NoPackages, //THIS IS A VERY IMPORTANG PARAMETER
+                    DetailLevel = SearchDetailLevel.Minimal, //THIS IS A VERY IMPORTANG PARAMETER
                     Residency = "US",
                     Rooms = new[]
                            {
@@ -51,63 +52,56 @@ namespace TravolutionaryWebServiceTest
                            },
                     HotelLocation = 457034 //Prague
                        
-                };
+                };*/
 
-                var searchRqst = new HotelsServiceSearchRequest()
+                var searchRequest = new HotelsServiceSearchRequest()
                 {
-                    CheckIn = DateTime.Now.AddDays(5),
-                    CheckOut = DateTime.Now.AddDays(6),
-                    ClientIP = null,
-                    ContractIds = new int[] { 5 }, //Search by contract id with hotel supplier. (Can be retrieved from admin panel: Admin>Contracts)
-                    DesiredResultCurrency = "USD", //Currency ISO (Example: "USD", "EUR", "ILS")
-                    DetailLevel = SearchDetailLevel.Meta, 
-                    /**
-                        Default - includes all the details. Not Recommended because of Large package size 
-                        Low - includes supplier name on the package
-                        Minimal - includes only rooms types and prices
-                        NoPackages - doesn't return any package information, only the lowest price.
-                        Meta - doesn't return any package information, only lowest prices from each supplier. Recommended way!
-                    **/
-                    ExcludeHotelDetails = false,
-                    HotelIds = new int[] { }, //*Mandatory*. Search by hotel id. Limited to 150 id's. Can be downloaded
-                    HotelLocation = 457034, //*Mandatory*. Search by hotel location. Can be downloaded here.
-                    IncludeCityTax = false, 
-                    /*
-                        False - default value.
-                        True - might be useful for some USA cities.
-                    */
-                    Nights = 1, //Mandatory. Number of nights for hotel stay (Example: 2). Cannot be “0” or “NULL”!
-                    Residency = "ID", //Mandatory. Lead pax residency, ISO Country Code (Example: US, CZ, IL)
-                    ResponseLanguage = null, // No description in API documentation
-                    Rooms = new HotelRoomRequest[]
-                    {
-                        new HotelRoomRequest
-                        {
-                            AdultsCount  = 2, //Mandatory. Number of adults to stay in room. Up to 4 in a room. Cannot be “0” or “NULL”!
-                            KidsAges = new int[] {8,8}, //Up to 2 in a room.
-                            SeperatedBeds = false
-                            /*
-                                False - default value. No separated beds in the room.
-                                True - Separated beds.
-                            */
-                        }
-                    },
-                    SupplierIds = new int[] { } //For search from specific suppliers.
+                    CheckIn = DateTime.Now.AddDays(2),
+                    CheckOut = DateTime.Now.AddDays(3),
+                    Nights = 1,
+                    DesiredResultCurrency = "USD",
+                    DetailLevel = SearchDetailLevel.Meta, //THIS IS A VERY IMPORTANG PARAMETER
+                    Residency = "ID",
+                    Rooms = new[]
+                           {
+                               //One room with thow adults and one child 
+                               new HotelRoomRequest()
+                                   {
+                                       AdultsCount = 2,
+                                       KidsAges = new []{5}
+                                   }, 
+                           },
+                    HotelLocation = 640255 //Prague
+
                 };
 
 
-                Stopwatch stopwatch = Stopwatch.StartNew(); //creates and start the instance of Stopwatch
+                var newRequest = new SeedHotelsSearchRequest
+                {
+                    CheckIn = DateTime.Now.AddDays(2),
+                    CheckOut = DateTime.Now.AddDays(3),
+                    Location = 640255,
+                    Nights = 1 ,
+                    Residency = "ID",
+                    ResultCurrency = "USD",
+                    SearchDetail = HotelSearchDetailLevel.Meta
+                };
+
+
+
+
+                var stopwatch = Stopwatch.StartNew(); //creates and start the instance of Stopwatch
                
                 var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
                 {
                     //SessionID = session,
                     TypeOfService = ServiceType.Hotels,
                     RequestType = ServiceRequestType.Search,
-                    Request = searchRequest,
+                    Request = ClientLibrary.CreateMockHotelsSearchRequest(newRequest),
                     Credentials = new Credentials
                     {
-                        UserName = "",
-                        Password = ""
+                        UserName = userName,
+                        Password = password
                     }
                 });
 
@@ -121,14 +115,47 @@ namespace TravolutionaryWebServiceTest
                     return;
                 }
 
-                Console.WriteLine("Ditemukan " + searchResponse.HotelsSearchResponse.Result.Length + "hotel");
+                Console.WriteLine("Ditemukan " + searchResponse.HotelsSearchResponse.Result.Length + " hotel");
                 stopwatch.Stop();
                 Console.WriteLine("Pencarian membutuhkan waktu " + stopwatch.ElapsedMilliseconds / 1000 + " detik");
 
                 /*foreach (var hotel in searchResponse.HotelsSearchResponse.Result)
                 {
+                    //Console.WriteLine("{0} | {1} | {2} | {3} | {4}", hotel.DisplayName, hotel.Area, hotel.District, hotel.StarRating, hotel.Packages.Min(p => p.SimplePrice));
                     Console.Out.WriteLine("Hotel ->{0,-50},LowestPrice ->{1,10} USD", hotel.DisplayName, hotel.Packages.Min(p => p.SimplePrice));
                 }*/
+
+                var hotelTable = searchResponse.HotelsSearchResponse.Result;
+                var firstHotel = hotelTable[5];
+
+                Console.WriteLine("Test null {0}",null);
+
+                Console.WriteLine("address : {0}",firstHotel.Address ?? "rama null value");
+                Console.WriteLine("area : {0}", firstHotel.Area ?? "rama null value");
+                //Console.WriteLine("city tax max & min & total fee : {0} {1} {2}", firstHotel.CityTax.MaxFee,firstHotel.CityTax.MinFee, firstHotel.CityTax.TotalFee);
+                Console.WriteLine("defaultimage full size & pic description & thumb : {0} {1} {2}", firstHotel.DefaultImage.FullSize ?? "rama null value", firstHotel.DefaultImage.PicDescription ?? "rama null value", firstHotel.DefaultImage.Thumb ?? "rama null value");
+                Console.WriteLine("display name : {0}", firstHotel.DisplayName ?? "rama null value");
+                Console.WriteLine("district : {0}", firstHotel.District ?? "rama null value");
+                Console.WriteLine("latitude & longitude : {0} {1}", firstHotel.GeoLocation.Latitude,firstHotel.GeoLocation.Longitude);
+                Console.WriteLine("highest package price : {0}", firstHotel.HighestPackagePrice);
+                Console.WriteLine("hotel id : {0}", firstHotel.ID);
+                Console.WriteLine("lowest package price : {0}", firstHotel.LowestPackagePrice);
+                //Console.WriteLine("packages tostring : {0}", firstHotel.Packages.ToString());
+                Console.WriteLine("star rating : {0}", firstHotel.StarRating ?? "rama null value");
+                Console.WriteLine("supplier lowest packageprice : {0}", firstHotel.SuppliersLowestPackagePrices);
+                Console.Write("Isi dictionary : ");
+                if (firstHotel.SuppliersLowestPackagePrices != null)
+                {
+                    foreach (var temp in firstHotel.SuppliersLowestPackagePrices)
+                    {
+                        Console.WriteLine("Key : {0}, Value : {1}", temp.Key, temp.Value);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("dictionary price null");
+                }
+                
             }
 
 
