@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO.Compression;
+using System.Runtime.InteropServices;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Pattern;
 using Lunggo.Framework.Sequence;
@@ -28,6 +30,7 @@ using Dapper;
 using Lunggo.Repository;
 using System.Dynamic;
 using System.Reflection;
+using StackExchange.Redis;
 
 
 namespace Lunggo.Driver
@@ -46,9 +49,32 @@ namespace Lunggo.Driver
             //TestSnowMaker();
             //TestDB1();
             //TestQueue();
-            TestLoop();
-
+            //TestLoop();
+            TestRedis();
         }
+
+        static void TestRedis()
+        {
+            var connection = ConnectionMultiplexer.Connect("lunggodev.redis.cache.windows.net,ssl=true,password=3Zl2hElizwSap5pKp8xGX1s2vvvNsxeBW6DDErPYbIU=");
+            var cache = connection.GetDatabase();
+            cache.StringSet("rama", "adhitia");
+            cache.StringSet("dodol", "garut");
+            //cache.StringSet("runi", "anggia", TimeSpan.FromSeconds(60));
+
+            var key1 = cache.StringGet("rama");
+            var key2 = cache.StringGet("dodol");
+            var key3 = (String)cache.StringGet("runi");
+
+            var valueList = cache.StringGet(new RedisKey[] { (RedisKey) "rama", (RedisKey)"dodol", (RedisKey)"runi" });
+            Console.WriteLine("{0} {1} {2}",key1,key2,key3 ?? "null masa dong");
+            foreach (var value in valueList)
+            {
+                Console.WriteLine(value.ToString() ?? "masa null sih");
+            }
+        }
+
+        
+    
 
         static void TestLoop()
         {
