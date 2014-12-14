@@ -58,6 +58,11 @@
   <ItemGroup>
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
+    <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
+    <Compile Include="Hotel\Model\HotelsSearchFilter.cs" />
+    <Compile Include="Hotel\Model\HotelsSearchRequest.cs" />
+    <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
@@ -119,9 +124,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
