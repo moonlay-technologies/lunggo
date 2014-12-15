@@ -2,6 +2,15 @@
 <ServiceConfiguration serviceName="Lunggo.API" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
   <Role name="Lunggo.WebAPI">
     <Instances count="1" />
-    <ConfigurationSettings />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="developer" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEHtt5vg+r4GeSZ9+EMGzlEQwDQYJKoZIhvcNAQEBBQAEggEAaHyc97xawsxUM1r5f+fUJw4A0bEOoDgDpH651LGrhjeNFVZcn9Frqmca4VUF/ME4ONOq93zWexSPstJC23z8cVddx7DMT3LTyr93NAUIDZ5K62NMXXQvJojiTlEUs9NoAVZ2O7d0xPBKEgu/p3espQKUMzDCcC1MuTA2vnTedIJav6zRmjvR/ZyFhi5tXQWIJOyCzM2cfvz2m9Z+bamN5kPzkYcahJ8K9sgcYyrzNxDOjVq1bu1vNokrNptXu7NxkU6G3++wFSz54mcTE3kzDIXQtZhZutFpKC2wBfvOICZbPp23bqPhK0N/K4XvhfMTp3lTJH3GafvdI9f/XVXVdDAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECD9t0SC2NqLGgBCl4InL7DUcyUzQ8RoHN2PL" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2015-12-15T23:59:59.0000000+07:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="6D3630087F7873638141F23D869DDEB5EC357CC8" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>
