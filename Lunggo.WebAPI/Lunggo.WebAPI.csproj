@@ -112,6 +112,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HotelsController.cs" />
+    <Compile Include="DummyData.cs" />
+    <Compile Include="DummyLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

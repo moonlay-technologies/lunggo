@@ -11,81 +11,15 @@ namespace Lunggo.WebAPI.Controllers
         [EnableCors(origins: "http://localhost", headers: "*", methods: "*")]
         public HotelSearchApiResponse GetHotels([FromUri] HotelSearchApiRequest request)
         {
+            var hotelList = DummyLogic.GetHotels(request);
             var response = new HotelSearchApiResponse
             {
                 SearchId = "dummySearchId",
                 InitialRequest = request,
-                HotelList = new List<HotelExcerpt>
-                {
-                    new HotelExcerpt
-                    {
-                        HotelName = "Hotel Borobudur",
-                        HotelId = "456789",
-                        Address = "Jalan Lapangan Banteng, Jakarta Pusat",
-                        Area = "Gambir",
-                        Country = "Indonesia",
-                        Province = "DKI Jakarta",
-                        StarRating = 5,
-                        Latitude = 67,
-                        Longitude = 115,
-                        ImageUrlList = new List<String>
-                        {
-                            "http://bestjakartahotels.com/wp-content/dubai_hotel/5-Hotel_Borobudur_Jakarta.jpg",
-                            "http://www.cleartrip.com/places/hotels//4373/437368/images/8536640_w.jpg"
-                        },
-                        LowestPrice = new Price()
-                        {
-                            Value = 500000,
-                            Currency = "IDR"
-                        }
-                    },
-                    new HotelExcerpt
-                    {
-                        HotelName = "Hotel Sultan",
-                        HotelId = "456789",
-                        Address = "Jalan Gatot Subroto, Jakarta Pusat",
-                        Area = "Senayan",
-                        Country = "Indonesia",
-                        Province = "DKI Jakarta",
-                        StarRating = 5,
-                        Latitude = 67,
-                        Longitude = 115,
-                        ImageUrlList = new List<String>
-                        {
-                            "http://images.yuktravel.com/images/upload/review/1333112196-The_Sultan_Hotel_Jakarta_Exterior.jpg",
-                            "http://data.tribunnews.com/foto/bank/images/hotel-sultan-1.jpg"
-                        },
-                        LowestPrice = new Price()
-                        {
-                            Value = 500000,
-                            Currency = "IDR"
-                        }
-                    },
-                    new HotelExcerpt
-                    {
-                        HotelName = "Hotel Sultan",
-                        HotelId = "456789",
-                        Address = "Jalan Gatot Subroto, Jakarta Pusat",
-                        Area = "Senayan",
-                        Country = "Indonesia",
-                        Province = "DKI Jakarta",
-                        StarRating = 5,
-                        Latitude = 67,
-                        Longitude = 115,
-                        ImageUrlList = new List<String>
-                        {
-                            "http://hikarivoucher.com/files/hotels/547/keraton-at-the-plaza.jpg",
-                            "http://assets.keratonattheplazajakarta.com/lps/assets/gallery/lux3635po.126266_lg.jpg"
-                        },
-                        LowestPrice = new Price()
-                        {
-                            Value = 500000,
-                            Currency = "IDR"
-                        }
-                    },
-                },
-                TotalHotelCount = 3 
+                HotelList = hotelList,
+                TotalHotelCount = 3
             };
+
             return response;
         }
     }
@@ -94,14 +28,15 @@ namespace Lunggo.WebAPI.Controllers
     {
         public int LocationId { get; set; }
         public String StayDate { get; set; }
-        public int StayLength { get; set; }
+        public String StayLength { get; set; }
         public String SearchId { get; set; }
-        public int SortBy { get; set; }
-        public int StartIndex { get; set; }
-        public int ResultCount { get; set; }
-        public long MinPrice { get; set; }
-        public long MaxPrice { get; set; }
+        public String SortBy { get; set; }
+        public String StartIndex { get; set; }
+        public String ResultCount { get; set; }
+        public String MinPrice { get; set; }
+        public String MaxPrice { get; set; }
         public String StarRating { get; set; }
+        public String Lang { get; set; }
     }
 
     public class Price
@@ -118,7 +53,7 @@ namespace Lunggo.WebAPI.Controllers
         public String SearchId { get; set; }
     }
 
-    public class HotelExcerpt
+    public class HotelDetailBase
     {
         public String HotelName { get; set; }
         public String HotelId { get; set; }
@@ -130,6 +65,34 @@ namespace Lunggo.WebAPI.Controllers
         public String Province { get; set; }
         public String Area { get; set; }
         public List<String> ImageUrlList { get; set; }
+    }
+
+
+
+    public class HotelDetailComplete : HotelDetailBase
+    {
+        public IEnumerable<Passage> HotelDescription { get; set; }
         public Price LowestPrice { get; set; }
+    }
+
+    public class Passage
+    {
+        public String Value { get; set; }
+        public String Lang { get; set; }
+    }
+
+    public class HotelExcerpt : HotelDetailBase
+    {
+        public Price LowestPrice { get; set; }
+    }
+
+    public enum HotelSearchSortType
+    {
+        PriceAscending = 1,
+        PriceDescending = 2,
+        StarRatingAscending = 3,
+        StarRatingDescending = 4,
+        AlphanumericAscending = 5,
+        AlphanumericDescending = 6
     }
 }
