@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Permissions;
-using System.Web;
-using System.Web.Http.Filters;
-using Lunggo.WebAPI.Controllers;
+using Lunggo.WebAPI.ApiSrc.v1.Hotels;
+using Lunggo.WebAPI.ApiSrc.v1.Hotels.Object;
 
 namespace Lunggo.WebAPI
 {
@@ -20,6 +17,36 @@ namespace Lunggo.WebAPI
             var pagedList = PageList(sortedList, request);
             var hotelExcerptList = ConvertToHotelExcerptList(pagedList);
             return hotelExcerptList;
+        }
+
+        private static IEnumerable<HotelDetailComplete> FilterByPrice(IEnumerable<HotelDetailComplete> hotelList, HotelSearchApiRequest request)
+        {
+            var minValue = -99999999L;
+            var maxValue = Int64.MaxValue;
+            if (!String.IsNullOrEmpty(request.MinPrice))
+            {
+                minValue = Convert.ToInt64(request.MinPrice);
+            }
+
+            if (!String.IsNullOrEmpty(request.MaxPrice))
+            {
+                maxValue = Convert.ToInt64(request.MaxPrice);
+            }
+
+            return hotelList.Where(p => p.LowestPrice.Value >= minValue && p.LowestPrice.Value <= maxValue);
+        }
+
+        private static IEnumerable<HotelDetailComplete> FilterByStarRating(IEnumerable<HotelDetailComplete> hotelList, HotelSearchApiRequest request)
+        {
+            if (String.IsNullOrEmpty(request.StarRating))
+            {
+                return hotelList;
+            }
+            else
+            {
+                var starArray = request.StarRating.Split(',');
+                return hotelList.Where(p => starArray.Contains(p.StarRating.ToString(CultureInfo.InvariantCulture)));
+            }
         }
 
         private static IEnumerable<HotelExcerpt> ConvertToHotelExcerptList(IEnumerable<HotelDetailComplete> sourceList)
@@ -93,145 +120,9 @@ namespace Lunggo.WebAPI
             }
         }
 
-        private static IEnumerable<HotelDetailComplete> FilterList(IEnumerable<HotelDetailComplete> hotelList, HotelSearchApiRequest request)
-        {
-            var list = FilterByPrice(hotelList, request);
-            list = FilterByStarRating(list,request);
-            return list;
-        }
+        
 
-        private static IEnumerable<HotelDetailComplete> FilterByPrice(IEnumerable<HotelDetailComplete> hotelList, HotelSearchApiRequest request)
-        {
-            var minValue = -99999999L;
-            var maxValue = Int64.MaxValue;
-            if (!String.IsNullOrEmpty(request.MinPrice))
-            {
-                minValue = Convert.ToInt64(request.MinPrice);
-            }
-
-            if (!String.IsNullOrEmpty(request.MaxPrice))
-            {
-                maxValue = Convert.ToInt64(request.MaxPrice);
-            }
-
-            return hotelList.Where(p => p.LowestPrice.Value >= minValue && p.LowestPrice.Value <= maxValue);
-        }
-
-        private static IEnumerable<HotelDetailComplete> FilterByStarRating(IEnumerable<HotelDetailComplete> hotelList, HotelSearchApiRequest request)
-        {
-            if (String.IsNullOrEmpty(request.StarRating))
-            {
-                return hotelList;
-            }
-            else
-            {
-                var starArray = request.StarRating.Split(',');
-                return hotelList.Where(p => starArray.Contains(p.StarRating.ToString(CultureInfo.InvariantCulture)));
-            }
-        }
-    }
-
-    public class HotelDetailSortPriceAscending  : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            if (x.LowestPrice.Value < y.LowestPrice.Value)
-            {
-                return -1;
-            }
-            else if (x.LowestPrice.Value > y.LowestPrice.Value)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-    }
-
-    public class HotelDetailSortPriceDescending : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            if (x.LowestPrice.Value < y.LowestPrice.Value)
-            {
-                return 1;
-            }
-            else if (x.LowestPrice.Value > y.LowestPrice.Value)
-            {
-                return -1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-    }
-
-    public class HotelDetailSortStarDescending : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            if (x.StarRating < y.StarRating)
-            {
-                return 1;
-            }
-            else if (x.StarRating > y.StarRating)
-            {
-                return -1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-    }
-
-    public class HotelDetailSortStarAscending : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            if (x.StarRating < y.StarRating)
-            {
-                return -1;
-            }
-            else if (x.StarRating > y.StarRating)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-    }
-
-    public class HotelDetailSortNameAscending : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            return System.String.Compare(x.HotelName, y.HotelName, System.StringComparison.OrdinalIgnoreCase);
-        }
-    }
-
-    public class HotelDetailSortNameDescending : IComparer<HotelDetailComplete>
-    {
-        public int Compare(HotelDetailComplete x, HotelDetailComplete y)
-        {
-            var comparisonResult = System.String.Compare(x.HotelName, y.HotelName,
-                System.StringComparison.OrdinalIgnoreCase);
-            switch (comparisonResult)
-            {
-                case -1:
-                    return 1;
-                case 1:
-                    return -1;
-                default:
-                    return 0;
-            }
-        }
-    }
+    
 
 
 }

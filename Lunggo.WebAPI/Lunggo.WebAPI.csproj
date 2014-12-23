@@ -139,10 +139,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiSrc\v1\Hotels\Model\Hotel.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HotelsController.cs" />
-    <Compile Include="DummyData.cs" />
-    <Compile Include="DummyLogic.cs" />
+    <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Hotels\HotelsController.cs" />
+    <Compile Include="ApiSrc\v1\Hotels\Logic\GetHotelLogic.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,13 +161,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApiSrc\Common\" />
+    <Folder Include="ApiSrc\v1\FlightOrders\" />
+    <Folder Include="ApiSrc\v1\Flights\" />
+    <Folder Include="ApiSrc\v1\HotelOrders\" />
+    <Folder Include="ApiSrc\v1\Rooms\DTO\" />
+    <Folder Include="ApiSrc\v1\Rooms\Logic\" />
+    <Folder Include="ApiSrc\v1\V1Common\" />
+    <Folder Include="ApiSrc\v2\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
-      <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
-      <Name>Lunggo.Framework</Name>
+    <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
+      <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
+      <Name>Lunggo.ApCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

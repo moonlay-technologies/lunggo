@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    class HotelsSearchFilter
+    public class HotelsSearchFilter
     {
         public IEnumerable<int> StarRatingsToDisplay { get; set; }
         public long MinPrice { get; set; }

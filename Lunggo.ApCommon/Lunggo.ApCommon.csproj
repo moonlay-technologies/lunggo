@@ -59,10 +59,14 @@
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
+    <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
     <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
-    <Compile Include="Hotel\Model\HotelsSearchFilter.cs" />
-    <Compile Include="Hotel\Model\HotelsSearchRequest.cs" />
+    <Compile Include="Hotel\Model\Hotel.cs" />
+    <Compile Include="Hotel\Model\HotelImage.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchFilter.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
@@ -78,6 +82,8 @@
     <Compile Include="Identity\User\UserBase.cs" />
     <Compile Include="Model\BookingFormViewModel.cs" />
     <Compile Include="Model\HotelDetailViewModel.cs" />
+    <Compile Include="Model\I18nText.cs" />
+    <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

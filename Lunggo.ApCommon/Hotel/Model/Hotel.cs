@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Lunggo.ApCommon.Model;
+
+namespace Lunggo.ApCommon.Hotel.Model
+{
+    public abstract class HotelDetailBase
+    {
+        public String HotelName { get; set; }
+        public String HotelId { get; set; }
+        public String Address { get; set; }
+        public int StarRating { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public String Country { get; set; }
+        public String Province { get; set; }
+        public String Area { get; set; }
+        public IEnumerable<HotelImage> ImageUrlList { get; set; }
+    }
+
+    public class HotelDetail : HotelDetailBase
+    {
+        public I18NText HotelDescription { get; set; }
+        public Price LowestPrice { get; set; }
+    }
+
+    
+
+
+}

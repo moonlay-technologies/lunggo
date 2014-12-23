@@ -15,7 +15,7 @@ namespace Lunggo.WebAPI
             // Enable Cors
             config.EnableCors();
 
-            // Web API routes
+            // Web API routes (Enable Attribute Routing)
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
