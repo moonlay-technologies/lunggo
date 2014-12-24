@@ -140,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Hotels\Model\Hotel.cs" />
+    <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Rooms\RoomsController.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiResponse.cs" />
@@ -165,8 +168,8 @@
     <Folder Include="ApiSrc\v1\FlightOrders\" />
     <Folder Include="ApiSrc\v1\Flights\" />
     <Folder Include="ApiSrc\v1\HotelOrders\" />
-    <Folder Include="ApiSrc\v1\Rooms\DTO\" />
     <Folder Include="ApiSrc\v1\Rooms\Logic\" />
+    <Folder Include="ApiSrc\v1\Rooms\Model\" />
     <Folder Include="ApiSrc\v1\V1Common\" />
     <Folder Include="ApiSrc\v2\" />
     <Folder Include="App_Data\" />
