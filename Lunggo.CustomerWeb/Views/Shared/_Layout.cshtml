@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="travorama">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/bundles/bootstrap/plugincss")
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
     <style>
         body{
             padding-top:0px;
@@ -68,10 +69,16 @@
         <!-- SITE FOOTER END -->
         <!--***********************************-->
 
-        @Scripts.Render("~/bundles/jquery")
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/bootstrap/pluginjs")
         @RenderSection("scripts", required: false)
         @Html.PageScripts()
+        
+        <!-- Angular JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js"></script>
+        <script src="/Assets/script/angularApp.js"></script>
+
     </body>
 </html>

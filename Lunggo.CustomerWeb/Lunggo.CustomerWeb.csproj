@@ -267,6 +267,7 @@
     <Content Include="Assets\images\hotel-4.jpg" />
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
     <Content Include="Assets\script\data.js" />
