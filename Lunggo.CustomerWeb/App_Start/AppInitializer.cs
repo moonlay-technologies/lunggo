@@ -17,10 +17,10 @@ namespace Lunggo.CustomerWeb
         {
             InitConfigurationManager();
             InitI18NMessageManager();
-            InitUniqueIdGenerator();
-            InitDatabaseService();
-            InitQueueService();
-            InitLogger();
+            //InitUniqueIdGenerator();
+            //InitDatabaseService();
+            //InitQueueService();
+            //InitLogger();
         }
 
         private static void InitConfigurationManager()
@@ -66,6 +66,7 @@ namespace Lunggo.CustomerWeb
         }
         private static void InitLogger()
         {
+            log4net.Config.XmlConfigurator.Configure();
             ILog Log = log4net.LogManager.GetLogger("Log");
             LunggoLogger.GetInstance().init(Log);
         }

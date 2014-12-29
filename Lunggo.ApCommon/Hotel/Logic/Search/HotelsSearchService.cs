@@ -28,6 +28,11 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             };
         }
 
+        public static HotelDetail GetHotelDetail(int hotelId)
+        {
+            return new HotelDetail();
+        }
+
         private static IEnumerable<HotelDetail> PageList(IEnumerable<HotelDetail> hotelList,
             HotelsSearchServiceRequest request)
         {

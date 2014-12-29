@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Model;
 
-namespace Lunggo.ApCommon.Hotel.Model
+namespace Lunggo.CustomerWeb.WebSrc.UW200.Object
 {
-    public abstract class HotelDetailBase
+    public class Uw200HotelDetailResponse
     {
+        public int HotelId { get; set; }
+        public DateTime StayDate { get; set; }
+        public int StayLength { get; set; }
+        public String SearchId { get; set; }
+        public String Lang { get; set; }
+        public IEnumerable<RoomOccupant> RoomOccupants { get; set; }
         public String HotelName { get; set; }
-        public String HotelId { get; set; }
         public String Address { get; set; }
         public int StarRating { get; set; }
         public double Latitude { get; set; }
@@ -19,20 +24,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public String Province { get; set; }
         public String Area { get; set; }
         public IEnumerable<HotelImage> ImageUrlList { get; set; }
-    }
-
-    public class HotelDetail : HotelDetailBase
-    {
         public I18NText HotelDescription { get; set; }
         public Price LowestPrice { get; set; }
     }
-
-    public class HotelExcerpt : HotelDetailBase
-    {
-        public Price LowestPrice { get; set; }
-    }
-
-    
-
-
 }

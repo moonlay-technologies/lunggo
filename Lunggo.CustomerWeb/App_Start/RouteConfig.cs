@@ -15,10 +15,18 @@ namespace Lunggo.CustomerWeb
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
             routes.MapRoute(
-                name: "UW100SearchHotel",
-                url: "{langCode}/Hotel/Search",
-                defaults: new { controller = "UW100Search", action = "SearchForm"}
-            ).DataTokens = new RouteValueDictionary(new { area = "UW100" });
+                name: "UW100HotelSearch",
+                url: "UW100/UW100HotelSearch",
+                defaults: new { controller = "UW100HotelSearch", action = "Search"}
+            );
+
+            routes.MapRoute(
+                name: "UW200HotelDetail",
+                url: "UW200/UW200HotelDetail",
+                defaults: new { controller ="UW200HotelDetail", action = "GetHotelDetail" }
+            );
+
+            
 
             routes.MapRoute(
                 name: "UW400BookhHotel",
@@ -26,36 +34,7 @@ namespace Lunggo.CustomerWeb
                 defaults: new { controller = "UW400Booking", action = "Index" }
             ).DataTokens = new RouteValueDictionary(new { area = "UW400" });
 
-            #region HotelDetail
-            routes.MapRoute(
-                name: "UW200HotelDetail",
-                url: "{langCode}/Hotel/{CountryArea}/{ProvinceArea}/{HotelName}/{HotelId}",
-                defaults: new { controller = "UW200HotelDetail", action = "UW200Index" },
-                constraints: new { HotelId = @"\d+" }
-            ).DataTokens = new RouteValueDictionary(new { area = "UW200" });
-
-            routes.MapRoute(
-                name: "UW200HotelAddressDetail",
-                url: "{langCode}/Hotel/{CountryArea}/{ProvinceArea}/{HotelName}/{HotelId}/alamat",
-                defaults: new { controller = "UW200HotelAddressDetail", action = "UW200Index" },
-                constraints: new { HotelId = @"\d+" }
-            ).DataTokens = new RouteValueDictionary(new { area = "UW200" });
-
-            routes.MapRoute(
-                name: "UW200HotelPhotoDetail",
-                url: "{langCode}/Hotel/{CountryArea}/{ProvinceArea}/{HotelName}/{HotelId}/foto",
-                defaults: new { controller = "UW200HotelPhotoDetail", action = "UW200Index" },
-                constraints: new { HotelId = @"\d+" }
-            ).DataTokens = new RouteValueDictionary(new { area = "UW200" });
-
-            routes.MapRoute(
-                name: "UW200HotelReviewDetail",
-                url: "{langCode}/Hotel/{CountryArea}/{ProvinceArea}/{HotelName}/{HotelId}/review",
-                defaults: new { controller = "UW200HotelReviewDetail", action = "UW200Index" },
-                constraints: new { HotelId = @"\d+" }
-            ).DataTokens = new RouteValueDictionary(new { area = "UW200" });
-            #endregion
-
+            
             //TODO UrlParameter Optional can only be used on the last url segment
             //Please fix below routes
             routes.MapRoute(

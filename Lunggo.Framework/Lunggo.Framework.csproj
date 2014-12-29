@@ -230,6 +230,7 @@
     <Compile Include="TicketSupport\ITicketSupportClient.cs" />
     <Compile Include="TicketSupport\TicketSupportService.cs" />
     <Compile Include="TicketSupport\ZendeskTicketClient.cs" />
+    <Compile Include="Util\DateTimeUtil.cs" />
     <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />

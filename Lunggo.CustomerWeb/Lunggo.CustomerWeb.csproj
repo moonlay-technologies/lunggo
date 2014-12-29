@@ -215,7 +215,7 @@
     <Compile Include="Areas\UW100\Models\UW100SearchResultViewModel.cs" />
     <Compile Include="Areas\UW100\Models\UW100SearchParamViewModel.cs" />
     <Compile Include="Areas\UW100\UW100AreaRegistration.cs" />
-    <Compile Include="Areas\UW200\Controllers\UW200HotelDetailController.cs" />
+    <Compile Include="Areas\UW200\Controllers\UW200HotelDetaillalaController.cs" />
     <Compile Include="Areas\UW200\Logic\UW200GetHotelDetail.cs" />
     <Compile Include="Areas\UW200\Logic\UW200GetPlacesNearHotel.cs" />
     <Compile Include="Areas\UW200\Models\UW200PlacesNearHotelViewModel.cs" />
@@ -246,6 +246,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
+    <Compile Include="WebSrc\UW100\Logic\HotelSearchLogic.cs" />
+    <Compile Include="WebSrc\UW100\Object\UW100HotelSearchRequest.cs" />
+    <Compile Include="WebSrc\UW100\Object\UW100HotelSearchResponse.cs" />
+    <Compile Include="WebSrc\UW100\UW100HotelSearchController.cs" />
+    <Compile Include="WebSrc\UW200\Logic\HotelDetailLogic.cs" />
+    <Compile Include="WebSrc\UW200\Object\UW200HotelDetailRequest.cs" />
+    <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
+    <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Dummy.xml" />
@@ -289,7 +297,7 @@
     <Content Include="Areas\UW200\Views\web.config" />
     <Content Include="Areas\UW200\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW200\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\UW200\Views\UW200HotelDetail\UW200Index.cshtml" />
+    <Content Include="Areas\UW200\Views\UW200HotelDetaillala\UW200Index.cshtml" />
     <Content Include="Areas\UW300\Views\web.config" />
     <Content Include="Areas\UW300\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW300\Views\Shared\_Layout.cshtml" />
@@ -1475,6 +1483,8 @@
     <Content Include="Views\UsersAdmin\Details.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
+    <Content Include="Views\UW100HotelSearch\Search.cshtml" />
+    <Content Include="Views\UW200HotelDetail\GetHotelDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

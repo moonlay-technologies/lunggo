@@ -60,9 +60,15 @@
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
+    <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
+    <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
     <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
     <Compile Include="Hotel\Model\Hotel.cs" />
     <Compile Include="Hotel\Model\HotelImage.cs" />
+    <Compile Include="Hotel\Object\HotelRequestBase.cs" />
+    <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />
+    <Compile Include="Hotel\Object\HotelRoomsSearchServiceRequest.cs" />
+    <Compile Include="Hotel\Object\HotelSearchServiceRequestBase.cs" />
     <Compile Include="Hotel\Object\HotelsSearchFilter.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lunggo.WebAPI.ApiSrc.v1.Hotels.Model;
+using Lunggo.ApCommon.Hotel.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Object
 {

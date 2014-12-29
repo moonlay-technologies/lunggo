@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Areas.UW200.Controllers
 {
-    public class UW200HotelDetailController : Controller
+    public class UW200HotelDetaillalaController : Controller
     {
         //
         // GET: /UW200/UW200HotelDetail/
