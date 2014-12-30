@@ -7,6 +7,10 @@ var SearchHotelConfig = {
     CurrentPage: '1'
 }
 
+var SearchRoomConfig = {
+    Url: 'http://travorama-apidev.cloudapp.net/api/v1/rooms'
+}
+
 // ************************
 // functions
 
@@ -36,6 +40,45 @@ $(document).ready(function () {
 
     var app = angular.module('travorama', ['ngRoute']);
 
+    // Room Controller
+    app.controller('RoomController', ['$http', '$scope', function($http, $scope) {
+
+        // room list
+        var room_list = this;
+        room_list.rooms = [];
+
+        // room search params
+        $scope.RoomSearchParams = {};
+
+        // load room list function
+        $scope.load_room_list = function() {
+            
+            console.log('Loading...');
+
+            // http request
+            $http.get(SearchRoomConfig.Url, {
+                params: {
+                    //StayDate: $scope.RoomSearchParams.StayDate,
+                    //StayLength: $scope.RoomSearchParams.StayLength,
+                    //RoomCount: $scope.RoomSearchParams.RoomCount,
+                    //SearchId: $scope.HotelSearchParams.SearchId
+                    HotelId: '456789',
+                    StayDate: '2015-10-10',
+                    StayLength: '1',
+                    RoomCount: '2'
+                }
+            }).success(function (data) {
+                console.log(data);
+                console.log('...Loaded');
+            }).error(function () {
+                console.log('REQUEST ERROR');
+            });
+
+        };
+
+    }])
+
+    // Hotel Controller
     app.controller('HotelController', ['$http', '$scope', function ($http, $scope) {
 
         // hotel list
@@ -49,8 +92,6 @@ $(document).ready(function () {
         $scope.load_hotel_list = function () {
 
             console.log('Loading...');
-
-            $('.hotel-list-content').prepend('<h1 class="preload text-center notif">LOADING</h1>');
 
             // generate StarRating
             $scope.HotelSearchParams.StarRating = [$scope.HotelSearchParams.star0, $scope.HotelSearchParams.star1, $scope.HotelSearchParams.star2, $scope.HotelSearchParams.star3, $scope.HotelSearchParams.star4, $scope.HotelSearchParams.star5].join('');

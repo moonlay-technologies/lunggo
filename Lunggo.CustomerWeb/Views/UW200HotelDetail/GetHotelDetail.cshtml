@@ -4,5 +4,183 @@
     ViewBag.Title = "GetHotelDetail";
 }
 
-<h2>GetHotelDetail</h2>
+<p>@Model.ImageUrlList</p>
 
+<div class="page hotel-detail-page hotel-section" ng-controller="RoomController as room_list">
+
+    <div class="container">
+        <!-- breadcrumb start -->
+        <div class="row">
+            <section class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Hotel</a></li>
+                    <li><a href="#">@Model.Country</a></li>
+                    <li><a href="#">@Model.Province</a></li>
+                    <li><a href="#">@Model.Area</a></li>
+                    <li class="active">@Model.HotelName</li>
+                </ol>
+            </section>
+        </div>
+        <!-- breadcrumb end -->
+        <!-- main-content start -->
+        <div class="row">
+            <div class="col-sm-3">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">Lorem Ipsum</h3>
+                    <div class="sidebar-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-sm-9">
+                <!-- .hotel-detail start -->
+                <article class="hotel-detail">
+
+                    <header class="hotel-header">
+                        <h1 class="hotel-name">@Model.HotelName<span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span></h1>
+                        <address class="hotel-address">@Model.Address</address>
+                        <nav class="hotel-nav">
+                            <a href="#top" class="active">Main</a>
+                            <a href="#hotel-photo" class="">Photos</a>
+                            <a href="#hotel-rooms" class="">Rooms</a>
+                            <a href="#hotel-location" class="">Location</a>
+                            <a href="#hotel-details" class="">Details and Facilities</a>
+                            <a href="#hotel-reviews" class="">Reviews</a>
+                        </nav>
+                    </header>
+                    <section class="hotel-images">
+                        <div class="image-main">
+                            <img src="/assets/images/hotel-1.jpg" alt="">
+                        </div>
+                        <div class="image-slide">
+                            <img src="/assets/images/hotel-1.jpg" alt="">
+                            <img src="/assets/images/hotel-2.jpg" alt="">
+                            <img src="/assets/images/hotel-3.jpg" alt="">
+                            <img src="/assets/images/hotel-4.jpg" alt="">
+                        </div>
+                    </section>
+                    <section class="hotel-rate">
+                        <h2 class="section-title">Room Rates</h2>
+                        <div class="hotel-rate-search">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Checkin Date</label>
+                                    <div class="col-sm-2">
+                                        <input type="type" name="date" value="" class="form-control"/>
+                                    </div>
+                                    <label class="control-label col-sm-2">Length</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label col-sm-2">Room</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="hotel-rate-list">
+                            <div class="hotel-rate-list-header">
+                                <div class="hotel-room-name"><span>room package</span></div>
+                                <div class="hotel-room-guest"><span>max guest per room</span></div>
+                                <div class="hotel-room-price"><span>room rate per night</span></div>
+                            </div>
+                            <ul class="hotel-rate-list-content">
+                                
+                                <!-- Hotel rooms template start -->
+                                <li class="hotel-room">
+                                    <div class="hotel-room-name">
+                                        <h3 class="hotel-rate-room-name">Standard Room</h3>
+                                        <div class="hotel-rate-room-desc">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis numquam nesciunt, voluptatem quis sequi odio eos eius aliquid temporibus minima voluptates nisi alias sit quae quisquam quaerat, totam vel magnam!</p>
+                                        </div>
+                                    </div>
+                                    <div class="hotel-room-guest">
+                                        <span>2 adults</span>
+                                    </div>
+                                    <div class="hotel-room-price">
+                                        <h3>Rp. 1.200.000</h3>
+                                        <span>per night</span>
+                                        <a href="#" class="btn btn-primary btn-book" ng-click="load_room_list()">Book Now</a>
+                                    </div>
+                                </li>
+                                <!-- Hotel rooms template end -->
+                                
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="hotel-location">
+                        <h2 class="section-title">Location</h2>
+                        <div class="section-content">
+                            <img src="/assets/images/map.jpg" alt="Location">
+                        </div>
+                    </section>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <section class="hotel-description">
+                                <h3>@Model.HotelName</h3>
+                                @Model.HotelDescription
+                            </section>
+                        </div>
+                        <div class="col-sm-6">
+                            <section class="hotel-facilities">
+                                <h3>Hotel Facilities</h3>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <ul>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <ul>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                            <li>Lorem ipsum</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                </article>
+                <!-- .hotel-detail end -->
+            </div>
+        </div>
+        <!-- main-content end -->
+    </div>
+
+</div>
