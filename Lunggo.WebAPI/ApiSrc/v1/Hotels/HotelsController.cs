@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels
 
     public class HotelsController : ApiController
     {
-        [EnableCors(origins: "http://localhost", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/hotels")]
         public HotelSearchApiResponse GetHotels(HttpRequestMessage httpRequest,[FromUri] HotelSearchApiRequest request)
         {

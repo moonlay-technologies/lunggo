@@ -30,7 +30,20 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
 
         public static HotelDetail GetHotelDetail(int hotelId)
         {
-            return new HotelDetail();
+            var completeHotelList = GetCompleteHotelList(null);
+            var hotel = completeHotelList.Where(p => Int32.Parse(p.HotelId) == hotelId);
+
+            var hotelDetails = hotel as IList<HotelDetail> ?? hotel.ToList();
+            if (hotelDetails.Any())
+            {
+                return hotelDetails.First();
+            }
+            else
+            {
+                return null;
+            }
+
+            
         }
 
         private static IEnumerable<HotelDetail> PageList(IEnumerable<HotelDetail> hotelList,
