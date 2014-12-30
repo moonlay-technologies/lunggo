@@ -9,27 +9,45 @@
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 
-                <form class="form form-horizontal hotel-search-form" role="form">
+                <form class="form form-horizontal hotel-search-form" action="/uw100/uw100HotelSearch" role="form" method="post">
                     <h2>Cari Hotel</h2>
                     <div class="form-group">
                         <label class="control-label col-sm-3">Tujuan</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="kota, daerah, negara atau nama hotel" />
+                            <input type="text" class="form-control" value="1" name="LocationId" placeholder="kota, daerah, negara atau nama hotel" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3">Check-in</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" />
+                        <div class="col-sm-4">
+                            <input type="text" name="StayDate" class="form-control" />
                         </div>
-                        <label class="control-label col-sm-3">Check-out</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" />
+                        <label class="control-label col-sm-3">Stay Length</label>
+                        <div class="col-sm-2">
+                            <select class=" form-control" name="StayLength">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Room</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="RoomCount">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
-                            <a href="#" class="btn btn-primary">Cari Hotel</a>
+                            <input type="submit" value="Cari Hotel" class="btn btn-primary" />
                         </div>
                     </div>
                 </form>

@@ -2,7 +2,7 @@
 // variables
 
 var SearchHotelConfig = {
-    Url: 'http://travorama-apidev.cloudapp.net/api/hotels',
+    Url: 'http://travorama-apidev.cloudapp.net/api/v1/hotels',
     ResultCount: '10',
     CurrentPage: '1'
 }
@@ -48,6 +48,8 @@ $(document).ready(function () {
         // load hotel list function
         $scope.load_hotel_list = function () {
 
+            console.log('Loading...');
+
             $('.hotel-list-content').prepend('<h1 class="preload text-center notif">LOADING</h1>');
 
             // generate StarRating
@@ -74,6 +76,8 @@ $(document).ready(function () {
                 console.log(data);
                 hotel_list.hotels = data.HotelList;
                 hotel_list.SearchId = data.SearchId;
+                hotel_list.hotelsTotal = data.TotalFilteredCount;
+                console.log('...Loaded');
             }).error(function () {
                 console.log('REQUEST ERROR');
             });
