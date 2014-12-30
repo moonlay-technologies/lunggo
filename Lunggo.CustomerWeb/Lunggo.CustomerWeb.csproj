@@ -152,6 +152,7 @@
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -233,6 +234,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -263,6 +265,18 @@
     </Content>
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
+    <Content Include="Assets\images\airline\airasia.png" />
+    <Content Include="Assets\images\airline\citilink.png" />
+    <Content Include="Assets\images\airline\garuda.png" />
+    <Content Include="Assets\images\airline\lionair.png" />
+    <Content Include="Assets\images\airline\sriwijaya.png" />
+    <Content Include="Assets\images\hotel-1.jpg" />
+    <Content Include="Assets\images\hotel-2.jpg" />
+    <Content Include="Assets\images\hotel-3.jpg" />
+    <Content Include="Assets\images\hotel-4.jpg" />
+    <Content Include="Assets\images\hotel-preview.jpg" />
+    <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
     <Content Include="Assets\script\data.js" />
@@ -1485,6 +1499,15 @@
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UW100HotelSearch\Search.cshtml" />
     <Content Include="Views\UW200HotelDetail\GetHotelDetail.cshtml" />
+    <Content Include="Views\Template\HotelSearchList.cshtml" />
+    <Content Include="Views\Template\FlightSearchList.cshtml" />
+    <Content Include="Views\Template\HotelDetail.cshtml" />
+    <Content Include="Views\Template\HotelCheckout.cshtml" />
+    <Content Include="Views\Template\HotelCheckoutPayment.cshtml" />
+    <Content Include="Views\Template\HotelCheckoutThankyou.cshtml" />
+    <Content Include="Views\Template\FlightCheckout.cshtml" />
+    <Content Include="Views\Template\FlightCheckoutPayment.cshtml" />
+    <Content Include="Views\Template\FlightCheckoutThankyou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
