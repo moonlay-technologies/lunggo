@@ -16,10 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Rooms.Logic
         {
             var searchServiceRequest = PreprocessSearchRequest(request);
             var searchServiceResponse = HotelRoomsSearchService.GetRooms(searchServiceRequest);
-            var apiResponse = new RoomSearchApiResponse
-            {
-
-            };
+            var apiResponse = AssembleApiResponse(searchServiceResponse, request);
             return apiResponse;
         }
 
