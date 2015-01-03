@@ -65,7 +65,7 @@ namespace Lunggo.Driver
             var key2 = cache.StringGet("dodol");
             var key3 = (String)cache.StringGet("runi");
 
-            var valueList = cache.StringGet(new RedisKey[] { (RedisKey) "rama", (RedisKey)"dodol", (RedisKey)"runi" });
+            var valueList = cache.StringGet(new RedisKey[] { "rama", "dodol", "runi" });
             Console.WriteLine("{0} {1} {2}",key1,key2,key3 ?? "null masa dong");
             foreach (var value in valueList)
             {
