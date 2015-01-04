@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -22,15 +23,36 @@ namespace Lunggo.Generator.HotelDesc
             const String hotelGeneralInfoFilePath = @"C:\Users\ramaadhitia\Documents\D20140529_HotelGeneralDetails.csv";
             const String hotelFacilityFilePath = @"C:\Users\ramaadhitia\Documents\D20140521_HotelFacility.csv";
             const String redisConnectionString =
-                "lunggodev.redis.cache.windows.net,ssl=true,password=3Zl2hElizwSap5pKp8xGX1s2vvvNsxeBW6DDErPYbIU=";
+                "datadev.redis.cache.windows.net,allowAdmin=true,ssl=true,password=j1JCDG7dtnXjJtz1uBrjt4mHoOxrhbr9cBc+3u1sSL4=";
+            
+            
             try
             {
                 var connection = ConnectionMultiplexer.Connect(redisConnectionString);
+                FlushAllDatabase(connection);
                 var redisDb = connection.GetDatabase();
-                ProcessHotelDescription(hotelDescriptionFilePath,redisDb);
+                
+                /*var hotelDetail = RetrieveFromCache(4006592, redisDb);
+                foreach (var desc in hotelDetail.DescriptionList)
+                {
+                    Console.WriteLine("{0} {1}",desc.Line,desc.Description.Lang);
+                    Console.WriteLine("{0}", desc.Description.Value);
+                    Console.WriteLine("-------------------------------------------------------------------------------------------------");
+                }*/
+
+                /*var hotelDetail = RetrieveFromCache(4005214, redisDb);
+                foreach (var facility in hotelDetail.FacilityList)
+                {
+                    Console.WriteLine("{0}",facility.FacilityId);
+                }*/
+
+                var watch = Stopwatch.StartNew();
+                ProcessHotelDescription(hotelDescriptionFilePath, redisDb);
                 ProcessHotelFacilities(hotelFacilityFilePath,redisDb);
                 ProcessHotelGeneralDetail(hotelGeneralInfoFilePath,redisDb);
-                Console.WriteLine("selesai");
+                watch.Stop();
+                var elapsedMinute = watch.ElapsedMilliseconds/60000;
+                Console.WriteLine("Selesai dalam waktu {0} menit",elapsedMinute);
             }
             catch (Exception exception)
             {
@@ -41,18 +63,36 @@ namespace Lunggo.Generator.HotelDesc
                         "'" + de.Key.ToString() + "'", de.Value);
                 }
                 Console.WriteLine(exception.Message);
+                Console.WriteLine(exception.StackTrace);
+            }
+        }
+
+        private static void FlushAllDatabase(ConnectionMultiplexer multiplexer)
+        {
+            var endPoints = multiplexer.GetEndPoints(true);
+
+            foreach (var endpoint in endPoints)
+            {
+                var server = multiplexer.GetServer(endpoint);
+                if (!server.IsSlave)
+                {
+                    server.FlushAllDatabases();
+                }
             }
         }
 
         private static void ProcessHotelDescription(String filePath, IDatabase redisDb)
         {
             var hotelsDescLookup = GetHotelDescriptionLookupFromFile(filePath);
+            var i = 1;
             foreach (var hotelDescLookup in hotelsDescLookup)
             {
+                Console.WriteLine("Processing Hotel Description - {0} Hotel Id : {1}", i, hotelDescLookup.Key);
                 var hotelDetailOnMem = RetrieveFromCache(hotelDescLookup.Key,redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnMem,hotelDescLookup.Key);
                 SetHotelDescription(hotelDetailOnMem,hotelDescLookup);
                 InsertIntoCache(hotelDetailOnMem, redisDb);
+                i++;
             }
             hotelsDescLookup = null;
         }
@@ -60,12 +100,15 @@ namespace Lunggo.Generator.HotelDesc
         private static void ProcessHotelFacilities(String filePath, IDatabase redisDb)
         {
             var hotelsFacilityLookup = GetHotelFacilityLookupFromFile(filePath);
+            var i = 1;
             foreach (var hotelFacilityLookup in hotelsFacilityLookup)
             {
+                Console.WriteLine("Processing Hotel Facilities - {0} Hotel Id : {1}", i, hotelFacilityLookup.Key);
                 var hotelDetailOnmem = RetrieveFromCache(hotelFacilityLookup.Key, redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnmem,hotelFacilityLookup.Key);
                 SetHotelFacility(hotelDetailOnmem,hotelFacilityLookup);
                 InsertIntoCache(hotelDetailOnmem,redisDb);
+                i++;
             }
             hotelsFacilityLookup = null;
         }
@@ -73,13 +116,17 @@ namespace Lunggo.Generator.HotelDesc
         private static void ProcessHotelGeneralDetail(String filePath, IDatabase redisDb)
         {
             var hotelsGeneralDetail = ReadHotelGeneralDetailsFile(filePath);
+            var i = 0;
             foreach (var generalDetail in hotelsGeneralDetail)
             {
+                Console.WriteLine("Processing Hotel General Details - {0} Hotel Id : {1}", i, generalDetail.HotelId);
                 var hotelDetailOnMem = RetrieveFromCache(generalDetail.HotelId, redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnMem,generalDetail.HotelId);
                 SetHotelGeneralDetail(hotelDetailOnMem,generalDetail);
                 InsertIntoCache(hotelDetailOnMem,redisDb);
+                i++;
             }
+            hotelsGeneralDetail = null;
         }
 
         private static void SetHotelGeneralDetail(OnMemHotelDetail hotelDetailOnMem,
@@ -162,17 +209,30 @@ namespace Lunggo.Generator.HotelDesc
 
         private static void InsertIntoCache(OnMemHotelDetail hotelDetailOnMem,IDatabase redisDb)
         {
-            var keyInRedis = "hotelid:" + hotelDetailOnMem.HotelId;
+            var keyInRedis = GetHotelDetailKeyInCache(hotelDetailOnMem.HotelId);
             var hotelJson = SerializeHotelDetail(hotelDetailOnMem);
             var hotelJsonCompressed = Compress(hotelJson);
             redisDb.StringSet(keyInRedis, hotelJsonCompressed);
         }
 
+        private static String GetHotelDetailKeyInCache(String hotelId)
+        {
+            return "hoteldetail:" + hotelId;
+        }
+
         public static OnMemHotelDetail RetrieveFromCache(int hotelId, IDatabase redisDb)
         {
-            byte[] hotelJsonCompressed = redisDb.StringGet(hotelId.ToString(CultureInfo.InvariantCulture));
-            var hoteljson = Decompress(hotelJsonCompressed);
-            return DeserializeHotelDetail(hoteljson);
+            var value = redisDb.StringGet(GetHotelDetailKeyInCache(hotelId.ToString(CultureInfo.InvariantCulture)));
+            if (value.IsNullOrEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                byte[] hotelJsonCompressed = value;
+                var hoteljson = Decompress(hotelJsonCompressed);
+                return DeserializeHotelDetail(hoteljson);
+            }   
         }
 
         private static String SerializeHotelDetail(OnMemHotelDetail hotelDetail)
@@ -276,7 +336,7 @@ namespace Lunggo.Generator.HotelDesc
         static IEnumerable<IGrouping<int, HotelDescription>> GetHotelDescriptionLookup(IEnumerable<HotelDescriptionFileRow> hotelDescriptionFileRows)
         {
             return hotelDescriptionFileRows.ToLookup(p => p.HotelId,
-                p => new HotelDescription {Line = p.HotelId, Description = p.Description});
+                p => new HotelDescription {Line = p.Line, Description = p.Description});
         }
 
 
