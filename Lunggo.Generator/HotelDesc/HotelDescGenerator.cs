@@ -87,7 +87,10 @@ namespace Lunggo.Generator.HotelDesc
             var i = 1;
             foreach (var hotelDescLookup in hotelsDescLookup)
             {
-                Console.WriteLine("Processing Hotel Description - {0} Hotel Id : {1}", i, hotelDescLookup.Key);
+                if (i%100 == 0)
+                {
+                    Console.WriteLine("Processing Hotel Description - {0} Hotel Id : {1}", i, hotelDescLookup.Key);
+                }
                 var hotelDetailOnMem = RetrieveFromCache(hotelDescLookup.Key,redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnMem,hotelDescLookup.Key);
                 SetHotelDescription(hotelDetailOnMem,hotelDescLookup);
@@ -103,7 +106,10 @@ namespace Lunggo.Generator.HotelDesc
             var i = 1;
             foreach (var hotelFacilityLookup in hotelsFacilityLookup)
             {
-                Console.WriteLine("Processing Hotel Facilities - {0} Hotel Id : {1}", i, hotelFacilityLookup.Key);
+                if (i%100 == 0)
+                {
+                    Console.WriteLine("Processing Hotel Facilities - {0} Hotel Id : {1}", i, hotelFacilityLookup.Key);
+                }
                 var hotelDetailOnmem = RetrieveFromCache(hotelFacilityLookup.Key, redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnmem,hotelFacilityLookup.Key);
                 SetHotelFacility(hotelDetailOnmem,hotelFacilityLookup);
@@ -119,7 +125,10 @@ namespace Lunggo.Generator.HotelDesc
             var i = 0;
             foreach (var generalDetail in hotelsGeneralDetail)
             {
-                Console.WriteLine("Processing Hotel General Details - {0} Hotel Id : {1}", i, generalDetail.HotelId);
+                if (i%100 == 0)
+                {
+                    Console.WriteLine("Processing Hotel General Details - {0} Hotel Id : {1}", i, generalDetail.HotelId);
+                }
                 var hotelDetailOnMem = RetrieveFromCache(generalDetail.HotelId, redisDb) ?? new OnMemHotelDetail();
                 SetHotelId(hotelDetailOnMem,generalDetail.HotelId);
                 SetHotelGeneralDetail(hotelDetailOnMem,generalDetail);
