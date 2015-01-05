@@ -19,37 +19,27 @@ namespace Lunggo.Generator.HotelDesc
     {
         public static void Main(String[] args)
         {
-            const string hotelDescriptionFilePath = @"C:\Users\ramaadhitia\Documents\D20140521_HotelDescription.csv";
-            const String hotelGeneralInfoFilePath = @"C:\Users\ramaadhitia\Documents\D20140529_HotelGeneralDetails.csv";
-            const String hotelFacilityFilePath = @"C:\Users\ramaadhitia\Documents\D20140521_HotelFacility.csv";
+            const string hotelDescriptionFilePath = @"C:\Users\developer\Documents\RedisUpload\D20140521_HotelDescription.csv";
+            const String hotelGeneralInfoFilePath = @"C:\Users\developer\Documents\RedisUpload\D20140529_HotelGeneralDetails.csv";
+            const String hotelFacilityFilePath = @"C:\Users\developer\Documents\RedisUpload\D20140521_HotelFacility.csv";
+            const String hotelImageFilePath = @"C:\Users\developer\Documents\RedisUpload\D20140521_HotelImage.csv";
             const String redisConnectionString =
-                "datadev.redis.cache.windows.net,allowAdmin=true,ssl=true,password=j1JCDG7dtnXjJtz1uBrjt4mHoOxrhbr9cBc+3u1sSL4=";
-            
+                "lunggodatadev.redis.cache.windows.net,allowAdmin=true,syncTimeout=5000,ssl=true,password=QqWKr+dVW5sNzxcU5ObYjRIgGmFvRqLUktbWZ7wzTL4=";
             
             try
             {
                 var connection = ConnectionMultiplexer.Connect(redisConnectionString);
                 FlushAllDatabase(connection);
                 var redisDb = connection.GetDatabase();
-                
-                /*var hotelDetail = RetrieveFromCache(4006592, redisDb);
-                foreach (var desc in hotelDetail.DescriptionList)
-                {
-                    Console.WriteLine("{0} {1}",desc.Line,desc.Description.Lang);
-                    Console.WriteLine("{0}", desc.Description.Value);
-                    Console.WriteLine("-------------------------------------------------------------------------------------------------");
-                }*/
-
-                /*var hotelDetail = RetrieveFromCache(4005214, redisDb);
-                foreach (var facility in hotelDetail.FacilityList)
-                {
-                    Console.WriteLine("{0}",facility.FacilityId);
-                }*/
-
                 var watch = Stopwatch.StartNew();
+                Console.WriteLine("Start Processing Hotel Description");
                 ProcessHotelDescription(hotelDescriptionFilePath, redisDb);
+                Console.WriteLine("Start Processing Hotel Facilities");
                 ProcessHotelFacilities(hotelFacilityFilePath,redisDb);
+                Console.WriteLine("Start Processing Hotel General Detail");
                 ProcessHotelGeneralDetail(hotelGeneralInfoFilePath,redisDb);
+                Console.WriteLine("Start Processing Hotel Image");
+                ProcessHotelImageFile(hotelImageFilePath,redisDb);
                 watch.Stop();
                 var elapsedMinute = watch.ElapsedMilliseconds/60000;
                 Console.WriteLine("Selesai dalam waktu {0} menit",elapsedMinute);
@@ -65,6 +55,8 @@ namespace Lunggo.Generator.HotelDesc
                 Console.WriteLine(exception.Message);
                 Console.WriteLine(exception.StackTrace);
             }
+            
+            
         }
 
         private static void FlushAllDatabase(ConnectionMultiplexer multiplexer)
@@ -98,6 +90,24 @@ namespace Lunggo.Generator.HotelDesc
                 i++;
             }
             hotelsDescLookup = null;
+        }
+
+        private static void ProcessHotelImageFile(String filePath, IDatabase redisDb)
+        {
+            var hotelsImageLookup = GetHotelImageLookupFromFile(filePath);
+            var i = 1;
+            foreach (var hotelImageLookup in hotelsImageLookup)
+            {
+                if (i%100 == 0)
+                {
+                    Console.WriteLine("Processing Hotel Image - {0} HotelId : {1}",i,hotelImageLookup.Key);
+                }
+                var hotelDetailOnMem = RetrieveFromCache(hotelImageLookup.Key, redisDb) ?? new OnMemHotelDetail();
+                SetHotelId(hotelDetailOnMem,hotelImageLookup.Key);
+                SetHotelImage(hotelDetailOnMem,hotelImageLookup);
+                InsertIntoCache(hotelDetailOnMem, redisDb);
+                i++;
+            }
         }
 
         private static void ProcessHotelFacilities(String filePath, IDatabase redisDb)
@@ -136,6 +146,40 @@ namespace Lunggo.Generator.HotelDesc
                 i++;
             }
             hotelsGeneralDetail = null;
+        }
+
+        private static void SetHotelImage(OnMemHotelDetail hotelDetailOnMem, IEnumerable<HotelImageFileRow> hotelImages)
+        {
+            if (hotelDetailOnMem.ImageUrlList == null)
+            {
+                hotelDetailOnMem.ImageUrlList = new List<HotelImage>();
+            }
+            var imageList = hotelDetailOnMem.ImageUrlList as IList<HotelImage> ??
+                               hotelDetailOnMem.ImageUrlList.ToList();
+
+            foreach (var image in hotelImages)
+            {
+                imageList.Add(new HotelImage
+                {
+                    FullSizeUrl = GetImageFileName(image.ImageUrl), 
+                    ThumbSizeUrl = GetImageFileName(image.ThumbUrl), 
+                    Priority = image.Priority
+                });
+            }
+            hotelDetailOnMem.ImageUrlList = imageList;
+        }
+
+        private static String GetImageFileName(String imageUrl)
+        {
+            if (String.IsNullOrEmpty(imageUrl))
+            {
+                return null;
+            }
+            else
+            {
+                var lastIndexOfSlash = imageUrl.LastIndexOf("/", System.StringComparison.Ordinal);
+                return imageUrl.Substring(lastIndexOfSlash + 1);
+            }
         }
 
         private static void SetHotelGeneralDetail(OnMemHotelDetail hotelDetailOnMem,
@@ -342,6 +386,30 @@ namespace Lunggo.Generator.HotelDesc
             }
         }
 
+        private static IEnumerable<HotelImageFileRow> ReadHotelImageFile(String filePath)
+        {
+            using (var streamReader = new StreamReader(filePath))
+            {
+                var csvReader = new CsvReader(streamReader);
+                ConfigureCsvReader(csvReader);
+                return csvReader.GetRecords<HotelImageFileRow>().ToList();
+            }
+        }
+
+        private static IEnumerable<IGrouping<int, HotelImageFileRow>> GetHotelImageLookupFromFile(String filePath)
+        {
+            var hotelImageFileRows = ReadHotelImageFile(filePath);
+            var hotelImageListFromFile = hotelImageFileRows as IList<HotelImageFileRow> ?? hotelImageFileRows.ToList();
+            var hotelImageLookup = GetHotelImageLookup(hotelImageListFromFile);
+            return hotelImageLookup;
+        }
+
+        private static IEnumerable<IGrouping<int, HotelImageFileRow>> GetHotelImageLookup(
+            IEnumerable<HotelImageFileRow> hotelImageFileRows)
+        {
+            return hotelImageFileRows.ToLookup(p=>p.HotelId, p=>p);
+        }
+
         static IEnumerable<IGrouping<int, HotelDescription>> GetHotelDescriptionLookup(IEnumerable<HotelDescriptionFileRow> hotelDescriptionFileRows)
         {
             return hotelDescriptionFileRows.ToLookup(p => p.HotelId,
@@ -354,11 +422,24 @@ namespace Lunggo.Generator.HotelDesc
             const string delimiter = "|";
             csvReader.Configuration.Delimiter = delimiter;
             csvReader.Configuration.CultureInfo = CultureInfo.InvariantCulture;
-            csvReader.Configuration.DetectColumnCountChanges = true;
+            csvReader.Configuration.DetectColumnCountChanges = false;
             csvReader.Configuration.HasHeaderRecord = true;
             csvReader.Configuration.IgnoreHeaderWhiteSpace = true;
             csvReader.Configuration.WillThrowOnMissingField = true;
         }
+    }
+
+    public class HotelImageFileRow
+    {
+        public int HotelId { get; set; }
+        public int Priority { get; set; }
+        public String ImageUrl { get; set; }
+        public String ImageHeight { get; set; }
+        public String ImageWidth { get; set; }
+        public String ThumbUrl { get; set; }
+        public String ThumbHeight { get; set; }
+        public String ThumbWidth { get; set; }
+        public String Description { get; set; }
     }
 
     public class HotelFacilityFileRow
