@@ -64,7 +64,9 @@
     <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
     <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
     <Compile Include="Hotel\Model\Hotel.cs" />
+    <Compile Include="Hotel\Model\OnMemHotelDescription.cs" />
     <Compile Include="Hotel\Model\HotelImage.cs" />
+    <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
     <Compile Include="Hotel\Model\Room.cs" />
     <Compile Include="Hotel\Object\HotelRequestBase.cs" />
     <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />

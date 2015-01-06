@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Model;
 
 namespace Lunggo.ApCommon.Hotel.Model
@@ -15,10 +12,17 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int StarRating { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool IsLatLongSet { get; set; }
         public String Country { get; set; }
         public String Province { get; set; }
         public String Area { get; set; }
         public IEnumerable<HotelImage> ImageUrlList { get; set; }
+    }
+
+    public class OnMemHotelDetail : HotelDetailBase
+    {
+        public IEnumerable<OnMemHotelDescription> DescriptionList { get; set; }
+        public IEnumerable<OnMemHotelFacility> FacilityList { get; set; } 
     }
 
     public class HotelDetail : HotelDetailBase

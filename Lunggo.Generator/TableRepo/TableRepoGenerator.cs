@@ -46,7 +46,7 @@ namespace Lunggo.Generator.TableRepo
                Init();
         }
         
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
 
             String connectionString = @"Data Source=MARINABAY\SQL2012DC;Initial Catalog=Lunggo;User ID=sa;Password=Admin-pwd";
@@ -56,7 +56,7 @@ namespace Lunggo.Generator.TableRepo
             
             var tableRepoGenerator = new TableRepoGenerator(connectionString,configurationXmlPath);
             tableRepoGenerator.Generate(destinationPath);
-        }
+        }*/
 
         public TableRepoGenerator(String connectionString, String xmlConfigurationPath)
         {

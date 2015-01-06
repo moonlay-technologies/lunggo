@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class HotelImage
+    public class OnMemHotelFacility
     {
-        public String FullSizeUrl { get; set; }
-        public String ThumbSizeUrl { get; set; }
-        public int Priority { get; set; }
+        public int FacilityId { get; set; }
     }
 }
