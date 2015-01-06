@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Hotels" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Hotels" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.General" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" />
+  <xs:simpleType name="SearchDetailLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Low" />
+      <xs:enumeration value="Minimal" />
+      <xs:enumeration value="NoPackages" />
+      <xs:enumeration value="Meta" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SearchDetailLevel" nillable="true" type="tns:SearchDetailLevel" />
+  <xs:complexType name="HotelRepricePackageRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy" />
+          <xs:element minOccurs="0" name="HotelId" type="xs:int" />
+          <xs:element minOccurs="0" name="PackageId" type="ser:guid" />
+          <xs:element minOccurs="0" name="Rooms" nillable="true" type="tns:ArrayOfRepriceRoomRequest" />
+          <xs:element minOccurs="0" name="SearchRequest" nillable="true" type="HotelsServiceSearchRequest" />
+          <xs:element minOccurs="0" name="TotalPrice" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HotelRepricePackageRequest" nillable="true" type="tns:HotelRepricePackageRequest" />
+  <xs:complexType name="ArrayOfRepriceRoomRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RepriceRoomRequest" nillable="true" type="tns:RepriceRoomRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRepriceRoomRequest" nillable="true" type="tns:ArrayOfRepriceRoomRequest" />
+  <xs:complexType name="RepriceRoomRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Adults" type="xs:int" />
+      <xs:element minOccurs="0" name="Availability" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="KidsAges" nillable="true" type="q1:ArrayOfint" />
+      <xs:element minOccurs="0" name="RoomBasis" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoomClass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RoomKind" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RepriceRoomRequest" nillable="true" type="tns:RepriceRoomRequest" />
+  <xs:complexType name="OrderBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HotelSegments" nillable="true" type="ArrayOfHotelBookSegment" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.General" minOccurs="0" name="Payment3DSecureEnrollment" nillable="true" type="q2:Payment3DSecureEnrollment">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderBookResponse" nillable="true" type="tns:OrderBookResponse" />
+  <xs:complexType name="HotelRepricePackageResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy" />
+      <xs:element minOccurs="0" name="Match" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="Price" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HotelRepricePackageResponse" nillable="true" type="tns:HotelRepricePackageResponse" />
+  <xs:complexType name="CityTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MaxFee" type="xs:double">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="MinFee" type="xs:double">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="TotalFee" type="xs:double">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="Type" type="q3:CityTaxType">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CityTax" nillable="true" type="tns:CityTax" />
+</xs:schema>

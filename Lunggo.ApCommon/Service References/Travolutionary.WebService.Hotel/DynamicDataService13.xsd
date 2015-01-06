@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.Ticketing" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.Ticketing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:complexType name="FlightTicketingRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BookingPrice" nillable="true" type="xs:double">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" minOccurs="0" name="Card" nillable="true" type="q1:PaymentCard">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SegmentID" type="xs:long" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" name="SelectedPaymentMethod" type="q2:PaymentMethod" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FlightTicketingRequest" nillable="true" type="tns:FlightTicketingRequest" />
+  <xs:complexType name="FlightTicketingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BookingStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SegmentId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightTicketingResponse" nillable="true" type="tns:FlightTicketingResponse" />
+</xs:schema>

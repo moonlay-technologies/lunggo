@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -120,6 +122,11 @@
     <Compile Include="Sequence\SampleSequence.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />
+    <Compile Include="Service References\Travolutionary.WebService.Hotel\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
@@ -138,8 +145,87 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService1.wsdl" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\Lunggo.ApCommon.Travolutionary.WebService.Hotel.DynamicDataServiceRsp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Travolutionary.WebService.Hotel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
