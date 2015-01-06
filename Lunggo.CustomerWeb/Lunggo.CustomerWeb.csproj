@@ -287,6 +287,9 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
+    <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
+    <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
+    <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>

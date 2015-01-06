@@ -31,6 +31,8 @@ function GenerateSearchParams() {
 // ready function
 $(document).ready(function () {
 
+    $('.datepicker').datepick({dateFormat: 'yyyy-mm-dd'});
+
 });
 
 

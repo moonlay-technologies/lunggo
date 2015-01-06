@@ -74,11 +74,18 @@
     @Scripts.Render("~/bundles/bootstrap/pluginjs")
     @RenderSection("scripts", required: false)
     @Html.PageScripts()
+
+    <!-- Datepicker -->
+    <link href="/Assets/vendor/datepicker/jquery.datepick.css" rel="stylesheet" />
+    <script src="/Assets/vendor/datepicker/jquery.plugin.min.js" type="text/javascript"></script>
+    <script src="/Assets/vendor/datepicker/jquery.datepick.min.js" type="text/javascript"></script>
         
-        <!-- Angular JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js"></script>
-        <script src="/Assets/script/angularApp.js"></script>
+    <!-- Angular JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js"></script>
+    <script src="/Assets/script/angularApp.js"></script>
+    
+
 
 </body>
 </html>
