@@ -50,13 +50,11 @@ namespace Lunggo.Generator.HotelDesc
                 foreach (DictionaryEntry de in exception.Data)
                 {
                     Console.WriteLine("    Key: {0}      Value: {1}", 
-                        "'" + de.Key.ToString() + "'", de.Value);
+                        "'" + de.Key + "'", de.Value);
                 }
                 Console.WriteLine(exception.Message);
                 Console.WriteLine(exception.StackTrace);
             }
-            
-            
         }
 
         private static void FlushAllDatabase(ConnectionMultiplexer multiplexer)
