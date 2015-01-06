@@ -256,6 +256,7 @@
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailRequest.cs" />
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
     <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
+    <Compile Include="WebSrc\UW300\UW300HotelBookingFormController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Dummy.xml" />
@@ -1508,12 +1509,15 @@
     <Content Include="Views\Template\FlightCheckout.cshtml" />
     <Content Include="Views\Template\FlightCheckoutPayment.cshtml" />
     <Content Include="Views\Template\FlightCheckoutThankyou.cshtml" />
+    <Content Include="Views\UW300HotelBookingForm\DisplayBookingForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Helper\" />
+    <Folder Include="WebSrc\UW300\Logic\" />
+    <Folder Include="WebSrc\UW300\Object\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

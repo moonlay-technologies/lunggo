@@ -26,7 +26,11 @@ namespace Lunggo.CustomerWeb
                 defaults: new { controller ="UW200HotelDetail", action = "GetHotelDetail" }
             );
 
-            
+            routes.MapRoute(
+                name: "UW300HotelBookingForm",
+                url: "UW300/UW300HotelBookingForm",
+                defaults: new { controller = "UW300HotelBookingForm", action = "DisplayBookingForm" }
+            );
 
             routes.MapRoute(
                 name: "UW400BookhHotel",
