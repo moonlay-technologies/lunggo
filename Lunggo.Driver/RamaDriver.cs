@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
+using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Pattern;
 using Lunggo.Framework.Sequence;
@@ -50,7 +51,17 @@ namespace Lunggo.Driver
             //TestDB1();
             //TestQueue();
             //TestLoop();
-            TestRedis();
+            //TestRedis();
+
+            const string hotelImageDirectory = "images/hotels";
+            var isHttps = true;
+            var urlBuilder = new UriBuilder
+            {
+                Path = hotelImageDirectory + "/" + "dodol.jpg",
+                Host = "services.carsolize.com",
+                Scheme = isHttps ? "https" : "http"
+            };
+            Console.WriteLine(urlBuilder.Uri.ToString());
         }
 
         static void TestRedis()

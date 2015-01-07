@@ -46,6 +46,13 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -61,12 +68,13 @@
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
+    <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
     <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
     <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
     <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
     <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
     <Compile Include="Hotel\Model\Hotel.cs" />
-    <Compile Include="Hotel\Model\OnMemHotelDescription.cs" />
+    <Compile Include="Hotel\Model\HotelDescription.cs" />
     <Compile Include="Hotel\Model\HotelImage.cs" />
     <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
     <Compile Include="Hotel\Model\Room.cs" />
@@ -75,6 +83,7 @@
     <Compile Include="Hotel\Object\HotelRoomsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Object\HotelSearchServiceRequestBase.cs" />
     <Compile Include="Hotel\Object\HotelsSearchFilter.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchResult.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
@@ -121,12 +130,17 @@
     <Compile Include="Sequence\HotelReservationSequence.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
+    <Compile Include="Sequence\HotelSearchIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />
     <Compile Include="Service References\Travolutionary.WebService.Hotel\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelService.cs" />
+    <Compile Include="Util\HotelFacilityUtil.cs" />
+    <Compile Include="Util\UrlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
@@ -226,6 +240,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

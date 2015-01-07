@@ -116,7 +116,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
             try
             {
-                mailService.init(mailClient);
+                mailService.Init(mailClient);
             }
             catch (Exception ex)
             {
