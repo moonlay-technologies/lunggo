@@ -36,6 +36,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class HotelExcerpt : HotelDetailBase
     {
         public Price LowestPrice { get; set; }
+        public IEnumerable<HotelFacility> Facilities { get; set; }
     }
 
     

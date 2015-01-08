@@ -135,6 +135,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\i18n_message.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -143,6 +146,7 @@
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Rooms\RoomsController.cs" />
+    <Compile Include="App_Start\AppInitializer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiResponse.cs" />
@@ -156,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Config\application.properties" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -179,6 +184,10 @@
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
       <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
       <Name>Lunggo.ApCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
+      <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
+      <Name>Lunggo.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

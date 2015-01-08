@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Logic;
 using Lunggo.ApCommon.Hotel.Logic.Search;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
+using Lunggo.ApCommon.Util;
+using Lunggo.Framework.Constant;
 using Lunggo.WebAPI.ApiSrc.v1.Hotels.Object;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
@@ -18,9 +21,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
             return apiResponse;
         }
 
-        private static IEnumerable<HotelExcerpt> ConvertToHotelExcerptList(IEnumerable<HotelDetail> sourceList)
+        private static IEnumerable<HotelExcerpt> ConvertToHotelExcerptList(IEnumerable<HotelDetail> sourceList, HotelSearchApiRequest request)
         {
-            return sourceList.Select(
+            var hotelExcerptList = sourceList.Select(
                 hotel => new HotelExcerpt
                 {
                     Address = hotel.Address,
@@ -34,12 +37,53 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
                     LowestPrice = hotel.LowestPrice,
                     Province = hotel.Province,
                     StarRating = hotel.StarRating,
+                    IsLatLongSet = hotel.IsLatLongSet,
+                    Facilities = hotel.Facilities
                 });
+
+            var convertToHotelExcerptList = hotelExcerptList as IList<HotelExcerpt> ?? hotelExcerptList.ToList();
+            foreach (var hotel in convertToHotelExcerptList)
+            {
+                SetImageUrlList(hotel);
+                SetFacilitiesName(hotel,request);
+            }
+
+            return convertToHotelExcerptList;
+        }
+
+        private static void SetImageUrlList(HotelExcerpt hotel)
+        {
+            if (hotel.ImageUrlList == null) return;
+            foreach (var image in hotel.ImageUrlList)
+            {
+                if (!String.IsNullOrEmpty(image.FullSizeUrl))
+                {
+                    image.FullSizeUrl = UrlUtil.CreateFullImageUrlForHotel(hotel.HotelId, image.FullSizeUrl, true);
+                }
+
+                if (!String.IsNullOrEmpty(image.ThumbSizeUrl))
+                {
+                    image.ThumbSizeUrl = UrlUtil.CreateFullImageUrlForHotel(hotel.HotelId, image.ThumbSizeUrl, true);
+                }
+            }
+        }
+
+        private static void SetFacilitiesName(HotelExcerpt hotel, HotelSearchApiRequest request)
+        {
+            if (hotel.Facilities == null) return;
+            var activeLanguageCode = String.IsNullOrEmpty(request.Lang)
+                ? SystemConstant.IndonesianLanguageCode
+                : request.Lang;
+
+            foreach (var facility in hotel.Facilities)
+            {
+                facility.FacilityName = HotelFacilityUtil.GetFacilityName(facility.FacilityId, activeLanguageCode);
+            }
         }
 
         private static HotelSearchApiResponse AssembleApiResponse(HotelsSearchServiceResponse response, HotelSearchApiRequest apiRequest)
         {
-            var hotelList = ConvertToHotelExcerptList(response.HotelList);
+            var hotelList = ConvertToHotelExcerptList(response.HotelList,request);
             var apiResponse = new HotelSearchApiResponse
             {
                 HotelList = hotelList,
