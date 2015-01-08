@@ -66,21 +66,12 @@ namespace Lunggo.ApCommon.Travolutionary
                 //ContractIds = new int[] { 5 }, //Search by contract id with hotel supplier. (Can be retrieved from admin panel: Admin>Contracts)
                 DesiredResultCurrency = DefaultResultCurrency, //Currency ISO (Example: "USD", "EUR", "ILS")
                 DetailLevel = DefaultHotelSearchDetailLevel,
-                /**
-                    Default - includes all the details. Not Recommended because of Large package size 
-                    Low - includes supplier name on the package
-                    Minimal - includes only rooms types and prices
-                    NoPackages - doesn't return any package information, only the lowest price.
-                    Meta - doesn't return any package information, only lowest prices from each supplier. Recommended way!
-                **/
+
                 ExcludeHotelDetails = true,
-                //HotelIds = new int[] { }, //*Mandatory*. Search by hotel id. Limited to 150 id's. Can be downloaded
-                HotelLocation = request.LocationId, //*Mandatory*. Search by hotel location. Can be downloaded here.
+                //HotelIds = new int[] { }, 
+                HotelLocation = request.LocationId,
                 IncludeCityTax = false,
-                /*
-                    False - default value.
-                    True - might be useful for some USA cities.
-                */
+
                 Nights = request.StayLength, //Mandatory. Number of nights for hotel stay (Example: 2). Cannot be “0” or “NULL”!
                 Residency = DefaultResidency, //Mandatory. Lead pax residency, ISO Country Code (Example: US, CZ, IL)
                 //ResponseLanguage = null, // No description in API documentation

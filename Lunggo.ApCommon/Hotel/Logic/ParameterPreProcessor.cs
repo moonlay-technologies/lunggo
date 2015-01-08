@@ -131,8 +131,15 @@ namespace Lunggo.ApCommon.Hotel.Logic
 
         public static void PreProcessRoomCountParam(HotelSearchServiceRequestBase searchServiceRequest, HotelRequestBase request)
         {
+            //TODO Use Configuration File Do not HardCode
+            var defaultRoomCount = 1;
+            var requestedRoomCount = request.RoomCount;
+            if (requestedRoomCount <=0)
+            {
+                requestedRoomCount = defaultRoomCount;
+            }
             var roomOccupantList = new List<RoomOccupant>();
-            for (var i = 0; i < request.RoomCount; i++)
+            for (var i = 0; i < requestedRoomCount; i++)
             {
                 roomOccupantList.Add(new RoomOccupant
                 {

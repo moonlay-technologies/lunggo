@@ -151,7 +151,8 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase("search_result_cache");
             var hotelCacheObject = HotelCacheUtil.ConvertHotelIdListToHotelCacheObject(hotelIdList);
-            redisDb.StringSet(searchId, hotelCacheObject);
+            //TODO Use Configuration File, Do not hardcode
+            redisDb.StringSet(searchId, hotelCacheObject,TimeSpan.FromMinutes(30));
         }
 
         private static IEnumerable<int> SearchHotelInCache(HotelsSearchServiceRequest request)

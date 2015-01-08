@@ -83,7 +83,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
 
         private static HotelSearchApiResponse AssembleApiResponse(HotelsSearchServiceResponse response, HotelSearchApiRequest apiRequest)
         {
-            var hotelList = ConvertToHotelExcerptList(response.HotelList,request);
+            var hotelList = ConvertToHotelExcerptList(response.HotelList,apiRequest);
             var apiResponse = new HotelSearchApiResponse
             {
                 HotelList = hotelList,

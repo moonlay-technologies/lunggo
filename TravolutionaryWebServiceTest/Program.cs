@@ -78,8 +78,8 @@ namespace TravolutionaryWebServiceTest
 
                 var newRequest = new SeedHotelsSearchRequest
                 {
-                    CheckIn = DateTime.Now.AddDays(2),
-                    CheckOut = DateTime.Now.AddDays(3),
+                    CheckIn = DateTime.Now.AddDays(1),
+                    CheckOut = DateTime.Now.AddDays(2),
                     Location = 640255,
                     Nights = 1 ,
                     Residency = "ID",
