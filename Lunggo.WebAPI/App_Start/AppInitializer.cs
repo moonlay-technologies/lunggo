@@ -14,6 +14,7 @@ namespace Lunggo.WebAPI
             InitConfigurationManager();
             //InitI18NMessageManager();
             InitUniqueIdGenerator();
+            InitRedisService();
         }
         
         private static void InitConfigurationManager()
@@ -52,7 +53,7 @@ namespace Lunggo.WebAPI
                 new RedisConnectionProperty
                 {
                     ConnectionName = "search_result_cache",
-                    ConnectionString = "lunggosearchdev.redis.cache.windows.net,allowAdmin=true,syncTimeout=5000,ssl=true,password=QqWKr+dVW5sNzxcU5ObYjRIgGmFvRqLUktbWZ7wzTL4="
+                    ConnectionString = "lunggosearchdev.redis.cache.windows.net,allowAdmin=true,syncTimeout=5000,ssl=true,password=Wl4iQpbjuvs+Yr5OnNzOYo3AhY/1+1K5Gunpu7IvoR4="
                 },
                 new RedisConnectionProperty
                 {
