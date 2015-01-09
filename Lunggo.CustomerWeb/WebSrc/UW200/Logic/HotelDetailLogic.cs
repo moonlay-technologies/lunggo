@@ -36,7 +36,8 @@ namespace Lunggo.CustomerWeb.WebSrc.UW200.Logic
                 Lang = searchServiceRequest.Lang,
                 StayDate = searchServiceRequest.StayDate,
                 StayLength = searchServiceRequest.StayLength,
-                HotelDetail = hotelDetail != null ? ToUw200HotelDetail(hotelDetail) : null
+                HotelDetail = hotelDetail != null ? ToUw200HotelDetail(hotelDetail) : null,
+                RoomOccupants = searchServiceRequest.RoomOccupants
             };
             return response;
         }
@@ -56,7 +57,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW200.Logic
                 LowestPrice = hotelDetail.LowestPrice,
                 Province = hotelDetail.Province,
                 StarRating = hotelDetail.StarRating,
-                HotelDescription = GetHotelDescription(hotelDetail) 
+                HotelDescription = GetHotelDescription(hotelDetail),
             };
             SetFullImageUrl(retVal);
             SetFacilitiesName(retVal);
