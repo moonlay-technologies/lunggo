@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using System.Linq;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Travolutionary;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 
 namespace Lunggo.ApCommon.Hotel.Logic.Search
@@ -147,19 +149,17 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
 
         private static void SaveSearchResultToCache(String searchId, IEnumerable<int> hotelIdList)
         {
-            //TODO Use Configuration File, Do not hardcode
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase("search_result_cache");
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var hotelCacheObject = HotelCacheUtil.ConvertHotelIdListToHotelCacheObject(hotelIdList);
-            //TODO Use Configuration File, Do not hardcode
-            redisDb.StringSet(searchId, hotelCacheObject,TimeSpan.FromMinutes(30));
+            redisDb.StringSet(searchId, hotelCacheObject, TimeSpan.FromMinutes(
+                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"))));
         }
 
         private static IEnumerable<int> SearchHotelInCache(HotelsSearchServiceRequest request)
         {
-            //TODO Use Configuration File, Do not hardcode
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase("search_result_cache");
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var rawHotelIdListFromCache =  redisDb.StringGet(request.SearchId);
 
             if (!rawHotelIdListFromCache.IsNullOrEmpty)
@@ -265,9 +265,8 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
 
         private static IEnumerable<OnMemHotelDetail> GetHotelsDetailFromCache(IEnumerable<int> hotelIdList)
         {
-            //TODO Use configuration file do not hardcode
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase("master_data_cache");
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var cacheKeys = HotelCacheUtil.GetHotelDetailKeyInCacheArray(hotelIdList.ToArray());
             var rawHotelsDetailFromCache = redisDb.StringGet(cacheKeys);
             var hotelDetail =
@@ -277,9 +276,8 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
 
         private static OnMemHotelDetail GetHotelDetailFromCache(int hotelId)
         {
-            //TODO Use configuration file do not hardcode
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase("master_data_cache");
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var cacheKey = HotelCacheUtil.GetHotelDetailKeyInCache(hotelId);
             var rawHotelDetailFromCache = redisDb.StringGet(cacheKey);
             OnMemHotelDetail hotelDetailOnMem = null;

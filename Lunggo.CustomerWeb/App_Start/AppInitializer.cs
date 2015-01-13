@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using log4net;
+using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
@@ -27,19 +28,18 @@ namespace Lunggo.CustomerWeb
 
         private static void InitRedisService()
         {
-            //TODO Use Configuration File Do Not Hardcode
             var redisService = RedisService.GetInstance();
             redisService.Init(new RedisConnectionProperty[]
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = "search_result_cache",
-                    ConnectionString = "lunggosearchdev.redis.cache.windows.net,allowAdmin=true,syncTimeout=5000,ssl=true,password=Wl4iQpbjuvs+Yr5OnNzOYo3AhY/1+1K5Gunpu7IvoR4="
+                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
                 },
                 new RedisConnectionProperty
                 {
-                    ConnectionName = "master_data_cache",
-                    ConnectionString = "lunggodatadev.redis.cache.windows.net,allowAdmin=true,syncTimeout=5000,ssl=true,password=QqWKr+dVW5sNzxcU5ObYjRIgGmFvRqLUktbWZ7wzTL4="
+                    ConnectionName = ApConstant.MasterDataCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
                 }, 
             });
         }

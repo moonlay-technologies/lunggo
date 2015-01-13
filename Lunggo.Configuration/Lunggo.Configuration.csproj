@@ -83,6 +83,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CustomerWeb\domain.properties" />
+    <None Include="Config\CustomerWeb\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\domain.properties" />
+    <None Include="Config\WebAPI\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\azurestorage.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\db.properties" />
+    <None Include="Config\WebAPI\freshdesk.properties" />
+    <None Include="Config\WebAPI\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\veritrans.properties" />
+    <None Include="Config\WebAPI\zendesk.properties" />
+    <None Include="Config\CustomerWeb\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\freshdesk.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\general.properties">

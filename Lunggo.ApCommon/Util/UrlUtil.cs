@@ -7,15 +7,16 @@ using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Util
 {
     public class UrlUtil
     {
-        //TODO use configuration file do not hardcode
-        private const String ImageDomain = "services.carsolize.com";
+        private readonly static String ImageDomain = ConfigManager.GetInstance().GetConfigValue("domain","imageDomain");
         public static String CreateFullImageUrlForHotel(String hotelId,String imageFileName, bool isHttps = false)
         {
+            //TODO use configuration file do not hardcode
             const string hotelImageDirectory = "images/hotels";
             var urlBuilder = new UriBuilder
             {

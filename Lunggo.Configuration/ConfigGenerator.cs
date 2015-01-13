@@ -43,7 +43,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler" };
+            String[] projectList = { "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler", "WebAPI" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -54,7 +54,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
+            generator.StartConfig(DeploymentEnvironment.Development, projectList);
             //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -103,8 +103,8 @@ namespace Lunggo.Configuration
 
             for (var row = ExcelRowDefaultStart; row <= excelRowCount; row++)
             {
-                string variableName = xlRange.Cells[row, ExcelColumnGeneratedNameIndex].Value2;
-                string resultValue = xlRange.Cells[row, columnValueIndex].Value2;
+                string variableName = xlRange.Cells[row, ExcelColumnGeneratedNameIndex].Text;
+                string resultValue = xlRange.Cells[row, columnValueIndex].Text;
                 if (IsCellsNotNull(variableName, resultValue))
                     dictionaryConfig.Add(variableName, resultValue);
             }

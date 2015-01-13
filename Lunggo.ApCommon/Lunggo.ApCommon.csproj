@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />

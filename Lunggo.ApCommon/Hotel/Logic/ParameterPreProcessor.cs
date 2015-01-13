@@ -4,6 +4,8 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Constant;
 using Lunggo.Framework.Util;
 
 namespace Lunggo.ApCommon.Hotel.Logic
@@ -33,9 +35,7 @@ namespace Lunggo.ApCommon.Hotel.Logic
 
         public static void PreProcessStayLengthParam(HotelSearchServiceRequestBase searchServiceRequest, HotelRequestBase request)
         {
-            //TODO Do not hardcode use configuration file
-            searchServiceRequest.StayLength = 1;
-            
+            searchServiceRequest.StayLength = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel","defaultStayLength"));
             if (!String.IsNullOrEmpty(request.StayLength))
             {
                 searchServiceRequest.StayLength = Int32.Parse(request.StayLength);
@@ -44,12 +44,10 @@ namespace Lunggo.ApCommon.Hotel.Logic
 
         public static void PreProcessStayDateParam(HotelSearchServiceRequestBase searchServiceRequest, HotelRequestBase request)
         {
-            //TODO Do not hardcode use configuration file
             searchServiceRequest.StayDate =  GetDefaultStayDate();
 
             if (!String.IsNullOrEmpty(request.StayDate))
             {
-                //TODO create string constant untuk datetime format
                 searchServiceRequest.StayDate = DateTime.ParseExact(request.StayDate, "yyyy-MM-dd",
                     System.Globalization.CultureInfo.InvariantCulture);
             }
@@ -58,8 +56,7 @@ namespace Lunggo.ApCommon.Hotel.Logic
         public static void PreProcessLangParam(HotelSearchServiceRequestBase searchServiceRequest,
             HotelRequestBase request)
         {
-            //TODO Do not hardcode use configuration file
-            searchServiceRequest.Lang = "id";
+            searchServiceRequest.Lang = SystemConstant.IndonesianLanguageCode;
             if (!String.IsNullOrEmpty(request.Lang))
             {
                 searchServiceRequest.Lang = request.Lang;
@@ -68,15 +65,14 @@ namespace Lunggo.ApCommon.Hotel.Logic
 
         private static DateTime GetDefaultStayDate()
         {
-            const int dayOffset = 1;
+            var dayOffset = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "defaultCheckInOffset"));
             return DateTimeUtil.GetJakartaDateTime().AddDays(dayOffset);
         }
 
         public static void PreProcessPagingParam(HotelsSearchServiceRequest searchServiceRequest, HotelSearchRequestBase request)
         {
-            //TODO Do not hardcode use configuration file
             searchServiceRequest.StartIndex = 0;
-            searchServiceRequest.ResultCount = 10;
+            searchServiceRequest.ResultCount = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel","defaultResultCount"));
 
             if (!String.IsNullOrEmpty(request.StartIndex))
             {
@@ -131,8 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Logic
 
         public static void PreProcessRoomCountParam(HotelSearchServiceRequestBase searchServiceRequest, HotelRequestBase request)
         {
-            //TODO Use Configuration File Do not HardCode
-            var defaultRoomCount = 1;
+            var defaultRoomCount = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel","defaultRoomCount"));
             var requestedRoomCount = request.RoomCount;
             if (requestedRoomCount <=0)
             {
@@ -143,7 +138,7 @@ namespace Lunggo.ApCommon.Hotel.Logic
             {
                 roomOccupantList.Add(new RoomOccupant
                 {
-                    AdultCount = 2, //TODO Do not hardcode use configuration file
+                    AdultCount = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("hotel","defaultAdultCount")), 
                     ChildrenAges = null
                 });
             }
