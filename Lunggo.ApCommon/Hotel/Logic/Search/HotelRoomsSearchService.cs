@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
+using Lunggo.ApCommon.Travolutionary;
 
 namespace Lunggo.ApCommon.Hotel.Logic.Search
 {
@@ -13,7 +15,16 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
     {
         public static HotelRoomsSearchServiceResponse GetRooms(HotelRoomsSearchServiceRequest request)
         {
-            var roomPackages = GetDummyRoomPackages();
+            IEnumerable<RoomPackage> roomPackages = null;
+            try
+            {
+                roomPackages = GetRoomsInternal(request);
+            }
+            catch (Exception)
+            {
+                //TODO catch custom specialized exception type
+            }
+                
             var response = new HotelRoomsSearchServiceResponse
             {
                 RoomPackages = roomPackages
@@ -21,9 +32,40 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             return response;
         }
 
+        public static IEnumerable<RoomPackage> GetRoomsInternal(HotelRoomsSearchServiceRequest request)
+        {
+            var response = TravolutionaryHotelService.GetHotelRooms(request);
+            if (TravolutionaryHotelService.IsErrorTravolutionaryResponse(response))
+            {
+                //TODO please throw specialized custom exception class
+                throw new Exception("Error in retrieving Hotel Rooms");
+            }
+            var roomPackages = ToRoomPackages(response.RoomPackages);
+            return roomPackages;
+        }
+
+        private static IEnumerable<RoomPackage> ToRoomPackages(IEnumerable<RawRoomPackage>  rawRoomPackages)
+        {
+            return rawRoomPackages.Select(p => new RoomPackage
+            {
+                FinalPackagePrice = HotelPriceUtil.CountPrice(p.PackagePrice),
+                PackageId = p.PackageId,
+                RoomList = p.RoomList.Select(r => new Room
+                {
+                    AdultCount = r.AdultCount,
+                    ChildrenCount = r.ChildrenCount,
+                    RoomDescription = r.RoomDescription,
+                    RoomId = r.RoomId,
+                    RoomName = r.RoomName,
+                    FinalRoomPrice = HotelPriceUtil.CountPrice(r.RoomPrice)
+                })
+            });
+        }
+
         private static IEnumerable<RoomPackage> GetDummyRoomPackages()
         {
-            var list = new List<RoomPackage>
+            return null;
+            /*var list = new List<RoomPackage>
             {
                 new RoomPackage
                 {
@@ -141,7 +183,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
                 }
             };
 
-            return list;
+            return list;*/
         }
     }
 }

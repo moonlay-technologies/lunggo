@@ -211,11 +211,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
         private static Lunggo.ApCommon.Model.Price GetLowestPrice(OnMemHotelDetail hotelDetailOnMem)
         {
             //TODO Please replace below dummy logic
-            return new Lunggo.ApCommon.Model.Price
-            {
-                Currency = "IDR",
-                Value = 1000000
-            };
+            return HotelPriceUtil.CountPrice(null);
         }
 
         private static IEnumerable<HotelFacility> GetFacilities(OnMemHotelDetail hotelDetailOnMem)

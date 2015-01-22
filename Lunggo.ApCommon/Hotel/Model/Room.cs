@@ -10,14 +10,14 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public abstract class RoomPackageBase
     {
-        public long PackageId { get; set; }
+        public String PackageId { get; set; }
         public Price FinalPackagePrice { get; set; }
     }
 
     public abstract class RoomBase
     {
         public String RoomName { get; set; }
-        public long RoomId { get; set; }
+        public String RoomId { get; set; }
         public int AdultCount { get; set; }
         public int ChildrenCount { get; set; }
         public String RoomDescription { get; set; }
@@ -43,4 +43,23 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         
     }
+
+    public class RawRoom
+    {
+        public String RoomName { get; set; }
+        public String RoomId { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildrenCount { get; set; }
+        public String RoomDescription { get; set; }
+        public Price RoomPrice { get; set; }
+    }
+
+    public class RawRoomPackage
+    {
+        public String PackageId { get; set; }
+        public Price PackagePrice { get; set; }
+        public IEnumerable<RawRoom> RoomList { get; set; }
+    }
+
+
 }

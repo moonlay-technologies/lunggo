@@ -134,6 +134,7 @@
     <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
+    <Compile Include="Error\Error.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
     <Compile Include="Http\Http.cs" />

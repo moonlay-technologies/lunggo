@@ -70,6 +70,7 @@
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
+    <Compile Include="Hotel\Logic\HotelPriceUtil.cs" />
     <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
     <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
     <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
@@ -138,8 +139,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Travolutionary\TravolutionaryErrorMapper.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelService.cs" />
+    <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
   </ItemGroup>

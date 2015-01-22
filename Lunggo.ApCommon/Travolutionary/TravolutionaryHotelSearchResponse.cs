@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Travolutionary
 {
-    public class TravolutionaryHotelSearchResponse
+    public class TravolutionaryHotelSearchResponse : TravolutionaryResponseBase
     {
         public IEnumerable<int> HotelIdList { get; set; }
-        public String SessionId { get; set; }
     }
+
 }
