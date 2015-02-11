@@ -67,19 +67,7 @@ namespace TravolutionaryWebServiceTest
                                //One room with thow adults and one child 
                                new HotelRoomRequest()
                                    {
-                                       AdultsCount = 4,
-                                   },
-                                   new HotelRoomRequest()
-                                   {
-                                       AdultsCount = 4,
-                                   },
-                                   new HotelRoomRequest()
-                                   {
-                                       AdultsCount = 4,
-                                   },
-                                   new HotelRoomRequest()
-                                   {
-                                       AdultsCount = 4,
+                                       AdultsCount = 2,
                                    }
                            },
                     HotelIds = new int[]
@@ -101,9 +89,6 @@ namespace TravolutionaryWebServiceTest
                     SearchDetail = HotelSearchDetailLevel.Meta
                 };
 
-
-
-
                 var stopwatch = Stopwatch.StartNew(); //creates and start the instance of Stopwatch
                
                 var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
@@ -119,8 +104,6 @@ namespace TravolutionaryWebServiceTest
                     }
                 });
 
-
-
                 if (searchResponse.Errors != null && searchResponse.Errors.Any())
                 {
                     foreach (var error in searchResponse.Errors)
@@ -130,6 +113,8 @@ namespace TravolutionaryWebServiceTest
                     }
                     return;
                 }
+
+                var sessionId = searchResponse.SessionID;
 
                 Console.WriteLine("Ditemukan " + searchResponse.HotelsSearchResponse.Result.Length + " hotel");
                 stopwatch.Stop();
@@ -141,10 +126,7 @@ namespace TravolutionaryWebServiceTest
                     Console.Out.WriteLine("Hotel ->{0,-50},LowestPrice ->{1,10} USD, HotelId ->{2,70}", hotel.DisplayName, hotel.Packages.Min(p => p.SimplePrice), hotel.ID);
                 }
 
-
-
                 var hotelTable = searchResponse.HotelsSearchResponse.Result;
-
                 if (!hotelTable.Any())
                 {
                     Console.WriteLine("ng ada isinya");
@@ -161,7 +143,68 @@ namespace TravolutionaryWebServiceTest
                 }
                 Console.WriteLine();
                 Console.WriteLine();
+
+                var leadPaxId = Guid.NewGuid().ToString();
+
+                var bookRequest = new HotelBookRequest
+                {
+                    ClientIP = "139.228.112.122", //mandatory
+                    BookingPrice = 100, //mandatory
+                    HotelID = hotelTable[0].ID, //mandatory
+                    InternalAgentRef1 = "No Data", //optional
+                    InternalAgentRef2 = "No Data", //optional
+                    PackageID = firstPackage.PackageId, //mandatory
+                    LeadPaxId = leadPaxId, //mandatory
+                    LeadPaxRoomId = firstPackage.Rooms[0].Id, //mandatory
+                    Passengers = new []
+                    {
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[0].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rama",
+                                    NamePrefix = "Mr",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = leadPaxId
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[0].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
+                        }
+                    },
+                    RoomsRemarks = new Dictionary<String,String>()
+                    {
+                        {firstPackage.Rooms[0].Id,null}
+                    },
+                    SelectedPaymentMethod = PaymentMethod.Cash
+                };
+
+                var bookReponse = cli.ServiceRequest(new DynamicDataServiceRqst()
+                {
+                    SessionID = sessionId,
+                    TypeOfService = ServiceType.Hotels,
+                    RequestType = ServiceRequestType.Book,
+                    Request = bookRequest 
+                });
                 
+                Console.WriteLine();
 
                 /*var firstHotel = hotelTable[5];
 

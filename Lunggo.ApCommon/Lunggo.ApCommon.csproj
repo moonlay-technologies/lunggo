@@ -80,6 +80,7 @@
     <Compile Include="Hotel\Model\HotelImage.cs" />
     <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
     <Compile Include="Hotel\Model\Room.cs" />
+    <Compile Include="Hotel\Object\HotelBookServiceRequest.cs" />
     <Compile Include="Hotel\Object\HotelRequestBase.cs" />
     <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />
     <Compile Include="Hotel\Object\HotelRoomsSearchServiceRequest.cs" />
@@ -140,6 +141,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Travolutionary\TravolutionaryErrorMapper.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelBookResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelService.cs" />

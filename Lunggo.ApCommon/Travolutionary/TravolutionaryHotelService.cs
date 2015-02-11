@@ -34,6 +34,11 @@ namespace Lunggo.ApCommon.Travolutionary
             return response;
         }
 
+        public static TravolutionaryHotelBookResponse BookHotel(HotelBookServiceRequest request)
+        {
+            return null;
+        }
+
         private static TravolutionaryHotelRoomSearchResponse GetHotelRoomsInternal(HotelsServiceSearchRequest request)
         {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
