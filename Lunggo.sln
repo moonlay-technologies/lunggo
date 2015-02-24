@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.CW", "Lunggo\Lunggo.CW.ccproj", "{F3A0985F-4551-44DA-9C54-3E593F6ADCF2}"
 EndProject
@@ -41,6 +41,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.TicketQueueHandler", "Lunggo.WebJob.TicketQueueHandler\Lunggo.WebJob.TicketQueueHandler.csproj", "{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EmailQueueHandler", "Lunggo.WebJob.EmailQueueHandler\Lunggo.WebJob.EmailQueueHandler.csproj", "{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.BackendWeb", "Lunggo.BackendWeb\Lunggo.BackendWeb.csproj", "{78EF7AAF-20EA-424F-A45C-DC2CE127E149}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,10 @@ Global
 		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8450B86-5157-453A-9B2F-CC0A2DD4A1A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78EF7AAF-20EA-424F-A45C-DC2CE127E149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78EF7AAF-20EA-424F-A45C-DC2CE127E149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78EF7AAF-20EA-424F-A45C-DC2CE127E149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78EF7AAF-20EA-424F-A45C-DC2CE127E149}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
