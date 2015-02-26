@@ -26,5 +26,30 @@ namespace Lunggo.BackendWeb.Controllers
 
             return View();
         }
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult Hotel()
+        {
+            return View();
+        }
+
+        public ActionResult Flight()
+        {
+            return View();
+        }
+
+        public ActionResult HotelDetail()
+        {
+            return View();
+        }
+
+        public ActionResult FlightDetail()
+        {
+            return View();
+        }
     }
 }
