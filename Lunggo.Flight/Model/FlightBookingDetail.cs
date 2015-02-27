@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Flight.Model
 {
-    class BookingDetail
+    public class FlightBookingDetail
     {
         public int BookingNumber { get; set; }
         public DateTime BookingDate { get; set; }
