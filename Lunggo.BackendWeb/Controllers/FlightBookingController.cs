@@ -17,7 +17,7 @@ namespace Lunggo.BackendWeb.Controllers
 
         public ActionResult SearchFlightBooking(FlightBookingDetail record)
         {
-            
+            throw new NotImplementedException();
         }
 
     }
