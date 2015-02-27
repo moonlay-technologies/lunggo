@@ -49,6 +49,7 @@
     <Compile Include="Crawler\CitilinkCrawler.cs" />
     <Compile Include="Crawler\ICrawler.cs" />
     <Compile Include="Crawler\LionAirCrawler.cs" />
+    <Compile Include="Model\BookingDetail.cs" />
     <Compile Include="Model\DepartDetail.cs" />
     <Compile Include="Model\FlightTicket.cs" />
     <Compile Include="Model\TicketSearch.cs" />
