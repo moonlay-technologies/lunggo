@@ -8,6 +8,10 @@ namespace Lunggo.BackendWeb.Controllers
 {
     public class HomeController : Controller
     {
+
+        //public HotelTableRepo hotelTable = HotelTableRepo.GetInstance();
+        //public IDbConnection connHotel = DbService.GetInstance().GetOpenConnection();
+
         public ActionResult Index()
         {
             return View();
@@ -34,6 +38,8 @@ namespace Lunggo.BackendWeb.Controllers
 
         public ActionResult Hotel()
         {
+            //var result = hotelTable.FindAll(connHotel);
+            //return View(result);
             return View();
         }
 
@@ -42,8 +48,9 @@ namespace Lunggo.BackendWeb.Controllers
             return View();
         }
 
-        public ActionResult HotelDetail()
+        public ActionResult HotelDetail(int id)
         {
+            //return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
             return View();
         }
 
@@ -51,5 +58,19 @@ namespace Lunggo.BackendWeb.Controllers
         {
             return View();
         }
+
+        /*
+        public ActionResult DeleteBookingHotel(int id)
+        {
+          
+         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
+        }
+         
+        public ActionResult CheckBookingHotel(int id)
+        {
+          
+         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
+        }
+        */
     }
 }

@@ -3,7 +3,6 @@
   <Role name="Lunggo.CustomerWeb">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="ramaadhitia" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEDTEJKuDTxGdTzXFip2m7ewwDQYJKoZIhvcNAQEBBQAEggEAiNeGjB5RqVa7sgd0Ka1SbKwXdI6ZGn2tmecyjJwkj61yChR8krvGZm98OH91ZZojRO0/c6afXyS2b+7wV+j2mLTCNlcEkiwPmnp3sfr53O9HjctONK6I7OkGQq1EG/uRPjkJeDwyV0L8NVP4v8UN3Fu2hsXgJpH9Q6aX9N4LTAUveZuJB0T8OG4S2EyjXlyuLhnQElkrvr39FGKrNbiJhr9pKmpfQDHVQGvNr90gmuGFqF2aXwTu68++p4fZD0NtQxAtzOmLUfbSCt8nl+7VyJW+c1AZznCv9+6/pfI6KEkSj1XyLzPkgCdu9SW185p+WvX9buHGuEgXRFz86UGMNzAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECOIiZ6bC5AOSgBBBnzMe5UNYLNSJRsChON5J" />
