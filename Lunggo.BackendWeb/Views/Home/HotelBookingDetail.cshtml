@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "HotelDetail";
+    ViewBag.ActiveMenu = "hotel";
+}
+
+@model Lunggo.BackendWeb.Query.GetHotelBookingDetailRecord
+
+        @using (Html.BeginForm())
+        {
+            var dateBooking = Model.RsvTime.Value.ToString("yyyy MMMM dd");
+
+            <h3><i class="fa fa-angle-right"></i> Hotel Booking <small> > @Html.DisplayFor(model => model.RsvNo)</small></h3>
+            <div class="row">
+        
+                    <div class="col-md-6">
+                        <div class="showback">
+                            <h4>Hotel Booking Detail</h4>
+                            <hr>
+                            <table class="table table-hover table-no-border">
+                                <tbody>
+                                    <tr>
+                                        <td>Booking ID</td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.RsvNo)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Booking Date</td>
+                                        <td>
+                                            @Html.DisplayFor(model => dateBooking)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Booking Status</td>
+                                        <td><span class="label label-success">@Html.DisplayFor(model => model.PaymentStatusCd)</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="showback">
+                            <h4>User Detail</h4>
+                            <hr>
+                            <table class="table table-hover table-no-border">
+                                <tbody>
+                                    <tr>
+                                        <td>User ID</td>
+                                        <td>@Html.DisplayFor(model => model.MemberCd)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Name</td>
+                                        <td>Rama Adhitia</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Email</td>
+                                        <td><a href="#">rama.adhitia@gmail.com</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Phone</td>
+                                        <td>+62 821 234 5678</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Address</td>
+                                        <td>Jalan Simacanmangaraja no.xxi</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Jakarta Barat</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Indonesia</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="showback">
+                            <h4>Hotel Detail</h4>
+                            <hr>
+                            <table class="table table-hover table-no-border">
+                                <tbody>
+                                    <tr>
+                                        <td>Hotel ID</td>
+                                        <td>@Html.DisplayFor(model => model.HotelNo)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotel Name</td>
+                                        <td>Lorem Ipsum Dolor Sit Amet</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotel Address</td>
+                                        <td>Jalan Jalan bebas no.30</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Jakarta Barat</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Indonesia</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotel Contact</td>
+                                        <td>+62 21 1234 567</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hotel Website</td>
+                                        <td><a href="#">http://www.hotelbebas.com</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+       
+                    </div>
+                    <!-- col-md-6 -->
+
+                    <div class="col-md-6">
+
+                        <div class="showback">
+                            <h4>Payment Detail Detail</h4>
+                            <hr>
+                            <table class="table table-hover table-no-border">
+                                <tbody>
+                                    <tr>
+                                        <td>Payment Method</td>
+                                        <td>@Html.DisplayFor(model => model.PaymentMethodCd)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final Price</td>
+                                        <td>@Html.DisplayFor(model => model.FinalPrice)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+    <!-- col-md-6 -->
+    
+        </div><!-- row -->
+        }

@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
+    <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
     <Compile Include="TableRecord\PersonTableRecord.cs" />
     <Compile Include="TableRecord\RolesTableRecord.cs" />
     <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs" />
@@ -47,6 +49,8 @@
     <Compile Include="TableRecord\UserLoginsTableRecord.cs" />
     <Compile Include="TableRecord\UserRolesTableRecord.cs" />
     <Compile Include="TableRecord\UsersTableRecord.cs" />
+    <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
+    <Compile Include="TableRepository\HotelReservationsRepository.cs" />
     <Compile Include="TableRepository\PersonRepository.cs" />
     <Compile Include="TableRepository\RolesRepository.cs" />
     <Compile Include="TableRepository\TableCobaSemuaRepository.cs" />

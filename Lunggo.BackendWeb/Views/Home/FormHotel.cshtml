@@ -1,0 +1,146 @@
+﻿@using System.Web.UI.WebControls
+@model Lunggo.BackendWeb.Query.GetSearchHotelRecord
+@{
+    ViewBag.Title = "searchHotel";
+}
+
+<h2>searchHotel</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    var listItems = new List<ListItem>
+    {
+            new ListItem { Text = "", Value = "0" },
+            new ListItem { Text = "January", Value = "1" },
+            new ListItem { Text = "Febuary", Value = "2" },
+            new ListItem { Text = "March", Value = "3" },
+            new ListItem { Text = "April", Value = "4" },
+            new ListItem { Text = "May", Value = "5" },
+            new ListItem { Text = "June", Value = "6" },
+            new ListItem { Text = "July", Value = "7" },
+            new ListItem { Text = "Augustus", Value = "8" },
+            new ListItem { Text = "September", Value = "9" },
+            new ListItem { Text = "October", Value = "10" },
+            new ListItem { Text = "November", Value = "11" },
+            new ListItem { Text = "December", Value = "12" },
+    };
+    
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <form method="post">
+            
+                <div class="form-group">
+                    <label>Hotel Booking Number</label>
+                    <div>
+                        @Html.EditorFor(model => model.RsvNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RsvNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <label>Hotel Id</label>
+                    <div>
+                        @Html.EditorFor(model => model.HotelNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HotelNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Hotel Name</label>
+                    <div>
+                       @Html.EditorFor(model => model.HotelName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                       @Html.ValidationMessageFor(model => model.HotelName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Booking Date</label>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <div class="form form-horizontal"> 
+                            <label class="form-group" for="rdSpecificDate">
+                                @Html.RadioButtonFor(modal => modal.rdSelection, 0)
+                                <span style="display: inline">Specific Date </span>
+                                @Html.EditorFor(model => model.RsvTime, new { htmlAttributes = new { @class = "form-control width",  @style = "display: inline; width: auto" } })
+                                @Html.ValidationMessageFor(model => model.RsvTime, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                        <div class="form form-horizontal">
+                            <label class="form-group" for="rdBookingDateRange">
+                                @Html.RadioButtonFor(modal => modal.rdSelection, 1)
+                                <span style="display: inline">booking Date Range </span>
+                                @Html.EditorFor(model => model.RsvDateStart, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                                @Html.ValidationMessageFor(model => model.RsvDateStart, "", new { @class = "text-danger" })
+                                <span style="display: inline"> to </span>
+                                @Html.EditorFor(model => model.RsvDateEnd, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                                @Html.ValidationMessageFor(model => model.RsvDateEnd, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                        
+                       
+
+                        <div class="form form-horizontal">
+                            <label class="form-group" for="rdBookingDateSpec">
+                                @Html.RadioButtonFor(modal => modal.rdSelection, 2)
+                                <span style="display: inline">Specific Month </span>
+                                
+                                @Html.DropDownListFor(model => model.RsvMonth, new SelectList(listItems, "Value", "Text"))
+                                @Html.ValidationMessageFor(model => model.RsvMonth, "", new { @class = "text-danger" })
+
+                                <span style="display: inline"> Year </span>
+                                @Html.EditorFor(model => model.RsvYear, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                                @Html.ValidationMessageFor(model => model.RsvYear, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label>CheckIn Date</label>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.EditorFor(model => model.CheckInDate, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                            @Html.ValidationMessageFor(model => model.CheckInDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label>CheckOut Date</label>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.EditorFor(model => model.CheckOutDate, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                            @Html.ValidationMessageFor(model => model.CheckOutDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label>Room Occupant Name</label>
+                    <div>
+                        @Html.EditorFor(model => model.GuestName, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                        @Html.ValidationMessageFor(model => model.GuestName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label>Reserver Name</label>
+                    <div>
+                        @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @class = "form-control width", @style = "display: inline; width: auto" } })
+                        @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary col-xs-12">Submit</button>
+            </form>
+        </div>
+    </div>
+}
+
