@@ -1,0 +1,52 @@
+﻿@model Lunggo.Repository.TableRecord.FlightReservationsTableRecord
+
+<div class="showback">
+    <h4>Reservation Detail</h4>
+    <hr />
+    <table class="table table-hover table-no-border">
+        <tbody>
+            <tr>
+                <td>Reservation Number</td>
+                <td>@Model.RsvNo</td>
+            </tr>
+            <tr>
+                <td>Reservation Time</td>
+                <td>@Model.RsvTime.GetValueOrDefault().ToString("d MMM yyyy HH:mm:ss")<br /></td>
+            </tr>
+            <tr>
+                <td>Reservation Status</td>
+                <td>
+                    @if (Model.RsvStatusCd == "COM")
+                    {
+                        <span class="label label-success">Complete</span><br />
+                    }
+                    else
+                    {
+                        <span class="label label-danger">Incomplete</span><br />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Total Price</td>
+                <td>@Model.FinalPrice.GetValueOrDefault().ToString("Rp0,0")</td>
+            </tr>
+            <tr>
+                <td>Payment Method</td>
+                <td>@Model.PaymentMethodCd</td>
+            </tr>
+            <tr>
+                <td>Payment Status</td>
+                <td>
+                    @if (Model.PaymentStatusCd == "YES")
+                    {
+                        <span class="label label-success">Complete</span><br />
+                    }
+                    else
+                    {
+                        <span class="label label-danger">Incomplete</span><br />
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

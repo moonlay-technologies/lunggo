@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="Users" />
-  <table name="UserRoles" />
-  <table name="UserLogins" />
-  <table name="UserClaims" />
-  <table name="Roles" />
+  <table name="FlightReservations" />
+  <table name="FlightTrip" />
+  <table name="FlightTripDetail" />
+  <table name="FlightPassenger" />
 </tables> 

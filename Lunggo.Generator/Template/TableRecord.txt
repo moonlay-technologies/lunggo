@@ -7,6 +7,10 @@ namespace Lunggo.Repository.TableRecord
 {
     public class $TableName$TableRecord : Lunggo.Framework.Database.TableRecord
     {
+		private static List<ColumnMetadata> _recordMetadata;
+        private static List<ColumnMetadata> _primaryKeys;
+        private static String _tableName;
+
 		$orders: {order|
 public $order.ColumnType$ $order.OriginDefinition.COLUMN_NAME$
 {
@@ -45,12 +49,12 @@ private $order.ColumnType$ _$order.OriginDefinition.COLUMN_NAME$;
 
         private static void InitTableName()
         {
-            TableName = "$TableName$";
+            _tableName = "$TableName$";
         }
 
         private static void InitRecordMetadata()
         {
-            RecordMetadata = new List<ColumnMetadata>
+            _recordMetadata = new List<ColumnMetadata>
             {
 				$orders: {order|
 $if(order.OriginDefinition.IsPrimaryKey)$
@@ -65,7 +69,25 @@ $endif$
 
         private static void InitPrimaryKeysMetadata()
         {
-            PrimaryKeys = RecordMetadata.Where(p => p.IsPrimaryKey).ToList();
+            _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
+
+		public override List<ColumnMetadata> GetMetadata()
+        {
+            return _recordMetadata;
+        }
+
+        public override string GetTableName()
+        {
+            return _tableName;
+        }
+
+        public override List<ColumnMetadata> GetPrimaryKeys()
+        {
+            return _primaryKeys;
+        }
+
+
+
     }
 }

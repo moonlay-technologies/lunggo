@@ -8,6 +8,8 @@
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
     <title>DASHGUM - Bootstrap Admin Template</title>
+    
+    @Styles.Render("~/Content/css")
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -72,7 +74,7 @@
                     </li>
 
                     <li class="sub-menu" id="menu-flight">
-                        <a href="/Home/Flight">
+                        <a href="/Home/FlightReservationSearch">
                             <i class="fa fa-plane"></i>
                             <span>Flight Booking</span>
                         </a>
@@ -137,7 +139,11 @@
       $('#menu-@ViewBag.ActiveMenu a').addClass('active');
 
     </script>
-    
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/CustomAutoComplete.js")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
