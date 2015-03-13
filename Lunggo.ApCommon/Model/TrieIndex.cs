@@ -16,13 +16,14 @@ namespace Lunggo.ApCommon.Model
         {
             foreach (var airline in FlightCode.Airline)
             {
-                AirlineName.InsertWord(airline.Value.Abbr, airline.Key);
-                AirlineName.InsertWordsBySentence(airline.Value.Full, airline.Key);
+                AirlineName.InsertWord(airline.Value.Code, airline.Key);
+                AirlineName.InsertWordsBySentence(airline.Value.Name, airline.Key);
             }
             foreach (var airport in FlightCode.Airport)
             {
-                AirportName.InsertWord(airport.Value.Abbr, airport.Key);
-                AirportName.InsertWordsBySentence(airport.Value.Full, airport.Key);
+                AirportName.InsertWord(airport.Value.Code, airport.Key);
+                AirportName.InsertWordsBySentence(airport.Value.Name, airport.Key);
+                AirportName.InsertWordsBySentence(airport.Value.City, airport.Key);
             }
         }
     }

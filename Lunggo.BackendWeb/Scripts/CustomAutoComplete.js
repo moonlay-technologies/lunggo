@@ -16,11 +16,27 @@ function BindAutoComplete() {
                     data: { prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return {
-                                label: item.Full + ' (' + item.Abbr + ')',
-                                value: item.Full + ' (' + item.Abbr + ')',
-                                selectedValue: item.Abbr
+                            if (autocompletetype == 'Airport') {
+                                return {
+                                    label: item.City + ' (' + item.Code + ') - ' + item.Name,
+                                    value: item.City + ' (' + item.Code + ')',
+                                    selectedValue: item.Code
+                                }
                             }
+                            else if (autocompletetype == 'Airline') {
+                                return {
+                                    label: item.Name,
+                                    value: item.Name,
+                                    selectedValue: item.Code
+                                }
+                            } else {
+                                return {
+                                    label: item,
+                                    value: item,
+                                    selectedValue: item
+                                }
+                            }
+                            
                         }));
                     },
                     error: function (data) {

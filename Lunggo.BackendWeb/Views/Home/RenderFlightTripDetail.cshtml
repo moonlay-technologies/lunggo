@@ -18,7 +18,9 @@
                     if (detail == Model.First())
                     {
                         <tr>
-                            <td>@detail.DepartureAirportCd</td>
+                            <td>@FlightCode.Airport.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
+                                (@detail.DepartureAirportCd)
+                            </td>
                             <td><img src="/Content/up.png" alt="up" /></td>
                             <td>
                                 @detail.DepartureTime.GetValueOrDefault().ToString("d MMM yy")<br/>
@@ -29,7 +31,10 @@
                     else
                     {
                         <tr>
-                            <td>@detail.DepartureAirportCd</td>
+                            <td>
+                                @FlightCode.Airport.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
+                                (@detail.DepartureAirportCd)
+                            </td>
                             <td><img src="/Content/mid.png" alt="mid" /></td>
                             <td>
                                 @prevArrivalTime.ToString("d MMM yy")<br/>
@@ -43,14 +48,17 @@
                         <td></td>
                         <td><img src="/Content/line.png" alt="line" /></td>
                         <td>
-                            @FlightCode.Airline.First(x => x.Value.Abbr == detail.CarrierCd).Value.Full<br />
+                            @FlightCode.Airline.First(x => x.Value.Code == detail.CarrierCd).Value.Name<br />
                             @detail.CarrierCd@detail.FlightNumber<br/>
                         </td>
                     </tr>
                     if (detail == Model.Last())
                     {
                         <tr>
-                            <td>@detail.ArrivalAirportCd</td>
+                            <td>
+                                @FlightCode.Airport.First(x => x.Value.Code == detail.ArrivalAirportCd).Value.City<br />
+                                (@detail.ArrivalAirportCd)
+                            </td>
                             <td><img src="/Content/down.png" alt="down" /></td>
                             <td>
                                 @detail.ArrivalTime.GetValueOrDefault().ToString("d MMM yy")<br/>

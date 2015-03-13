@@ -4,125 +4,146 @@ namespace Lunggo.Flight.Dictionary
 {
     public static class FlightCode
     {
-        public static readonly Dictionary<int, Code> Airline = PopulateAirline();
-        public static readonly Dictionary<int, Code> Airport = PopulateAirport();
+        public static readonly Dictionary<int, AirlineCode> Airline = PopulateAirline();
+        public static readonly Dictionary<int, AirportCode> Airport = PopulateAirport();
 
-        private static Dictionary<int, Code> PopulateAirport()
+        private static Dictionary<int, AirportCode> PopulateAirport()
         {
-            return new Dictionary<int, Code>
+            return new Dictionary<int, AirportCode>
             {
-                {1, new Code ("BTH", "Bandar Udara Internasional Hang Nadim, Batam")},
-                {2, new Code ("BTJ", "Bandar Udara Internasional Sultan Iskandar Muda , Banda Aceh")},
-                {3, new Code ("KNO", "Bandar Udara Internasional Kuala Namu, Deli Serdang")},
-                {4, new Code ("SIX", "Bandar Udara Dr. Ferdinand Lumban Tobing, Sibolga")},
-                {5, new Code ("SGT", "Bandar Udara Internasional Silangit, Siborong-borong")},
-                {6, new Code ("LSW", "Bandar Udara Malikus Saleh, Lhokseumawe")},
-                {7, new Code ("RGT", "Bandar Udara Japura, Rengat")},
-                {8, new Code ("MEQ", "Bandar Udara Cut Nyak Dhien, Nagan Raya")},
-                {9, new Code ("PDG", "Bandar Udara Internasional Minangkabau, Kota Padang")},
-                {10, new Code ("PKU", "Bandar Udara Internasional Sultan Syarif Kasim II, Pekanbaru")},
-                {11, new Code ("PLM", "Bandar Udara Internasional Sultan Mahmud Badaruddin II, Palembang")},
-                {12, new Code ("TNJ", "Bandar Udara Internasional Raja Haji Fisabilillah, Tanjungpinang")},
-                {13, new Code ("BDO", "Bandar Udara Internasional Husein Sastranegara, Bandung")},
-                {14, new Code ("CGK", "Bandar Udara Internasional Soekarno-Hatta, Tangerang")},
-                {15, new Code ("JOG", "Bandar Udara Internasional Adi Sucipto, Yogyakarta")},
-                {16, new Code ("SOC", "Bandar Udara Internasional Adisumarmo, Solo")},
-                {17, new Code ("SRG", "Bandar Udara Internasional Achmad Yani, Semarang")},
-                {18, new Code ("SUB", "Bandar Udara Internasional Juanda, Surabaya")},
-                {19, new Code ("MSI", "Bandar Udara Internasional Valia Rahma, Masalembo")},
-                {20, new Code ("JBB", "Bandar Udara Notohadinegoro, Jember")},
-                {21, new Code ("BWX", "Bandar Udara Blimbingsari, Banyuwangi")},
-                {22, new Code ("DPS", "Bandar Udara Internasional Ngurah Rai, Denpasar")},
-                {23, new Code ("LOP", "Bandar Udara Internasional Lombok, Lombok Tengah")},
-                {24, new Code ("MOF", "Bandar Udara Wai Oti, Maumere")},
-                {25, new Code ("TMC", "Bandar Udara Tambolaka, Waikabubak")},
-                {26, new Code ("LKA", "Bandar Udara Gewayantana, Larantuka (mulai 4 Oktober 2014)")},
-                {27, new Code ("SWQ", "Bandar Udara Sultan Muhammad Kaharuddin III, Sumbawa Besar")},
-                {28, new Code ("MLK", "Bandar Udara Melalan, Sendawar")},
-                {29, new Code ("PKY", "Bandar Udara Tjilik Riwut, Palangka Raya")},
-                {30, new Code ("TRK", "Bandar Udara Internasional Juwata, Tarakan")},
-                {31, new Code ("SRI", "Bandar Udara Temindung, Samarinda")},
-                {32, new Code ("BEJ", "Bandar Udara Internasional Kalimarau, Berau")},
-                {33, new Code ("BPN", "Bandar Udara Sultan Aji Muhammad Sulaiman, Balikpapan")},
-                {34, new Code ("NNX", "Bandar Udara Warukin, Tabalong")},
-                {35, new Code ("BDJ", "Bandar Udara Internasional Syamsuddin Noor, Banjarmasin")},
-                {36, new Code ("MTW", "Bandar Udara Beringin, Muara Teweh")},
-                {37, new Code ("MDC", "Bandar Udara Internasional Sam Ratulangi, Manado")},
-                {38, new Code ("UPG", "Bandar Udara Internasional Sultan Hasanuddin, Makassar")},
-                {39, new Code ("KDI", "Bandar Udara Internasional Haluoleo, Kendari")},
-                {40, new Code ("LUW", "Bandar Udara Syukuran Aminuddin Amir, Luwuk")},
-                {41, new Code ("GTO", "Bandar Udara Jalaluddin, Gorontalo")},
-                {42, new Code ("WKB", "Bandar Udara Matahora, Wangi-wangi")},
-                {43, new Code ("TMI", "Bandar Udara Maranggo, Pulau Tomia")},
-                {44, new Code ("NBX", "Bandar Udara Internasional Yos Sudarso, Nabire (mulai 4 Oktober 2014)")},
-                {45, new Code ("BIK", "Bandar Udara Frans Kaisiepo, Biak (mulai 4 Oktober 2014)")},
-                {46, new Code ("ORG", "Bandara Internasional Iskak, Oksibil (mulai 4 Oktober 2014)")},
-                {47, new Code ("TMH", "Bandar Udara Tanah Merah, Tanah Merah (mulai 4 Oktober 2014)")},
+                {1, new AirportCode ("BTH", "Hang Nadim Int'l", "Batam", "Sumatera")},
+                {2, new AirportCode ("BTJ", "Sultan Iskandar Muda Int'l", "Banda Aceh", "Sumatera")},
+                {3, new AirportCode ("KNO", "Kuala Namu Int'l", "Deli Serdang", "Sumatera")},
+                {4, new AirportCode ("SIX", "Dr. Ferdinand Lumban Tobing", "Sibolga", "Sumatera")},
+                {5, new AirportCode ("SGT", "Silangit Int'l", "Siborong-borong", "Sumatera")},
+                {6, new AirportCode ("LSW", "Malikus Saleh", "Lhokseumawe", "Sumatera")},
+                {7, new AirportCode ("RGT", "Japura", "Rengat", "Sumatera")},
+                {8, new AirportCode ("MEQ", "Cut Nyak Dhien", "Nagan Raya", "Sumatera")},
+                {9, new AirportCode ("PDG", "Minangkabau Int'l", "Kota Padang", "Sumatera")},
+                {10, new AirportCode ("PKU", "Sultan Syarif Kasim II Int'l", "Pekanbaru", "Sumatera")},
+                {11, new AirportCode ("PLM", "Sultan Mahmud Badaruddin II Int'l", "Palembang", "Sumatera")},
+                {12, new AirportCode ("TNJ", "Raja Haji Fisabilillah Int'l", "Tanjungpinang", "Sumatera")},
+                {13, new AirportCode ("BDO", "Husein Sastranegara Int'l", "Bandung", "Jawa")},
+                {14, new AirportCode ("CGK", "Soekarno-Hatta Int'l", "Jakarta", "Jawa")},
+                {15, new AirportCode ("JOG", "Adi Sucipto Int'l", "Yogyakarta", "Jawa")},
+                {16, new AirportCode ("SOC", "Adisumarmo Int'l", "Solo", "Jawa")},
+                {17, new AirportCode ("SRG", "Achmad Yani Int'l", "Semarang", "Jawa")},
+                {18, new AirportCode ("SUB", "Juanda Int'l", "Surabaya", "Jawa")},
+                {19, new AirportCode ("MSI", "Valia Rahma Int'l", "Masalembo", "Jawa")},
+                {20, new AirportCode ("JBB", "Notohadinegoro", "Jember", "Jawa")},
+                {21, new AirportCode ("BWX", "Blimbingsari", "Banyuwangi", "Jawa")},
+                {22, new AirportCode ("DPS", "Ngurah Rai Int'l", "Denpasar", "Bali")},
+                {23, new AirportCode ("LOP", "Lombok Int'l", "Lombok Tengah", "Nusa Tenggara")},
+                {24, new AirportCode ("MOF", "Wai Oti", "Maumere", "Nusa Tenggara")},
+                {25, new AirportCode ("TMC", "Tambolaka", "Waikabubak", "Nusa Tenggara")},
+                {26, new AirportCode ("LKA", "Gewayantana", "Larantuka", "Nusa Tenggara")},
+                {27, new AirportCode ("SWQ", "Sultan Muhammad Kaharuddin III", "Sumbawa Besar", "Nusa Tenggara")},
+                {28, new AirportCode ("MLK", "Melalan", "Sendawar", "Kalimantan")},
+                {29, new AirportCode ("PKY", "Tjilik Riwut", "Palangka Raya", "Kalimantan")},
+                {30, new AirportCode ("TRK", "Juwata Int'l", "Tarakan", "Kalimantan")},
+                {31, new AirportCode ("SRI", "Temindung", "Samarinda", "Kalimantan")},
+                {32, new AirportCode ("BEJ", "Kalimarau Int'l", "Berau", "Kalimantan")},
+                {33, new AirportCode ("BPN", "Sultan Aji Muhammad Sulaiman", "Balikpapan", "Kalimantan")},
+                {34, new AirportCode ("NNX", "Warukin", "Tabalong", "Kalimantan")},
+                {35, new AirportCode ("BDJ", "Syamsuddin Noor Int'l", "Banjarmasin", "Kalimantan")},
+                {36, new AirportCode ("MTW", "Beringin", "Muara Teweh", "Kalimantan")},
+                {37, new AirportCode ("MDC", "Sam Ratulangi Int'l", "Manado", "Sulawesi")},
+                {38, new AirportCode ("UPG", "Sultan Hasanuddin Int'l", "Makassar", "Sulawesi")},
+                {39, new AirportCode ("KDI", "Haluoleo Int'l", "Kendari", "Sulawesi")},
+                {40, new AirportCode ("LUW", "Syukuran Aminuddin Amir", "Luwuk", "Sulawesi")},
+                {41, new AirportCode ("GTO", "Jalaluddin", "Gorontalo", "Sulawesi")},
+                {42, new AirportCode ("WKB", "Matahora", "Wangi-wangi", "Sulawesi")},
+                {43, new AirportCode ("TMI", "Maranggo", "Pulau Tomia", "Sulawesi")},
+                {44, new AirportCode ("NBX", "Yos Sudarso Int'l", "Nabire", "Papua")},
+                {45, new AirportCode ("BIK", "Frans Kaisiepo", "Biak", "Papua")},
+                {46, new AirportCode ("ORG", "Iskak Int'l", "Oksibil", "Papua")},
+                {47, new AirportCode ("TMH", "Tanah Merah", "Tanah Merah", "Papua")},
+
+                {48, new AirportCode ("ICN", "Incheon Int'l", "Seoul", "Korea Selatan")},
+                {49, new AirportCode ("SIN", "Changi Int'l", "Singapura", "Singapura")},
+                {50, new AirportCode ("KTM", "Tribhuvan Int'l", "Kathmandu", "Nepal")},
+                {51, new AirportCode ("KUL", "KLIA", "Kuala Lumpur", "Malaysia")}
             };
         }
 
-        private static Dictionary<int, Code> PopulateAirline()
+        private static Dictionary<int, AirlineCode> PopulateAirline()
         {
-            return new Dictionary<int, Code>
+            return new Dictionary<int, AirlineCode>
             {
-                {1, new Code ("QZ", " AirAsia")},
-                {2, new Code ("JT", " Lion Air")},
-                {3, new Code ("SJ", " Sriwijaya Air")},
-                {4, new Code ("QG", " Citylink")},
-                {5, new Code ("MZ", " Merpati Nusantara")},
-                {6, new Code ("MV", " Aviastar")},
-                {7, new Code ("ID", " Batik Air")},
-                {8, new Code ("TN", " Trigana Air")},
-                {9, new Code ("KD", " KalStar Aviation")},
-                {10, new Code ("FS", " Airfast Indonesia")},
-                {11, new Code ("IW", " Wings Air")},
-                {12, new Code ("XN", " Express Air")},
-                {13, new Code ("SY", " Sky Aviation")},
-                {14, new Code ("SI", " Susi Air")},
-                {15, new Code ("GA", " Garuda Indonesia")},
-                {16, new Code ("CA", " Air China")},
-                {17, new Code ("AK", " AirAsia")},
-                {18, new Code ("NH", " All Nippon Airways")},
-                {19, new Code ("CX", " Cathay Pacific")},
-                {20, new Code ("5J", " Cebu Pacific")},
-                {21, new Code ("CI", " China Airlines")},
-                {22, new Code ("CZ", " China Southern")},
-                {23, new Code ("EK", " Emirates")},
-                {24, new Code ("EY", " Etihad Airways")},
-                {25, new Code ("BR", " EVA Air")},
-                {26, new Code ("JL", " Japan Airlines")},
-                {27, new Code ("JQ", " Jetstar Airways")},
-                {28, new Code ("KL", " KLM")},
-                {29, new Code ("KE", " Korean Air")},
-                {30, new Code ("KU", " Kuwait Airways")},
-                {31, new Code ("MH", " Malaysia Airlines")},
-                {32, new Code ("MJ", " Mihin Lanka")},
-                {33, new Code ("PR", " Philipphine Airlines")},
-                {34, new Code ("QF", " Qantas")},
-                {35, new Code ("QR", " Qatar Airways")},
-                {36, new Code ("BI", " Royal Brunei Airlines")},
-                {37, new Code ("SV", " Saudi Arabian Airlines")},
-                {38, new Code ("3U", " Sichuan Airlines")},
-                {39, new Code ("SQ", " Singapore Airlines")},
-                {40, new Code ("TQ", " Thai Airways")},
-                {41, new Code ("TR", " Tiger Airways")},
-                {42, new Code ("TK", " Turkish Airlines")},
-                {43, new Code ("VF", " Valuair")},
-                {44, new Code ("VN", " Vietnam Airlines")},
-                {45, new Code ("IY", " Yemenia")},
+                {1, new AirlineCode ("QZ", "AirAsia")},
+                {2, new AirlineCode ("JT", "Lion Air")},
+                {3, new AirlineCode ("SJ", "Sriwijaya Air")},
+                {4, new AirlineCode ("QG", "Citylink")},
+                {5, new AirlineCode ("MZ", "Merpati Nusantara")},
+                {6, new AirlineCode ("MV", "Aviastar")},
+                {7, new AirlineCode ("ID", "Batik Air")},
+                {8, new AirlineCode ("TN", "Trigana Air")},
+                {9, new AirlineCode ("KD", "KalStar Aviation")},
+                {10, new AirlineCode ("FS", "Airfast Indonesia")},
+                {11, new AirlineCode ("IW", "Wings Air")},
+                {12, new AirlineCode ("XN", "Express Air")},
+                {13, new AirlineCode ("SY", "Sky Aviation")},
+                {14, new AirlineCode ("SI", "Susi Air")},
+                {15, new AirlineCode ("GA", "Garuda Indonesia")},
+                {16, new AirlineCode ("CA", "Air China")},
+                {17, new AirlineCode ("AK", "AirAsia")},
+                {18, new AirlineCode ("NH", "All Nippon Airways")},
+                {19, new AirlineCode ("CX", "Cathay Pacific")},
+                {20, new AirlineCode ("5J", "Cebu Pacific")},
+                {21, new AirlineCode ("CI", "China Airlines")},
+                {22, new AirlineCode ("CZ", "China Southern")},
+                {23, new AirlineCode ("EK", "Emirates")},
+                {24, new AirlineCode ("EY", "Etihad Airways")},
+                {25, new AirlineCode ("BR", "EVA Air")},
+                {26, new AirlineCode ("JL", "Japan Airlines")},
+                {27, new AirlineCode ("JQ", "Jetstar Airways")},
+                {28, new AirlineCode ("KL", "KLM")},
+                {29, new AirlineCode ("KE", "Korean Air")},
+                {30, new AirlineCode ("KU", "Kuwait Airways")},
+                {31, new AirlineCode ("MH", "Malaysia Airlines")},
+                {32, new AirlineCode ("MJ", "Mihin Lanka")},
+                {33, new AirlineCode ("PR", "Philipphine Airlines")},
+                {34, new AirlineCode ("QF", "Qantas")},
+                {35, new AirlineCode ("QR", "Qatar Airways")},
+                {36, new AirlineCode ("BI", "Royal Brunei Airlines")},
+                {37, new AirlineCode ("SV", "Saudi Arabian Airlines")},
+                {38, new AirlineCode ("3U", "Sichuan Airlines")},
+                {39, new AirlineCode ("SQ", "Singapore Airlines")},
+                {40, new AirlineCode ("TQ", "Thai Airways")},
+                {41, new AirlineCode ("TR", "Tiger Airways")},
+                {42, new AirlineCode ("TK", "Turkish Airlines")},
+                {43, new AirlineCode ("VF", "Valuair")},
+                {44, new AirlineCode ("VN", "Vietnam Airlines")},
+                {45, new AirlineCode ("IY", "Yemenia")},
             };
         }
     }
 
-    public class Code
+    public class AirlineCode
     {
-        public string Abbr;
-        public string Full;
+        public string Code;
+        public string Name;
 
-        public Code(string abbr, string full)
+        public AirlineCode(string code, string name)
         {
-            Abbr = abbr;
-            Full = full;
+            Code = code;
+            Name = name;
+        }
+    }
+
+    public class AirportCode
+    {
+        public string Code;
+        public string Name;
+        public string City;
+        public string Region;
+
+        public AirportCode(string code, string name, string city, string region)
+        {
+            Code = code;
+            Name = name;
+            City = city;
+            Region = region;
         }
     }
 }

@@ -79,10 +79,10 @@ namespace Lunggo.Flight.Query
                 }
                 if (condition.Param.DepartureAirline != null)
                     clauseBuilder.Append(
-                        @"(td.CarrierCd = '@DepartureAirline' AND td.SequenceNo = 1) AND ");
+                        @"(td.CarrierCd = @DepartureAirline AND (td.DepartureAirportCd = t.OriginAirportCd OR td.ArrivalAirportCd = t.DestinationAirportCd)) AND ");
                 if (condition.Param.ReturnAirline != null)
                     clauseBuilder.Append(
-                        @"");
+                        @"(td.CarrierCd = @ReturnAirline AND (td.DepartureAirportCd = t.DestinationAirportCd OR td.ArrivalAirportCd = t.OriginAirportCd)) AND ");
                 if (condition.Param.DepartureDateSelection != null)
                 {
                     switch ((int) condition.Param.DepartureDateSelection)

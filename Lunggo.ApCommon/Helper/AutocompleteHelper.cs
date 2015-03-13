@@ -5,8 +5,15 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
-namespace Lunggo.BackendWeb.Scripts
+namespace Lunggo.ApCommon.Helper
 {
+    public enum AutoCompleteType
+    {
+        None,
+        Airline,
+        Airport
+    }
+
     public static class AutoCompleteHelper
     {
 
@@ -48,12 +55,12 @@ namespace Lunggo.BackendWeb.Scripts
 
             return new MvcHtmlString(builder.ToString());
         }
-        public static MvcHtmlString AutocompleteFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string displayProperty, string actionUrl, IDictionary<string, object> viewhtmlAttributes = null, bool? isRequired = false, string onselectfunction = "")
+        public static MvcHtmlString AutocompleteFor<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string displayProperty, string actionUrl, AutoCompleteType autoCompleteType, IDictionary<string, object> viewhtmlAttributes = null, bool? isRequired = false, string onselectfunction = "")
         {
-            return GetAutocompleteForString(helper, expression, displayProperty, actionUrl, viewhtmlAttributes, isRequired, onselectfunction: onselectfunction);
+            return GetAutocompleteForString(helper, expression, displayProperty, actionUrl, autoCompleteType, viewhtmlAttributes, isRequired, onselectfunction: onselectfunction);
         }
 
-        private static MvcHtmlString GetAutocompleteForString<TModel, TValue>(HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string displayText, string actionUrl = "", IDictionary<string, object> viewhtmlAttributes = null, bool? isRequired = false, string onselectfunction = "")
+        private static MvcHtmlString GetAutocompleteForString<TModel, TValue>(HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string displayText, string actionUrl, AutoCompleteType autoCompleteType, IDictionary<string, object> viewhtmlAttributes = null, bool? isRequired = false, string onselectfunction = "")
         {
                if(viewhtmlAttributes==null)
                 viewhtmlAttributes=new Dictionary<string, object>();
@@ -61,7 +68,8 @@ namespace Lunggo.BackendWeb.Scripts
             viewhtmlAttributes.Add("data-autocomplete", true );
 
             viewhtmlAttributes.Add("data-sourceurl", actionUrl );
-            
+
+            viewhtmlAttributes.Add("data-autocompletetype", autoCompleteType.ToString());
             
             if (!string.IsNullOrEmpty(onselectfunction))
             {

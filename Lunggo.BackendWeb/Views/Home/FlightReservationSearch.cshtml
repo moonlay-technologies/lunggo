@@ -1,5 +1,6 @@
-﻿@using Lunggo.ApCommon.Model
-@using Lunggo.BackendWeb.Scripts
+﻿@using HtmlParserSharp.Core
+@using Lunggo.ApCommon.Helper
+@using Lunggo.ApCommon.Model
 @using Lunggo.Flight.Dictionary
 @using Lunggo.Flight.Model
 @using RestSharp.Extensions
@@ -51,14 +52,14 @@
         <div class="form-group">
             <label class="control-label col-md-2">Origin Airport</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.OriginAirport, "", "/Home/GetAirport", new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.AutocompleteFor(m => m.OriginAirport, "", "/Home/GetAirport", AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
                 @Html.ValidationMessageFor(model => model.OriginAirport, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Destination Airport</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.DestinationAirport, "", "/Home/GetAirport", new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.AutocompleteFor(m => m.DestinationAirport, "", "/Home/GetAirport", AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
                 @Html.ValidationMessageFor(model => model.DestinationAirport, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -100,14 +101,14 @@
         <div class="form-group">
             <label class="control-label col-md-2">Departure Airline</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.DepartureAirline, "", "/Home/GetAirline", new Dictionary<string, object>{{"class","form-control"}} )
+                @Html.AutocompleteFor(m => m.DepartureAirline, "", "/Home/GetAirline", AutoCompleteType.Airline, new Dictionary<string, object>{{"class","form-control"}} )
                 @Html.ValidationMessageFor(model => model.DepartureAirline, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Return Airline</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.ReturnAirline, "", "/Home/GetAirline", new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.AutocompleteFor(m => m.ReturnAirline, "", "/Home/GetAirline", AutoCompleteType.Airline, new Dictionary<string, object> { { "class", "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReturnAirline, "", new { @class = "text-danger" })
             </div>
         </div>
