@@ -9,6 +9,8 @@ namespace Lunggo.Framework.Database
     public interface ITableRecord
     {
         bool ManuallyCreated { get; set; }
+        bool IsChanged(String columnName);
+        bool IsChanged();
         bool IsSet(String columnName);
         void ResetLog();
     }

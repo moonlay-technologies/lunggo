@@ -10,10 +10,6 @@ namespace Lunggo.Repository.TableRecord
     public class TableCobaSemuaTableRecord: Lunggo.Framework.Database.TableRecord
     {
 
-        private static List<ColumnMetadata> _recordMetadata;
-        private static List<ColumnMetadata> _primaryKeys;
-        private static String _tableName;
-
         public static TableCobaSemuaTableRecord CreateNewInstance()
         {
             var record = new TableCobaSemuaTableRecord();
@@ -297,12 +293,12 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "TableCobaSemua";
+            TableName = "TableCobaSemua";
         }
 
         private static void InitRecordMetadata()
         {
-            _recordMetadata = new List<ColumnMetadata>
+            RecordMetadata = new List<ColumnMetadata>
         {
             new ColumnMetadata("Id", true),
             new ColumnMetadata("binaryType", false),
@@ -335,22 +331,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitPrimaryKeysMetadata()
         {
-            _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
-        }
-
-        public override List<ColumnMetadata> GetMetadata()
-        {
-            return _recordMetadata;
-        }
-
-        public override string GetTableName()
-        {
-            return _tableName;
-        }
-
-        public override List<ColumnMetadata> GetPrimaryKeys()
-        {
-            return _primaryKeys;
+            PrimaryKeys = RecordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
         
     }

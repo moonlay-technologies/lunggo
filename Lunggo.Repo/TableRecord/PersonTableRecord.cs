@@ -7,11 +7,6 @@ namespace Lunggo.Repository.TableRecord
 {
     public class PersonTableRecord : Lunggo.Framework.Database.TableRecord
     {
-
-        private static List<ColumnMetadata> _recordMetadata;
-        private static List<ColumnMetadata> _primaryKeys;
-        private static String _tableName;
-
         public int PersonID
         {
             get { return _PersonID; }
@@ -101,12 +96,12 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Person";
+            TableName = "Person";
         }
 
         private static void InitRecordMetadata()
         {
-            _recordMetadata = new List<ColumnMetadata>
+            RecordMetadata = new List<ColumnMetadata>
             {
                 new ColumnMetadata("PersonID", true),
                 new ColumnMetadata("LastName", false),
@@ -119,25 +114,9 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitPrimaryKeysMetadata()
         {
-            _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
-        }
-
-        public override List<ColumnMetadata> GetMetadata()
-        {
-            return _recordMetadata;
-        }
-
-        public override string GetTableName()
-        {
-            return _tableName;
-        }
-
-        public override List<ColumnMetadata> GetPrimaryKeys()
-        {
-            return _primaryKeys;
+            PrimaryKeys = RecordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
     }
-
 }
 
 

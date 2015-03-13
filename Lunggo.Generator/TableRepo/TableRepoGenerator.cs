@@ -45,13 +45,12 @@ namespace Lunggo.Generator.TableRepo
         {
                Init();
         }
-
+        
         static void Main(string[] args)
         {
-            //String connectionString = @"Data Source=MARINABAY\SQL2012DC;Initial Catalog=Lunggo;User ID=sa;Password=Admin-pwd";
+
+            String connectionString = @"Data Source=MARINABAY\SQL2012DC;Initial Catalog=Lunggo;User ID=sa;Password=Admin-pwd";
             //String connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=""D:\Bayu\Lunggo\Lunggo.Driver\dodol.mdf"";Integrated Security=True;";
-            String connectionString =
-                @"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234";
             String destinationPath = String.Empty;
             String configurationXmlPath = @"test.xml";
             

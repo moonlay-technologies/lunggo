@@ -74,8 +74,6 @@
     <Compile Include="Model\HotelDetailViewModel.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
-    <Compile Include="Model\TrieIndex.cs" />
-    <Compile Include="Model\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
@@ -103,10 +101,6 @@
     <Compile Include="Sequence\UserIdSequence.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
-      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
-      <Name>Lunggo.Flight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>

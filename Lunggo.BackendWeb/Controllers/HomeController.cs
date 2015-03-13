@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Lunggo.ApCommon.Model;
-using Lunggo.Flight.Dictionary;
-using Lunggo.Flight.Model;
-using Lunggo.Flight.Query;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Http;
-using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.BackendWeb.Controllers
 {
@@ -50,55 +43,34 @@ namespace Lunggo.BackendWeb.Controllers
             return View();
         }
 
+        public ActionResult Flight()
+        {
+            return View();
+        }
+
         public ActionResult HotelDetail(int id)
         {
             //return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
             return View();
         }
 
-        public ActionResult FlightReservationSearch()
+        public ActionResult FlightDetail()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult FlightReservationSearch(FlightReservationSearch search)
+        /*
+        public ActionResult DeleteBookingHotel(int id)
         {
-            if (search.RsvNo == null)
-            {
-                return RedirectToAction("FlightReservationList", search);
-            }
-            else
-            {
-                return RedirectToAction("FlightReservationDetail", search);
-            }
+          
+         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
         }
-        public ActionResult FlightReservationList(FlightReservationSearch search)
+         
+        public ActionResult CheckBookingHotel(int id)
         {
-            ViewData.Add("Name", search.PassengerName);
-            return View(FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Overview).ToList());
+          
+         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
         }
-
-        public ActionResult FlightReservationDetail(FlightReservationSearch search)
-        {
-            return View(FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Complete).SingleOrDefault());
-        }
-
-        public ActionResult GetAirline(string prefix)
-        {
-            return Json(TrieIndex.AirlineName.GetAllIdContainingSuggestedWords(prefix).Select(id => FlightCode.Airline[id]).ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetAirport(string prefix)
-        {
-            return Json(TrieIndex.AirportName.GetAllIdContainingSuggestedWords(prefix).Select(id => FlightCode.Airport[id]).ToList(), JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult FlightReservationDelete(FlightReservationSearch search)
-        {
-            var integrated = FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.PrimKeys).SingleOrDefault();
-            if (integrated != null)
-                integrated.DeleteFromDb();
-            return RedirectToAction("FlightReservationSearch");
-        }
+        */
     }
 }
