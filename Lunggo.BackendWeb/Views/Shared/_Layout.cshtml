@@ -26,6 +26,7 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
@@ -74,7 +75,7 @@
                     </li>
 
                     <li class="sub-menu" id="menu-flight">
-                        <a href="/Home/FlightReservationSearch">
+                        <a href="/FlightReservation/Search">
                             <i class="fa fa-plane"></i>
                             <span>Flight Booking</span>
                         </a>
@@ -144,6 +145,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/scripts/CustomAutoComplete.js")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/scripts/Flip.js")
+    @Scripts.Render("~/scripts/InputAdder.js")
 </body>
 </html>

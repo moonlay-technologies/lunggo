@@ -54,7 +54,6 @@
     <Compile Include="Crawler\CitilinkCrawler.cs" />
     <Compile Include="Crawler\ICrawler.cs" />
     <Compile Include="Crawler\LionAirCrawler.cs" />
-    <Compile Include="Dictionary\FlightCode.cs" />
     <Compile Include="Model\DepartDetail.cs" />
     <Compile Include="Model\FlightReservationIntegrated.cs" />
     <Compile Include="Model\FlightReservationSearch.cs" />

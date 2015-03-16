@@ -24,41 +24,7 @@ namespace Lunggo.Flight.Model
             TripDetail = new Dictionary<long, List<FlightTripDetailTableRecord>>();
             Passenger = new Dictionary<long, List<FlightPassengerTableRecord>>();
         }
-        /*
-        public static IEnumerable<FlightReservationIntegrated> GetFromDb(FlightReservationSearch search, QueryType queryType)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var rsvNoList = new List<string>();
-                if (search.RsvNo != null)
-                    rsvNoList.Add(search.RsvNo);
-                else
-                    rsvNoList.AddRange(GetFlightRsvNoQuery.GetInstance().Execute(conn, search, search));
-                foreach (var rsvNo in rsvNoList)
-                {
-                    var integrated = new FlightReservationIntegrated();
-                    integrated.Reservation =
-                        GetFlightReservationQuery.GetInstance()
-                            .Execute(conn, new {RsvNo = rsvNo}, queryType)
-                            .First();
-                    integrated.Trip =
-                        GetFlightTripQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}, queryType).ToList();
-                    foreach (var id in integrated.Trip.Select(trip => trip.TripId.GetValueOrDefault()))
-                    {
-                        integrated.TripDetail.Add(id,
-                            GetFlightTripDetailQuery.GetInstance()
-                                .Execute(conn, new {TripId = id}, queryType)
-                                .ToList());
-                        integrated.Passenger.Add(id,
-                            GetFlightPassengerQuery.GetInstance()
-                                .Execute(conn, new {TripId = id}, queryType)
-                                .ToList());
-                    }
-                    yield return integrated;
-                }
-            }
-        }
-        */
+
         public enum QueryType
         {
             Overview = 0,
@@ -120,6 +86,48 @@ namespace Lunggo.Flight.Model
                 }
             }
             return integratedList;
+        }
+
+        public void InsertToDb()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                FlightReservationsTableRepo.GetInstance().Insert(conn, Reservation);
+                foreach (var trip in Trip)
+                {
+                    var tripId = trip.TripId.GetValueOrDefault();
+                    FlightTripTableRepo.GetInstance().Insert(conn, trip);
+                    foreach (var passenger in Passenger[tripId])
+                    {
+                        FlightPassengerTableRepo.GetInstance().Insert(conn, passenger);
+                    }
+                    foreach (var tripDetail in TripDetail[tripId])
+                    {
+                        FlightTripDetailTableRepo.GetInstance().Insert(conn, tripDetail);
+                    }
+                }
+            }
+        }
+
+        public void UpdateToDb()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                FlightReservationsTableRepo.GetInstance().Update(conn, Reservation);
+                foreach (var trip in Trip)
+                {
+                    var tripId = trip.TripId.GetValueOrDefault();
+                    FlightTripTableRepo.GetInstance().Update(conn, trip);
+                    foreach (var passenger in Passenger[tripId])
+                    {
+                        FlightPassengerTableRepo.GetInstance().Update(conn, passenger);
+                    }
+                    foreach (var tripDetail in TripDetail[tripId])
+                    {
+                        FlightTripDetailTableRepo.GetInstance().Update(conn, tripDetail);
+                    }
+                }
+            }
         }
 
         public void DeleteFromDb()

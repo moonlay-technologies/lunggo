@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Model
             node._containerId.Add(id);
         }
 
-        public IEnumerable<int> GetAllIdContainingSuggestedWords(string prefix)
+        public IEnumerable<int> GetAllSuggestionIds(string prefix)
         {
             if (prefix == null) return new List<int>();
             var node = this;

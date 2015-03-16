@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Model;
-using Lunggo.Flight.Dictionary;
 using Lunggo.Flight.Model;
 using Lunggo.Flight.Query;
 using Lunggo.Framework.Database;
@@ -56,49 +55,5 @@ namespace Lunggo.BackendWeb.Controllers
             return View();
         }
 
-        public ActionResult FlightReservationSearch()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult FlightReservationSearch(FlightReservationSearch search)
-        {
-            if (search.RsvNo == null)
-            {
-                return RedirectToAction("FlightReservationList", search);
-            }
-            else
-            {
-                return RedirectToAction("FlightReservationDetail", search);
-            }
-        }
-        public ActionResult FlightReservationList(FlightReservationSearch search)
-        {
-            ViewData.Add("Name", search.PassengerName);
-            return View(FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Overview).ToList());
-        }
-
-        public ActionResult FlightReservationDetail(FlightReservationSearch search)
-        {
-            return View(FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Complete).SingleOrDefault());
-        }
-
-        public ActionResult GetAirline(string prefix)
-        {
-            return Json(TrieIndex.AirlineName.GetAllIdContainingSuggestedWords(prefix).Select(id => FlightCode.Airline[id]).ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetAirport(string prefix)
-        {
-            return Json(TrieIndex.AirportName.GetAllIdContainingSuggestedWords(prefix).Select(id => FlightCode.Airport[id]).ToList(), JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult FlightReservationDelete(FlightReservationSearch search)
-        {
-            var integrated = FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.PrimKeys).SingleOrDefault();
-            if (integrated != null)
-                integrated.DeleteFromDb();
-            return RedirectToAction("FlightReservationSearch");
-        }
     }
 }
