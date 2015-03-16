@@ -53,11 +53,40 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +119,8 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
+    <Compile Include="Dictionary\Code.cs" />
+    <Compile Include="Helper\AutocompleteHelper.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
@@ -109,6 +140,8 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
+    <Compile Include="Model\TrieIndex.cs" />
+    <Compile Include="Model\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
@@ -150,6 +183,10 @@
     <Compile Include="Util\UrlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
+      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
+      <Name>Lunggo.Flight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>
@@ -165,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Dictionary\HotelList.csv" />
     <None Include="packages.config" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">
