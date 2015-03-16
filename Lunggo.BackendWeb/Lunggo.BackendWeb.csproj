@@ -112,6 +112,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FlightBookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -271,6 +272,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\FlightBooking\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -280,12 +282,24 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
+      <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
+      <Name>Lunggo.ApCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
+      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
+      <Name>Lunggo.Flight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
-      <Project>{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}</Project>
+      <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lunggo.Hotel\Lunggo.Hotel.csproj">
+      <Project>{9f226318-0164-4d44-8b2d-4139caca98d2}</Project>
+      <Name>Lunggo.Hotel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
-      <Project>{50B8C0C0-6B28-46FD-BA90-771D8C9F12A1}</Project>
+      <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
     </ProjectReference>
   </ItemGroup>
