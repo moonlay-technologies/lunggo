@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ClientLibrary.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramBook.cs" />
     <Compile Include="ProgramOriginal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Travolutionary.WebService\Reference.cs">
