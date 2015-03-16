@@ -28,9 +28,9 @@ namespace Lunggo.ApCommon.Model
             }
             foreach (var hotel in Code.Hotel)
             {
-                Airport.InsertWordsBySentence(hotel.Value.CountryName, hotel.Key);
-                Airport.InsertWordsBySentence(hotel.Value.LocationName, hotel.Key);
-                Airport.InsertWordsBySentence(hotel.Value.RegionName, hotel.Key);
+                Hotel.InsertWordsBySentence(hotel.Value.CountryName, hotel.Key);
+                Hotel.InsertWordsBySentence(hotel.Value.LocationName, hotel.Key);
+                Hotel.InsertWordsBySentence(hotel.Value.RegionName, hotel.Key);
             }
         }
     }

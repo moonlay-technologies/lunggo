@@ -14,6 +14,11 @@ namespace Lunggo.ApCommon.Dictionary
         public static readonly Dictionary<int, Airport> Airport = PopulateAirport();
         public static readonly Dictionary<int, Hotel> Hotel = PopulateHotel();
 
+        public static void Initialize()
+        {
+            
+        }
+
         private static Dictionary<int, Hotel> PopulateHotel()
         {
             var i = 0;

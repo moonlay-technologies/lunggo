@@ -19,6 +19,7 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpGet]
         public IEnumerable<Airport> Airport(string prefix)
         {
+            var x = TrieIndex.Airport.GetAllSuggestionIds(prefix).Select(id => Code.Airport[id]).ToList();
             return TrieIndex.Airport.GetAllSuggestionIds(prefix).Select(id => Code.Airport[id]);
         }
     }
