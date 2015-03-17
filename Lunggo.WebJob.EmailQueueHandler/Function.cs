@@ -44,7 +44,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             try
             {
                 string emailTemplateName = "SuccessBooking";
-                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
+                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
             }
             catch (Exception)
             {
@@ -57,7 +57,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             try
             {
                 string emailTemplateName = "TestHtml";
-                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
+                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
             }
             catch (Exception)
             {
@@ -69,7 +69,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             try
             {
                 string emailTemplateName = "TestHtml";
-                MailService.GetInstance().sendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
+                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
             }
             catch (Exception)
             {

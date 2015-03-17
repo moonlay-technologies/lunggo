@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,6 +46,13 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -52,6 +60,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,8 +94,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
+    <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
+    <Compile Include="Hotel\Logic\HotelPriceUtil.cs" />
+    <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
+    <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
+    <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
+    <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
+    <Compile Include="Hotel\Model\Hotel.cs" />
+    <Compile Include="Hotel\Model\HotelDescription.cs" />
+    <Compile Include="Hotel\Model\HotelImage.cs" />
+    <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
+    <Compile Include="Hotel\Model\Room.cs" />
+    <Compile Include="Hotel\Object\HotelBookServiceRequest.cs" />
+    <Compile Include="Hotel\Object\HotelRequestBase.cs" />
+    <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />
+    <Compile Include="Hotel\Object\HotelRoomsSearchServiceRequest.cs" />
+    <Compile Include="Hotel\Object\HotelSearchServiceRequestBase.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchFilter.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchResult.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
+    <Compile Include="Hotel\Model\RoomOccupant.cs" />
+    <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
     <Compile Include="Dictionary\Code.cs" />
     <Compile Include="Helper\AutocompleteHelper.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
@@ -103,6 +136,8 @@
     <Compile Include="Identity\User\UserBase.cs" />
     <Compile Include="Model\BookingFormViewModel.cs" />
     <Compile Include="Model\HotelDetailViewModel.cs" />
+    <Compile Include="Model\I18nText.cs" />
+    <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Model\TrieIndex.cs" />
@@ -131,7 +166,21 @@
     <Compile Include="Sequence\HotelReservationSequence.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
+    <Compile Include="Sequence\HotelSearchIdSequence.cs" />
     <Compile Include="Sequence\UserIdSequence.cs" />
+    <Compile Include="Service References\Travolutionary.WebService.Hotel\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Travolutionary\TravolutionaryErrorMapper.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelBookResponse.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />
+    <Compile Include="Travolutionary\TravolutionaryHotelService.cs" />
+    <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
+    <Compile Include="Util\HotelFacilityUtil.cs" />
+    <Compile Include="Util\UrlUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
@@ -155,10 +204,88 @@
     <None Include="app.config" />
     <None Include="Dictionary\HotelList.csv" />
     <None Include="packages.config" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService1.wsdl" />
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService15.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService16.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Travolutionary.WebService.Hotel\Lunggo.ApCommon.Travolutionary.WebService.Hotel.DynamicDataServiceRsp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logic\" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Travolutionary.WebService.Hotel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Travolutionary.WebService.Hotel\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

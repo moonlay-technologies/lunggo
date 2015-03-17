@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "HotelCheckout";
+}
+<div class="page hotel-checkout-page hotel-checkout-section">
+
+    <div class="container">
+        <!-- breadcrumb start -->
+        <div class="row">
+            <section class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Checkout</a></li>
+                    <li class="active">Payment</li>
+                </ol>
+            </section>
+        </div>
+        <!-- breadcrumb end -->
+        <!-- main content start -->
+        <div class="row">
+            <div class="col-sm-8">
+
+                <section class="checkout-detail form-horizontal" role="form">
+                    <h2 class="page-title">Reservation Detail</h2>
+                    <h3>Guest detail</h3>
+                    <div class="form-group">
+                        <label for="form-first-name" class="control-label col-sm-4">First Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="form-first-name" placeholder="First Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-last-name" class="control-label col-sm-4">Last Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="form-last-name" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-email" class="control-label col-sm-4">Email</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="form-email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-email-confirm" class="control-label col-sm-4">Email Confirmation</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="form-email-confirm" placeholder="Email Confirmation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-phone" class="control-label col-sm-4">Phone</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="form-phone" placeholder="your phone number">
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Payment Options</h3>
+                    <div class="payment-options">
+                        <div role="tabpanel">
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-pills" role="tablist">
+                                <li role="presentation" class="active"><a href="#payment-transfer" aria-controls="home" role="tab" data-toggle="tab">Transfer Bank</a></li>
+                                <li role="presentation"><a href="#payment-bcaklikpay" aria-controls="profile" role="tab" data-toggle="tab">BCA Klikpay</a></li>
+                                <li role="presentation"><a href="#payment-mandiriclickpay" aria-controls="messages" role="tab" data-toggle="tab">Mandiri Clickkpay</a></li>
+                                <li role="presentation"><a href="#payment-creditcard" aria-controls="settings" role="tab" data-toggle="tab">Kartu Kredit</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="payment-transfer">transfer bank</div>
+                                <div role="tabpanel" class="tab-pane" id="payment-bcaklikpay">BCA klikpay</div>
+                                <div role="tabpanel" class="tab-pane" id="payment-mandiriclickpay">Mandiri Clickpay</div>
+                                <div role="tabpanel" class="tab-pane" id="payment-creditcard">Kartu kredit</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row form-footer">
+                        <div class="col-sm-6">
+                            <a href="#" class="btn btn-lg btn-gray">Return to hotel details</a>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="#" class="btn btn-lg btn-primary">Continue</a>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <div class="col-sm-4">
+
+                <section class="checkout-summary">
+                    <h2 class="page-title">Room Detail</h2>
+                    <div class="reservation-hotel">
+                        <img src="/assets/images/hotel-preview.jpg" alt="Grand Hyatt Hotel Jakarta" class="hotel-image">
+                        <h4 class="hotel-name">Grand Hyatt Hotel Jakarta</h4>
+                    </div>
+                    <div class="reservation-room">
+                        <div class="row">
+                            <div class="col-sm-4">Check-in</div>
+                            <div class="col-sm-8 text-right">Rabu , 1 November 2014</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">Check-out</div>
+                            <div class="col-sm-8 text-right">Kamis, 2 November 2014</div>
+                        </div>
+                    </div>
+                    <div class="reservation-price">
+                        <h5><strong>Total</strong> including taxes and service charge</h5>
+                        <h3 class="text-center">Rp. 1.200.000</h3>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <!-- main content end -->
+    </div>
+
+
+</div>

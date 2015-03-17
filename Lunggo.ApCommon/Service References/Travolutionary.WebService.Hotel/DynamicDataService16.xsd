@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.Reprice" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights.Reprice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd5" namespace="http://gimmonix/carsolize/public" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" />
+  <xs:complexType name="FlightRepriceRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LegSegments" nillable="true" type="tns:ArrayOfRepriceLegSegmentRequest" />
+          <xs:element minOccurs="0" name="RouteId" type="ser:guid" />
+          <xs:element xmlns:q1="http://gimmonix/carsolize/public" minOccurs="0" name="SearchRequest" nillable="true" type="q1:FlightSearchRequest" />
+          <xs:element minOccurs="0" name="TotalPrice" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FlightRepriceRequest" nillable="true" type="tns:FlightRepriceRequest" />
+  <xs:complexType name="ArrayOfRepriceLegSegmentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RepriceLegSegmentRequest" nillable="true" type="tns:RepriceLegSegmentRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRepriceLegSegmentRequest" nillable="true" type="tns:ArrayOfRepriceLegSegmentRequest" />
+  <xs:complexType name="RepriceLegSegmentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AircraftType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AirlineCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ArriveDate" type="q2:DateTimeOffset" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DepartDate" type="q3:DateTimeOffset" />
+      <xs:element minOccurs="0" name="DestinationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FlightNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OperatedByCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" minOccurs="0" name="RateInfo" nillable="true" type="q4:ArrayOfRateInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RepriceLegSegmentRequest" nillable="true" type="tns:RepriceLegSegmentRequest" />
+  <xs:complexType name="FlightRepriceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Match" type="xs:boolean" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" minOccurs="0" name="Price" nillable="true" type="q5:TotalFlightPrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightRepriceResponse" nillable="true" type="tns:FlightRepriceResponse" />
+</xs:schema>
