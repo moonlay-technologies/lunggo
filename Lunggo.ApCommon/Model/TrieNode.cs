@@ -8,9 +8,9 @@ namespace Lunggo.ApCommon.Model
     {
         private readonly Dictionary<char,TrieNode> _children = new Dictionary<char, TrieNode>();
         private bool _isWord;
-        private readonly List<int> _containerId = new List<int>();
+        private readonly List<long> _containerId = new List<long>();
 
-        public void InsertWordsBySentence(string sentence, int id)
+        public void InsertWordsBySentence(string sentence, long id)
         {
             foreach (var word in sentence.Split(' '))
             {
@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Model
             }
         }
 
-        public void InsertWord(string word, int id)
+        public void InsertWord(string word, long id)
         {
             var node = this;
             foreach (var c in word.ToLower())
@@ -33,9 +33,9 @@ namespace Lunggo.ApCommon.Model
             node._containerId.Add(id);
         }
 
-        public IEnumerable<int> GetAllSuggestionIds(string prefix)
+        public IEnumerable<long> GetAllSuggestionIds(string prefix)
         {
-            if (prefix == null) return new List<int>();
+            if (prefix == null) return new List<long>();
             var node = this;
             var matched = true;
             foreach (var c in prefix.ToLower())
@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Model
                 }
                 node = node._children[c];
             }
-            return matched ? GetAllChildIds(node).Distinct() : new List<int>();
+            return matched ? GetAllChildIds(node).Distinct() : new List<long>();
         }
 
         public IEnumerable<String> GetAllSuggestions(string prefix)
@@ -80,9 +80,9 @@ namespace Lunggo.ApCommon.Model
             }
         }
 
-        private static IEnumerable<int> GetAllChildIds(TrieNode node)
+        private static IEnumerable<long> GetAllChildIds(TrieNode node)
         {
-            var childIds = new List<int>();
+            var childIds = new List<long>();
             if (node._isWord)
             {
                 childIds.AddRange(node._containerId);
