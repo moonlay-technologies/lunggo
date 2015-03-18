@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.ApCommon", "Lunggo.A
 		{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED} = {E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB4B-DEF1-41E6-A599-D9794769FC31}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget (2)", ".nuget (2)", "{02050831-C9DA-40B1-8429-25D0859248E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.TicketQueueHandler", "Lunggo.WebJob.TicketQueueHandler\Lunggo.WebJob.TicketQueueHandler.csproj", "{1B62F3FC-8B82-4051-9F3D-974AD5005F9D}"
 EndProject
@@ -125,8 +125,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

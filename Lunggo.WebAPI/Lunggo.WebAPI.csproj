@@ -162,6 +162,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Config\application.properties" />
+    <Content Include="Config\HotelLocation.csv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

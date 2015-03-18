@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.IO;
+using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Config;
@@ -23,7 +24,9 @@ namespace Lunggo.WebAPI
         private static void InitAutocompleteManager()
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
-            autocompleteManager.Init();
+            var hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
+            var hotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"),hotelLocationFileName);
+            autocompleteManager.Init(hotelLocationFilePath);
         }
 
         private static void InitConfigurationManager()

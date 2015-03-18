@@ -25,13 +25,13 @@ namespace Lunggo.ApCommon.Autocomplete
         {
             return Instance;
         }
-        public void Init()
+        public void Init(String hotelLocationFilePath)
         {
             if (!_isInitialized)
             {
                 AirlineDict = PopulateAirlineDict();
                 AirportDict = PopulateAirportDict();
-                HotelLocationDict = PopulateHotelLocationDict();
+                HotelLocationDict = PopulateHotelLocationDict(hotelLocationFilePath);
                 _isInitialized = true;
             }
             else
@@ -58,10 +58,10 @@ namespace Lunggo.ApCommon.Autocomplete
             return hotelLocationIndex.GetAllSuggestionIds(prefix).Select(id => HotelLocationDict[id]);
         }
 
-        private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict()
+        private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)
         {
             var result = new Dictionary<long, HotelLocationDict>();
-            using (var file = new StreamReader(@"~\Autocomplete\HotelList.csv"))
+            using (var file = new StreamReader(hotelLocationFilePath))
             {
                 var line = file.ReadLine();
                 while (!file.EndOfStream)
