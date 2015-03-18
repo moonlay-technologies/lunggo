@@ -1,3 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Messages>
+   <Message code="VAL0001" lang="en_US" value="User ID" />
+   <Message code="VAL0001" lang="id_ID" value="Id Pengguna" />
+   <Message code="VAL0002" lang="en_US" value="Password" />
+   <Message code="VAL0002" lang="id_ID" value="Kata Kunci" />
 </Messages>

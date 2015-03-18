@@ -135,9 +135,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\i18n_message.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Config\i18n_message.xml" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>

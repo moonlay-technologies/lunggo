@@ -290,9 +290,7 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
-    <Content Include="Config\i18n_message.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Config\i18n_message.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -306,7 +304,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties" />
     <Content Include="Areas\UW100\Views\web.config" />
     <Content Include="Areas\UW100\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW100\Views\UW100Search\SearchForm.cshtml" />
@@ -323,6 +320,7 @@
     <Content Include="Areas\UW400\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW400\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\UW400\Views\UW400Booking\UW400Index.cshtml" />
+    <Content Include="Config\application.properties" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
