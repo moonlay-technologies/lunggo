@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.I18nMessage;
@@ -16,8 +17,15 @@ namespace Lunggo.WebAPI
             //InitI18NMessageManager();
             InitUniqueIdGenerator();
             InitRedisService();
+            InitAutocompleteManager();
         }
-        
+
+        private static void InitAutocompleteManager()
+        {
+            var autocompleteManager = AutocompleteManager.GetInstance();
+            autocompleteManager.Init();
+        }
+
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();

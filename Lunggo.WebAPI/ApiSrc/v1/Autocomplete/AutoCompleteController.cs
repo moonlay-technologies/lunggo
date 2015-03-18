@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Model;
+using Lunggo.ApCommon.Trie;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
 {
@@ -12,25 +13,28 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airline")]
-        public IEnumerable<Airline> Airline(string prefix)
+        public IEnumerable<AirlineDict> Airline(string prefix)
         {
-            return TrieIndex.Airline.GetAllSuggestionIds(prefix).Select(id => Code.Airline[id]);
+            var autocompleteManager = AutocompleteManager.GetInstance();
+            return autocompleteManager.GetAirlineAutocomplete(prefix);
         }
 
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airport")]
-        public IEnumerable<Airport> Airport(string prefix)
+        public IEnumerable<AirportDict> Airport(string prefix)
         {
-            return TrieIndex.Airport.GetAllSuggestionIds(prefix).Select(id => Code.Airport[id]);
+            var autocompleteManager = AutocompleteManager.GetInstance();
+            return autocompleteManager.GetAirportAutocomplete(prefix);
         }
 
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/hotellocation")]
-        public IEnumerable<ApCommon.Dictionary.Hotel> Hotel(string prefix)
+        public IEnumerable<HotelLocationDict> Hotel(string prefix)
         {
-            return TrieIndex.Hotel.GetAllSuggestionIds(prefix).Select(id => Code.Hotel[id]);
+            var autocompleteManager = AutocompleteManager.GetInstance();
+            return autocompleteManager.GetHotelLocationAutocomplete(prefix);
         }
     }
 }

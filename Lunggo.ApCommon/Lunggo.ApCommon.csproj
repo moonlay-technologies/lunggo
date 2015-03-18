@@ -94,6 +94,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
-    <Compile Include="Dictionary\Code.cs" />
     <Compile Include="Helper\AutocompleteHelper.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
@@ -140,8 +140,8 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
-    <Compile Include="Model\TrieIndex.cs" />
-    <Compile Include="Model\TrieNode.cs" />
+    <Compile Include="Trie\TrieIndex.cs" />
+    <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
@@ -202,7 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Dictionary\HotelList.csv" />
+    <Content Include="Autocomplete\HotelLocationList.csv" />
     <None Include="packages.config" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">

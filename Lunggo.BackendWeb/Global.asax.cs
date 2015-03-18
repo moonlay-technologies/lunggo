@@ -6,7 +6,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.Framework.Database;
 
 namespace Lunggo.BackendWeb
@@ -21,7 +20,6 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DbService.GetInstance().Init(@"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234");
-            Code.Initialize();
         }
     }
 }
