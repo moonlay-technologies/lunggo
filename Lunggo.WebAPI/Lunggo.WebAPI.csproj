@@ -161,6 +161,7 @@
     <Content Include="packages.config" />
     <Content Include="Config\application.properties" />
     <Content Include="Config\HotelLocation.csv" />
+    <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
