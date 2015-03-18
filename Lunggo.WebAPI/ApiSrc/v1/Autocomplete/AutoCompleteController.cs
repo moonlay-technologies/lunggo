@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
     {
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
-        [Route("api/v1/autocomplete/airline")]
+        [Route("api/v1/autocomplete/airline/{prefix}")]
         public IEnumerable<AirlineDict> Airline(string prefix)
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
@@ -21,7 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
 
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
-        [Route("api/v1/autocomplete/airport")]
+        [Route("api/v1/autocomplete/airport/{prefix}")]
         public IEnumerable<AirportDict> Airport(string prefix)
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
@@ -30,8 +30,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
 
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
-        [Route("api/v1/autocomplete/hotellocation")]
-        public IEnumerable<HotelLocationDict> Hotel(string prefix)
+        [Route("api/v1/autocomplete/hotellocation/{prefix}")]
+        public IEnumerable<HotelLocationDict> HotelLocation(string prefix)
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
             return autocompleteManager.GetHotelLocationAutocomplete(prefix);

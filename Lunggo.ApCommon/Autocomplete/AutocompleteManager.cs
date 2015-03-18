@@ -32,6 +32,7 @@ namespace Lunggo.ApCommon.Autocomplete
                 AirlineDict = PopulateAirlineDict();
                 AirportDict = PopulateAirportDict();
                 HotelLocationDict = PopulateHotelLocationDict(hotelLocationFilePath);
+                TrieIndex.GetInstance().Init();
                 _isInitialized = true;
             }
             else
