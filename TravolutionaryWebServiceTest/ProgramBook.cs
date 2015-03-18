@@ -9,15 +9,17 @@ namespace TravolutionaryWebServiceTest
 {
     class ProgramBook
     {
+        const string userName = "rama.adhitia@travelmadezy.com";
+        const string password = "d61Md7l7";
+
         static void Main(String[] args)
         {
-            const string userName = "rama.adhitia@travelmadezy.com";
-            const string password = "d61Md7l7";
+            
 
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
                 var searchRequest = CreateHotelsServiceSearchRequest();
-                var searchResponse = ExecuteHotelSearch(searchRequest);
+                var searchResponse = ExecuteHotelSearch(searchRequest,cli);
             }
         }
 
@@ -48,7 +50,7 @@ namespace TravolutionaryWebServiceTest
             return searchRequest;
         }
 
-        static DynamicDataServiceRsp ExecuteHotelSearch(HotelsServiceSearchRequest request)
+        static DynamicDataServiceRsp ExecuteHotelSearch(HotelsServiceSearchRequest request,DynamicDataServiceClient cli)
         {
             var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
             {
