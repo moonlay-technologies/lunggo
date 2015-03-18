@@ -248,7 +248,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />
-    <Content Include="Scripts\InputAdder.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -288,10 +287,6 @@
     <Content Include="Views\FlightReservation\RenderPassenger.cshtml" />
     <Content Include="Views\FlightReservation\RenderTripDetail.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\FlightReservation\Insert.cshtml" />
-    <Content Include="Views\FlightReservation\View.cshtml" />
-    <Content Include="Views\FlightReservation\Edit.cshtml" />
-    <Content Include="Views\FlightReservation\RenderTripDetailInput.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

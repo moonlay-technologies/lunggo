@@ -10,8 +10,6 @@
 {
     <h3>
         <i class="fa fa-angle-right"></i> Flight Reservation <small> > @Model.Reservation.RsvNo</small>
-        <a href="@Url.Action("Edit", new FlightReservationSearch(Model.Reservation.RsvNo))" class="btn btn-xs btn-warning"><span class="fa fa-edit"> edit</span></a>
-        <a href="@Url.Action("Delete", new FlightReservationSearch(Model.Reservation.RsvNo))" class="btn btn-xs btn-danger"><span class="fa fa-trash"> delete</span></a>
     </h3>
     var trip = Model.Trip.FirstOrDefault();
     var tripId = trip.TripId.GetValueOrDefault();

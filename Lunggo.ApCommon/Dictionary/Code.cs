@@ -10,14 +10,18 @@ namespace Lunggo.ApCommon.Dictionary
 {
     public static class Code
     {
-        public static readonly Dictionary<int, Airline> Airline = PopulateAirline();
-        public static readonly Dictionary<int, Airport> Airport = PopulateAirport();
-        public static readonly Dictionary<int, Hotel> Hotel = PopulateHotel();
+        public static readonly Dictionary<long, Airline> Airline = PopulateAirline();
+        public static readonly Dictionary<long, Airport> Airport = PopulateAirport();
+        public static readonly Dictionary<long, Hotel> Hotel = PopulateHotel();
 
-        private static Dictionary<int, Hotel> PopulateHotel()
+        public static void Initialize()
         {
-            var i = 0;
-            var result = new Dictionary<int, Hotel>();
+            
+        }
+
+        private static Dictionary<long, Hotel> PopulateHotel()
+        {
+            var result = new Dictionary<long, Hotel>();
             using (var file = new StreamReader(@"C:\Users\Admin\Documents\Visual Studio 2013\Projects\lunggo\Lunggo.ApCommon\Dictionary\HotelList.csv"))
             {
                 var line = file.ReadLine();
@@ -25,7 +29,7 @@ namespace Lunggo.ApCommon.Dictionary
                 {
                     line = file.ReadLine();
                     var splittedLine = line.Split('|');
-                    result.Add(i, new Hotel
+                    result.Add(long.Parse(splittedLine[0]), new Hotel
                     {
                         LocationId = long.Parse(splittedLine[0]),
                         CountryCode = splittedLine[1],
@@ -40,15 +44,14 @@ namespace Lunggo.ApCommon.Dictionary
                         IsAirport = splittedLine[10].IsEmpty() ? (bool?) null : bool.Parse(splittedLine[10]),
                         IsActive = splittedLine[11].IsEmpty() ? (bool?) null : bool.Parse(splittedLine[11])
                     });
-                    i++;
                 }
             }
             return result;
         }
 
-        private static Dictionary<int, Airport> PopulateAirport()
+        private static Dictionary<long, Airport> PopulateAirport()
         {
-            return new Dictionary<int, Airport>
+            return new Dictionary<long, Airport>
             {
                 {1, new Airport { Code = "BTH", Name = "Hang Nadim Int'l", City = "Batam", Region = "Sumatera"}},
                 {2, new Airport { Code = "BTJ", Name = "Sultan Iskandar Muda Int'l", City = "Banda Aceh", Region = "Sumatera"}},
@@ -105,9 +108,9 @@ namespace Lunggo.ApCommon.Dictionary
             };
         }
 
-        private static Dictionary<int, Airline> PopulateAirline()
+        private static Dictionary<long, Airline> PopulateAirline()
         {
-            return new Dictionary<int, Airline>
+            return new Dictionary<long, Airline>
             {
                 {1, new Airline { Code = "QZ", Name = "AirAsia"}},
                 {2, new Airline { Code = "JT", Name = "Lion Air"}},

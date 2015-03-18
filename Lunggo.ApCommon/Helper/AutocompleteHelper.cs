@@ -11,7 +11,8 @@ namespace Lunggo.ApCommon.Helper
     {
         None,
         Airline,
-        Airport
+        Airport,
+        Hotel
     }
 
     public static class AutoCompleteHelper
