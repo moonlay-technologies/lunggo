@@ -12,7 +12,7 @@ namespace Lunggo.BackendWeb.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT a.RsvNo, a.RsvTime, a.PaymentStatusCd, a.MemberCd, a.HotelNo, a.PaymentMethodCd, a.FinalPrice from HotelReservations a INNER JOIN HotelReservationRoomDetails b on a.RsvNo = b.RsvNo WHERE a.RsvNo = @rsvno ";
+            return "SELECT RsvNo, RsvTime, PaymentStatusCd, HotelNo, ContactName, ContactEmail, ContactPhone, ContactAddress, PaymentMethodCd, FinalPrice from HotelReservations WHERE RsvNo = @rsvno ";
         }
 
     }

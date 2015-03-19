@@ -40,37 +40,33 @@
                         </div>
 
                         <div class="showback">
-                            <h4>User Detail</h4>
+                            <h4>Reserver Detail</h4>
                             <hr>
                             <table class="table table-hover table-no-border">
                                 <tbody>
                                     <tr>
-                                        <td>User ID</td>
-                                        <td>@Html.DisplayFor(model => model.MemberCd)</td>
-                                    </tr>
-                                    <tr>
                                         <td>User Name</td>
-                                        <td>Rama Adhitia</td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ContactName)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>User Email</td>
-                                        <td><a href="#">rama.adhitia@gmail.com</a></td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ContactEmail)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>User Phone</td>
-                                        <td>+62 821 234 5678</td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ContactPhone)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>User Address</td>
-                                        <td>Jalan Simacanmangaraja no.xxi</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Jakarta Barat</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Indonesia</td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ContactAddress)
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -88,26 +84,6 @@
                                     <tr>
                                         <td>Hotel Name</td>
                                         <td>Lorem Ipsum Dolor Sit Amet</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hotel Address</td>
-                                        <td>Jalan Jalan bebas no.30</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Jakarta Barat</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Indonesia</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hotel Contact</td>
-                                        <td>+62 21 1234 567</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hotel Website</td>
-                                        <td><a href="#">http://www.hotelbebas.com</a></td>
                                     </tr>
                                 </tbody>
                             </table>

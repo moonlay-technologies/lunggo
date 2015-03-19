@@ -8,6 +8,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
 using Lunggo.Repository.TableRecord;
 using Lunggo.BackendWeb.Query;
+using Microsoft.Ajax.Utilities;
 
 namespace Lunggo.BackendWeb.Controllers
 {
@@ -15,7 +16,10 @@ namespace Lunggo.BackendWeb.Controllers
     {
 
         public HotelReservationsTableRepo hotelBookTable = HotelReservationsTableRepo.GetInstance();
-        public IDbConnection connHotel = DbService.GetInstance().GetOpenConnection();
+        public FlightReservationsTableRepo flightBookTable = FlightReservationsTableRepo.GetInstance();
+
+        public IDbConnection connOpen = DbService.GetInstance().GetOpenConnection();
+
 
         public ActionResult Index()
         {
@@ -45,7 +49,7 @@ namespace Lunggo.BackendWeb.Controllers
         {
             
             var query = GetAllHotel.GetInstance();
-            var result = query.Execute(connHotel,new{});
+            var result = query.Execute(connOpen, new { });
             
             return View(result);
         }
@@ -58,7 +62,7 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult HotelBookingDetail(string rsvno)
         {
             var query = GetHotelBookingDetail.GetInstance();
-            var result = query.Execute(connHotel, new
+            var result = query.Execute(connOpen, new
             {
                 rsvno
             });
@@ -74,7 +78,7 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult ListResultId(GetSearchHotelRecord record)
         {
             var query = GetSearchHotel.GetInstance();
-            var result = query.Execute(connHotel, new
+            var result = query.Execute(connOpen, new
             {
                 record.RsvNo
             });
@@ -86,7 +90,7 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult ListResultDll(GetSearchHotelRecord record)
         {
             var query = GetSearchHotelDetail.GetInstance();
-            var result = query.Execute(connHotel, record,record);
+            var result = query.Execute(connOpen, record, record);
 
             return View(result);
         }
@@ -97,7 +101,7 @@ namespace Lunggo.BackendWeb.Controllers
         }
 
         [HttpPost, ActionName("FormHotel")]
-        public ActionResult searchHotelConfirm(GetSearchHotelRecord record)
+        public ActionResult SearchHotelConfirm(GetSearchHotelRecord record)
         {
                 // TODO: Add update logic here
 
@@ -113,18 +117,53 @@ namespace Lunggo.BackendWeb.Controllers
                 
            
         }
-        /*
-        public ActionResult DeleteBookingHotel(int id)
+
+        public ActionResult BookingPending()
         {
-          
-         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
+            var query = GetBookingPending.GetInstance();
+            var result = query.Execute(connOpen, new { });
+
+            return View(result);
         }
-         
-        public ActionResult CheckBookingHotel(int id)
+
+        [HttpPost, ActionName("BookingPending")]
+        public ActionResult BookingPending(List<GetBookingPendingRecord> record)
         {
+            //TODO: Add update logic here
+           
           
-         * return View(hotelTable.FindAll(connHotel).Single((x=> x.Id == id)));
+            for (var i=0; i<record.Count; i++)
+            {
+                if (record[i].rdSelection == "paid")
+                {
+                    if (record[i].Type == "Hotel")
+                    {
+                        var dataRecord = new HotelReservationsTableRecord
+                        {
+                            RsvNo = record[i].RsvNo,
+                            PaymentStatusCd = "02"
+                        };
+
+                        var a = hotelBookTable.Update(connOpen, dataRecord);
+                        Console.WriteLine(a);
+                    }
+                    else if (record[i].Type == "Flight")
+                    {
+                        var dataRecord = new FlightReservationsTableRecord
+                        {
+                            RsvNo = record[i].RsvNo,
+                            PaymentStatusCd = "02"
+                        };
+
+                        var b = flightBookTable.Update(connOpen, dataRecord);
+                        Console.WriteLine(b);
+                    }
+                }
+                
+                
+            }
+            return View("Index");
         }
-        */
+
     }
 }
