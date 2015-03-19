@@ -1,0 +1,56 @@
+﻿@using Lunggo.Flight.Model
+@using Microsoft.Ajax.Utilities
+@model Lunggo.Flight.Model.FlightReservationIntegrated
+
+@{
+    ViewBag.Title = "Flight Reservation Detail";
+}
+
+@if (Model != null)
+{
+    <h3>
+        <i class="fa fa-angle-right"></i> Flight Reservation <small> > @Model.Reservation.RsvNo</small>
+        <a href="#" class="btn btn-xs btn-warning"><span class="fa fa-edit"> edit</span></a>
+        <a href="#" class="btn btn-xs btn-danger"><span class="fa fa-trash"> delete</span></a>
+    </h3>
+    var trip = Model.Trip.FirstOrDefault();
+    var tripId = trip.TripId.GetValueOrDefault();
+    var tripDetailList = Model.TripDetail[tripId];
+    var splitSequence = Model.TripDetail[tripId].Count;
+    if (trip.TripTypeCd == "RET")
+    {
+        splitSequence = tripDetailList.First(x => x.DepartureAirportCd == trip.DestinationAirportCd).SequenceNo.GetValueOrDefault() - 1;
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            @{ Html.RenderPartial("RenderFlightReservation", Model.Reservation); }
+        </div>
+        <div class="col-md-4">
+            @{ Html.RenderPartial("RenderFlightTripDetail", Model.TripDetail[tripId].GetRange(0, splitSequence), new ViewDataDictionary {{"Type", "Departure Flight"}}); }
+        </div>
+        <div class="col-md-4">
+            @{ Html.RenderPartial("RenderFlightTripDetail", Model.TripDetail[tripId].GetRange(splitSequence, Model.TripDetail[tripId].Count - splitSequence), new ViewDataDictionary {{"Type", "Return Flight"}}); }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @{ Html.RenderPartial("RenderFlightContact", Model.Reservation); }
+        </div>
+        <div class="col-md-4">
+            @{ Html.RenderPartial("RenderFlightTrip", trip); }
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @{ Html.RenderPartial("RenderFlightPassenger", Model.Passenger[tripId]); }
+        </div>
+    </div>
+}
+else
+{
+    <h3><i class="fa fa-angle-right"></i> Flight Reservation <big> > NOT FOUND</big></h3>
+}

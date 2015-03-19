@@ -112,7 +112,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\FlightBookingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,6 +218,11 @@
     <Content Include="assets\lineicons\style.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\down.png" />
+    <Content Include="Content\jquery-ui-1.8.11.custom.css" />
+    <Content Include="Content\line.png" />
+    <Content Include="Content\mid.png" />
+    <Content Include="Content\up.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -237,9 +241,11 @@
     <Content Include="assets\lineicons\fonts\linecons.ttf" />
     <Content Include="assets\lineicons\fonts\linecons.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.23.custom.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -265,6 +271,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\dashboard.cshtml" />
     <Content Include="Views\Home\Hotel.cshtml" />
+    <Content Include="Views\Home\FlightReservationList.cshtml" />
+    <Content Include="Views\Home\HotelDetail.cshtml" />
+    <Content Include="Views\Home\FlightReservationDetail.cshtml" />
+    <Content Include="Views\Home\FlightReservationSearch.cshtml" />
+    <Content Include="Views\Home\RenderFlight.cshtml" />
+    <Content Include="Views\Home\RenderFlightReservation.cshtml" />
+    <Content Include="Views\Home\RenderFlightTrip.cshtml" />
+    <Content Include="Views\Home\RenderFlightPassenger.cshtml" />
+    <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
+    <Content Include="Views\Home\RenderFlightContact.cshtml" />
     <Content Include="Views\Home\Flight.cshtml" />
     <Content Include="Views\Home\HotelBookingDetail.cshtml" />
     <Content Include="Views\Home\FlightDetail.cshtml" />
@@ -275,8 +291,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\FlightBooking\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

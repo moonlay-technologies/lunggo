@@ -40,26 +40,56 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
     <Compile Include="TableRecord\FlightReservationsTableRecord.cs" />
-    <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
-    <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
-    <Compile Include="TableRecord\PersonTableRecord.cs" />
-    <Compile Include="TableRecord\RolesTableRecord.cs" />
-    <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs" />
-    <Compile Include="TableRecord\UserClaimsTableRecord.cs" />
-    <Compile Include="TableRecord\UserLoginsTableRecord.cs" />
-    <Compile Include="TableRecord\UserRolesTableRecord.cs" />
-    <Compile Include="TableRecord\UsersTableRecord.cs" />
+    <Compile Include="TableRecord\FlightTripDetailTableRecord.cs" />
+    <Compile Include="TableRecord\FlightTripTableRecord.cs" />
+    <Compile Include="TableRecord\PersonTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\RolesTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\UserClaimsTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\UserLoginsTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\UserRolesTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRecord\UsersTableRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\FlightPassengerRepository.cs" />
     <Compile Include="TableRepository\FlightReservationsRepository.cs" />
-    <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
-    <Compile Include="TableRepository\HotelReservationsRepository.cs" />
-    <Compile Include="TableRepository\PersonRepository.cs" />
-    <Compile Include="TableRepository\RolesRepository.cs" />
-    <Compile Include="TableRepository\TableCobaSemuaRepository.cs" />
-    <Compile Include="TableRepository\UserClaimsRepository.cs" />
-    <Compile Include="TableRepository\UserLoginsRepository.cs" />
-    <Compile Include="TableRepository\UserRolesRepository.cs" />
-    <Compile Include="TableRepository\UsersRepository.cs" />
+    <Compile Include="TableRepository\FlightTripDetailRepository.cs" />
+    <Compile Include="TableRepository\FlightTripRepository.cs" />
+    <Compile Include="TableRepository\PersonRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\RolesRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\TableCobaSemuaRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\UserClaimsRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\UserLoginsRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\UserRolesRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableRepository\UsersRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">

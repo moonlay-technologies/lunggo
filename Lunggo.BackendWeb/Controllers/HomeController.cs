@@ -164,6 +164,5 @@ namespace Lunggo.BackendWeb.Controllers
             }
             return View("Index");
         }
-
     }
 }

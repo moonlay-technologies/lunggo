@@ -1,0 +1,39 @@
+﻿@model Lunggo.Repository.TableRecord.FlightReservationsTableRecord
+
+<div class="showback">
+    <h4>Contact Detail</h4>
+    <hr/>
+    <table class="table table-hover table-no-border">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>@Model.ContactName</td>
+            </tr>
+            <tr>
+                <td>E-mail</td>
+                <td>@Model.ContactEmail</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>@Model.ContactPhone</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>@Model.ContactAddress</td>
+            </tr>
+            <tr>
+                <td>Membership</td>
+                <td>
+                    @if (Model.MemberCd == "YES")
+                    {
+                        <span class="label control-label label-success">Member</span>
+                    }
+                    else
+                    {
+                        <span class="label control-label label-default">Not Member</span>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
