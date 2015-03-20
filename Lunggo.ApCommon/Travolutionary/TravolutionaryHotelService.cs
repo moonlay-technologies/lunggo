@@ -39,6 +39,12 @@ namespace Lunggo.ApCommon.Travolutionary
             return null;
         }
 
+        private static HotelBookRequest CreateHotelBookRequest(HotelBookServiceRequest request)
+        {
+            return null;
+        }
+
+
         private static TravolutionaryHotelRoomSearchResponse GetHotelRoomsInternal(HotelsServiceSearchRequest request)
         {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
@@ -116,13 +122,12 @@ namespace Lunggo.ApCommon.Travolutionary
             var hotel = rsp.HotelsSearchResponse.Result.First();
             var packages = hotel.Packages;
 
-            //TODO Use configuration file do not hardcode
             return packages.Select(p => new RawRoomPackage
             {
                 PackageId = p.PackageId.ToString(),
                 PackagePrice = new Lunggo.ApCommon.Model.Price
                 {
-                    Currency = "USD",
+                    Currency = DefaultResultCurrency,
                     Value = (decimal)p.PackagePrice.FinalPrice
                 },
                 RoomList = p.Rooms.Select(r => new RawRoom
@@ -134,13 +139,12 @@ namespace Lunggo.ApCommon.Travolutionary
                     RoomName = r.RoomClass + " " + r.RoomType,
                     RoomPrice = new Model.Price
                     {
-                        Currency = "USD",
+                        Currency = DefaultResultCurrency,
                         Value = r.Price == null ? 0 : (decimal)r.Price.FinalPrice
                     }
                 })
             });
         }
-
 
         private static void SetSessionIdInResponse(TravolutionaryResponseBase response, DynamicDataServiceRsp rsp)
         {
