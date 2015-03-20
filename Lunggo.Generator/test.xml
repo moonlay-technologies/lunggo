@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="FlightReservations" />
-  <table name="FlightTrip" />
-  <table name="FlightTripDetail" />
-  <table name="FlightPassenger" />
+  <table name="HotelReservations" />
+  <table name="HotelReservationRoomDetails" />
 </tables> 

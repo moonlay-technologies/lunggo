@@ -7,6 +7,10 @@ namespace Lunggo.Repository.TableRecord
 {
     public class HotelReservationRoomDetailsTableRecord : Lunggo.Framework.Database.TableRecord
     {
+		private static List<ColumnMetadata> _recordMetadata;
+        private static List<ColumnMetadata> _primaryKeys;
+        private static String _tableName;
+
 		public short? RoomSeq
 		{
 		    get { return _RoomSeq; }
@@ -133,12 +137,12 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            TableName = "HotelReservationRoomDetails";
+            _tableName = "HotelReservationRoomDetails";
         }
 
         private static void InitRecordMetadata()
         {
-            RecordMetadata = new List<ColumnMetadata>
+            _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("RoomSeq", true),
 				new ColumnMetadata("RsvNo", false),
@@ -156,7 +160,25 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitPrimaryKeysMetadata()
         {
-            PrimaryKeys = RecordMetadata.Where(p => p.IsPrimaryKey).ToList();
+            _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
+
+		public override List<ColumnMetadata> GetMetadata()
+        {
+            return _recordMetadata;
+        }
+
+        public override string GetTableName()
+        {
+            return _tableName;
+        }
+
+        public override List<ColumnMetadata> GetPrimaryKeys()
+        {
+            return _primaryKeys;
+        }
+
+
+
     }
 }
