@@ -45,6 +45,8 @@
     <Compile Include="TableRecord\FlightReservationsTableRecord.cs" />
     <Compile Include="TableRecord\FlightTripDetailTableRecord.cs" />
     <Compile Include="TableRecord\FlightTripTableRecord.cs" />
+    <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
+    <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
     <Compile Include="TableRecord\PersonTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +72,8 @@
     <Compile Include="TableRepository\FlightReservationsRepository.cs" />
     <Compile Include="TableRepository\FlightTripDetailRepository.cs" />
     <Compile Include="TableRepository\FlightTripRepository.cs" />
+    <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
+    <Compile Include="TableRepository\HotelReservationsRepository.cs" />
     <Compile Include="TableRepository\PersonRepository.cs">
       <SubType>Code</SubType>
     </Compile>

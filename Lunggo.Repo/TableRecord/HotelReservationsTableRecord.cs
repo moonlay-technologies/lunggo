@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class FlightReservationsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class HotelReservationsTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -18,6 +18,105 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _RsvNo = value;
 		        IncrementLog("RsvNo");
+		    }
+		}
+		public String HotelNo
+		{
+		    get { return _HotelNo; }
+		    set
+		    {
+		        _HotelNo = value;
+		        IncrementLog("HotelNo");
+		    }
+		}
+		public String RoomCd
+		{
+		    get { return _RoomCd; }
+		    set
+		    {
+		        _RoomCd = value;
+		        IncrementLog("RoomCd");
+		    }
+		}
+		public String RateCd
+		{
+		    get { return _RateCd; }
+		    set
+		    {
+		        _RateCd = value;
+		        IncrementLog("RateCd");
+		    }
+		}
+		public String RoomName
+		{
+		    get { return _RoomName; }
+		    set
+		    {
+		        _RoomName = value;
+		        IncrementLog("RoomName");
+		    }
+		}
+		public String RateName
+		{
+		    get { return _RateName; }
+		    set
+		    {
+		        _RateName = value;
+		        IncrementLog("RateName");
+		    }
+		}
+		public DateTime? CheckInDate
+		{
+		    get { return _CheckInDate; }
+		    set
+		    {
+		        _CheckInDate = value;
+		        IncrementLog("CheckInDate");
+		    }
+		}
+		public DateTime? CheckOutDate
+		{
+		    get { return _CheckOutDate; }
+		    set
+		    {
+		        _CheckOutDate = value;
+		        IncrementLog("CheckOutDate");
+		    }
+		}
+		public short? StayCount
+		{
+		    get { return _StayCount; }
+		    set
+		    {
+		        _StayCount = value;
+		        IncrementLog("StayCount");
+		    }
+		}
+		public short? RoomCount
+		{
+		    get { return _RoomCount; }
+		    set
+		    {
+		        _RoomCount = value;
+		        IncrementLog("RoomCount");
+		    }
+		}
+		public short? AdultCount
+		{
+		    get { return _AdultCount; }
+		    set
+		    {
+		        _AdultCount = value;
+		        IncrementLog("AdultCount");
+		    }
+		}
+		public short? ChildCount
+		{
+		    get { return _ChildCount; }
+		    set
+		    {
+		        _ChildCount = value;
+		        IncrementLog("ChildCount");
 		    }
 		}
 		public String ContactName
@@ -248,6 +347,17 @@ namespace Lunggo.Repository.TableRecord
 
 		
 		private String _RsvNo;
+		private String _HotelNo;
+		private String _RoomCd;
+		private String _RateCd;
+		private String _RoomName;
+		private String _RateName;
+		private DateTime? _CheckInDate;
+		private DateTime? _CheckOutDate;
+		private short? _StayCount;
+		private short? _RoomCount;
+		private short? _AdultCount;
+		private short? _ChildCount;
 		private String _ContactName;
 		private String _ContactEmail;
 		private String _ContactPhone;
@@ -275,20 +385,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static FlightReservationsTableRecord CreateNewInstance()
+		public static HotelReservationsTableRecord CreateNewInstance()
         {
-            var record = new FlightReservationsTableRecord();
+            var record = new HotelReservationsTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public FlightReservationsTableRecord()
+		public HotelReservationsTableRecord()
         {
             ;
         }
 
-        static FlightReservationsTableRecord()
+        static HotelReservationsTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -297,7 +407,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightReservations";
+            _tableName = "HotelReservations";
         }
 
         private static void InitRecordMetadata()
@@ -305,6 +415,17 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("RsvNo", true),
+				new ColumnMetadata("HotelNo", false),
+				new ColumnMetadata("RoomCd", false),
+				new ColumnMetadata("RateCd", false),
+				new ColumnMetadata("RoomName", false),
+				new ColumnMetadata("RateName", false),
+				new ColumnMetadata("CheckInDate", false),
+				new ColumnMetadata("CheckOutDate", false),
+				new ColumnMetadata("StayCount", false),
+				new ColumnMetadata("RoomCount", false),
+				new ColumnMetadata("AdultCount", false),
+				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
 				new ColumnMetadata("ContactPhone", false),

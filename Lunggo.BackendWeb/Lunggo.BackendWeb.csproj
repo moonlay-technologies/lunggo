@@ -131,6 +131,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\UpdateBookingPending.cs" />
+    <Compile Include="Query\GetBookingPending.cs" />
+    <Compile Include="Query\GetBookingPendingRecord.cs" />
+    <Compile Include="Query\GetSearchHotelDetail.cs" />
+    <Compile Include="Query\GetSearchHotel.cs" />
+    <Compile Include="Query\GetSearchHotelRecord.cs" />
+    <Compile Include="Query\GetHotelBookingDetailRecord.cs" />
+    <Compile Include="Query\GetHotelBookingDetail.cs" />
+    <Compile Include="Query\GetAllHotel.cs" />
+    <Compile Include="Query\GetAllHotelQueryRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\application.css" />
@@ -277,6 +287,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\dashboard.cshtml" />
     <Content Include="Views\Home\Hotel.cshtml" />
+    <Content Include="Views\Home\Flight.cshtml" />
+    <Content Include="Views\Home\HotelBookingDetail.cshtml" />
+    <Content Include="Views\Home\FlightDetail.cshtml" />
+    <Content Include="Views\Home\FormHotel.cshtml" />
+    <Content Include="Views\Home\ListResultDll.cshtml" />
+    <Content Include="Views\Home\ListResultId.cshtml" />
+    <Content Include="Views\Home\BookingPending.cshtml" />
     <Content Include="Views\FlightReservation\List.cshtml" />
     <Content Include="Views\Home\HotelDetail.cshtml" />
     <Content Include="Views\FlightReservation\Detail.cshtml" />

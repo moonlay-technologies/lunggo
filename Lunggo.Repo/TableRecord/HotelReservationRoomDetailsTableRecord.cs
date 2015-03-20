@@ -5,19 +5,19 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class FlightTripTableRecord : Lunggo.Framework.Database.TableRecord
+    public class HotelReservationRoomDetailsTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? TripId
+		public short? RoomSeq
 		{
-		    get { return _TripId; }
+		    get { return _RoomSeq; }
 		    set
 		    {
-		        _TripId = value;
-		        IncrementLog("TripId");
+		        _RoomSeq = value;
+		        IncrementLog("RoomSeq");
 		    }
 		}
 		public String RsvNo
@@ -29,94 +29,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvNo");
 		    }
 		}
-		public String BookingNumber
+		public String GuestName
 		{
-		    get { return _BookingNumber; }
+		    get { return _GuestName; }
 		    set
 		    {
-		        _BookingNumber = value;
-		        IncrementLog("BookingNumber");
+		        _GuestName = value;
+		        IncrementLog("GuestName");
 		    }
 		}
-		public String TripTypeCd
+		public short? GuestCount
 		{
-		    get { return _TripTypeCd; }
+		    get { return _GuestCount; }
 		    set
 		    {
-		        _TripTypeCd = value;
-		        IncrementLog("TripTypeCd");
-		    }
-		}
-		public Decimal? FinalPrice
-		{
-		    get { return _FinalPrice; }
-		    set
-		    {
-		        _FinalPrice = value;
-		        IncrementLog("FinalPrice");
-		    }
-		}
-		public String OriginAirportCd
-		{
-		    get { return _OriginAirportCd; }
-		    set
-		    {
-		        _OriginAirportCd = value;
-		        IncrementLog("OriginAirportCd");
-		    }
-		}
-		public String DestinationAirportCd
-		{
-		    get { return _DestinationAirportCd; }
-		    set
-		    {
-		        _DestinationAirportCd = value;
-		        IncrementLog("DestinationAirportCd");
-		    }
-		}
-		public DateTime? DepartureTime
-		{
-		    get { return _DepartureTime; }
-		    set
-		    {
-		        _DepartureTime = value;
-		        IncrementLog("DepartureTime");
-		    }
-		}
-		public DateTime? ReturnTime
-		{
-		    get { return _ReturnTime; }
-		    set
-		    {
-		        _ReturnTime = value;
-		        IncrementLog("ReturnTime");
-		    }
-		}
-		public short? AdultCount
-		{
-		    get { return _AdultCount; }
-		    set
-		    {
-		        _AdultCount = value;
-		        IncrementLog("AdultCount");
-		    }
-		}
-		public short? ChildCount
-		{
-		    get { return _ChildCount; }
-		    set
-		    {
-		        _ChildCount = value;
-		        IncrementLog("ChildCount");
-		    }
-		}
-		public short? InfantCount
-		{
-		    get { return _InfantCount; }
-		    set
-		    {
-		        _InfantCount = value;
-		        IncrementLog("InfantCount");
+		        _GuestCount = value;
+		        IncrementLog("GuestCount");
 		    }
 		}
 		public String InsertBy
@@ -175,18 +103,10 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _TripId;
+		private short? _RoomSeq;
 		private String _RsvNo;
-		private String _BookingNumber;
-		private String _TripTypeCd;
-		private Decimal? _FinalPrice;
-		private String _OriginAirportCd;
-		private String _DestinationAirportCd;
-		private DateTime? _DepartureTime;
-		private DateTime? _ReturnTime;
-		private short? _AdultCount;
-		private short? _ChildCount;
-		private short? _InfantCount;
+		private String _GuestName;
+		private short? _GuestCount;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -195,20 +115,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdatePgId;
 
 
-		public static FlightTripTableRecord CreateNewInstance()
+		public static HotelReservationRoomDetailsTableRecord CreateNewInstance()
         {
-            var record = new FlightTripTableRecord();
+            var record = new HotelReservationRoomDetailsTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public FlightTripTableRecord()
+		public HotelReservationRoomDetailsTableRecord()
         {
             ;
         }
 
-        static FlightTripTableRecord()
+        static HotelReservationRoomDetailsTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -217,25 +137,17 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightTrip";
+            _tableName = "HotelReservationRoomDetails";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("TripId", true),
+				new ColumnMetadata("RoomSeq", true),
 				new ColumnMetadata("RsvNo", false),
-				new ColumnMetadata("BookingNumber", false),
-				new ColumnMetadata("TripTypeCd", false),
-				new ColumnMetadata("FinalPrice", false),
-				new ColumnMetadata("OriginAirportCd", false),
-				new ColumnMetadata("DestinationAirportCd", false),
-				new ColumnMetadata("DepartureTime", false),
-				new ColumnMetadata("ReturnTime", false),
-				new ColumnMetadata("AdultCount", false),
-				new ColumnMetadata("ChildCount", false),
-				new ColumnMetadata("InfantCount", false),
+				new ColumnMetadata("GuestName", false),
+				new ColumnMetadata("GuestCount", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
