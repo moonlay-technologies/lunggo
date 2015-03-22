@@ -6,36 +6,36 @@ using System.Data;
 
 namespace Lunggo.Repository.TableRepository
 {
-	public class FlightTripDetailTableRepo : TableDao<FlightTripDetailTableRecord>, IDbTableRepository<FlightTripDetailTableRecord> 
+	public class HotelReservationRoomDetailsTableRepo : TableDao<HotelReservationRoomDetailsTableRecord>, IDbTableRepository<HotelReservationRoomDetailsTableRecord> 
     {
-		private static readonly FlightTripDetailTableRepo Instance = new FlightTripDetailTableRepo("FlightTripDetail");
+		private static readonly HotelReservationRoomDetailsTableRepo Instance = new HotelReservationRoomDetailsTableRepo("HotelReservationRoomDetails");
         
-        private FlightTripDetailTableRepo(String tableName) : base(tableName)
+        private HotelReservationRoomDetailsTableRepo(String tableName) : base(tableName)
         {
             ;
         }
 
-		public static FlightTripDetailTableRepo GetInstance()
+		public static HotelReservationRoomDetailsTableRepo GetInstance()
         {
             return Instance;
         }
 
-        public int Insert(IDbConnection connection, FlightTripDetailTableRecord record)
+        public int Insert(IDbConnection connection, HotelReservationRoomDetailsTableRecord record)
         {
             return Insert(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Delete(IDbConnection connection, FlightTripDetailTableRecord record)
+        public int Delete(IDbConnection connection, HotelReservationRoomDetailsTableRecord record)
         {
             return Delete(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-		public int Update(IDbConnection connection, FlightTripDetailTableRecord record)
+		public int Update(IDbConnection connection, HotelReservationRoomDetailsTableRecord record)
         {
             return Update(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
-        public IEnumerable<FlightTripDetailTableRecord> FindAll(IDbConnection connection)
+        public IEnumerable<HotelReservationRoomDetailsTableRecord> FindAll(IDbConnection connection)
         {
             return FindAll(connection, CommandDefinition.GetDefaultDefinition());
         }
@@ -45,17 +45,17 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAll(connection, CommandDefinition.GetDefaultDefinition());
         }
 
-        public int Insert(IDbConnection connection, FlightTripDetailTableRecord record, CommandDefinition definition)
+        public int Insert(IDbConnection connection, HotelReservationRoomDetailsTableRecord record, CommandDefinition definition)
         {
             return InsertInternal(connection, record, definition);
         }
 
-        public int Delete(IDbConnection connection, FlightTripDetailTableRecord record, CommandDefinition definition)
+        public int Delete(IDbConnection connection, HotelReservationRoomDetailsTableRecord record, CommandDefinition definition)
         {
             return DeleteInternal(connection, record, definition);
         }
 
-        public int Update(IDbConnection connection, FlightTripDetailTableRecord record, CommandDefinition definition)
+        public int Update(IDbConnection connection, HotelReservationRoomDetailsTableRecord record, CommandDefinition definition)
         {
             return UpdateInternal(connection, record, definition);
         }
@@ -65,7 +65,7 @@ namespace Lunggo.Repository.TableRepository
             return DeleteAllInternal(connection, definition);
         }
 
-        public IEnumerable<FlightTripDetailTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
+        public IEnumerable<HotelReservationRoomDetailsTableRecord> FindAll(IDbConnection connection, CommandDefinition definition)
         {
             return FindAllInternal(connection, definition);
         }

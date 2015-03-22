@@ -34,8 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">

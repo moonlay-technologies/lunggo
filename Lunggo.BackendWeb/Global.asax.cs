@@ -19,7 +19,13 @@ namespace Lunggo.BackendWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DbService.GetInstance().Init(@"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234");
+            InitDB();
         }
+        private void InitDB()
+        {
+            const string connString = @"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234";
+            DbService.GetInstance().Init(connString);
+        }
+
     }
 }
