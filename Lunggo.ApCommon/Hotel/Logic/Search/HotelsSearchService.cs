@@ -179,7 +179,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             IEnumerable<HotelDetail> hotelsDetail = null;
             if (onMemHotelsDetail != null)
             {
-                hotelsDetail = onMemHotelsDetail.Select(ToHotelDetail);
+                hotelsDetail = onMemHotelsDetail.Where(p => p != null).Select(ToHotelDetail);
             }
             return hotelsDetail;
         }
