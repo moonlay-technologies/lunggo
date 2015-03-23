@@ -5,6 +5,7 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Room = Lunggo.ApCommon.Travolutionary.WebService.Hotel.Room;
 
 namespace Lunggo.ApCommon.Travolutionary
 {
@@ -36,20 +37,79 @@ namespace Lunggo.ApCommon.Travolutionary
 
         public static TravolutionaryHotelBookResponse BookHotel(HotelBookServiceRequest request)
         {
+
+
             return null;
         }
 
-        private static HotelBookRequest CreateHotelBookRequest(HotelBookServiceRequest request)
+        private static HotelBookRequest CreateHotelBookRequest(HotelBookServiceRequest request, RoomsPackage travolutionaryPackage)
         {
+            var customerInfoArray = CreateCustomerInfoArray(request, travolutionaryPackage);
+
+            var bookRequest = new HotelBookRequest
+            {
+                ClientIP = request.ClientIp, //mandatory
+                //TODO create price logic
+                BookingPrice = 100, //mandatory
+                HotelID = request.HotelId, //mandatory
+                InternalAgentRef1 = "No Data", //optional
+                InternalAgentRef2 = "No Data", //optional
+                PackageID = new Guid(request.PackageId), //mandatory
+                LeadPaxId = customerInfoArray.First().Id,
+                LeadPaxRoomId = customerInfoArray.First().Allocation, //mandatory
+                Passengers = customerInfoArray,
+                RoomsRemarks = CreateRoomsRemarks(travolutionaryPackage),
+                SelectedPaymentMethod = PaymentMethod.Cash
+            };
             return null;
         }
 
+        private static Dictionary<String, String> CreateRoomsRemarks(RoomsPackage travolutionaryPackage)
+        {
+            return travolutionaryPackage.Rooms.ToDictionary<Room, string, string>(room => room.Id, room => null);
+        }
+
+        private static CustomerInfo[] CreateCustomerInfoArray(HotelBookServiceRequest request, RoomsPackage travolutionaryPackage)
+        {
+            var customerInfoList = new List<CustomerInfo>();
+            var roomCounter = 0;
+            foreach (var name in request.LeadRoomOccupantNames)
+            {
+                var customerInfo1 = CreateCustomerInfo(name, travolutionaryPackage.Rooms[roomCounter].Id);
+                var customerInfo2 = CreateCustomerInfo(name, travolutionaryPackage.Rooms[roomCounter].Id);
+                customerInfoList.Add(customerInfo1);
+                customerInfoList.Add(customerInfo2);
+                roomCounter++;
+            }
+            return customerInfoList.ToArray();
+        }
+
+        private static CustomerInfo CreateCustomerInfo(String name, String roomId)
+        {
+            var nameParts = name.Split(null);
+            var customerInfo = new CustomerInfo
+            {
+                Allocation = roomId,
+                PersonDetails = new Person
+                {
+                    Name = new PersonName
+                    {
+                        GivenName = nameParts[0],
+                        NamePrefix = "Mr/Mrs",
+                        Surname = nameParts.Count() > 1 ? nameParts[1] : nameParts[0]
+                    },
+                    Type = PersonType.Adult
+                },
+                Id = Guid.NewGuid().ToString()
+            };
+            return customerInfo;
+        }
 
         private static TravolutionaryHotelRoomSearchResponse GetHotelRoomsInternal(HotelsServiceSearchRequest request)
         {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
-                var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
+                var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst
                 {
                     //SessionID = session,
                     TypeOfService = ServiceType.Hotels,
@@ -70,7 +130,7 @@ namespace Lunggo.ApCommon.Travolutionary
         {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
-                var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
+                var searchResponse = cli.ServiceRequest(new DynamicDataServiceRqst
                 {
                     //SessionID = session,
                     TypeOfService = ServiceType.Hotels,
@@ -125,7 +185,7 @@ namespace Lunggo.ApCommon.Travolutionary
             return packages.Select(p => new RawRoomPackage
             {
                 PackageId = p.PackageId.ToString(),
-                PackagePrice = new Lunggo.ApCommon.Model.Price
+                PackagePrice = new Model.Price
                 {
                     Currency = DefaultResultCurrency,
                     Value = (decimal)p.PackagePrice.FinalPrice
