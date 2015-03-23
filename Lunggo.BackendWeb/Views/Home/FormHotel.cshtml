@@ -65,7 +65,7 @@
                     <div class="col-md-6">
                         <div class="form form-horizontal"> 
                             <label class="form-group" for="rdSpecificDate">
-                                @Html.RadioButtonFor(modal => modal.rdSelection, 0)
+                                @Html.RadioButtonFor(modal => modal.rdSelection, 0, new { @checked = "checked" })
                                 <span style="display: inline">Specific Date </span>
                                 @Html.EditorFor(model => model.RsvTime, new { htmlAttributes = new { @class = "form-control width",  @style = "display: inline; width: auto" } })
                                 @Html.ValidationMessageFor(model => model.RsvTime, "", new { @class = "text-danger" })

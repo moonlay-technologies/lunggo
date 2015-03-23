@@ -57,11 +57,11 @@ namespace Lunggo.BackendWeb.Query
             }
             if (condition.GuestName != null && condition.GuestName != "")
             {
-                queryWhereBuilder.Append("GuestName = @GuestName AND");
+                queryWhereBuilder.Append(" GuestName = @GuestName AND");
             }
             if (condition.ContactName != null && condition.ContactName != "")
             {
-                queryWhereBuilder.Append("ContactName = @ContactName AND");
+                queryWhereBuilder.Append(" ContactName = @ContactName AND");
             }
 
             if (queryWhereBuilder.Length == 6)
