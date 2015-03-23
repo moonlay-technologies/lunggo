@@ -44,19 +44,31 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
         {
             var airportIndex = TrieIndex.GetInstance().AirportIndex;
-            return airportIndex.GetAllSuggestionIds(prefix).Select(id => AirportDict[id]);
+            var airportAutocomplete = airportIndex.GetAllSuggestionIds(prefix).Select(id => AirportDict[id]);
+            return airportAutocomplete;
         }
 
         public IEnumerable<AirlineDict> GetAirlineAutocomplete(string prefix)
         {
             var airlineIndex = TrieIndex.GetInstance().AirlineIndex;
-            return airlineIndex.GetAllSuggestionIds(prefix).Select(id => AirlineDict[id]);
+            var airlineAutocomplete = airlineIndex.GetAllSuggestionIds(prefix).Select(id => AirlineDict[id]);
+            return airlineAutocomplete;
         }
 
-        public IEnumerable<HotelLocationDict> GetHotelLocationAutocomplete(string prefix)
+        public IEnumerable<object> GetHotelLocationAutocomplete(string prefix)
         {
             var hotelLocationIndex = TrieIndex.GetInstance().HotelLocationIndex;
-            return hotelLocationIndex.GetAllSuggestionIds(prefix).Select(id => HotelLocationDict[id]);
+            var hotelLocationAutocomplete = hotelLocationIndex.GetAllSuggestionIds(prefix)
+                .Select(id => new
+                {
+                    HotelLocationDict[id].LocationId,
+                    HotelLocationDict[id].LocationName,
+                    HotelLocationDict[id].RegionName,   
+                    HotelLocationDict[id].CountryName,
+                    HotelLocationDict[id].Priority,
+                })
+                .OrderBy(dict => dict.Priority);
+            return hotelLocationAutocomplete;
         }
 
         private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)

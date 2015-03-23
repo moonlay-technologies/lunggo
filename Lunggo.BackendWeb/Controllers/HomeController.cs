@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Model;
 using Lunggo.Flight.Model;
-using Lunggo.Flight.Query;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Http;
 using Lunggo.Repository.TableRecord;

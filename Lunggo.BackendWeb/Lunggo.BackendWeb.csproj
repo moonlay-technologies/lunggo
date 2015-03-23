@@ -130,7 +130,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Model\FlightReservationIntegrated.cs" />
+    <Compile Include="Model\FlightReservationSearch.cs" />
+    <Compile Include="Model\QueryType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\GetFlightPassengerQuery.cs" />
+    <Compile Include="Query\GetFlightReservationExcPassengerQuery.cs" />
     <Compile Include="Query\UpdateBookingPending.cs" />
     <Compile Include="Query\GetBookingPending.cs" />
     <Compile Include="Query\GetBookingPendingRecord.cs" />
@@ -230,6 +235,7 @@
     <Content Include="assets\lineicons\index.html" />
     <Content Include="assets\lineicons\lte-ie7.js" />
     <Content Include="assets\lineicons\style.css" />
+    <Content Include="Config\i18n_message.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\down.png" />
@@ -254,6 +260,8 @@
     <Content Include="assets\lineicons\fonts\linecons.eot" />
     <Content Include="assets\lineicons\fonts\linecons.ttf" />
     <Content Include="assets\lineicons\fonts\linecons.woff" />
+    <Content Include="Config\application.properties" />
+    <Content Include="Config\HotelLocation.csv" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />

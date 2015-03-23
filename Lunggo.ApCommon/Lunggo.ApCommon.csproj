@@ -202,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Autocomplete\HotelLocationList.csv" />
     <None Include="packages.config" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">
