@@ -56,11 +56,11 @@ namespace TravolutionaryWebServiceTest
 
                 var searchRequest = new HotelsServiceSearchRequest()
                 {
-                    CheckIn = DateTime.Now.AddDays(2),
-                    CheckOut = DateTime.Now.AddDays(3),
+                    CheckIn = DateTime.Now.AddDays(3),
+                    CheckOut = DateTime.Now.AddDays(4),
                     Nights = 1,
                     DesiredResultCurrency = "USD",
-                    DetailLevel = SearchDetailLevel.Meta, //THIS IS A VERY IMPORTANG PARAMETER
+                    DetailLevel = SearchDetailLevel.Default, //THIS IS A VERY IMPORTANG PARAMETER
                     Residency = "ID",
                     Rooms = new[]
                            {
@@ -68,27 +68,26 @@ namespace TravolutionaryWebServiceTest
                                new HotelRoomRequest()
                                    {
                                        AdultsCount = 2,
-                                       KidsAges = new []{5}
-                                   }, 
+                                   }
                            },
-                    HotelLocation = 640255 //Prague
-
+                    HotelIds = new int[]
+                    {
+                        4116550
+                    }
+                    //HotelLocation = 640255 //Prague
                 };
 
 
                 var newRequest = new SeedHotelsSearchRequest
                 {
-                    CheckIn = DateTime.Now.AddDays(2),
-                    CheckOut = DateTime.Now.AddDays(3),
+                    CheckIn = DateTime.Now.AddDays(1),
+                    CheckOut = DateTime.Now.AddDays(2),
                     Location = 640255,
                     Nights = 1 ,
                     Residency = "ID",
                     ResultCurrency = "USD",
                     SearchDetail = HotelSearchDetailLevel.Meta
                 };
-
-
-
 
                 var stopwatch = Stopwatch.StartNew(); //creates and start the instance of Stopwatch
                
@@ -97,7 +96,7 @@ namespace TravolutionaryWebServiceTest
                     //SessionID = session,
                     TypeOfService = ServiceType.Hotels,
                     RequestType = ServiceRequestType.Search,
-                    Request = ClientLibrary.CreateMockHotelsSearchRequest(newRequest),
+                    Request = searchRequest,
                     Credentials = new Credentials
                     {
                         UserName = userName,
@@ -115,18 +114,99 @@ namespace TravolutionaryWebServiceTest
                     return;
                 }
 
+                var sessionId = searchResponse.SessionID;
+
                 Console.WriteLine("Ditemukan " + searchResponse.HotelsSearchResponse.Result.Length + " hotel");
                 stopwatch.Stop();
                 Console.WriteLine("Pencarian membutuhkan waktu " + stopwatch.ElapsedMilliseconds / 1000 + " detik");
 
-                /*foreach (var hotel in searchResponse.HotelsSearchResponse.Result)
+                foreach (var hotel in searchResponse.HotelsSearchResponse.Result)
                 {
                     //Console.WriteLine("{0} | {1} | {2} | {3} | {4}", hotel.DisplayName, hotel.Area, hotel.District, hotel.StarRating, hotel.Packages.Min(p => p.SimplePrice));
-                    Console.Out.WriteLine("Hotel ->{0,-50},LowestPrice ->{1,10} USD", hotel.DisplayName, hotel.Packages.Min(p => p.SimplePrice));
-                }*/
+                    Console.Out.WriteLine("Hotel ->{0,-50},LowestPrice ->{1,10} USD, HotelId ->{2,70}", hotel.DisplayName, hotel.Packages.Min(p => p.SimplePrice), hotel.ID);
+                }
 
                 var hotelTable = searchResponse.HotelsSearchResponse.Result;
-                var firstHotel = hotelTable[5];
+                if (!hotelTable.Any())
+                {
+                    Console.WriteLine("ng ada isinya");
+                }
+
+                var packageTable = hotelTable[0].Packages;
+                var firstPackage = packageTable[0];
+                Console.WriteLine();
+                foreach (var package in packageTable)
+                {
+                    var packagePrice = package.PackagePrice;
+                    Console.WriteLine("{0} {1} {2} {3} {4}",package.PackageId,packagePrice.Currency, packagePrice.FinalPrice, 
+                        packagePrice.FinalPriceInSupplierCurrency, packagePrice.OriginalPrice);
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+
+                var leadPaxId = Guid.NewGuid().ToString();
+
+                var bookRequest = new HotelBookRequest
+                {
+                    ClientIP = "139.228.112.122", //mandatory
+                    BookingPrice = 100, //mandatory
+                    HotelID = hotelTable[0].ID, //mandatory
+                    InternalAgentRef1 = "No Data", //optional
+                    InternalAgentRef2 = "No Data", //optional
+                    PackageID = firstPackage.PackageId, //mandatory
+                    LeadPaxId = leadPaxId, //mandatory
+                    LeadPaxRoomId = firstPackage.Rooms[0].Id, //mandatory
+                    Passengers = new []
+                    {
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[0].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rama",
+                                    NamePrefix = "Mr",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = leadPaxId
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[0].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
+                        }
+                    },
+                    RoomsRemarks = new Dictionary<String,String>()
+                    {
+                        {firstPackage.Rooms[0].Id,null}
+                    },
+                    SelectedPaymentMethod = PaymentMethod.Cash
+                };
+
+                var bookReponse = cli.ServiceRequest(new DynamicDataServiceRqst()
+                {
+                    SessionID = sessionId,
+                    TypeOfService = ServiceType.Hotels,
+                    RequestType = ServiceRequestType.Book,
+                    Request = bookRequest 
+                });
+                
+                Console.WriteLine();
+
+                /*var firstHotel = hotelTable[5];
 
                 Console.WriteLine("Test null {0}",null);
 
@@ -154,8 +234,8 @@ namespace TravolutionaryWebServiceTest
                 else
                 {
                     Console.WriteLine("dictionary price null");
-                }
-                
+                }*/
+
             }
 
 

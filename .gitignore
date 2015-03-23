@@ -161,5 +161,8 @@ Lunggo.Configuration/Log/
 # Lunggo.CustomerWeb Config Directory
 Lunggo.CustomerWeb/Config/
 
-# Lunggo.Driver Log Directory
+# Lunggo.Driver Config Directory
 Lunggo.Driver/Config/
+
+# Lunggo.CustomerWeb Config Directory
+Lunggo.WebAPI/Config/

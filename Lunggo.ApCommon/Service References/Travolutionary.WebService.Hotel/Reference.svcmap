@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9ea0aa38-1435-4dc5-9f31-a6a30b50e4c0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://services.carsolize.com/BookingServices/DynamicDataService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DynamicDataService.xsd" MetadataType="Schema" ID="dc9c7710-c8c0-4c39-9022-7a323082f3db" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd7" />
+    <MetadataFile FileName="DynamicDataService1.xsd" MetadataType="Schema" ID="3f578541-ec3e-4e5a-b8e6-2c3ca0280d69" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd11" />
+    <MetadataFile FileName="DynamicDataService2.xsd" MetadataType="Schema" ID="f43a6abb-e68c-461b-afd0-d2dc9ecd36f2" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd17" />
+    <MetadataFile FileName="DynamicDataService.wsdl" MetadataType="Wsdl" ID="3c268cdc-e60a-4f7c-bfd0-53a5c0c6187f" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?wsdl" />
+    <MetadataFile FileName="DynamicDataService3.xsd" MetadataType="Schema" ID="48ed4411-eb7e-4d8e-8157-268d50ded34e" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd10" />
+    <MetadataFile FileName="DynamicDataService1.wsdl" MetadataType="Wsdl" ID="712ff52d-607c-4e30-b4bf-1e45fe57a54b" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="DynamicDataService4.xsd" MetadataType="Schema" ID="2bb4ec3a-efd1-4e35-a24e-0a5707694760" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd15" />
+    <MetadataFile FileName="DynamicDataService5.xsd" MetadataType="Schema" ID="0a15079b-95ab-4778-b259-67fe8ba35acf" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd5" />
+    <MetadataFile FileName="DynamicDataService6.xsd" MetadataType="Schema" ID="f678eca7-bd02-4779-9613-dbd768ad9650" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" />
+    <MetadataFile FileName="DynamicDataService.disco" MetadataType="Disco" ID="78546b59-e4ea-4b13-ab34-dd5c4f3c2ea0" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?disco" />
+    <MetadataFile FileName="DynamicDataService7.xsd" MetadataType="Schema" ID="e5ae1bef-7bc8-4051-934c-5bcf4af3db4a" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd6" />
+    <MetadataFile FileName="DynamicDataService8.xsd" MetadataType="Schema" ID="da6cc0df-5c07-46d5-afa6-91a4ecabede7" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DynamicDataService9.xsd" MetadataType="Schema" ID="105ce325-f9dc-4024-a203-a554e1fb7a8e" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DynamicDataService10.xsd" MetadataType="Schema" ID="472ed379-e66a-4351-a713-f4bafdff64b0" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd3" />
+    <MetadataFile FileName="DynamicDataService11.xsd" MetadataType="Schema" ID="1dcdcc8f-25dd-4293-a610-cd3b4023c4af" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DynamicDataService12.xsd" MetadataType="Schema" ID="93c1b271-5752-4ed8-8613-9f0a28ea3963" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd16" />
+    <MetadataFile FileName="DynamicDataService13.xsd" MetadataType="Schema" ID="16390338-4d6e-422f-8137-9c37602ca3fe" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd12" />
+    <MetadataFile FileName="DynamicDataService14.xsd" MetadataType="Schema" ID="be2c0220-a3a6-4eef-98af-18f684e72512" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd9" />
+    <MetadataFile FileName="DynamicDataService15.xsd" MetadataType="Schema" ID="61fcee2c-44e2-4969-850f-3ae96e1df4a5" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd8" />
+    <MetadataFile FileName="DynamicDataService16.xsd" MetadataType="Schema" ID="c243a812-9c1e-4bba-ab60-2ea90570da98" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd13" />
+    <MetadataFile FileName="DynamicDataService17.xsd" MetadataType="Schema" ID="0c07dde0-1d69-4af9-86b1-1ea444fb8065" SourceId="1" SourceUrl="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd14" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

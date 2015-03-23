@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Cars" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Cars" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="CarRepriceRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BrokerId" type="xs:int" />
+          <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy" />
+          <xs:element minOccurs="0" name="CarRepriceItem" nillable="true" type="tns:CarRepriceItem" />
+          <xs:element minOccurs="0" name="DropOffOfficeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Id" type="ser:guid" />
+          <xs:element minOccurs="0" name="PickUpOfficeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SearchRequest" nillable="true" type="CarsServiceSearchRequest" />
+          <xs:element minOccurs="0" name="TotalPrice" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CarRepriceRequest" nillable="true" type="tns:CarRepriceRequest" />
+  <xs:complexType name="CarRepriceItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Acriss" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AirConditioning" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AirportPickUpLocation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CarModel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FuelType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GPS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfDoors" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PackageName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RepresentingCategory" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransmissionType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CarRepriceItem" nillable="true" type="tns:CarRepriceItem" />
+  <xs:complexType name="CarsOrderBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CarSegments" nillable="true" type="ArrayOfCarBookSegment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CarsOrderBookResponse" nillable="true" type="tns:CarsOrderBookResponse" />
+  <xs:complexType name="CarRepriceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy" />
+      <xs:element minOccurs="0" name="Match" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="Price" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CarRepriceResponse" nillable="true" type="tns:CarRepriceResponse" />
+  <xs:complexType name="CarDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CancellationPolicies" nillable="true" type="ArrayOfCancellationPolicy" />
+      <xs:element minOccurs="0" name="CarId" type="ser:guid" />
+      <xs:element minOccurs="0" name="CarRentalTermsUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DropoffOffice" nillable="true" type="tns:ArrayOfOfficeDetails" />
+      <xs:element minOccurs="0" name="Extras" nillable="true" type="ArrayOfCarExtras" />
+      <xs:element minOccurs="0" name="PackageDetails" nillable="true" type="ArrayOfPackageDetailsInfo" />
+      <xs:element minOccurs="0" name="PickupOffice" nillable="true" type="tns:ArrayOfOfficeDetails" />
+      <xs:element minOccurs="0" name="Terms" nillable="true" type="ArrayOfCarRentalTerm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CarDetails" nillable="true" type="tns:CarDetails" />
+  <xs:complexType name="ArrayOfOfficeDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OfficeDetails" nillable="true" type="tns:OfficeDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOfficeDetails" nillable="true" type="tns:ArrayOfOfficeDetails" />
+  <xs:complexType name="OfficeDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Latitude" type="xs:double">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Longitude" type="xs:double">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="OfficeId" nillable="true" type="ser:guid">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OpeningHours" nillable="true" type="q1:ArrayOfstring">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OfficeDetails" nillable="true" type="tns:OfficeDetails" />
+</xs:schema>

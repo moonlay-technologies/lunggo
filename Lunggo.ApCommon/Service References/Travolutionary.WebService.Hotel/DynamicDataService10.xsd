@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:complexType name="PaymentCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressLine" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="CID" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CVV" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CardNumber" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" name="CardType" type="q1:CreditCardType">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ExpireDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="HolderName" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentCard" nillable="true" type="tns:PaymentCard" />
+  <xs:complexType name="GetCurrencyConversionRatesRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element name="SourceCurrency" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" name="TargetCurrencies" nillable="true" type="q2:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCurrencyConversionRatesRequest" nillable="true" type="tns:GetCurrencyConversionRatesRequest" />
+  <xs:complexType name="ArrayOfPaymentPreference">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentPreference" nillable="true" type="tns:PaymentPreference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentPreference" nillable="true" type="tns:ArrayOfPaymentPreference" />
+  <xs:complexType name="PaymentPreference">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcceptedCreditCards" nillable="true" type="tns:ArrayOfCreditCardPaymentCommision" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="Type" type="q3:PaymentMethod" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentPreference" nillable="true" type="tns:PaymentPreference" />
+  <xs:complexType name="ArrayOfCreditCardPaymentCommision">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CreditCardPaymentCommision" nillable="true" type="tns:CreditCardPaymentCommision" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCreditCardPaymentCommision" nillable="true" type="tns:ArrayOfCreditCardPaymentCommision" />
+  <xs:complexType name="CreditCardPaymentCommision">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="CardType" type="q4:CreditCardType" />
+      <xs:element minOccurs="0" name="ChargingCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Commision" type="xs:double" />
+      <xs:element minOccurs="0" name="ConversionRate" type="xs:double" />
+      <xs:element minOccurs="0" name="FlatFee" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditCardPaymentCommision" nillable="true" type="tns:CreditCardPaymentCommision" />
+  <xs:complexType name="GetCurrencyConversionRatesResponse">
+    <xs:sequence>
+      <xs:element name="Rates" nillable="true" type="tns:ArrayOfCurrencyConversionRate" />
+      <xs:element name="SourceCurrency" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetCurrencyConversionRatesResponse" nillable="true" type="tns:GetCurrencyConversionRatesResponse" />
+  <xs:complexType name="ArrayOfCurrencyConversionRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CurrencyConversionRate" nillable="true" type="tns:CurrencyConversionRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCurrencyConversionRate" nillable="true" type="tns:ArrayOfCurrencyConversionRate" />
+  <xs:complexType name="CurrencyConversionRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rate" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CurrencyConversionRate" nillable="true" type="tns:CurrencyConversionRate" />
+  <xs:complexType name="Payment3DSecureResponse">
+    <xs:sequence>
+      <xs:element name="ResponseReceived" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Payment3DSecureResponse" nillable="true" type="tns:Payment3DSecureResponse" />
+</xs:schema>

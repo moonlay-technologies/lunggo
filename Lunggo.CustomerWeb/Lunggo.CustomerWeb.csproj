@@ -248,11 +248,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
+    <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
     <Compile Include="WebSrc\UW100\Logic\HotelSearchLogic.cs" />
     <Compile Include="WebSrc\UW100\Object\UW100HotelSearchRequest.cs" />
     <Compile Include="WebSrc\UW100\Object\UW100HotelSearchResponse.cs" />
     <Compile Include="WebSrc\UW100\UW100HotelSearchController.cs" />
     <Compile Include="WebSrc\UW200\Logic\HotelDetailLogic.cs" />
+    <Compile Include="WebSrc\UW200\Model\UW200HotelDetail.cs" />
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailRequest.cs" />
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
     <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
@@ -307,7 +309,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Config\application.properties" />
     <Content Include="Areas\UW100\Views\web.config" />
     <Content Include="Areas\UW100\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW100\Views\UW100Search\SearchForm.cshtml" />
@@ -324,6 +325,7 @@
     <Content Include="Areas\UW400\Views\_ViewStart.cshtml" />
     <Content Include="Areas\UW400\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\UW400\Views\UW400Booking\UW400Index.cshtml" />
+    <Content Include="Config\application.properties" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

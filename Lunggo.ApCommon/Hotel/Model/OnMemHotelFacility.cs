@@ -1,13 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class OnMemHotelFacility
+    public abstract class HotelFacilityBase
     {
         public int FacilityId { get; set; }
+        
+    }
+
+    public class OnMemHotelFacility : HotelFacilityBase
+    {
+
+    }
+
+    public class HotelFacility : HotelFacilityBase
+    {
+        public String FacilityName { get; set; }
     }
 }

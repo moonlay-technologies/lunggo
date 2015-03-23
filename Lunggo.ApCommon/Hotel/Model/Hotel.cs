@@ -27,13 +27,16 @@ namespace Lunggo.ApCommon.Hotel.Model
 
     public class HotelDetail : HotelDetailBase
     {
-        public I18NText HotelDescription { get; set; }
+        public IEnumerable<HotelDescription> HotelDescriptions { get; set; }
         public Price LowestPrice { get; set; }
+        public IEnumerable<HotelFacility> Facilities { get; set; }
+        
     }
 
     public class HotelExcerpt : HotelDetailBase
     {
         public Price LowestPrice { get; set; }
+        public IEnumerable<HotelFacility> Facilities { get; set; }
     }
 
     

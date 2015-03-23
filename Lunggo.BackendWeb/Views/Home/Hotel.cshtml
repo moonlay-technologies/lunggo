@@ -1,0 +1,152 @@
+﻿@using System.Runtime.Serialization
+@using System.Web.UI.WebControls
+
+@model IEnumerable<Lunggo.BackendWeb.Query.GetAllHotelQueryRecord>
+
+@{
+    ViewBag.Title = "Hotel";
+    ViewBag.ActiveMenu = "hotel";
+}
+
+
+
+<h3><i class="fa fa-angle-right"></i> Hotel Booking</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Hotel Booking List</h4>
+            <hr>
+        
+            <div>
+                <form class="form-search">
+                    <input type="text" class="input-medium search-query">
+                    <button type="submit" class="btn">Search</button>
+                </form>
+            </div>
+            <div ng-app="" ng-controller="customersController">
+
+                <table class="table table-hover table-flight-booking">
+                    <thead>
+                        <tr>
+                            <th class="number">#</th>
+                            <th class="booking-number">Booking Number</th>
+                            <th class="booking-date">Booking Date</th>
+                            <th class="booking-reserve-name">Reserve Name</th>
+                            <th class="booking-status">Status</th>
+                            <th class="booking-occupants">Occupants</th>
+                            <th class="booking-hotel">Hotel</th>
+                            <th class="booking-checkin">Checkin</th>
+                            <th class="booking-checkout">Checkout</th>
+                            <th class="booking-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var i = 1;
+                            foreach (var item in Model)
+                            {
+
+                                var dateBooking = item.RsvTime.Value.ToString("yyyy MMMM dd");
+                                var checkOut = item.CheckOutDate.Value.ToString("yyyy MMMM dd");
+                                var checkIn = item.CheckInDate.Value.ToString("yyyy MMMM dd");
+
+                                var status = item.PaymentStatusCd;
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => i)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(item.RsvNo, "HotelBookingDetail", new {rsvno = item.RsvNo})
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => dateBooking)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ContactName)
+                                    </td>
+                                    <td class="booking-status">
+                                        <span class="label label-success">@status</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GuestName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.HotelNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => checkIn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => checkOut)
+                                    </td>
+                                    <td class="booking-action">
+                                        <a href="#" class="btn btn-xs btn-success"><span class="fa fa-check"> check</span></a>
+                                        <a href="#" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a>
+                                        <a href="#" class="btn btn-xs btn-danger"><span class="fa fa-trash"> delete</span></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                    
+                </table>
+
+            </div>
+        
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->
+
+<!--
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+    <table class="table table-hover table-flight-booking">
+        <thead>
+            <tr>
+                <th class="number">#</th>
+                <th class="booking-number">Booking Number</th>
+                <th class="booking-date">Booking Date</th>
+                <th class="booking-reserve-name">Reserve Name</th>
+                <th class="booking-status">Status</th>
+                <th class="booking-occupants">Occupants</th>
+                <th class="booking-hotel">Hotel</th>
+                <th class="booking-checkin">Checkin</th>
+                <th class="booking-checkout">Checkout</th>
+                <th class="booking-action">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+                    
+    
+                    <tbody>
+                        <tr ng-repeat="x in names">
+                            <td>1</td>
+                            <td>{{ x.RsvNo }}</td>
+                            <td>{{ x.RsvTime }}</td>
+                            <td>{{ x.ContactName }}</td>
+                            <td>{{ x.PaymentStatusCd }}</td>
+                            <td>{{ x.GuestName }}</td>
+                            <td>{{ x.HotelNo }}</td>
+                            <td>{{ x.CheckInDate }}</td>
+                            <td>{{ x.CheckOutDate }}</td>
+                        </tr>
+                    </tbody>
+                    
+           
+            </table>
+      <script>
+                function customersController($scope) {
+                    console.log('getting data');
+                    $scope.names = @Html.Raw(Json.Encode(Model));//$('table#data-placement').attr('data-table');
+
+                    console.log('JEMPING BAWAH');
+                    console.log($scope.names);
+
+                }
+
+            </script>
+    -->

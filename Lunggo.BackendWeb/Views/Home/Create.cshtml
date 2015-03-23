@@ -1,0 +1,30 @@
+﻿@using Lunggo.Flight.Model
+@using Lunggo.Repository.TableRecord
+@model Lunggo.Flight.Model.FlightReservationIntegrated
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>FlightReservationIntegrated</h4>
+        <hr />
+        @Html.EditorFor(item => Model.Trip[1].TripId)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

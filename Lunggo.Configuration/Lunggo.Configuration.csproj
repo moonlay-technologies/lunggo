@@ -83,6 +83,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CustomerWeb\domain.properties" />
+    <None Include="Config\CustomerWeb\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\HotelLocation.csv" />
+    <None Include="Config\WebAPI\domain.properties" />
+    <None Include="Config\WebAPI\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\azurestorage.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\db.properties" />
+    <None Include="Config\WebAPI\freshdesk.properties" />
+    <None Include="Config\WebAPI\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\veritrans.properties" />
+    <None Include="Config\WebAPI\zendesk.properties" />
+    <None Include="Config\CustomerWeb\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\freshdesk.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\general.properties">
@@ -130,6 +155,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Config\Common\i18n_message.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MailTemplate\TemplateFiles\HTMLPage1.html" />
     <Content Include="MailTemplate\TemplateFiles\TestHtml.html" />
   </ItemGroup>

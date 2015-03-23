@@ -1,0 +1,109 @@
+﻿@using System.Runtime.Serialization
+@using System.Web.UI.WebControls
+
+@model List<Lunggo.BackendWeb.Query.GetBookingPendingRecord>
+
+@{
+    ViewBag.Title = "SearchResult";
+    ViewBag.ActiveMenu = "SearchResult";
+}
+
+
+
+<h3><i class="fa fa-angle-right"></i> Search Result</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    var i = 1;
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Search Result List</h4>
+                <hr>
+                <div ng-app="" ng-controller="customersController">
+
+                    <table class="table table-hover table-flight-booking">
+                        <thead>
+                            <tr>
+                                <th class="number">#</th>
+                                <th class="booking-number">Booking Number</th>
+                                <th class="booking-number">Type Data</th>
+                                <th class="booking-reserve-name">Reserve Name</th>
+                                <th class="booking-date">Booking Date</th>
+                                <th class="booking-status">Booking Status</th>
+                                <th class="booking-FinalPrice">Total Price</th>
+                                <th class="booking-PaymentMethodCd">Payment Method</th>
+                                <th class="booking-PaymentStatusCd">Payment Status</th>
+                                <th class="booking-action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @foreach (var item in Model)
+                            {
+
+                                var dateBooking = item.RsvTime.Value.ToString("yyyy MMMM dd");
+
+                                var status = item.RsvStatusCd;
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => i)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RsvNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Type)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ContactName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => dateBooking)
+                                    </td>
+                                    <td class="booking-status">
+                                        <span class="label label-success">@status</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FinalPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentMethodCd)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentStatusCd)
+                                    </td>
+                                    
+                                    @Html.HiddenFor(modelItem => Model[i-1].RsvNo)
+                                    @Html.HiddenFor(modelItem => Model[i - 1].Type)
+
+                                    <td class="booking-action">
+                                        @Html.RadioButtonFor(modelItem => Model[i - 1].rdSelection, "unpaid", new { @checked = "checked" })
+                                        <span style="display: inline">Unpaid </span>
+
+                                        @Html.RadioButtonFor(modelItem => Model[i - 1].rdSelection, "paid")
+                                        <span style="display: inline">Paid </span>
+                                    </td>
+
+                                </tr>
+                                i++;
+                            }
+                                
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="submit" value="SAVE" class="btn btn-primary form-control" style="max-width: none" />
+                        </div>
+                    </div>
+                </div>
+            </div><!--/content-panel -->
+        </div><!-- /col-md-12 -->
+    </div><!-- row -->
+}
