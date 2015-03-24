@@ -24,6 +24,8 @@ namespace Lunggo.Configuration
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
         private const string ConfigDirectoryName = "Config";
+        private const string ConfigurationProject = "Configuration";
+        private const string CommonDirectoryName = "Common";
         private const string LogDirectoryName = "Log";
         private const string ExcelConfigurationFile = "Lunggo_Config.xlsx";
         private const int ExcelColumnGeneratedNameIndex = 4;
@@ -43,7 +45,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler" };
+            String[] projectList = { "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler", "WebAPI" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -54,7 +56,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
+            generator.StartConfig(DeploymentEnvironment.Development, projectList);
             //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -103,8 +105,8 @@ namespace Lunggo.Configuration
 
             for (var row = ExcelRowDefaultStart; row <= excelRowCount; row++)
             {
-                string variableName = xlRange.Cells[row, ExcelColumnGeneratedNameIndex].Value2;
-                string resultValue = xlRange.Cells[row, columnValueIndex].Value2;
+                string variableName = xlRange.Cells[row, ExcelColumnGeneratedNameIndex].Text;
+                string resultValue = xlRange.Cells[row, columnValueIndex].Text;
                 if (IsCellsNotNull(variableName, resultValue))
                     dictionaryConfig.Add(variableName, resultValue);
             }
@@ -125,6 +127,18 @@ namespace Lunggo.Configuration
                 var configFile = CreateProjectConfigurationFile(project);
                 WriteConfigurationFileToProject(configFile, project);
                 WriteConfigurationFileToLog(configFile, project);
+                var nonConfigFiles = GetAllNonConfigFilesByProjectName(project);
+                foreach (var nonConfigFile in nonConfigFiles)
+                {
+                    WriteNonConfigurationFileToProject(nonConfigFile, project);
+                    WriteNonConfigurationFileToLog(nonConfigFile, project);
+                }
+                var commonFiles = GetAllCommonFiles();
+                foreach (var commonFile in commonFiles)
+                {
+                    WriteCommonFileToProject(commonFile, project);
+                    WriteCommonFileToLog(commonFile, project);
+                }
             }
         }
 
@@ -136,6 +150,32 @@ namespace Lunggo.Configuration
         private void WriteConfigurationFileToLog(XmlDocument file, String projectName)
         {
             file.Save(Path.Combine(_currentExecutionDir, projectName, FinalProjectConfigFile));
+        }
+
+        private void WriteNonConfigurationFileToProject(string file, String projectName)
+        {
+            var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", projectName, file);
+            var destinationPath = Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", file);
+            File.Copy(sourcePath, destinationPath, true);
+        }
+        private void WriteNonConfigurationFileToLog(string file, String projectName)
+        {
+            var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", projectName, file);
+            var destinationPath = Path.Combine(_currentExecutionDir, projectName, FinalProjectConfigFile);
+            File.Copy(sourcePath, destinationPath, true);
+        }
+
+        private void WriteCommonFileToProject(string file, String projectName)
+        {
+            var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", CommonDirectoryName, file);
+            var destinationPath = Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", file);
+            File.Copy(sourcePath, destinationPath, true);
+        }
+        private void WriteCommonFileToLog(string file, String projectName)
+        {
+            var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", CommonDirectoryName, file);
+            var destinationPath = Path.Combine(_currentExecutionDir, projectName, file);
+            File.Copy(sourcePath, destinationPath, true);
         }
 
         private void CreateProjectLogDirectory(String projectName)
@@ -176,6 +216,20 @@ namespace Lunggo.Configuration
         {
             var allFilesInPath = Directory.GetFiles(Path.Combine(ParentConfigPath,projectName), FileExtension);
             return allFilesInPath;
+        }
+
+        private IEnumerable<string> GetAllNonConfigFilesByProjectName(string projectName)
+        {
+            var allFilesInPath = Directory.GetFiles(Path.Combine(ParentConfigPath, projectName));
+            var allConfigFilesInPath = Directory.GetFiles(Path.Combine(ParentConfigPath, projectName), FileExtension);
+            var allNonConfigFilesInPath = allFilesInPath.Except(allConfigFilesInPath);
+            return allNonConfigFilesInPath.Select(Path.GetFileName);
+        }
+
+        private IEnumerable<string> GetAllCommonFiles()
+        {
+            var allFilesInPath = Directory.GetFiles(Path.Combine(ParentConfigPath, CommonDirectoryName));
+            return allFilesInPath.Select(Path.GetFileName);
         }
 
         private Dictionary<String,Dictionary<String,String>> GetAppliedConfig(String projectName)

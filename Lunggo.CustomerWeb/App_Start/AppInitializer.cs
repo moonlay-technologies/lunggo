@@ -1,9 +1,11 @@
 ﻿using System.Web;
 using log4net;
+using Lunggo.ApCommon.Constant;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.I18nMessage;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
@@ -18,9 +20,28 @@ namespace Lunggo.CustomerWeb
             InitConfigurationManager();
             InitI18NMessageManager();
             InitUniqueIdGenerator();
-            InitDatabaseService();
-            InitQueueService();
-            InitLogger();
+            InitRedisService();
+            //InitDatabaseService();
+            //InitQueueService();
+            //InitLogger();
+        }
+
+        private static void InitRedisService()
+        {
+            var redisService = RedisService.GetInstance();
+            redisService.Init(new RedisConnectionProperty[]
+            {
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                },
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.MasterDataCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                }, 
+            });
         }
 
         private static void InitConfigurationManager()
@@ -66,6 +87,7 @@ namespace Lunggo.CustomerWeb
         }
         private static void InitLogger()
         {
+            log4net.Config.XmlConfigurator.Configure();
             ILog Log = log4net.LogManager.GetLogger("Log");
             LunggoLogger.GetInstance().init(Log);
         }

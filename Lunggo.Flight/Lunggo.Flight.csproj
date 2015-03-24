@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,6 +70,8 @@
     <Compile Include="Query\GetFlightTripQuery.cs" />
     <Compile Include="Query\GetFlightReservationQuery.cs" />
     <Compile Include="Query\GetFlightRsvNoQuery.cs" />
+	<Compile Include="Query\GetFlightBookingDetailByBookingNumberQuery.cs" />
+    <Compile Include="Query\GetFlightBookingDetailBySearchParamsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

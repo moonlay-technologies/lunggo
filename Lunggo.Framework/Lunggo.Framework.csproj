@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,7 +55,7 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <Private>False</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -74,6 +75,9 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -91,6 +95,7 @@
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,6 +134,7 @@
     <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
+    <Compile Include="Error\Error.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
     <Compile Include="Http\Http.cs" />
@@ -183,6 +189,8 @@
     <Compile Include="Queue\AzureQueueExtension.cs" />
     <Compile Include="Queue\IQueueClient.cs" />
     <Compile Include="Queue\QueueService.cs" />
+    <Compile Include="Redis\RedisConnectionProperty.cs" />
+    <Compile Include="Redis\RedisService.cs" />
     <Compile Include="Sequence\SequenceBase.cs" />
     <Compile Include="Sequence\SequenceProperties.cs" />
     <Compile Include="SharedModel\AzureTraceAppender.cs" />
@@ -229,6 +237,8 @@
     <Compile Include="TicketSupport\ITicketSupportClient.cs" />
     <Compile Include="TicketSupport\TicketSupportService.cs" />
     <Compile Include="TicketSupport\ZendeskTicketClient.cs" />
+    <Compile Include="Util\CompressionUtil.cs" />
+    <Compile Include="Util\DateTimeUtil.cs" />
     <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Util\ReflectionUtil.cs" />
     <Compile Include="Util\StreamUtil.cs" />

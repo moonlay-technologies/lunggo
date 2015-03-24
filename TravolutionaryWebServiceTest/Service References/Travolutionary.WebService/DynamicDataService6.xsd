@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="CreditCardType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unspecified" />
+      <xs:enumeration value="Visa" />
+      <xs:enumeration value="MasterCard" />
+      <xs:enumeration value="AmericanExpress" />
+      <xs:enumeration value="Diners" />
+      <xs:enumeration value="Discover" />
+      <xs:enumeration value="Eurocard" />
+      <xs:enumeration value="Maestro" />
+      <xs:enumeration value="JCB" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CreditCardType" nillable="true" type="tns:CreditCardType" />
+  <xs:simpleType name="PaymentMethod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Cash" />
+      <xs:enumeration value="CreditCardInternal" />
+      <xs:enumeration value="CreditCardExternal" />
+      <xs:enumeration value="PayUponArrival" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PaymentMethod" nillable="true" type="tns:PaymentMethod" />
+  <xs:simpleType name="FlightClassType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Economy" />
+      <xs:enumeration value="PremiumEconomy" />
+      <xs:enumeration value="Business" />
+      <xs:enumeration value="First" />
+      <xs:enumeration value="PremiumFirst" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FlightClassType" nillable="true" type="tns:FlightClassType" />
+  <xs:simpleType name="FlightConnectionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TwoConn" />
+      <xs:enumeration value="OneConn" />
+      <xs:enumeration value="NonStop" />
+      <xs:enumeration value="Direct" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FlightConnectionType" nillable="true" type="tns:FlightConnectionType" />
+  <xs:simpleType name="LocationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Airport" />
+      <xs:enumeration value="City" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LocationType" nillable="true" type="tns:LocationType" />
+  <xs:simpleType name="FlightMealPreference">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Any" />
+      <xs:enumeration value="Vegeterian" />
+      <xs:enumeration value="GlutenFree" />
+      <xs:enumeration value="Kosher" />
+      <xs:enumeration value="LowCholesterol" />
+      <xs:enumeration value="LowSalt" />
+      <xs:enumeration value="LowProtein" />
+      <xs:enumeration value="NonLactose" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FlightMealPreference" nillable="true" type="tns:FlightMealPreference" />
+  <xs:simpleType name="FlightSeatPreference">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Any" />
+      <xs:enumeration value="Window" />
+      <xs:enumeration value="Aisle" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FlightSeatPreference" nillable="true" type="tns:FlightSeatPreference" />
+  <xs:simpleType name="ServiceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Cars" />
+      <xs:enumeration value="Hotels" />
+      <xs:enumeration value="Flights" />
+      <xs:enumeration value="General">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Payment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ServiceType" nillable="true" type="tns:ServiceType" />
+  <xs:simpleType name="PaymentPeriod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WholePeriod" />
+      <xs:enumeration value="PerDay" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PaymentPeriod" nillable="true" type="tns:PaymentPeriod" />
+  <xs:simpleType name="Refundability">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Refundable" />
+      <xs:enumeration value="Nonrefundable" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Refundability" nillable="true" type="tns:Refundability" />
+  <xs:simpleType name="CityTaxType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Absolute" />
+      <xs:enumeration value="Range" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CityTaxType" nillable="true" type="tns:CityTaxType" />
+  <xs:simpleType name="CreditCardPayment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ImmediatePayment" />
+      <xs:enumeration value="Guarantee" />
+      <xs:enumeration value="Deposit" />
+      <xs:enumeration value="NotRequierd" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CreditCardPayment" nillable="true" type="tns:CreditCardPayment" />
+</xs:schema>

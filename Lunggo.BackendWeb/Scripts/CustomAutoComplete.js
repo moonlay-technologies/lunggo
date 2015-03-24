@@ -29,14 +29,22 @@ function BindAutoComplete() {
                                     value: item.Name,
                                     selectedValue: item.Code
                                 }
-                            } else {
+                            }
+                            else if (autocompletetype == 'Hotel') {
+                                return {
+                                    label: item.LocationName + ', ' + item.CountryName,
+                                    value: item.LocationName + ', ' + item.CountryName,
+                                    selectedValue: item.LocationId
+                                }
+                            }
+                            else {
                                 return {
                                     label: item,
                                     value: item,
                                     selectedValue: item
                                 }
                             }
-                            
+
                         }));
                     },
                     error: function (data) {

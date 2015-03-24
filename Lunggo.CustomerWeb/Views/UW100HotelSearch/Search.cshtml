@@ -1,0 +1,153 @@
+﻿@model Lunggo.CustomerWeb.WebSrc.UW100.Object.Uw100HotelSearchResponse
+
+@{
+    ViewBag.Title = "Search";
+}
+
+@{
+    ViewBag.Title = "Hotel Search List";
+}
+
+<div class="page hotel-section hotel-search-list-page" ng-controller="HotelController as hotel_list">
+    <div class="container">
+
+        <!-- BREADCRUMB START -->
+        <div class="row">
+            <section class="col-sm-12">
+                <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Hotel</a></li>
+                    <li class="active">Jakarta</li>
+                </ol>
+            </section>
+        </div>
+        <!-- BREADCRUMB END -->
+
+        <div class="row">
+            <!-- HOTEL SEARCH SIDEBAR START -->
+            <div class="col-sm-3">
+                <aside class="hotel-list-filter sidebar">
+                    <h3 class="sidebar-title">Filter Pencarian</h3>
+                    <div class="filter filter-hotel-location">
+                        <h5 class="filter-title">Lokasi hotel</h5>
+                        <div class="filter-content">
+                            <input type="text" class="form-control" placeholder="Negara / Provinsi / Kota">
+                        </div>
+                    </div>
+                    <div class="filter filter-hotel-date">
+                        <h5 class="filter-title">Tanggal Tinggal</h5>
+                        <div class="filter-content">
+
+                        </div>
+                    </div>
+                    <div class="filter filter-hotel-star">
+                        <h5 class="filter-title">Penilaian hotel</h5>
+                        <div class="filter-content">
+                            <div class="form-group">
+                                <label for="hotel-star-5"> <input type="checkbox" id="hotel-star-5"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel-star-4"> <input type="checkbox" id="hotel-star-4"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel-star-3"> <input type="checkbox" id="hotel-star-3"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel-star-2"> <input type="checkbox" id="hotel-star-2"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel-star-1"> <input type="checkbox" id="hotel-star-1"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span></span></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hotel-star-0"> <input type="checkbox" id="hotel-star-0"> Tidak ada bintang </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter">
+                        <h5 class="filter-title">Tarif Hotel</h5>
+                        <div class="filter-content">
+                            <input type="text" class="form-control" placeholder="harga terendah">
+                            <span>sampai</span>
+                            <input type="text" class="form-control" placeholder="harga termahal">
+                        </div>
+                    </div>
+                    <div class="filter filter-action">
+                        <a href="#" class="btn btn-primary" ng-click="load_hotel_list()">search</a>
+                    </div>
+                </aside>
+            </div>
+            <!-- HOTEL SEARCH SIDEBAR END -->
+            <!-- MAIN SECTION START -->
+            <section class="main-content hotel-search-list-content">
+                <div class="col-sm-9">
+
+                    <h1 class="page-title">Hotel di Jakarta</h1>
+                    <h5 class="page-subtitle">{{hotel_list.hotelsTotal}} Hotel ditemukan untuk tanggal @Model.StayDate.ToString()</h5>
+
+                    <!-- .hotel-list-detail start -->
+                    <div class="hotel-list-detail">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="hotel-list-option form-inline text-right">
+                                    <div class="form-group hotel-list-option-view">
+                                        <label for="listing-view-detail" class="control-label">Perlihatkan dalam:</label>
+                                        <a href="#" class="active change-listing-view view-square" title="bentuk kotak" data-view-type="square"><span class="glyphicon glyphicon-th"></span></a>
+                                        <a href="#" class="change-listing-view view-row" title="bentuk list" data-view-type="row"><span class="glyphicon glyphicon-th-list"></span></a>
+                                    </div>
+                                    <div class="form-group hotel-list-option-sort">
+                                        <label for="listing-sort" class="control-label">Urutkan :</label>
+                                        <select name="#" id="listing-sort" class="form-control">
+                                            <option value="#">Rekomendasi</option>
+                                            <option value="#">Terbaru</option>
+                                            <option value="#">Termurah</option>
+                                            <option value="#">Abjad</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .hotel-list-detail end -->
+                    <!-- .hotel-list-wrapper start -->
+                    <section class="hotel-list-wrapper" data-locationid="@Model.LocationId" data-staydate="@Model.StayDate.ToString("yyyy-MM-dd")" data-staylength="@Model.StayLength" data-roomoccupant="@Model.RoomOccupants.Count()">
+                        <ul class="row hotel-list">
+
+                            <!-- Hotel list template start -->
+                            <li class="col-sm-4" ng-repeat="hotel in hotel_list.hotels">
+                                <div class="hotel">
+                                    <img src="/assets/images/hotel-preview.jpg" alt="Hotel Sample" class="hotel-image">
+                                    <h3 class="hotel-name">{{ hotel.HotelName }}<span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span></h3>
+                                    <h4 class="hotel-price">
+                                        <small>Room stars from</small>
+                                        <span>{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</span>
+                                        <small>per night</small>
+                                    </h4>
+                                    <div class="hotel-action">
+                                        <a href="/uw200/uw200HotelDetail?HotelId={{ hotel.HotelId }}" class="btn btn-primary">Book</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Hotel list template end -->
+
+                        </ul>
+                        <nav class="hotel-list-pagination text-center">
+                            <ul class="pagination">
+                                <li class="disabled"><span>sebelumnya</span></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">berikutnya</a></li>
+                            </ul>
+                        </nav>
+                    </section>
+                    <!-- .hotel-list-wrapper end -->
+
+                </div>
+            </section>
+            <!-- MAIN SECTION END -->
+        </div>
+
+    </div>
+</div>

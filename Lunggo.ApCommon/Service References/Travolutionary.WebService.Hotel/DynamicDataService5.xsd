@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://gimmonix/carsolize/public" elementFormDefault="qualified" targetNamespace="http://gimmonix/carsolize/public" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd2" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" />
+  <xs:import schemaLocation="http://services.carsolize.com/BookingServices/DynamicDataService.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.General" />
+  <xs:complexType name="FlightSearchRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceSearchRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DaysAfter" type="xs:int" />
+          <xs:element minOccurs="0" name="DaysBefore" type="xs:int" />
+          <xs:element minOccurs="0" name="DirectsFlights" type="xs:boolean" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="FlightClass" type="q1:FlightClassType" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" minOccurs="0" name="FlightConnectionType" type="q2:FlightConnectionType" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" minOccurs="0" name="FlightRoute" nillable="true" type="q3:ArrayOfFlightLegRequest" />
+          <xs:element minOccurs="0" name="Passengers" nillable="true" type="tns:ArrayOfRequestPersonType" />
+          <xs:element minOccurs="0" name="RefundableOnly" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ResponseLanguage" nillable="true" type="xs:string" />
+          <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SpecificCarriers" nillable="true" type="q4:ArrayOfstring" />
+          <xs:element minOccurs="0" name="UserId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FlightSearchRequest" nillable="true" type="tns:FlightSearchRequest" />
+  <xs:complexType name="ArrayOfRequestPersonType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RequestPersonType" nillable="true" type="tns:RequestPersonType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRequestPersonType" nillable="true" type="tns:ArrayOfRequestPersonType" />
+  <xs:complexType name="RequestPersonType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Count" type="xs:int" />
+      <xs:element minOccurs="0" name="PassengerType" type="PersonType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestPersonType" nillable="true" type="tns:RequestPersonType" />
+  <xs:complexType name="FareInfoRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element name="RouteId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FareInfoRequest" nillable="true" type="tns:FareInfoRequest" />
+  <xs:complexType name="FlightBookRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ServiceRequest">
+        <xs:sequence>
+          <xs:element name="BookingPrice" type="xs:double" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Payment" minOccurs="0" name="Card" nillable="true" type="q5:PaymentCard">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LeadPaxId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.General" minOccurs="0" name="Passengers" nillable="true" type="q6:ArrayOfFlightCustomerInfo" />
+          <xs:element minOccurs="0" name="ProviderCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RoutePackageGuid" type="ser:guid" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/IsuBe.Base.Enums" name="SelectedPaymentMethod" type="q7:PaymentMethod" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FlightBookRequest" nillable="true" type="tns:FlightBookRequest" />
+  <xs:complexType name="ArrayOfFlightSegmentBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlightSegmentBookResponse" nillable="true" type="tns:FlightSegmentBookResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlightSegmentBookResponse" nillable="true" type="tns:ArrayOfFlightSegmentBookResponse" />
+  <xs:complexType name="FlightSegmentBookResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BookingId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BookingReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BookingStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastTicketingDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderId" type="xs:long" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Remarks" nillable="true" type="q8:ArrayOfstring" />
+      <xs:element minOccurs="0" name="SegmentId" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightSegmentBookResponse" nillable="true" type="tns:FlightSegmentBookResponse" />
+  <xs:complexType name="FlightSearchResponse">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AirportCodes" nillable="true" type="q9:ArrayOfKeyValueOfstringstring" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" minOccurs="0" name="Flights" nillable="true" type="q10:ArrayOfFlightRouteGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlightSearchResponse" nillable="true" type="tns:FlightSearchResponse" />
+  <xs:complexType name="FareInfoResponse">
+    <xs:sequence>
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/IsuBe.Public.Enteties.Flights" minOccurs="0" name="Result" nillable="true" type="q11:FlightRoute" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FareInfoResponse" nillable="true" type="tns:FareInfoResponse" />
+</xs:schema>
