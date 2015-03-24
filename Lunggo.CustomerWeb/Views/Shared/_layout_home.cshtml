@@ -8,17 +8,19 @@
     <title>Travorama</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/application.css">
 
 </head>
 <body>
+
+
     <!-- page start -->
-    <div class="page">
+    <div class="page home-page">
 
         <!-- site header start -->
-        <header id="site-header" class="site-header">
+        <header id="site-header" class="site-header home-header">
             <nav class="main-menu">
                 <div class="container">
                     <div class="row">
@@ -37,39 +39,55 @@
                     </div>
                 </div>
             </nav>
-            <section class="search">
-                <section class="search-hotel">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <form action="#" class="form-inline search-hotel-form">
-                                    <div class="form-group">
-                                        <span class="fa fa-building"></span><input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location.">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-checkin" placeholder="checkin">
-                                    </div>
-                                    <div class="form-group">
-                                        <span class="form-dash">-</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-checkout" placeholder="checkout">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-room" placeholder="room">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                    </div>
-                                </form>
-
+            <section class="header-form">
+                <section class="hotel-form">
+                    <section class="site-tag">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h1><img src="assets/images/enjoy.png" alt="Enjoy Your Every Moment"><br />However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h1>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <div class="search-flight"></div>
-            </section>
+                    </section>
+                    <section class="search">
+                        <section class="search-hotel">
+                            <div class="container wide">
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <form action="#" class="form-inline search-hotel-form">
+                                            <div class="form-group loc-auto-wrapper">
+                                                <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
+                                                <div class="loc-auto">
+                                                    <ul></ul>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-checkin" placeholder="checkin">
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="form-dash">-</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-checkout" placeholder="checkout">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-room" placeholder="room">
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary btn-yellow">SEARCH</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="search-flight"></div>
+                    </section>
+                </section><!-- .hotel-form -->
+            </section><!-- .header-form -->
         </header>
         <!-- site header end -->
         <!-- site content start -->

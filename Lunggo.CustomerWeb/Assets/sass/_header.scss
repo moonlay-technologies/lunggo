@@ -1,0 +1,40 @@
+#site-header {background:url(../images/header-bg.jpg) center top no-repeat #005892; padding:20px 0 40px;}
+
+.main-menu {color:#fff; text-transform:uppercase; text-align:center;
+	img {}
+	li+li {margin-right:10px; margin-top:25px; font-weight:bold;}
+	li+li a {font-size:18px;}
+	li+li.active a {color:#f3bd00;}
+	li:last-child {margin-right:0;}
+	li:last-child a {font-weight:normal;}
+	a {color:#fff;}
+}
+
+.site-tag {text-align:center; color:#fff; margin-bottom:20px; margin-top:20px;
+	img {margin-bottom:10px;}
+	h1 {font-size:15px;}
+}
+.home-header .search {margin-top:0;}
+
+section.search {margin-top:40px;
+	section.search-hotel {color:#fff; text-align:center;
+		.fa {font-size:42px; vertical-align:middle;}
+		input[type="text"] {padding:20px 10px; font-size:14px;}
+		.form-dash {font-size:32px;}
+		.input-location {width:250px;}
+		input.input-checkin {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px;}
+		input.input-checkout {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px;}
+		input.input-room {width:200px; background:url(../images/bed-bg.png) 10px center no-repeat #fff; padding-left:50px;}
+		.btn {@extend .gotham; padding:10px 20px;}
+
+		// if container wide
+		.container.wide {
+			input[type="text"] {font-size:18px;}
+			input.input-location {width:350px;}
+			input.input-checkin {width:150px;}
+			input.input-checkout {width:150px;}
+			input.input-room {width:200px;}
+		}
+	}
+	section.search-flight {}
+}

@@ -1,121 +1,164 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "HotelCheckout";
 }
-<div class="page hotel-checkout-page hotel-checkout-section">
+
+<!-- .checkout-page content start -->
+<div class="checkout-page hotel-checkout-page">
+
+    <header class="page-header">
+        <div class="container">
+            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
+            <hr>
+            <h1><b>CUSTOMER</b> DETAIL</h1>
+        </div>
+    </header>
 
     <div class="container">
-        <!-- breadcrumb start -->
         <div class="row">
-            <section class="col-sm-12">
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Checkout</a></li>
-                    <li class="active">Payment</li>
-                </ol>
-            </section>
-        </div>
-        <!-- breadcrumb end -->
-        <!-- main content start -->
-        <div class="row">
+
             <div class="col-sm-8">
-
-                <section class="checkout-detail form-horizontal" role="form">
-                    <h2 class="page-title">Reservation Detail</h2>
-                    <h3>Guest detail</h3>
-                    <div class="form-group">
-                        <label for="form-first-name" class="control-label col-sm-4">First Name</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="form-first-name" placeholder="First Name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-last-name" class="control-label col-sm-4">Last Name</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="form-last-name" placeholder="Last Name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-email" class="control-label col-sm-4">Email</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="form-email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-email-confirm" class="control-label col-sm-4">Email Confirmation</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="form-email-confirm" placeholder="Email Confirmation">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-phone" class="control-label col-sm-4">Phone</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="form-phone" placeholder="your phone number">
-                        </div>
-                    </div>
-                    <hr>
-                    <h3>Payment Options</h3>
-                    <div class="payment-options">
-                        <div role="tabpanel">
-
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-pills" role="tablist">
-                                <li role="presentation" class="active"><a href="#payment-transfer" aria-controls="home" role="tab" data-toggle="tab">Transfer Bank</a></li>
-                                <li role="presentation"><a href="#payment-bcaklikpay" aria-controls="profile" role="tab" data-toggle="tab">BCA Klikpay</a></li>
-                                <li role="presentation"><a href="#payment-mandiriclickpay" aria-controls="messages" role="tab" data-toggle="tab">Mandiri Clickkpay</a></li>
-                                <li role="presentation"><a href="#payment-creditcard" aria-controls="settings" role="tab" data-toggle="tab">Kartu Kredit</a></li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="payment-transfer">transfer bank</div>
-                                <div role="tabpanel" class="tab-pane" id="payment-bcaklikpay">BCA klikpay</div>
-                                <div role="tabpanel" class="tab-pane" id="payment-mandiriclickpay">Mandiri Clickpay</div>
-                                <div role="tabpanel" class="tab-pane" id="payment-creditcard">Kartu kredit</div>
+                <section class="customer-detail">
+                    <section class="customer-form">
+                        <form action="#" class="form">
+                            <div class="form-group">
+                                <label for="" class="control-label">Name (Buyer) :</label>
+                                <input type="text" class="form-control" placeholder="Nama sesuai KTP / SIM">
                             </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Phone Number :</label>
+                                <input type="text" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Email :</label>
+                                <input type="text" class="form-control" placeholder="ex : nama@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Guest :</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Special Request :</label>
+                            </div>
+                        </form>
+                    </section><!-- .customer-form -->
+                    <section class="payment-form">
+                        <h2><b>PAYMENT</b> METHOD</h2>
 
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row form-footer">
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-lg btn-gray">Return to hotel details</a>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="#" class="btn btn-lg btn-primary">Continue</a>
-                        </div>
-                    </div>
-                </section>
+                        <section class="payment-option">
+                            <form action="#" class="form">
+                                <label class="payment-transfer" for="payment-transfer">
+                                    <input type="radio" name="payment-option" id="payment-transfer">
+                                    <span>Transfer Bank</span>
+                                </label>
+                                <label class="payment-credit" for="payment-credit">
+                                    <input type="radio" name="payment-option" id="payment-credit">
+                                    <span>Kartu Kredit</span>
+                                </label>
+                                <label class="payment-bca" for="payment-bca">
+                                    <input type="radio" name="payment-option" id="payment-bca">
+                                    <span>BCA KlikPay</span>
+                                </label>
+                                <label class="payment-mandiri" for="payment-mandiri">
+                                    <input type="radio" name="payment-option" id="payment-mandiri">
+                                    <span>Mandiri ClickPay</span>
+                                </label>
+                                <label class="payment-cimb" for="payment-cimb">
+                                    <input type="radio" name="payment-option" id="payment-cimb">
+                                    <span>CIMB Click</span>
+                                </label>
+                            </form>
+                        </section><!-- .payment-option -->
+                        <section class="payment-detail">
+                            <section class="payment-transfer-detail">
+                                <h4>Transfer</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
+                            </section>
+                            <section class="payment-credit-detail">
+                                <h4>Credit Card</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
+                            </section>
+                            <section class="payment-bca-detail">
+                                <h4>BCA KlikPay</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, beatae magni sit et, accusantium quo reprehenderit temporibus consectetur, nihil voluptatibus laborum vel numquam repellat excepturi modi mollitia doloremque voluptate. Sapiente.</p>
+                            </section>
+                            <section class="payment-mandiri-detail">
+                                <h4>Mandiri ClickPay</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quibusdam, tempora numquam pariatur sit saepe magnam assumenda voluptates rem rerum nesciunt facilis nisi esse modi totam ipsum, quaerat vitae reprehenderit?</p>
+                            </section>
+                            <section class="payment-cimb-detail">
+                                <h4>CIMB</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis doloremque iusto in, sunt vero voluptas voluptate! Perferendis, distinctio aliquid, voluptate vero reiciendis laudantium dolorem laboriosam ipsam ad. Dolorum, id, nostrum.</p>
+                            </section>
+                        </section><!-- .payment-detail -->
 
-            </div>
+                    </section><!-- .payment-form -->
+                    <section class="payment-button">
+                        <button class="btn btn-primary btn-yellow">BAYAR</button>
+                    </section><!-- .payment-button -->
+                </section><!-- .customer-detail -->
+            </div><!-- .col-sm-8 -->
+
             <div class="col-sm-4">
-
-                <section class="checkout-summary">
-                    <h2 class="page-title">Room Detail</h2>
-                    <div class="reservation-hotel">
-                        <img src="/assets/images/hotel-preview.jpg" alt="Grand Hyatt Hotel Jakarta" class="hotel-image">
-                        <h4 class="hotel-name">Grand Hyatt Hotel Jakarta</h4>
-                    </div>
-                    <div class="reservation-room">
+                <section class="order-detail">
+                    <h2><b>ORDER</b> DETAILS</h2>
+                    <section class="hotel-detail">
+                        <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel" class="hotel-image">
+                        <h3 class="hotel-name">AMARIS HOTEL</h3>
+                        <p class="hotel-star"> <span class="star"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </span> </p>
+                        <p class="hotel-address">Jl. Karet Pasar Gang Tiong No.62</p>
+                    </section><!-- .hotel-detail -->
+                    <section class="checkin-detail">
                         <div class="row">
-                            <div class="col-sm-4">Check-in</div>
-                            <div class="col-sm-8 text-right">Rabu , 1 November 2014</div>
+                            <div class="col-sm-6">Check-in Date</div>
+                            <div class="col-sm-6">2015 Februari 30</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">Check-out</div>
-                            <div class="col-sm-8 text-right">Kamis, 2 November 2014</div>
+                            <div class="col-sm-6">Check-out Date</div>
+                            <div class="col-sm-6">2015 Februari 31</div>
                         </div>
-                    </div>
-                    <div class="reservation-price">
-                        <h5><strong>Total</strong> including taxes and service charge</h5>
-                        <h3 class="text-center">Rp. 1.200.000</h3>
-                    </div>
-                </section>
+                        <div class="row">
+                            <div class="col-sm-6">Number of Rooms</div>
+                            <div class="col-sm-6">3 Rooms</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Nights</div>
+                            <div class="col-sm-6">3 Nights</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Room Package</div>
+                            <div class="col-sm-6">3 Deluxe Room Package</div>
+                        </div>
+                    </section><!-- .checkin-detail -->
+                    <section class="price-detail">
+                        <h2><b>PRICE</b> DETAIL</h2>
+                        <div class="content-wrapper">
+                            <div class="row">
+                                <div class="col-sm-6">3 Rooms</div>
+                                <div class="col-sm-6">Rp 3.900.000</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">Tax</div>
+                                <div class="col-sm-6">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">Travorama Fee</div>
+                                <div class="col-sm-6">0</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">TOTAL</div>
+                                <div class="col-sm-6">Rp 3.900.000</div>
+                            </div>
+                        </div>
+                    </section><!-- .price-detail -->
+                </section><!-- .order-detail -->
+            </div><!-- .col-sm-4 -->
 
-            </div>
         </div>
-        <!-- main content end -->
     </div>
 
 
+
+
+
 </div>
+<!-- .checkout-page content end -->

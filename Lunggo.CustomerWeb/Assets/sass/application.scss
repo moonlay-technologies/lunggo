@@ -1,0 +1,662 @@
+@import '_font_face.scss';
+@import '_header.scss';
+@import '_footer.scss';
+
+body {@extend .din; color:#555; background:#f9f9f9;}
+body img {max-width:100%;}
+
+.container {max-width:960px;}
+.container.wide {max-width:1170px;}
+
+.btn-primary {background:#2fb4e6; border-color:#2fb4e6;}
+.btn-yellow {
+	background: #ffeaa8; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffeaa8 0%, #f3b400 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffeaa8), color-stop(99%,#f3b400)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffeaa8 0%,#f3b400 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa8', endColorstr='#f3b400',GradientType=0 ); /* IE6-9 */
+	border-color:#ebb600;
+	color:#59544b;
+}
+.no-radius {border-radius:0; -moz-border-radius:0; -webkit-border-radius:0; -o-border-radius:0;}
+.pagination li a {color:#3fabe3;}
+.pagination li.active a {background:#3fabe3; border-color:#3fabe3;}
+a {color:#3fabe3;}
+a:hover {text-decoration:none;}
+hr {margin:7px 0;}
+label {font-weight:normal;}
+
+hr {border-color:#aaa;}
+
+.site-nav {
+	a {color:#555;}
+}
+
+.page-header {border-bottom:0; margin-top:20px;}
+
+.site-content {padding-bottom:30px;}
+
+.page {
+	.page-title {margin:0; font-size:20px; margin-bottom:20px;}
+}
+
+// ----------------------------------------------
+// home page
+.home-page {
+	.site-content {padding-bottom:0;}
+	section.slider {position:relative;
+		.slide-wrapper {
+			.slide {min-height:550px; width:100%;
+				p {font-size:18px; color:#fff;}
+				.btn.btn-slide {margin-top:15px; padding:15px 50px; font-size:17px; border-width:2px; border-bottom-width:4px; @extend .gotham; border-radius:7px; -moz-border-radius:7px; -webkit-border-radius:7px; -o-border-radius:7px;}
+			}
+		}
+		.slide-control {
+			.slide-arrow {
+				a {position:absolute; top:50%;}
+				.slide-prev {}
+				.slide-next {}
+			}
+		}
+	}
+	section.news {padding-top:20px; padding-bottom:50px;
+		.section-title {margin-bottom:20px; font-size:24px; color:#525252;}
+		.news-wrapper {
+			.news-link {position:relative; display:block;
+				.news-content {z-index:2; text-align:center; position:absolute; left:0; bottom:0; width:100%; height:0; background:rgba(50,50,50,0.85); color:#fff; padding:0 30px; overflow:hidden;
+					.news-star {border-bottom:1px solid #fff; font-size:21px; padding-bottom:10px;}
+					.news-author {margin:15px 0;}
+					.news-text {}
+					.news-button {color:#ffc600; text-decoration:underline;}
+				}
+				.news-image {z-index:1; position:relative;}
+			}
+			.news-title {background:#ffc600; color:#525252; margin:0; padding:10px 0; text-align:center; @extend .gotham; font-size:16px;}
+		}
+	}
+}
+
+
+// ----------------------------------------------
+// hotel search result page
+.hotel-search-page {
+	.page-header {
+		.site-nav {display:inline;
+			a {color:inherit;}
+		}
+		.display-option {
+			a {padding:5px; font-size:18px; width:30px;
+				&.active {background:#3fabe3; color:#fff;}
+			}
+		}
+	}
+	.hotel-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
+		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
+			.arrow {display:block; cursor:pointer; background:#2196c3; color:#fff; padding:5px; text-align:center;}
+			.text {display:block; cursor:pointer; position:absolute; top:140px; text-align:center; vertical-align:middle; width:110px; height:45px; background:#2fb4e6; color:#fff; padding:13px 10px;  -webkit-transform:rotate(-90deg); -moz-transform:rotate(-90deg); -o-transform:rotate(-90deg); transform-origin: top left 0; -webkit-transform-origin: top left 0; -o-transform-origin: top left 0; -moz-transform-origin: top left 0;}
+		}
+		header {padding:0;
+			h3 {margin:0;}
+		}
+		.filter-group {border-bottom:1px solid #ddd; padding:10px 0;
+			.section-title {font-size:16px; margin:10px 0;}
+			input[type="text"] {width:100%;}
+			&.hotel-star {
+				ul {padding:0; list-style:none;}
+				.star {color:#f3bd00;}
+			}
+			&.hotel-discount {
+				ul {padding:0; list-style:none;}
+			}
+			&:last-child {border-bottom:0; padding-bottom:0;}
+			ul {margin-bottom:0;}
+			label {cursor:pointer;}
+			a {display:block;}
+		}
+	}
+	.hotel-list {
+		&.square {
+			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
+				.hotel-link {color:#555;}
+				.hotel-image {}
+				.hotel-sum {padding:20px;
+					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham;}
+					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:5px;}
+					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0;}
+				}
+				.hotel-tag {padding:20px;
+					.hotel-price {width:70%; float:left;
+						.price-was {margin-top:0; margin-bottom:5px;}
+						.price-now {margin-top:0; font-size:28px; font-weight:bold;}
+					}
+					.hotel-feedback {color:#888; width:30%; float:left; border-left:1px solid #888; padding-left:15px;
+						.hotel-like {margin-bottom:10px; display:block;}
+						.hotel-review {}
+						.fa {font-size:16px;}
+					}
+				}.clearfix {margin-bottom:10px;}
+				.hotel-show-list {display:none;}
+				.hotel-show-square {display:block;}
+			}
+		}
+		&.horizontal {
+			.hotel-wrapper {width:100%;}
+			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
+				&:after {content:""; clear:both; display:block;}
+				.hotel-link {color:#555;}
+				.hotel-image {float:left; width:35%;}
+				.hotel-sum {padding:20px; float:left; width:35%;
+					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
+					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:10px;}
+					.hotel-address {margin-bottom:10px; font-style:italic; margin-top:0;}
+					.hotel-feedback {color:#888; padding-top:10px;
+						.hotel-like {margin-right:10px;}
+						.hotel-review {border-left:1px solid #ddd; padding-left:15px;}
+						.fa {font-size:16px;}
+					}
+				}
+				.hotel-tag {padding:25px 0 20px 0; float:left; width:30%;
+					.hotel-price {padding-left:20px; border-left:1px solid #ddd;
+						.price-was {margin-top:0; margin-bottom:5px;}
+						.price-now {margin-top:0; font-size:28px; font-weight:bold;}
+					}
+				}.clearfix {margin-bottom:10px;}
+				.hotel-show-list {display:block;}
+				.hotel-show-square {display:none;}
+			}
+		}
+	}
+}
+
+// ----------------------------------------------
+// hotel detail page
+.hotel-detail-page {
+	header {padding:20px 0 0;
+		h1 {color:#3fabe3; font-size:21px; margin-top:10px; @extend .gotham;}
+		.star {color:#f3bd00; margin-left:15px;
+			.fa {margin-right:5px; font-size:18px;}
+		}
+	}
+	.hotel-image {
+		.hotel-main-image {height:380px; text-align:center; background:#000;
+			img {width:auto; max-height:100%;}
+		}
+		.hotel-thumb {background:#000; text-align:center; padding:10px 0;
+			a {margin-right:5px;
+				img {width:50px;}
+			}
+		}
+	}
+	.hotel-map {position:relative;
+		.hotel-address {position:absolute; z-index:100; background:#f3bd00; width:100%; padding:10px 15px; font-style:italic;
+			p {margin:0;}
+		}
+	}
+	.room-search {
+		header {padding:10px 0;
+			form {
+				.form-group { width:23%;
+					label {font-weight:normal;}
+					.form-control {width:65%;}
+				}
+				.form-action {float:right;}
+			}
+		}
+		.room-list {
+			.room {border:1px solid #ddd; margin-bottom:15px; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5;
+				h3 {margin:0; font-size:18px; margin-bottom:10px; font-weight:bold;}
+				.room-image {width:25%; float:left;}
+				.room-detail {width:75%; float:left;
+					.room-name {color:#3fabe3; font-size:18px; padding:10px; margin:0; margin-top:10px;}
+					.room-content {
+						>div {float:left; padding:5px 10px;}
+						.room-desc {width:35%;}
+						.room-facilities {width:35%; border-left:1px solid #ddd; border-right:1px solid #ddd;
+							 ul {padding-left:0; list-style-position:inside; margin-right:-10px;}
+						}
+						.room-price {width:30%;
+							h5 {}
+							h2 {margin-top:10px; font-weight:bold; margin-top:10px; margin-bottom:0;}
+							small {display:block; margin-bottom:10px;}
+							a {display:block;}
+						}
+					}
+				}
+			}
+		}
+	}
+	.hotel-text {
+		.hotel-description {}
+		.hotel-facilities {}
+	}
+	.hotel-review {
+		.review-sum {padding:20px 0;
+			p {font-weight:bold; width:20%; display:inline-block; position:relative;}
+			p:after {content:':'; position:absolute; right:10px;}
+		}
+		.review-list {
+			.review {margin-bottom:15px; padding:20px; border:1px solid #ddd; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; -o-border-radius:5px;
+				header {padding:0  0 20px; color:#3fabe3;}
+				.review-left {border-right:1px solid #ddd; padding-right:25px;
+					.review-title {margin-top:0; @extend .gotham; font-size:18px;}
+				}
+				.review-right {
+					summary {padding-left:15px;
+						p {margin-bottom:0;}
+						.score {font-size:42px; font-weight:bold;}
+						.max-score {}
+						.score-circle {color:#f3bd00; font-size:18px;}
+					}
+				}
+			}
+		}
+	}
+	.suggestion {
+		.hotel {
+			h2 {background:#ffc600; color:#555; margin:0; font-size:18px; text-align:center; padding:10px 0; font-weight:bold; @extend .gotham;}
+		}
+	}
+}
+
+// ----------------------------------------------
+// hotel checkout page
+.hotel-checkout-page {
+	.page-header {
+		h1 {margin:0; font-size:20px;}
+	}
+	.customer-detail {
+		.customer-form {}
+		.payment-form {
+			h2 {font-size:21px;}
+			.payment-option {
+				label {cursor:pointer; color:#fff; width:30%; display:inline-block; border:2px solid #82d4ff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; background: #7cdbfe; /* Old browsers */ background: -moz-linear-gradient(top,  #7cdbfe 0%, #2fb4e6 46%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7cdbfe), color-stop(46%,#2fb4e6)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* IE10+ */ background: linear-gradient(to bottom,  #7cdbfe 0%,#2fb4e6 46%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cdbfe', endColorstr='#2fb4e6',GradientType=0 ); /* IE6-9 */
+					span {display:block; padding:10px 0px 10px 50px; background-repeat:no-repeat; background-position:10px center;}
+					&.active {}
+					&.payment-transfer {
+						span {background-image:url(../images/payment-transfer.png);}
+					}
+					&.payment-credit {
+						span {background-image:url(../images/payment-credit.png);}
+					}
+					&.payment-bca {
+						span {background-image:url(../images/payment-token.png);}
+					}
+					&.payment-mandiri {
+						span {background-image:url(../images/payment-token.png);}
+					}
+					&.payment-cimb {
+						span {background-image:url(../images/payment-token.png);}
+					}
+					input[type="radio"] {display:none;}
+				}
+			}
+		}
+		.payment-button {text-align:center;
+			.btn {font-size:18px; font-weight:bold; padding:10px 35px;}
+		}
+	}
+	.order-detail {
+		h2 {background:#dadada; font-size:21px; text-align:center; padding:10px 0; margin:0;}
+		.hotel-detail {padding:10px; background:#ededed;
+			.hotel-image {margin-bottom:10px;}
+			.hotel-name {color:#3fabe3; @extend .gotham; font-size:18px; margin-top:10px; margin-bottom:0;}
+			.hotel-star {margin-bottom:0; color:#f3bd00; font-size:16px;
+				.fa {margin-right:3px;}
+			}
+			.hotel-address {margin-bottom:0; font-style:italic;}
+		}
+		.checkin-detail {padding:10px; background:#ededed; margin-bottom:20px;
+			.row {
+				div:last-child {font-weight:bold;
+					&:before {content:" : "; position:absolute; left:0;}
+				}
+			}
+		}
+		.price-detail {
+			.content-wrapper {padding:10px; background:#ededed;
+				hr {border-color:#aaa;}
+				.row {
+					div:last-child {text-align:right; font-weight:bold;
+						&:before {content:" : "; position:absolute; left:0;}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+// ----------------------------------------------
+// flight search page
+.flight-search-page {
+	// page header
+	.page-header {
+		.site-nav {display:inline;
+			a {color:inherit;}
+		}
+		.display-option {
+			a {padding:5px; font-size:18px;
+				&.active {background:#3fabe3; color:#fff;}
+			}
+		}
+	}
+	.flight-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
+		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
+			.arrow {display:block; cursor:pointer; background:#2196c3; color:#fff; padding:5px; text-align:center;}
+			.text {display:block; cursor:pointer; position:absolute; top:140px; text-align:center; vertical-align:middle; width:110px; height:45px; background:#2fb4e6; color:#fff; padding:13px 10px;  -webkit-transform:rotate(-90deg); -moz-transform:rotate(-90deg); -o-transform:rotate(-90deg); transform-origin: top left 0; -webkit-transform-origin: top left 0; -o-transform-origin: top left 0; -moz-transform-origin: top left 0;}
+		}
+		header {padding:0;
+			h3 {margin:0;}
+		}
+		.filter-group {border-bottom:1px solid #ddd; padding:10px 0;
+			.section-title {font-size:16px; margin:10px 0;}
+			input[type="text"] {width:100%;}
+			&.hotel-star {
+				ul {padding:0; list-style:none;}
+				.star {color:#f3bd00;}
+			}
+			&.hotel-discount {
+				ul {padding:0; list-style:none;}
+			}
+			&:last-child {border-bottom:0; padding-bottom:0;}
+			ul {margin-bottom:0;}
+			label {cursor:pointer;}
+			a {display:block;}
+		}
+	}
+	// flight list horizontal
+	.flight-list.horizontal {
+		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+			.flight-main {display:block; clear:both; position:relative;
+				&:after {content:""; clear:both; display:block; width:100%;}
+				.flight-left {float:left; width:73%;
+					.flight-header {border-bottom:1px solid #ddd;
+						.flight-airline {@extend .gotham; color:#3fabe3; display:inline-block; padding-left:10px; width:72%;
+							img {height:25px; margin-right:5px;}
+						}
+						.flight-number {display:inline-block; font-weight:bold; border-left:1px solid #ddd; height:100%; padding:10px;}
+						.flight-basic-data {display:inline-block; border-left:1px solid #ddd; padding:10px;
+							.flight-weight {background:url(../images/flight-weight.png) bottom center no-repeat; color:#fff; padding:10px 10px 2px;}
+						}
+					}
+					.flight-route {padding:35px 60px; padding-bottom:0;
+						.flight-route-detail {border-bottom:1px solid #ddd; position:relative; margin-bottom:40px;
+							&:after {content:""; display:block; clear:both; width:100%;}
+							&>div {display:inline-block; width:120px; text-align:center; position:relative;
+								.number {position:absolute; width:100%; left:0; top:0; text-align:center; display:block;}
+								.time {position:absolute; text-align:center; width:100%; top:-25px; left:0; font-weight:bold; font-size:18px;}
+								img {}
+								.location {position:absolute; display:block; text-align:center; width:100%; font-size:14px; bottom:-25px; left:0;}
+							}
+							.departure {float:left; margin-left:-60px;}
+							.arrival {float:right; margin-right:-60px;}
+							.stop {position:absolute; top:3px;
+								.number {top:-5px;}
+								img {position:relative; top:10px;}
+							}
+							&.transit-1 {
+								.stop-1 {left:50%; margin-left:-60px;}
+							}
+							&.transit-2 {
+								.stop-1 {left:33%; margin-left:-60px;}
+								.stop-2 {left:67%; margin-left:-60px;}
+							}
+							&.transit-3 {
+								.stop-1 {left:25%; margin-left:-60px;}
+								.stop-2 {left:50%; margin-left:-60px;}
+								.stop-3 {left:75%; margin-left:-60px;}
+							}
+						}
+						.flight-time {height:10px; width:100%; border-right:1px solid #2fb4e6; border-left:1px solid #2fb4e6; text-align:center; position:relative;
+							&:after {content:""; display:block; width:100%; border-top:1px dashed #2fb4e6; z-index:1; margin-top:-15px; position:relative;}
+							.total-time {background:#fff; color:#2fb4e6; font-weight:bold; z-index:2; top:-5px; position:relative; padding:0 5px;}
+						}
+					}
+				}
+				.flight-right {float:left; width:27%; padding:30px 20px; border-left:1px solid #ddd; position:relative;
+					.tag {position:absolute; top:0; left:50%; margin-left:-50px; width:100px; height:25px; padding-top:2px; background-position:top center; background-repeat:no-repeat; text-align:center; color:#fff;
+						&.red {background-image:url(../images/tag-red.png);}
+						&.orange {background-image:url(../images/tag-orange.png);}
+						&.green {background-image:url(../images/tag-green.png);}
+						&.purple {background-image:url(../images/tag-purple.png);}
+					}
+					p {font-weight:bold; margin-bottom:5px;}
+					.price-was {margin-bottom:0;}
+					.price-now {margin-top:0; font-weight:bold; font-size:32px;}
+					small {display:block; margin-bottom:10px;}
+					.btn {display:block; width:70%; background:#2fb4e6; color:#fff;}
+				}
+				.flight-toggle {position:absolute; background:url(../images/flight-toggle-down.png) center bottom no-repeat; color:#fff; left:45%; width:50px; height:20px; bottom:0; cursor:pointer; text-decoration:none; text-align:center;
+					&.active {background-image:url(../images/flight-toggle-up.png);}
+				}
+			}
+			.flight-detail {border-top:1px solid #62c7ec; display:none;
+				&:after {content:""; display:block; width:100%; clear:both;}
+				.detail-left {float:left; width:73%; padding:20px;
+					.detail-title {margin-bottom:20px;}
+					ol {list-style:none; counter-reset: listCounter;
+						li {position:relative; margin-bottom:15px;
+							&:before {
+							    counter-increment: listCounter; content: counter(listCounter); color: #444; background:#f3b400; font-weight:bold; text-align:center; width:20px; position:absolute; top:0; left:-30px; z-index:10;
+							}
+							&>div {display:inline-block; vertical-align:top;}
+							.detail-destination {width:35%; text-align:center;
+								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&>div {position:relative; z-index:2; background:#fff;}
+								.departure {float:left; padding-right:5px;}
+								.arrival {float:right; padding-left:5px;}
+									.city {display:block; font-weight:bold; font-size:18px;}
+									.airport {}
+							}
+							.detail-airline {width:35%; vertical-align:middle; padding-top:5px; font-size:20px; text-align:center;}
+							.detail-time {width:28%; text-align:center;
+								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&>div {position:relative; z-index:2; background:#fff;}
+								.departure {float:left; padding-right:5px;}
+								.arrival {float:right; padding-left:5px;}
+									.time {display:block; font-weight:bold; font-size:18px;}
+									.day {}
+							}
+						}
+					}
+				}
+				.detail-right {float:left; width:27%; padding:20px;
+					h5 {font-weight:bold;}
+				}
+			}
+		}
+	}
+	// flight list return fligt
+	.flight-list-return.horizontal {
+		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+			.flight-main {
+				&:after {content:""; display:block; width:100%; clear:both;}
+				.flight-left {float:left; width:73%;
+					.departure, .arrival {
+						.detail {border-bottom:1px solid #ddd;
+							&:after {content:""; clear:both; width:100%; display:block;}
+							&>div {float:left;}
+							.airline {@extend .gotham; color:#3fabe3; display:inline-block; width:50%; padding-left:10px;
+								img {height:20px; width:auto; margin-right:5px;}
+							}
+							.flight-number {width:15%; font-weight:bold; border-left:1px solid #ddd; padding:10px; text-align:center;}
+							.duration {width:20%; font-weight:bold; border-left:1px solid #ddd; height:100%; padding:10px;
+								h5 {font-weight:bold; margin:0; margin-top:2px;
+									span {font-weight:normal;}
+								}
+							}
+							.info {width:15%; border-left:1px solid #ddd; padding:10px;
+								.flight-weight {background:url(../images/flight-weight.png) bottom center no-repeat; color:#fff; padding:10px 10px 2px;}
+							}
+						}
+						.route {
+							&:before {content:""; width:100%; display:block; border-bottom:1px solid #ddd; position:relative; z-index:1; top:20px;}
+							&:after {content:""; clear:both; display:block; width:100%;}
+							&>div {float:left; padding:10px;}
+							.departure {width:40%; text-align:left; padding-left:0;
+								span {padding-left:20px; padding-right:5px;}
+							}
+							.stop {width:20%; text-align:center;
+								span {background:#fff; position:relative; z-index:2; padding:0 5px;}
+							}
+							.arrival {width:40%; text-align:right; padding-right:0;
+								span {padding-right:20px; padding-left:5px;}
+							}
+							.departure span, .arrival span {background:#fff; position:relative; z-index:2; display:inline-block;}
+						}
+					}
+					.departure {margin-bottom:5px;}
+					.arrival .detail {border-top:1px solid #ddd;}
+				}
+				.flight-right {float:left; width:27%; padding:20px; border-left:1px solid #ddd;
+					p {font-weight:bold; margin-bottom:5px;}
+					.price-was {margin-bottom:0;}
+					.price-now {margin-top:0; font-weight:bold; font-size:32px;}
+					small {display:block; margin-bottom:10px;}
+					.btn {display:block; width:70%; background:#2fb4e6; color:#fff;}
+				}
+			}
+			.flight-detail {border-top:1px solid #62c7ec;
+				&:after {content:""; display:block; width:100%; clear:both;}
+				>div:after {content:""; display:block; width:100%; clear:both;}
+				.detail-left {float:left; width:73%; padding:20px;
+					.detail-title {margin-bottom:20px;}
+					ol {list-style:none; counter-reset: listCounter;
+						li {position:relative; margin-bottom:15px;
+							&:before {
+							    counter-increment: listCounter; content: counter(listCounter); color: #444; background:#f3b400; font-weight:bold; text-align:center; width:20px; position:absolute; top:0; left:-30px; z-index:10;
+							}
+							&>div {display:inline-block; vertical-align:top;}
+							.detail-destination {width:35%; text-align:center;
+								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&>div {position:relative; z-index:2; background:#fff;}
+								.departure {float:left; padding-right:5px;}
+								.arrival {float:right; padding-left:5px;}
+									.city {display:block; font-weight:bold; font-size:18px;}
+									.airport {}
+							}
+							.detail-airline {width:35%; vertical-align:middle; padding-top:5px; font-size:20px; text-align:center;}
+							.detail-time {width:28%; text-align:center;
+								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&>div {position:relative; z-index:2; background:#fff;}
+								.departure {float:left; padding-right:5px;}
+								.arrival {float:right; padding-left:5px;}
+									.time {display:block; font-weight:bold; font-size:18px;}
+									.day {}
+							}
+						}
+					}
+				}
+				.detail-right {float:left; width:27%; padding:20px;
+					h5 {font-weight:bold;}
+				}
+			}
+		}
+	}
+}
+
+// ----------------------------------------------
+// user login
+.user-page-login {
+	#site-header {background:none;}
+	.user-login {background:url(../images/user-login-bg.jpg) center top no-repeat #a9a9a9; margin-bottom:30px;
+		h1 {margin-top:30px;}
+		h3 {margin-top:10px; margin-bottom:30px;}
+		.login-form {
+			input[type="text"] {padding:20px; font-size:18px;}
+			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @extend .gotham;}
+			.form-add {
+				font-size:16px;
+				a {color:#4c4c4c;}
+			}
+		}
+		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @extend .gotham; position:relative;
+			.or-right, .or-left {display:block; width:45%; border-bottom:2px solid #fff; position:absolute; box-shadow:2px 2px 5px #444; top:40%;}
+			.or-left {left:0;}
+			.or-right {right:0;}
+		}
+		.facebook-login {margin:30px 0;
+			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+		}
+	}
+	.benefit {
+		h3 {margin-bottom:10px;}
+		hr {margin-bottom:30px;}
+		h4 {color:#2fb4e6; @extend .gotham;}
+	}
+
+}
+
+// ----------------------------------------------
+// user register
+.user-page-register {
+	#site-header {background:none;}
+	.user-register {background:url(../images/user-register-bg.jpg) center top no-repeat #a9a9a9; margin-bottom:30px;
+		h1 {margin-top:30px;}
+		h3 {margin-top:10px; margin-bottom:30px;}
+		.login-form {
+			input[type="text"] {padding:20px; font-size:18px;}
+			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @extend .gotham;}
+			.form-add {
+				font-size:16px;
+				a {color:#4c4c4c;}
+			}
+		}
+		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @extend .gotham; position:relative;
+			.or-right, .or-left {display:block; width:45%; border-bottom:2px solid #fff; position:absolute; box-shadow:2px 2px 5px #444; top:40%;}
+			.or-left {left:0;}
+			.or-right {right:0;}
+		}
+		.facebook-login {margin:30px 0;
+			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+		}
+	}
+	.benefit {
+		h3 {margin-bottom:10px;}
+		hr {margin-bottom:30px;}
+		h4 {color:#2fb4e6; @extend .gotham;}
+	}
+
+}
+
+// ----------------------------------------------
+// user account
+.user-account {
+	#site-header {background-image:url(../images/header-bg-gray.jpg); background-color:#81868b; padding-bottom:20px;}
+	.site-content {
+		.nav-tabs {
+			li {
+				a {background:#b2b2b2; color:#fff; margin-top:10px; font-size:18px; font-weight:bold; border-color:#aaa; border-radius:0; -moz-border-radius:0; -webkit-border-radius:0; margin-right:0;}
+				&.active {
+					a {background:#fff; color:#444; padding-bottom:11px; margin-top:-5px; border-bottom-color:#fff; font-size:24px; padding-top:15px;}
+				}
+			}
+		}
+		.tab-content {border:1px solid #aaa; border-top:0; background:#fff; padding:15px;}
+	}
+}
+
+// ----------------------------------------------
+// static page
+.static-page {
+	.page-header {
+		.page-title {font-size:20px; margin-top:0;}
+	}
+}
+
+// ----------------------------------------------
+// Location auto complete
+.loc-auto-wrapper {position:relative;
+	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none;
+		ul {padding:0; list-style:none; margin-bottom:0;
+			li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
+				&:hover {background:#ddd;}
+			}
+		}
+	}
+}
+
+
