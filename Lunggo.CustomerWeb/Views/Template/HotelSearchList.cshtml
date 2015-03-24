@@ -3,148 +3,128 @@
     ViewBag.Title = "Hotel Search List";
 }
 
+<!-- .search-page content start -->
+<div class="search-page hotel-search-page">
 
-<div class="page hotel-section hotel-search-list-page">
+    <header class="page-header">
+        <div class="container">
+            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
+            <div class="pull-right display-option">display as: <a href="#" class="active"><span class="fa fa-list"></span></a> <a href="#"><span class="fa fa-th"></span></a> </div>
+            <hr>
+            <div class="pull-left">1 Room for 3 Days (2-15-2015 untill 2-18-2015)</div>
+            <div class="pull-right list-option">Show : <select name="#" id="hotel-list"><option value="25">25 Hotels</option><option value="50">50 Hotels</option></select> / page</div>
+        </div>
+    </header><!-- .page-header -->
     <div class="container">
-        
-        <!-- BREADCRUMB START -->
-        <div class="row">
-            <section class="col-sm-12">
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Hotel</a></li>
-                    <li class="active">Jakarta</li>
-                </ol>
-            </section>
-        </div>
-        <!-- BREADCRUMB END -->
-        
-        <div class="row">
-            <!-- HOTEL SEARCH SIDEBAR START -->
-            <div class="col-sm-3">
-                <aside class="hotel-list-filter sidebar">
-                    <h3 class="sidebar-title">Filter Pencarian</h3>
-                    <div class="filter filter-hotel-location">
-                        <h5 class="filter-title">Lokasi hotel</h5>
-                        <div class="filter-content">
-                            <input type="text" class="form-control" placeholder="Negara / Provinsi / Kota">
-                        </div>
-                    </div>
-                    <div class="filter filter-hotel-date">
-                        <h5 class="filter-title">Tanggal Tinggal</h5>
-                        <div class="filter-content">
-                            
-                        </div>
-                    </div>
-                    <div class="filter filter-hotel-star">
-                        <h5 class="filter-title">Penilaian hotel</h5>
-                        <div class="filter-content">
-                            <div class="form-group">
-                                <label for="hotel-star-5"> <input type="checkbox" id="hotel-star-5"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="hotel-star-4"> <input type="checkbox" id="hotel-star-4"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="hotel-star-3"> <input type="checkbox" id="hotel-star-3"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="hotel-star-2"> <input type="checkbox" id="hotel-star-2"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span> </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="hotel-star-1"> <input type="checkbox" id="hotel-star-1"> <span class="hotel-star"><span class="glyphicon glyphicon-star"></span></span></label>
-                            </div>
-                            <div class="form-group">
-                                <label for="hotel-star-0"> <input type="checkbox" id="hotel-star-0"> Tidak ada bintang </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter">
-                        <h5 class="filter-title">Tarif Hotel</h5>
-                        <div class="filter-content">
-                            <input type="text" class="form-control" placeholder="harga terendah">
-                            <span>sampai</span>
-                            <input type="text" class="form-control" placeholder="harga termahal">
-                        </div>
-                    </div>
-                    <div class="filter filter-action">
-                        <a href="#" class="btn btn-primary">search</a>
-                    </div>
-                </aside>
-            </div>
-            <!-- HOTEL SEARCH SIDEBAR END -->
-            <!-- MAIN SECTION START -->
-            <section class="main-content hotel-search-list-content">
-                <div class="col-sm-9">
-
-                    <h1 class="page-title">Hotel di Jakarta</h1>
-                    <h5 class="page-subtitle">256 Hotel ditemukan untuk tanggal 26 Desember 2014</h5>
-                    
-                    <!-- .hotel-list-detail start -->
-                    <div class="hotel-list-detail">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="hotel-list-option form-inline text-right">
-                                    <div class="form-group hotel-list-option-view">
-                                        <label for="listing-view-detail" class="control-label">Perlihatkan dalam:</label>
-                                        <a href="#" class="active change-listing-view view-square" title="bentuk kotak" data-view-type="square"><span class="glyphicon glyphicon-th"></span></a>
-                                        <a href="#" class="change-listing-view view-row" title="bentuk list" data-view-type="row"><span class="glyphicon glyphicon-th-list"></span></a>
-                                    </div>
-                                    <div class="form-group hotel-list-option-sort">
-                                        <label for="listing-sort" class="control-label">Urutkan :</label>
-                                        <select name="#" id="listing-sort" class="form-control">
-                                            <option value="#">Rekomendasi</option>
-                                            <option value="#">Terbaru</option>
-                                            <option value="#">Termurah</option>
-                                            <option value="#">Abjad</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .hotel-list-detail end -->
-                    
-                    <!-- .hotel-list-wrapper start -->
-                    <section class="hotel-list-wrapper">
-                        <ul class="row hotel-list">
-
-                            @for( var i=1; i<=9; i++ ){
-                            <li class="col-sm-4">
-                                <div class="hotel">
-                                    <img src="/assets/images/hotel-preview.jpg" alt="Hotel Sample" class="hotel-image">
-                                    <h3 class="hotel-name">Grand Hyatt Hotel Jakarta <span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span></h3>
-                                    <h4 class="hotel-price">
-                                        <small>Room stars from</small>
-                                        <span>Rp. 1.200.000</span>
-                                        <small>per night</small>
-                                    </h4>
-                                    <div class="hotel-action">
-                                        <a href="#" class="btn btn-primary">Book</a>
-                                    </div>
-                                </div>
-                            </li>
-                            }
-
-                        </ul>
-                        <nav class="hotel-list-pagination text-center">
-                            <ul class="pagination">
-                                <li class="disabled"><span>sebelumnya</span></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">berikutnya</a></li>
-                            </ul>
-                        </nav>
-                    </section>
-                    <!-- .hotel-list-wrapper end -->
-
-                </div>
-            </section>
-            <!-- MAIN SECTION END -->
-        </div>
-        
+        <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
     </div>
+    <aside class="hotel-filter filter" data-active="false">
+        <div class="filter-button">
+            <span class="arrow">&gt;</span>
+            <span class="text">FILTER OFF</span>
+        </div>
+        <header>
+            <h3><b>FILTER</b> BY</h3>
+        </header>
+        <section class="filter-group hotel-price">
+            <h3 class="section-title">Harga</h3>
+            <input type="text" class="form-control">
+        </section>
+        <section class="filter-group hotel-star">
+            <h3 class="section-title">Bintang Hotel</h3>
+            <div class="star-selection">
+                <ul>
+                    <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
+                </ul>
+            </div>
+        </section>
+        <section class="filter-group hotel-discount">
+            <ul>
+                <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
+            </ul>
+        </section>
+        <section class="filter-group search-filter">
+            <a href="#" class="btn btn-primary">FILTER</a>
+        </section>
+    </aside><!-- .hotel-filter -->
+    <section class="hotel-list horizontal">
+        <div class="container">
+
+            <div class="row">
+
+                <?php for($i=1; $i<=12; $i++){ ?>
+
+                <div class="hotel-wrapper col-sm-4">
+                    <article class="hotel">
+                        <a href="#" class="hotel-link">
+                            <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel Amaris" class="hotel-image">
+                            <section class="hotel-sum">
+                                <h2 class="hotel-name">AMARIS HOTEL</h2>
+                                <h4 class="hotel-star">
+                                    <span class="star star-4">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star-o"></span>
+                                    </span>
+                                </h4>
+                                <h5 class="hotel-address">Jl. Karet Pasar Gang Tiong No. 62</h5>
+                                <div class="hotel-feedback hotel-show-list">
+                                    <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
+                                    <span class="hotel-review"><span class="fa fa-comment"> 1234</span></span>
+                                </div>
+                            </section><!-- .hotel-sum -->
+                            <section class="hotel-tag hotel-show-square">
+                                <div class="hotel-price">
+                                    <h5 class="price-was"><del>Rp 500.000</del></h5>
+                                    <h2 class="price-now">Rp 300.000</h2>
+                                </div>
+                                <div class="hotel-feedback">
+                                    <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
+                                    <span class="hotel-review"><span class="fa fa-comment"> 1234</span></span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <span>Harga <strong>sudah</strong> termasuk pajak</span>
+                            </section><!-- .hotel-tag -->
+                            <section class="hotel-tag hotel-show-list">
+                                <div class="hotel-price">
+                                    <p><b>Price :</b></p>
+                                    <h5 class="price-was"><del>Rp 500.000</del></h5>
+                                    <h2 class="price-now">Rp 300.000</h2>
+                                    <span>Harga <strong>sudah</strong> termasuk pajak</span>
+                                </div>
+                            </section><!-- .hotel-tag -->
+                        </a>
+                    </article>
+                </div><!-- .hotel-wrapper -->
+                <?php } ?>
+
+            </div>
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <nav>
+                        <ul class="pagination">
+                            <li><a href="#">&lt;</a></li>
+                            <li><a href="#" class="active">1</a></li>
+                            <li class="active"><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&gt;</a></li>
+                        </ul>
+                    </nav>
+                </div><!-- .text-center -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section><!-- .hotel-list -->
+
 </div>
+<!-- .search-page content end -->

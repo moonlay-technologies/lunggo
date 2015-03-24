@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -39,6 +40,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult FlightSearchListReturn()
+        {
+            return View();
+        }
+
         public ActionResult FlightCheckout()
         {
             return View();
@@ -50,6 +56,26 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult FlightCheckoutThankyou()
+        {
+            return View();
+        }
+
+        public ActionResult Static()
+        {
+            return View();
+        }
+
+        public ActionResult UserLogin()
+        {
+            return View();
+        }
+
+        public ActionResult UserRegister()
+        {
+            return View();
+        }
+
+        public ActionResult UserAccount()
         {
             return View();
         }
