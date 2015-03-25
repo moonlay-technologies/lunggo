@@ -5,6 +5,7 @@ using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Lunggo.Framework.Config;
 using Room = Lunggo.ApCommon.Travolutionary.WebService.Hotel.Room;
 
 namespace Lunggo.ApCommon.Travolutionary
@@ -18,8 +19,8 @@ namespace Lunggo.ApCommon.Travolutionary
         private const int DefaultAdultCount = 2;
 
         //TODO Use configuration file do not hardcode
-        private const string UserName = "rama.adhitia@travelmadezy.com";
-        private const string Password = "d61Md7l7";
+        private readonly static string UserName = ConfigManager.GetInstance().GetConfigValue("travolutionary", "apiUserName");
+        private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("travolutionary", "apiPassword");
 
         public static TravolutionaryHotelSearchResponse SearchHotel(HotelsSearchServiceRequest request)
         {
@@ -37,7 +38,6 @@ namespace Lunggo.ApCommon.Travolutionary
 
         public static TravolutionaryHotelBookResponse BookHotel(HotelBookServiceRequest request)
         {
-
 
             return null;
         }

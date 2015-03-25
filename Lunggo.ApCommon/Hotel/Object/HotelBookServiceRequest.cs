@@ -7,10 +7,9 @@ using Lunggo.ApCommon.Hotel.Model;
 
 namespace Lunggo.ApCommon.Hotel.Object
 {
-    public class HotelBookServiceRequest : HotelSearchServiceRequestBase
+    public class HotelBookServiceRequest : HotelRoomsSearchServiceRequest
     {
         public String ClientIp { get; set; }
-        public int HotelId { get; set; }
         public String PackageId { get; set; }
         public String SessionId { get; set; }
         public String PackageDetail { get; set; }
