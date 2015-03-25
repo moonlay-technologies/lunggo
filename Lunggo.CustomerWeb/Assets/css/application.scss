@@ -369,7 +369,7 @@ hr {border-color:#aaa;}
 	}
 	// flight list horizontal
 	.flight-list.horizontal {
-		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
 			.flight-main {display:block; clear:both; position:relative;
 				&:after {content:""; clear:both; display:block; width:100%;}
 				.flight-left {float:left; width:73%;
@@ -471,7 +471,7 @@ hr {border-color:#aaa;}
 	}
 	// flight list return fligt
 	.flight-list-return.horizontal {
-		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
 			.flight-main {
 				&:after {content:""; display:block; width:100%; clear:both;}
 				.flight-left {float:left; width:73%;

@@ -267,6 +267,9 @@
       <DependentUpon>DummyDB.mdf</DependentUpon>
     </Content>
     <Content Include="Assets\css\application.css" />
+    <Content Include="Assets\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\tv-desktop-300019.css" />
@@ -411,10 +414,10 @@
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
     <Content Include="Assets\js\jquery.cycle2.js.map" />
-    <Content Include="Assets\sass\application.scss" />
-    <Content Include="Assets\sass\_font_face.scss" />
-    <Content Include="Assets\sass\_footer.scss" />
-    <Content Include="Assets\sass\_header.scss" />
+    <Content Include="Assets\css\application.scss" />
+    <Content Include="Assets\css\_font_face.scss" />
+    <Content Include="Assets\css\_footer.scss" />
+    <Content Include="Assets\css\_header.scss" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1612,6 +1615,7 @@
     <Content Include="Views\Template\UserRegister.cshtml" />
     <Content Include="Views\Template\UserAccount.cshtml" />
     <Content Include="Views\Shared\_Layout_user.cshtml" />
+    <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
