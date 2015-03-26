@@ -35,7 +35,7 @@ hr {border-color:#aaa;}
 	a {color:#555;}
 }
 
-.page-header {border-bottom:0; margin-top:20px;}
+.page-header {border-bottom:0; margin-top:0; padding-top:20px;}
 
 .site-content {padding-bottom:30px;}
 
@@ -369,7 +369,8 @@ hr {border-color:#aaa;}
 	}
 	// flight list horizontal
 	.flight-list.horizontal {
-		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+            &.active {border-color:#3fabe3;}
 			.flight-main {display:block; clear:both; position:relative;
 				&:after {content:""; clear:both; display:block; width:100%;}
 				.flight-left {float:left; width:73%;
@@ -471,8 +472,9 @@ hr {border-color:#aaa;}
 	}
 	// flight list return fligt
 	.flight-list-return.horizontal {
-		.flight {border:2px solid #62c7ec; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
-			.flight-main {
+		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+            &.active {border-color:#3fabe3;}
+			.flight-main {display:block; clear:both; position:relative;
 				&:after {content:""; display:block; width:100%; clear:both;}
 				.flight-left {float:left; width:73%;
 					.departure, .arrival {
@@ -518,8 +520,11 @@ hr {border-color:#aaa;}
 					small {display:block; margin-bottom:10px;}
 					.btn {display:block; width:70%; background:#2fb4e6; color:#fff;}
 				}
+                .flight-toggle {position:absolute; background:url(../images/flight-toggle-down.png) center bottom no-repeat; color:#fff; left:45%; width:50px; height:20px; bottom:0; cursor:pointer; text-decoration:none; text-align:center;
+					&.active {background-image:url(../images/flight-toggle-up.png);}
+				}
 			}
-			.flight-detail {border-top:1px solid #62c7ec;
+			.flight-detail {border-top:1px solid #62c7ec; display:none;
 				&:after {content:""; display:block; width:100%; clear:both;}
 				>div:after {content:""; display:block; width:100%; clear:both;}
 				.detail-left {float:left; width:73%; padding:20px;
@@ -657,6 +662,12 @@ hr {border-color:#aaa;}
 			}
 		}
 	}
+}
+
+// ----------------------------------------------
+// Loading
+.loading-overlay {position:absolute; z-index:9999; background:rgba(80,80,80,0.8); width:100%; height:100%; top:0; left:0;
+    .loading-content {position:absolute; text-align:center; top:40%; width:100%;}
 }
 
 

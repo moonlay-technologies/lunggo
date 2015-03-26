@@ -267,14 +267,15 @@
       <DependentUpon>DummyDB.mdf</DependentUpon>
     </Content>
     <Content Include="Assets\css\application.css" />
+    <Content Include="Assets\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
-    <Content Include="Assets\fonts\DINB__-demo.html" />
-    <Content Include="Assets\fonts\DINB__-webfont.svg" />
-    <Content Include="Assets\fonts\DINR__-demo.html" />
-    <Content Include="Assets\fonts\DINR__-webfont.svg" />
+    <Content Include="Assets\fonts\DINB-webfont.svg" />
+    <Content Include="Assets\fonts\DINR-webfont.svg" />
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
@@ -306,6 +307,7 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\payment-credit.png" />
@@ -392,14 +394,14 @@
     <Content Include="Areas\UW400\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\UW400\Views\UW400Booking\UW400Index.cshtml" />
     <Content Include="Config\application.properties" />
-    <Content Include="Assets\fonts\DINB__-webfont.eot" />
-    <Content Include="Assets\fonts\DINB__-webfont.ttf" />
-    <Content Include="Assets\fonts\DINB__-webfont.woff" />
-    <Content Include="Assets\fonts\DINB__-webfont.woff2" />
-    <Content Include="Assets\fonts\DINR__-webfont.eot" />
-    <Content Include="Assets\fonts\DINR__-webfont.ttf" />
-    <Content Include="Assets\fonts\DINR__-webfont.woff" />
-    <Content Include="Assets\fonts\DINR__-webfont.woff2" />
+    <Content Include="Assets\fonts\DINB-webfont.eot" />
+    <Content Include="Assets\fonts\DINB-webfont.ttf" />
+    <Content Include="Assets\fonts\DINB-webfont.woff" />
+    <Content Include="Assets\fonts\DINB-webfont.woff2" />
+    <Content Include="Assets\fonts\DINR-webfont.eot" />
+    <Content Include="Assets\fonts\DINR-webfont.ttf" />
+    <Content Include="Assets\fonts\DINR-webfont.woff" />
+    <Content Include="Assets\fonts\DINR-webfont.woff2" />
     <Content Include="Assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
     <Content Include="Assets\fonts\fontawesome-webfont.woff" />
@@ -1616,6 +1618,9 @@
     <Content Include="Views\Template\UserRegister.cshtml" />
     <Content Include="Views\Template\UserAccount.cshtml" />
     <Content Include="Views\Shared\_Layout_user.cshtml" />
+    <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
+    <Content Include="Views\Shared\_Mainmenu.cshtml" />
+    <Content Include="Views\Shared\_Layout_account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

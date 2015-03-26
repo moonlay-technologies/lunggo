@@ -21,24 +21,7 @@
 
         <!-- site header start -->
         <header id="site-header" class="site-header home-header">
-            <nav class="main-menu">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-12">
-                            <ul class="list-inline">
-                                <li class="site-logo pull-left"><a href="#"><img src="/assets/images/logo.png" alt="Travorama"></a></li>
-                                <li><a href="#"><span class="fa fa-building"></span> Hotel</a></li>
-                                <li><a href="#"><span class="fa fa-plane"></span> Flight</a></li>
-                                <li><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
-                                <li><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
-                                <li class="pull-right site-login"><a href="#">Login</a> | <a href="#">Register</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </nav>
+            @{ Html.RenderPartial("_Mainmenu"); }
             <section class="header-form">
                 <section class="hotel-form">
                     <section class="site-tag">

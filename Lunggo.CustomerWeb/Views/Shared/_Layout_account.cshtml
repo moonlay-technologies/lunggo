@@ -1,67 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Travorama</title>
-
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
-
-</head>
-<body>
-    <!-- page start -->
-    <div class="page">
-
-        <!-- site header start -->
-        <header id="site-header" class="site-header">
-            @{ Html.RenderPartial("_Mainmenu"); }
-            <section class="search">
-                <section class="search-hotel">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <form action="#" class="form-inline search-hotel-form">
-                                    <div class="form-group">
-                                        <span class="fa fa-building"></span><input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location.">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-checkin" placeholder="checkin">
-                                    </div>
-                                    <div class="form-group">
-                                        <span class="form-dash">-</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-checkout" placeholder="checkout">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-room" placeholder="room">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <div class="search-flight"></div>
-            </section>
-        </header>
-        <!-- site header end -->
-        <!-- site content start -->
-        <div id="site-content" class="site-content">
+﻿
 
             @RenderBody()
 
-        </div>
-        <!-- site content end -->
+
         <!-- site footer start -->
         <footer id="site-footer" class="site-footer">
             <section class="footer-menu">
@@ -147,12 +88,8 @@
     <script src="/assets/js/jquery.cycle2.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
-    <script src="/assets/js/angular.min.js"></script>
-    <script src="/assets/js/angular-route.min.js"></script>
 
     <script src="/assets/js/application.js"></script>
-    <script src="/assets/js/angular_app.js"></script>
 
 </body>
 </html>
