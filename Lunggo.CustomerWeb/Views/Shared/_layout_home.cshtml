@@ -54,11 +54,11 @@
                         <section class="search-hotel">
                             <div class="container wide">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12" >
 
-                                        <form action="#" class="form-inline search-hotel-form">
+                                        <form action="#" class="form-inline search-hotel-form" ng>
                                             <div class="form-group loc-auto-wrapper">
-                                                <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
+                                                <span class="fa fa-building	"></span> <input type="text" ng-model="HotelSearchParams.LocationId" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
                                                 <div class="loc-auto">
                                                     <ul></ul>
                                                 </div>

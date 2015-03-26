@@ -52,28 +52,26 @@
         </section>
     </aside><!-- .hotel-filter -->
     <section class="hotel-list horizontal">
-        <div class="container">
+        <div class="container" ng-app="travorama">
 
-            <div class="row">
+            <div class="row" ng-controller="HotelController">
 
-                <?php for($i=1; $i<=12; $i++){ ?>
-
-                <div class="hotel-wrapper col-sm-4">
+                <input placeholder=" locid" ng-model="HotelSearchParams.LocationId" type="text" />
+                <input placeholder="CheckIn" ng-model="HotelSearchParams.StayDate" type="text" />
+                <input placeholder="StayLength" ng-model="HotelSearchParams.StayLength" type="text" />
+                <button ng-click="load_hotel_list()">Search</button>
+                
+                <div ng-repeat="x in hotels" class="hotel-wrapper col-sm-4">
+                    
                     <article class="hotel">
                         <a href="#" class="hotel-link">
-                            <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel Amaris" class="hotel-image">
+                            <img src="{{x.ImageUrlList[0].ThumbSizeUrl}}" alt="Hotel Amaris" class="hotel-image">
                             <section class="hotel-sum">
-                                <h2 class="hotel-name">AMARIS HOTEL</h2>
+                                <h2 class="hotel-name">{{x.HotelName}}</h2>
                                 <h4 class="hotel-star">
-                                    <span class="star star-4">
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star-o"></span>
-                                    </span>
+                                    <span class="star star-{{x.StarRating}}"></span>
                                 </h4>
-                                <h5 class="hotel-address">Jl. Karet Pasar Gang Tiong No. 62</h5>
+                                <h5 class="hotel-address">{{x.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
                                     <span class="hotel-review"><span class="fa fa-comment"> 1234</span></span>
@@ -82,7 +80,7 @@
                             <section class="hotel-tag hotel-show-square">
                                 <div class="hotel-price">
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">Rp 300.000</h2>
+                                    <h2 class="price-now">{{x.LowestPrice.Currency}} {{x.LowestPrice.Value}}</h2>
                                 </div>
                                 <div class="hotel-feedback">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
@@ -95,14 +93,14 @@
                                 <div class="hotel-price">
                                     <p><b>Price :</b></p>
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">Rp 300.000</h2>
+                                    <h2 class="price-now">{{x.LowestPrice.Currency | currency:"Rp":0}} {{x.LowestPrice.Value | currency:"IDR":0}}</h2>
                                     <span>Harga <strong>sudah</strong> termasuk pajak</span>
                                 </div>
                             </section><!-- .hotel-tag -->
                         </a>
                     </article>
                 </div><!-- .hotel-wrapper -->
-                <?php } ?>
+
 
             </div>
 

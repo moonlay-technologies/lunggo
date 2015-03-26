@@ -70,8 +70,6 @@
     <Compile Include="Query\GetFlightTripQuery.cs" />
     <Compile Include="Query\GetFlightReservationQuery.cs" />
     <Compile Include="Query\GetFlightRsvNoQuery.cs" />
-	<Compile Include="Query\GetFlightBookingDetailByBookingNumberQuery.cs" />
-    <Compile Include="Query\GetFlightBookingDetailBySearchParamsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

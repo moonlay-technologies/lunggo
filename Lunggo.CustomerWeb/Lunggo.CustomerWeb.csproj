@@ -339,6 +339,9 @@
     <Content Include="Assets\images\_sample\save.png" />
     <Content Include="Assets\images\_sample\slide_1.jpg" />
     <Content Include="Assets\images\_sample\travorama-display-large.png" />
+    <Content Include="Assets\js\angular-route.min.js" />
+    <Content Include="Assets\js\angular.min.js" />
+    <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
@@ -415,6 +418,8 @@
     <Content Include="Assets\sass\_font_face.scss" />
     <Content Include="Assets\sass\_footer.scss" />
     <Content Include="Assets\sass\_header.scss" />
+    <Content Include="Assets\js\angular-route.min.js.map" />
+    <Content Include="Assets\js\angular.min.js.map" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1605,7 +1610,6 @@
     <Content Include="Views\Template\FlightCheckoutThankyou.cshtml" />
     <Content Include="Views\UW300HotelBookingForm\DisplayBookingForm.cshtml" />
     <Content Include="Views\Shared\_layout_home.cshtml" />
-    <Content Include="Views\Template\HotelSearchList - Copy.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn.cshtml" />
     <Content Include="Views\Template\Static.cshtml" />
     <Content Include="Views\Template\UserLogin.cshtml" />
