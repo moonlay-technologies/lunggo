@@ -201,10 +201,11 @@ $(document).ready(function(){
 
 		// toggle flight detail
 		function toggle_detail(){
-			$('.flight-search-page .flight-list .flight .flight-toggle').click(function(evt){
+		    $('.flight-search-page .flight-list .flight .flight-toggle, .flight-search-page .flight-list-return .flight .flight-toggle').click(function (evt) {
 				evt.preventDefault();
 				$(this).closest('.flight').children('.flight-detail').stop().slideToggle();
 				$(this).toggleClass('active');
+			    $(this).closest('.flight').toggleClass('active');
 			});
 		}
 
