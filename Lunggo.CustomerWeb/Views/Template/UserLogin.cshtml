@@ -1,91 +1,131 @@
-﻿
-@{
+﻿@{
+    Layout = "/Views/Shared/_Layout_account.cshtml";
     ViewBag.Title = "Hotel Detail";
 }
-<!-- .checkout-page content start -->
-<div class="static-page">
+<!-- page start -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <header class="page-header">
-        <div class="container">
-            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
-            <hr>
-            <h1 class="page-title"><b>ABOUT</b> TRAVORAMA</h1>
-        </div>
-    </header>
+    <title>Travorama</title>
 
-    <div class="container">
-        <section class="page-content">
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
 
-            <p class="text-center">
-                <img src="/assets/images/_sample/travorama-display-large.png" alt="Travorama - Enjoy your every moment">
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate perspiciatis expedita magnam facilis eius temporibus esse voluptatem similique repellendus itaque maiores modi, nesciunt, consequatur autem alias atque facere consequuntur!  Lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates atque ea consectetur laborum expedita reprehenderit. Nobis, deserunt explicabo vero laboriosam cumque tempore quod consequatur suscipit animi harum incidunt repudiandae consectetur? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate quod hic nemo pariatur eius debitis ad non quis, laborum et assumenda sunt sapiente, magni optio sit ab ut unde vitae.</p>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h2><b>LIST</b> DISPLAY</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque esse iste eligendi recusandae rerum excepturi repudiandae nesciunt, nobis enim, assumenda ab consectetur culpa. Nisi deserunt nemo distinctio sit tempore totam.</p>
-                    <ul>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt quae, nihil sed, rerum magnam labore magni ipsam quia eligendi impedit dolor eveniet, quam suscipit ullam debitis optio. Non, consectetur nam.</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia alias, incidunt, vitae error iste modi repudiandae, beatae voluptatem adipisci earum unde ipsa quam blanditiis voluptatibus rem dicta laudantium qui veritatis!</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut eaque recusandae architecto repellat illo velit laboriosam, quae modi, culpa qui debitis aliquam temporibus accusamus perspiciatis doloribus voluptatum ipsa beatae mollitia?</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit assumenda repellendus, iste excepturi pariatur maxime aliquam impedit dolorum ratione deleniti vitae facilis exercitationem adipisci, ipsam quis at et dolorem accusantium.</p></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6">
-                    <h2><b>IMAGE</b> DISPLAY</h2>
-                    <img src="/assets/images/_sample/hotel-image.jpg" alt="Lorem ipsum">
-                </div>
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-page user-page-login">
+
+        <section class="user-login">
+            <header id="site-header" class="site-header">
+                @{ Html.RenderPartial("_Mainmenu"); }
+            </header>
+
+            <div class="container">
+                <section class="user-form">
+                    <h1 class="text-center">LOG IN</h1>
+                    <h3 class="text-center">WITH TRAVORAMA ACCOUNT</h3>
+                    <form action="#" class="login-form form form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <input type="text" class="form-control" placeholder="Your email address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" placeholder="Your account password">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-yellow">LOGIN</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-add">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <label for="login-remember"><input type="checkbox" id="login-remember"> <span>Remember Me</span></label>
+                                <p class="pull-right"> <a href="">Forgot password</a> | <a href="#">Register</a></p>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="or text-center">
+                                <span class="or-left"></span><span>OR</span><span class="or-right"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="facebook-login text-center">
+                        <a href="#"><span class="fa fa-facebook"></span> Log In with Facebook</a>
+                    </section>
+                </section>
             </div>
-            <h2><b>TABLE</b> DISPLAY</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th width="20%">Name</th>
-                        <th width="60%">Description</th>
-                        <th width="10%">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod iusto quae eveniet, minus inventore architecto quasi facilis sapiente asperiores fugiat, nam alias in voluptatem amet aliquam corrupti temporibus. Eligendi, laboriosam.</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                </tbody>
-            </table>
 
+        </section><!-- .user-login -->
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
 
-        </section>
-    </div><!-- .container -->
-
-
-
-
-</div>
-<!-- .checkout-page content end -->
+            <div class="container">
+                <section class="benefit">
+                    <h3 class="text-center"><b>BENEFIT OF</b> TRAVORAMA MEMBERSHIP</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <article class="media">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="/assets/images/benefit/news.png" alt="Latest News">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h4>GET UPDATED</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque ad suscipit consectetur! Neque unde vitae mollitia repellat blanditiis error sit possimus dicta doloremque tempore quisquam voluptate similique, voluptatem suscipit, beatae!</p>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="media">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="/assets/images/benefit/discount.png" alt="Discount">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h4>GET DISCOUNT</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas veniam consequatur, porro beatae blanditiis, deleniti voluptatibus provident, non nostrum distinctio ipsa aut ipsam id quam perspiciatis nulla, autem reiciendis voluptates.</p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col-sm-6">
+                            <article class="media">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="/assets/images/benefit/check.png" alt="Check">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h4>ORDER CHECKING</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam non blanditiis dicta dolores numquam totam illo earum nemo culpa excepturi facere, aut, ad. Rerum voluptatibus eveniet veniam accusantium, velit tempora?</p>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="media">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="/assets/images/benefit/refund.png" alt="refund">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h4>REFUND SYSTEM</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque odio non, sed perspiciatis dolor officia dolorum ipsam consequatur, id molestiae facilis, a nulla iusto velit quae mollitia cupiditate veritatis totam.</p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            </div><!-- .container -->

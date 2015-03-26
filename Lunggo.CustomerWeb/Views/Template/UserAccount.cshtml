@@ -1,91 +1,98 @@
-﻿
-@{
+﻿@{
+    Layout = "/Views/Shared/_Layout_account.cshtml";
     ViewBag.Title = "Hotel Detail";
 }
-<!-- .checkout-page content start -->
-<div class="static-page">
 
-    <header class="page-header">
-        <div class="container">
-            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
-            <hr>
-            <h1 class="page-title"><b>ABOUT</b> TRAVORAMA</h1>
-        </div>
-    </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div class="container">
-        <section class="page-content">
+    <title>Travorama</title>
 
-            <p class="text-center">
-                <img src="/assets/images/_sample/travorama-display-large.png" alt="Travorama - Enjoy your every moment">
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate perspiciatis expedita magnam facilis eius temporibus esse voluptatem similique repellendus itaque maiores modi, nesciunt, consequatur autem alias atque facere consequuntur!  Lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates atque ea consectetur laborum expedita reprehenderit. Nobis, deserunt explicabo vero laboriosam cumque tempore quod consequatur suscipit animi harum incidunt repudiandae consectetur? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate quod hic nemo pariatur eius debitis ad non quis, laborum et assumenda sunt sapiente, magni optio sit ab ut unde vitae.</p>
-            <div class="row">
-                <div class="col-sm-6">
-                    <h2><b>LIST</b> DISPLAY</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque esse iste eligendi recusandae rerum excepturi repudiandae nesciunt, nobis enim, assumenda ab consectetur culpa. Nisi deserunt nemo distinctio sit tempore totam.</p>
-                    <ul>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt quae, nihil sed, rerum magnam labore magni ipsam quia eligendi impedit dolor eveniet, quam suscipit ullam debitis optio. Non, consectetur nam.</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia alias, incidunt, vitae error iste modi repudiandae, beatae voluptatem adipisci earum unde ipsa quam blanditiis voluptatibus rem dicta laudantium qui veritatis!</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut eaque recusandae architecto repellat illo velit laboriosam, quae modi, culpa qui debitis aliquam temporibus accusamus perspiciatis doloribus voluptatum ipsa beatae mollitia?</p></li>
-                        <li><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit assumenda repellendus, iste excepturi pariatur maxime aliquam impedit dolorum ratione deleniti vitae facilis exercitationem adipisci, ipsam quis at et dolorem accusantium.</p></li>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-account">
+
+        <header id="site-header" class="site-header">
+            @{ Html.RenderPartial("_Mainmenu"); }
+        </header>
+
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
+
+
+            <header class="page-header">
+                <div class="container">
+                    <div class="site-nav"> <a href="#">Beranda</a> / <strong>User Account</strong></div>
+                    <hr>
+                    <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+                </div>
+            </header><!-- .page-header -->
+
+            <section class="page-content">
+                <div class="container">
+
+
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Profile</a></li>
+                        <li role="presentation" class="active"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
+                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
                     </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <h4><b>USER</b> PROFILE</h4>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="history">
+                            <h4><b>HISTORY</b> ORDER</h4>
+
+                            <div class="history-list">
+                                <?php for($i=1; $i<=5; $i++){ ?>
+                                <div class="history">
+                                    <table>
+                                        <tr>
+                                            <td class="number"></td>
+                                            <td class="detail"></td>
+                                            <td class="date"></td>
+                                            <td class="code"></td>
+                                            <td class="action"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <?php } ?>
+                            </div>
+
+                            <nav class="row text-center">
+                                <ul class="pagination">
+                                    <li><a href="#">&lt;</a></li>
+                                    <li><a href="#" class="active">1</a></li>
+                                    <li class="active"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&gt;</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="password">
+                            <h4><b>GANTI</b> PASSWORD</h4>
+                        </div>
+                    </div>
+
+
                 </div>
-                <div class="col-sm-6">
-                    <h2><b>IMAGE</b> DISPLAY</h2>
-                    <img src="/assets/images/_sample/hotel-image.jpg" alt="Lorem ipsum">
-                </div>
-            </div>
-            <h2><b>TABLE</b> DISPLAY</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th width="20%">Name</th>
-                        <th width="60%">Description</th>
-                        <th width="10%">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod iusto quae eveniet, minus inventore architecto quasi facilis sapiente asperiores fugiat, nam alias in voluptatem amet aliquam corrupti temporibus. Eligendi, laboriosam.</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Rama Adhitia</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi deleniti aut nam ab! Reiciendis, iure consequatur dicta atque ullam tempora veniam. Iure consectetur suscipit reprehenderit, nesciunt ullam repudiandae voluptate, saepe!</td>
-                        <td><span class="label label-success">Berhasil</span></td>
-                    </tr>
-                </tbody>
-            </table>
+            </section><!-- .page-content -->
 
 
-        </section>
-    </div><!-- .container -->
-
-
-
-
-</div>
-<!-- .checkout-page content end -->
+        </div>
+        <!-- site content end -->

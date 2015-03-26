@@ -1616,6 +1616,8 @@
     <Content Include="Views\Template\UserAccount.cshtml" />
     <Content Include="Views\Shared\_Layout_user.cshtml" />
     <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
+    <Content Include="Views\Shared\_Mainmenu.cshtml" />
+    <Content Include="Views\Shared\_Layout_account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
