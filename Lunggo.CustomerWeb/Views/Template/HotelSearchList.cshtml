@@ -4,7 +4,7 @@
 }
 
 <!-- .search-page content start -->
-<div class="search-page hotel-search-page">
+<div class="search-page hotel-search-page" ng-app="travorama">
 
     <header class="page-header">
         <div class="container">
@@ -51,19 +51,19 @@
             <a href="#" class="btn btn-primary">FILTER</a>
         </section>
     </aside><!-- .hotel-filter -->
-    <section class="hotel-list horizontal">
+    <section class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
         <div class="container">
 
             <div class="row">
 
-                <?php for($i=1; $i<=12; $i++){ ?>
+                <!-- Loop start here -->
 
-                <div class="hotel-wrapper col-sm-4">
+                <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotel_list.hotels">
                     <article class="hotel">
                         <a href="#" class="hotel-link">
                             <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel Amaris" class="hotel-image">
                             <section class="hotel-sum">
-                                <h2 class="hotel-name">AMARIS HOTEL</h2>
+                                <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">
                                     <span class="star star-4">
                                         <span class="fa fa-star"></span>
@@ -73,7 +73,7 @@
                                         <span class="fa fa-star-o"></span>
                                     </span>
                                 </h4>
-                                <h5 class="hotel-address">Jl. Karet Pasar Gang Tiong No. 62</h5>
+                                <h5 class="hotel-address">{{hotel.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
                                     <span class="hotel-review"><span class="fa fa-comment"> 1234</span></span>
@@ -82,7 +82,7 @@
                             <section class="hotel-tag hotel-show-square">
                                 <div class="hotel-price">
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">Rp 300.000</h2>
+                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</h2>
                                 </div>
                                 <div class="hotel-feedback">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
@@ -95,24 +95,24 @@
                                 <div class="hotel-price">
                                     <p><b>Price :</b></p>
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">Rp 300.000</h2>
+                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</h2>
                                     <span>Harga <strong>sudah</strong> termasuk pajak</span>
                                 </div>
                             </section><!-- .hotel-tag -->
                         </a>
                     </article>
                 </div><!-- .hotel-wrapper -->
-                <?php } ?>
+                <!-- Loop end here -->
 
             </div>
 
         </div>
-        <div class="container">
+        <footer class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <nav>
                         <ul class="pagination">
-                            <li><a href="#">&lt;</a></li>
+                            <li><a href="#" ng-click="load_hotel_list()">&lt;</a></li>
                             <li><a href="#" class="active">1</a></li>
                             <li class="active"><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
@@ -123,7 +123,7 @@
                     </nav>
                 </div><!-- .text-center -->
             </div><!-- .row -->
-        </div><!-- .container -->
+        </footer><!-- .container -->
     </section><!-- .hotel-list -->
 
 </div>
