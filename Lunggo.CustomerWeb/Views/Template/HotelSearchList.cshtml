@@ -4,7 +4,7 @@
 }
 
 <!-- .search-page content start -->
-<div id="section-block" class="search-page hotel-search-page">
+<div class="search-page hotel-search-page" ng-app="travorama">
 
     <header class="page-header">
         <div class="container">
@@ -53,8 +53,8 @@
             <a href="#" class="btn btn-primary">FILTER</a>
         </section>
     </aside><!-- .hotel-filter -->
-    <section class="hotel-list horizontal">
-        <div class="container" ng-app="travorama">
+    <section class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
+        <div class="container">
 
             <div class="row" ng-controller="HotelController">
 
@@ -63,17 +63,16 @@
                 <input placeholder="StayLength" ng-model="HotelSearchParams.StayLength" type="text" />
                 <button ng-click="load_hotel_list()">Search</button>
 
-                <div ng-repeat="x in hotels" class="hotel-wrapper col-sm-4">
-
+                <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotel_list.hotels">
                     <article class="hotel">
                         <a href="#" class="hotel-link">
                             <img src="{{x.ImageUrlList[0].ThumbSizeUrl}}" alt="Hotel Amaris" class="hotel-image">
                             <section class="hotel-sum">
-                                <h2 class="hotel-name">{{x.HotelName}}</h2>
+                                <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">
                                     <span class="star star-{{x.StarRating}}"></span>
                                 </h4>
-                                <h5 class="hotel-address">{{x.Address}}</h5>
+                                <h5 class="hotel-address">{{hotel.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
                                     <span class="hotel-review"><span class="fa fa-comment"> 1234</span></span>
@@ -82,7 +81,7 @@
                             <section class="hotel-tag hotel-show-square">
                                 <div class="hotel-price">
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">{{x.LowestPrice.Currency}} {{x.LowestPrice.Value}}</h2>
+                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</h2>
                                 </div>
                                 <div class="hotel-feedback">
                                     <span class="hotel-like"><span class="fa fa-heart"> 1234</span></span>
@@ -95,23 +94,32 @@
                                 <div class="hotel-price">
                                     <p><b>Price :</b></p>
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">{{x.LowestPrice.Currency | currency:"Rp":0}} {{x.LowestPrice.Value | currency:"IDR":0}}</h2>
+                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</h2>
                                     <span>Harga <strong>sudah</strong> termasuk pajak</span>
                                 </div>
                             </section><!-- .hotel-tag -->
                         </a>
                     </article>
                 </div><!-- .hotel-wrapper -->
+                <!-- Loop end here -->
 
             </div>
 
         </div>
-
         <footer class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <nav>
                         <ul class="pagination">
+                            <!--
+                            <li><a href="#" ng-click="load_hotel_list()">&lt;</a></li>
+                            <li><a href="#" class="active">1</a></li>
+                            <li class="active"><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&gt;</a></li>
+                             -->
                         </ul>
                     </nav>
                 </div><!-- .text-center -->
