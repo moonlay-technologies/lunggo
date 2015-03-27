@@ -212,7 +212,7 @@ function flight_search() {
 
 //******************************************
 // Show loading
-function loading(state, loc) {
+function loading_overlay(state, loc) {
 
     if (state == 'show') {
 

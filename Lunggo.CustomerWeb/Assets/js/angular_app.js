@@ -45,8 +45,11 @@ var SearchHotelConfig = {
 
 		}
 
+
 		// load hotel list function
-		$scope.load_hotel_list = function(page){
+		$scope.load_hotel_list = function(page) {
+
+		    loading_overlay("show", "#section-block");
 
 			console.log('--------------------------------');
 			console.log('Searching for hotel with params:');
@@ -84,7 +87,10 @@ var SearchHotelConfig = {
 					StarRating : $scope.HotelSearchParams.StarRating
 				}
 			// if success
-			}).success(function(data){
+			}).success(function (data) {
+
+			    loading_overlay("hide", "#section-block");
+
 				// console data
 				console.log('Hotel search result:');
 				//console.log(data);
@@ -97,13 +103,16 @@ var SearchHotelConfig = {
 			    hotel_list.hotels = data.HotelList;
 			    
 			    $scope.hotels = hotel_list.hotels;
-			    console.log(hotel_list.hotels);
 
 			    $scope.HotelSearchParams.SearchId = data.SearchId;
 
 				// pagination
-				$scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount );
+			    $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
+			    console.log($scope.MaxPage);
+
 				$scope.show_page( $scope.MaxPage );
+				
+			    
 
 				console.log('loaded');
 				console.log('--------------------------------');
@@ -111,7 +120,10 @@ var SearchHotelConfig = {
 				$scope.stopwatch('stop');
 
 		   	// if error
-		    }).error(function(){
+			}).error(function () {
+
+			    loading_overlay("hide", "#section-block");
+
 		    	console.log('REQUEST ERROR');
 		    	$('.notif').remove();
 		    	$('.hotel-list-content').prepend('<h1 class="report text-center notif">ERROR</h1>');
@@ -121,14 +133,18 @@ var SearchHotelConfig = {
 
 		// paging function
 		$scope.show_page = function (max_page) {
-			$('footer .pagination').html('');
+
+		    $('footer .pagination').html('');
+		    
 			for( n=1 ; n<=max_page ; n++ ){
 				$('footer .pagination').append('<li><a href="#" data-page="'+n+'">'+n+'</a></li>');
 			}
-			$('footer .pagination a').click(function(){
+
+			$('footer .pagination a').click(function () {
 				var page = $(this).attr('data-page');
 				$scope.load_hotel_list(page);
 			});
+
 		}
 
 

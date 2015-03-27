@@ -4,7 +4,7 @@
 }
 
 <!-- .search-page content start -->
-<div class="search-page hotel-search-page">
+<div id="section-block" class="search-page hotel-search-page">
 
     <header class="page-header">
         <div class="container">
@@ -15,9 +15,11 @@
             <div class="pull-right list-option">Show : <select name="#" id="hotel-list"><option value="25">25 Hotels</option><option value="50">50 Hotels</option></select> / page</div>
         </div>
     </header><!-- .page-header -->
+
     <div class="container">
         <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
     </div>
+
     <aside class="hotel-filter filter" data-active="false">
         <div class="filter-button">
             <span class="arrow">&gt;</span>
@@ -60,9 +62,9 @@
                 <input placeholder="CheckIn" ng-model="HotelSearchParams.StayDate" type="text" />
                 <input placeholder="StayLength" ng-model="HotelSearchParams.StayLength" type="text" />
                 <button ng-click="load_hotel_list()">Search</button>
-                
+
                 <div ng-repeat="x in hotels" class="hotel-wrapper col-sm-4">
-                    
+
                     <article class="hotel">
                         <a href="#" class="hotel-link">
                             <img src="{{x.ImageUrlList[0].ThumbSizeUrl}}" alt="Hotel Amaris" class="hotel-image">
@@ -101,27 +103,20 @@
                     </article>
                 </div><!-- .hotel-wrapper -->
 
-
             </div>
 
         </div>
-        <div class="container">
+
+        <footer class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <nav>
                         <ul class="pagination">
-                            <li><a href="#">&lt;</a></li>
-                            <li><a href="#" class="active">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&gt;</a></li>
                         </ul>
                     </nav>
                 </div><!-- .text-center -->
             </div><!-- .row -->
-        </div><!-- .container -->
+        </footer><!-- .container -->
     </section><!-- .hotel-list -->
 
 </div>
