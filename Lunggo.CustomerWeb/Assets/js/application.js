@@ -257,6 +257,10 @@ var SearchHotelConfig = {
 
     app.controller('HotelController', ['$http', '$scope', function ($http, $scope) {
 
+        angular.element(document).ready(function () {
+            $scope.load_hotel_list();
+        });
+
         // hotel list
         var hotel_list = this;
         hotel_list.hotels = [];
@@ -286,6 +290,8 @@ var SearchHotelConfig = {
 
         // load hotel list function
         $scope.load_hotel_list = function (page) {
+
+            loading_overlay('show','body');
 
             console.log('--------------------------------');
             console.log('Searching for hotel with params:');
@@ -347,11 +353,16 @@ var SearchHotelConfig = {
 
                 $scope.stopwatch('stop');
 
+                loading_overlay('hide','body');
+
                 // if error
             }).error(function () {
                 console.log('REQUEST ERROR');
                 $('.notif').remove();
                 $('.hotel-list-content').prepend('<h1 class="report text-center notif">ERROR</h1>');
+
+                loading_overlay('hide','body');
+
             });
 
         };
