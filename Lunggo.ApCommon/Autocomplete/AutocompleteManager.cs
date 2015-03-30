@@ -58,7 +58,17 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<object> GetHotelLocationAutocomplete(string prefix)
         {
             var hotelLocationIndex = TrieIndex.GetInstance().HotelLocationIndex;
-            var hotelLocationAutocomplete = hotelLocationIndex.GetAllSuggestionIds(prefix)
+            var splittedString = prefix.Split(' ');
+            var hotelLocationIds = new List<long>();
+            hotelLocationIds.AddRange(hotelLocationIndex.GetAllSuggestionIds(splittedString[0]));
+            var i = 1;
+            while (i < splittedString.Count())
+            {
+                hotelLocationIds = hotelLocationIds.Intersect(hotelLocationIndex.GetAllSuggestionIds(splittedString[i])).ToList();
+                i++;
+            }
+            var distinctHotelLocationIds = hotelLocationIds.Distinct();
+            var hotelLocationAutocomplete = distinctHotelLocationIds
                 .Select(id => new
                 {
                     HotelLocationDict[id].LocationId,

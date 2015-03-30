@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightFareTrip>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureAirport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalAirport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AirlineCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FlightNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemainingSeats)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureAirport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalAirport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AirlineCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FlightNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemainingSeats)
+        </td>
+        <td>
+            @{Html.RenderPartial("TestFlightStop", item.FlightStops);}
+        </td>
+    </tr>
+}
+
+</table>

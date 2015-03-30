@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightFareItinerary>
+
+@{
+    ViewBag.Title = "TestSearchedFlights";
+}
+
+<h2>TestSearchedFlights</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalFare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdultTotalFare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChildTotalFare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InfantTotalFare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Currency)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequirePassport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequireBirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequireSameCheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TripType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalFare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdultTotalFare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChildTotalFare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InfantTotalFare)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequirePassport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequireBirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequireSameCheckIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TripType)
+        </td>
+        <td>
+            @{ Html.RenderPartial("TestFlightTrip", item.FlightTrips);}
+        </td>
+    </tr>
+}
+
+</table>

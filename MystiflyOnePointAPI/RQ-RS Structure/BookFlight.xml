@@ -1,0 +1,63 @@
+﻿<BookFlight>
+
+  <AirBookRQ>
+    <SessionId/>
+    <FareSourceCode/>
+    <TravelerInfo>
+      <AirTravelers>
+        <AirTraveler>
+          <PassengerType/>
+          <Gender/>
+          <PassengerName>
+            <PassengerTitle/>
+            <PassengerFirstName/>
+            <PassengerLastName/>
+          </PassengerName>
+          <DateOfBirth/>
+          <Passport>
+            <PassportNumber/>
+            <ExpiryDate/>
+            <Country/>
+          </Passport>
+          <ExtraServices1_1>
+            <Services>
+              <ExtraServiceId/>
+            </Services>
+          </ExtraServices1_1>
+          <ExtraServices>
+            <Services>
+              <ExtraServiceId/>
+              <Quantity/>
+            </Services>
+          </ExtraServices>
+          <SpecialServiceRequest>
+            <SeatPreference/>
+            <MealPreference/>
+          </SpecialServiceRequest>
+        </AirTraveler>
+      </AirTravelers>
+      <AreaCode/>
+      <CountryCode/>
+      <Email/>
+      <PhoneNumber/>
+    </TravelerInfo>
+    <Target/>
+  </AirBookRQ>
+
+
+  <AirBookRS>
+    <Status/>
+    <Success/>
+    <UniqueID/>
+    <TktTimeLimit/>
+    <Errors>
+      <Error>
+        <Code/>
+        <Message/>
+      </Error>
+    </Errors>
+    <Target/>
+  </AirBookRS>
+
+
+</BookFlight>

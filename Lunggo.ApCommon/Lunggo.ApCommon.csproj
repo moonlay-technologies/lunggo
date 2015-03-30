@@ -98,6 +98,26 @@
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Flight\Constant\FlightEnum.cs" />
+    <Compile Include="Flight\Interface\IBookFlight.cs" />
+    <Compile Include="Flight\Interface\IGetTripDetails.cs" />
+    <Compile Include="Flight\Interface\IOrderTicket.cs" />
+    <Compile Include="Flight\Interface\IRevalidateFare.cs" />
+    <Compile Include="Flight\Model\BookFlightResult.cs" />
+    <Compile Include="Flight\Model\FlightBooking.cs" />
+    <Compile Include="Flight\Model\FlightBookingInfo.cs" />
+    <Compile Include="Flight\Model\FlightItinerary.cs" />
+    <Compile Include="Flight\Model\FlightTrip.cs" />
+    <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
+    <Compile Include="Flight\Model\OrderTicketResult.cs" />
+    <Compile Include="Flight\Model\PassengerInfo.cs" />
+    <Compile Include="Flight\Model\ResultBase.cs" />
+    <Compile Include="Flight\Model\RevalidateFareResult.cs" />
+    <Compile Include="Flight\Model\SearchFlightConditions.cs" />
+    <Compile Include="Flight\Model\SearchFlightResult.cs" />
+    <Compile Include="Mystifly\MystiflyClientHandler.cs" />
+    <Compile Include="Flight\Interface\ISearchFlight.cs" />
+    <Compile Include="Flight\Service\FlightService.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
     <Compile Include="Hotel\Logic\HotelPriceUtil.cs" />
@@ -140,6 +160,18 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
+    <Compile Include="Mystifly\MystiflyCommon.cs" />
+    <Compile Include="Mystifly\MystiflyBookFlight.cs" />
+    <Compile Include="Mystifly\MystiflyGetTripDetails.cs" />
+    <Compile Include="Mystifly\MystiflyOrderTicket.cs" />
+    <Compile Include="Mystifly\MystiflySearchFlight.cs" />
+    <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
+    <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,6 +235,97 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingDataRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingNotesRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirCancelRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirLowFareSearchRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirMessageQueueRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirOrderTicketRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirQuoteRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRemoveMessageQueueRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRevalidateRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRulesRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRulesRS1.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirSeatMapRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirSeatRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirTripDetailsRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirBookRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirRevalidateRS.datasource" />
+    <None Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.SessionCreateRS.datasource" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirBookingDataRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirBookingNotesRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirBookRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirCancelRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirLowFareSearchRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirMessageQueueRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirOrderTicketRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirQuoteRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRemoveMessageQueueRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRevalidateRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRulesRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRulesRS1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirSeatMapRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirSeatRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTripDetailsRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.MultiAirBookRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.MultiAirRevalidateRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Lunggo.ApCommon.Mystifly.OnePointService.Flight.SessionCreateRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.wsdl" />
     <None Include="Service References\Travolutionary.WebService.Hotel\DynamicDataService.xsd">
       <SubType>Designer</SubType>
@@ -267,6 +390,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Mystifly.OnePointService.Flight\" />
     <WCFMetadataStorage Include="Service References\Travolutionary.WebService.Hotel\" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +408,24 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Flight\Logic\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Mystifly.OnePointService.Flight\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

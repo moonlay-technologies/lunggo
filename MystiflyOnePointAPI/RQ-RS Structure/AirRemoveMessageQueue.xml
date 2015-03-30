@@ -1,0 +1,26 @@
+﻿<AirRemoveMessageQueue>
+
+  <AirRemoveMessageQueueRQ>
+    <SessionId/>
+    <Items>
+      <Item>
+        <UniqueId/>
+        <CategoryId/>
+      </Item>
+    </Items>
+    <Target/>
+  </AirRemoveMessageQueueRQ>
+
+
+  <AirRemoveMessageQueueRS>
+    <Success/>
+    <Errors>
+      <Error>
+        <Code/>
+        <Message/>
+      </Error>
+    </Errors>
+    <Target/>
+  </AirRemoveMessageQueueRS>
+
+</AirRemoveMessageQueue>

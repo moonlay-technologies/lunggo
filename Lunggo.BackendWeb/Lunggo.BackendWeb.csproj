@@ -48,6 +48,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -130,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interface\OnePointInterface.cs" />
     <Compile Include="Model\FlightReservationIntegrated.cs" />
     <Compile Include="Model\FlightReservationSearch.cs" />
     <Compile Include="Model\QueryType.cs" />
@@ -146,6 +149,11 @@
     <Compile Include="Query\GetHotelBookingDetail.cs" />
     <Compile Include="Query\GetAllHotel.cs" />
     <Compile Include="Query\GetAllHotelQueryRecord.cs" />
+    <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\application.css" />
@@ -262,6 +270,24 @@
     <Content Include="assets\lineicons\fonts\linecons.woff" />
     <Content Include="Config\application.properties" />
     <Content Include="Config\HotelLocation.csv" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingDataRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookingNotesRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirBookRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirCancelRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirLowFareSearchRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirMessageQueueRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirOrderTicketRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirQuoteRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRemoveMessageQueueRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRevalidateRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRulesRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirRulesRS1.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirSeatMapRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirSeatRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.AirTripDetailsRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirBookRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirRevalidateRS.datasource" />
+    <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.SessionCreateRS.datasource" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />
@@ -278,6 +304,13 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -311,6 +344,29 @@
     <Content Include="Views\FlightReservation\RenderPassenger.cshtml" />
     <Content Include="Views\FlightReservation\RenderTripDetail.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\FlightReservation\TestSearchedFlights.cshtml" />
+    <Content Include="Views\FlightReservation\TestSearchFlight.cshtml" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\FlightReservation\TestFlightTrip.cshtml" />
+    <Content Include="Views\FlightReservation\TestFlightStop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,6 +399,16 @@
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MystiflyOnePointAPI\MystiflyOnePointAPI.csproj">
+      <Project>{39e43b13-0914-4e73-9c03-e2a5eb4cc4fc}</Project>
+      <Name>MystiflyOnePointAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Mystifly.OnePointService.Flight\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

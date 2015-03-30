@@ -1,0 +1,18 @@
+﻿<AirBookingNotes>
+
+  <AirBookingNotesRQ>
+    <SessionId/>
+    <UniqueID/>
+    <Notes>
+      <string/>
+    </Notes>
+    <Target/>
+  </AirBookingNotesRQ>
+
+
+  <AirBookingNotesRS>
+    <Success/>
+    <Errors/>
+  </AirBookingNotesRS>
+
+</AirBookingNotes>

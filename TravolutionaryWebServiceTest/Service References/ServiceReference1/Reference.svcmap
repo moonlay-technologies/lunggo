@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d71fb837-41cc-4b57-833e-e947c383f1c7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://apidemo.myfarebox.com/V2/OnePoint.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OnePoint.xsd" MetadataType="Schema" ID="021aa37d-eec2-4a00-819b-a69440e4576b" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd1" />
+    <MetadataFile FileName="OnePoint.wsdl" MetadataType="Wsdl" ID="d17b34ab-8529-4133-aede-e50bc96e2d66" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?wsdl" />
+    <MetadataFile FileName="OnePoint.disco" MetadataType="Disco" ID="f45028bc-9ed8-4b7b-9678-32eb43475182" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?disco" />
+    <MetadataFile FileName="OnePoint1.xsd" MetadataType="Schema" ID="a589c3a1-e6f0-4ec3-8cab-341662d0aab7" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd2" />
+    <MetadataFile FileName="OnePoint2.xsd" MetadataType="Schema" ID="f9309752-94b3-45f2-aac3-c05d8957df50" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd3" />
+    <MetadataFile FileName="OnePoint3.xsd" MetadataType="Schema" ID="202ca3e2-0fa8-47f8-9ead-71db66fe6dd8" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd0" />
+    <MetadataFile FileName="OnePoint4.xsd" MetadataType="Schema" ID="e0e058bf-5643-4892-9f2a-e64b9a12b062" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd5" />
+    <MetadataFile FileName="OnePoint5.xsd" MetadataType="Schema" ID="f900da72-fcaf-48ae-a2bb-0138bbabdfed" SourceId="1" SourceUrl="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

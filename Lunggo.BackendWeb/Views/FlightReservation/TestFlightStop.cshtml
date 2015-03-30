@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightStop>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StopAirport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StopAirport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
