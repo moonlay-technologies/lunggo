@@ -8,10 +8,39 @@ $(document).ready(function(){
 	hotel_detail();
 	flight_search();
 
+	$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
+	    calendars: 3,
+	    format: 'Y/m/d',
+	    hide_on_select: true,
+	    select_month: false,
+	    select_year: false,
+	    separator: '/',
+        min: new Date
+	});
+
+	$('.input-checkout.select-date').pickmeup_twitter_bootstrap({
+	    calendars: 3,
+	    format: 'Y/m/d',
+	    hide_on_select: true,
+	    select_month: false,
+	    select_year: false,
+	    separator: '/',
+        default_date : $('.input-checkin.select-date').val(),
+        min: $('.input-checkin.select-date').val()
+	});
+    
 });
 
 //******************************************
+// FUNCTIONS
+
 //******************************************
+// date picker
+var date_picker_checkout = function(the_date) {
+    
+}
+
+
 //******************************************
 // news hover
 $('.page.home-page section.news .news-wrapper').hover(

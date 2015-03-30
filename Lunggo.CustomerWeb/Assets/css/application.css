@@ -129,7 +129,8 @@ section.search {
 
 body {
   color: #555;
-  background: #f9f9f9; }
+  background: #f9f9f9;
+  min-height: 100%; }
 
 body img {
   max-width: 100%; }
@@ -1535,7 +1536,10 @@ hr {
     width: 90%;
     max-height: 250px;
     overflow: auto;
-    display: none; }
+    display: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px; }
     .loc-auto-wrapper .loc-auto ul {
       padding: 0;
       list-style: none;
@@ -1563,3 +1567,21 @@ hr {
     text-align: center;
     top: 40%;
     width: 100%; }
+
+.pickmeup-twitter-bootstrap {
+  z-index: 9999; }
+  .pickmeup-twitter-bootstrap .pmu-day-of-week {
+    font-weight: bold; }
+  .pickmeup-twitter-bootstrap .pmu-month {
+    font-weight: bold;
+    font-size: 18px; }
+  .pickmeup-twitter-bootstrap .pmu-days .pmu-button:hover {
+    background: #2fb4e6; }
+  .pickmeup-twitter-bootstrap .pmu-disabled {
+    color: #ccc; }
+  .pickmeup-twitter-bootstrap .pmu-not-in-month {
+    background: none !important;
+    opacity: 0;
+    cursor: none; }
+  .pickmeup-twitter-bootstrap .pmu-selected {
+    background: #2fb4e6; }

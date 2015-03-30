@@ -346,6 +346,8 @@
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
+    <Content Include="Assets\js\jquery.pickmeup.min.js" />
+    <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />

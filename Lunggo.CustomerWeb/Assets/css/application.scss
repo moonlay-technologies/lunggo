@@ -2,7 +2,7 @@
 @import '_header.scss';
 @import '_footer.scss';
 
-body {@extend .din; color:#555; background:#f9f9f9;}
+body {@extend .din; color:#555; background:#f9f9f9; min-height:100%;}
 body img {max-width:100%;}
 
 .container {max-width:960px;}
@@ -655,7 +655,7 @@ hr {border-color:#aaa;}
 // ----------------------------------------------
 // Location auto complete
 .loc-auto-wrapper {position:relative;
-	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none;
+	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
 		ul {padding:0; list-style:none; margin-bottom:0;
 			li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
 				&:hover {background:#ddd;}
@@ -670,4 +670,15 @@ hr {border-color:#aaa;}
     .loading-content {position:absolute; text-align:center; top:40%; width:100%;}
 }
 
-
+// ----------------------------------------------
+// Date picker
+.pickmeup-twitter-bootstrap {z-index:9999;
+    .pmu-day-of-week {font-weight:bold;}
+    .pmu-month {font-weight:bold; font-size:18px;}
+    .pmu-days .pmu-button {
+        &:hover {background:#2fb4e6;}
+    }
+    .pmu-disabled {color:#ccc;}
+    .pmu-not-in-month {background:none !important; opacity:0; cursor:none;}
+    .pmu-selected {background:#2fb4e6;}
+}
