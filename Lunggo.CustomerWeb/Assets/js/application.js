@@ -2,7 +2,8 @@
 // on document ready
 $(document).ready(function(){
 
-	location_autocomplete();
+    location_autocomplete();
+    room_picker();
 	toggle_filter();
 	hotel_search();
 	hotel_detail();
@@ -51,6 +52,41 @@ var date_picker_checkout = function (the_date) {
 // room picker
 var room_picker = function() {
     var max_room = 4;
+    var room_option = '.input-room.select-room';
+
+    // show
+    $('.input-room.select-room').focus(function() {
+        if ($(this).siblings('div.option').length == 0) {
+            $(this).parent().addClass('option-wrapper').append('<div class="option"></div>');
+            for (var i = 1; i <= max_room; i++) {
+                var room;
+                if (i > 1) {
+                    room = ' rooms'
+                } else {
+                    room = ' room'
+                }
+                $(this).siblings('div.option').append('<li data-value="'+i+'">' + i + room +' </li>');
+            }
+            $(this).siblings('.option').wrapInner('<ul></ul>');
+        }
+
+        $(room_option).siblings('div.option').show();
+
+    });
+
+    // hide room option
+    $('html').click(function () {
+        $('.option-wrapper .option').hide();
+    });
+    $(".input-room.select-room, .option-wrapper .option").on('click', function (evt) {
+        evt.stopPropagation();
+    });
+    $('.option-wrapper .option li').on('click', function (evt) {
+        evt.stopPropagation();
+        console.log('JEMPING');
+    });
+
+
 }
 
 //******************************************
