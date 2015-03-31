@@ -30,7 +30,7 @@ $(document).ready(function(){
 // date picker
 var date_picker_checkout = function (the_date) {
 
-    selected_date = the_date || new Date ;
+    var selected_date = the_date || new Date;
 
     $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
     $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
@@ -41,13 +41,17 @@ var date_picker_checkout = function (the_date) {
         select_year: false,
         separator: '/',
         min: selected_date,
-        date: selected_date,
         default_date: selected_date
     });
     $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
 
 }
 
+//******************************************
+// room picker
+var room_picker = function() {
+    var max_room = 4;
+}
 
 //******************************************
 // news hover
