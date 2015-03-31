@@ -15,18 +15,10 @@ $(document).ready(function(){
 	    select_month: false,
 	    select_year: false,
 	    separator: '/',
-        min: new Date
-	});
-
-	$('.input-checkout.select-date').pickmeup_twitter_bootstrap({
-	    calendars: 3,
-	    format: 'Y/m/d',
-	    hide_on_select: true,
-	    select_month: false,
-	    select_year: false,
-	    separator: '/',
-        default_date : $('.input-checkin.select-date').val(),
-        min: $('.input-checkin.select-date').val()
+	    min: new Date,
+	    change: function () {
+	        date_picker_checkout( $(this).pickmeup('get_date') )
+        }
 	});
     
 });
@@ -36,8 +28,24 @@ $(document).ready(function(){
 
 //******************************************
 // date picker
-var date_picker_checkout = function(the_date) {
-    
+var date_picker_checkout = function (the_date) {
+
+    selected_date = the_date || new Date ;
+
+    $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
+    $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
+        calendars: 3,
+        format: 'Y/m/d',
+        hide_on_select: true,
+        select_month: false,
+        select_year: false,
+        separator: '/',
+        min: selected_date,
+        date: selected_date,
+        default_date: selected_date
+    });
+    $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
+
 }
 
 
