@@ -55,7 +55,7 @@ var room_picker = function() {
     var room_option = '.input-room.select-room';
 
     // show
-    $('.input-room.select-room').focus(function() {
+    $(room_option).focus(function() {
         if ($(this).siblings('div.option').length == 0) {
             $(this).parent().addClass('option-wrapper').append('<div class="option"></div>');
             for (var i = 1; i <= max_room; i++) {
@@ -74,17 +74,20 @@ var room_picker = function() {
 
     });
 
+    // select room
+    $('.form-group').on('click', '.option li', function() {
+        $(room_option).val( $(this).html() );
+    });
+
+
     // hide room option
     $('html').click(function () {
         $('.option-wrapper .option').hide();
     });
-    $(".input-room.select-room, .option-wrapper .option").on('click', function (evt) {
+    $(".input-room.select-room").on('click', function (evt) {
         evt.stopPropagation();
     });
-    $('.option-wrapper .option li').on('click', function (evt) {
-        evt.stopPropagation();
-        console.log('JEMPING');
-    });
+    
 
 
 }
