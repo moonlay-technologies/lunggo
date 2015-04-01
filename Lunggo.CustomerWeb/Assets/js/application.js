@@ -9,18 +9,18 @@ $(document).ready(function(){
 	hotel_detail();
 	flight_search();
 
-	$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
-	    calendars: 3,
-	    format: 'Y/m/d',
-	    hide_on_select: true,
-	    select_month: false,
-	    select_year: false,
-	    separator: '/',
-	    min: new Date,
-	    change: function () {
-	        date_picker_checkout( $(this).pickmeup('get_date') )
-        }
-	});
+	//$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
+	//   calendars: 3,
+	//    format: 'Y/m/d',
+	//    hide_on_select: true,
+	//    select_month: false,
+	//    select_year: false,
+	//    separator: '/',
+	//    min: new Date,
+	//    change: function () {
+	//        date_picker_checkout( $(this).pickmeup('get_date') )
+    //    }
+	//});
     
 });
 
@@ -90,6 +90,21 @@ var room_picker = function() {
     
 
 
+}
+
+//******************************************
+// generate hotel star
+var generate_star = function() {
+    $('.generate-star').each(function () {
+        var star_rating = $(this).attr('data-star');
+        $(this).html('');
+        for (var i = 1; i <= star_rating; i++) {
+            $(this).append('<span class="fa fa-star></span>');
+        }
+        for (var i = 5; i > star_rating; i--) {
+            $(this).append('<span class="fa fa-star-o></span>');
+        }
+    });
 }
 
 //******************************************
@@ -337,6 +352,7 @@ var SearchHotelConfig = {
 
     app.controller('HotelController', ['$http', '$scope', function ($http, $scope) {
 
+        // run hotel search function on document ready
         angular.element(document).ready(function () {
             $scope.load_hotel_list();
         });
@@ -350,23 +366,10 @@ var SearchHotelConfig = {
 
         // *******************************
         // sample content
-        $scope.HotelSearchParams.StayDate = '2015-05-20';
-        $scope.HotelSearchParams.StayLength = '1';
-        $scope.HotelSearchParams.LocationId = '640254';
+        $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-stayDate');
+        $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-stayLength');
+        $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-locationId');
         // *******************************
-
-        $scope.Loadtime;
-        $scope.stopwatch = function (state) {
-
-            if (state == 'start') {
-                $scope.Loadtime = 0;
-                $scope.timer = setInterval(function () { $scope.Loadtime = $scope.Loadtime + 0.1 }, 100);
-            } else if (state == 'stop') {
-                clearInterval($scope.timer);
-                $scope.Loadtime = Math.round($scope.Loadtime * 10) / 10;
-            }
-
-        }
 
         // load hotel list function
         $scope.load_hotel_list = function (page) {
@@ -376,8 +379,6 @@ var SearchHotelConfig = {
             console.log('--------------------------------');
             console.log('Searching for hotel with params:');
             console.log($scope.HotelSearchParams);
-
-            $scope.stopwatch('start');
 
             // set default page
             $scope.CurrentPage = page || 1;
@@ -428,10 +429,10 @@ var SearchHotelConfig = {
                 $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
                 $scope.show_page($scope.MaxPage);
 
+                generate_star();
+
                 console.log('loaded');
                 console.log('--------------------------------');
-
-                $scope.stopwatch('stop');
 
                 loading_overlay('hide','body');
 
