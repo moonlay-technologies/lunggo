@@ -2,34 +2,195 @@
 // on document ready
 $(document).ready(function(){
 
-    location_autocomplete();
-    room_picker();
 	toggle_filter();
 	hotel_search();
 	hotel_detail();
 	flight_search();
 
-	//$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
-	//   calendars: 3,
-	//    format: 'Y/m/d',
-	//    hide_on_select: true,
-	//    select_month: false,
-	//    select_year: false,
-	//    separator: '/',
-	//    min: new Date,
-	//    change: function () {
-	//        date_picker_checkout( $(this).pickmeup('get_date') )
+    hotel_search_form_functions();
+
+    //$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
+    //   calendars: 3,
+    //    format: 'Y/m/d',
+    //    hide_on_select: true,
+    //    select_month: false,
+    //    select_year: false,
+    //    separator: '/',
+    //    min: new Date,
+    //    change: function () {
+    //        date_picker_checkout( $(this).pickmeup('get_date') )
     //    }
-	//});
-    
+    //});
+
 });
 
 //******************************************
 // FUNCTIONS
 
 //******************************************
+// hotel search form
+function hotel_search_form_functions() {
+
+    // activate functions
+    $(document).ready(function() {
+        location_autocomplete();
+        date_picker();
+        stay_length();
+        room_count();
+    });
+
+    // ******************************
+    // location auto complete
+    var location_autocomplete = function () {
+
+        // setting
+        var el_input = 'input.input-location';
+        var ajax_url = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/hotellocation/';
+        var min_char = 3;
+        var list_wrapper = '.loc-auto';
+
+        // run function on keyup
+        $(el_input).keyup(function () {
+            var req_val = $(this).val();
+            verify_input(req_val);
+        });
+
+        $(el_input).focus(function () {
+            var req_val = $(this).val();
+            verify_input(req_val);
+        });
+
+        // function verified input
+        function verify_input(input_val) {
+            if (input_val.length >= min_char) {
+                get_result(input_val);
+            } else {
+                $(list_wrapper).hide();
+            }
+        }
+
+        // get result
+        function get_result(input_val) {
+            $.ajax({
+                method: "GET",
+                dataType: "json",
+                url: ajax_url + input_val
+            })
+            .done(function (result) {
+                show_result(result);
+            });
+        }
+
+        // show result
+        function show_result(data) {
+            if (data.length > 0) {
+                $(list_wrapper).empty();
+                for (i = 0; i < data.length; i++) {
+                    $(list_wrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
+                }
+                $(list_wrapper).wrapInner('<ul></ul>');
+                $(list_wrapper).show().attr('data-active', 'true');
+            } else {
+                $(list_wrapper).hide();
+            }
+        }
+
+        // on click
+        select_result();
+        function select_result() {
+            $(list_wrapper).on('click', 'li', function () {
+                $(el_input).val($(this).text());
+                $(list_wrapper).hide();
+                $(el_input).attr('data-location-id', $(this).attr('data-location-id'));
+                $('.search-hotel-form .search-hotel-value.location').val($(this).attr('data-location-id'));
+            });
+        }
+
+        // hide when click another element
+        $('html').click(function () {
+            $(list_wrapper).hide();
+        });
+        $("input.input-location , .loc-auto").on('click', function (evt) {
+            evt.stopPropagation();
+        });
+
+
+
+    };
+
+    // ******************************
+    // date picker
+    var date_picker = function() {
+        
+    }
+
+    // ******************************
+    // stay length
+    var stay_length = function() {
+        
+    }
+
+    // ******************************
+    // room count
+    var room_count = function (room) {
+        var max_room = room || 4;
+        var room_option = '.input-room.select-room';
+
+        // show
+        $(room_option).focus(function () {
+            if ($(this).siblings('div.option').length == 0) {
+                $(this).parent().addClass('option-wrapper').append('<div class="option"></div>');
+                for (var i = 1; i <= max_room; i++) {
+                    var room;
+                    if (i > 1) {
+                        room = ' rooms'
+                    } else {
+                        room = ' room'
+                    }
+                    $(this).siblings('div.option').append('<li data-value="' + i + '">' + i + room + ' </li>');
+                }
+                $(this).siblings('.option').wrapInner('<ul></ul>');
+            }
+            $(room_option).siblings('div.option').show();
+        });
+
+        $(room_option).on('keyup', function() {
+            var key_value = this.value;
+            if (key_value > 0 && key_value <= max_room) {
+                $(this).siblings('.option').children('ul').children('li:nth-child(' + key_value + ')').click();
+                $(this).blur();
+            } else if (key_value > max_room) {
+                $(this).siblings('.option').children('ul').children('li:nth-child(' + max_room + ')').click();
+                $(this).blur();
+            } else {
+                $(this).val('');
+            }
+        });
+
+        // select room
+        $('.form-group').on('click', '.option li', function () {
+            $(room_option).val($(this).html());
+        });
+
+
+        // hide room option
+        $('html').click(function () {
+            $('.option-wrapper .option').hide();
+        });
+        $(".input-room.select-room").on('click', function (evt) {
+            evt.stopPropagation();
+        });
+
+    }
+
+
+    
+
+}
+
+//******************************************
 // date picker
-var date_picker_checkout = function (the_date) {
+function date_picker_checkout(the_date) {
 
     var selected_date = the_date || new Date;
 
@@ -49,52 +210,8 @@ var date_picker_checkout = function (the_date) {
 }
 
 //******************************************
-// room picker
-var room_picker = function() {
-    var max_room = 4;
-    var room_option = '.input-room.select-room';
-
-    // show
-    $(room_option).focus(function() {
-        if ($(this).siblings('div.option').length == 0) {
-            $(this).parent().addClass('option-wrapper').append('<div class="option"></div>');
-            for (var i = 1; i <= max_room; i++) {
-                var room;
-                if (i > 1) {
-                    room = ' rooms'
-                } else {
-                    room = ' room'
-                }
-                $(this).siblings('div.option').append('<li data-value="'+i+'">' + i + room +' </li>');
-            }
-            $(this).siblings('.option').wrapInner('<ul></ul>');
-        }
-
-        $(room_option).siblings('div.option').show();
-
-    });
-
-    // select room
-    $('.form-group').on('click', '.option li', function() {
-        $(room_option).val( $(this).html() );
-    });
-
-
-    // hide room option
-    $('html').click(function () {
-        $('.option-wrapper .option').hide();
-    });
-    $(".input-room.select-room").on('click', function (evt) {
-        evt.stopPropagation();
-    });
-    
-
-
-}
-
-//******************************************
 // generate hotel star
-var generate_star = function() {
+function generate_star() {
     $('.generate-star').each(function () {
         var star_rating = $(this).attr('data-star');
         $(this).html('');
@@ -135,84 +252,6 @@ $('.page.home-page section.slider .slide').each(function () {
         backgroundSize: 'cover'
     });
 });
-
-//******************************************
-// autocomplete
-var location_autocomplete = function () {
-
-    // setting
-    var el_input = 'input.input-location';
-    var ajax_url = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/hotellocation/';
-    var min_char = 3;
-    var list_wrapper = '.loc-auto';
-
-    // run function on keyup
-    $(el_input).keyup(function () {
-        var req_val = $(this).val();
-        verify_input(req_val);
-    });
-
-    $(el_input).focus(function () {
-        var req_val = $(this).val();
-        verify_input(req_val);
-    });
-
-    // function verified input
-    function verify_input(input_val) {
-        if (input_val.length >= min_char) {
-            get_result(input_val);
-        } else {
-            $(list_wrapper).hide();
-        }
-    }
-
-    // get result
-    function get_result(input_val) {
-        $.ajax({
-            method: "GET",
-            dataType: "json",
-            url: ajax_url + input_val
-        })
-        .done(function (result) {
-            show_result(result);
-        });
-    }
-
-    // show result
-    function show_result(data) {
-        if (data.length > 0) {
-            $(list_wrapper).empty();
-            for (i = 0; i < data.length; i++) {
-                $(list_wrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
-            }
-            $(list_wrapper).wrapInner('<ul></ul>');
-            $(list_wrapper).show().attr('data-active', 'true');
-        } else {
-            $(list_wrapper).hide();
-        }
-    }
-
-    // on click
-    select_result();
-    function select_result() {
-        $(list_wrapper).on('click', 'li', function () {
-            $(el_input).val($(this).text());
-            $(list_wrapper).hide();
-            $(el_input).attr('data-location-id', $(this).attr('data-location-id'));
-        });
-    }
-
-    // hide when click another element
-    $('html').click(function () {
-        $(list_wrapper).hide();
-    });
-    $("input.input-location , .loc-auto").on('click', function (evt) {
-        evt.stopPropagation();
-    });
-
-
-
-};
 
 //******************************************
 // toggle filter functions
@@ -291,10 +330,10 @@ function hotel_detail() {
 // flight search functions
 function flight_search() {
 
-    toggle_detail();
+    toggle_flight_detail();
 
     // toggle flight detail
-    function toggle_detail() {
+    function toggle_flight_detail() {
         $('.flight-search-page .flight-list .flight .flight-toggle, .flight-search-page .flight-list-return .flight .flight-toggle').click(function (evt) {
             evt.preventDefault();
             $(this).closest('.flight').children('.flight-detail').stop().slideToggle();
@@ -330,22 +369,18 @@ function loading_overlay(state, loc) {
 
 }
 
-
+// ************************
 // angular app
 // ************************
 // variables
-
 var SearchHotelConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels/',
-    ResultCount: '20'
+    ResultCount: '25'
 };
 
-// ************************x
-// functions
 
-
-// ************************x
-// angular app
+// ************************
+// Angular app
 (function () {
 
     var app = angular.module('travorama', ['ngRoute']);
@@ -365,10 +400,12 @@ var SearchHotelConfig = {
         $scope.HotelSearchParams = {};
 
         // *******************************
-        // sample content
-        $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-stayDate');
-        $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-stayLength');
-        $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-locationId');
+        // default value
+        $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-StayDate');
+        $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-StayLength');
+        $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-LocationId');
+        $scope.HotelSearchParams.ResultCount = $('.search-page.hotel-search-page').attr('data-search-ResultCount');
+        $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
         // *******************************
 
         // load hotel list function
@@ -386,10 +423,7 @@ var SearchHotelConfig = {
             // set startIndex
             $scope.CurrentPage = $scope.CurrentPage - 1;
             $scope.HotelSearchParams.StartIndex = (SearchHotelConfig.ResultCount * $scope.CurrentPage);
-
-            // show 'loading' text
-            $('.hotel-list-content').prepend('<h1 class="preload text-center notif">LOADING</h1>');
-
+            
             $scope.hotels = [];
 
             // generate StarRating
@@ -439,8 +473,6 @@ var SearchHotelConfig = {
                 // if error
             }).error(function () {
                 console.log('REQUEST ERROR');
-                $('.notif').remove();
-                $('.hotel-list-content').prepend('<h1 class="report text-center notif">ERROR</h1>');
 
                 loading_overlay('hide','body');
 
