@@ -63,6 +63,10 @@ function hotel_search_form_functions() {
         // function verified input
         function verify_input(input_val) {
             if (input_val.length >= min_char) {
+                $(list_wrapper).empty();
+                $(list_wrapper).append('<li class="text-center"> Loading </li>');
+                $(list_wrapper).wrapInner('<ul></ul>');
+                $(list_wrapper).show();
                 get_result(input_val);
             } else {
                 $(list_wrapper).hide();
@@ -91,7 +95,10 @@ function hotel_search_form_functions() {
                 $(list_wrapper).wrapInner('<ul></ul>');
                 $(list_wrapper).show().attr('data-active', 'true');
             } else {
-                $(list_wrapper).hide();
+                $(list_wrapper).empty();
+                $(list_wrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
+                $(list_wrapper).wrapInner('<ul></ul>');
+                $(list_wrapper).show();
             }
         }
 
@@ -154,22 +161,41 @@ function hotel_search_form_functions() {
             $(room_option).siblings('div.option').show();
         });
 
-        $(room_option).on('keyup', function() {
-            var key_value = this.value;
-            if (key_value > 0 && key_value <= max_room) {
-                $(this).siblings('.option').children('ul').children('li:nth-child(' + key_value + ')').click();
-                $(this).blur();
-            } else if (key_value > max_room) {
-                $(this).siblings('.option').children('ul').children('li:nth-child(' + max_room + ')').click();
-                $(this).blur();
+
+        $(room_option).on('keydown', function(evt) {
+            var key_value = evt.which;
+            var room_value;
+            if (key_value >= 49 && key_value <= 57) {
+                switch (key_value) {
+                    case 49:
+                        room_value = 1;
+                        break;
+                    case 50:
+                        room_value = 2;
+                        break;
+                    case 51:
+                        room_value = 3;
+                        break;
+                    case 52:
+                        room_value = 4;
+                        break;
+                    default:
+                        room_value = 4;
+                        break;
+                }
+                console.log('JEMPING');
+                $(this).siblings('.option').children('ul').children('li:nth-child('+room_value+')').click();
+                return false;
             } else {
-                $(this).val('');
+                return false;
             }
         });
 
         // select room
         $('.form-group').on('click', '.option li', function () {
             $(room_option).val($(this).html());
+            $(room_option).attr('data-current-room', $(this).attr('data-value'));
+            $(room_option).blur();
         });
 
 
@@ -375,7 +401,7 @@ function loading_overlay(state, loc) {
 // variables
 var SearchHotelConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels/',
-    ResultCount: '25'
+    ResultCount: '24'
 };
 
 
