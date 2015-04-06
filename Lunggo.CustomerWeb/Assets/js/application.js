@@ -128,7 +128,49 @@ function hotel_search_form_functions() {
     // ******************************
     // date picker
     var date_picker = function() {
-        
+        $('.input-checkin.select-date').pickmeup_twitter_bootstrap({
+           calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: new Date,
+            change: function () {
+                date_picker_checkout($(this).pickmeup('get_date'));
+                $('.search-hotel-value.staydate').val( $(this).val() );
+            }
+        });
+    }
+
+    function date_picker_checkout(the_date) {
+
+        var selected_date = the_date || new Date;
+
+        $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
+        $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
+            calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: selected_date,
+            default_date: selected_date,
+            change: function() {
+                calculate_date( $(this).pickmeup('get_date') );
+            }
+        });
+        $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
+
+    }
+
+    function calculate_date(checkout_date) {
+        var checkin_date = new Date($('.search-hotel-value.staydate').val());
+        var checkout_date = new Date( checkout_date );
+        var stay_length = Math.abs(checkout_date - checkin_date);
+        var stay_length_value = Math.ceil(stay_length/ (1000 * 3600 * 24));
+        $('.search-hotel-value.staylength').val(stay_length_value );
     }
 
     // ******************************
@@ -211,27 +253,6 @@ function hotel_search_form_functions() {
 
 
     
-
-}
-
-//******************************************
-// date picker
-function date_picker_checkout(the_date) {
-
-    var selected_date = the_date || new Date;
-
-    $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
-    $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
-        calendars: 3,
-        format: 'Y/m/d',
-        hide_on_select: true,
-        select_month: false,
-        select_year: false,
-        separator: '/',
-        min: selected_date,
-        default_date: selected_date
-    });
-    $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
 
 }
 
@@ -401,7 +422,7 @@ function loading_overlay(state, loc) {
 // variables
 var SearchHotelConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels/',
-    ResultCount: '24'
+    ResultCount: 24
 };
 
 
