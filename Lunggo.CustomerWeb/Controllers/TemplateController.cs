@@ -17,6 +17,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult HotelDetail()
         {
+
+
             return View();
         }
 

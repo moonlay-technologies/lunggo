@@ -23,7 +23,7 @@ namespace Lunggo.CustomerWeb
             routes.MapRoute(
                 name: "UW200HotelDetail",
                 url: "UW200/UW200HotelDetail",
-                defaults: new { controller ="UW200HotelDetail", action = "GetHotelDetail" }
+                defaults: new { controller = "UW200HotelDetail", action = "GetHotelDetail", langCode = "en" }
             );
 
             routes.MapRoute(

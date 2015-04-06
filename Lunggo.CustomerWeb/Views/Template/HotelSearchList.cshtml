@@ -53,7 +53,7 @@
             <a href="#" class="btn btn-primary">FILTER</a>
         </section>
     </aside><!-- .hotel-filter -->
-    <section class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
+    <section id="section-block" class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
         <div class="container">
 
             <div class="row" ng-controller="HotelController">
@@ -63,14 +63,14 @@
                 <input placeholder="StayLength" ng-model="HotelSearchParams.StayLength" type="text" />
                 <button ng-click="load_hotel_list()">Search</button>
 
-                <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotel_list.hotels">
+                <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotels">
                     <article class="hotel">
                         <a href="#" class="hotel-link">
-                            <img src="{{x.ImageUrlList[0].ThumbSizeUrl}}" alt="Hotel Amaris" class="hotel-image">
+                            <img src="{{hotel.ImageUrlList[0].ThumbSizeUrl}}" alt="Hotel Amaris" class="hotel-image">
                             <section class="hotel-sum">
                                 <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">
-                                    <span class="star star-{{x.StarRating}}"></span>
+                                    <span class="star star-{{hotel.StarRating}}"></span>
                                 </h4>
                                 <h5 class="hotel-address">{{hotel.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
@@ -94,7 +94,7 @@
                                 <div class="hotel-price">
                                     <p><b>Price :</b></p>
                                     <h5 class="price-was"><del>Rp 500.000</del></h5>
-                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency }} {{ hotel.LowestPrice.Value | number }}</h2>
+                                    <h2 class="price-now">{{ hotel.LowestPrice.Currency | currency:"Rp":0 }} {{ hotel.LowestPrice.Value | number }}</h2>
                                     <span>Harga <strong>sudah</strong> termasuk pajak</span>
                                 </div>
                             </section><!-- .hotel-tag -->

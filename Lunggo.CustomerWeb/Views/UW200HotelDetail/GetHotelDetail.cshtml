@@ -4,183 +4,295 @@
     ViewBag.Title = "GetHotelDetail";
 }
 
-<p>@Model.ImageUrlList</p>
 
-<div class="page hotel-detail-page hotel-section" ng-controller="RoomController as room_list">
 
-    <div class="container">
-        <!-- breadcrumb start -->
-        <div class="row">
-            <section class="col-sm-12">
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Hotel</a></li>
-                    <li><a href="#">@Model.Country</a></li>
-                    <li><a href="#">@Model.Province</a></li>
-                    <li><a href="#">@Model.Area</a></li>
-                    <li class="active">@Model.HotelName</li>
-                </ol>
-            </section>
-        </div>
-        <!-- breadcrumb end -->
-        <!-- main-content start -->
-        <div class="row">
-            <div class="col-sm-3">
-                <aside class="sidebar">
-                    <h3 class="sidebar-title">Lorem Ipsum</h3>
-                    <div class="sidebar-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
-                    </div>
-                </aside>
-                <aside class="sidebar">
-                    <h3 class="sidebar-title">Lorem Ipsum</h3>
-                    <div class="sidebar-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
-                    </div>
-                </aside>
-                <aside class="sidebar">
-                    <h3 class="sidebar-title">Lorem Ipsum</h3>
-                    <div class="sidebar-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat ipsum repellendus tempora nam, at! Molestias quo, nesciunt laboriosam obcaecati inventore, sint, repellat sequi eveniet consequatur voluptatum consequuntur. Iure harum, unde.</p>
-                    </div>
-                </aside>
+
+
+<!-- .search-page content start -->
+<div class="detail-page hotel-detail-page">
+
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
+                    <hr>
+                    <h1 class="hotel-name">@Model.HotelDetail.HotelName <span class="hotel-star" data-enerateStar="@Model.HotelDetail.StarRating">  <span class="star star-4"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span></span> </span></h1>
+                </div>
             </div>
-            <div class="col-sm-9">
-                <!-- .hotel-detail start -->
-                <article class="hotel-detail">
+        </div>
+    </header>
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="hotel-image">
+                    
+                    <div class="hotel-main-image">
+                        
+                        <img src="@Model.HotelDetail.ImageUrlList.First().FullSizeUrl" alt="Hotel Image">
+                       
+                    </div>
+                    <div class="hotel-thumb">
+                        @foreach (var imgList in Model.HotelDetail.ImageUrlList)
+                        {
+                            <a href="#"><img src="@imgList.ThumbSizeUrl" alt="Hotel Image" data-image-url="@imgList.FullSizeUrl"></a>
+                        }
+                    </div>
 
-                    <header class="hotel-header">
-                        <h1 class="hotel-name">@Model.HotelName<span class="hotel-star"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span></h1>
-                        <address class="hotel-address">@Model.Address</address>
-                        <nav class="hotel-nav">
-                            <a href="#top" class="active">Main</a>
-                            <a href="#hotel-photo" class="">Photos</a>
-                            <a href="#hotel-rooms" class="">Rooms</a>
-                            <a href="#hotel-location" class="">Location</a>
-                            <a href="#hotel-details" class="">Details and Facilities</a>
-                            <a href="#hotel-reviews" class="">Reviews</a>
-                        </nav>
-                    </header>
-                    <section class="hotel-images">
-                        <div class="image-main">
-                            <img src="/assets/images/hotel-1.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="hotel-map" data-long="@Model.HotelDetail.Longitude" data-lat="@Model.HotelDetail.Latitude" data-location="@Model.HotelDetail.IsLatLongSet">
+                    <div class="hotel-address">
+                        @{
+                            String fullAddress = "";
+                            
+                            if (@Model.HotelDetail.Address != null)
+                            {
+                                fullAddress = @Model.HotelDetail.Address;
+                            }
+                            
+                            if (@Model.HotelDetail.Area != null)
+                            {
+                                fullAddress += ", " + @Model.HotelDetail.Area;
+                            }
+
+                            if (@Model.HotelDetail.Province != null)
+                            {
+                                fullAddress += ", " + @Model.HotelDetail.Province;
+                            }
+
+                            if (@Model.HotelDetail.Country != null)
+                            {
+                                fullAddress += ", " + @Model.HotelDetail.Country;
+                            }
+                        }
+                        <p>@(fullAddress)</p>
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7932.4923808288595!2d106.7993432994751!3d-6.231240814623588!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1425374312343" width="100%" height="450" frameborder="0" style="border:0"></iframe>
+                </div>
+            </div>
+        </div>
+    </section><!-- .container -->
+ 
+    <section class="room-search container">
+        <div class="row">
+            <div class="col-sm-12">
+                <header>
+                    <form action="#" class="form form-inline">
+                        <div class="form-group checkin">
+                            <label for="form-room-checkin" class="control-label">Check In:</label>
+                            <input type="text" class="form-control" id="form-room-checkin" value="@Model.StayDate.ToString("yyyy MM dd")">
                         </div>
-                        <div class="image-slide">
-                            <img src="/assets/images/hotel-1.jpg" alt="">
-                            <img src="/assets/images/hotel-2.jpg" alt="">
-                            <img src="/assets/images/hotel-3.jpg" alt="">
-                            <img src="/assets/images/hotel-4.jpg" alt="">
+                        <div class="form-group checkout">
+                            <label for="form-room-checkout" class="control-label">Check Out:</label>
+                            <input type="text" class="form-control" id="form-room-checkout">
                         </div>
-                    </section>
-                    <section class="hotel-rate">
-                        <h2 class="section-title">Room Rates</h2>
-                        <div class="hotel-rate-search">
-                            <form action="" method="post">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">Checkin Date</label>
-                                    <div class="col-sm-2">
-                                        <input type="type" name="date" value="" class="form-control"/>
-                                    </div>
-                                    <label class="control-label col-sm-2">Length</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                    <label class="control-label col-sm-2">Room</label>
-                                    <div class="col-sm-2">
-                                        <select class="form-control">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="form-group duration">
+                            <label for="form-room-duration" class="control-label">Duration:</label>
+                            <input type="text" class="form-control" id="form-room-duration" value="@Model.StayLength">
                         </div>
-                        <div class="hotel-rate-list">
-                            <div class="hotel-rate-list-header">
-                                <div class="hotel-room-name"><span>room package</span></div>
-                                <div class="hotel-room-guest"><span>max guest per room</span></div>
-                                <div class="hotel-room-price"><span>room rate per night</span></div>
+                        <div class="form-group qty">
+                            <label for="form-room-qty" class="control-label">Rooms:</label>
+                            <input type="text" class="form-control" id="form-room-qty">
+                        </div>
+                        <div class="form-action">
+                            <input type="image" src="/assets/images/search.png" class="btn btn-yellow">
+                        </div>
+                    </form>
+                </header>
+                <section>
+                    <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>
+
+                    <section class="room-list">
+                        <?php for($i=1; $i<=5 ; $i++){ ?>
+                        <article class="room">
+                            <div class="room-image">
+                                <img src="/assets/images/_sample/room-thumb.jpg" alt="Room">
                             </div>
-                            <ul class="hotel-rate-list-content">
-                                
-                                <!-- Hotel rooms template start -->
-                                <li class="hotel-room">
-                                    <div class="hotel-room-name">
-                                        <h3 class="hotel-rate-room-name">Standard Room</h3>
-                                        <div class="hotel-rate-room-desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis numquam nesciunt, voluptatem quis sequi odio eos eius aliquid temporibus minima voluptates nisi alias sit quae quisquam quaerat, totam vel magnam!</p>
+                            <div class="room-detail">
+                                <h2 class="room-name">Deluxe 2 Kings Bed Rooms</h2>
+                                <div class="room-content">
+                                    <div class="room-desc">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, cum sapiente, explicabo reprehenderit est obcaecati id porro, voluptas odit illo amet, necessitatibus labore optio minima quasi molestiae libero. Quas, facilis.</p>
+                                    </div>
+                                    <div class="room-facilities">
+                                        <h3>Facilities:</h3>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <ul>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <ul>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                    <li>Lorem ipsum</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="hotel-room-guest">
-                                        <span>2 adults</span>
-                                    </div>
-                                    <div class="hotel-room-price">
-                                        <h3>Rp. 1.200.000</h3>
-                                        <span>per night</span>
-                                        <a href="#" class="btn btn-primary btn-book" ng-click="load_room_list()">Book Now</a>
-                                    </div>
-                                </li>
-                                <!-- Hotel rooms template end -->
-                                
-                            </ul>
-                        </div>
-                    </section>
-                    <section class="hotel-location">
-                        <h2 class="section-title">Location</h2>
-                        <div class="section-content">
-                            <img src="/assets/images/map.jpg" alt="Location">
-                        </div>
-                    </section>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <section class="hotel-description">
-                                <h3>@Model.HotelName</h3>
-                                @Model.HotelDescription
-                            </section>
-                        </div>
-                        <div class="col-sm-6">
-                            <section class="hotel-facilities">
-                                <h3>Hotel Facilities</h3>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <ul>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <ul>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                            <li>Lorem ipsum</li>
-                                        </ul>
+                                    <div class="room-price">
+                                        <h3>Best Price:</h3>
+                                        <h5 class="room-price-was"><del>Rp 500.000</del></h5>
+                                        <h2 class="room-price-now">Rp 300.000</h2>
+                                        <small>Harga sudah termasuk pajak</small>
+                                        <a href="/Uw300/Uw300HotelBookingForm" class="btn btn-primary room-book">Book now !</a>
+                                        <a href="#">Terms &amp; Conditions</a>
                                     </div>
                                 </div>
-                            </section>
-                        </div>
-                    </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </article>
+                        <?php } ?>
+                    </section>
 
-                </article>
-                <!-- .hotel-detail end -->
+                </section>
             </div>
         </div>
-        <!-- main-content end -->
-    </div>
+    </section><!-- .room-search -->
+    <section class="hotel-text container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="hotel-description">
+                    <h3 class="section-title"><b>HOTEL</b> DESCRIPTION</h3>
+                    @{
+                        foreach (var textDesc in (Model.HotelDetail.HotelDescription))
+                        {
+                            <p>@textDesc.Description.Value</p>
+                        }
+                    }
+                    
+                    <a class="btn btn-primary no-radius"> <img src="/assets/images/terms-icon.png" alt="Terms and Conditions"> Terms &amp; Conditions</a>
+                </div>
+            </div>
+            
+            
+
+            <div class="col-sm-6">
+                <div class="hotel-facilities">
+                    <h3 class="section-title"><b>HOTEL</b> FACILITIES</h3>
+                    <div class="row">
+                        @{
+                            double faciLength = Model.HotelDetail.Facilities.Count();
+
+                            var leftSection = Math.Ceiling(faciLength / 2);
+                            //var rightSection = Math.Floor(faciLength / 2);
+                            var i = 0;
+                            <div class="col-sm-6">
+                                <ul>
+                                    @foreach (var faciLeft in (Model.HotelDetail.Facilities))
+                                    {
+                                        if (i != leftSection)
+                                        {
+                                            <li>@faciLeft.FacilityName</li>
+                                            i++;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <ul>
+                                    @foreach (var faciRight in (Model.HotelDetail.Facilities))
+                                    {
+                                        if (i != faciLength)
+                                        {
+                                            <li>@faciRight.FacilityName</li>
+                                            i++;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- .hotel-text -->
+    <section class="hotel-review container">
+        <h3 class="section-title"><b>HOTEL</b> REVIEW</h3>
+        <section class="review-sum">
+            <div class="row">
+                <div class="col-sm-2"><img src="/assets/images/hotel-review-header.png" alt="Hotel review"></div>
+                <div class="col-sm-10">
+                    <p>Sleep Quality </p> <img src="/assets/images/_sample/bar-1.png" alt=""> <br>
+                    <p>Location </p> <img src="/assets/images/_sample/bar-2.png" alt=""> <br>
+                    <p>Rooms </p> <img src="/assets/images/_sample/bar-3.png" alt=""> <br>
+                    <p>Service </p> <img src="/assets/images/_sample/bar-4.png" alt=""> <br>
+                    <p>Cleanliness </p> <img src="/assets/images/_sample/bar-5.png" alt="">
+                </div>
+            </div>
+        </section>
+        <section class="review-list">
+            <?php for($i=1; $i<=5; $i++){ ?>
+            <article class="review">
+                <div class="row">
+                    <div class="col-sm-10 review-left">
+                        <header>
+                            <a href="#" class="review-user"><span class="fa fa-user"></span> Rama Adhitia</a>
+                            <span class="review-date pull-right"><span class="fa fa-calendar"></span> 2015 Februari 30</span>
+                        </header>
+                        <h3 class="review-title">Thank you AMARIS HOTEL</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel deserunt consequuntur voluptas neque fugiat porro quas accusamus blanditiis. Porro officiis a quas accusamus repellat, saepe atque libero non nesciunt aliquid.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae vero labore ab maxime animi impedit velit ducimus deleniti, quod hic omnis voluptatum deserunt ex incidunt placeat. Incidunt amet culpa, ratione?</p>
+                    </div><!-- .col-sm-9 -->
+                    <div class="col-sm-2 review-right">
+                        <summary>
+                            <p>SCORE:</p>
+                            <span class="score">
+                                7.8
+                            </span>
+                            <span class="max-score">
+                                / 10
+                            </span>
+                            <p class="score-circle">
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle-o"></span>
+                            </p>
+                        </summary>
+                    </div><!-- .col-sm-3 -->
+                </div>
+            </article>
+            <?php } ?>
+        </section>
+    </section><!-- .hotel-review -->
+    <section class="location container">
+        <h3 class="section-title"><b>SUGGESTION</b> &amp; INFORMATION</h3>
+        <img src="/assets/images/_sample/sample-tab.jpg" alt="">
+    </section><!-- .location -->
+    <section class="suggestion container">
+        <h3 class="section-title"><b>YOU MAY</b> ALSO LIKE</h3>
+        <div class="row">
+
+
+            <?php for($i=1; $i<=4; $i++){ ?>
+
+            <div class="col-sm-3">
+                <div class="hotel">
+                    <a href="#">
+                        <img src="/assets/images/_sample/hotel-image.jpg" alt="Hotel thumb">
+                        <h2>HILTON HOTEL</h2>
+                    </a>
+                </div>
+            </div>
+
+            <?php } ?>
+
+        </div>
+    </section><!-- .suggestion -->
+
 
 </div>
+<!-- .search-page content end -->
