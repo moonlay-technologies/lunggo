@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
-    public class FlightService
+    public partial class FlightService
     {
         private static readonly FlightService Instance = new FlightService();
-        private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
+        private static readonly MystiflyWrapper APIServiceWrapper = MystiflyWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
@@ -22,11 +23,11 @@ namespace Lunggo.ApCommon.Flight.Service
             return Instance;
         }
 
-        public void Init(string accountNumber, string userName, string password, Target target)
+        public void Init(string accountNumber, string userName, string password, TargetServer target)
         {
             if (!_isInitialized)
             {
-                MystiflyClientHandler.Init(accountNumber, userName, password, target);
+                APIServiceWrapper.Init(accountNumber, userName, password, target);
                 _isInitialized = true;
             }
             else
@@ -35,30 +36,49 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public List<FlightFareItinerary> SearchFlight(SearchFlightConditions conditions)
+        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            return MystiflyWrapper.SearchFlight(conditions).FlightItineraries;
-        }
-        /*
-        public SelectFlightRs SelectFlight(string itineraryId)
-        {
-            return null;
+            return APIServiceWrapper.SearchFlight(conditions);
         }
 
-        
-        public BookFlightRs BookFlight(BookFlightRq request)
+        private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
         {
-            return null;
+            return APIServiceWrapper.SpecificSearchFlight(conditions);
         }
 
-        public OrderTicketRs OrderTicket(OrderTicketRq request)
+        private RevalidateFareResult RevalidateFareInternal(string fareId)
         {
-            return null;
+            return APIServiceWrapper.RevalidateFare(fareId);
         }
 
-        public GetTripDetailsRs GetTripDetails(GetTripDetailsRq request)
+        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            return null;
-        }*/
+            return APIServiceWrapper.BookFlight(bookInfo);
+        }
+
+        private OrderTicketResult OrderTicketInternal(string bookingId)
+        {
+            return APIServiceWrapper.OrderTicket(bookingId);
+        }
+
+        private GetTripDetailsResult GetTripDetailsInternal(string bookingId)
+        {
+            return APIServiceWrapper.GetTripDetails(bookingId);
+        }
+
+        private GetBookingStatusResult GetBookingStatusInternal()
+        {
+            return APIServiceWrapper.GetBookingStatus();
+        }
+
+        private CancelBookingResult CancelBookingInternal(string bookingId)
+        {
+            return APIServiceWrapper.CancelBooking(bookingId);
+        }
+
+        private GetRulesResult GetRulesInternal(string fareId)
+        {
+            return APIServiceWrapper.GetRules(fareId);
+        }
     }
 }

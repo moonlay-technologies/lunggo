@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Autocomplete;
+using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 
@@ -23,6 +25,7 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             InitDb();
+            FlightService.GetInstance().Init("MCN004085", "GOAXML", "GA2014_xml", TargetServer.Test);
         }
         private static void InitDb()
         {

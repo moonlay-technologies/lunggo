@@ -99,15 +99,20 @@
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Flight\Constant\FlightEnum.cs" />
-    <Compile Include="Flight\Interface\IBookFlight.cs" />
-    <Compile Include="Flight\Interface\IGetTripDetails.cs" />
-    <Compile Include="Flight\Interface\IOrderTicket.cs" />
-    <Compile Include="Flight\Interface\IRevalidateFare.cs" />
+    <Compile Include="Flight\Interface\IClientHandler.cs" />
+    <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
+    <Compile Include="Flight\Model\BookingStatusInfo.cs" />
+    <Compile Include="Flight\Model\Business Logic\CancelBookingInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\CancelBookingOutput.cs" />
+    <Compile Include="Flight\Model\Business Logic\OutputBase.cs" />
+    <Compile Include="Flight\Model\CancelBookingResult.cs" />
     <Compile Include="Flight\Model\FlightBooking.cs" />
     <Compile Include="Flight\Model\FlightBookingInfo.cs" />
     <Compile Include="Flight\Model\FlightItinerary.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
+    <Compile Include="Flight\Model\GetBookingStatusResult.cs" />
+    <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
     <Compile Include="Flight\Model\PassengerInfo.cs" />
@@ -115,8 +120,29 @@
     <Compile Include="Flight\Model\RevalidateFareResult.cs" />
     <Compile Include="Flight\Model\SearchFlightConditions.cs" />
     <Compile Include="Flight\Model\SearchFlightResult.cs" />
+    <Compile Include="Flight\Model\SpecificSearchConditions.cs" />
+    <Compile Include="Flight\Model\Business Logic\BookFlightInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\BookFlightOutput.cs" />
+    <Compile Include="Flight\Model\Business Logic\GetDetailsInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\IssueTicketOutput.cs" />
+    <Compile Include="Flight\Model\Business Logic\RevalidateFlightInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\IssueTicketInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\GetDetailsOutput.cs" />
+    <Compile Include="Flight\Model\Business Logic\RevalidateFlightOutput.cs" />
+    <Compile Include="Flight\Model\Business Logic\SearchFlightInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\SearchFlightOutput.cs" />
+    <Compile Include="Flight\Service\Business Logic\BookFlight.cs" />
+    <Compile Include="Flight\Service\Business Logic\CancelBooking.cs" />
+    <Compile Include="Flight\Service\Business Logic\GetBookingStatus.cs" />
+    <Compile Include="Flight\Service\Business Logic\GetDetails.cs" />
+    <Compile Include="Flight\Service\Business Logic\GetRules.cs" />
+    <Compile Include="Flight\Model\Business Logic\GetRulesInput.cs" />
+    <Compile Include="Flight\Model\Business Logic\GetRulesOutput.cs" />
+    <Compile Include="Flight\Service\Business Logic\IssueTicket.cs" />
+    <Compile Include="Flight\Service\Business Logic\RevalidateFlight.cs" />
+    <Compile Include="Flight\Service\Business Logic\SearchFlight.cs" />
+    <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Mystifly\MystiflyClientHandler.cs" />
-    <Compile Include="Flight\Interface\ISearchFlight.cs" />
     <Compile Include="Flight\Service\FlightService.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
@@ -160,11 +186,13 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
-    <Compile Include="Mystifly\MystiflyCommon.cs" />
     <Compile Include="Mystifly\MystiflyBookFlight.cs" />
+    <Compile Include="Mystifly\MystiflyGetBookingStatus.cs" />
+    <Compile Include="Mystifly\MystiflyGetRules.cs" />
     <Compile Include="Mystifly\MystiflyGetTripDetails.cs" />
     <Compile Include="Mystifly\MystiflyOrderTicket.cs" />
     <Compile Include="Mystifly\MystiflySearchFlight.cs" />
+    <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
@@ -408,9 +436,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Flight\Logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
   </ItemGroup>

@@ -2,43 +2,43 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using CabinType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType;
+using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
 {
-    public partial class MystiflyWrapper : ISearchFlight
+    internal partial class MystiflyWrapper
     {
-        public SearchFlightResult SearchFlight(SearchFlightConditions conditions)
+        internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
-            var originDestinationInformations = MapOriginDestinationInformations(conditions);
-            var passengerTypes = MapPassengerTypes(conditions);
-            var travelPreferences = MapTravelPreferences(conditions);
-
             using (var client = new MystiflyClientHandler())
             {
                 var request = new AirLowFareSearchRQ
                 {
-                    OriginDestinationInformations = originDestinationInformations.ToArray(),
+                    OriginDestinationInformations = MapOriginDestinationInformations(conditions),
+                    //TODO combine refundable
                     IsRefundable = true,
                     IsResidentFare = false,
                     NearByAirports = false,
-                    PassengerTypeQuantities = passengerTypes.ToArray(),
+                    PassengerTypeQuantities = MapPassengerTypes(conditions),
                     PricingSourceType = PricingSourceType.Public,
-                    TravelPreferences = travelPreferences,
+                    TravelPreferences = MapTravelPreferences(conditions),
                     RequestOptions = RequestOptions.TwoHundred,
                     SessionId = client.SessionId,
-                    Target = client.Target,
+                    Target = MystiflyClientHandler.Target,
                     ExtensionData = null
                 };
 
                 var result = new SearchFlightResult();
                 var retry = 0;
                 var done = false;
-                while (retry < 3 && !done)
+                while (!done)
                 {
                     var response = client.AirLowFareSearch(request);
                     done = true;
@@ -49,23 +49,35 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     else
                     {
-                        foreach (var error in response.Errors)
+                        if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERSER021")
                         {
-                            if (error.Code == "ERSER002")
+                            result.Errors.Clear();
+                            result.Success = true;
+                            result.FlightItineraries = null;
+                        }
+                        else
+                        {
+                            foreach (var error in response.Errors)
                             {
-                                result.Errors.Clear();
-                                client.CreateSession();
-                                request.SessionId = client.SessionId;
-                                retry++;
-                                done = false;
-                                break;
+                                if (error.Code == "ERSER002")
+                                {
+                                    result.Errors.Clear();
+                                    client.CreateSession();
+                                    request.SessionId = client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
+                                }
+                                MapError(response, result);
                             }
-                            result.Errors.Add(MapError(error));
                             result.Success = false;
                         }
                     }
-                
                 }
+                
                 return result;
             }
         }
@@ -75,7 +87,7 @@ namespace Lunggo.ApCommon.Mystifly
             return new SearchFlightResult{ FlightItineraries = MapFlightFareItineraries(response) };
         }
 
-        private static List<OriginDestinationInformation> MapOriginDestinationInformations(SearchFlightConditions conditions)
+        private static OriginDestinationInformation[] MapOriginDestinationInformations(SearchFlightConditions conditions)
         {
             return conditions.OriDestInfos.Select(info => new OriginDestinationInformation()
             {
@@ -85,10 +97,10 @@ namespace Lunggo.ApCommon.Mystifly
                 ArrivalWindow = null,
                 DepartureWindow = null,
                 ExtensionData = null
-            }).ToList();
+            }).ToArray();
         }
 
-        private static List<PassengerTypeQuantity> MapPassengerTypes(SearchFlightConditions conditions)
+        private static PassengerTypeQuantity[] MapPassengerTypes(SearchFlightConditions conditions)
         {
             var passengerTypeQuantities = new List<PassengerTypeQuantity>
             {
@@ -112,7 +124,7 @@ namespace Lunggo.ApCommon.Mystifly
                         Code = PassengerType.INF,
                         Quantity = conditions.InfantCount
                     });
-            return passengerTypeQuantities;
+            return passengerTypeQuantities.ToArray();
         }
 
         private static TravelPreferences MapTravelPreferences(SearchFlightConditions conditions)
@@ -154,15 +166,15 @@ namespace Lunggo.ApCommon.Mystifly
         private static CabinType SetCabinType(SearchFlightConditions conditions)
         {
             CabinType cabinType;
-            switch (conditions.CabinType)
+            switch (conditions.CabinClass)
             {
-                case Flight.Constant.CabinType.Economy:
+                case Flight.Constant.CabinClass.Economy:
                     cabinType = CabinType.Y;
                     break;
-                case Flight.Constant.CabinType.Business:
+                case Flight.Constant.CabinClass.Business:
                     cabinType = CabinType.C;
                     break;
-                case Flight.Constant.CabinType.First:
+                case Flight.Constant.CabinClass.First:
                     cabinType = CabinType.F;
                     break;
                 default:
@@ -183,6 +195,8 @@ namespace Lunggo.ApCommon.Mystifly
             var flightFareItinerary = new FlightFareItinerary();
             flightFareItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
             MapPTCFareBreakdowns(pricedItinerary, flightFareItinerary);
+            flightFareItinerary.PSCFare =
+                decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalTax.Amount);
             flightFareItinerary.TotalFare =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
             flightFareItinerary.Currency = pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.CurrencyCode;
@@ -238,22 +252,43 @@ namespace Lunggo.ApCommon.Mystifly
         private static List<FlightFareTrip> MapFlightTrips(PricedItinerary pricedItinerary)
         {
             var flightTrips = new List<FlightFareTrip>();
-            foreach (var originDestinationOptions in pricedItinerary.OriginDestinationOptions)
+            foreach (var flightSegment in pricedItinerary.OriginDestinationOptions.SelectMany(options => options.FlightSegments))
             {
-                foreach (var flightSegment in originDestinationOptions.FlightSegments)
+                if (flightSegment.StopQuantity > 0)
                 {
-                    var flightStops = new List<FlightStop>();
-                    if (flightSegment.StopQuantity > 0)
+                    var firstFlightTrip = new FlightFareTrip
                     {
-                        var flightStop = new FlightStop
-                        {
-                            ArrivalTime = flightSegment.StopQuantityInfo.ArrivalDateTime,
-                            DepartureTime = flightSegment.StopQuantityInfo.DepartureDateTime,
-                            Duration = flightSegment.StopQuantityInfo.Duration,
-                            StopAirport = flightSegment.StopQuantityInfo.LocationCode
-                        };
-                        flightStops.Add(flightStop);
-                    }
+                        DepartureAirport = flightSegment.DepartureAirportLocationCode,
+                        ArrivalAirport = flightSegment.StopQuantityInfo.LocationCode,
+                        DepartureTime = flightSegment.DepartureDateTime,
+                        ArrivalTime = flightSegment.StopQuantityInfo.ArrivalDateTime,
+                        AirlineCode = flightSegment.OperatingAirline.Code,
+                        FlightNumber = flightSegment.OperatingAirline.FlightNumber,
+                        AircraftCode = flightSegment.OperatingAirline.Equipment,
+                        Duration = flightSegment.JourneyDuration,
+                        CabinClass = flightSegment.CabinClassCode,
+                        RBD = flightSegment.ResBookDesigCode,
+                        RemainingSeats = flightSegment.SeatsRemaining.Number
+                    };
+                    var secondFlightTrip = new FlightFareTrip
+                    {
+                        DepartureAirport = flightSegment.StopQuantityInfo.LocationCode,
+                        ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
+                        DepartureTime = flightSegment.StopQuantityInfo.DepartureDateTime,
+                        ArrivalTime = flightSegment.ArrivalDateTime,
+                        AirlineCode = flightSegment.OperatingAirline.Code,
+                        FlightNumber = flightSegment.OperatingAirline.FlightNumber,
+                        AircraftCode = flightSegment.OperatingAirline.Equipment,
+                        Duration = 0,
+                        CabinClass = flightSegment.CabinClassCode,
+                        RBD = flightSegment.ResBookDesigCode,
+                        RemainingSeats = flightSegment.SeatsRemaining.Number
+                    };
+                    flightTrips.Add(firstFlightTrip);
+                    flightTrips.Add(secondFlightTrip);
+                }
+                else
+                {
                     var flightTrip = new FlightFareTrip
                     {
                         DepartureAirport = flightSegment.DepartureAirportLocationCode,
@@ -265,14 +300,77 @@ namespace Lunggo.ApCommon.Mystifly
                         Duration = flightSegment.JourneyDuration,
                         CabinClass = flightSegment.CabinClassCode,
                         RBD = flightSegment.ResBookDesigCode,
-                        RemainingSeats = flightSegment.SeatsRemaining.Number,
-                        StopQuantity = flightSegment.StopQuantity,
-                        FlightStops = flightStops
+                        RemainingSeats = flightSegment.SeatsRemaining.Number
                     };
                     flightTrips.Add(flightTrip);
                 }
             }
             return flightTrips;
+        }
+
+        private static void MapError(AirLowFareSearchRS response, ResultBase result)
+        {
+            foreach (var error in response.Errors)
+            {
+                switch (error.Code)
+                {
+                    case "ERSER001":
+                    case "ERSER003":
+                    case "ERSER004":
+                    case "ERSER005":
+                    case "ERSER006":
+                    case "ERSER007":
+                    case "ERSER008":
+                    case "ERSER009":
+                    case "ERSER010":
+                    case "ERSER011":
+                    case "ERSER012":
+                    case "ERSER013":
+                    case "ERSER014":
+                    case "ERSER015":
+                    case "ERSER016":
+                    case "ERSER017":
+                    case "ERSER018":
+                    case "ERSER019":
+                    case "ERSER020":
+                    case "ERSER022":
+                    case "ERSER023":
+                    case "ERSER024":
+                    case "ERSER025":
+                    case "ERSER026":
+                    case "ERIFS001":
+                    case "ERIFS003":
+                    case "ERIFS004":
+                    case "ERIFS005":
+                    case "ERIFS006":
+                    case "ERIFS007":
+                    case "ERIFS008":
+                    case "ERIFS009":
+                    case "ERIFS010":
+                    case "ERIFS011":
+                    case "ERIFS015":
+                    case "ERIFS016":
+                        goto case "InvalidInputData";
+                    case "ERSER027":
+                        result.ErrorMessages.Add("Daily maximum search limit reached!");
+                        goto case "TechnicalError";
+                    case "ERGEN002":
+                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        goto case "TechnicalError";
+                    case "ERGEN018":
+                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        goto case "TechnicalError";
+                    case "ERMAI001":
+                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        goto case "TechnicalError";
+                    case "InvalidInputData":
+                        result.Errors.Add(FlightError.InvalidInputData);
+                        break;
+                    case "TechnicalError":
+                        result.Errors.Add(FlightError.TechnicalError);
+                        break;
+                }
+            }
         }
     }
 }

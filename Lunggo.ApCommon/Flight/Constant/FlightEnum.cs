@@ -6,7 +6,32 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Constant
 {
-    public enum CabinType
+    public enum FlightError
+    {
+        TechnicalError = 0,
+        FareIdNoLongerValid = 1,
+        BookingIdNoLongerValid = 2,
+        AlreadyBooked = 3,
+        InvalidInputData = 4,
+        ProcessFailed = 5
+    }
+    public enum TargetServer
+    {
+        Test = 0,
+        Development = 1,
+        Production = 2,
+    }
+
+    public enum TripType
+    {
+        OneWay = 0,
+        Return = 1,
+        MultiCity = 2,
+        OpenJaw = 3,
+        Circle = 4
+    }
+
+    public enum CabinClass
     {
         Economy = 0,
         Business = 1,
@@ -35,7 +60,10 @@ namespace Lunggo.ApCommon.Flight.Constant
 
     public enum BookingStatus
     {
-        Confirmed = 0,
-        Pending = 1
+        Pending = 0,
+        Booked = 1,
+        Ticketing = 2,
+        Ticketed = 3,
+        Cancelled = 4
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd4" namespace="Mystifly.OnePoint.OnePointEntities" />
@@ -1492,7 +1492,7 @@
   <xs:complexType name="IntelliBestBuyRQ">
     <xs:sequence>
       <xs:element minOccurs="0" name="BookingClassPreference" type="tns:BookingClassPreference" />
-      <xs:element minOccurs="0" name="CabinPreference" type="tns:CabinType">
+      <xs:element minOccurs="0" name="CabinPreference" type="tns:CabinClass">
         <xs:annotation>
           <xs:appinfo>
             <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />

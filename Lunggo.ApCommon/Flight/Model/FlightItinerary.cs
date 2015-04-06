@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.Framework.Error;
 
 namespace Lunggo.ApCommon.Flight.Model
@@ -21,6 +20,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal AdultTotalFare { get; set; }
         public decimal ChildTotalFare { get; set; }
         public decimal InfantTotalFare { get; set; }
+        public decimal PSCFare { get; set; }
         public string Currency { get; set; }
     }
 

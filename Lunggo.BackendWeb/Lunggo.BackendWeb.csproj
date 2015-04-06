@@ -129,6 +129,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\FlightReservationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -136,6 +137,7 @@
     <Compile Include="Model\FlightReservationIntegrated.cs" />
     <Compile Include="Model\FlightReservationSearch.cs" />
     <Compile Include="Model\QueryType.cs" />
+    <Compile Include="Model\TestInputData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetFlightPassengerQuery.cs" />
     <Compile Include="Query\GetFlightReservationExcPassengerQuery.cs" />
@@ -344,8 +346,6 @@
     <Content Include="Views\FlightReservation\RenderPassenger.cshtml" />
     <Content Include="Views\FlightReservation\RenderTripDetail.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\FlightReservation\TestSearchedFlights.cshtml" />
-    <Content Include="Views\FlightReservation\TestSearchFlight.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -365,8 +365,11 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\FlightReservation\TestFlightTrip.cshtml" />
-    <Content Include="Views\FlightReservation\TestFlightStop.cshtml" />
+    <Content Include="Views\Test\Search.cshtml" />
+    <Content Include="Views\Test\PartialItinerary.cshtml" />
+    <Content Include="Views\Test\PartialSegment.cshtml" />
+    <Content Include="Views\Test\List.cshtml" />
+    <Content Include="Views\Test\InputData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

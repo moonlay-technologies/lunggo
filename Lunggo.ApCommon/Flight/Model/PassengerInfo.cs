@@ -23,6 +23,5 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PassportOrIdNumber { get; set; }
-        
     }
 }

@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
-        public CabinType CabinType { get; set; }
+        public CabinClass CabinClass { get; set; }
     }
 
     public class OriginDestinationInfo

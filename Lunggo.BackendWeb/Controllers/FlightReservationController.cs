@@ -14,7 +14,6 @@ using Lunggo.BackendWeb.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Http;
 using Lunggo.Repository.TableRecord;
-using CabinType = Lunggo.ApCommon.Flight.Constant.CabinType;
 
 namespace Lunggo.BackendWeb.Controllers
 {
@@ -29,7 +28,6 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpPost]
         public ActionResult Search(FlightReservationSearch search)
         {
-            OnePointInterface.AirLowFareSearch(search);
             return RedirectToAction(search.RsvNo == null ? "List" : "Detail", search);
         }
 
@@ -44,40 +42,6 @@ namespace Lunggo.BackendWeb.Controllers
         {
             var result = FlightReservationIntegrated.GetFromDb(search, QueryType.Complete).SingleOrDefault();
             return View(result);
-        }
-        public ActionResult TestSearchFlight()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult TestSearchFlight(SearchFlightConditions conditions)
-        {
-            conditions.CabinType = CabinType.Economy;
-            var infos = new List<OriginDestinationInfo>();
-            infos.Add(new OriginDestinationInfo
-            {
-                DepartureDate = new DateTime(2015,4,4),
-                OriginAirport = "CGK",
-                DestinationAirport = "SIN"
-            });
-            infos.Add(new OriginDestinationInfo
-            {
-                DepartureDate = new DateTime(2015, 4, 6),
-                OriginAirport = "SIN",
-                DestinationAirport = "CGK"
-            });
-            conditions.OriDestInfos = infos;
-            TempData["cond"] = conditions;
-            return RedirectToAction("TestSearchedFlights");
-        }
-
-        public ActionResult TestSearchedFlights()
-        {
-           var flightService = FlightService.GetInstance();
-            flightService.Init("MCN004085", "GOAXML", "GA2014_xml", Target.Test);
-            var x = flightService.SearchFlight((SearchFlightConditions) TempData["cond"]);
-            return View(x);
         }
     }
 

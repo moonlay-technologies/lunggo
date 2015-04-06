@@ -1,41 +1,69 @@
-﻿using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+﻿using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Interface;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
 {
-    public class MystiflyClientHandler : OnePointClient
+    internal partial class MystiflyWrapper
     {
-        private static string _accountNumber;
-        private static string _userName;
-        private static string _password;
-        private static Target _target;
-        public string SessionId;
-
-        public Target Target { get { return _target; } }
-
-        public MystiflyClientHandler()
+        private class MystiflyClientHandler : OnePointClient, IClientHandler
         {
-            CreateSession();
-        }
+            private static string _accountNumber;
+            private static string _userName;
+            private static string _password;
+            private static Target _target;
+            public string SessionId;
 
-        public static void Init(string accountNumber, string userName, string password, Target target)
-        {
-            _accountNumber = accountNumber;
-            _userName = userName;
-            _password = password;
-            _target = target;
-        }
-
-        public void CreateSession()
-        {
-            var request = new SessionCreateRQ()
+            internal static Target Target
             {
-                AccountNumber = _accountNumber,
-                UserName = _userName,
-                Password = _password,
-                Target = _target
-            };
-            var response = CreateSession(request);
-            SessionId = response.SessionId;
+                get { return _target; }
+            }
+
+            internal MystiflyClientHandler()
+            {
+                CreateSession();
+            }
+
+            internal static void Init(string accountNumber, string userName, string password, TargetServer target)
+            {
+                _accountNumber = accountNumber;
+                _userName = userName;
+                _password = password;
+                switch (target)
+                {
+                    case TargetServer.Test:
+                        _target = Target.Test;
+                        break;
+                    case TargetServer.Development:
+                        _target = Target.Development;
+                        break;
+                    case TargetServer.Production:
+                        _target = Target.Production;
+                        break;
+                    default:
+                        _target = Target.Default;
+                        break;
+                }
+            }
+
+            void IClientHandler.Init(string accountNumber, string userName, string password, TargetServer target)
+            {
+                Init(accountNumber, userName, password, target);
+            }
+
+            internal void CreateSession()
+            {
+                var request = new SessionCreateRQ()
+                {
+                    AccountNumber = _accountNumber,
+                    UserName = _userName,
+                    Password = _password,
+                    Target = _target
+                };
+                var response = CreateSession(request);
+                SessionId = response.SessionId;
+            }
         }
     }
 }

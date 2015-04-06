@@ -12,24 +12,24 @@ using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerT
 
 namespace Lunggo.ApCommon.Mystifly
 {
-    public partial class MystiflyWrapper : IGetTripDetails
+    internal partial class MystiflyWrapper
     {
-        public GetTripDetailsResult GetTripDetails(FlightBooking booking)
+        internal override GetTripDetailsResult GetTripDetails(string bookingId)
         {
             using (var client = new MystiflyClientHandler())
             {
                 var request = new AirTripDetailsRQ
                 {
-                    UniqueID = booking.BookingId,
+                    UniqueID = bookingId,
                     SendOnlyTicketed = false,
                     SessionId = client.SessionId,
-                    Target = client.Target,
+                    Target = MystiflyClientHandler.Target,
                     ExtensionData = null
                 };
                 var result = new GetTripDetailsResult();
                 var retry = 0;
                 var done = false;
-                while (retry < 3 && !done)
+                while (!done)
                 {
                     done = true;
                     var response = client.TripDetails(request);
@@ -48,10 +48,13 @@ namespace Lunggo.ApCommon.Mystifly
                                 client.CreateSession();
                                 request.SessionId = client.SessionId;
                                 retry++;
-                                done = false;
-                                break;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
                             }
-                            result.Errors.Add(MapError(error));
+                            MapError(response, result);
                             result.Success = false;
                         }
                     }
@@ -70,6 +73,8 @@ namespace Lunggo.ApCommon.Mystifly
             result.FlightItineraryDetails.PassengerInfo = MapDetailsPassengerInfo(response);
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
+            result.PSCFare =
+                decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.Tax.Amount);
             result.Currency = response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.CurrencyCode;
             MapDetailsPTCFareBreakdowns(response, result);
             return result;
@@ -91,6 +96,7 @@ namespace Lunggo.ApCommon.Mystifly
                     ArrivalTerminal = reservationItem.ArrivalTerminal,
                     AirlineCode = reservationItem.OperatingAirlineCode,
                     FlightNumber = reservationItem.FlightNumber,
+                    AircraftCode = reservationItem.AirEquipmentType,
                     RBD = reservationItem.ResBookDesigCode,
                     Baggage = reservationItem.Baggage,
                     StopQuantity = reservationItem.StopQuantity
@@ -170,6 +176,39 @@ namespace Lunggo.ApCommon.Mystifly
                     case PassengerType.INF:
                         result.InfantTotalFare =
                             decimal.Parse(breakdown.TripDetailsPassengerFare.TotalFare.Amount);
+                        break;
+                }
+            }
+        }
+
+        private static void MapError(AirTripDetailsRS response, ResultBase result)
+        {
+            foreach (var error in response.Errors)
+            {
+                switch (error.Code)
+                {
+                    case "ERTDT001":
+                    case "ERTDT003":
+                        goto case "InvalidInputData";
+                    case "ERTDT004":
+                    case "ERTDT005":
+                    case "ERTDT006":
+                        goto case "BookingIdNoLongerValid";
+                    case "ERGEN006":
+                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        goto case "TechnicalError";
+                    case "ERMAI001":
+                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        goto case "TechnicalError";
+
+                    case "InvalidInputData":
+                        result.Errors.Add(FlightError.InvalidInputData);
+                        break;
+                    case "BookingIdNoLongerValid":
+                        result.Errors.Add(FlightError.BookingIdNoLongerValid);
+                        break;
+                    case "TechnicalError":
+                        result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }
