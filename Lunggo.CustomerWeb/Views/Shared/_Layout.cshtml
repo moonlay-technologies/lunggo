@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/assets/css/application.css">
 
 </head>
-<body>
+<body ng-app="travorama">
     <!-- page start -->
     <div class="page">
 
@@ -26,9 +26,12 @@
                         <div class="row">
                             <div class="col-sm-12">
 
-                                <form action="#" class="form-inline search-hotel-form">
-                                    <div class="form-group">
-                                        <span class="fa fa-building"></span><input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location.">
+                                <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
+                                    <div class="form-group loc-auto-wrapper">
+                                        <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
+                                        <div class="loc-auto">
+                                            <ul></ul>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control input-checkin select-date" placeholder="checkin">
@@ -43,6 +46,10 @@
                                         <input type="text" class="form-control input-room select-room" placeholder="room">
                                     </div>
                                     <div class="form-group">
+                                        <input class="hidden search-hotel-value location" name="LocationId" />
+                                        <input class="hidden search-hotel-value staydate" name="StayDate" />
+                                        <input class="hidden search-hotel-value staylength" name="StayLength" />
+                                        <input class="hidden search-hotel-value roomcount" name="RoomCount" />
                                         <button class="btn btn-primary btn-yellow">SEARCH</button>
                                     </div>
                                 </form>
@@ -150,6 +157,9 @@
     <script src="/Assets/js/angular-route.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+    <script src="/Assets/js/jquery.pickmeup.min.js"></script>
+    <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
 
     <script src="/assets/js/application.js"></script>
 

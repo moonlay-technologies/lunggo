@@ -432,6 +432,7 @@ var SearchHotelConfig = {
 
     var app = angular.module('travorama', ['ngRoute']);
 
+    // hotel controller
     app.controller('HotelController', ['$http', '$scope', function ($http, $scope) {
 
         // run hotel search function on document ready
@@ -515,7 +516,9 @@ var SearchHotelConfig = {
                 console.log('loaded');
                 console.log('--------------------------------');
 
-                loading_overlay('hide','body');
+                loading_overlay('hide', 'body');
+
+                $scope.postProcess();
 
                 // if error
             }).error(function () {
@@ -536,6 +539,13 @@ var SearchHotelConfig = {
             $('footer .pagination a').click(function () {
                 var page = $(this).attr('data-page');
                 $scope.load_hotel_list(page);
+            });
+        }
+
+        // post process
+        $scope.postProcess = function () {
+            $('.hotel-wrapper .hotel').each(function() {
+                console.log('JEMPING POST PROCESS');
             });
         }
 
