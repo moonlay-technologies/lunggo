@@ -20,7 +20,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW100.Logic
             {
                 Lang = searchServiceRequest.Lang,
                 Country = "Indonesia",
-                LocationId = 456789,
+                LocationId = searchServiceRequest.LocationId,
                 Area = "Senayan",
                 LocationName = "Senayan, Jakarta, Indonesia",
                 Province = "Jakarta",

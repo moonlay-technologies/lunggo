@@ -249,6 +249,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
     <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
+    <Compile Include="WebSrc\UW000\UW000TopPageController.cs" />
     <Compile Include="WebSrc\UW100\Logic\HotelSearchLogic.cs" />
     <Compile Include="WebSrc\UW100\Object\UW100HotelSearchRequest.cs" />
     <Compile Include="WebSrc\UW100\Object\UW100HotelSearchResponse.cs" />
@@ -347,6 +348,8 @@
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
+    <Content Include="Assets\js\jquery.pickmeup.min.js" />
+    <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
@@ -1621,6 +1624,7 @@
     <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
+    <Content Include="Views\UW000TopPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

@@ -2,7 +2,7 @@
 @import '_header.scss';
 @import '_footer.scss';
 
-body {@extend .din; color:#555; background:#f9f9f9;}
+body {@extend .din; color:#555; background:#f9f9f9; min-height:100%;}
 body img {max-width:100%;}
 
 .container {max-width:960px;}
@@ -37,7 +37,7 @@ hr {border-color:#aaa;}
 
 .page-header {border-bottom:0; margin-top:0; padding-top:20px;}
 
-.site-content {padding-bottom:30px;}
+.site-content {padding-bottom:30px; min-height:500px;}
 
 .page {
 	.page-title {margin:0; font-size:20px; margin-bottom:20px;}
@@ -121,11 +121,13 @@ hr {border-color:#aaa;}
 		&.square {
 			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
 				.hotel-link {color:#555;}
-				.hotel-image {}
+				.hotel-image {height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
+                    img {width:100%;}
+				}
 				.hotel-sum {padding:20px;
-					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham;}
+					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham; height:38px;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:5px;}
-					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0;}
+					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0; height:30px;}
 				}
 				.hotel-tag {padding:20px;
 					.hotel-price {width:70%; float:left;
@@ -135,7 +137,7 @@ hr {border-color:#aaa;}
 					.hotel-feedback {color:#888; width:30%; float:left; border-left:1px solid #888; padding-left:15px;
 						.hotel-like {margin-bottom:10px; display:block;}
 						.hotel-review {}
-						.fa {font-size:16px;}
+						.fa {font-size:15px;}
 					}
 				}.clearfix {margin-bottom:10px;}
 				.hotel-show-list {display:none;}
@@ -147,7 +149,9 @@ hr {border-color:#aaa;}
 			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
 				&:after {content:""; clear:both; display:block;}
 				.hotel-link {color:#555;}
-				.hotel-image {float:left; width:35%;}
+				.hotel-image {float:left; width:35%; height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
+                    img {width:100%;}
+				}
 				.hotel-sum {padding:20px; float:left; width:35%;
 					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:10px;}
@@ -655,7 +659,7 @@ hr {border-color:#aaa;}
 // ----------------------------------------------
 // Location auto complete
 .loc-auto-wrapper {position:relative;
-	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none;
+	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
 		ul {padding:0; list-style:none; margin-bottom:0;
 			li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
 				&:hover {background:#ddd;}
@@ -670,4 +674,24 @@ hr {border-color:#aaa;}
     .loading-content {position:absolute; text-align:center; top:40%; width:100%;}
 }
 
+// ----------------------------------------------
+// Date picker
+.pickmeup-twitter-bootstrap {z-index:9999;
+    .pmu-day-of-week {font-weight:bold;}
+    .pmu-month {font-weight:bold; font-size:18px;}
+    .pmu-days .pmu-button {
+        &:hover {background:#2fb4e6;}
+    }
+    .pmu-disabled {color:#ccc;}
+    .pmu-not-in-month {background:none !important; opacity:0; cursor:none;}
+    .pmu-selected {background:#2fb4e6;}
+}
 
+.option-wrapper {position:relative;
+    .option {position:absolute; z-index:9999; background:#fff; right:0; width:100%; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
+        ul{padding:0; margin:0;}
+        li {display:block; text-align:right; color:#000; text-align:left; padding:10px 0; padding-left:50px; border-bottom:1px solid #ddd; cursor:pointer;
+            &:hover {background:#ddd;}
+        }
+    }
+}

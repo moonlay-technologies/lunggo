@@ -129,7 +129,8 @@ section.search {
 
 body {
   color: #555;
-  background: #f9f9f9; }
+  background: #f9f9f9;
+  min-height: 100%; }
 
 body img {
   max-width: 100%; }
@@ -201,7 +202,8 @@ hr {
   padding-top: 20px; }
 
 .site-content {
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+  min-height: 500px; }
 
 .page .page-title {
   margin: 0;
@@ -383,6 +385,14 @@ hr {
   -o-border-radius: 3px; }
   .hotel-search-page .hotel-list.square .hotel .hotel-link {
     color: #555; }
+  .hotel-search-page .hotel-list.square .hotel .hotel-image {
+    height: 150px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .hotel-search-page .hotel-list.square .hotel .hotel-image img {
+      width: 100%; }
   .hotel-search-page .hotel-list.square .hotel .hotel-sum {
     padding: 20px; }
     .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name {
@@ -390,7 +400,8 @@ hr {
       color: #3fabe3;
       font-weight: bold;
       margin-top: 0;
-      margin-bottom: 5px; }
+      margin-bottom: 5px;
+      height: 38px; }
     .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-star {
       color: #f3bd00;
       margin-top: 0;
@@ -398,7 +409,8 @@ hr {
     .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-address {
       margin-bottom: 0;
       font-style: italic;
-      margin-top: 0; }
+      margin-top: 0;
+      height: 30px; }
   .hotel-search-page .hotel-list.square .hotel .hotel-tag {
     padding: 20px; }
     .hotel-search-page .hotel-list.square .hotel .hotel-tag .hotel-price {
@@ -421,7 +433,7 @@ hr {
         margin-bottom: 10px;
         display: block; }
       .hotel-search-page .hotel-list.square .hotel .hotel-tag .hotel-feedback .fa {
-        font-size: 16px; }
+        font-size: 15px; }
   .hotel-search-page .hotel-list.square .hotel .clearfix {
     margin-bottom: 10px; }
   .hotel-search-page .hotel-list.square .hotel .hotel-show-list {
@@ -450,7 +462,14 @@ hr {
     color: #555; }
   .hotel-search-page .hotel-list.horizontal .hotel .hotel-image {
     float: left;
-    width: 35%; }
+    width: 35%;
+    height: 150px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; }
+    .hotel-search-page .hotel-list.horizontal .hotel .hotel-image img {
+      width: 100%; }
   .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum {
     padding: 20px;
     float: left;
@@ -1535,7 +1554,10 @@ hr {
     width: 90%;
     max-height: 250px;
     overflow: auto;
-    display: none; }
+    display: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px; }
     .loc-auto-wrapper .loc-auto ul {
       padding: 0;
       list-style: none;
@@ -1563,3 +1585,47 @@ hr {
     text-align: center;
     top: 40%;
     width: 100%; }
+
+.pickmeup-twitter-bootstrap {
+  z-index: 9999; }
+  .pickmeup-twitter-bootstrap .pmu-day-of-week {
+    font-weight: bold; }
+  .pickmeup-twitter-bootstrap .pmu-month {
+    font-weight: bold;
+    font-size: 18px; }
+  .pickmeup-twitter-bootstrap .pmu-days .pmu-button:hover {
+    background: #2fb4e6; }
+  .pickmeup-twitter-bootstrap .pmu-disabled {
+    color: #ccc; }
+  .pickmeup-twitter-bootstrap .pmu-not-in-month {
+    background: none !important;
+    opacity: 0;
+    cursor: none; }
+  .pickmeup-twitter-bootstrap .pmu-selected {
+    background: #2fb4e6; }
+
+.option-wrapper {
+  position: relative; }
+  .option-wrapper .option {
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    right: 0;
+    width: 100%;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px; }
+    .option-wrapper .option ul {
+      padding: 0;
+      margin: 0; }
+    .option-wrapper .option li {
+      display: block;
+      text-align: right;
+      color: #000;
+      text-align: left;
+      padding: 10px 0;
+      padding-left: 50px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer; }
+      .option-wrapper .option li:hover {
+        background: #ddd; }

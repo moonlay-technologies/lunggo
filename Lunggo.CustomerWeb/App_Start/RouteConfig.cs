@@ -13,7 +13,13 @@ namespace Lunggo.CustomerWeb
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
+            routes.MapRoute(
+                name: "toppage",
+                url: "",
+                defaults: new { controller = "UW000TopPage", action = "Index", langCode = "id" }
+            );
+
             routes.MapRoute(
                 name: "UW100HotelSearch",
                 url: "UW100/UW100HotelSearch",
@@ -55,12 +61,6 @@ namespace Lunggo.CustomerWeb
             ).DataTokens = new RouteValueDictionary(new { area = "UW100" });
                 
             //TODO End of Todo
-
-            routes.MapRoute(
-                name: "toppage",
-                url: "",
-                defaults: new { controller = "Home", action = "Index", langCode = "id" }
-            );
 
             routes.MapRoute(
                 name: "Default",
