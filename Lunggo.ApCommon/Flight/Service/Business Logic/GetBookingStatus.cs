@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Query;
+using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -11,7 +13,14 @@ namespace Lunggo.ApCommon.Flight.Service
         public void GetBookingStatus()
         {
             var result = GetBookingStatusInternal();
-            //TODO save to database
+            var query = UpdateBookingStatusQuery.GetInstance();
+            // TODO FLIGHT : Schedule change Notification
+            /*
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                query.Execute(conn, result.BookingStatusInfos);
+            }
+             */
         }
     }
 }

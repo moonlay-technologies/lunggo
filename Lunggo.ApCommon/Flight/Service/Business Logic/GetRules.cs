@@ -10,10 +10,26 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        GetRulesOutput GetRules(GetRulesInput input)
+        public GetRulesOutput GetRules(GetRulesInput input)
         {
-            //TODO GetRules
-            return null;
+            var output = new GetRulesOutput();
+            var rules = GetRulesInternal(input.FareId);
+            output.Rules = new FlightRules();
+            if (rules.IsSuccess)
+            {
+                output.Rules.AirlineRules = rules.AirlineRules;
+                output.Rules.BaggageRules = rules.BaggageRules;
+            }
+            if (input.ReturnFareId != null)
+            {
+                rules = GetRulesInternal(input.ReturnFareId);
+                if (rules.IsSuccess)
+                {
+                    output.ReturnRules.AirlineRules = rules.AirlineRules;
+                    output.ReturnRules.BaggageRules = rules.BaggageRules;
+                }
+            }
+            return output;
         }
     }
 }

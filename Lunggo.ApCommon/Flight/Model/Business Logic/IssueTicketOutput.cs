@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class IssueTicketOutput
+    public class IssueTicketOutput : OutputBase
     {
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }

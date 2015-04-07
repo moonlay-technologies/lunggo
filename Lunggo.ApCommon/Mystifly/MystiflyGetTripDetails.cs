@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Mystifly
                     if (!response.Errors.Any())
                     {
                         result = MapResult(response);
-                        result.Success = true;
+                        result.IsSuccess = true;
                     }
                     else
                     {
@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Mystifly
                                 }
                             }
                             MapError(response, result);
-                            result.Success = false;
+                            result.IsSuccess = false;
                         }
                     }
                 }
@@ -69,8 +69,11 @@ namespace Lunggo.ApCommon.Mystifly
             result.BookingId = response.TravelItinerary.UniqueID;
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
-            result.FlightItineraryDetails.FlightTrips = MapDetailsFlightTrips(response);
-            result.FlightItineraryDetails.PassengerInfo = MapDetailsPassengerInfo(response);
+            result.FlightItineraryDetails = new FlightItineraryDetails
+            {
+                FlightTrips = MapDetailsFlightTrips(response),
+                PassengerInfo = MapDetailsPassengerInfo(response)
+            };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
             result.PSCFare =

@@ -1,5 +1,5 @@
 ﻿@using Lunggo.ApCommon.Mystifly.OnePointService.Flight
-@model Lunggo.ApCommon.Flight.Model.FlightItinerary
+@model Lunggo.ApCommon.Flight.Model.FlightFareItinerary
 
 <div>
     <dl class="dl-horizontal">
@@ -13,7 +13,7 @@
         
         <dd>
             <h4>Details</h4>
-            @foreach (var segment in Model.FlightSegments)
+            @foreach (var segment in Model.FlightTrips)
             {
                 Html.RenderPartial("PartialSegment", segment);
             }

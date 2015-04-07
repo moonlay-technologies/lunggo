@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public List<FlightError> Errors { get; set; }
         public List<string> ErrorMessages { get; set; }
-        public bool Success { get; set; }
+        public bool IsSuccess { get; set; }
 
         protected ResultBase()
         {

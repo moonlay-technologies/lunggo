@@ -22,7 +22,6 @@ namespace Lunggo.ApCommon.Mystifly
                 var request = new AirLowFareSearchRQ
                 {
                     OriginDestinationInformations = MapOriginDestinationInformations(conditions),
-                    //TODO combine refundable
                     IsRefundable = true,
                     IsResidentFare = false,
                     NearByAirports = false,
@@ -41,40 +40,44 @@ namespace Lunggo.ApCommon.Mystifly
                 while (!done)
                 {
                     var response = client.AirLowFareSearch(request);
+                    request.IsRefundable = false;
+                    var refundResponse = client.AirLowFareSearch(request);
                     done = true;
-                    if (!response.Errors.Any())
+                    if (!response.Errors.Any() || !refundResponse.Errors.Any())
                     {
-                        result = MapResult(response);
-                        result.Success = true;
+                        result.FlightItineraries = new List<FlightFareItinerary>();
+                        if (!response.Errors.Any())
+                        {
+                            var result1 = MapResult(response);
+                            result.FlightItineraries.AddRange(result1.FlightItineraries);
+                        }
+                        if (!refundResponse.Errors.Any())
+                        {
+                            var result2 = MapResult(refundResponse);
+                            result.FlightItineraries.AddRange(result2.FlightItineraries);
+                        }
+                        result.IsSuccess = true;
                     }
                     else
                     {
-                        if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERSER021")
+                        var errors = response.Errors.Concat(refundResponse.Errors).Distinct();
+                        foreach (var error in errors)
                         {
-                            result.Errors.Clear();
-                            result.Success = true;
-                            result.FlightItineraries = null;
-                        }
-                        else
-                        {
-                            foreach (var error in response.Errors)
+                            if (error.Code == "ERSER002")
                             {
-                                if (error.Code == "ERSER002")
+                                result.Errors.Clear();
+                                client.CreateSession();
+                                request.SessionId = client.SessionId;
+                                retry++;
+                                if (retry <= 3)
                                 {
-                                    result.Errors.Clear();
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
+                                    done = false;
+                                    break;
                                 }
-                                MapError(response, result);
                             }
-                            result.Success = false;
+                            MapError(response, result);
                         }
+                        result.IsSuccess = false;
                     }
                 }
                 
@@ -204,7 +207,28 @@ namespace Lunggo.ApCommon.Mystifly
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightTrips(pricedItinerary);
+            flightFareItinerary.Source = FlightSource.Wholesaler;
+            MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
+        }
+
+        private static void MapPassengerCount(PricedItinerary pricedItinerary, FlightFareItinerary flightFareItinerary)
+        {
+            foreach (var item in pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns)
+            {
+                switch (item.PassengerTypeQuantity.Code)
+                {
+                    case PassengerType.ADT:
+                        flightFareItinerary.AdultCount = item.PassengerTypeQuantity.Quantity;
+                        break;
+                    case PassengerType.CHD:
+                        flightFareItinerary.ChildCount = item.PassengerTypeQuantity.Quantity;
+                        break;
+                    case PassengerType.INF:
+                        flightFareItinerary.InfantCount= item.PassengerTypeQuantity.Quantity;
+                        break;
+                }
+            }
         }
 
         private static void MapPTCFareBreakdowns(PricedItinerary pricedItinerary, FlightFareItinerary flightFareItinerary)

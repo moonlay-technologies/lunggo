@@ -32,14 +32,14 @@ namespace Lunggo.ApCommon.Mystifly
                     if (!response.Errors.Any())
                     {
                         result = MapResult(response);
-                        result.Success = true;
+                        result.IsSuccess = true;
                     }
                     else
                     {
                         if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
                         {
                             result.Errors.Clear();
-                            result.Success = true;
+                            result.IsSuccess = true;
                             result.AirlineRules = null;
                             result.BaggageRules = null;
                         }
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Mystifly
                                 }
                                 MapError(response, result);
                             }
-                            result.Success = false;
+                            result.IsSuccess = false;
                         }
                     }
                 }

@@ -18,5 +18,10 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal PSCFare { get; set; }
         public string Currency { get; set; }
         public List<string> BookingNotes { get; set; }
+
+        public GetTripDetailsResult()
+        {
+            BookingNotes = new List<string>();
+        }
     }
 }

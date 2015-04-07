@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class BookFlightOutput
+    public class BookFlightOutput : OutputBase
     {
         public BookResult BookResult { get; set; }
         public BookResult ReturnBookResult { get; set; }

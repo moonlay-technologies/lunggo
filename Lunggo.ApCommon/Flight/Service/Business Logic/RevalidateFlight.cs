@@ -12,15 +12,35 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public RevalidateFlightOutput RevalidateFlight(RevalidateFlightInput input)
         {
-            var response = RevalidateFareInternal(input.FareId);
             var output = new RevalidateFlightOutput();
-            output.IsValid = response.IsValid;
-            output.Itinerary = response.Itinerary;
-            if (input.ReturnFareId != null)
+            var response = RevalidateFareInternal(input.FareId);
+            if (response.IsSuccess)
             {
-                response = RevalidateFareInternal(input.ReturnFareId);
-                output.ReturnIsValid = response.IsValid;
-                output.ReturnItinerary = response.Itinerary;
+                output.IsSuccess = true;
+                output.IsValid = response.IsValid;
+                output.Itinerary = response.Itinerary;
+                if (input.ReturnFareId != null)
+                {
+                    response = RevalidateFareInternal(input.ReturnFareId);
+                    if (response.IsSuccess)
+                    {
+                        output.IsSuccess = true;
+                        output.ReturnIsValid = response.IsValid;
+                        output.ReturnItinerary = response.Itinerary;
+                    }
+                    else
+                    {
+                        output.IsSuccess = false;
+                        output.Errors = response.Errors;
+                        output.ErrorMessages = response.ErrorMessages;
+                    }
+                }
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = response.Errors;
+                output.ErrorMessages = response.ErrorMessages;
             }
             return output;
         }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Database;

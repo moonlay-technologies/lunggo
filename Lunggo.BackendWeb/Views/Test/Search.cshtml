@@ -27,9 +27,9 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CabinClass, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Conditions.CabinClass, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CabinClass, new SelectList(cabinList))
+                @Html.DropDownListFor(model => model.Conditions.CabinClass, new SelectList(cabinList))
             </div>
         </div>
         
@@ -41,77 +41,28 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[0].OriginAirport, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Conditions.OriDestInfos[0].OriginAirport, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[0].OriginAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[0].OriginAirport, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Conditions.OriDestInfos[0].OriginAirport, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Conditions.OriDestInfos[0].OriginAirport, "", new { @class = "text-danger" })
             </div>
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[0].DestinationAirport, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Conditions.OriDestInfos[0].DestinationAirport, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[0].DestinationAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[0].DestinationAirport, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Conditions.OriDestInfos[0].DestinationAirport, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Conditions.OriDestInfos[0].DestinationAirport, "", new { @class = "text-danger" })
             </div>
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[0].DepartureDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Conditions.OriDestInfos[0].DepartureDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[0].DepartureDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[0].DepartureDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Conditions.OriDestInfos[0].DepartureDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Conditions.OriDestInfos[0].DepartureDate, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[1].OriginAirport, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[1].OriginAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[1].OriginAirport, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[1].DestinationAirport, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[1].DestinationAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[1].DestinationAirport, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[1].DepartureDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[1].DepartureDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[1].DepartureDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[2].OriginAirport, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[2].OriginAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[2].OriginAirport, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[2].DestinationAirport, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[2].DestinationAirport, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[2].DestinationAirport, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OriginDestinationDates[2].DepartureDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OriginDestinationDates[2].DepartureDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginDestinationDates[2].DepartureDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.AdultCount, htmlAttributes: new { @class = "control-label col-md-2" })

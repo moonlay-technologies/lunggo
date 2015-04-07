@@ -16,13 +16,32 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new IssueTicketOutput();
             var orderResult = OrderTicketInternal(input.BookingId);
-            if (orderResult.IsOrderSuccess)
+            if (orderResult.IsSuccess) 
+            { 
                 output.BookingStatus = BookingStatus.Ticketing;
+                output.BookingId = orderResult.BookingId;
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = orderResult.Errors;
+                output.ErrorMessages = orderResult.ErrorMessages;
+            }
+
             if (input.ReturnBookingId != null)
             {
                 orderResult = OrderTicketInternal(input.ReturnBookingId);
-                if (orderResult.IsOrderSuccess)
+                if (orderResult.IsSuccess)
+                {
                     output.ReturnBookingStatus = BookingStatus.Ticketing;
+                    output.ReturnBookingId = orderResult.BookingId;
+                }
+                else
+                {
+                    output.IsSuccess = false;
+                    output.Errors = orderResult.Errors;
+                    output.ErrorMessages = orderResult.ErrorMessages;
+                }
             }
             return output;
         }

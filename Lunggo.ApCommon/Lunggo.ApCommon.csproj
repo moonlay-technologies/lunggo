@@ -131,7 +131,9 @@
     <Compile Include="Flight\Model\Business Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Business Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Business Logic\SearchFlightOutput.cs" />
+    <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Service\Business Logic\BookFlight.cs" />
+    <Compile Include="Flight\Service\Business Logic\BundleFlight.cs" />
     <Compile Include="Flight\Service\Business Logic\CancelBooking.cs" />
     <Compile Include="Flight\Service\Business Logic\GetBookingStatus.cs" />
     <Compile Include="Flight\Service\Business Logic\GetDetails.cs" />

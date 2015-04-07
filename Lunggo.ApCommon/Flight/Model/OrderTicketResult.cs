@@ -9,6 +9,5 @@ namespace Lunggo.ApCommon.Flight.Model
     public class OrderTicketResult : ResultBase
     {
         public string BookingId { get; set; }
-        public bool IsOrderSuccess { get; set; }
     }
 }

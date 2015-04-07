@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Constant
 {
+    public enum FlightSource
+    {
+        Wholesaler = 0,
+        Airline = 1
+    }
     public enum FlightError
     {
         TechnicalError = 0,

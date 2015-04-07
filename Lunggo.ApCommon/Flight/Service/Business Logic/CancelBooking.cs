@@ -11,8 +11,23 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public CancelBookingOutput CancelBooking(CancelBookingInput input)
         {
-            //TODO CancelBOoking
-            return null;
+            var output = new CancelBookingOutput();
+            var cancelResult = CancelBookingInternal(input.BookingId);
+            if (cancelResult.IsSuccess)
+            {
+                output.IsCancelSuccess = true;
+                output.BookingId = cancelResult.BookingId;
+            }
+            if (input.ReturnBookingId != null)
+            {
+                cancelResult = CancelBookingInternal(input.ReturnBookingId);
+                if (cancelResult.IsSuccess)
+                {
+                    output.ReturnIsCancelSuccess = true;
+                    output.ReturnBookingId = cancelResult.BookingId;
+                }
+            }
+            return output;
         }
     }
 }

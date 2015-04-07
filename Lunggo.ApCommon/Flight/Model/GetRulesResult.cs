@@ -11,6 +11,12 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public List<AirlineRules> AirlineRules { get; set; }
         public List<BaggageRules> BaggageRules { get; set; }
+
+        public GetRulesResult()
+        {
+            AirlineRules = new List<AirlineRules>();
+            BaggageRules = new List<BaggageRules>();
+        }
     }
 
     public class AirlineRules

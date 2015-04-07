@@ -9,7 +9,8 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class OutputBase
     {
-        public bool Success { get; set; }
-        public List<string> Messages { get; set; }
+        public bool IsSuccess { get; set; }
+        public List<FlightError> Errors { get; set; }
+        public List<string> ErrorMessages { get; set; }
     }
 }

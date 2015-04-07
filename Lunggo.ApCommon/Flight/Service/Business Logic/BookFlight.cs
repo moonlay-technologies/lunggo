@@ -25,23 +25,37 @@ namespace Lunggo.ApCommon.Flight.Service
                 PassengerFareInfos = input.BookingInfo.PassengerFareInfos
             };
             var response = BookFlightInternal(bookInfo);
-            if (response.IsBookSuccess)
+            output.BookResult = new BookResult();
+            if (response.IsSuccess)
             {
                 output.BookResult.BookingId = response.Status.BookingId;
                 output.BookResult.BookingStatus = response.Status.BookingStatus;
                 if (response.Status.BookingStatus == BookingStatus.Booked)
                     output.BookResult.TimeLimit = response.Status.TimeLimit;
             }
-            if (input.ReturnBookingInfo.FareId != null)
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = response.Errors;
+                output.ErrorMessages = response.ErrorMessages;
+            }
+
+            if (input.ReturnBookingInfo != null)
             {
                 bookInfo.FareId = input.ReturnBookingInfo.FareId;
                 response = BookFlightInternal(bookInfo);
-                if (response.IsBookSuccess)
+                if (response.IsSuccess)
                 {
                     output.ReturnBookResult.BookingId = response.Status.BookingId;
                     output.ReturnBookResult.BookingStatus = response.Status.BookingStatus;
                     if (response.Status.BookingStatus == BookingStatus.Booked)
                         output.ReturnBookResult.TimeLimit = response.Status.TimeLimit;
+                }
+                else
+                {
+                    output.IsSuccess = false;
+                    output.Errors = response.Errors;
+                    output.ErrorMessages = response.ErrorMessages;
                 }
             }
             return output;

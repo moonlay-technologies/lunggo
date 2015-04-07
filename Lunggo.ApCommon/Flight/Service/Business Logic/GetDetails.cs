@@ -6,9 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using FlightItineraryDetails = Lunggo.ApCommon.Flight.Model.FlightItineraryDetails;
-using FlightTripDetails = Lunggo.ApCommon.Flight.Model.FlightTripDetails;
-using PassengerInfoDetails = Lunggo.ApCommon.Flight.Model.PassengerInfoDetails;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

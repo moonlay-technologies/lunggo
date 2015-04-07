@@ -17,9 +17,6 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
-            //TODO List all use cases of these business logics
-            //TODO then implement accordingly
-            //TODO refundable
             var inputTuple = input.Conditions.OriDestInfos;
             var conditions = new SearchFlightConditions();
             var returnConditions = new SearchFlightConditions();
@@ -65,6 +62,16 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.Any = true;
                 if (returnResult.FlightItineraries != null)
                     output.ReturnAny = true;
+
+                if (!result.IsSuccess || !returnResult.IsSuccess)
+                {
+                    output.Errors.AddRange(result.Errors);
+                    output.Errors.AddRange(returnResult.Errors);
+                    output.Errors = output.Errors.Distinct().ToList();
+                    output.ErrorMessages.AddRange(result.ErrorMessages);
+                    output.ErrorMessages.AddRange(returnResult.ErrorMessages);
+                    output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                }
             }
             else
             {
@@ -93,6 +100,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.ReturnItineraries = null;
                 if (result.FlightItineraries != null)
                     output.Any = true;
+
+                if (!result.IsSuccess)
+                {
+                    output.Errors.AddRange(result.Errors);
+                    output.ErrorMessages.AddRange(result.ErrorMessages);
+                }
             }
             return output;
         }

@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Mystifly
                     if (!response.Errors.Any())
                     {
                         result = MapResult(response);
-                        result.Success = true;
+                        result.IsSuccess = true;
                     }
                     else
                     {
@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Mystifly
                                 }
                             }
                             MapError(response, result);
-                            result.Success = false;
+                            result.IsSuccess = false;
                         }
                     }
                 }

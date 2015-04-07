@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class GetDetailsOutput
+    public class GetDetailsOutput : OutputBase
     {
         public FlightDetails FlightDetails { get; set; }
         public FlightDetails ReturnFlightDetails { get; set; }

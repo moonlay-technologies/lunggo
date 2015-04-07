@@ -118,7 +118,7 @@ namespace Lunggo.ApCommon.Mystifly
                     ExtensionData = null
                 };
 
-                client.RemoveMessageQueues(deleteRequest);
+                var x = client.RemoveMessageQueues(deleteRequest);
 
                 return result;
             }

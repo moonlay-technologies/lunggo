@@ -2,7 +2,7 @@
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class GetRulesOutput
+    public class GetRulesOutput : OutputBase
     {
         public FlightRules Rules { get; set; }
         public FlightRules ReturnRules { get; set; }

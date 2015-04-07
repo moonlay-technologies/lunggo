@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Mystifly
                     if (!response.Errors.Any())
                     {
                         result = MapResult(response);
-                        result.Success = true;
+                        result.IsSuccess = true;
                     }
                     else
                     {
@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Mystifly
                                 }
                             }
                             MapError(response, result);
-                            result.Success = false;
+                            result.IsSuccess = false;
                         }
                     }
                     
@@ -173,7 +173,6 @@ namespace Lunggo.ApCommon.Mystifly
         {
             return new BookFlightResult
             {
-                IsBookSuccess = response.Success,
                 Status = new BookingStatusInfo
                 {
                     BookingStatus = MapBookingStatus(response),
@@ -187,9 +186,9 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (response.Status)
             {
-                case "Confirmed" :
+                case "CONFIRMED" :
                     return BookingStatus.Booked;
-                case "Pending" :
+                case "PENDING" :
                     return BookingStatus.Pending;
                 default :
                     return BookingStatus.Pending;

@@ -1,4 +1,4 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightSegment
+﻿@model Lunggo.ApCommon.Flight.Model.FlightFareTrip
 
 <div>
     <div class="row">
@@ -14,13 +14,13 @@
     </div>
     <div class="row">
         <div class="col-md-2">
-            @Html.DisplayFor(model => model.DepartureDateTime)
+            @Html.DisplayFor(model => model.DepartureTime)
         </div>
         <div class="col-md-2">
             @Html.DisplayFor(model => model.Duration)
         </div>
         <div class="col-md-2">
-            @Html.DisplayFor(model => model.ArrivalDateTime)
+            @Html.DisplayFor(model => model.ArrivalTime)
         </div>
     </div>
     <div class="row">

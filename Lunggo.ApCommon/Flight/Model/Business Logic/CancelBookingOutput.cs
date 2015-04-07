@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class CancelBookingOutput
+    public class CancelBookingOutput : OutputBase
     {
         public bool IsCancelSuccess { get; set; }
         public string BookingId { get; set; }

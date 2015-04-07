@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class SearchFlightOutput
+    public class SearchFlightOutput : OutputBase
     {
         public bool IsReturnType { get; set; }
         public bool Any { get; set; }

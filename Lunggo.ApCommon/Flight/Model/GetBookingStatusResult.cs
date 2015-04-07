@@ -10,5 +10,11 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public List<BookingStatusInfo> BookingStatusInfos { get; set; }
         public List<string> ChangedScheduleBooking { get; set; }
+
+        public GetBookingStatusResult()
+        {
+            BookingStatusInfos = new List<BookingStatusInfo>();
+            ChangedScheduleBooking = new List<string>();
+        }
     }
 }
