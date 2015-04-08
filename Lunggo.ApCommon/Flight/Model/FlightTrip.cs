@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightTripDetails : FlightTripBase
     {
+        public string PNR { get; set; }
         public string DepartureTerminal { get; set; }
         public string ArrivalTerminal { get; set; }
         public string Baggage { get; set; }

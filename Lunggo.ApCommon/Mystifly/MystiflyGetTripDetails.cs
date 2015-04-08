@@ -90,6 +90,7 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var flightTrip = new FlightTripDetails
                 {
+                    PNR = reservationItem.AirlinePNR,
                     DepartureTime = reservationItem.DepartureDateTime,
                     ArrivalTime = reservationItem.ArrivalDateTime,
                     Duration = int.Parse(reservationItem.JourneyDuration),

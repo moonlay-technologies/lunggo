@@ -30,7 +30,6 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public Dictionary<int, FlightTripDetails> FlightTrips { get; set; }
         public List<PassengerInfoDetails> PassengerInfo { get; set; }
-
     }
 
     public class FlightItineraryBase
