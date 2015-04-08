@@ -1401,6 +1401,54 @@ hr {
       .flight-search-page .flight-list-return.horizontal .flight .flight-detail .detail-right h5 {
         font-weight: bold; }
 
+.tab-pane#history .history-wrapper .history-list {
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  .tab-pane#history .history-wrapper .history-list .history {
+    border: 1px solid red; }
+    .tab-pane#history .history-wrapper .history-list .history:before, .tab-pane#history .history-wrapper .history-list .history:after {
+      clear: both;
+      display: block;
+      width: 100%;
+      content: ""; }
+    .tab-pane#history .history-wrapper .history-list .history .history-number {
+      width: 10%;
+      float: left;
+      background-color: #b2b2b2; }
+    .tab-pane#history .history-wrapper .history-list .history .history-detail {
+      width: 90%;
+      float: left;
+      padding: 10px 0;
+      background: #f7f7f7; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail > div {
+        float: left;
+        padding: 0 10px; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .row {
+        padding: 5px 0; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .row > div:first-child:after {
+        content: ":";
+        position: absolute;
+        right: 0; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name {
+        width: 25%;
+        border-right: 1px solid #ddd; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name a {
+          font-size: 18px;
+          font-weight: bold; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name p {
+          font-size: 12px; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-date {
+        width: 30%;
+        border-right: 1px solid #ddd; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-id {
+        width: 30%; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-action {
+        width: 15%;
+        text-align: center; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-action .btn {
+          width: 100%; }
+
 .user-page-login #site-header {
   background: none; }
 .user-page-login .user-login {

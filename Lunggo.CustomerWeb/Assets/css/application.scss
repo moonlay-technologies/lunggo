@@ -568,6 +568,35 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// user account
+
+// history
+.tab-pane#history {
+    .history-wrapper {
+        .history-list {padding:0; margin:0; list-style:none;
+            .history {border:1px solid red; 
+                &:before, &:after {clear:both; display:block; width:100%; content:"";}
+                .history-number {width:10%; float:left; background-color:#b2b2b2;}
+                .history-detail {width:90%; float:left; padding:10px 0; background:#f7f7f7;
+                    &>div {float:left; padding:0 10px;}
+                    & .row {padding:5px 0;}
+                    & .row > div:first-child:after {content:":"; position:absolute; right:0;}
+                    .history-name {width:25%; border-right:1px solid #ddd;
+                        a {font-size:18px; font-weight:bold;}
+                        p {font-size:12px;}
+                    }
+                    .history-date {width:30%; border-right:1px solid #ddd;}
+                    .history-id {width:30%;}
+                    .history-action {width:15%; text-align:center;
+                        .btn {width:100%;}
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ----------------------------------------------
 // user login
 .user-page-login {
 	#site-header {background:none;}
