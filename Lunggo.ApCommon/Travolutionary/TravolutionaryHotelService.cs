@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Travolutionary
             var response = SearchInternal(travolutionarySearchRequest);
             return response;
         }
-
+        
         public static TravolutionaryHotelRoomSearchResponse GetHotelRooms(HotelRoomsSearchServiceRequest request)
         {
             var travolutionarySearchRequest = CreateHotelRoomsSearchServiceRequest(request);
@@ -38,9 +38,36 @@ namespace Lunggo.ApCommon.Travolutionary
 
         public static TravolutionaryHotelBookResponse BookHotel(HotelBookServiceRequest request)
         {
-
+            var preBookCheckResponse = PreBookCheck(request);
             return null;
         }
+
+        private static TravolutionaryPreBookCheckResponse PreBookCheck(HotelBookServiceRequest request)
+        {
+            //Try to search again hotel & package id picked by user
+            var hotelRoomSearchResponse = GetHotelRooms(request);
+            var response = PreBookCheckInternal(request, hotelRoomSearchResponse);
+            return response;
+        }
+
+        private static TravolutionaryPreBookCheckResponse PreBookCheckInternal(HotelBookServiceRequest request,
+            TravolutionaryHotelRoomSearchResponse roomSearchResponse)
+        {
+            var package = roomSearchResponse.RoomPackages.Where(p => p.PackageId == request.PackageId);
+            if (package.Any())
+            {
+                
+            }
+
+            var response = new TravolutionaryPreBookCheckResponse
+            {
+
+            };
+
+            return response;
+        }
+        
+
 
         private static HotelBookRequest CreateHotelBookRequest(HotelBookServiceRequest request, RoomsPackage travolutionaryPackage)
         {

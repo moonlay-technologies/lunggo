@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,10 +16,42 @@ namespace TravolutionaryWebServiceTest
 
         static void Main(String[] args)
         {
+            HotelRepricePackageFlow();
+        }
+
+        static void HotelRepricePackageFlow()
+        {
+            using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
+            {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                var searchRequest = CreateHotelsServiceSearchRequest();
+                var searchResponse = ExecuteHotelSearch(searchRequest, cli);
+                stopwatch.Stop();
+                Console.WriteLine("Search Time in : {0} seconds", stopwatch.ElapsedMilliseconds / 1000);
+                if (searchResponse.Errors != null && searchResponse.Errors.Any())
+                {
+                    foreach (var error in searchResponse.Errors)
+                    {
+                        Console.Error.WriteLine("Search Failed.");
+                        Console.Out.WriteLine(error.Message);
+                    }
+                    return;
+                }
+                stopwatch.Restart();
+                ExecuteReprice(searchResponse,cli,searchRequest);
+                stopwatch.Stop();
+                Console.WriteLine("Reprice Time in  : {0} seconds", stopwatch.ElapsedMilliseconds / 1000);
+                Console.WriteLine("Sukses");
+            }
+        }
+
+        static void HotelBookFlow()
+        {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
                 var searchRequest = CreateHotelsServiceSearchRequest();
-                var searchResponse = ExecuteHotelSearch(searchRequest,cli);
+                var searchResponse = ExecuteHotelSearch(searchRequest, cli);
 
                 if (searchResponse.Errors != null && searchResponse.Errors.Any())
                 {
@@ -29,7 +62,7 @@ namespace TravolutionaryWebServiceTest
                     }
                     return;
                 }
-                ExecuteHotelBook(searchResponse,cli);
+                ExecuteHotelBook(searchResponse, cli);
                 Console.WriteLine("Sukses");
             }
         }
@@ -76,6 +109,55 @@ namespace TravolutionaryWebServiceTest
                 }
             });
             return searchResponse;
+        }
+
+        static void ExecuteReprice(DynamicDataServiceRsp searchResponse, DynamicDataServiceClient cli, HotelsServiceSearchRequest searchRequest)
+        {
+            var repriceRequest = CreateRepricePackageRequest(searchResponse, searchRequest);
+            var repriceResponse = cli.ServiceRequest(new DynamicDataServiceRqst()
+            {
+                SessionID = searchResponse.SessionID,
+                TypeOfService = ServiceType.Hotels,
+                RequestType = ServiceRequestType.RepriceItem,
+                Request = repriceRequest,
+            });
+
+            if (repriceResponse.Errors!=null && repriceResponse.Errors.Any())
+            {
+                foreach (var error in repriceResponse.Errors)
+                {
+                    Console.WriteLine(error.Message);
+                }
+            }
+            Console.WriteLine(repriceResponse.HotelRepricePackageResponse.Match);
+        }
+
+        static HotelRepricePackageRequest CreateRepricePackageRequest(DynamicDataServiceRsp searchResponse, HotelsServiceSearchRequest searchRequest)
+        {
+            var hotelTable = searchResponse.HotelsSearchResponse.Result;
+            var hotelId = hotelTable[0].ID;
+            var packageTable = hotelTable[0].Packages;
+            var firstPackage = packageTable[0];
+
+            return new HotelRepricePackageRequest
+            {
+                HotelId = hotelId,
+                PackageId = firstPackage.PackageId,
+                Rooms = firstPackage.Rooms.Select( p => new RepriceRoomRequest
+                {
+                    Adults = p.AdultsCount,
+                    Availability = p.Availability,
+                    Id = p.Id,
+                    KidsAges = p.KidsAges,
+                    RoomBasis = p.RoomBasis,
+                    RoomClass = p.RoomClass,
+                    RoomKind = p.RoomType
+                }).ToArray(),
+                SearchRequest = searchRequest,
+                TotalPrice = firstPackage.PackagePrice.FinalPrice
+            };
+
+
         }
 
         static void ExecuteHotelBook(DynamicDataServiceRsp searchResponse, DynamicDataServiceClient cli)

@@ -67,6 +67,7 @@ namespace Lunggo.CustomerWeb
                 url: "{langCode}/{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }
