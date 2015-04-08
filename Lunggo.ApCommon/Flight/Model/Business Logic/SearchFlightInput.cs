@@ -13,8 +13,5 @@ namespace Lunggo.ApCommon.Flight.Model
         public TripType TripType { get; set; }
         public bool IsDateFlexible { get; set; }
         public bool IsReturnSeparated { get; set; }
-        public int AdultCount { get; set; }
-        public int ChildCount { get; set; }
-        public int InfantCount { get; set; }
     }
 }

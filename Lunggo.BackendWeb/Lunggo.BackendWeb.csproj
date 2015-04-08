@@ -141,7 +141,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetFlightPassengerQuery.cs" />
     <Compile Include="Query\GetFlightReservationExcPassengerQuery.cs" />
-    <Compile Include="Query\UpdateBookingPending.cs" />
     <Compile Include="Query\GetBookingPending.cs" />
     <Compile Include="Query\GetBookingPendingRecord.cs" />
     <Compile Include="Query\GetSearchHotelDetail.cs" />

@@ -24,9 +24,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new SearchFlightOutput();
             if (input.TripType == TripType.Return && input.IsReturnSeparated)
             {
-                conditions.AdultCount = input.AdultCount;
-                conditions.ChildCount = input.ChildCount;
-                conditions.InfantCount = input.InfantCount;
+                conditions.AdultCount = input.Conditions.AdultCount;
+                conditions.ChildCount = input.Conditions.ChildCount;
+                conditions.InfantCount = input.Conditions.InfantCount;
                 conditions.CabinClass = input.Conditions.CabinClass;
                 conditions.OriDestInfos = new List<OriginDestinationInfo>
                 {
@@ -38,9 +38,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                 };
 
-                returnConditions.AdultCount = input.AdultCount;
-                returnConditions.ChildCount = input.ChildCount;
-                returnConditions.InfantCount = input.InfantCount;
+                returnConditions.AdultCount = input.Conditions.AdultCount;
+                returnConditions.ChildCount = input.Conditions.ChildCount;
+                returnConditions.InfantCount = input.Conditions.InfantCount;
                 returnConditions.CabinClass = input.Conditions.CabinClass;
                 returnConditions.OriDestInfos = new List<OriginDestinationInfo>
                 {
@@ -75,9 +75,9 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                conditions.AdultCount = input.AdultCount;
-                conditions.ChildCount = input.ChildCount;
-                conditions.InfantCount = input.InfantCount;
+                conditions.AdultCount = input.Conditions.AdultCount;
+                conditions.ChildCount = input.Conditions.ChildCount;
+                conditions.InfantCount = input.Conditions.InfantCount;
                 conditions.CabinClass = input.Conditions.CabinClass;
                 switch (input.TripType)
                 {
