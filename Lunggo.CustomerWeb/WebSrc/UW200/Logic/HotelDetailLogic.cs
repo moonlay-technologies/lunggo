@@ -58,9 +58,16 @@ namespace Lunggo.CustomerWeb.WebSrc.UW200.Logic
                 Province = hotelDetail.Province,
                 StarRating = hotelDetail.StarRating,
                 HotelDescription = GetHotelDescription(hotelDetail),
+                Facilities = hotelDetail.Facilities,
+                ImageUrlList = hotelDetail.ImageUrlList
             };
             SetFullImageUrl(retVal);
+
+            retVal.ImageUrlList = retVal.ImageUrlList.OrderBy(orderImg => orderImg.Priority);
+
+            retVal.Facilities = retVal.Facilities.ToList();
             SetFacilitiesName(retVal);
+        
             return retVal;
         }
 
@@ -91,12 +98,13 @@ namespace Lunggo.CustomerWeb.WebSrc.UW200.Logic
 
         private static void SetFullImageUrl(Uw200HotelDetail uw200HotelDetail)
         {
+            
             if (uw200HotelDetail.ImageUrlList == null) return;
             var hotelId = uw200HotelDetail.HotelId.ToString(CultureInfo.InvariantCulture);
             var isHttps = HttpContext.Current.Request.IsSecureConnection;
             foreach (var hotelImage in uw200HotelDetail.ImageUrlList)
             {
-                
+
                 if (!String.IsNullOrEmpty(hotelImage.FullSizeUrl))
                 {
                     hotelImage.FullSizeUrl =
@@ -114,11 +122,12 @@ namespace Lunggo.CustomerWeb.WebSrc.UW200.Logic
 
         private static void SetFacilitiesName(Uw200HotelDetail uw200HotelDetail)
         {
+
             if (uw200HotelDetail.Facilities == null) return;
             var activeLanguageCode = OnlineContext.GetActiveLanguageCode();
-            foreach (var facility in  uw200HotelDetail.Facilities)
+            foreach (var facility in uw200HotelDetail.Facilities)
             {
-                facility.FacilityName = HotelFacilityUtil.GetFacilityName(facility.FacilityId, activeLanguageCode);
+                facility.FacilityName = HotelFacilityUtil.GetFacilityName(facility.FacilityId, activeLanguageCode);   
             }
         }
 

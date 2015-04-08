@@ -330,6 +330,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\dashboard.cshtml" />
     <Content Include="Views\Home\Hotel.cshtml" />
+    <Content Include="Views\Home\FlightReservationList.cshtml" />
+    <Content Include="Views\Home\HotelDetail.cshtml" />
+    <Content Include="Views\Home\FlightReservationDetail.cshtml" />
+    <Content Include="Views\Home\FlightReservationSearch.cshtml" />
+    <Content Include="Views\Home\RenderFlight.cshtml" />
+    <Content Include="Views\Home\RenderFlightReservation.cshtml" />
+    <Content Include="Views\Home\RenderFlightTrip.cshtml" />
+    <Content Include="Views\Home\RenderFlightPassenger.cshtml" />
+    <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
+    <Content Include="Views\Home\RenderFlightContact.cshtml" />
     <Content Include="Views\Home\Flight.cshtml" />
     <Content Include="Views\Home\HotelBookingDetail.cshtml" />
     <Content Include="Views\Home\FlightDetail.cshtml" />

@@ -1,84 +1,167 @@
 ﻿<!DOCTYPE html>
-<html ng-app="travorama">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/bundles/bootstrap/plugincss")
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body{
-            padding-top:0px;
-            padding-bottom:20px;
-        }
-		@@media (min-width: 992px) {
-		  .HeaderMenu {
-			margin-top:50px;
-		  }
-		}
-    </style>
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
 </head>
-<body>
-        
-        <!--***********************************-->
-        <!-- SITE HEADER START -->
-        <header class="site-header">
-            <div class="navbar navbar-default" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                        <a href="/" class="navbar-brand">
-                            Travorama
-                        </a>
+<body ng-app="travorama">
+    <!-- page start -->
+    <div class="page">
+
+        <!-- site header start -->
+        <header id="site-header" class="site-header">
+            @{ Html.RenderPartial("_Mainmenu"); }
+            <section class="search">
+                <section class="search-hotel">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
+                                    <div class="form-group loc-auto-wrapper">
+                                        <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
+                                        <div class="loc-auto">
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-checkin select-date" placeholder="checkin">
+                                    </div>
+                                    <div class="form-group">
+                                        <span class="form-dash">-</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-checkout select-date" placeholder="checkout">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-room select-room" placeholder="room">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="hidden search-hotel-value location" name="LocationId" />
+                                        <input class="hidden search-hotel-value staydate" name="StayDate" />
+                                        <input class="hidden search-hotel-value staylength" name="StayLength" />
+                                        <input class="hidden search-hotel-value roomcount" name="RoomCount" />
+                                        <button class="btn btn-primary btn-yellow">SEARCH</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="/id/Template/HotelSearchList">Hotel</a></li>
-                        <li><a href="/id/Template/FlightSearchList">Flight</a></li>
-                        <li><a href="/id/Template/Trips">Tour and Day Trips</a></li>
-                    </ul>
-                    <ul class="nav navbar-right">
-                        @Html.Partial("_LoginPartial") @*Login | IDR | ENG*@
-                    </ul>
-                </div>
-            </div>
+                </section>
+                <div class="search-flight"></div>
+            </section>
         </header>
-        <!-- SITE HEADER END -->
-        <!--***********************************-->
-        
-        <!--***********************************-->
-        <!-- SITE CONTENT START -->
-        <div class="site-content" style="min-height:500px;">
+        <!-- site header end -->
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
+
             @RenderBody()
-    </div>
-        <!-- SITE CONTENT END -->
-        <!--***********************************-->
 
-        <!--***********************************-->
-        <!-- SITE FOOTER START -->
-        <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <p>2015 - Travelmadezy</p>
-            </div>
         </div>
-    </div>
-        </footer>
-        <!-- SITE FOOTER END -->
-        <!--***********************************-->
+        <!-- site content end -->
+        <!-- site footer start -->
+        <footer id="site-footer" class="site-footer">
+            <section class="footer-menu">
+                <div class="container">
+                    <div class="row">
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/bootstrap/pluginjs")
-    @RenderSection("scripts", required: false)
-    @Html.PageScripts()
-        
-        <!-- Angular JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular-route.min.js"></script>
-        <script src="/Assets/script/angularApp.js"></script>
+                        <div class="col-sm-6">
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4>Tentang Kami</h4>
+                                    <ul>
+                                        <li><a href="#">Sejarah</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">Syarat &amp; Ketentuan</a></li>
+                                        <li><a href="#">Kebijakan &amp; privasi</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4>Penawaran</h4>
+                                    <ul>
+                                        <li><a href="#">Hotel</a></li>
+                                        <li><a href="#">Mitra Kami</a></li>
+                                        <li><a href="#">Program Perjalanan</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4>Kontak</h4>
+                                    <ul>
+                                        <li><a href="#">Lokasi</a></li>
+                                        <li><a href="#">Email</a></li>
+                                        <li><a href="#">Social Media</a></li>
+                                        <li><a href="#">Maps</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-1">
+                            <h4>Subscribe Email</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur odit fugit, harum, voluptas distinctio ratione enim ipsum.</p>
+                            <form action="#" class="form subscribe-form">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Email address" class="form-control no-radius">
+                                </div>
+                                <div class="form-group text-right">
+                                    <button class="btn btn-primary no-radius">SUBSCRIBE</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <section class="footer-copyright">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+                            <div class="text-center footer-socialmedia">
+                                <a href="#" class="fa fa-instagram"></a>
+                                <a href="#" class="fa fa-facebook"></a>
+                                <a href="#" class="fa fa-pinterest"></a>
+                                <a href="#" class="fa fa-youtube"></a>
+                            </div>
+                            <p class="text-center">
+                                Copyright 2014 - Travelmadezy. All Rights Reserved.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </footer>
+        <!-- site footer end -->
+
+    </div>
+    <!-- page end -->
+    <!-- javascripts -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/jquery.cycle2.min.js"></script>
+    
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+    <script src="/Assets/js/jquery.pickmeup.min.js"></script>
+    <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
+
+    <script src="/assets/js/application.js"></script>
 
 </body>
 </html>

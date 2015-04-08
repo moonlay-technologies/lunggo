@@ -1,0 +1,49 @@
+/* FONT FACE */
+@font-face {
+    font-family: 'din';
+    src: url('../fonts/DINB-webfont.eot');
+    src: url('../fonts/DINB-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DINB-webfont.woff2') format('woff2'),
+         url('../fonts/DINB-webfont.woff') format('woff'),
+         url('../fonts/DINB-webfont.ttf') format('truetype'),
+         url('../fonts/DINB-webfont.svg#din-boldregular') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'din';
+    src: url('../fonts/DINR-webfont.eot');
+    src: url('../fonts/DINR-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DINR-webfont.woff2') format('woff2'),
+         url('../fonts/DINR-webfont.woff') format('woff'),
+         url('../fonts/DINR-webfont.ttf') format('truetype'),
+         url('../fonts/DINR-webfont.svg#din-regularregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.din {font-family:'din', helvetica, arial, sans-serif;}
+
+@font-face {
+  font-family: 'gotham';
+  src:  url('../fonts/Gotham-Bold.eot?#iefix') format('embedded-opentype'),  
+        url('../fonts/Gotham-Bold.otf')  format('opentype'),
+        url('../fonts/Gotham-Bold.woff') format('woff'), 
+        url('../fonts/Gotham-Bold.ttf')  format('truetype'), 
+        url('../fonts/Gotham-Bold.svg#Gotham-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gotham';
+  src:  url('../fonts/Gotham-Medium.eot?#iefix') format('embedded-opentype'),  
+        url('../fonts/Gotham-Medium.otf')  format('opentype'),
+        url('../fonts/Gotham-Medium.woff') format('woff'), 
+        url('../fonts/Gotham-Medium.ttf')  format('truetype'), 
+        url('../fonts/Gotham-Medium.svg#Gotham-Medium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.gotham {font-family:'gotham', helvetica, arial, sans-serif;}
+

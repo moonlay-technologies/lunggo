@@ -1,0 +1,101 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout_account.cshtml";
+    ViewBag.Title = "Hotel Detail";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-account">
+
+        <header id="site-header" class="site-header">
+            @{ Html.RenderPartial("_Mainmenu"); }
+        </header>
+
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
+
+
+            <header class="page-header">
+                <div class="container">
+                    <div class="site-nav"> <a href="#">Beranda</a> / <strong>User Account</strong></div>
+                    <hr>
+                    <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+                </div>
+            </header><!-- .page-header -->
+
+            <section class="page-content">
+                <div class="container">
+
+
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Profile</a></li>
+                        <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
+                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="profile">
+                            <h4><b>USER</b> PROFILE</h4>
+                            
+                            
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            <h4><b>HISTORY</b> ORDER</h4>
+
+                            <div class="history-list">
+                                <?php for($i=1; $i<=5; $i++){ ?>
+                                <div class="history">
+                                    <table>
+                                        <tr>
+                                            <td class="number"></td>
+                                            <td class="detail"></td>
+                                            <td class="date"></td>
+                                            <td class="code"></td>
+                                            <td class="action"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <?php } ?>
+                            </div>
+
+                            <nav class="row text-center">
+                                <ul class="pagination">
+                                    <li><a href="#">&lt;</a></li>
+                                    <li><a href="#" class="active">1</a></li>
+                                    <li class="active"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&gt;</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="password">
+                            <h4><b>GANTI</b> PASSWORD</h4>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section><!-- .page-content -->
+
+
+        </div>
+        <!-- site content end -->
