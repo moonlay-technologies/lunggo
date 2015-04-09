@@ -260,6 +260,10 @@
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
     <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
     <Compile Include="WebSrc\UW300\UW300HotelBookingFormController.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Logic\ChangeProfileLogic.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Model\UW610ChangePofile.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Object\UW610ChangeProfileRespone.cs" />
+    <Compile Include="WebSrc\UW600\UW610\UW610ChangeProfileController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Dummy.xml" />
@@ -1625,6 +1629,7 @@
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
+    <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
