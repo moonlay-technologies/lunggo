@@ -202,6 +202,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Sequence\MemberIdCardSequence.cs" />
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
