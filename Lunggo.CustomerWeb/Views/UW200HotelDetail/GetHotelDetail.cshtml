@@ -6,7 +6,7 @@
 
 
 <!-- .search-page content start -->
-<div class="detail-page hotel-detail-page" data-hotelId="@Model.HotelDetail.HotelId" data-stayDate="" data-stayLength="" data-roomCount="">
+<div class="detail-page hotel-detail-page">
 
 
     <header>
@@ -77,11 +77,11 @@
         <div class="row">
             <div class="col-sm-12">
                 <header>
-                    <form action="#" class="form form-inline">
+                    <form action="#" class="form form-inline" id="form-room" data-hotelId="@Model.HotelDetail.HotelId">
                         <div class="form-group checkin">
                             <label for="form-room-checkin" class="control-label">Check In:</label>
 
-                            <input type="text" class="form-control" id="form-room-checkin" value="@Model.StayDate.ToString("yyyy MM dd")">
+                            <input type="text" class="form-control" id="form-room-checkin" value="@Model.StayDate.ToString("yyyy-MM-dd")">
 
                         </div>
                         <div class="form-group checkout">
@@ -91,12 +91,12 @@
                         <div class="form-group duration">
                             <label for="form-room-duration" class="control-label">Duration:</label>
 
-                            <input type="text" class="form-control" id="form-room-duration" value="@Model.StayLength">
+                            <input type="text" class="form-control" id="form-room-length" value="@Model.StayLength">
 
                         </div>
                         <div class="form-group qty">
                             <label for="form-room-qty" class="control-label">Rooms:</label>
-                            <input type="text" class="form-control" id="form-room-qty">
+                            <input type="text" class="form-control input-room select-room" id="form-room-qty" value="2">
                         </div>
                         <div class="form-action">
                             <input type="image" src="/assets/images/search.png" class="btn btn-yellow">
@@ -113,7 +113,9 @@
                                 <img src="/assets/images/_sample/room-thumb.jpg" alt="Room">
                             </div>
                             <div class="room-detail">
-                                <h2 class="room-name">Deluxe 2 Kings Bed Rooms</h2>
+                                <h2 class="room-name">
+                                    <span ng-repeat="singleRoom in room.RoomList">{{singleRoom.RoomName}} {{$last ? '' : ' + '}}</span>
+                                </h2>
                                 <div class="room-content">
                                     <div class="room-desc">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, cum sapiente, explicabo reprehenderit est obcaecati id porro, voluptas odit illo amet, necessitatibus labore optio minima quasi molestiae libero. Quas, facilis.</p>
@@ -142,9 +144,9 @@
                                         </div>
                                     </div>
                                     <div class="room-price">
-                                        <h3>Best Price:</h3>
+                                        <h3>Final Price:</h3>
                                         <h5 class="room-price-was"><del>Rp 500.000</del></h5>
-                                        <h2 class="room-price-now">{{room.FinalPackagePrice.Currency}} {{room.FinalPackagePrice.Value}}</h2>
+                                        <h2 class="room-price-now">{{room.FinalPackagePrice.Currency}} {{room.FinalPackagePrice.Value | number}}</h2>
                                         <small>Harga sudah termasuk pajak</small>
                                         <a href="/Uw300/Uw300HotelBookingForm" class="btn btn-primary room-book" data-packageId="{{room.PackageId}}">Book now !</a>
                                         <a href="#">Terms &amp; Conditions</a>

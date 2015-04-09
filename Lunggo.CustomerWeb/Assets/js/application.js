@@ -558,15 +558,13 @@ var SearchRoomConfig = {
         $scope.RoomSearchParams = {};
 
         // default value
-        $scope.RoomSearchParams.HotelId = $('.detail-page.hotel-detail-page').attr('data-hotelId');
-        $scope.RoomSearchParams.StayDate = $('.detail-page.hotel-detail-page').attr('data-stayDate') || '2015-05-05';
-        $scope.RoomSearchParams.StayLength = $('.detail-page.hotel-detail-page').attr('data-stayLength') || 1;
-        $scope.RoomSearchParams.RoomCount = $('.detail-page.hotel-detail-page').attr('data-roomCount') || 1;
+        $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
+        $scope.RoomSearchParams.StayDate = $('#form-room-checkin').val() || '2015-05-05';
+        $scope.RoomSearchParams.StayLength = $('#form-room-length').val() || 1;
+        $scope.RoomSearchParams.RoomCount = $('#form-room-qty').val() || 1;
         $scope.RoomSearchParams.SearchId = '';
 
         $scope.getRoomlist = function() {
-
-            console.log('Testing');
 
             console.log('--------------------------------');
             console.log('Searching for Room with params:');

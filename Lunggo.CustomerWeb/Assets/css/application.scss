@@ -207,13 +207,17 @@ hr {border-color:#aaa;}
 					.form-control {width:65%;}
 				}
 				.form-action {float:right;}
+                .option-wrapper {
+                    .option {width:65%; right:10%;}
+                    li {padding-left:0; text-align:center;}
+                }
 			}
 		}
 		.room-list {
 			.room {border:1px solid #ddd; margin-bottom:15px; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5;
 				h3 {margin:0; font-size:18px; margin-bottom:10px; font-weight:bold;}
-				.room-image {width:25%; float:left;}
-				.room-detail {width:75%; float:left;
+				.room-image {width:25%; float:left; display:none;}
+				.room-detail {width:100%; float:left;
 					.room-name {color:#3fabe3; font-size:18px; padding:10px; margin:0; margin-top:10px;}
 					.room-content {
 						>div {float:left; padding:5px 10px;}

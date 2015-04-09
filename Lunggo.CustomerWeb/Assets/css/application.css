@@ -567,6 +567,12 @@ hr {
       width: 65%; }
   .hotel-detail-page .room-search header form .form-action {
     float: right; }
+  .hotel-detail-page .room-search header form .option-wrapper .option {
+    width: 65%;
+    right: 10%; }
+  .hotel-detail-page .room-search header form .option-wrapper li {
+    padding-left: 0;
+    text-align: center; }
 .hotel-detail-page .room-search .room-list .room {
   border: 1px solid #ddd;
   margin-bottom: 15px;
@@ -580,9 +586,10 @@ hr {
     font-weight: bold; }
   .hotel-detail-page .room-search .room-list .room .room-image {
     width: 25%;
-    float: left; }
+    float: left;
+    display: none; }
   .hotel-detail-page .room-search .room-list .room .room-detail {
-    width: 75%;
+    width: 100%;
     float: left; }
     .hotel-detail-page .room-search .room-list .room .room-detail .room-name {
       color: #3fabe3;
