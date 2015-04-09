@@ -43,7 +43,7 @@ namespace Lunggo.Framework.Database
         public IDbConnection GetOpenConnection()
         {
             var conn = new SqlConnection(_connectionString);
-            conn.Open();
+            //conn.Open();
             return conn;
         }
 

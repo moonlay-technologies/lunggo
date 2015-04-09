@@ -1,0 +1,48 @@
+﻿<AirRules>
+
+  <AirRulesRQ>
+    <SessionId/>
+    <FareSourceCode/>
+    <Target/>
+  </AirRulesRQ>
+
+
+  <AirRulesRS>
+    <Success/>
+    <FareRules>
+      <FareRule>
+        <Airline/>
+        <CityPair/>
+        <RuleDetails>
+          <RuleDetail>
+            <Category/>
+            <Rules/>
+          </RuleDetail>
+          <RuleDetail>
+            <Category/>
+            <Rules/>
+          </RuleDetail>
+          <RuleDetail>
+            <Category/>
+            <Rules/>
+          </RuleDetail>
+          <RuleDetail>
+            <Category/>
+            <Rules/>
+          </RuleDetail>
+        </RuleDetails>
+      </FareRule>
+    </FareRules>
+    <BaggageInfos>
+      <BaggageInfo>
+        <FlightNo/>
+        <Departure/>
+        <Arrival/>
+        <Baggage/>
+      </BaggageInfo>
+    </BaggageInfos>
+    <Target/>
+    <Errors/>
+  </AirRulesRS>
+
+</AirRules>

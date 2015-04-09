@@ -1,0 +1,23 @@
+﻿<AirOrderTicket>
+
+  <AirOrderTicketRQ>
+    <SessionId/>
+    <UniqueID/>
+    <Target/>
+  </AirOrderTicketRQ>
+
+
+  <AirOrderTicketRS>
+    <Success/>
+    <UniqueID/>
+    <Message/>
+    <Target/>
+    <Errors>
+      <Error>
+        <Code/>
+        <Message/>
+      </Error>
+    </Errors>
+  </AirOrderTicketRS>
+
+</AirOrderTicket>

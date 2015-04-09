@@ -1,0 +1,34 @@
+﻿@model Lunggo.ApCommon.Flight.Model.FlightFareTrip
+
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.DepartureAirport)
+        </div>
+        <div class="col-md-2">
+            --->
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.ArrivalAirport)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.DepartureTime)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.Duration)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.AirlineCode)@Html.DisplayFor(model => model.FlightNumber)
+        </div>
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.AircraftCode)
+        </div>
+    </div>
+</div>

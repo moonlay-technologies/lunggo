@@ -57,15 +57,11 @@
     <Compile Include="Crawler\LionAirCrawler.cs" />
     <Compile Include="Dictionary\FlightCode.cs" />
     <Compile Include="Model\DepartDetail.cs" />
-    <Compile Include="Model\FlightReservationIntegrated.cs" />
-    <Compile Include="Model\FlightReservationSearch.cs" />
     <Compile Include="Model\FlightTicket.cs" />
     <Compile Include="Model\TicketSearch.cs" />
     <Compile Include="Crawler\SriwijayaCrawler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\GetFlightReservationExcPassengerQuery.cs" />
     <Compile Include="Query\GetFlightReservationIntegratedQuery.cs" />
-    <Compile Include="Query\GetFlightPassengerQuery.cs" />
     <Compile Include="Query\GetFlightTripDetailQuery.cs" />
     <Compile Include="Query\GetFlightTripQuery.cs" />
     <Compile Include="Query\GetFlightReservationQuery.cs" />

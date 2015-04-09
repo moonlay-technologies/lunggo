@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="Mystifly.OnePoint" elementFormDefault="qualified" targetNamespace="Mystifly.OnePoint" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" />
+  <xs:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1" />
+  <xs:element name="CreateSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q1:SessionCreateRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="CreateSessionResult" nillable="true" type="q2:SessionCreateRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SessionId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EndSessionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EndSessionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirLowFareSearch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q3:AirLowFareSearchRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirLowFareSearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirLowFareSearchResult" nillable="true" type="q4:AirLowFareSearchRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirRevalidate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q5:AirRevalidateRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirRevalidateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirRevalidateResult" nillable="true" type="q6:AirRevalidateRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BookFlight">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q7:AirBookRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BookFlightResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="BookFlightResult" nillable="true" type="q8:AirBookRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FareRules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q9:AirRulesRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FareRulesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="FareRulesResult" nillable="true" type="q10:AirRulesRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelBooking">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q11:AirCancelRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelBookingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="CancelBookingResult" nillable="true" type="q12:AirCancelRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TicketOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q13:AirOrderTicketRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TicketOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="TicketOrderResult" nillable="true" type="q14:AirOrderTicketRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TripDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q15:AirTripDetailsRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TripDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="TripDetailsResult" nillable="true" type="q16:AirTripDetailsRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBookingNotes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q17:AirBookingNotesRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBookingNotesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AddBookingNotesResult" nillable="true" type="q18:AirBookingNotesRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MessageQueues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q19:AirMessageQueueRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MessageQueuesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="MessageQueuesResult" nillable="true" type="q20:AirMessageQueueRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveMessageQueues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q21:AirRemoveMessageQueueRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveMessageQueuesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="RemoveMessageQueuesResult" nillable="true" type="q22:AirRemoveMessageQueueRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirSeatMap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q23:AirSeatMapRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirSeatMapResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirSeatMapResult" nillable="true" type="q24:AirSeatMapRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirSeatReserve">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q25:AirSeatRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirSeatReserveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirSeatReserveResult" nillable="true" type="q26:AirSeatRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirBookingData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q27:AirBookingDataRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirBookingDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirBookingDataResult" nillable="true" type="q28:AirBookingDataRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MultiAirRevalidate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q29:MultiAirRevalidateRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MultiAirRevalidateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="MultiAirRevalidateResult" nillable="true" type="q30:MultiAirRevalidateRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MultiAirBookFlight">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q31:MultiAirBookRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MultiAirBookFlightResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="MultiAirBookFlightResult" nillable="true" type="q32:MultiAirBookRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IntelliFareSearch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q33:IntelliFareRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IntelliFareSearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="IntelliFareSearchResult" nillable="true" type="q34:AirLowFareSearchRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IntelliBestBuy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q35:IntelliBestBuyRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IntelliBestBuyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="IntelliBestBuyResult" nillable="true" type="q36:AirLowFareSearchRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirQuote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="rq" nillable="true" type="q37:AirQuoteRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AirQuoteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" minOccurs="0" name="AirQuoteResult" nillable="true" type="q38:AirQuoteRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FareRules1_1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1" minOccurs="0" name="rq" nillable="true" type="q39:AirRulesRQ" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FareRules1_1Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1" minOccurs="0" name="FareRules1_1Result" nillable="true" type="q40:AirRulesRS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
