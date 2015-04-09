@@ -425,6 +425,9 @@ var SearchHotelConfig = {
     ResultCount: 24
 };
 
+var SearchRoomConfig = {
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/rooms'
+};
 
 // ************************
 // Angular app
@@ -500,9 +503,6 @@ var SearchHotelConfig = {
                 console.log('Hotel search result:');
                 console.log(data);
 
-                //remove notif
-                $('.notif').remove();
-
                 // add data to $scope
                 hotel_list.hotels = data.HotelList;
                 $scope.HotelSearchParams.SearchId = data.SearchId;
@@ -511,18 +511,15 @@ var SearchHotelConfig = {
                 $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
                 $scope.show_page($scope.MaxPage);
 
-                generate_star();
-
                 console.log('loaded');
                 console.log('--------------------------------');
 
                 loading_overlay('hide', 'body');
 
-                $scope.postProcess();
-
                 // if error
             }).error(function () {
                 console.log('REQUEST ERROR');
+                console.log('--------------------------------');
 
                 loading_overlay('hide','body');
 
@@ -542,13 +539,59 @@ var SearchHotelConfig = {
             });
         }
 
-        // post process
-        $scope.postProcess = function () {
-            $('.hotel-wrapper .hotel').each(function() {
-                console.log('JEMPING POST PROCESS');
-            });
-        }
 
+    }]);
+
+    // room controller
+    app.controller('RoomController', ['$http', '$scope', function($http, $scope) {
+
+        $scope.testingText = "JEMPING";
+
+        // run hotel search function on document ready
+        angular.element(document).ready(function () {
+            $scope.getRoomlist();
+        });
+
+        // get room list
+        var room_list = this;
+        room_list.rooms = [];
+        $scope.RoomSearchParams = {};
+
+        // default value
+        $scope.RoomSearchParams.HotelId = $('.detail-page.hotel-detail-page').attr('data-hotelId');
+        $scope.RoomSearchParams.StayDate = $('.detail-page.hotel-detail-page').attr('data-stayDate') || '2015-05-05';
+        $scope.RoomSearchParams.StayLength = $('.detail-page.hotel-detail-page').attr('data-stayLength') || 1;
+        $scope.RoomSearchParams.RoomCount = $('.detail-page.hotel-detail-page').attr('data-roomCount') || 1;
+        $scope.RoomSearchParams.SearchId = '';
+
+        $scope.getRoomlist = function() {
+
+            console.log('--------------------------------');
+            console.log('Searching for Room with params:');
+            console.log($scope.RoomSearchParams);
+
+            $http.get(SearchRoomConfig.Url, {
+                params : {
+                    HotelId: $scope.RoomSearchParams.HotelId,
+                    StayDate: $scope.RoomSearchParams.StayDate,
+                    StayLength: $scope.RoomSearchParams.StayLength,
+                    RoomCount: $scope.RoomSearchParams.RoomCount,
+                    SearchId: $scope.RoomSearchParams.SearchId,
+                }
+            }).success(function(data) {
+                console.log(data);
+
+                room_list.rooms = data.PackageList;
+
+                console.log('LOADED');
+                console.log('--------------------------------');
+
+            }).error(function() {
+                console.log('REQUEST ERROR');
+                console.log('--------------------------------');
+            });
+
+        }
 
     }]);
 
