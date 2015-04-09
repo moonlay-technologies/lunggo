@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="Mystifly.OnePoint" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OnePoint" targetNamespace="Mystifly.OnePoint" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="Mystifly.OnePoint/Imports">
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd0" namespace="Mystifly.OnePoint" />
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint" />
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd4" namespace="Mystifly.OnePoint.OnePointEntities" />
+      <xsd:import schemaLocation="http://apidemo.myfarebox.com/V2/OnePoint.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="OnePoint_CreateSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSession" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_CreateSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_EndSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndSession" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_EndSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirLowFareSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirLowFareSearch" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirLowFareSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirLowFareSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirRevalidate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirRevalidate" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirRevalidate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirRevalidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_BookFlight_InputMessage">
+    <wsdl:part name="parameters" element="tns:BookFlight" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_BookFlight_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BookFlightResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_FareRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:FareRules" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_FareRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FareRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_CancelBooking_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelBooking" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_CancelBooking_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelBookingResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_TicketOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:TicketOrder" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_TicketOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TicketOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_TripDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:TripDetails" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_TripDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TripDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AddBookingNotes_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBookingNotes" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AddBookingNotes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBookingNotesResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MessageQueues_InputMessage">
+    <wsdl:part name="parameters" element="tns:MessageQueues" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MessageQueues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MessageQueuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_RemoveMessageQueues_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMessageQueues" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_RemoveMessageQueues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMessageQueuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirSeatMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirSeatMap" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirSeatMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirSeatMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirSeatReserve_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirSeatReserve" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirSeatReserve_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirSeatReserveResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirBookingData_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirBookingData" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirBookingData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirBookingDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MultiAirRevalidate_InputMessage">
+    <wsdl:part name="parameters" element="tns:MultiAirRevalidate" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MultiAirRevalidate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MultiAirRevalidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MultiAirBookFlight_InputMessage">
+    <wsdl:part name="parameters" element="tns:MultiAirBookFlight" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_MultiAirBookFlight_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MultiAirBookFlightResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_IntelliFareSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:IntelliFareSearch" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_IntelliFareSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IntelliFareSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_IntelliBestBuy_InputMessage">
+    <wsdl:part name="parameters" element="tns:IntelliBestBuy" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_IntelliBestBuy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IntelliBestBuyResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirQuote_InputMessage">
+    <wsdl:part name="parameters" element="tns:AirQuote" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_AirQuote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AirQuoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_FareRules1_1_InputMessage">
+    <wsdl:part name="parameters" element="tns:FareRules1_1" />
+  </wsdl:message>
+  <wsdl:message name="OnePoint_FareRules1_1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FareRules1_1Response" />
+  </wsdl:message>
+  <wsdl:portType name="OnePoint">
+    <wsdl:operation name="CreateSession">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/CreateSession" message="tns:OnePoint_CreateSession_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/CreateSessionResponse" message="tns:OnePoint_CreateSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EndSession">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/EndSession" message="tns:OnePoint_EndSession_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/EndSessionResponse" message="tns:OnePoint_EndSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirLowFareSearch">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirLowFareSearch" message="tns:OnePoint_AirLowFareSearch_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirLowFareSearchResponse" message="tns:OnePoint_AirLowFareSearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirRevalidate">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirRevalidate" message="tns:OnePoint_AirRevalidate_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirRevalidateResponse" message="tns:OnePoint_AirRevalidate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BookFlight">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/BookFlight" message="tns:OnePoint_BookFlight_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/BookFlightResponse" message="tns:OnePoint_BookFlight_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FareRules">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/FareRules" message="tns:OnePoint_FareRules_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/FareRulesResponse" message="tns:OnePoint_FareRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelBooking">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/CancelBooking" message="tns:OnePoint_CancelBooking_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/CancelBookingResponse" message="tns:OnePoint_CancelBooking_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TicketOrder">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/TicketOrder" message="tns:OnePoint_TicketOrder_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/TicketOrderResponse" message="tns:OnePoint_TicketOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TripDetails">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/TripDetails" message="tns:OnePoint_TripDetails_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/TripDetailsResponse" message="tns:OnePoint_TripDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBookingNotes">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AddBookingNotes" message="tns:OnePoint_AddBookingNotes_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AddBookingNotesResponse" message="tns:OnePoint_AddBookingNotes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MessageQueues">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/MessageQueues" message="tns:OnePoint_MessageQueues_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/MessageQueuesResponse" message="tns:OnePoint_MessageQueues_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMessageQueues">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/RemoveMessageQueues" message="tns:OnePoint_RemoveMessageQueues_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/RemoveMessageQueuesResponse" message="tns:OnePoint_RemoveMessageQueues_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirSeatMap">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirSeatMap" message="tns:OnePoint_AirSeatMap_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirSeatMapResponse" message="tns:OnePoint_AirSeatMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirSeatReserve">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirSeatReserve" message="tns:OnePoint_AirSeatReserve_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirSeatReserveResponse" message="tns:OnePoint_AirSeatReserve_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirBookingData">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirBookingData" message="tns:OnePoint_AirBookingData_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirBookingDataResponse" message="tns:OnePoint_AirBookingData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiAirRevalidate">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/MultiAirRevalidate" message="tns:OnePoint_MultiAirRevalidate_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/MultiAirRevalidateResponse" message="tns:OnePoint_MultiAirRevalidate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MultiAirBookFlight">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/MultiAirBookFlight" message="tns:OnePoint_MultiAirBookFlight_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/MultiAirBookFlightResponse" message="tns:OnePoint_MultiAirBookFlight_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IntelliFareSearch">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/IntelliFareSearch" message="tns:OnePoint_IntelliFareSearch_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/IntelliFareSearchResponse" message="tns:OnePoint_IntelliFareSearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IntelliBestBuy">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/IntelliBestBuy" message="tns:OnePoint_IntelliBestBuy_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/IntelliBestBuyResponse" message="tns:OnePoint_IntelliBestBuy_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AirQuote">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/AirQuote" message="tns:OnePoint_AirQuote_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/AirQuoteResponse" message="tns:OnePoint_AirQuote_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FareRules1_1">
+      <wsdl:input wsam:Action="Mystifly.OnePoint/OnePoint/FareRules1_1" message="tns:OnePoint_FareRules1_1_InputMessage" />
+      <wsdl:output wsam:Action="Mystifly.OnePoint/OnePoint/FareRules1_1Response" message="tns:OnePoint_FareRules1_1_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOnePoint" type="tns:OnePoint">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateSession">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/CreateSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndSession">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/EndSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirLowFareSearch">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirLowFareSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirRevalidate">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirRevalidate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookFlight">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/BookFlight" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FareRules">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/FareRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelBooking">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/CancelBooking" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TicketOrder">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/TicketOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TripDetails">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/TripDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBookingNotes">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AddBookingNotes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MessageQueues">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/MessageQueues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMessageQueues">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/RemoveMessageQueues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirSeatMap">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirSeatMap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirSeatReserve">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirSeatReserve" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirBookingData">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirBookingData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiAirRevalidate">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/MultiAirRevalidate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MultiAirBookFlight">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/MultiAirBookFlight" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntelliFareSearch">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/IntelliFareSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IntelliBestBuy">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/IntelliBestBuy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AirQuote">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/AirQuote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FareRules1_1">
+      <soap:operation soapAction="Mystifly.OnePoint/OnePoint/FareRules1_1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OnePoint">
+    <wsdl:port name="BasicHttpBinding_IOnePoint" binding="tns:BasicHttpBinding_IOnePoint">
+      <soap:address location="http://apidemo.myfarebox.com/V2/OnePoint.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

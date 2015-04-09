@@ -1,7 +1,11 @@
-﻿@using Lunggo.ApCommon.Dictionary
+﻿@using Lunggo.ApCommon.Autocomplete
 @model Lunggo.Repository.TableRecord.FlightTripTableRecord
 
-    <div class="showback">
+@{
+    var dict = AutocompleteManager.GetInstance();
+}
+
+<div class="showback">
     <h4>Trip Detail</h4>
     <hr />
     <table class="table table-hover table-no-border">
@@ -13,14 +17,14 @@
             <tr>
                 <td>Origin</td>
                 <td>
-                    @Code.Airport.First(x => x.Value.Code == Model.OriginAirportCd).Value.City
+                    @dict.AirportDict.First(x => x.Value.Code == Model.OriginAirportCd).Value.City
                     (@Model.OriginAirportCd)
                 </td>
             </tr>
             <tr>
                 <td>Destination</td>
                 <td>
-                    @Code.Airport.First(x => x.Value.Code == Model.DestinationAirportCd).Value.City
+                    @dict.AirportDict.First(x => x.Value.Code == Model.DestinationAirportCd).Value.City
                     (@Model.DestinationAirportCd)
                 </td>
             </tr>
@@ -38,17 +42,17 @@
             </tr>
         </tbody>
     </table>
-        <div class="flipped" id="trip-detail">
-            <table class="table table-hover table-no-border">
-                <tbody>
-                    <tr>
-                        <td>Final Price</td>
-                        <td>@Model.FinalPrice.GetValueOrDefault().ToString("Rp0,0")</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="flipper" id="trip-detail" align="center">
-            Show More
-        </div>
+    <div class="flipped" id="trip-detail">
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>Final Price</td>
+                    <td>@Model.FinalPrice.GetValueOrDefault().ToString("Rp0,0")</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <div class="flipper" id="trip-detail" align="center">
+        Show More
+    </div>
+</div>

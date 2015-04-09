@@ -6,7 +6,7 @@
 
 
 <!-- .search-page content start -->
-<div class="detail-page hotel-detail-page">
+<div class="detail-page hotel-detail-page" data-hotelId="@Model.HotelDetail.HotelId" data-stayDate="" data-stayLength="" data-roomCount="">
 
 
     <header>
@@ -15,7 +15,7 @@
                 <div class="col-sm-12">
                     <div class="site-nav"> <a href="#">Beranda</a> / <strong>Hotel List</strong></div>
                     <hr>
-                    <h1 class="hotel-name">@Model.HotelDetail.HotelName <span class="hotel-star" data-enerateStar="@Model.HotelDetail.StarRating">  <span class="star star-4"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span></span> </span></h1>
+                    <h1 class="hotel-name">@Model.HotelDetail.HotelName <span class="hotel-star" data-generateStar="@Model.HotelDetail.StarRating">  <span class="star star-4"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span></span> </span></h1>
                 </div>
             </div>
         </div>
@@ -103,12 +103,12 @@
                         </div>
                     </form>
                 </header>
-                <section>
+                <section ng-controller="RoomController as room_list">
                     <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>
 
                     <section class="room-list">
-                        <?php for($i=1; $i<=5 ; $i++){ ?>
-                        <article class="room">
+                        <!-- Loop start here -->
+                        <article class="room" ng-repeat="room in room_list.rooms">
                             <div class="room-image">
                                 <img src="/assets/images/_sample/room-thumb.jpg" alt="Room">
                             </div>
@@ -144,16 +144,16 @@
                                     <div class="room-price">
                                         <h3>Best Price:</h3>
                                         <h5 class="room-price-was"><del>Rp 500.000</del></h5>
-                                        <h2 class="room-price-now">Rp 300.000</h2>
+                                        <h2 class="room-price-now">{{room.FinalPackagePrice.Currency}} {{room.FinalPackagePrice.Value}}</h2>
                                         <small>Harga sudah termasuk pajak</small>
-                                        <a href="/Uw300/Uw300HotelBookingForm" class="btn btn-primary room-book">Book now !</a>
+                                        <a href="/Uw300/Uw300HotelBookingForm" class="btn btn-primary room-book" data-packageId="{{room.PackageId}}">Book now !</a>
                                         <a href="#">Terms &amp; Conditions</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </article>
-                        <?php } ?>
+                        <!-- Loop end here -->
                     </section>
 
                 </section>

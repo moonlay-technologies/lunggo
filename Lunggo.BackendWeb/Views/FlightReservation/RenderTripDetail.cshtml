@@ -1,9 +1,13 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Web.UI.WebControls
 @using CsQuery.ExtensionMethods.Internal
-@using Lunggo.ApCommon.Dictionary
+@using Lunggo.ApCommon.Autocomplete
 @using Microsoft.Ajax.Utilities
-@model List<Lunggo.Repository.TableRecord.FlightTripDetailTableRecord>
+@model IEnumerable<Lunggo.Repository.TableRecord.FlightTripDetailTableRecord>
+
+@{
+    var dict = AutocompleteManager.GetInstance();
+}
 
 <div class="showback">
     <h4>@ViewData["Type"]</h4>
@@ -18,7 +22,9 @@
                     if (detail == Model.First())
                     {
                         <tr>
-                            <td>@Code.Airport.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
+                            <td>
+                                
+                                @dict.AirportDict.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
                                 (@detail.DepartureAirportCd)
                             </td>
                             <td><img src="/Content/up.png" alt="up" /></td>
@@ -32,7 +38,7 @@
                     {
                         <tr>
                             <td>
-                                @Code.Airport.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
+                                @dict.AirportDict.First(x => x.Value.Code == detail.DepartureAirportCd).Value.City<br/>
                                 (@detail.DepartureAirportCd)
                             </td>
                             <td><img src="/Content/mid.png" alt="mid" /></td>
@@ -48,7 +54,7 @@
                         <td></td>
                         <td><img src="/Content/line.png" alt="line" /></td>
                         <td>
-                            @Code.Airline.First(x => x.Value.Code == detail.CarrierCd).Value.Name<br />
+                            @dict.AirlineDict.First(x => x.Value.Code == detail.CarrierCd).Value.Name<br />
                             @detail.CarrierCd@detail.FlightNumber<br/>
                         </td>
                     </tr>
@@ -56,7 +62,7 @@
                     {
                         <tr>
                             <td>
-                                @Code.Airport.First(x => x.Value.Code == detail.ArrivalAirportCd).Value.City<br />
+                                @dict.AirportDict.First(x => x.Value.Code == detail.ArrivalAirportCd).Value.City<br />
                                 (@detail.ArrivalAirportCd)
                             </td>
                             <td><img src="/Content/down.png" alt="down" /></td>

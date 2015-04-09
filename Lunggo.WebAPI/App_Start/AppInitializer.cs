@@ -21,14 +21,6 @@ namespace Lunggo.WebAPI
             InitAutocompleteManager();
         }
 
-        private static void InitAutocompleteManager()
-        {
-            var autocompleteManager = AutocompleteManager.GetInstance();
-            var hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
-            var hotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"),hotelLocationFileName);
-            autocompleteManager.Init(hotelLocationFilePath);
-        }
-
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
@@ -72,6 +64,13 @@ namespace Lunggo.WebAPI
                     ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
                 }, 
             });
+        }
+        private static void InitAutocompleteManager()
+        {
+            var autocompleteManager = AutocompleteManager.GetInstance();
+            var hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
+            var hotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), hotelLocationFileName);
+            autocompleteManager.Init(hotelLocationFilePath);
         }
     }
 }

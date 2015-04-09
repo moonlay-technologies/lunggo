@@ -1,0 +1,30 @@
+﻿<AirMessageQueue>
+
+  <AirMessageQueueRQ>
+    <SessionId/>
+    <CategoryId/>
+    <Target/>
+  </AirMessageQueueRQ>
+
+
+  <AirMessageQueueRS>
+    <Success/>
+    <MessageItems>
+      <MessageItem>
+        <UniqueID/>
+        <RPH/>
+        <Messages>
+          <String/>
+        </Messages>
+      </MessageItem>
+    </MessageItems>
+    <Target/>
+    <Errors>
+      <Error>
+        <Code/>
+        <Message/>
+      </Error>
+    </Errors>
+  </AirMessageQueueRS>
+
+</AirMessageQueue>

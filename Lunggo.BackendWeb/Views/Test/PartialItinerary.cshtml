@@ -1,0 +1,23 @@
+﻿@using Lunggo.ApCommon.Mystifly.OnePointService.Flight
+@model Lunggo.ApCommon.Flight.Model.FlightFareItinerary
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalFare)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency) @Html.DisplayFor(model => model.TotalFare)
+        </dd>
+        
+        <dd>
+            <h4>Details</h4>
+            @foreach (var segment in Model.FlightTrips)
+            {
+                Html.RenderPartial("PartialSegment", segment);
+            }
+        </dd>
+
+    </dl>
+</div>

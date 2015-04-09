@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lunggo.ApCommon.Model
+namespace Lunggo.ApCommon.Trie
 {
     public class TrieNode
     {

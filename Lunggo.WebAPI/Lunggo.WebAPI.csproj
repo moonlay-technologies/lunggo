@@ -141,6 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
+    <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\GetFlightLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
@@ -172,7 +176,6 @@
   <ItemGroup>
     <Folder Include="ApiSrc\Common\" />
     <Folder Include="ApiSrc\v1\FlightOrders\" />
-    <Folder Include="ApiSrc\v1\Flights\" />
     <Folder Include="ApiSrc\v1\HotelOrders\" />
     <Folder Include="ApiSrc\v1\Hotels\Model\" />
     <Folder Include="ApiSrc\v1\Rooms\Model\" />

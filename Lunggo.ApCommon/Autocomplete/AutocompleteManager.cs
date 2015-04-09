@@ -44,19 +44,41 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
         {
             var airportIndex = TrieIndex.GetInstance().AirportIndex;
-            return airportIndex.GetAllSuggestionIds(prefix).Select(id => AirportDict[id]);
+            var airportAutocomplete = airportIndex.GetAllSuggestionIds(prefix).Select(id => AirportDict[id]);
+            return airportAutocomplete;
         }
 
         public IEnumerable<AirlineDict> GetAirlineAutocomplete(string prefix)
         {
             var airlineIndex = TrieIndex.GetInstance().AirlineIndex;
-            return airlineIndex.GetAllSuggestionIds(prefix).Select(id => AirlineDict[id]);
+            var airlineAutocomplete = airlineIndex.GetAllSuggestionIds(prefix).Select(id => AirlineDict[id]);
+            return airlineAutocomplete;
         }
 
-        public IEnumerable<HotelLocationDict> GetHotelLocationAutocomplete(string prefix)
+        public IEnumerable<object> GetHotelLocationAutocomplete(string prefix)
         {
             var hotelLocationIndex = TrieIndex.GetInstance().HotelLocationIndex;
-            return hotelLocationIndex.GetAllSuggestionIds(prefix).Select(id => HotelLocationDict[id]);
+            var splittedString = prefix.Split(' ');
+            var hotelLocationIds = new List<long>();
+            hotelLocationIds.AddRange(hotelLocationIndex.GetAllSuggestionIds(splittedString[0]));
+            var i = 1;
+            while (i < splittedString.Count())
+            {
+                hotelLocationIds = hotelLocationIds.Intersect(hotelLocationIndex.GetAllSuggestionIds(splittedString[i])).ToList();
+                i++;
+            }
+            var distinctHotelLocationIds = hotelLocationIds.Distinct();
+            var hotelLocationAutocomplete = distinctHotelLocationIds
+                .Select(id => new
+                {
+                    HotelLocationDict[id].LocationId,
+                    HotelLocationDict[id].LocationName,
+                    HotelLocationDict[id].RegionName,   
+                    HotelLocationDict[id].CountryName,
+                    HotelLocationDict[id].Priority,
+                })
+                .OrderBy(dict => dict.Priority);
+            return hotelLocationAutocomplete;
         }
 
         private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)

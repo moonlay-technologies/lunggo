@@ -4,7 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls.WebParts;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Model;
+using Lunggo.ApCommon.Mystifly;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.BackendWeb.Interface;
+using Lunggo.BackendWeb.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Http;
 using Lunggo.Repository.TableRecord;
@@ -22,31 +28,20 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpPost]
         public ActionResult Search(FlightReservationSearch search)
         {
-            if (search.RsvNo == null)
-            {
-                return RedirectToAction("List", search);
-            }
-            else
-            {
-                return RedirectToAction("Detail", search);
-            }
+            return RedirectToAction(search.RsvNo == null ? "List" : "Detail", search);
         }
 
         public ActionResult List(FlightReservationSearch search)
         {
             ViewData.Add("Name", search.PassengerName);
-            return
-                View(
-                    FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Overview)
-                        .ToList());
+            var result = FlightReservationIntegrated.GetFromDb(search, QueryType.Overview);
+            return View(result);
         }
 
         public ActionResult Detail(FlightReservationSearch search)
         {
-            return
-                View(
-                    FlightReservationIntegrated.GetFromDb(search, FlightReservationIntegrated.QueryType.Complete)
-                        .SingleOrDefault());
+            var result = FlightReservationIntegrated.GetFromDb(search, QueryType.Complete).SingleOrDefault();
+            return View(result);
         }
     }
 

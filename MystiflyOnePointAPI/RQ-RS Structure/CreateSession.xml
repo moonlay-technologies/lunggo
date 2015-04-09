@@ -1,0 +1,22 @@
+﻿<CreateSession>
+
+  <SessionCreateRQ>
+    <AccountNumber/>
+    <UserName/>
+    <Password/>
+  </SessionCreateRQ>
+
+
+  <SessionCreateRS>
+    <SessionStatus/>
+    <SessionId/>
+    <Target/>
+    <Errors>
+      <Error>
+        <Code/>
+        <Message/>
+      </Error>
+    </Errors>
+  </SessionCreateRS>
+
+</CreateSession>
