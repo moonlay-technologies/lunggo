@@ -566,6 +566,8 @@ var SearchRoomConfig = {
 
         $scope.getRoomlist = function() {
 
+            console.log('Testing');
+
             console.log('--------------------------------');
             console.log('Searching for Room with params:');
             console.log($scope.RoomSearchParams);
