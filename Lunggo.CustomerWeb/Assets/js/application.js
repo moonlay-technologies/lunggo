@@ -367,7 +367,7 @@ function hotel_detail() {
         $('.hotel-detail-page .hotel-image .hotel-thumb a').click(function (evt) {
             evt.preventDefault();
             var selected_image = $(this).children('img').attr('data-image-url');
-            $('.hotel-detail-page .hotel-image .hotel-main-image img').attr('src', selected_image);
+            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url('+selected_image+')');
         });
     }
 

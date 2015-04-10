@@ -534,7 +534,10 @@ hr {
 .hotel-detail-page .hotel-image .hotel-main-image {
   height: 380px;
   text-align: center;
-  background: #000; }
+  background-color: #000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat; }
   .hotel-detail-page .hotel-image .hotel-main-image img {
     width: auto;
     max-height: 100%; }
@@ -543,7 +546,11 @@ hr {
   text-align: center;
   padding: 10px 0; }
   .hotel-detail-page .hotel-image .hotel-thumb a {
-    margin-right: 5px; }
+    margin-right: 5px;
+    display: inline-block;
+    height: 30px;
+    width: 50px;
+    overflow: hidden; }
     .hotel-detail-page .hotel-image .hotel-thumb a img {
       width: 50px; }
 .hotel-detail-page .hotel-map {

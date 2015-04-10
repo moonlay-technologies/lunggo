@@ -25,11 +25,7 @@
             <div class="col-sm-6">
                 <div class="hotel-image">
                     
-                    <div class="hotel-main-image">
-                        
-                        <img src="@Model.HotelDetail.ImageUrlList.First().FullSizeUrl" alt="Hotel Image">
-                       
-                    </div>
+                    <div class="hotel-main-image" style="background-image:url(@Model.HotelDetail.ImageUrlList.First().FullSizeUrl);"></div>
                     <div class="hotel-thumb">
                         @foreach (var imgList in Model.HotelDetail.ImageUrlList)
                         {

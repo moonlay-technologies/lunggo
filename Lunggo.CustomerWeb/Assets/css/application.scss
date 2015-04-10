@@ -185,11 +185,11 @@ hr {border-color:#aaa;}
 		}
 	}
 	.hotel-image {
-		.hotel-main-image {height:380px; text-align:center; background:#000;
+		.hotel-main-image {height:380px; text-align:center; background-color:#000; background-size:contain; background-position:center center; background-repeat:no-repeat;
 			img {width:auto; max-height:100%;}
 		}
 		.hotel-thumb {background:#000; text-align:center; padding:10px 0;
-			a {margin-right:5px;
+			a {margin-right:5px; display:inline-block; height:30px; width:50px; overflow:hidden;
 				img {width:50px;}
 			}
 		}
