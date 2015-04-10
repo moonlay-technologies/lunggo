@@ -394,7 +394,8 @@ hr {
     .hotel-search-page .hotel-list.square .hotel .hotel-image img {
       width: 100%; }
   .hotel-search-page .hotel-list.square .hotel .hotel-sum {
-    padding: 20px; }
+    padding: 20px;
+    padding-bottom: 0; }
     .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name {
       font-size: 18px;
       color: #3fabe3;

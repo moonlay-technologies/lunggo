@@ -5,7 +5,7 @@
 }
 
 <!-- .search-page content start -->
-<div class="search-page hotel-search-page" data-search-staydate="@Html.DisplayFor(model=>model.StayDate)" data-search-staylength="@Html.DisplayFor(model=>model.StayLength)" data-search-locationid="@Html.DisplayFor(model=>model.LocationId)" data-search-roomcount="@Html.DisplayFor(model=>model.RoomOccupants)">
+<div class="search-page hotel-search-page" data-search-staydate="2015-05-05" data-search-staylength="@Html.DisplayFor(model=>model.StayLength)" data-search-locationid="@Html.DisplayFor(model=>model.LocationId)" data-search-roomcount="@Html.DisplayFor(model=>model.RoomOccupants)">
 
     <header class="page-header">
         <div class="container">
@@ -62,7 +62,7 @@
                 <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotel_list.hotels">
                     <article class="hotel">
                         <a href="@Href("~/UW200/UW200HotelDetail?HotelId="){{hotel.HotelId}}" class="hotel-link" target="_blank">
-                            <div class="hotel-image" style="background-image:url({{hotel.ImageUrlList[0].FullSizeUrl}});"></div>
+                            <div class="hotel-image" ng-repeat="featuredImage in hotel.ImageUrlList | filter : {Priority: 1} : true" style="background-image:url({{featuredImage.FullSizeUrl}});"></div>
                             <section class="hotel-sum">
                                 <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">

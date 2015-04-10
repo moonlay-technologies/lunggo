@@ -421,7 +421,7 @@ function loading_overlay(state, loc) {
 // ************************
 // variables
 var SearchHotelConfig = {
-    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels/',
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels',
     ResultCount: 24
 };
 
@@ -544,8 +544,6 @@ var SearchRoomConfig = {
 
     // room controller
     app.controller('RoomController', ['$http', '$scope', function($http, $scope) {
-
-        $scope.testingText = "JEMPING";
 
         // run hotel search function on document ready
         angular.element(document).ready(function () {

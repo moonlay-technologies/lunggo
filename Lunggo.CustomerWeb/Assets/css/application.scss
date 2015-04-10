@@ -124,7 +124,7 @@ hr {border-color:#aaa;}
 				.hotel-image {height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
 				}
-				.hotel-sum {padding:20px;
+				.hotel-sum {padding:20px; padding-bottom:0;
 					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham; height:38px;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:5px;}
 					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0; height:30px;}
