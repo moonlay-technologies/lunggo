@@ -313,6 +313,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\loading-icon.png" />
+    <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\payment-credit.png" />

@@ -393,25 +393,24 @@ function flight_search() {
 
 //******************************************
 // Show loading
-function loading_overlay(state, loc) {
+function loading_overlay(state) {
 
     if (state == 'show') {
 
-        if ( $(loc).has('.loading-overlay').length == 0 ) {
+        if ( $('body').has('.loading-overlay').length == 0 ) {
             create_loading();
-            $(loc).children('.loading-overlay').show();
+            $('body').children('.loading-overlay').show();
         } else {
-            $(loc).children('.loading-overlay').show();
+            $('body').children('.loading-overlay').show();
         }
 
     } else if (state == 'hide') {
-        $(loc).children('.loading-overlay').hide();
+        $('body').children('.loading-overlay').hide();
     }
 
     // create loading screen
     function create_loading() {
-        $(loc).css('position','relative');
-        $(loc).append('<div class="loading-overlay"> <div class="loading-content"><img src="/assets/images/loading-icon.png" /></div> </div>');
+        $('body').append('<div class="loading-overlay"> <div class="loading-content"><img src="/assets/images/loading-image.gif" /></div> </div>');
     }
 
 }
@@ -462,7 +461,7 @@ var SearchRoomConfig = {
         // load hotel list function
         $scope.load_hotel_list = function (page) {
 
-            loading_overlay('show','body');
+            loading_overlay('show');
 
             console.log('--------------------------------');
             console.log('Searching for hotel with params:');
@@ -514,14 +513,14 @@ var SearchRoomConfig = {
                 console.log('loaded');
                 console.log('--------------------------------');
 
-                loading_overlay('hide', 'body');
+                loading_overlay('hide');
 
                 // if error
             }).error(function () {
                 console.log('REQUEST ERROR');
                 console.log('--------------------------------');
 
-                loading_overlay('hide','body');
+                loading_overlay('hide');
 
             });
 

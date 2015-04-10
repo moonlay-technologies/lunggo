@@ -394,8 +394,7 @@ hr {
     .hotel-search-page .hotel-list.square .hotel .hotel-image img {
       width: 100%; }
   .hotel-search-page .hotel-list.square .hotel .hotel-sum {
-    padding: 20px;
-    padding-bottom: 0; }
+    padding: 20px; }
     .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name {
       font-size: 18px;
       color: #3fabe3;
@@ -474,7 +473,8 @@ hr {
   .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum {
     padding: 20px;
     float: left;
-    width: 35%; }
+    width: 35%;
+    padding-bottom: 0; }
     .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name {
       font-size: 18px;
       color: #3fabe3;
@@ -1636,7 +1636,7 @@ hr {
           background: #ddd; }
 
 .loading-overlay {
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   background: rgba(80, 80, 80, 0.8);
   width: 100%;

@@ -124,7 +124,7 @@ hr {border-color:#aaa;}
 				.hotel-image {height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
 				}
-				.hotel-sum {padding:20px; padding-bottom:0;
+				.hotel-sum {padding:20px;
 					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham; height:38px;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:5px;}
 					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0; height:30px;}
@@ -152,7 +152,7 @@ hr {border-color:#aaa;}
 				.hotel-image {float:left; width:35%; height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
 				}
-				.hotel-sum {padding:20px; float:left; width:35%;
+				.hotel-sum {padding:20px; float:left; width:35%; padding-bottom:0;
 					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:10px;}
 					.hotel-address {margin-bottom:10px; font-style:italic; margin-top:0;}
@@ -703,7 +703,7 @@ hr {border-color:#aaa;}
 
 // ----------------------------------------------
 // Loading
-.loading-overlay {position:absolute; z-index:9999; background:rgba(80,80,80,0.8); width:100%; height:100%; top:0; left:0;
+.loading-overlay {position:fixed; z-index:9999; background:rgba(80,80,80,0.8); width:100%; height:100%; top:0; left:0;
     .loading-content {position:absolute; text-align:center; top:40%; width:100%;}
 }
 
