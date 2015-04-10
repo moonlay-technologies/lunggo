@@ -103,14 +103,17 @@
     <Compile Include="Hotel\Logic\HotelPriceUtil.cs" />
     <Compile Include="Hotel\Logic\HotelsSortComparer.cs" />
     <Compile Include="Hotel\Logic\ParameterPreProcessor.cs" />
+    <Compile Include="Hotel\Logic\Search\HotelBookService.cs" />
     <Compile Include="Hotel\Logic\Search\HotelRoomsSearchService.cs" />
     <Compile Include="Hotel\Logic\Search\HotelsSearchService.cs" />
     <Compile Include="Hotel\Model\Hotel.cs" />
     <Compile Include="Hotel\Model\HotelDescription.cs" />
     <Compile Include="Hotel\Model\HotelImage.cs" />
     <Compile Include="Hotel\Model\OnMemHotelFacility.cs" />
+    <Compile Include="Hotel\Model\PackageDetailForBooking.cs" />
     <Compile Include="Hotel\Model\Room.cs" />
     <Compile Include="Hotel\Model\RoomAssignment.cs" />
+    <Compile Include="Hotel\Model\RoomDetailForBooking.cs" />
     <Compile Include="Hotel\Object\HotelBookServiceRequest.cs" />
     <Compile Include="Hotel\Object\HotelRequestBase.cs" />
     <Compile Include="Hotel\Object\HotelRoomsSearchServiceResponse.cs" />
