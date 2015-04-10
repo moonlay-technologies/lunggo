@@ -60,12 +60,15 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     else
                     {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
                         var errors = response.Errors.Concat(refundResponse.Errors).Distinct();
                         foreach (var error in errors)
                         {
                             if (error.Code == "ERSER002")
                             {
-                                result.Errors.Clear();
+                                result.Errors = null;
+                                result.ErrorMessages = null;
                                 client.CreateSession();
                                 request.SessionId = client.SessionId;
                                 retry++;
@@ -197,17 +200,17 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var flightFareItinerary = new FlightFareItinerary();
             flightFareItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
-            MapPTCFareBreakdowns(pricedItinerary, flightFareItinerary);
-            flightFareItinerary.PSCFare =
+            MapPtcFareBreakdowns(pricedItinerary, flightFareItinerary);
+            flightFareItinerary.PscFare =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalTax.Amount);
             flightFareItinerary.TotalFare =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
-            flightFareItinerary.Currency = pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.CurrencyCode;
             flightFareItinerary.TripType = pricedItinerary.DirectionInd.ToString();
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightTrips(pricedItinerary);
             flightFareItinerary.Source = FlightSource.Wholesaler;
+            flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
         }
@@ -231,7 +234,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static void MapPTCFareBreakdowns(PricedItinerary pricedItinerary, FlightFareItinerary flightFareItinerary)
+        private static void MapPtcFareBreakdowns(PricedItinerary pricedItinerary, FlightFareItinerary flightFareItinerary)
         {
             var ptcFareBreakdowns = pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns;
             foreach (var ptcFareBreakdown in ptcFareBreakdowns)
@@ -278,56 +281,36 @@ namespace Lunggo.ApCommon.Mystifly
             var flightTrips = new List<FlightFareTrip>();
             foreach (var flightSegment in pricedItinerary.OriginDestinationOptions.SelectMany(options => options.FlightSegments))
             {
+                List<FlightStop> stops = null;
                 if (flightSegment.StopQuantity > 0)
                 {
-                    var firstFlightTrip = new FlightFareTrip
+                    stops = new List<FlightStop>
                     {
-                        DepartureAirport = flightSegment.DepartureAirportLocationCode,
-                        ArrivalAirport = flightSegment.StopQuantityInfo.LocationCode,
-                        DepartureTime = flightSegment.DepartureDateTime,
-                        ArrivalTime = flightSegment.StopQuantityInfo.ArrivalDateTime,
-                        AirlineCode = flightSegment.OperatingAirline.Code,
-                        FlightNumber = flightSegment.OperatingAirline.FlightNumber,
-                        AircraftCode = flightSegment.OperatingAirline.Equipment,
-                        Duration = flightSegment.JourneyDuration,
-                        CabinClass = flightSegment.CabinClassCode,
-                        RBD = flightSegment.ResBookDesigCode,
-                        RemainingSeats = flightSegment.SeatsRemaining.Number
+                        new FlightStop
+                        {
+                            StopAirport = flightSegment.StopQuantityInfo.LocationCode,
+                            StopArrival = flightSegment.StopQuantityInfo.ArrivalDateTime,
+                            StopDeparture = flightSegment.StopQuantityInfo.DepartureDateTime,
+                            StopDuration = flightSegment.StopQuantityInfo.Duration
+                        }
                     };
-                    var secondFlightTrip = new FlightFareTrip
-                    {
-                        DepartureAirport = flightSegment.StopQuantityInfo.LocationCode,
-                        ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
-                        DepartureTime = flightSegment.StopQuantityInfo.DepartureDateTime,
-                        ArrivalTime = flightSegment.ArrivalDateTime,
-                        AirlineCode = flightSegment.OperatingAirline.Code,
-                        FlightNumber = flightSegment.OperatingAirline.FlightNumber,
-                        AircraftCode = flightSegment.OperatingAirline.Equipment,
-                        Duration = 0,
-                        CabinClass = flightSegment.CabinClassCode,
-                        RBD = flightSegment.ResBookDesigCode,
-                        RemainingSeats = flightSegment.SeatsRemaining.Number
-                    };
-                    flightTrips.Add(firstFlightTrip);
-                    flightTrips.Add(secondFlightTrip);
                 }
-                else
+                flightTrips.Add(new FlightFareTrip
                 {
-                    var flightTrip = new FlightFareTrip
-                    {
-                        DepartureAirport = flightSegment.DepartureAirportLocationCode,
-                        ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
-                        DepartureTime = flightSegment.DepartureDateTime,
-                        ArrivalTime = flightSegment.ArrivalDateTime,
-                        AirlineCode = flightSegment.OperatingAirline.Code,
-                        FlightNumber = flightSegment.OperatingAirline.FlightNumber,
-                        Duration = flightSegment.JourneyDuration,
-                        CabinClass = flightSegment.CabinClassCode,
-                        RBD = flightSegment.ResBookDesigCode,
-                        RemainingSeats = flightSegment.SeatsRemaining.Number
-                    };
-                    flightTrips.Add(flightTrip);
-                }
+                    DepartureAirport = flightSegment.DepartureAirportLocationCode,
+                    ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
+                    DepartureTime = flightSegment.DepartureDateTime,
+                    ArrivalTime = flightSegment.ArrivalDateTime,
+                    Duration = flightSegment.JourneyDuration,
+                    AirlineCode = flightSegment.OperatingAirline.Code,
+                    FlightNumber = flightSegment.OperatingAirline.FlightNumber,
+                    AircraftCode = flightSegment.OperatingAirline.Equipment,
+                    CabinClass = flightSegment.CabinClassCode,
+                    Rbd = flightSegment.ResBookDesigCode,
+                    RemainingSeats = flightSegment.SeatsRemaining.Number,
+                    StopQuantity = flightSegment.StopQuantity,
+                    FlightStops = stops
+                });
             }
             return flightTrips;
         }

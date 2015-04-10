@@ -16,13 +16,16 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
+        public bool CanHold { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildCount { get; set; }
+        public int InfantCount { get; set; }
         public string TripType { get; set; }
         public decimal TotalFare { get; set; }
         public decimal AdultTotalFare { get; set; }
         public decimal ChildTotalFare { get; set; }
         public decimal InfantTotalFare { get; set; }
-        public decimal PSCFare { get; set; }
-        public string Currency { get; set; }
+        public decimal PscFare { get; set; }
         public List<FlightRules> Rules { get; set; }
     }
 
@@ -35,9 +38,6 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightItineraryBase
     {
         public FlightSource Source { get; set; }
-        public int AdultCount { get; set; }
-        public int ChildCount { get; set; }
-        public int InfantCount { get; set; }
     }
     
 }

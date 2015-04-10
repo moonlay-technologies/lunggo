@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.Framework.Error;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public abstract class ResultBase
+    public class OutputBase
     {
+        public bool IsSuccess { get; set; }
         public List<FlightError> Errors { get; set; }
         public List<string> ErrorMessages { get; set; }
-        public bool IsSuccess { get; set; }
+
+        public OutputBase()
+        {
+            Errors = new List<FlightError>();
+            ErrorMessages = new List<string>();
+        }
     }
 }

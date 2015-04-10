@@ -38,12 +38,15 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     else
                     {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
                         if (response.Errors.Length <= 3 && 
                             (response.Errors.First().Code == "ERIFS012" ||
                             response.Errors.First().Code == "ERIFS013" ||
                             response.Errors.First().Code == "ERIFS014"))
                         {
-                            result.Errors.Clear();
+                            result.Errors = null;
+                            result.ErrorMessages = null;
                             result.IsSuccess = true;
                             result.FlightItineraries = null;
                         }
@@ -53,7 +56,8 @@ namespace Lunggo.ApCommon.Mystifly
                             {
                                 if (error.Code == "ERIFS002")
                                 {
-                                    result.Errors.Clear();
+                                    result.Errors = null;
+                                    result.ErrorMessages = null;
                                     client.CreateSession();
                                     request.SessionId = client.SessionId;
                                     retry++;
@@ -126,7 +130,7 @@ namespace Lunggo.ApCommon.Mystifly
                 ArrivalDateTime = item.ArrivalTime,
                 AirlineCode = item.AirlineCode,
                 FlightNumber = item.FlightNumber,
-                BookingClass = item.RBD,
+                BookingClass = item.Rbd,
                 ExtensionData = null
             }).ToArray();
         }

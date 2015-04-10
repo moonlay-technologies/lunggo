@@ -10,103 +10,101 @@ using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
-    public class GetFlightLogic
+    public partial class FlightLogic
     {
         public static FlightSearchApiResponse GetFlights(FlightSearchApiRequest request)
         {
-            var searchServiceRequest = PreprocessServiceRequest(request);
-            var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-            var apiResponse = AssembleApiResponse(searchServiceResponse, request);
-            return apiResponse;
+            if (IsValid(request))
+            {
+                var searchServiceRequest = PreprocessServiceRequest(request);
+                var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
+                var apiResponse = AssembleApiResponse(searchServiceResponse, request);
+                return apiResponse;
+            }
+            else
+            {
+                return new FlightSearchApiResponse
+                {
+                    SearchId = null,
+                    OriginalRequest = request,
+                    TotalFlightCount = 0,
+                    FlightList = null
+                };
+            }
+            
+        }
+
+        private static bool IsValid(FlightSearchApiRequest request)
+        {
+            return
+                request != null &&
+                request.Adult >= 1 &&
+                request.Child >= 0 &&
+                request.Infant >= 0 &&
+                request.Adult + request.Child <= 9 &&
+                request.Cabin != null;
+            /*
+                (
+                    (request.Type == "One" && request.OriDestDate.Count == 1) ||
+                    (request.Type == "Ret" && request.OriDestDate.Count == 2) ||
+                    (request.Type == "Mul" && request.OriDestDate.Count >= 1)
+                ) &&
+                request.OriDestDate.TrueForAll(data => data.Date >= DateTime.Now);
+                */
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
         {
             var apiResponse = new FlightSearchApiResponse
             {
-                InitialRequest = request,
-                SearchId = null,
-                TotalFlightCount = searchServiceResponse.Itineraries.Count,
-                FlightList = searchServiceResponse.Itineraries
+                OriginalRequest = request,
+                SearchId = null
             };
+            if (searchServiceResponse.Itineraries == null)
+            {
+                apiResponse.FlightList = null;
+                apiResponse.TotalFlightCount = 0;
+            }
+            else
+            {
+                apiResponse.FlightList = searchServiceResponse.Itineraries;
+                apiResponse.TotalFlightCount = searchServiceResponse.Itineraries.Count;
+            }
             return apiResponse;
         }
 
         private static SearchFlightInput PreprocessServiceRequest(FlightSearchApiRequest request)
         {
-            var originDestinationInformation = new List<OriginDestinationInfo>
-            {
-                new OriginDestinationInfo
-                {
-                    OriginAirport = AssignOriginAirport(request.Origin),
-                    DestinationAirport = AssignDestinationAirport(request.Destination),
-                    DepartureDate = AssignDepartureDate(request.Date)
-                }
-            };
             var searchConditions = new SearchFlightConditions
             {
-                AdultCount = AssignAdultPassenger(request.Adult),
-                ChildCount = AssignChildPassenger(request.Child),
-                InfantCount = AssignInfantPassenger(request.Infant),
+                AdultCount = request.Adult,
+                ChildCount = request.Child,
+                InfantCount = request.Infant,
                 CabinClass = AssignCabinClass(request.Cabin),
-                OriDestInfos = originDestinationInformation
+                OriDestInfos = new List<OriginDestinationInfo>
+                {
+                    new OriginDestinationInfo
+                    {
+                        OriginAirport = request.Ori,
+                        DestinationAirport = request.Dest,
+                        DepartureDate = request.Date
+                    }
+                }
+                /*
+                OriDestInfos = request.OriDestDate.Select(data => new OriginDestinationInfo
+                {
+                    OriginAirport = data.Ori,
+                    DestinationAirport = data.Dest,
+                    DepartureDate = data.Date
+                }).ToList(),
+                 */
             };
             var searchServiceRequest = new SearchFlightInput
             {
                 Conditions = searchConditions,
-                IsReturnSeparated = false,
                 IsDateFlexible = false,
-                TripType = TripType.OneWay
             };
             return searchServiceRequest;
-        }
-
-        private static string AssignOriginAirport(string origin)
-        {
-            if (origin == null)
-                return "CGK";
-            else
-                return origin;
-        }
-
-        private static string AssignDestinationAirport(string destination)
-        {
-            if (destination == null)
-                return "CGK";
-            else
-                return destination;
-        }
-
-        private static DateTime AssignDepartureDate(DateTime? date)
-        {
-            if (date == null || (DateTime)date < DateTime.Now)
-                return DateTime.Now;
-            else
-                return (DateTime)date;
-        }
-
-        private static int AssignAdultPassenger(int? adult)
-        {
-            if (adult == null || (int)adult < 1)
-                return 0;
-            else
-                return (int)adult;
-        }
-
-        private static int AssignChildPassenger(int? child)
-        {
-            if (child == null || (int)child < 0)
-                return 0;
-            else
-                return (int)child;
-        }
-
-        private static int AssignInfantPassenger(int? infant)
-        {
-            if (infant == null || (int)infant < 0)
-                return 0;
-            else
-                return (int)infant;
         }
 
         private static CabinClass AssignCabinClass(string cabin)

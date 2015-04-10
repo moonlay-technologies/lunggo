@@ -29,41 +29,48 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = client.FareRules1_1(request);
                     done = true;
-                    if (!response.Errors.Any())
+                    if (!response.Errors.Any() && response.Success)
                     {
                         result = MapResult(response);
                         result.IsSuccess = true;
                     }
                     else
                     {
-                        if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
+                        if (response.Errors.Any())
                         {
-                            result.Errors.Clear();
-                            result.IsSuccess = true;
-                            result.AirlineRules = null;
-                            result.BaggageRules = null;
-                        }
-                        else
-                        {
-
-                            foreach (var error in response.Errors)
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
                             {
-                                if (error.Code == "ERFRU013")
-                                {
-                                    result.Errors.Clear();
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                result.IsSuccess = true;
+                                result.AirlineRules = null;
+                                result.BaggageRules = null;
                             }
-                            result.IsSuccess = false;
+                            else
+                            {
+
+                                foreach (var error in response.Errors)
+                                {
+                                    if (error.Code == "ERFRU013")
+                                    {
+                                        result.Errors = null;
+                                        result.ErrorMessages = null;
+                                        client.CreateSession();
+                                        request.SessionId = client.SessionId;
+                                        retry++;
+                                        if (retry <= 3)
+                                        {
+                                            done = false;
+                                            break;
+                                        }
+                                    }
+                                    MapError(response, result);
+                                }
+                            }
                         }
+                        result.IsSuccess = false;
                     }
                 }
                 return result;

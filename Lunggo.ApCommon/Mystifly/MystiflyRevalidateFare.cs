@@ -32,30 +32,36 @@ namespace Lunggo.ApCommon.Mystifly
                 {                                                            
                     done = true;
                     var response = client.AirRevalidate(request);
-                    if (!response.Errors.Any())
+                    if (!response.Errors.Any() && response.Success)
                     {
                         result = MapResult(response);
                         result.IsSuccess = true;
                     }
                     else
                     {
-                        foreach (var error in response.Errors)
+                        if (response.Errors.Any())
                         {
-                            if (error.Code == "ERREV002")
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
                             {
-                                result.Errors.Clear();
-                                client.CreateSession();
-                                request.SessionId = client.SessionId;
-                                retry++;
-                                if (retry <= 3)
+                                if (error.Code == "ERREV002")
                                 {
-                                    done = false;
-                                    break;
+                                    result.Errors = null;
+                                    result.ErrorMessages = null;
+                                    client.CreateSession();
+                                    request.SessionId = client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
                                 }
+                                MapError(response, result);
                             }
-                            MapError(response, result);
-                            result.IsSuccess = false;
                         }
+                        result.IsSuccess = false;
                     }
                 }
                 return result;
@@ -66,14 +72,12 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
-            if (response.PricedItineraries != null)
+            if (response.PricedItineraries.Any())
                 result.Itinerary = MapFlightFareItinerary(response.PricedItineraries[0]);
             return result;
         }
 
-        private static void CheckFareValidity(
-            AirRevalidateRS response,
-            RevalidateFareResult result)
+        private static void CheckFareValidity(AirRevalidateRS response, RevalidateFareResult result)
         {
             result.IsValid = response.IsValid;
         }

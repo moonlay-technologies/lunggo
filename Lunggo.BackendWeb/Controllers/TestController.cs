@@ -24,7 +24,7 @@ namespace Lunggo.BackendWeb.Controllers
             var fs = FlightService.GetInstance();
             fs.GetBookingStatus();
             var searchResult = fs.SearchFlight(input);
-            var itin = searchResult.Itineraries[0];
+            var itin = searchResult.Itineraries[1];
 
             var revalidateInput = new RevalidateFlightInput
             {

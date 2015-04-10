@@ -142,9 +142,21 @@
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\BookFlightLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetFlightLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\GetTripDetailsLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\RevalidateFlightLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightBookingApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightBookingApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightCancelApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightCancelApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightRevalidateApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightRevalidateApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightDetailsApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Model\FlightDetailsApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />

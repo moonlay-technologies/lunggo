@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.Framework.Payment.Data;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class BookingStatusInfo
+    public class BookFlightInput
     {
-        public BookingStatus BookingStatus { get; set; }
-        public string BookingId { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        public FlightBookingInfo BookingInfo { get; set; }
+        public PaymentData PaymentData { get; set; }
     }
 }

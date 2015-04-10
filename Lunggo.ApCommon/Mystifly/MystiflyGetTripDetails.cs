@@ -33,30 +33,36 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     done = true;
                     var response = client.TripDetails(request);
-                    if (!response.Errors.Any())
+                    if (!response.Errors.Any() && response.Success)
                     {
                         result = MapResult(response);
                         result.IsSuccess = true;
                     }
                     else
                     {
-                        foreach (var error in response.Errors)
+                        if (response.Errors.Any())
                         {
-                            if (error.Code == "ERTDT002")
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
                             {
-                                result.Errors.Clear();
-                                client.CreateSession();
-                                request.SessionId = client.SessionId;
-                                retry++;
-                                if (retry <= 3)
+                                if (error.Code == "ERTDT002")
                                 {
-                                    done = false;
-                                    break;
+                                    result.Errors = null;
+                                    result.ErrorMessages = null;
+                                    client.CreateSession();
+                                    request.SessionId = client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
                                 }
+                                MapError(response, result);
                             }
-                            MapError(response, result);
-                            result.IsSuccess = false;
                         }
+                        result.IsSuccess = false;
                     }
                 }
                 return result;
@@ -72,7 +78,8 @@ namespace Lunggo.ApCommon.Mystifly
             result.FlightItineraryDetails = new FlightItineraryDetails
             {
                 FlightTrips = MapDetailsFlightTrips(response),
-                PassengerInfo = MapDetailsPassengerInfo(response)
+                PassengerInfo = MapDetailsPassengerInfo(response),
+                Source = FlightSource.Wholesaler
             };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
@@ -90,7 +97,7 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var flightTrip = new FlightTripDetails
                 {
-                    PNR = reservationItem.AirlinePNR,
+                    Pnr = reservationItem.AirlinePNR,
                     DepartureTime = reservationItem.DepartureDateTime,
                     ArrivalTime = reservationItem.ArrivalDateTime,
                     Duration = int.Parse(reservationItem.JourneyDuration),
@@ -101,7 +108,7 @@ namespace Lunggo.ApCommon.Mystifly
                     AirlineCode = reservationItem.OperatingAirlineCode,
                     FlightNumber = reservationItem.FlightNumber,
                     AircraftCode = reservationItem.AirEquipmentType,
-                    RBD = reservationItem.ResBookDesigCode,
+                    Rbd = reservationItem.ResBookDesigCode,
                     Baggage = reservationItem.Baggage,
                     StopQuantity = reservationItem.StopQuantity
                 };

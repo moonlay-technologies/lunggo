@@ -7,8 +7,6 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic;
-using Lunggo.WebAPI.ApiSrc.v1.Hotels.Object;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 {
@@ -18,14 +16,35 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights")]
         public FlightSearchApiResponse GetFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
         {
-            var checkedRequest = CreateFlightSearchApiRequestIfNull(request);
-            var response = GetFlightLogic.GetFlights(checkedRequest);
-            return response;
+            return FlightLogic.GetFlights(request);
         }
 
-        private FlightSearchApiRequest CreateFlightSearchApiRequestIfNull(FlightSearchApiRequest request)
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
+        [Route("api/v1/flights/revalidate")]
+        public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {
-            return request ?? new FlightSearchApiRequest();
+            return FlightLogic.RevalidateFlight(request);
+        }
+
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
+        [Route("api/v1/flights/book")]
+        public FlightBookingApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookingApiRequest request)
+        {
+            return FlightLogic.BookFlight(request);
+        }
+
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
+        [Route("api/v1/flights/cancel")]
+        public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
+        {
+            return FlightLogic.CancelBooking(request);
+        }
+
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
+        [Route("api/v1/flights/details")]
+        public FlightDetailsApiResponse GetFlightTripDetails(HttpRequestMessage httpRequest, [FromUri] FlightDetailsApiRequest request)
+        {
+            return FlightLogic.GetTripDetails(request);
         }
     }
 }

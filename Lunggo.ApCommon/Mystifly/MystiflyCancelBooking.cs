@@ -29,29 +29,36 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = client.CancelBooking(request);
                     done = true;
-                    if (!response.Errors.Any())
+                    if (!response.Errors.Any() && response.Success)
                     {
                         result = MapResult(response);
                         result.IsSuccess = true;
                     }
                     else
                     {
-                        foreach (var error in response.Errors)
+                        if (response.Errors.Any())
                         {
-                            if (error.Code == "ERCBK002")
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
                             {
-                                result.Errors.Clear();
-                                client.CreateSession();
-                                request.SessionId = client.SessionId;
-                                retry++;
-                                if (retry <= 3) { 
-                                    done = false;
-                                    break;
+                                if (error.Code == "ERCBK002")
+                                {
+                                    result.Errors = null;
+                                    result.ErrorMessages = null;
+                                    client.CreateSession();
+                                    request.SessionId = client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
                                 }
+                                MapError(response, result);
                             }
-                            MapError(response, result);
-                            result.IsSuccess = false;
                         }
+                        result.IsSuccess = false;
                     }
                 }
                 return result;
