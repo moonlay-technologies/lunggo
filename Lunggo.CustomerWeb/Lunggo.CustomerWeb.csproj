@@ -260,6 +260,10 @@
     <Compile Include="WebSrc\UW200\Object\UW200HotelDetailResponse.cs" />
     <Compile Include="WebSrc\UW200\UW200HotelDetailController.cs" />
     <Compile Include="WebSrc\UW300\UW300HotelBookingFormController.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Logic\ChangeProfileLogic.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Model\UW610ChangePofile.cs" />
+    <Compile Include="WebSrc\UW600\UW610\Object\UW610ChangeProfileRespone.cs" />
+    <Compile Include="WebSrc\UW600\UW610\UW610ChangeProfileController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Dummy.xml" />
@@ -309,8 +313,10 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\loading-icon.png" />
+    <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
@@ -425,6 +431,11 @@
     <Content Include="Assets\sass\_header.scss" />
     <Content Include="Assets\js\angular-route.min.js.map" />
     <Content Include="Assets\js\angular.min.js.map" />
+    <Content Include="Assets\css\application.css.map" />
+    <Content Include="Assets\css\application.scss" />
+    <Content Include="Assets\css\_font_face.scss" />
+    <Content Include="Assets\css\_footer.scss" />
+    <Content Include="Assets\css\_header.scss" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1625,6 +1636,7 @@
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
+    <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

@@ -163,6 +163,3 @@ Lunggo.CustomerWeb/Config/
 
 # Lunggo.Driver Config Directory
 Lunggo.Driver/Config/
-
-# Lunggo.CustomerWeb Config Directory
-Lunggo.WebAPI/Config/

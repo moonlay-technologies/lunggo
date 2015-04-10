@@ -39,6 +39,12 @@ namespace Lunggo.CustomerWeb
             );
 
             routes.MapRoute(
+                name: "UW610ChangeProfile",
+                url: "UW600/UW610ChangeProfile",
+                defaults: new { controller = "UW610ChangeProfile", action = "ChangeProfile" }
+            );
+
+            routes.MapRoute(
                 name: "UW400BookhHotel",
                 url: "{langCode}/Hotel/Booking",
                 defaults: new { controller = "UW400Booking", action = "Index" }
@@ -67,6 +73,7 @@ namespace Lunggo.CustomerWeb
                 url: "{langCode}/{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

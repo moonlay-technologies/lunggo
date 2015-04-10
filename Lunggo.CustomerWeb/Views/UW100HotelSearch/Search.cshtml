@@ -62,7 +62,8 @@
                 <div class="hotel-wrapper col-sm-4" ng-repeat="hotel in hotel_list.hotels">
                     <article class="hotel">
                         <a href="@Href("~/UW200/UW200HotelDetail?HotelId="){{hotel.HotelId}}" class="hotel-link" target="_blank">
-                            <div class="hotel-image" style="background-image:url({{hotel.ImageUrlList[0].FullSizeUrl}});"></div>
+                            <div class="hotel-image" ng-repeat="featuredImage in hotel.ImageUrlList | filter : {Priority: 1} : true" style="background-image:url({{featuredImage.FullSizeUrl ? featuredImage.FullSizeUrl : 'jemping'}});"></div>
+                            <div class="hotel-image" ng-if="hotel.ImageUrlList == null " style="background-image:url(/Assets/images/no-image.png); background-size:auto;"></div>
                             <section class="hotel-sum">
                                 <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">

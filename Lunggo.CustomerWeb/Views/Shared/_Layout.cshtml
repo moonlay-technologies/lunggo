@@ -160,8 +160,18 @@
     
     <script src="/Assets/js/jquery.pickmeup.min.js"></script>
     <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
+    
+    @if (IsSectionDefined("AdditionalPageJavascript"))
+    {
+        @RenderSection("AdditionalPageJavascript");
+    }
 
     <script src="/assets/js/application.js"></script>
+    
+    @if (IsSectionDefined("PageJavascript"))
+    {
+        @RenderSection("PageJavascript");
+    }
 
 </body>
 </html>

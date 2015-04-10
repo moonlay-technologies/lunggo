@@ -16,14 +16,10 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
         public static HotelRoomsSearchServiceResponse GetRooms(HotelRoomsSearchServiceRequest request)
         {
             IEnumerable<RoomPackage> roomPackages = null;
-            try
-            {
-                roomPackages = GetRoomsInternal(request);
-            }
-            catch (Exception)
-            {
-                //TODO catch custom specialized exception type
-            }
+            
+            roomPackages = GetRoomsInternal(request);
+            
+            
                 
             var response = new HotelRoomsSearchServiceResponse
             {

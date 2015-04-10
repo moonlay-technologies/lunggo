@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\WebAPI\travolutionary.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\domain.properties" />
     <None Include="Config\CustomerWeb\hotel.properties">
       <SubType>Designer</SubType>

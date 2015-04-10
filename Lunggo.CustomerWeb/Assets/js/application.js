@@ -367,7 +367,7 @@ function hotel_detail() {
         $('.hotel-detail-page .hotel-image .hotel-thumb a').click(function (evt) {
             evt.preventDefault();
             var selected_image = $(this).children('img').attr('data-image-url');
-            $('.hotel-detail-page .hotel-image .hotel-main-image img').attr('src', selected_image);
+            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url('+selected_image+')');
         });
     }
 
@@ -393,25 +393,24 @@ function flight_search() {
 
 //******************************************
 // Show loading
-function loading_overlay(state, loc) {
+function loading_overlay(state) {
 
     if (state == 'show') {
 
-        if ( $(loc).has('.loading-overlay').length == 0 ) {
+        if ( $('body').has('.loading-overlay').length == 0 ) {
             create_loading();
-            $(loc).children('.loading-overlay').show();
+            $('body').children('.loading-overlay').show();
         } else {
-            $(loc).children('.loading-overlay').show();
+            $('body').children('.loading-overlay').show();
         }
 
     } else if (state == 'hide') {
-        $(loc).children('.loading-overlay').hide();
+        $('body').children('.loading-overlay').hide();
     }
 
     // create loading screen
     function create_loading() {
-        $(loc).css('position','relative');
-        $(loc).append('<div class="loading-overlay"> <div class="loading-content"><img src="/assets/images/loading-icon.png" /></div> </div>');
+        $('body').append('<div class="loading-overlay"> <div class="loading-content"><img src="/assets/images/loading-image.gif" /></div> </div>');
     }
 
 }
@@ -421,10 +420,13 @@ function loading_overlay(state, loc) {
 // ************************
 // variables
 var SearchHotelConfig = {
-    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels/',
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/hotels',
     ResultCount: 24
 };
 
+var SearchRoomConfig = {
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/rooms'
+};
 
 // ************************
 // Angular app
@@ -459,7 +461,7 @@ var SearchHotelConfig = {
         // load hotel list function
         $scope.load_hotel_list = function (page) {
 
-            loading_overlay('show','body');
+            loading_overlay('show');
 
             console.log('--------------------------------');
             console.log('Searching for hotel with params:');
@@ -500,9 +502,6 @@ var SearchHotelConfig = {
                 console.log('Hotel search result:');
                 console.log(data);
 
-                //remove notif
-                $('.notif').remove();
-
                 // add data to $scope
                 hotel_list.hotels = data.HotelList;
                 $scope.HotelSearchParams.SearchId = data.SearchId;
@@ -511,20 +510,17 @@ var SearchHotelConfig = {
                 $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
                 $scope.show_page($scope.MaxPage);
 
-                generate_star();
-
                 console.log('loaded');
                 console.log('--------------------------------');
 
-                loading_overlay('hide', 'body');
-
-                $scope.postProcess();
+                loading_overlay('hide');
 
                 // if error
             }).error(function () {
                 console.log('REQUEST ERROR');
+                console.log('--------------------------------');
 
-                loading_overlay('hide','body');
+                loading_overlay('hide');
 
             });
 
@@ -542,13 +538,57 @@ var SearchHotelConfig = {
             });
         }
 
-        // post process
-        $scope.postProcess = function () {
-            $('.hotel-wrapper .hotel').each(function() {
-                console.log('JEMPING POST PROCESS');
-            });
-        }
 
+    }]);
+
+    // room controller
+    app.controller('RoomController', ['$http', '$scope', function($http, $scope) {
+
+        // run hotel search function on document ready
+        angular.element(document).ready(function () {
+            $scope.getRoomlist();
+        });
+
+        // get room list
+        var room_list = this;
+        room_list.rooms = [];
+        $scope.RoomSearchParams = {};
+
+        // default value
+        $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
+        $scope.RoomSearchParams.StayDate = $('#form-room-checkin').val() || '2015-05-05';
+        $scope.RoomSearchParams.StayLength = $('#form-room-length').val() || 1;
+        $scope.RoomSearchParams.RoomCount = $('#form-room-qty').val() || 1;
+        $scope.RoomSearchParams.SearchId = '';
+
+        $scope.getRoomlist = function() {
+
+            console.log('--------------------------------');
+            console.log('Searching for Room with params:');
+            console.log($scope.RoomSearchParams);
+
+            $http.get(SearchRoomConfig.Url, {
+                params : {
+                    HotelId: $scope.RoomSearchParams.HotelId,
+                    StayDate: $scope.RoomSearchParams.StayDate,
+                    StayLength: $scope.RoomSearchParams.StayLength,
+                    RoomCount: $scope.RoomSearchParams.RoomCount,
+                    SearchId: $scope.RoomSearchParams.SearchId,
+                }
+            }).success(function(data) {
+                console.log(data);
+
+                room_list.rooms = data.PackageList;
+
+                console.log('LOADED');
+                console.log('--------------------------------');
+
+            }).error(function() {
+                console.log('REQUEST ERROR');
+                console.log('--------------------------------');
+            });
+
+        }
 
     }]);
 

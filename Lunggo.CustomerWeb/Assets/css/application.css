@@ -473,7 +473,8 @@ hr {
   .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum {
     padding: 20px;
     float: left;
-    width: 35%; }
+    width: 35%;
+    padding-bottom: 0; }
     .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name {
       font-size: 18px;
       color: #3fabe3;
@@ -534,7 +535,10 @@ hr {
 .hotel-detail-page .hotel-image .hotel-main-image {
   height: 380px;
   text-align: center;
-  background: #000; }
+  background-color: #000;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat; }
   .hotel-detail-page .hotel-image .hotel-main-image img {
     width: auto;
     max-height: 100%; }
@@ -543,7 +547,11 @@ hr {
   text-align: center;
   padding: 10px 0; }
   .hotel-detail-page .hotel-image .hotel-thumb a {
-    margin-right: 5px; }
+    margin-right: 5px;
+    display: inline-block;
+    height: 30px;
+    width: 50px;
+    overflow: hidden; }
     .hotel-detail-page .hotel-image .hotel-thumb a img {
       width: 50px; }
 .hotel-detail-page .hotel-map {
@@ -557,6 +565,9 @@ hr {
     font-style: italic; }
     .hotel-detail-page .hotel-map .hotel-address p {
       margin: 0; }
+  .hotel-detail-page .hotel-map .hotel-map-placeholder {
+    height: 450px;
+    background: #000; }
 .hotel-detail-page .room-search header {
   padding: 10px 0; }
   .hotel-detail-page .room-search header form .form-group {
@@ -567,6 +578,12 @@ hr {
       width: 65%; }
   .hotel-detail-page .room-search header form .form-action {
     float: right; }
+  .hotel-detail-page .room-search header form .option-wrapper .option {
+    width: 65%;
+    right: 10%; }
+  .hotel-detail-page .room-search header form .option-wrapper li {
+    padding-left: 0;
+    text-align: center; }
 .hotel-detail-page .room-search .room-list .room {
   border: 1px solid #ddd;
   margin-bottom: 15px;
@@ -580,9 +597,10 @@ hr {
     font-weight: bold; }
   .hotel-detail-page .room-search .room-list .room .room-image {
     width: 25%;
-    float: left; }
+    float: left;
+    display: none; }
   .hotel-detail-page .room-search .room-list .room .room-detail {
-    width: 75%;
+    width: 100%;
     float: left; }
     .hotel-detail-page .room-search .room-list .room .room-detail .room-name {
       color: #3fabe3;
@@ -1401,6 +1419,54 @@ hr {
       .flight-search-page .flight-list-return.horizontal .flight .flight-detail .detail-right h5 {
         font-weight: bold; }
 
+.tab-pane#history .history-wrapper .history-list {
+  padding: 0;
+  margin: 0;
+  list-style: none; }
+  .tab-pane#history .history-wrapper .history-list .history {
+    border: 1px solid red; }
+    .tab-pane#history .history-wrapper .history-list .history:before, .tab-pane#history .history-wrapper .history-list .history:after {
+      clear: both;
+      display: block;
+      width: 100%;
+      content: ""; }
+    .tab-pane#history .history-wrapper .history-list .history .history-number {
+      width: 10%;
+      float: left;
+      background-color: #b2b2b2; }
+    .tab-pane#history .history-wrapper .history-list .history .history-detail {
+      width: 90%;
+      float: left;
+      padding: 10px 0;
+      background: #f7f7f7; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail > div {
+        float: left;
+        padding: 0 10px; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .row {
+        padding: 5px 0; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .row > div:first-child:after {
+        content: ":";
+        position: absolute;
+        right: 0; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name {
+        width: 25%;
+        border-right: 1px solid #ddd; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name a {
+          font-size: 18px;
+          font-weight: bold; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-name p {
+          font-size: 12px; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-date {
+        width: 30%;
+        border-right: 1px solid #ddd; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-id {
+        width: 30%; }
+      .tab-pane#history .history-wrapper .history-list .history .history-detail .history-action {
+        width: 15%;
+        text-align: center; }
+        .tab-pane#history .history-wrapper .history-list .history .history-detail .history-action .btn {
+          width: 100%; }
+
 .user-page-login #site-header {
   background: none; }
 .user-page-login .user-login {
@@ -1573,7 +1639,7 @@ hr {
           background: #ddd; }
 
 .loading-overlay {
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   background: rgba(80, 80, 80, 0.8);
   width: 100%;
