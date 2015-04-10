@@ -316,6 +316,7 @@
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
