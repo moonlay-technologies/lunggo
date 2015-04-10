@@ -565,6 +565,9 @@ hr {
     font-style: italic; }
     .hotel-detail-page .hotel-map .hotel-address p {
       margin: 0; }
+  .hotel-detail-page .hotel-map .hotel-map-placeholder {
+    height: 450px;
+    background: #000; }
 .hotel-detail-page .room-search header {
   padding: 10px 0; }
   .hotel-detail-page .room-search header form .form-group {
