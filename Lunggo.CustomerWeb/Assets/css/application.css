@@ -584,6 +584,9 @@ hr {
   .hotel-detail-page .room-search header form .option-wrapper li {
     padding-left: 0;
     text-align: center; }
+.hotel-detail-page .room-search .room-loading {
+  text-align: center;
+  padding: 20px 0; }
 .hotel-detail-page .room-search .room-list .room {
   border: 1px solid #ddd;
   margin-bottom: 15px;

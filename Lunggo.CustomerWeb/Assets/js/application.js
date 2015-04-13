@@ -553,6 +553,7 @@ var SearchRoomConfig = {
         var room_list = this;
         room_list.rooms = [];
         $scope.RoomSearchParams = {};
+        $scope.loaded = false;
 
         // default value
         $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
@@ -566,6 +567,8 @@ var SearchRoomConfig = {
             console.log('--------------------------------');
             console.log('Searching for Room with params:');
             console.log($scope.RoomSearchParams);
+
+            $scope.loaded = false;
 
             $http.get(SearchRoomConfig.Url, {
                 params : {
@@ -582,6 +585,8 @@ var SearchRoomConfig = {
 
                 console.log('LOADED');
                 console.log('--------------------------------');
+
+                $scope.loaded = true;
 
             }).error(function() {
                 console.log('REQUEST ERROR');

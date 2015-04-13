@@ -131,8 +131,12 @@
                 </header>
                 <section ng-controller="RoomController as room_list">
                     <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>
+                    
+                    <section class="room-loading" ng-if="!loaded">
+                        <img src="/Assets/images/loading-image-dark.gif"/>
+                    </section>
 
-                    <section class="room-list">
+                    <section class="room-list" ng-if="loaded">
                         <!-- Loop start here -->
                         <article class="room" ng-repeat="room in room_list.rooms">
                             <div class="room-image">
