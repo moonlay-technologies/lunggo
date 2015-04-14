@@ -288,10 +288,10 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         new FlightStop
                         {
-                            StopAirport = flightSegment.StopQuantityInfo.LocationCode,
-                            StopArrival = flightSegment.StopQuantityInfo.ArrivalDateTime,
-                            StopDeparture = flightSegment.StopQuantityInfo.DepartureDateTime,
-                            StopDuration = flightSegment.StopQuantityInfo.Duration
+                            Airport = flightSegment.StopQuantityInfo.LocationCode,
+                            Arrival = flightSegment.StopQuantityInfo.ArrivalDateTime,
+                            Departure = flightSegment.StopQuantityInfo.DepartureDateTime,
+                            Duration = flightSegment.StopQuantityInfo.Duration
                         }
                     };
                 }

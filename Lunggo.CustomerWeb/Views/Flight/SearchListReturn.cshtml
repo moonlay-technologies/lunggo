@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewBag.Title = "Hotel Search List";
+}
+
+<div class="search-page flight-search-page">
+
+    <header class="page-header">
+        <div class="container">
+            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+            <hr>
+            <div class="pull-left"><b>Jakarta</b> to <b>Bali</b>  | Wed, 15-2-2015 |  <b>3 People</b> (1 Adult 1 Kid 1 Infant)</div>
+        </div>
+    </header><!-- .page-header -->
+    <div class="container">
+        <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+    </div>
+
+    <!-- -->
+    <section class="flight-date"></section><!-- .flight-date -->
+    <!-- -->
+
+    <aside class="flight-filter filter" data-active="false">
+        <div class="filter-button">
+            <span class="arrow">&gt;</span>
+            <span class="text">FILTER OFF</span>
+        </div>
+        <header>
+            <h3><b>FILTER</b> BY</h3>
+        </header>
+        <section class="filter-group hotel-price">
+            <h3 class="section-title">Harga</h3>
+            <input type="text" class="form-control">
+        </section>
+        <section class="filter-group hotel-star">
+            <h3 class="section-title">Bintang Hotel</h3>
+            <div class="star-selection">
+                <ul>
+                    <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span> <span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
+                </ul>
+            </div>
+        </section>
+        <section class="filter-group hotel-discount">
+            <ul>
+                <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
+            </ul>
+        </section>
+        <section class="filter-group search-filter">
+            <a href="#" class="btn btn-primary">FILTER</a>
+        </section>
+    </aside><!-- .flight-filter -->
+
+    <div class="container">
+
+        <section class="flight-list-return horizontal">
+
+            <article class="flight">
+
+                <div class="flight-main">
+                    <div class="flight-left">
+
+                        <div class="departure">
+                            <div class="detail">
+                                <div class="airline">
+                                    <h4><img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> GARUDA INDONESIA</h4>
+                                </div>
+                                <div class="flight-number">QZK-1234</div>
+                                <div class="duration"><h5>Duration : <span>9h 20m</span></h5></div>
+                                <div class="info">
+                                    <span class="flight-weight">10</span>
+                                    <span class="flight-tax"><img src="/assets/images/flight-tax-true.png" alt="TAX Included"></span>
+                                </div>
+                            </div>
+                            <div class="route">
+                                <div class="departure"><span><strong>Departure :</strong> 15.00, Jakarta (CGK)</span></div>
+                                <div class="stop"><span>1 STOP</span></div>
+                                <div class="arrival"><span><strong>Arrival :</strong> 19.00, Bali (DPS)</span></div>
+                            </div>
+                        </div>
+                        <div class="arrival">
+                            <div class="detail">
+                                <div class="airline">
+                                    <h4><img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> GARUDA INDONESIA</h4>
+                                </div>
+                                <div class="flight-number">QZK-1234</div>
+                                <div class="duration"><h5>Duration : <span>9h 20m</span></h5></div>
+                                <div class="info">
+                                    <span class="flight-weight">10</span>
+                                    <span class="flight-tax"><img src="/assets/images/flight-tax-true.png" alt="TAX Included"></span>
+                                </div>
+                            </div>
+                            <div class="route">
+                                <div class="departure"><span><strong>Departure :</strong> 15.00, Jakarta (CGK)</span></div>
+                                <div class="stop"><span>1 STOP</span></div>
+                                <div class="arrival"><span><strong>Arrival :</strong> 19.00, Bali (DPS)</span></div>
+                            </div>
+                        </div>
+
+                    </div><!-- .flight-left -->
+                    <div class="flight-right">
+                        <p>Price / Person:</p>
+                        <h5 class="price-was"><del>Rp 1.800.000</del></h5>
+                        <h4 class="price-now">Rp 10.500.000</h4>
+                        <small>harga sudah termasuk <b>pajak</b></small>
+                        <button class="btn btn-blue">Pesan</button>
+                    </div><!-- .flight-right -->
+                    <span class="flight-toggle"></span><!-- .flight-toggle -->
+                </div><!-- .flight-main -->
+
+                <div class="flight-detail">
+                    <div class="detail-departure">
+                        <div class="detail-left">
+                            <h4 class="detail-title"> <b>DEPARTURE FLIGHT</b> DETAILS <small> | Wed, 30 Februari 2015</small> </h4>
+                            <ol>
+                                <li>
+                                    <div class="detail-destination">
+                                        <div class="departure">
+                                            <span class="city">Jakarta</span>
+                                            <span class="airport">(CGK)</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="city">Surabaya</span>
+                                            <span class="airport">(SBY)</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-airline">
+                                        <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
+                                    </div>
+                                    <div class="detail-time">
+                                        <div class="departure">
+                                            <span class="time">15.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="time">16.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detail-destination">
+                                        <div class="departure">
+                                            <span class="city">Jakarta</span>
+                                            <span class="airport">(CGK)</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="city">Surabaya</span>
+                                            <span class="airport">(SBY)</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-airline">
+                                        <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
+                                    </div>
+                                    <div class="detail-time">
+                                        <div class="departure">
+                                            <span class="time">15.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="time">16.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="detail-right">
+                            <h5>IMPORTANT:</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe excepturi officia facere magnam animi iste suscipit praesentium.</p>
+                        </div>
+                    </div><!-- .detail-departure -->
+                    <hr>
+                    <div class="detail-arrival">
+                        <div class="detail-left">
+                            <h4 class="detail-title"> <b>RETURN FLIGHT</b> DETAILS <small> | Wed, 30 Februari 2015</small> </h4>
+                            <ol>
+                                <li>
+                                    <div class="detail-destination">
+                                        <div class="departure">
+                                            <span class="city">Jakarta</span>
+                                            <span class="airport">(CGK)</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="city">Surabaya</span>
+                                            <span class="airport">(SBY)</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-airline">
+                                        <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
+                                    </div>
+                                    <div class="detail-time">
+                                        <div class="departure">
+                                            <span class="time">15.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="time">16.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="detail-destination">
+                                        <div class="departure">
+                                            <span class="city">Jakarta</span>
+                                            <span class="airport">(CGK)</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="city">Surabaya</span>
+                                            <span class="airport">(SBY)</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-airline">
+                                        <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
+                                    </div>
+                                    <div class="detail-time">
+                                        <div class="departure">
+                                            <span class="time">15.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                        <div class="arrival">
+                                            <span class="time">16.00</span>
+                                            <span class="day">Wed</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="detail-right">
+                            <h5>IMPORTANT:</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe excepturi officia facere magnam animi iste suscipit praesentium.</p>
+                        </div>
+                    </div><!-- .detail-arrival -->
+                </div><!-- .flight-details -->
+
+            </article><!-- .flight -->
+
+
+
+        </section><!-- .flght-list -->
+
+    </div><!-- .container -->
+
+
+</div><!-- .search-flight -->

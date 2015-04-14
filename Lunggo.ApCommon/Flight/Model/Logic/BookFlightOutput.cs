@@ -16,7 +16,6 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class BookResult
     {
-        public bool IsBookSuccess { get; set; }
         public BookingStatus BookingStatus { get; set; }
         public string BookingId { get; set; }
         public DateTime? TimeLimit { get; set; }

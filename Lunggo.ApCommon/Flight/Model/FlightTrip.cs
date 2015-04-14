@@ -27,6 +27,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int StopQuantity { get; set; }
         public List<FlightStop> FlightStops { get; set; }
         public string AirlineCode { get; set; }
+        public string MarketingAirlineCode { get; set; }
         public string FlightNumber { get; set; }
         public string AircraftCode { get; set; }
         public string Rbd { get; set; }
@@ -34,9 +35,9 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightStop
     {
-        public string StopAirport { get; set; }
-        public DateTime StopArrival { get; set; }
-        public DateTime StopDeparture { get; set; }
-        public int StopDuration { get; set; }
+        public string Airport { get; set; }
+        public DateTime Arrival { get; set; }
+        public DateTime Departure { get; set; }
+        public int Duration { get; set; }
     }
 }

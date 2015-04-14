@@ -167,8 +167,8 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 CountryCode = "0",
                 AreaCode = "0",
-                PhoneNumber = bookInfo.ContactPhone,
-                Email = bookInfo.ContactEmail,
+                PhoneNumber = bookInfo.ContactData.Phone,
+                Email = bookInfo.ContactData.Email,
                 AirTravelers = airTravelers.ToArray(),
                 ExtensionData = null
             };

@@ -230,6 +230,7 @@
     <Compile Include="Areas\UW400\Models\UW400BookViewModel.cs" />
     <Compile Include="Areas\UW400\UW400AreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -241,6 +242,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\FlightCheckoutData.cs" />
+    <Compile Include="Models\FlightSearchData.cs" />
+    <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
@@ -1637,6 +1641,9 @@
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
+    <Content Include="Views\Flight\Checkout.cshtml" />
+    <Content Include="Views\Flight\SearchListOneWay.cshtml" />
+    <Content Include="Views\Flight\SearchListReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
@@ -1670,6 +1677,10 @@
     <ProjectReference Include="..\Lunggo.Repo\Lunggo.Repository.csproj">
       <Project>{50b8c0c0-6b28-46fd-ba90-771d8c9f12a1}</Project>
       <Name>Lunggo.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunggo.WebAPI\Lunggo.WebAPI.csproj">
+      <Project>{94C45B65-F662-4262-A745-0D023F9C9FF9}</Project>
+      <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

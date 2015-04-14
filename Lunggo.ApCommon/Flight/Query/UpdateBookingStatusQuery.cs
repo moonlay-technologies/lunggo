@@ -8,11 +8,11 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    public class UpdateBookingStatusQuery : QueryBase<UpdateBookingStatusQuery, BookingStatusInfo>
+    internal class UpdateBookingStatusQuery : QueryBase<UpdateBookingStatusQuery, BookingStatusInfo>
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            //TODO FLIGHT : construct query
+            // TODO FLIGHT : update booking status query
             return null;
         }
     }

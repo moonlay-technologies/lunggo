@@ -22,9 +22,9 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult Search(SearchFlightInput input)
         {
             var fs = FlightService.GetInstance();
-            fs.GetBookingStatus();
+            fs.UpdateBookingStatus();
             var searchResult = fs.SearchFlight(input);
-            var itin = searchResult.Itineraries[1];
+            var itin = searchResult.Itineraries[4];
 
             var revalidateInput = new RevalidateFlightInput
             {
@@ -50,9 +50,12 @@ namespace Lunggo.BackendWeb.Controllers
                 BookingInfo = new FlightBookingInfo
                 {
                     FareId = revalidateResult2.Itinerary.FareId,
-                    ContactName = "ayey",
-                    ContactEmail = "ayey@aye.y",
-                    ContactPhone = "0856123456789",
+                    ContactData = new ContactData
+                    {
+                        Name = "ayey",
+                        Email = "ayey@aye.y",
+                        Phone = "0856123456789",
+                    },
                     PassengerFareInfos = new List<PassengerFareInfo>()
                 }
             };

@@ -20,8 +20,11 @@ namespace Lunggo.ApCommon.Flight.Service
             var bookInfo = new FlightBookingInfo
             {
                 FareId = input.BookingInfo.FareId,
-                ContactEmail = input.BookingInfo.ContactEmail,
-                ContactPhone = input.BookingInfo.ContactPhone,
+                ContactData = new ContactData
+                {
+                    Email = input.BookingInfo.ContactData.Email,
+                    Phone = input.BookingInfo.ContactData.Phone
+                },
                 PassengerFareInfos = input.BookingInfo.PassengerFareInfos
             };
             var response = BookFlightInternal(bookInfo);
@@ -29,11 +32,11 @@ namespace Lunggo.ApCommon.Flight.Service
             if (response.IsSuccess)
             {
                 output.IsSuccess = true;
-                output.BookResult.IsBookSuccess = true;
                 output.BookResult.BookingId = response.Status.BookingId;
                 output.BookResult.BookingStatus = response.Status.BookingStatus;
                 if (response.Status.BookingStatus == BookingStatus.Booked)
                     output.BookResult.TimeLimit = response.Status.TimeLimit;
+                // TODO InsertBookingDbQuery
             }
             else
             {

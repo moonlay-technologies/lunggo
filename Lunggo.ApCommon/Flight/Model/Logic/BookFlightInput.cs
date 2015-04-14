@@ -11,6 +11,8 @@ namespace Lunggo.ApCommon.Flight.Model
     public class BookFlightInput
     {
         public FlightBookingInfo BookingInfo { get; set; }
+        public FlightFareItinerary Itinerary { get; set; }
+        public OriginDestinationInfo OriginDestinationInfo { get; set; }
         public PaymentData PaymentData { get; set; }
     }
 }

@@ -1,0 +1,306 @@
+﻿@model Lunggo.CustomerWeb.Models.FlightCheckoutData
+
+@{
+    ViewBag.Title = "FlightCheckout";
+}
+
+<!-- .checkout-page content start -->
+<div class="checkout-page hotel-checkout-page">
+
+    <header class="page-header">
+        <div class="container">
+            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+            <hr>
+            <h1><b>CUSTOMER</b> DETAIL</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8">
+                <section class="customer-detail">
+                    <section class="customer-form">
+                        <form action="" class="form" id="inilho" method="post">
+                            <div class="form-group">
+                                <label for="" class="control-label">Name (Buyer) :</label>
+                                <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Phone Number :</label>
+                                <input type="text" class="form-control" name="ContactData.PhoneNumber" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="control-label">Email :</label>
+                                <input type="text" class="form-control" name="ContactData.EmailAddress" placeholder="ex : nama@email.com">
+                            </div>
+                            @for (var i = 1; i <= Model.AdultCount; i++)
+                            {
+                                <label for="" class="control-label"><b>Passenger Adult @i</b></label>
+                                <div class="form-group">
+                                    <label for="" class="control-label">Title :</label>
+                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Title" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">First Name :</label>
+                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].FirstName" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">Last Name :</label>
+                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
+                                </div>
+                                if (Model.IsBirthDateRequired)
+                                {
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Birth Date :</label>
+                                        <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    @if (Model.IsPassportRequired)
+                                    {
+                                        <label for="" class="control-label">Passport Number :</label>
+                                    }
+                                    else
+                                    {
+                                        <label for="" class="control-label">ID Number :</label>
+                                    }
+                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].PassportOrIdNumber" placeholder="">
+                                </div>
+                                if (Model.IsPassportRequired)
+                                {
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Passport Expiry Date:</label>
+                                        <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label for="" class="control-label">Origin Country :</label>
+                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="">
+                                </div>
+                            }
+                            
+                            @if (Model.ChildCount > 0)
+                            {
+                                for (var i = 1; i <= Model.ChildCount; i++)
+                                {
+                                    <label for="" class="control-label"><b>Passenger Child @i</b></label>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Title :</label>
+                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Title" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">First Name :</label>
+                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].FirstName" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Last Name :</label>
+                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
+                                    </div>
+                                    if (Model.IsBirthDateRequired)
+                                    {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Birth Date :</label>
+                                            <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        @if (Model.IsPassportRequired)
+                                        {
+                                            <label for="" class="control-label">Passport Number :</label>
+                                        }
+                                        else
+                                        {
+                                            <label for="" class="control-label">ID Number :</label>
+                                        }
+                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].PassportOrIdNumber" placeholder="">
+                                    </div>
+                                    if (Model.IsPassportRequired)
+                                    {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Passport Expiry Date:</label>
+                                            <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Origin Country :</label>
+                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="">
+                                    </div>
+                                }
+                            }
+                            
+                            @if (Model.InfantCount > 0)
+                            {
+                                for (var i = 1; i <= Model.InfantCount; i++)
+                                {
+                                    <label for="" class="control-label"><b>Passenger Infant @i</b></label>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Title :</label>
+                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Title" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">First Name :</label>
+                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].FirstName" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Last Name :</label>
+                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
+                                    </div>
+                                    if (Model.IsBirthDateRequired)
+                                    {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Birth Date :</label>
+                                            <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        @if (Model.IsPassportRequired)
+                                        {
+                                            <label for="" class="control-label">Passport Number :</label>
+                                        }
+                                        else
+                                        {
+                                            <label for="" class="control-label">ID Number :</label>
+                                        }
+                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].PassportOrIdNumber" placeholder="">
+                                    </div>
+                                    if (Model.IsPassportRequired)
+                                    {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Passport Expiry Date:</label>
+                                            <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Origin Country :</label>
+                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="">
+                                    </div>
+                                }
+                            }
+                            <div class="form-group">
+                                <label for="" class="control-label">Special Request :</label>
+                            </div>
+                        </form>
+                    </section><!-- .customer-form -->
+                    <section class="payment-form">
+                        <h2><b>PAYMENT</b> METHOD</h2>
+
+                        <section class="payment-option">
+                            <form action="#" class="form">
+                                <label class="payment-transfer" for="payment-transfer">
+                                    <input type="radio" name="payment-option" id="payment-transfer">
+                                    <span>Transfer Bank</span>
+                                </label>
+                                <label class="payment-credit" for="payment-credit">
+                                    <input type="radio" name="payment-option" id="payment-credit">
+                                    <span>Kartu Kredit</span>
+                                </label>
+                                <label class="payment-bca" for="payment-bca">
+                                    <input type="radio" name="payment-option" id="payment-bca">
+                                    <span>BCA KlikPay</span>
+                                </label>
+                                <label class="payment-mandiri" for="payment-mandiri">
+                                    <input type="radio" name="payment-option" id="payment-mandiri">
+                                    <span>Mandiri ClickPay</span>
+                                </label>
+                                <label class="payment-cimb" for="payment-cimb">
+                                    <input type="radio" name="payment-option" id="payment-cimb">
+                                    <span>CIMB Click</span>
+                                </label>
+                            </form>
+                        </section><!-- .payment-option -->
+                        <section class="payment-detail">
+                            <section class="payment-transfer-detail">
+                                <h4>Transfer</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
+                            </section>
+                            <section class="payment-credit-detail">
+                                <h4>Credit Card</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
+                            </section>
+                            <section class="payment-bca-detail">
+                                <h4>BCA KlikPay</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, beatae magni sit et, accusantium quo reprehenderit temporibus consectetur, nihil voluptatibus laborum vel numquam repellat excepturi modi mollitia doloremque voluptate. Sapiente.</p>
+                            </section>
+                            <section class="payment-mandiri-detail">
+                                <h4>Mandiri ClickPay</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quibusdam, tempora numquam pariatur sit saepe magnam assumenda voluptates rem rerum nesciunt facilis nisi esse modi totam ipsum, quaerat vitae reprehenderit?</p>
+                            </section>
+                            <section class="payment-cimb-detail">
+                                <h4>CIMB</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis doloremque iusto in, sunt vero voluptas voluptate! Perferendis, distinctio aliquid, voluptate vero reiciendis laudantium dolorem laboriosam ipsam ad. Dolorum, id, nostrum.</p>
+                            </section>
+                        </section><!-- .payment-detail -->
+
+                    </section><!-- .payment-form -->
+                    <section class="payment-button">
+                        <button class="btn btn-primary btn-yellow" onclick="document.getElementById('inilho').submit()">BAYAR</button>
+                    </section><!-- .payment-button -->
+                </section><!-- .customer-detail -->
+            </div><!-- .col-sm-8 -->
+
+            <div class="col-sm-4">
+                <section class="order-detail">
+                    <h2><b>ORDER</b> DETAILS</h2>
+                    <section class="hotel-detail">
+                        <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel" class="hotel-image">
+                        <h3 class="hotel-name">AMARIS HOTEL</h3>
+                        <p class="hotel-star"> <span class="star"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </span> </p>
+                        <p class="hotel-address">Jl. Karet Pasar Gang Tiong No.62</p>
+                    </section><!-- .hotel-detail -->
+                    <section class="checkin-detail">
+                        <div class="row">
+                            <div class="col-sm-6">Check-in Date</div>
+                            <div class="col-sm-6">2015 Februari 30</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Check-out Date</div>
+                            <div class="col-sm-6">2015 Februari 31</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Number of Rooms</div>
+                            <div class="col-sm-6">3 Rooms</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Nights</div>
+                            <div class="col-sm-6">3 Nights</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Room Package</div>
+                            <div class="col-sm-6">3 Deluxe Room Package</div>
+                        </div>
+                    </section><!-- .checkin-detail -->
+                    <section class="price-detail">
+                        <h2><b>PRICE</b> DETAIL</h2>
+                        <div class="content-wrapper">
+                            <div class="row">
+                                <div class="col-sm-6">3 Rooms</div>
+                                <div class="col-sm-6">Rp 3.900.000</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">Tax</div>
+                                <div class="col-sm-6">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">Travorama Fee</div>
+                                <div class="col-sm-6">0</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">TOTAL</div>
+                                <div class="col-sm-6">Rp 3.900.000</div>
+                            </div>
+                        </div>
+                    </section><!-- .price-detail -->
+                </section><!-- .order-detail -->
+            </div><!-- .col-sm-4 -->
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+<!-- .checkout-page content end -->

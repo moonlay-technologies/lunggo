@@ -49,9 +49,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             var bookInfo = new FlightBookingInfo
             {
                 FareId = request.FareId,
-                ContactName = request.ContactName,
-                ContactPhone = request.ContactPhone,
-                ContactEmail = request.ContactEmail,
+                ContactData = new ContactData
+                {
+                    Name = request.ContactName,
+                    Phone = request.ContactPhone,
+                    Email = request.ContactEmail
+                },
                 PassengerFareInfos = passengerInfo.ToList()
             };
             var bookServiceRequest = new BookFlightInput
@@ -145,7 +148,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 OriginalRequest = request
             };
-            if (bookServiceResponse.IsSuccess && bookServiceResponse.BookResult.IsBookSuccess)
+            if (bookServiceResponse.IsSuccess)
                 switch (bookServiceResponse.BookResult.BookingStatus)
                 {
                     case BookingStatus.Pending:
