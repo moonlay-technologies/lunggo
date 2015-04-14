@@ -383,7 +383,7 @@ hr {border-color:#aaa;}
             &.active {border-color:#3fabe3;}
 			.flight-main {display:block; clear:both; position:relative;
 				&:after {content:""; clear:both; display:block; width:100%;}
-				.flight-left {float:left; width:73%;
+				.flight-left {float:left; width:73%; padding-bottom:30px;
 					.flight-header {border-bottom:1px solid #ddd;
 						.flight-airline {@extend .gotham; color:#3fabe3; display:inline-block; padding-left:10px; width:72%;
 							img {height:25px; margin-right:5px;}

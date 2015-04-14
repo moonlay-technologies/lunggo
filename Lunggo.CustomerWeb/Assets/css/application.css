@@ -938,7 +938,8 @@ hr {
       width: 100%; }
     .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left {
       float: left;
-      width: 73%; }
+      width: 73%;
+      padding-bottom: 30px; }
       .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header {
         border-bottom: 1px solid #ddd; }
         .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline {
