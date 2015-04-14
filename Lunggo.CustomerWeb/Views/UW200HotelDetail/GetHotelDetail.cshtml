@@ -9,29 +9,31 @@
 }
 
 @section PageJavascript {
-<script>
-    function initialize() {
-        var hotelLat = $('.hotel-map').attr('data-lat');
-        var hotelLng = $('.hotel-map').attr('data-lng');
-        var myLatlng = new google.maps.LatLng(hotelLat, hotelLng);
-        var mapOptions = {
-            zoom: 16,
-            scrollwheel: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            center: myLatlng
+    <script>
+        
+        // start google maps
+        function initialize() {
+            var hotelLat = $('.hotel-map').attr('data-lat');
+            var hotelLng = $('.hotel-map').attr('data-lng');
+            var myLatlng = new google.maps.LatLng(hotelLat, hotelLng);
+            var mapOptions = {
+                zoom: 16,
+                scrollwheel: false,
+                mapTypeControl: false,
+                streetViewControl: false,
+                center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
         }
-        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map
-        });
-    }
+        google.maps.event.addDomListener(window, 'load', initialize);
 
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+    </script>
 }
 
 

@@ -322,6 +322,8 @@
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
+    <Content Include="Assets\images\search-form-switch-flight.png" />
+    <Content Include="Assets\images\search-form-switch-hotel.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />

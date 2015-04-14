@@ -28,12 +28,13 @@
   font-weight: normal;
   font-style: normal; }
 
-.gotham, section.search section.search-hotel .btn, .home-page section.slider .slide-wrapper .slide .btn.btn-slide, .home-page section.news .news-wrapper .news-title, .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name, .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name, .hotel-detail-page header h1, .hotel-detail-page .hotel-review .review-list .review .review-left .review-title, .hotel-detail-page .suggestion .hotel h2, .hotel-checkout-page .order-detail .hotel-detail .hotel-name, .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .departure .detail .airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .arrival .detail .airline, .user-page-login .user-login .login-form button.btn.btn-yellow, .user-page-login .user-login .or, .user-page-login .benefit h4, .user-page-register .user-register .login-form button.btn.btn-yellow, .user-page-register .user-register .or, .user-page-register .benefit h4 {
+.gotham, .hotel-form section.search section.search-hotel .btn, .flight-form section.search section.search-flight .btn, .home-page section.slider .slide-wrapper .slide .btn.btn-slide, .home-page section.news .news-wrapper .news-title, .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name, .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name, .hotel-detail-page header h1, .hotel-detail-page .hotel-review .review-list .review .review-left .review-title, .hotel-detail-page .suggestion .hotel h2, .hotel-checkout-page .order-detail .hotel-detail .hotel-name, .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .departure .detail .airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .arrival .detail .airline, .user-page-login .user-login .login-form button.btn.btn-yellow, .user-page-login .user-login .or, .user-page-login .benefit h4, .user-page-register .user-register .login-form button.btn.btn-yellow, .user-page-register .user-register .or, .user-page-register .benefit h4 {
   font-family: 'gotham', helvetica, arial, sans-serif; }
 
 #site-header {
   background: url(../images/header-bg.jpg) center top no-repeat #005892;
-  padding: 20px 0 40px; }
+  padding: 20px 0 40px;
+  position: relative; }
 
 .main-menu {
   color: #fff;
@@ -67,45 +68,83 @@
 .home-header .search {
   margin-top: 0; }
 
-section.search {
+.hotel-form section.search {
   margin-top: 40px; }
-  section.search section.search-hotel {
+  .hotel-form section.search section.search-hotel {
     color: #fff;
     text-align: center; }
-    section.search section.search-hotel .fa {
+    .hotel-form section.search section.search-hotel .fa {
       font-size: 42px;
       vertical-align: middle; }
-    section.search section.search-hotel input[type="text"] {
+    .hotel-form section.search section.search-hotel input[type="text"] {
       padding: 20px 10px;
       font-size: 14px; }
-    section.search section.search-hotel .form-dash {
+    .hotel-form section.search section.search-hotel .form-dash {
       font-size: 32px; }
-    section.search section.search-hotel .input-location {
+    .hotel-form section.search section.search-hotel .input-location {
       width: 250px; }
-    section.search section.search-hotel input.input-checkin {
+    .hotel-form section.search section.search-hotel input.input-checkin, .hotel-form section.search section.search-hotel input.input-checkout {
       width: 150px;
       background: url(../images/cal-bg.png) 10px center no-repeat #fff;
-      padding-left: 50px; }
-    section.search section.search-hotel input.input-checkout {
-      width: 150px;
-      background: url(../images/cal-bg.png) 10px center no-repeat #fff;
-      padding-left: 50px; }
-    section.search section.search-hotel input.input-room {
+      padding-left: 45px; }
+    .hotel-form section.search section.search-hotel input.input-room {
       width: 200px;
       background: url(../images/bed-bg.png) 10px center no-repeat #fff;
       padding-left: 50px; }
-    section.search section.search-hotel .btn {
+    .hotel-form section.search section.search-hotel .btn {
       padding: 10px 20px; }
-    section.search section.search-hotel .container.wide input[type="text"] {
+    .hotel-form section.search section.search-hotel .container.wide input[type="text"] {
       font-size: 18px; }
-    section.search section.search-hotel .container.wide input.input-location {
+    .hotel-form section.search section.search-hotel .container.wide input.input-location {
       width: 350px; }
-    section.search section.search-hotel .container.wide input.input-checkin {
+    .hotel-form section.search section.search-hotel .container.wide input.input-checkin {
       width: 150px; }
-    section.search section.search-hotel .container.wide input.input-checkout {
+    .hotel-form section.search section.search-hotel .container.wide input.input-checkout {
       width: 150px; }
-    section.search section.search-hotel .container.wide input.input-room {
+    .hotel-form section.search section.search-hotel .container.wide input.input-room {
       width: 200px; }
+
+.flight-form section.search section.search-flight {
+  text-align: center;
+  color: #fff; }
+  .flight-form section.search section.search-flight .fa {
+    font-size: 42px;
+    vertical-align: middle; }
+  .flight-form section.search section.search-flight input[type="text"] {
+    padding: 20px 10px;
+    font-size: 14px; }
+  .flight-form section.search section.search-flight .form-dash {
+    font-size: 32px; }
+  .flight-form section.search section.search-flight .btn {
+    padding: 10px 20px; }
+  .flight-form section.search section.search-flight input.flight-date, .flight-form section.search section.search-flight input.flight-return-date {
+    background: url(../images/cal-bg.png) 10px center no-repeat #fff;
+    padding-left: 45px;
+    width: 150px; }
+  .flight-form section.search section.search-flight .container.wide input[type="text"] {
+    font-size: 17px; }
+
+#site-header .search-switch-button {
+  font-size: 42px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  left: 100%;
+  margin-left: -10%; }
+  #site-header .search-switch-button img {
+    max-width: none; }
+
+.header-form-wrapper {
+  width: 100%;
+  height: 230px;
+  overflow: hidden; }
+
+#site-header .header-form {
+  width: 200%; }
+  #site-header .header-form > section {
+    display: inline-block;
+    width: 49%; }
 
 #site-footer {
   color: #fff; }
