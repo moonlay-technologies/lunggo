@@ -10,7 +10,8 @@ namespace Lunggo.ApCommon.Flight.Query.Model
 {
     internal class FlightPassengerQueryRecord : QueryRecord
     {
-        public long ItineraryId { get; set; }
-        public PassengerFareInfo Passenger { get; set; }
+        internal long PassengerId { get; set; }
+        internal string RsvNo { get; set; }
+        internal PassengerFareInfo Passenger { get; set; }
     }
 }

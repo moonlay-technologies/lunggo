@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public FlightBookingInfo BookingInfo { get; set; }
         public FlightFareItinerary Itinerary { get; set; }
-        public OriginDestinationInfo OriginDestinationInfo { get; set; }
+        public List<OriginDestinationInfo> OriginDestinationInfos { get; set; }
         public PaymentData PaymentData { get; set; }
     }
 }

@@ -205,7 +205,7 @@ namespace Lunggo.ApCommon.Mystifly
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalTax.Amount);
             flightFareItinerary.TotalFare =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
-            flightFareItinerary.TripType = pricedItinerary.DirectionInd.ToString();
+            flightFareItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightTrips(pricedItinerary);
@@ -213,6 +213,23 @@ namespace Lunggo.ApCommon.Mystifly
             flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
+        }
+
+        private static TripType MapTripType(string type)
+        {
+            switch (type)
+            {
+                case "OneWay":
+                    return TripType.OneWay;
+                case "Return":
+                    return TripType.Return;
+                case "OpenJaw":
+                    return TripType.OpenJaw;
+                case "Circle":
+                    return TripType.Circle;
+                default:
+                    return TripType.OpenJaw;
+            }
         }
 
         private static void MapPassengerCount(PricedItinerary pricedItinerary, FlightFareItinerary flightFareItinerary)

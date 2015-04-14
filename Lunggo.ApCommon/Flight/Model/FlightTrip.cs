@@ -27,8 +27,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public int StopQuantity { get; set; }
         public List<FlightStop> FlightStops { get; set; }
         public string AirlineCode { get; set; }
-        public string MarketingAirlineCode { get; set; }
         public string FlightNumber { get; set; }
+        public string OperatingAirlineCode { get; set; }
         public string AircraftCode { get; set; }
         public string Rbd { get; set; }
     }

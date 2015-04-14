@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web.SessionState;
-using Lunggo.ApCommon.Flight.Constant;
+﻿using System.Linq;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

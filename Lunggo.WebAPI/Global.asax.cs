@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI
 {

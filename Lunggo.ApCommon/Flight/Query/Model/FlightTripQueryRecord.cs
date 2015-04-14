@@ -10,6 +10,7 @@ namespace Lunggo.ApCommon.Flight.Query.Model
 {
     internal class FlightTripQueryRecord : QueryRecord
     {
+        internal long TripId { get; set; }
         internal long ItineraryId { get; set; }
         internal OriginDestinationInfo Info { get; set; }
     }

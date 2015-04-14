@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
-        public string TripType { get; set; }
+        public TripType TripType { get; set; }
         public decimal TotalFare { get; set; }
         public decimal AdultTotalFare { get; set; }
         public decimal ChildTotalFare { get; set; }

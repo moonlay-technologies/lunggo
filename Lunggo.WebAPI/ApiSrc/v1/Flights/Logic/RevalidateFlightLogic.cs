@@ -6,6 +6,7 @@ using System.Web;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
+using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {

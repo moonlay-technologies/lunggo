@@ -10,6 +10,7 @@ namespace Lunggo.ApCommon.Flight.Query.Model
 {
     internal class FlightStopQueryRecord : QueryRecord
     {
+        internal long StopId { get; set; }
         internal long SegmentId { get; set; }
         internal FlightStop Stop { get; set; }
     }

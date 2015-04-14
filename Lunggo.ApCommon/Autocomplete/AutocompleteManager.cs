@@ -133,10 +133,10 @@ namespace Lunggo.ApCommon.Autocomplete
                     var splittedLine = line.Split('|');
                     result.Add(long.Parse(splittedLine[0]), new AirportDict
                     {
-                        Code = splittedLine[0],
-                        Name = splittedLine[1],
-                        City = splittedLine[2],
-                        Country = splittedLine[3]
+                        Code = splittedLine[1],
+                        Name = splittedLine[2],
+                        City = splittedLine[3],
+                        Country = splittedLine[4]
                     });
                 }
             }

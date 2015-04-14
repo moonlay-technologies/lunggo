@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 
@@ -25,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     InfantCount = itineraries.First().InfantCount
                 };
                 var result = SpecificSearchFlightInternal(conditions);
-                output = result.IsSuccess ? result.FlightItineraries.First() : null;
+                output = result.IsSuccess ? Enumerable.First<FlightFareItinerary>(result.FlightItineraries) : null;
             }
             else
             {

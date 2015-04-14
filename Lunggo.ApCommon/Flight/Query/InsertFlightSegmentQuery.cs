@@ -29,10 +29,10 @@ namespace Lunggo.ApCommon.Flight.Query
             valueClause.Append(@"@TripId, ");
 
             insertClause.Append(@"OperatingAirlineCd, ");
-            valueClause.Append(@"@Segment.AirlineCode, ");
+            valueClause.Append(@"@Segment.OperatingAirlineCode, ");
 
-            insertClause.Append(@"MarketingAirlineCd, ");
-            valueClause.Append(@"@Segment.MarketingAirlineCode, ");
+            insertClause.Append(@"AirlineCd, ");
+            valueClause.Append(@"@Segment.AirlineCode, ");
 
             insertClause.Append(@"FlightNumber, ");
             valueClause.Append(@"@Segment.FlightNumber, ");
