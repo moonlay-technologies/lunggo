@@ -1,4 +1,4 @@
-#site-header {background:url(../images/header-bg.jpg) center top no-repeat #005892; padding:20px 0 40px;}
+#site-header {background:url(../images/header-bg.jpg) center top no-repeat #005892; padding:20px 0 40px; position:relative;}
 
 .main-menu {color:#fff; text-transform:uppercase; text-align:center;
 	img {}
@@ -16,25 +16,59 @@
 }
 .home-header .search {margin-top:0;}
 
-section.search {margin-top:40px;
-	section.search-hotel {color:#fff; text-align:center;
-		.fa {font-size:42px; vertical-align:middle;}
-		input[type="text"] {padding:20px 10px; font-size:14px;}
-		.form-dash {font-size:32px;}
-		.input-location {width:250px;}
-		input.input-checkin {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px;}
-		input.input-checkout {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px;}
-		input.input-room {width:200px; background:url(../images/bed-bg.png) 10px center no-repeat #fff; padding-left:50px;}
-		.btn {@extend .gotham; padding:10px 20px;}
+// hotel search form
+.hotel-form {
+    section.search {margin-top:40px;
+	    section.search-hotel {color:#fff; text-align:center;
+		    .fa {font-size:42px; vertical-align:middle;}
+		    input[type="text"] {padding:20px 10px; font-size:14px;}
+		    .form-dash {font-size:32px;}
+		    .input-location {width:250px;}
+		    input.input-checkin, input.input-checkout {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px;}
+		    input.input-room {width:200px; background:url(../images/bed-bg.png) 10px center no-repeat #fff; padding-left:50px;}
+		    .btn {@extend .gotham; padding:10px 20px;}
 
-		// if container wide
-		.container.wide {
-			input[type="text"] {font-size:18px;}
-			input.input-location {width:350px;}
-			input.input-checkin {width:150px;}
-			input.input-checkout {width:150px;}
-			input.input-room {width:200px;}
-		}
-	}
-	section.search-flight {}
+		    // if container wide
+		    .container.wide {
+			    input[type="text"] {font-size:18px;}
+			    input.input-location {width:350px;}
+			    input.input-checkin {width:150px;}
+			    input.input-checkout {width:150px;}
+			    input.input-room {width:200px;}
+		    }
+	    }
+    }
 }
+
+// flight search form
+.flight-form {
+    section.search {
+        section.search-flight {text-align:center; color:#fff;
+            .fa {font-size:42px; vertical-align:middle;}
+		    input[type="text"] {padding:20px 10px; font-size:14px;}
+		    .form-dash {font-size:32px;}
+		    .btn {@extend .gotham; padding:10px 20px;}
+
+            input.flight-date, input.flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px; width:150px;}
+
+		    // if container wide
+		    .container.wide {
+                input[type="text"] {font-size:17px;}
+		    }
+        }
+    }
+}
+
+#site-header .search-switch-button {font-size:42px; color:#fff; position:absolute; top:50%; cursor:pointer; left:100%; margin-left:-10%;
+    img {max-width:none;}
+    &.flight {}
+    &.hotel {}
+}
+.header-form-wrapper {width:100%; height:230px; overflow:hidden;}
+#site-header .header-form {width:200%;
+    &>section {display:inline-block; width:49%;}
+    &.hotel-form {}
+    &.flight-form {}
+}
+
+

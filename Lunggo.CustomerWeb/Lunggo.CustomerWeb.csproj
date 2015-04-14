@@ -317,6 +317,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\loading-icon.png" />
+    <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
@@ -325,6 +326,8 @@
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
+    <Content Include="Assets\images\search-form-switch-flight.png" />
+    <Content Include="Assets\images\search-form-switch-hotel.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />

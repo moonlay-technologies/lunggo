@@ -9,29 +9,31 @@
 }
 
 @section PageJavascript {
-<script>
-    function initialize() {
-        var hotelLat = $('.hotel-map').attr('data-lat');
-        var hotelLng = $('.hotel-map').attr('data-lng');
-        var myLatlng = new google.maps.LatLng(hotelLat, hotelLng);
-        var mapOptions = {
-            zoom: 16,
-            scrollwheel: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            center: myLatlng
+    <script>
+        
+        // start google maps
+        function initialize() {
+            var hotelLat = $('.hotel-map').attr('data-lat');
+            var hotelLng = $('.hotel-map').attr('data-lng');
+            var myLatlng = new google.maps.LatLng(hotelLat, hotelLng);
+            var mapOptions = {
+                zoom: 16,
+                scrollwheel: false,
+                mapTypeControl: false,
+                streetViewControl: false,
+                center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
         }
-        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map
-        });
-    }
+        google.maps.event.addDomListener(window, 'load', initialize);
 
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+    </script>
 }
 
 
@@ -131,8 +133,12 @@
                 </header>
                 <section ng-controller="RoomController as room_list">
                     <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>
+                    
+                    <section class="room-loading" ng-if="!loaded">
+                        <img src="/Assets/images/loading-image-dark.gif"/>
+                    </section>
 
-                    <section class="room-list">
+                    <section class="room-list" ng-if="loaded">
                         <!-- Loop start here -->
                         <article class="room" ng-repeat="room in room_list.rooms">
                             <div class="room-image">

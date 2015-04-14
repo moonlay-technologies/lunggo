@@ -6,26 +6,49 @@ $(document).ready(function(){
 	hotel_search();
 	hotel_detail();
 	flight_search();
-
+    animate_search_form();
     hotel_search_form_functions();
-
-    //$('.input-checkin.select-date').pickmeup_twitter_bootstrap({
-    //   calendars: 3,
-    //    format: 'Y/m/d',
-    //    hide_on_select: true,
-    //    select_month: false,
-    //    select_year: false,
-    //    separator: '/',
-    //    min: new Date,
-    //    change: function () {
-    //        date_picker_checkout( $(this).pickmeup('get_date') )
-    //    }
-    //});
 
 });
 
 //******************************************
 // FUNCTIONS
+
+//******************************************
+// toggle search form
+function animate_search_form() {
+
+    var scrollTarget;
+    var buttonPosition;
+
+    $('#site-header .search-switch-button').click(function () {
+        // get scroll value
+        if ($(this).hasClass('flight')) {
+            buttonPosition = {left : '0', marginLeft: '5%'};
+            scrollTarget = $('#site-header .header-form-wrapper .flight-form').position().left;
+            $(this).removeClass('flight').addClass('hotel');
+            $(this).children('img').attr('src', '/Assets/images/search-form-switch-hotel.png');
+        } else {
+            buttonPosition = {left : '100%', marginLeft: '-10%'};
+            scrollTarget = 0;
+            $(this).removeClass('hotel').addClass('flight');
+            $(this).children('img').attr('src','/Assets/images/search-form-switch-flight.png');
+        }
+
+        // scrollLeft the element
+        $('#site-header .header-form-wrapper').stop().animate({
+            scrollLeft: scrollTarget
+        }, {
+            duration: 1000
+        });
+
+        // animate button
+        $(this).stop().animate(buttonPosition, 1000);
+    });
+
+    
+
+}
 
 //******************************************
 // hotel search form
@@ -51,17 +74,17 @@ function hotel_search_form_functions() {
 
         // run function on keyup
         $(el_input).keyup(function () {
-            var req_val = $(this).val();
-            verify_input(req_val);
+            var reqVal = $(this).val();
+            verifyInput(reqVal);
         });
 
         $(el_input).focus(function () {
-            var req_val = $(this).val();
-            verify_input(req_val);
+            var reqVal = $(this).val();
+            verifyInput(reqVal);
         });
 
         // function verified input
-        function verify_input(input_val) {
+        function verifyInput(input_val) {
             if (input_val.length >= min_char) {
                 $(list_wrapper).empty();
                 $(list_wrapper).append('<li class="text-center"> Loading </li>');
@@ -553,6 +576,7 @@ var SearchRoomConfig = {
         var room_list = this;
         room_list.rooms = [];
         $scope.RoomSearchParams = {};
+        $scope.loaded = false;
 
         // default value
         $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
@@ -566,6 +590,8 @@ var SearchRoomConfig = {
             console.log('--------------------------------');
             console.log('Searching for Room with params:');
             console.log($scope.RoomSearchParams);
+
+            $scope.loaded = false;
 
             $http.get(SearchRoomConfig.Url, {
                 params : {
@@ -582,6 +608,8 @@ var SearchRoomConfig = {
 
                 console.log('LOADED');
                 console.log('--------------------------------');
+
+                $scope.loaded = true;
 
             }).error(function() {
                 console.log('REQUEST ERROR');
