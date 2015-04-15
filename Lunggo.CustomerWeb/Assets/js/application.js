@@ -61,7 +61,14 @@ function hotelSearchFormFunctions() {
         datePicker();
         stayLength();
         roomCount();
+        validateForm();
     });
+
+    // ******************************
+    // validate form
+    function validateForm() {
+        
+    }
 
     // ******************************
     // location auto complete
@@ -154,7 +161,6 @@ function hotelSearchFormFunctions() {
         $("input.input-location , .location-autocomplete").on('click', function (evt) {
             evt.stopPropagation();
         });
-
 
 
     };
@@ -300,9 +306,17 @@ function flightSearchFormFunctions() {
     // activate functions
     $(document).ready(function() {
         airportAutocomplete();
+        validateForm();
     });
 
     // ******************************
+    // validate form
+    function validateForm() {
+        
+    }
+
+    // ******************************
+    // flight autocomplete
     function airportAutocomplete() {
 
         var autocompleteWrapper = '.airport-autocomplete';
@@ -322,8 +336,10 @@ function flightSearchFormFunctions() {
             });
         });
 
-        $(elInput).each(function() {
+        $(elInput).each(function () {
+            var previousValue;
             $(this).focus(function () {
+                previousValue = $(this).val();
                 $(this).val('');
                 $(autocompleteWrapper).empty();
                 $('.autocomplete-current').removeClass('autocomplete-current');
@@ -347,7 +363,7 @@ function flightSearchFormFunctions() {
             }
         }
 
-        // populate ajax
+        // get Ajax
         function getResult(locationQuery) {
             $.ajax({
                 method: "GET",
@@ -365,7 +381,7 @@ function flightSearchFormFunctions() {
             if (data.length > 0) {
                 $(autocompleteWrapper).empty();
                 for (i = 0; i < data.length; i++) {
-                    $(autocompleteWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].Name + ',' + data[i].City + '</span></li>');
+                    $(autocompleteWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].Name + ' ,' + data[i].City + '</span></li>');
                 }
                 $(autocompleteWrapper).wrapInner('<ul></ul>');
                 $(autocompleteWrapper).show().attr('data-active', 'true');
@@ -377,7 +393,7 @@ function flightSearchFormFunctions() {
             }
         }
 
-        // select room
+        // select airport
         $(autocompleteWrapper).on('click', 'li', function () {
             $('.autocomplete-current').val($(this).text());
             $(elInput).blur();
@@ -385,7 +401,7 @@ function flightSearchFormFunctions() {
             $('.autocomplete-current').removeClass('autocomplete-current');
         });
 
-        // hide room option
+        // hide airport autocomplete
         $('html').click(function () {
             $(autocompleteWrapper).hide();
         });

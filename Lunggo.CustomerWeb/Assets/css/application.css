@@ -68,6 +68,9 @@
 .home-header .search {
   margin-top: 0; }
 
+.home-page #site-header section.search {
+  margin-top: 0; }
+
 .hotel-form section.search {
   margin-top: 40px; }
   .hotel-form section.search section.search-hotel {
@@ -109,6 +112,8 @@
   .flight-form section.search section.search-flight {
     text-align: center;
     color: #fff; }
+    .flight-form section.search section.search-flight .form-group {
+      position: relative; }
     .flight-form section.search section.search-flight .fa {
       font-size: 42px;
       vertical-align: middle; }
@@ -123,6 +128,10 @@
       background: url(../images/cal-bg.png) 10px center no-repeat #fff;
       padding-left: 45px;
       width: 120px; }
+    .flight-form section.search section.search-flight label[for="return-flight"] {
+      position: absolute;
+      left: 0;
+      cursor: pointer; }
     .flight-form section.search section.search-flight .container.wide input[type="text"] {
       font-size: 17px; }
     .flight-form section.search section.search-flight .container.wide input.flight-date, .flight-form section.search section.search-flight .container.wide input.flight-return-date {
