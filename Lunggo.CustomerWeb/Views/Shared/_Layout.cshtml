@@ -19,49 +19,94 @@
 
         <!-- site header start -->
         <header id="site-header" class="site-header">
+            <div class="search-switch-button flight">
+                <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" />
+            </div><!-- .search-switch-button -->
             @{ Html.RenderPartial("_Mainmenu"); }
-            <section class="search">
-                <div class="hotel-form">
-                    <section class="search-hotel">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-12">
+            <div class="header-form-wrapper">
+                <section class="header-form">
+                    <section class="hotel-form">
+                        <section class="search">
+                            <section class="search-hotel">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
 
-                                    <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
-                                        <div class="form-group loc-auto-wrapper">
-                                            <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
-                                            <div class="loc-auto">
-                                                <ul></ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control input-checkin select-date" placeholder="checkin">
-                                        </div>
-                                        <div class="form-group">
-                                            <span class="form-dash">-</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control input-checkout select-date" placeholder="checkout">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control input-room select-room" placeholder="room">
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="hidden search-hotel-value location" name="LocationId" />
-                                            <input class="hidden search-hotel-value staydate" name="StayDate" />
-                                            <input class="hidden search-hotel-value staylength" name="StayLength" />
-                                            <input class="hidden search-hotel-value roomcount" name="RoomCount" />
-                                            <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                        </div>
-                                    </form>
+                                            <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
+                                                <div class="form-group">
+                                                    <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-checkin select-date" placeholder="checkin">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="form-dash">-</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-checkout select-date" placeholder="checkout">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control input-room select-room" placeholder="room">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="hidden search-hotel-value location" name="LocationId" />
+                                                    <input class="hidden search-hotel-value staydate" name="StayDate" />
+                                                    <input class="hidden search-hotel-value staylength" name="StayLength" />
+                                                    <input class="hidden search-hotel-value roomcount" name="RoomCount" />
+                                                    <button class="btn btn-primary btn-yellow">SEARCH</button>
+                                                </div>
+                                            </form>
 
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="search-flight"></div>
-            </section>
+                            </section><!-- .search-hotel -->
+                        </section>
+                    </section><!-- .hotel-form -->
+                    <section class="flight-form">
+                        <section class="search">
+                            <section class="search-flight">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-flight-form">
+                                                <div class="form-group loc-auto-wrapper">
+                                                    <span class="fa fa-plane"></span> <input type="text" class="form-control flight-origin" placeholder="Start here">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control flight-destination" placeholder="Enter your destination" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control flight-date" placeholder="flight date">
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="form-dash">-</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control flight-return-date" placeholder="return date">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control flight-" placeholder="passenger">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="hidden flight-form-value" id="flight-origin" />
+                                                    <input type="text" class="hidden flight-form-value" id="flight-destination" />
+                                                    <input type="text" class="hidden flight-form-value" id="flight-date" />
+                                                    <input type="text" class="hidden flight-form-value" id="flight-return-date" />
+                                                    <input type="text" class="hidden flight-form-value" id="flight-seat" />
+                                                    <button class="btn btn-primary btn-yellow">SEARCH</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </section><!-- .search-hotel -->
+                        </section>
+                    </section><!-- .flight-form -->
+                </section><!-- .header-form -->
+            </div><!-- .header-form-wrapper -->
         </header>
         <!-- site header end -->
         <!-- site content start -->

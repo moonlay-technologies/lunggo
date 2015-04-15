@@ -692,25 +692,21 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
-// Location auto complete
-.loc-auto-wrapper {position:relative;
-	.loc-auto {position:absolute; z-index:9999; background:#fff; right:0; width:90%; max-height:250px; overflow:auto; display:none; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
-		ul {padding:0; list-style:none; margin-bottom:0;
-			li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
-				&:hover {background:#ddd;}
-			}
-		}
-	}
-}
-
-// ----------------------------------------------
 // Loading
 .loading-overlay {position:fixed; z-index:9999; background:rgba(80,80,80,0.8); width:100%; height:100%; top:0; left:0;
     .loading-content {position:absolute; text-align:center; top:40%; width:100%;}
 }
 
 // ----------------------------------------------
-// Date picker
+// Hotel Search Form
+.location-autocomplete {background:#fff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; height:auto; max-height:200px; display:none; overflow:auto;
+    ul {padding:0; margin:0; list-style:none;
+        li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
+            &:hover {background:#ddd;}
+        }
+    }
+}
+
 .pickmeup-twitter-bootstrap {z-index:9999;
     .pmu-day-of-week {font-weight:bold;}
     .pmu-month {font-weight:bold; font-size:18px;}
@@ -722,11 +718,11 @@ hr {border-color:#aaa;}
     .pmu-selected {background:#2fb4e6;}
 }
 
-.option-wrapper {position:relative;
-    .option {position:absolute; z-index:9999; background:#fff; right:0; width:100%; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
-        ul{padding:0; margin:0;}
-        li {display:block; text-align:right; color:#000; text-align:left; padding:10px 0; padding-left:50px; border-bottom:1px solid #ddd; cursor:pointer;
+.room-count-selection {position:absolute; height:auto; background:#fff; z-index:9999; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; display:none;
+    ul {padding:0; margin:0; list-style:none;
+        li {display:block; color:#000; text-align:left; padding:10px 0; padding-left:50px; border-bottom:1px solid #ddd; cursor:pointer;
             &:hover {background:#ddd;}
         }
     }
 }
+

@@ -24,7 +24,7 @@
                 <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights"/>
             </div><!-- .search-switch-button -->
             @{ Html.RenderPartial("_Mainmenu"); }
-            <div class="header-form-wrapper">
+            <div class="header-form-wrapper home-page-header">
                 <section class="header-form">
                     <section class="hotel-form">
                         <section class="site-tag">
@@ -43,11 +43,8 @@
                                         <div class="col-sm-12">
 
                                             <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
-                                                <div class="form-group loc-auto-wrapper">
+                                                <div class="form-group">
                                                     <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
-                                                    <div class="loc-auto">
-                                                        <ul></ul>
-                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control input-checkin select-date" placeholder="checkin">

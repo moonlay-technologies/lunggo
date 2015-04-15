@@ -42,18 +42,19 @@
 
 // flight search form
 .flight-form {
-    section.search {
+    section.search {margin-top:40px;
         section.search-flight {text-align:center; color:#fff;
             .fa {font-size:42px; vertical-align:middle;}
 		    input[type="text"] {padding:20px 10px; font-size:14px;}
 		    .form-dash {font-size:32px;}
 		    .btn {@extend .gotham; padding:10px 20px;}
 
-            input.flight-date, input.flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px; width:150px;}
+            input.flight-date, input.flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px; width:120px;}
 
 		    // if container wide
 		    .container.wide {
                 input[type="text"] {font-size:17px;}
+                input.flight-date, input.flight-return-date {padding-left:45px; width:150px;}
 		    }
         }
     }
@@ -64,9 +65,11 @@
     &.flight {}
     &.hotel {}
 }
-.header-form-wrapper {width:100%; height:230px; overflow:hidden;}
+.header-form-wrapper {width:100%; overflow:hidden;
+    &.home-page-header {height:230px;}
+}
 #site-header .header-form {width:200%;
-    &>section {display:inline-block; width:49%;}
+    &>section {display:block; width:50%; float:left;}
     &.hotel-form {}
     &.flight-form {}
 }
