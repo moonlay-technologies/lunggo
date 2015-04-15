@@ -6,8 +6,9 @@ $(document).ready(function(){
 	hotel_search();
 	hotel_detail();
 	flight_search();
-    animate_search_form();
-    hotel_search_form_functions();
+    switchSearchForm();
+    hotelSearchFormFunctions();
+    flightSearchFormFunctions();
 
 });
 
@@ -16,7 +17,7 @@ $(document).ready(function(){
 
 //******************************************
 // toggle search form
-function animate_search_form() {
+function switchSearchForm() {
 
     var scrollTarget;
     var buttonPosition;
@@ -52,7 +53,7 @@ function animate_search_form() {
 
 //******************************************
 // hotel search form
-function hotel_search_form_functions() {
+function hotelSearchFormFunctions() {
 
     // activate functions
     $(document).ready(function() {
@@ -290,8 +291,110 @@ function hotel_search_form_functions() {
 
     }
 
+}
 
-    
+//******************************************
+// flight search form
+function flightSearchFormFunctions() {
+
+    // activate functions
+    $(document).ready(function() {
+        airportAutocomplete();
+    });
+
+    // ******************************
+    function airportAutocomplete() {
+
+        var autocompleteWrapper = '.airport-autocomplete';
+        var ajaxUrl = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/airport/';
+        var minLength = 3;
+        var elInput = '.airport-autocomplete-input';
+        var elPosition = {};
+
+        // generate autocomplete wrapper
+        $('body').append('<div class="'+autocompleteWrapper.replace('.','')+'"></div>');
+
+        // run function on keyup
+        $(elInput).each(function() {
+            $(elInput).keyup(function () {
+                var reqVal = $(this).val();
+                verifyInput(reqVal);
+            });
+        });
+
+        $(elInput).each(function() {
+            $(this).focus(function () {
+                $(this).val('');
+                $(autocompleteWrapper).empty();
+                $('.autocomplete-current').removeClass('autocomplete-current');
+                $(this).addClass('autocomplete-current');
+                elPosition.top = $(this).offset().top + $(this).outerHeight();
+                elPosition.left = $(this).offset().left;
+                $(autocompleteWrapper).css({
+                    top: elPosition.top,
+                    left: elPosition.left
+                });
+            });
+        });
+        
+        // verify input
+        function verifyInput(reqVal) {
+            if (reqVal.length >= minLength) {
+                getResult(reqVal);
+                $(autocompleteWrapper).show();
+            } else {
+                $(autocompleteWrapper).hide();
+            }
+        }
+
+        // populate ajax
+        function getResult(locationQuery) {
+            $.ajax({
+                method: "GET",
+                dataType: "json",
+                url: ajaxUrl + locationQuery
+            })
+            .done(function (result) {
+                showResult(result);
+                console.log(result);
+            });
+        }
+        
+        // show result
+        function showResult(data) {
+            if (data.length > 0) {
+                $(autocompleteWrapper).empty();
+                for (i = 0; i < data.length; i++) {
+                    $(autocompleteWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].Name + ',' + data[i].City + '</span></li>');
+                }
+                $(autocompleteWrapper).wrapInner('<ul></ul>');
+                $(autocompleteWrapper).show().attr('data-active', 'true');
+            } else {
+                $(autocompleteWrapper).empty();
+                $(autocompleteWrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
+                $(autocompleteWrapper).wrapInner('<ul></ul>');
+                $(autocompleteWrapper).show();
+            }
+        }
+
+        // select room
+        $(autocompleteWrapper).on('click', 'li', function () {
+            $('.autocomplete-current').val($(this).text());
+            $(elInput).blur();
+            $(autocompleteWrapper).hide();
+            $('.autocomplete-current').removeClass('autocomplete-current');
+        });
+
+        // hide room option
+        $('html').click(function () {
+            $(autocompleteWrapper).hide();
+        });
+        $(autocompleteWrapper).on('click', function (evt) {
+            evt.stopPropagation();
+        });
+        
+
+    }
 
 }
 

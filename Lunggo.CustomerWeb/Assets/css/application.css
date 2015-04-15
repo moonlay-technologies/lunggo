@@ -1738,3 +1738,29 @@ hr {
       cursor: pointer; }
       .room-count-selection ul li:hover {
         background: #ddd; }
+
+.airport-autocomplete {
+  width: 300px;
+  max-height: 200px;
+  overflow: auto;
+  background: #fff;
+  position: absolute;
+  z-index: 9999;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  display: none; }
+  .airport-autocomplete ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+    .airport-autocomplete ul li {
+      display: block;
+      color: #000;
+      text-align: left;
+      padding: 10px 0;
+      padding-left: 30px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer; }
+      .airport-autocomplete ul li:hover {
+        background: #ddd; }
