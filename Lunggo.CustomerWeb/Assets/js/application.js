@@ -282,7 +282,7 @@ function hotel_search_form_functions() {
 
         // hide room option
         $('html').click(function () {
-            $('.option-wrapper .option').hide();
+            $(roomSelection).hide();
         });
         $(roomOption).on('click', function (evt) {
             evt.stopPropagation();
