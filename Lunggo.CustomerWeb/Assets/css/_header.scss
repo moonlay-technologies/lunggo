@@ -57,10 +57,18 @@
 
             label[for="return-flight"] {position:absolute; left:0; cursor:pointer;}
 
+            .flight-passenger {height:42px; padding-top:8px;
+                label {width:40px; display:inline-block;
+                    span {text-align:center; display:inline-block;}
+                    input[type="text"] {text-align:center; width:25px; padding:0; color:#000; border:0;}
+                }
+            }
+
 		    // if container wide
 		    .container.wide {
                 input[type="text"] {font-size:17px;}
                 input.flight-date, input.flight-return-date {padding-left:45px; width:150px;}
+                .flight-passenger label {width:50px;}
 		    }
         }
     }

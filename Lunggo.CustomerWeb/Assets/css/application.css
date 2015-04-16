@@ -134,11 +134,28 @@
       position: absolute;
       left: 0;
       cursor: pointer; }
+    .flight-form section.search section.search-flight .flight-passenger {
+      height: 42px;
+      padding-top: 8px; }
+      .flight-form section.search section.search-flight .flight-passenger label {
+        width: 40px;
+        display: inline-block; }
+        .flight-form section.search section.search-flight .flight-passenger label span {
+          text-align: center;
+          display: inline-block; }
+        .flight-form section.search section.search-flight .flight-passenger label input[type="text"] {
+          text-align: center;
+          width: 25px;
+          padding: 0;
+          color: #000;
+          border: 0; }
     .flight-form section.search section.search-flight .container.wide input[type="text"] {
       font-size: 17px; }
     .flight-form section.search section.search-flight .container.wide input.flight-date, .flight-form section.search section.search-flight .container.wide input.flight-return-date {
       padding-left: 45px;
       width: 150px; }
+    .flight-form section.search section.search-flight .container.wide .flight-passenger label {
+      width: 50px; }
 
 #site-header .search-switch-button {
   font-size: 42px;
