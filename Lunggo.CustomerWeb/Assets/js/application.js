@@ -148,7 +148,7 @@ function hotelSearchFormFunctions() {
         function selectResult() {
             $(listWrapper).on('click', 'li', function () {
                 $(elInput).val($(this).text());
-                $(list_wrapper).hide();
+                $(listWrapper).hide();
                 $(elInput).attr('data-location-id', $(this).attr('data-location-id'));
                 $('.search-hotel-form .search-hotel-value.location').val($(this).attr('data-location-id'));
             });
@@ -177,15 +177,15 @@ function hotelSearchFormFunctions() {
             separator: '-',
             min: new Date,
             change: function () {
-                date_picker_checkout($(this).pickmeup('get_date'));
+                datePickerCheckout($(this).pickmeup('get_date'));
                 $('.search-hotel-value.staydate').val( $(this).val() );
             }
         });
     }
 
-    function date_picker_checkout(the_date) {
+    function datePickerCheckout(the_date) {
 
-        var selected_date = the_date || new Date;
+        var selectedDate = the_date || new Date;
 
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
@@ -195,22 +195,22 @@ function hotelSearchFormFunctions() {
             select_month: false,
             select_year: false,
             separator: '-',
-            min: selected_date,
-            default_date: selected_date,
+            min: selectedDate,
+            default_date: selectedDate,
             change: function() {
-                calculate_date( $(this).pickmeup('get_date') );
+                calculateDate( $(this).pickmeup('get_date') );
             }
         });
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
 
     }
 
-    function calculate_date(checkout_date) {
-        var checkin_date = new Date($('.search-hotel-value.staydate').val());
-        var checkout_date = new Date( checkout_date );
-        var stay_length = Math.abs(checkout_date - checkin_date);
-        var stay_length_value = Math.ceil(stay_length/ (1000 * 3600 * 24));
-        $('.search-hotel-value.staylength').val(stay_length_value );
+    function calculateDate(checkoutDate) {
+        var checkinDate = new Date($('.search-hotel-value.staydate').val());
+        var checkoutDate = new Date( checkoutDate);
+        var stayLength = Math.abs(checkoutDate - checkinDate);
+        var stayLengthValue = Math.ceil(stayLength/ (1000 * 3600 * 24));
+        $('.search-hotel-value.staylength').val(stayLengthValue);
     }
 
     // ******************************
@@ -307,6 +307,8 @@ function flightSearchFormFunctions() {
     $(document).ready(function() {
         airportAutocomplete();
         validateForm();
+        switchFlightType();
+        datePicker();
     });
 
     // ******************************
@@ -350,6 +352,7 @@ function flightSearchFormFunctions() {
                     top: elPosition.top,
                     left: elPosition.left
                 });
+                $(autocompleteWrapper).attr('data-airport-for', $(this).attr('data-airport-for') );
             });
         });
         
@@ -381,7 +384,7 @@ function flightSearchFormFunctions() {
             if (data.length > 0) {
                 $(autocompleteWrapper).empty();
                 for (i = 0; i < data.length; i++) {
-                    $(autocompleteWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].Name + ' ,' + data[i].City + '</span></li>');
+                    $(autocompleteWrapper).append('<li data-code="' + data[i].Code + '"><span>' + data[i].Name + ' ,' + data[i].City + '</span></li>');
                 }
                 $(autocompleteWrapper).wrapInner('<ul></ul>');
                 $(autocompleteWrapper).show().attr('data-active', 'true');
@@ -399,6 +402,12 @@ function flightSearchFormFunctions() {
             $(elInput).blur();
             $(autocompleteWrapper).hide();
             $('.autocomplete-current').removeClass('autocomplete-current');
+            var airportTarget = $(autocompleteWrapper).attr('data-airport-for');
+            if (airportTarget == 'Ori') {
+                $('.search-flight-form #flight-origin').val( $(this).attr('data-Code') );
+            } else if (airportTarget == 'Dest') {
+                $('.search-flight-form #flight-destination').val($(this).attr('data-Code'));
+            }
         });
 
         // hide airport autocomplete
@@ -409,6 +418,67 @@ function flightSearchFormFunctions() {
             evt.stopPropagation();
         });
         
+
+    }
+
+    // ******************************
+    // flight type
+    function switchFlightType() {
+        $('form.search-flight-form #return-flight').change(function () {
+            var checked = $(this).prop('checked');
+            var inputTarget = 'form.search-flight-form .flight-return-date';
+            if (checked) {
+                $(inputTarget).prop('disabled', false);
+                $(inputTarget).attr('placeholder', 'return date');
+                $(inputTarget).val('');
+                $('.search-flight-form .flight-form-value#flight-type').val('RET');
+            } else {
+                $(inputTarget).prop('disabled', true);
+                $(inputTarget).attr('placeholder', '');
+                $(inputTarget).val('one way');
+                $('.search-flight-form .flight-form-value#flight-type').val('ONE');
+            }
+        });
+    }
+
+    // ******************************
+    // date picker
+    var datePicker = function () {
+        $('.flight-date.select-date').pickmeup_twitter_bootstrap({
+            calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: new Date,
+            change: function () {
+                datePickerReturn($(this).pickmeup('get_date'));
+                $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
+            }
+        });
+        
+    }
+
+    function datePickerReturn(theDate) {
+
+        var selectedDate = theDate || new Date;
+
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('destroy');
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap({
+            calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: selectedDate,
+            default_date: selectedDate,
+            change: function () {
+                $('.search-flight-form .flight-form-value#flight-return-date').val($(this).val());
+            }
+        });
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('update');
 
     }
 

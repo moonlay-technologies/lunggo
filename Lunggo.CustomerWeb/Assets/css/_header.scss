@@ -53,6 +53,7 @@
 		    .btn {@extend .gotham; padding:10px 20px;}
 
             input.flight-date, input.flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px; width:120px;}
+            input.flight-return-date:disabled {background:#ddd;}
 
             label[for="return-flight"] {position:absolute; left:0; cursor:pointer;}
 

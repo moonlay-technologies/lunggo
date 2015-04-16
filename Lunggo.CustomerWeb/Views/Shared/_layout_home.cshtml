@@ -91,20 +91,20 @@
 
                                             <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-flight-form">
                                                 <div class="form-group loc-auto-wrapper">
-                                                    <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here">
+                                                    <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" />
+                                                    <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" data-airport-for="Dest" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control flight-date" placeholder="flight date">
+                                                    <input type="text" class="form-control flight-date select-date" placeholder="flight date">
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="form-dash">-</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control flight-return-date" placeholder="return date">
-                                                    <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" /> Pulang Pergi</label>
+                                                    <input type="text" class="form-control flight-return-date select-date" placeholder="return date">
+                                                    <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Pulang Pergi</label>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" placeholder="passenger">
@@ -114,7 +114,7 @@
                                                     <input type="text" class="hidden flight-form-value" id="flight-destination" name="Dest" />
                                                     <input type="text" class="hidden flight-form-value" id="flight-date" name="Date" />
                                                     <input type="text" class="hidden flight-form-value" id="flight-return-date" name="ReturnDate" />
-                                                    <input type="text" class="hidden flight-form-value" id="flight-type" name="Type" />
+                                                    <input type="text" class="hidden flight-form-value" id="flight-type" name="Type" value="RET" />
                                                     <input type="text" class="hidden flight-form-value" id="flight-seat-adult" name="Adult" />
                                                     <input type="text" class="hidden flight-form-value" id="flight-seat-child" name="Child" />
                                                     <input type="text" class="hidden flight-form-value" id="flight-seat-infant" name="Infant" />

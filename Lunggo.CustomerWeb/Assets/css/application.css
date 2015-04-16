@@ -128,6 +128,8 @@
       background: url(../images/cal-bg.png) 10px center no-repeat #fff;
       padding-left: 45px;
       width: 120px; }
+    .flight-form section.search section.search-flight input.flight-return-date:disabled {
+      background: #ddd; }
     .flight-form section.search section.search-flight label[for="return-flight"] {
       position: absolute;
       left: 0;
