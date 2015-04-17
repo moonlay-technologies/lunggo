@@ -45,6 +45,12 @@ namespace Lunggo.CustomerWeb
             );
 
             routes.MapRoute(
+                name: "UW620OrderHistory",
+                url: "UW600/UW620OrderHistory",
+                defaults: new { controller = "UW620OrderHistory", action = "OrderHistory" }
+            );
+
+            routes.MapRoute(
                 name: "UW400BookhHotel",
                 url: "{langCode}/Hotel/Booking",
                 defaults: new { controller = "UW400Booking", action = "Index" }

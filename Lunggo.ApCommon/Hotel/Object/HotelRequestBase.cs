@@ -31,4 +31,6 @@ namespace Lunggo.ApCommon.Hotel.Object
         public String HotelId { get; set; }
     }
 
+
+
 }

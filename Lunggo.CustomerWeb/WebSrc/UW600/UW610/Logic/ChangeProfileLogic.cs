@@ -35,7 +35,8 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW610.Logic
                 Email = memberDetail.Email,
                 Name = memberDetail.Name,
                 Password = memberDetail.Password,
-                Pdb = (DateTime) memberDetail.Pdb,
+                BirthPlace = memberDetail.BirthPlace,
+                BornDate = (DateTime) memberDetail.BornDate,
                 PhoneNumber = memberDetail.PhoneNumber
             };
 

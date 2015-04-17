@@ -12,7 +12,8 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW610.Model
         public String Country { get; set; }
         public String Address { get; set; }
         public String PhoneNumber { get; set; }
-        public DateTime Pdb { get; set; }
+        public String BirthPlace { get; set; }
+        public DateTime BornDate { get; set; }
 
     }
 }
