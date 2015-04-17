@@ -1,11 +1,9 @@
-﻿@{
+﻿@model Lunggo.CustomerWeb.WebSrc.UW600.UW610.Model.Uw610ChangePofile
+
+@{
     Layout = "/Views/Shared/_Layout_account.cshtml";
     ViewBag.Title = "Hotel Detail";
 }
-
-@model Lunggo.CustomerWeb.WebSrc.UW600.UW610.Model.Uw610ChangePofile
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,62 +46,83 @@
 
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Profile</a></li>
-                        <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
+                        <li role="presentation"><a href="/Uw600/UW620OrderHistory?idMember=@Model.IdMember" aria-controls="history"><span class="fa fa-history"></span> Order History</a></li>
                         <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
                     </ul>
 
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="profile">
                             <h4><b>USER</b> PROFILE</h4>
-                                <p>@Model.IdMember</p>
-                                <p>@Model.Name</p>  
-                                <p>@Model.Email</p>  
-                                <p>@Model.Country</p>  
-                                <p>@Model.Address</p>  
-                                <p>@Model.PhoneNumber</p>  
-                                <p>@Model.Pdb.ToString("d")</p>  
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="history">
-                            <h4><b>HISTORY</b> ORDER</h4>
 
-                            <div class="history-list">
-                                <?php for($i=1; $i<=5; $i++){ ?>
-                                <div class="history">
-                                    <table>
-                                        <tr>
-                                            <td class="number"></td>
-                                            <td class="detail"></td>
-                                            <td class="date"></td>
-                                            <td class="code"></td>
-                                            <td class="action"></td>
-                                        </tr>
-                                    </table>
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-1">
+
+
+                                    <form class="user-account-form form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">ID Member</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control" placeholder="Email" value="@Model.IdMember" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Nama</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="Nama" value="@Model.Name" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Alamat</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="Alamat" value="@Model.Address" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Negara</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="Negara" value="@Model.Country" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Telepon</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="Telephone" value="@Model.PhoneNumber" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Email</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="email" value="@Model.Email" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Tempat Tanggal Lahir</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" placeholder="Tempat Lahir" value="@Model.BirthPlace" />
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" placeholder="Tanggal Lahir" value="@Model.BornDate.ToString("d")" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-4">
+                                                <button class="btn btn-primary">UPDATE</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
-                                <?php } ?>
+
                             </div>
 
-                            <nav class="row text-center">
-                                <ul class="pagination">
-                                    <li><a href="#">&lt;</a></li>
-                                    <li><a href="#" class="active">1</a></li>
-                                    <li class="active"><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">&gt;</a></li>
-                                </ul>
-                            </nav>
-
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="password">
-                            <h4><b>GANTI</b> PASSWORD</h4>
-                        </div>
+                        
                     </div>
 
 
                 </div>
             </section><!-- .page-content -->
 
-
+            </div>
         </div>
         <!-- site content end -->

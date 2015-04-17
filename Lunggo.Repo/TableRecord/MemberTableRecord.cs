@@ -74,13 +74,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PhoneNumber");
 		    }
 		}
-		public DateTime? Pdb
+		public String BirthPlace
 		{
-		    get { return _Pdb; }
+		    get { return _BirthPlace; }
 		    set
 		    {
-		        _Pdb = value;
-		        IncrementLog("Pdb");
+		        _BirthPlace = value;
+		        IncrementLog("BirthPlace");
+		    }
+		}
+		public DateTime? BornDate
+		{
+		    get { return _BornDate; }
+		    set
+		    {
+		        _BornDate = value;
+		        IncrementLog("BornDate");
 		    }
 		}
 		public String InsertBy
@@ -146,7 +155,8 @@ namespace Lunggo.Repository.TableRecord
 		private String _Country;
 		private String _Address;
 		private String _PhoneNumber;
-		private DateTime? _Pdb;
+		private String _BirthPlace;
+		private DateTime? _BornDate;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -191,7 +201,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Country", false),
 				new ColumnMetadata("Address", false),
 				new ColumnMetadata("PhoneNumber", false),
-				new ColumnMetadata("Pdb", false),
+				new ColumnMetadata("BirthPlace", false),
+				new ColumnMetadata("BornDate", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
