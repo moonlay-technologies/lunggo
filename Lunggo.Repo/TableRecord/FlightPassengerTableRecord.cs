@@ -20,13 +20,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PassengerId");
 		    }
 		}
-		public long? TripId
+		public String RsvNo
 		{
-		    get { return _TripId; }
+		    get { return _RsvNo; }
 		    set
 		    {
-		        _TripId = value;
-		        IncrementLog("TripId");
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
+		    }
+		}
+		public String TitleCd
+		{
+		    get { return _TitleCd; }
+		    set
+		    {
+		        _TitleCd = value;
+		        IncrementLog("TitleCd");
 		    }
 		}
 		public String FirstName
@@ -56,13 +65,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("BirthDate");
 		    }
 		}
-		public String Gender
+		public String GenderCd
 		{
-		    get { return _Gender; }
+		    get { return _GenderCd; }
 		    set
 		    {
-		        _Gender = value;
-		        IncrementLog("Gender");
+		        _GenderCd = value;
+		        IncrementLog("GenderCd");
 		    }
 		}
 		public String PassengerTypeCd
@@ -83,13 +92,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CountryCd");
 		    }
 		}
-		public String IdCardNo
+		public String PassportOrIdCardNo
 		{
-		    get { return _IdCardNo; }
+		    get { return _PassportOrIdCardNo; }
 		    set
 		    {
-		        _IdCardNo = value;
-		        IncrementLog("IdCardNo");
+		        _PassportOrIdCardNo = value;
+		        IncrementLog("PassportOrIdCardNo");
+		    }
+		}
+		public DateTime? PassportExpiryDate
+		{
+		    get { return _PassportExpiryDate; }
+		    set
+		    {
+		        _PassportExpiryDate = value;
+		        IncrementLog("PassportExpiryDate");
 		    }
 		}
 		public String InsertBy
@@ -149,14 +167,16 @@ namespace Lunggo.Repository.TableRecord
 
 		
 		private long? _PassengerId;
-		private long? _TripId;
+		private String _RsvNo;
+		private String _TitleCd;
 		private String _FirstName;
 		private String _LastName;
 		private DateTime? _BirthDate;
-		private String _Gender;
+		private String _GenderCd;
 		private String _PassengerTypeCd;
 		private String _CountryCd;
-		private String _IdCardNo;
+		private String _PassportOrIdCardNo;
+		private DateTime? _PassportExpiryDate;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -195,14 +215,16 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("PassengerId", true),
-				new ColumnMetadata("TripId", false),
+				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("TitleCd", false),
 				new ColumnMetadata("FirstName", false),
 				new ColumnMetadata("LastName", false),
 				new ColumnMetadata("BirthDate", false),
-				new ColumnMetadata("Gender", false),
+				new ColumnMetadata("GenderCd", false),
 				new ColumnMetadata("PassengerTypeCd", false),
 				new ColumnMetadata("CountryCd", false),
-				new ColumnMetadata("IdCardNo", false),
+				new ColumnMetadata("PassportOrIdCardNo", false),
+				new ColumnMetadata("PassportExpiryDate", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

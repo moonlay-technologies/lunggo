@@ -1,0 +1,1746 @@
+[33mcommit 887d1e1c7ddf0dd8d8d4ecffa8e565e0fbfe67d1[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Apr 14 18:10:25 2015 +0700
+
+    Airport AutoComplete API config inclusion,
+    Insert to Flight Database right after booking
+
+[33mcommit 06245af498290a7a057fa9799485aa51bff67996[m
+Merge: 90b643b 23e4cb4
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Apr 14 11:29:09 2015 +0700
+
+    Merge branch 'development_201503'
+
+[33mcommit 90b643b725fc8667bca15a448fb2009087065142[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Apr 14 11:26:23 2015 +0700
+
+    Airport Autocomplete API data update (airport file name still not included in config),
+    Flight Database Query,
+    Some Flight Refactoring
+
+[33mcommit 23e4cb45829a31c28c2c19e9b1e916e268db998c[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Apr 14 11:16:05 2015 +0700
+
+    #12 update for Flight List
+
+[33mcommit 9735dbcb2b8035ab9f1673fe7640f3975690a13d[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Apr 14 10:59:19 2015 +0700
+
+    #12 update for Flight header
+
+[33mcommit 1356d32f641c6123955d0100c282e26b0dad1f32[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Apr 14 10:21:57 2015 +0700
+
+    Commit atas perintah yang empunya di kala beliau mengalami kemulesan yang diduga disebabkan oleh gorengan
+
+[33mcommit 7d19b81ee9af09ed7e6e513abeca13fd8fb107d3[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 13 09:44:30 2015 +0700
+
+    #1 Loading image added to Room Search
+
+[33mcommit 7fd9906c2b8cdd2d86e5c197afebd2d8771f1926[m
+Merge: 44da992 7cea8b6
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Apr 10 18:11:43 2015 +0700
+
+    Merge branch 'development_201503' of https://github.com/travelmadezy/lunggo into development_201503
+
+[33mcommit 44da992890e2778e1463d6b5294400aa83e1f090[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Apr 10 18:03:42 2015 +0700
+
+    Flight API,
+    FlightService Debug
+
+[33mcommit 7cea8b6dea78cd16f7dca17f022ef7c0a6250aac[m
+Merge: 1815120 d788eb6
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Apr 10 17:59:07 2015 +0700
+
+    merge rama_20141231 to development_201503
+
+[33mcommit d788eb69a14b36ddd93a8bb7fcbc4bcc9b81874a[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Apr 10 17:43:38 2015 +0700
+
+    Add PreBookCheck and Book Logic ( Not Finished)
+
+[33mcommit 18151209874a2b681478adc5bf944c9e05d62ad9[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Apr 10 16:44:45 2015 +0700
+
+    closes #7 Hotel Image in Hotel Search updated
+
+[33mcommit 189bf0a9b273a77c22b9bd61effd4a305aae995e[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Apr 10 16:01:46 2015 +0700
+
+    #3 Hotel PIn on Map updated
+
+[33mcommit 1da716c2c5f699ba993b8dd561f6f07c43dd8188[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Apr 10 14:26:56 2015 +0700
+
+    #6 Loading screen updated. Now covering whole body instead of element.
+
+[33mcommit 945f0acf38d9cce352aacabfcaa88f861937b88c[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Apr 10 13:49:47 2015 +0700
+
+    #5 Hotel image updated
+
+[33mcommit 55040607955aa8b0338295dabe0ffbd7d42cc346[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Apr 10 09:43:17 2015 +0700
+
+    #2 Hotel images on Hotel Detail updated
+
+[33mcommit a55265f44ee3b576885c396d73ecb551a2a35d8c[m
+Merge: 4875065 67fd6f5
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 9 16:15:39 2015 +0700
+
+    Merge branch 'development_201503' of https://github.com/travelmadezy/lunggo.git
+
+[33mcommit 48750654d0e931b1519eeae0aa2d6072d6cbef85[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 9 16:15:34 2015 +0700
+
+    #1 Room search update
+
+[33mcommit 67fd6f5852ef7672277dd04c59b67450dde632f3[m
+Merge: 4d9a249 e79be61
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Apr 9 14:28:13 2015 +0700
+
+    merge #1 ricki wawan
+
+[33mcommit 4d9a2498d920055bc491e56586d5b772fd924fbc[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Apr 9 12:25:00 2015 +0700
+
+    Logic,Model,Object for Uw610
+
+[33mcommit e79be61b2ed22711c548c839d3c3c72679e1c734[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 9 11:51:21 2015 +0700
+
+    #1 Update for Room List in Hotel Detail
+
+[33mcommit 3ddc056acb0916342aedd8021e86641353ece635[m
+Merge: a351b2d 09d29f4
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 9 11:48:03 2015 +0700
+
+    Merge branch 'development_201503' of https://github.com/travelmadezy/lunggo.git
+
+[33mcommit a351b2da1c6befc328a61fa483ef8f8584272592[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 9 11:46:07 2015 +0700
+
+    Update UserAccount View and Ajax for Room List in Hotel Detail
+
+[33mcommit 8c9baca8694c2366b8e51f017ae0c0ffc6f08107[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Wed Apr 8 17:35:10 2015 +0700
+
+    Update User History
+
+[33mcommit 1efb9772a9775af900fdd14316401c0ec0be8b0a[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Apr 8 15:28:02 2015 +0700
+
+    Test Reprice Logic in ProgramBook
+    Remove circular reference to Lunggo.Customer in Lunggo.Flight
+
+[33mcommit 09d29f487dbabbc9df46feb5c5e5e4fd30f20455[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Apr 8 14:11:01 2015 +0700
+
+    FlightAPI Test
+
+[33mcommit d661972d68f22f316cd1f398779e279c2bf47f78[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Wed Apr 8 11:11:52 2015 +0700
+
+    Update User History
+
+[33mcommit 1f16b30e795f78a8e77dd458dcb9a47174e8b512[m
+Merge: 40b33f2 17a4fdd
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Apr 8 10:48:01 2015 +0700
+
+    Merge Development_201503 -> Waski_development
+
+[33mcommit 40b33f2d941b987e5f7619a20d28b2e761d6c8be[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Apr 8 10:14:30 2015 +0700
+
+    Added PNR Field
+
+[33mcommit 13e4505c85010e5131cd5691d2bb7c111cd419e7[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Apr 7 19:04:59 2015 +0700
+
+    Completed Mystifly Wrapping,
+    FlightService Business Logic Supports Single Itinerary
+
+[33mcommit 323ce9931832f329e2f51c0552366085f507a6fd[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Apr 7 16:37:36 2015 +0700
+
+    User Account form
+
+[33mcommit 17a4fddd3c6e91ed56a2b9cf68218a375095b9f5[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Apr 7 10:13:50 2015 +0700
+
+    Update Conflict
+
+[33mcommit 9845242df6efd7ab40c9e816611d65f4e381e627[m
+Merge: 5ab750d 573947f
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 17:56:14 2015 +0700
+
+    Conflict Resolved
+
+[33mcommit fb4590fa60ae79d0ed733df9a64f7649d648fe26[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Mon Apr 6 17:13:39 2015 +0700
+
+    Completed Mystifly Wrapping
+
+[33mcommit 573947f4ebfd745fcbd501cf478fcc2f452a2082[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 16:59:04 2015 +0700
+
+    CSS Map
+
+[33mcommit dd0d0f85c1e437a7bfa9871ed90c50d7052dd732[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 16:56:49 2015 +0700
+
+    JS Reference Changes
+
+[33mcommit 8e3fbf9434ac831ec0f5b8e9e2dbd25e47f7c0b4[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 16:48:38 2015 +0700
+
+    Update 20150406_001
+
+[33mcommit 5ab750d934b2d43cb0652e4c4ddd608b2afbc8d1[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Mon Apr 6 16:38:24 2015 +0700
+
+    uw200 data already implement
+
+[33mcommit a7a9fc20b1ce7a12f164f60c6e987b29068b3c2b[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 13:52:20 2015 +0700
+
+    Update Search Page
+
+[33mcommit dc3592007464fb0add342323c0706f6dfac9e750[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Apr 6 10:27:50 2015 +0700
+
+    Update Location Auto Complete and Room Selector
+
+[33mcommit cb0a4cf588fd0d23fdb42be5c4d92568faef8fa5[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Apr 2 16:01:07 2015 +0700
+
+    Small Update
+
+[33mcommit 872a3109836521e3463f0affeec23122ba9fb1b8[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Wed Apr 1 17:31:57 2015 +0700
+
+    Update Top Page, Hotel Search Page
+
+[33mcommit 4a9a4e94565c53d2ef4d72c30bd6df7200a79e69[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Mar 31 17:09:16 2015 +0700
+
+    Update Room Selector
+
+[33mcommit 3c00514824d92e20f5c651b81afe4b30ce4ceb38[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Mar 31 15:58:58 2015 +0700
+
+    update Room selection
+
+[33mcommit 3657a7bb59ac9afaf1fed99fc9c62e6281f9afb7[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Mar 31 10:58:54 2015 +0700
+
+    Update datepicker
+
+[33mcommit e924912725c3da2df330521b84c4befd211750e0[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Tue Mar 31 10:28:42 2015 +0700
+
+    Update DatePicker
+
+[33mcommit 1daace45bc968448b1b9d2fa96bb208cf51f2e52[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Mon Mar 30 17:54:06 2015 +0700
+
+    Update for DatePicker
+
+[33mcommit ca93fbe67e5c5e3b86071d076be049a2d5876290[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Mon Mar 30 16:15:08 2015 +0700
+
+    Basic Mystifly Wrapper
+    Basic Flight Service
+    Added Multiple Words Functionality for Hotel Location Autocomplete
+
+[33mcommit d2e96feae71a72878c42ea3a2926768079d1e84d[m
+Merge: edbcb61 f8b15c2
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Fri Mar 27 17:48:53 2015 +0700
+
+    update marge riki wawan 27-3
+
+[33mcommit edbcb614752c35f9e241358b0164ca452caaff53[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Fri Mar 27 16:47:33 2015 +0700
+
+    update 27-3-2015 wawan
+
+[33mcommit f8b15c2c53d0802953796d37ea8fb094ef7ce806[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Mar 27 16:11:40 2015 +0700
+
+    Update Angular Functions
+
+[33mcommit 503305aa7981e714e7405eb2de07b6d386517bfb[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Mar 27 15:48:33 2015 +0700
+
+    Implementing AngularJS for Hotel Search
+
+[33mcommit 367bf2cdd779d28b2008bc0e294b4a17dd33be3e[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Fri Mar 27 15:12:26 2015 +0700
+
+    Update Flight views
+
+[33mcommit 6d6ac012efd16dc53435ad7c07a2e8a9db8504c3[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Mar 26 17:30:39 2015 +0700
+
+    Changed function name from "loading" to "loading_overlay"
+
+[33mcommit 772aa5a279ca9558d84a5ec4e2e71930f9744df0[m
+Merge: e1ff7ad 8b00dd6
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Mar 26 17:21:50 2015 +0700
+
+    new merge riki wawan
+
+[33mcommit e1ff7adcb518436428fc010c64e054dcbf24248c[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Mar 26 17:09:46 2015 +0700
+
+    angular_app ON
+
+[33mcommit 8b00dd66b773e2b83e5682c8785e398f36ecd92a[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Mar 26 16:53:52 2015 +0700
+
+    Update fonts
+
+[33mcommit 0c1fdf506d916a7c019293e266080fa93215452c[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Mar 26 16:50:53 2015 +0700
+
+    Loading Overlay
+
+[33mcommit 7ac6597e7733841b44dee0972686f34924c4c54a[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Mar 26 14:45:57 2015 +0700
+
+    Update Users Account Pages
+
+[33mcommit 46eb6cc84f2491734dcdf8b31862dac186849028[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Thu Mar 26 13:11:12 2015 +0700
+
+    Update Flight Pages Styles and Scripts
+
+[33mcommit 4b6ec8e3639cb38a46703c4fe5d533b8d7f347a1[m
+Author: Ricky Prahatama <ricky.prahatama@gmail.com>
+Date:   Wed Mar 25 16:22:11 2015 +0700
+
+    Changed SASS location
+
+[33mcommit e4da9dbd9657ba6ec90e1c027d7f5cb5be0272eb[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 25 12:44:03 2015 +0700
+
+    Put Travolutionary username in password to configuration excel
+
+[33mcommit fa956442e1c250a71b8827b7334cebe8f6359b61[m
+Merge: 0a1d232 4bc3164
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Tue Mar 24 16:01:07 2015 +0700
+
+    Merge branch 'ricky_head'
+
+[33mcommit 0a1d232990ef921004152b170500cea6cfdc2801[m
+Merge: 689bb6b 85a8798
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Tue Mar 24 15:56:09 2015 +0700
+
+    wawan ricky merge
+
+[33mcommit 4bc3164a979fd39683b4093f605010299ac816a9[m
+Author: Ricky Prahatama <ricky.prahatama@travelmadezy.com>
+Date:   Tue Mar 24 14:54:56 2015 +0700
+
+    Update Template
+
+[33mcommit 85a87989ebfa18a4409d26856f07a60bc4ad4a60[m
+Merge: 2d4955e de9759e
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 23 18:05:02 2015 +0700
+
+    merge development_201503 to ricky_head
+
+[33mcommit 590962d50688401812f4ab1aa6fe24481e7e1225[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 23 17:07:11 2015 +0700
+
+    remove hotel with unknown hotel detail
+
+[33mcommit de9759e7b1f14b7229f0920815ea42aff5c9fb42[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Mon Mar 23 15:44:22 2015 +0700
+
+    update booking pending
+
+[33mcommit ff5a8514e4623acb746abfc2f10fc32b0f3980f7[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 23 15:18:31 2015 +0700
+
+    Add HotelLocation.csv
+
+[33mcommit 375a310426bb7413dacf694714299c4bd984dfd6[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 23 15:15:44 2015 +0700
+
+    Implement Create HotelBookServiceRequest
+
+[33mcommit 32a02d0533a6331742450eec189f794ef5f35e16[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Mon Mar 23 11:53:46 2015 +0700
+
+    update dr wawan
+
+[33mcommit 5fe22e20a8618d6613f6d926f5f7d01fe5a17a29[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Mon Mar 23 11:34:47 2015 +0700
+
+    Flight Reservation Refactoring
+    Hotel Location Autocomplete Fix
+
+[33mcommit dfeb79b4676f14d0e85c3f8d911b9d205df61ac1[m
+Merge: 8ecea3e 4e756a5
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Mar 22 15:31:33 2015 +0700
+
+    Merge branch 'development_201503'
+
+[33mcommit 689bb6b60b58df34647309b6954dc9a0807a2721[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Fri Mar 20 11:27:06 2015 +0700
+
+    newCommit
+
+[33mcommit 4e756a5201d16931fae29214c892c8b4e5622b2e[m
+Merge: 29eb9a8 0341b86
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Mar 20 10:59:51 2015 +0700
+
+    merge wawan_development to developement_201503
+
+[33mcommit 8ecea3e0d06ac57fb8be9516a49df193b564ed40[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Mar 20 10:20:18 2015 +0700
+
+    Create hotelbook method signature in TravolutionaryHotelService
+
+[33mcommit 917d518f52277dd0d5560227c49fd815039bbedc[m
+Merge: f9b2733 f586189
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Mar 19 13:26:28 2015 +0700
+
+    merge waski wawan
+
+[33mcommit f9b273379b980c99ac8fb9fe8c10181e6b2406ca[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Mar 19 11:51:20 2015 +0700
+
+    commit update booking
+
+[33mcommit e115cc5db9fbc2a7069b875862bae72dcfc00eac[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Mar 19 10:20:21 2015 +0700
+
+    Finish Hotel Book Function for Testing
+
+[33mcommit 0341b86a88d3433674718baa6ead5e77aac9ebb6[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Thu Mar 19 10:12:18 2015 +0700
+
+    bookingPending View&Update
+
+[33mcommit 29eb9a8d29fd28d14c0a6ebd016afd8d72f2e8cc[m
+Merge: fb6ec34 5cbe52c
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Mar 18 17:32:27 2015 +0700
+
+    Merge branch 'development_201503' of https://github.com/travelmadezy/lunggo.git
+
+[33mcommit fb6ec345fac05388b2987985a903c52a130fe8b2[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Mar 18 17:30:06 2015 +0700
+
+    Add Common and Non-Configuration Files Functionality to Configuration Generator
+
+[33mcommit 5cbe52ce99ad422c35fccffd2c813a975eca4810[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 17:27:20 2015 +0700
+
+    add publish profile
+
+[33mcommit 44f9cb15b4a834b4a121f2675923804530ad61ef[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 15:27:33 2015 +0700
+
+    Trie Index Initialization
+    Add Prefix in routing rule for autocompletecontroller
+
+[33mcommit 9859e8bc22b93478b1fde9ecddfb46c2630af11b[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 14:39:01 2015 +0700
+
+    Refactor Autocomplete Manager
+    Add HotelLocation FIlename in lunggo config
+
+[33mcommit e857734bc84f0db535913ebc0d17fb1c2fd979e0[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Wed Mar 18 13:52:57 2015 +0700
+
+    Refactor Autocomplete into AutocompleteManager
+
+[33mcommit d23ca4af179315386322e6e287572b5a188e7f38[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 11:41:51 2015 +0700
+
+    Move Autocomplete controller to WebAPI project
+
+[33mcommit 5e76608e3e68bbf4a295a1058578f0f74299cc31[m
+Merge: c6dec00 8d60dc8
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 11:11:20 2015 +0700
+
+    Merge branch 'Waski_development'
+
+[33mcommit c6dec007b00ac31167adfc0df2357f950b0bca2c[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Mar 18 11:07:59 2015 +0700
+
+    Fix ProgramBook
+
+[33mcommit 8d60dc839d2a98555a776016abc97a399dda5c45[m
+Merge: c8ca90b c0dcb60
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Mar 17 10:39:03 2015 +0700
+
+    Merge branch 'rama_20141231'
+
+[33mcommit c8ca90bdefa7742fd5028f7a649b280ef76b43a0[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Tue Mar 17 10:33:43 2015 +0700
+
+    Add AutoComplete For Hotel
+
+[33mcommit c0dcb604d50b4482772249e5e75b52e8f7fdd3ae[m
+Merge: 86dda0f edc1a2b
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 16 20:00:29 2015 +0700
+
+    Merge Waski Development to rama_20141231
+
+[33mcommit dbc98c6b919bd0525d1187f56e0f4e1268c45067[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Mon Mar 16 19:54:22 2015 +0700
+
+    Little Fixed Autocomplete, Code File Tidying Up
+
+[33mcommit 86dda0fbe59111710fb8673f706b874e16f13f23[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Mar 16 19:48:13 2015 +0700
+
+    Separate Booking API call to other main program
+
+[33mcommit edc1a2ba0a4fa7fc535de20b16797b443731315b[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Mon Mar 16 19:03:36 2015 +0700
+
+    AutoComplete API (+Hotel), Migrate FlightReservation Controller
+
+[33mcommit 68b8da81d2f122490b38cca45225a9abd4ea38e8[m
+Merge: 92b4993 a9519b9
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Mon Mar 16 10:46:16 2015 +0700
+
+    merger waskie-edy
+
+[33mcommit f586189eaa0366ccd09392033fbf2a0ea6c40dd9[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Mar 13 17:59:03 2015 +0700
+
+    Fix Autocomplete (with Template Type (Airport, Airline)), Fix FlightCode Dictionary, Fix Flight Reservation Query (by Airline)
+
+[33mcommit 92b49931fb1e54336fa2b8f00acaeb448990aaa6[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Fri Mar 13 17:56:26 2015 +0700
+
+    update fungsi searchnya
+
+[33mcommit 4c31978aef5f3db8570aa08327a0fdbc3012f2c5[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Mar 13 16:01:54 2015 +0700
+
+    Flight Reservation Search (Query, List, Details, Delete), Autocomplete (Trie, Jquery), Framework Bugfix (TableRecord+Generator)
+
+[33mcommit ed8cc093901e6677a46ba71624f0e3fa8871be3a[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Mar 13 15:55:50 2015 +0700
+
+    Revert "Flight Reservation Search (Query, List, Details, Delete), Autocomplete (Trie, Jquery)"
+    
+    This reverts commit 1d380a728e772b8cc8169a42f3fc1eaac1dd7947.
+
+[33mcommit 1d380a728e772b8cc8169a42f3fc1eaac1dd7947[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Mar 13 15:51:14 2015 +0700
+
+    Flight Reservation Search (Query, List, Details, Delete), Autocomplete (Trie, Jquery)
+
+[33mcommit a9519b98f0dc3ac02f15269fc062b70717fbadb5[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Feb 27 16:31:07 2015 +0700
+
+    Commit debug
+
+[33mcommit 94ef75208d3acd3da98ee03d95217aeeb2029581[m
+Merge: 06ecc59 ff0fe8f
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Feb 27 16:15:31 2015 +0700
+
+    Merge branch 'wawan_development'
+
+[33mcommit 06ecc598b6b7839f69b876b26b290e0890147cc6[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Feb 27 16:05:07 2015 +0700
+
+    Add FlightBooking
+
+[33mcommit ff0fe8ffc2e8d8a85b15576b273b3ea357b35d4d[m
+Author: Bernadinus Realino Edy Gunawan <bernadinus.realino@travelmadezy.com>
+Date:   Fri Feb 27 15:59:06 2015 +0700
+
+    db, and some query in hotelcontrol
+
+[33mcommit 9ee2ab83ea1779e41b3c2119f7fd351f17786f1f[m
+Author: Indera Aji Waskitho <indera.aji@travelmadezy.com>
+Date:   Fri Feb 27 11:21:05 2015 +0700
+
+    Commit Pertamaku (Booking Detail Model Placeholder)
+
+[33mcommit 3102dfb88e6bc96ee1b7f47ac03de5baeeab3e65[m
+Author: Ricky Prahatama <ricky.prahatama@travelmadezy.com>
+Date:   Thu Feb 26 13:58:39 2015 +0700
+
+    Update View for Admin
+    
+    Updating view for Admin. Currently using Home Controller.
+
+[33mcommit 734d0150a4915ca5ae0b8dc0da289cf6bd89638f[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Feb 24 10:29:32 2015 +0700
+
+    Create Lunggo.BackendWeb
+
+[33mcommit b036b529335d2e6ea3995e7bcb11515a9f9d0149[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Feb 11 11:11:00 2015 +0700
+
+    Try to BookHotel WebServiceTest
+
+[33mcommit 3308207c1cfaa302d036b42a7c15d71a804643a1[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Jan 22 18:38:04 2015 +0700
+
+    Room Search API is using Travolutionary implementation
+
+[33mcommit 0d18d314f0975ca20b5175ece5e3bf36f0312ef8[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 13 10:41:38 2015 +0700
+
+    Change some harddcoded constant to value from configmanager
+
+[33mcommit a221e4e85dbd26ed8678ac546c6761e8ff94cd5e[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Jan 9 14:43:10 2015 +0700
+
+    Add AppInitializer
+
+[33mcommit 2d4955e844457601ae79e1bb0aa3d9d728b18257[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Jan 9 14:40:21 2015 +0700
+
+    Update Hotel Booking Form
+
+[33mcommit 7797f30d326e022d6bea5700d307b3a83fe8e53a[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Jan 9 10:02:44 2015 +0700
+
+    Search Result with Travolutionary is tested
+
+[33mcommit 7554b2c40e1c7fa0cbab26986351eb29667ce267[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Jan 8 19:42:28 2015 +0700
+
+    Test Travolutionary Implementation in HotelSearch
+
+[33mcommit edf6da7cb0bcfa8cfbcf7a301f6eca68e6136c24[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Jan 8 16:12:43 2015 +0700
+
+    Reset Config File in Lunggo.WebAPI
+
+[33mcommit 630b2c7c9225870ec214e34c6e8e4b7e77bb1abf[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Jan 8 16:09:45 2015 +0700
+
+    Add Lunggo.WebAPI/Config/ to .gitignore file
+
+[33mcommit 3b09cb68a2a5e04df6cc936be56f2d135c5d8a70[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Jan 8 16:04:23 2015 +0700
+
+    Add AppInitializer to Lunggo.WebAPI
+    Add Config directory to Lunggo.WebAPI
+
+[33mcommit 87281c597444fcde287c1b16afcbc467fc12610d[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Jan 7 18:47:00 2015 +0700
+
+    Implement Travolutionary to HotelsSearchService
+    (not tested yet)
+
+[33mcommit 830196245d740c548e13c131764f09bdd0819f71[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 6 10:55:23 2015 +0700
+
+    Add Travolutionary Hotel WebService Reference to Lunggo.ApCommon
+
+[33mcommit 2f2bc35223d8b4dfa2c65499a550da3d2a8ac988[m
+Merge: ee25c32 6e77ef2
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 6 10:33:49 2015 +0700
+
+    Merge branch 'rama_20141231'
+
+[33mcommit ee25c32a2a8104309b6bcd3c1141898fc1a2aca9[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 6 10:27:58 2015 +0700
+
+    Update javascripts
+
+[33mcommit 6e77ef221f59635aae2b9b354f8186a40edfa3a6[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 6 10:22:59 2015 +0700
+
+    Add UW300HotelBookingForm Controller & View
+
+[33mcommit a82f2056246cfcc264943216d3258e14fddb2da5[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Jan 6 10:05:29 2015 +0700
+
+    Refactoring
+
+[33mcommit 030565e3caa62b7bdd12575fdff34eaa4bdf0f55[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Jan 5 19:46:05 2015 +0700
+
+    Add ProcessHotelImage method to HotelDescGenerator
+
+[33mcommit f7d3853697cfed4857eaaadfb5520a55c6b8c13f[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Jan 4 21:10:53 2015 +0700
+
+    reinstall stackexchange.redis
+
+[33mcommit a346e8d835c4c3aab2f977a82caee9dbfacc9ec7[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Jan 4 21:08:56 2015 +0700
+
+    Remove stackexchange.redis (plan to reinstall again later)
+
+[33mcommit fd01604e5303520ad10f4f52c7e91048a0f6ba50[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Jan 4 20:23:04 2015 +0700
+
+    HotelDescGenerator is ready to start !!
+
+[33mcommit 4ccafa2e8cd09487d8fd38913a1873566a553090[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sat Jan 3 23:38:55 2015 +0700
+
+    Finish Development of HotelDescGenerator in Lunggo.Generator
+
+[33mcommit b3ef6706d061b9bac41bb44d3e81d53803131621[m
+Merge: 14841d5 4b585fd
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 31 09:00:26 2014 +0700
+
+    Merge branch 'ricky_head' of https://lunggo.visualstudio.com/DefaultCollection/_git/Lunggo
+
+[33mcommit 14841d5af5eeacbaceef75ef5349cfa6842c6fe3[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 31 09:00:04 2014 +0700
+
+    Add csvhelper lib untracked files
+
+[33mcommit cb39ae8f639435893b669436e3d53597e1c2e51e[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 31 08:59:41 2014 +0700
+
+    add csv helper lib to Lunggo.Driver
+
+[33mcommit da162fa115fbb97eb0ad53ab764f6295eb96ca56[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 31 08:45:05 2014 +0700
+
+    Fix Rooms Controller in API
+
+[33mcommit 4b585fd4a191d337f80a539c6ac367757ae46083[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 30 18:00:28 2014 +0700
+
+    Update Hotel Detail
+
+[33mcommit b77be69f12564a190acb5edc592c7fd9a8c0c8ec[m
+Merge: 6325b61 bad5614
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 30 15:45:00 2014 +0700
+
+    Merge branch 'rama_20141230'
+
+[33mcommit bad56140a35d72edafb2f6aa468f2033096ddea6[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 30 15:39:37 2014 +0700
+
+    Add additional domain for cors in WebAPI
+    Fix HotelDetail in Customer Web
+
+[33mcommit 6325b61c0f2c2f95a66db6667c18f625c2b2ad8b[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 30 14:04:53 2014 +0700
+
+    Update Angular and Hotel Search View
+
+[33mcommit 96bf1c299e8e456440453315c425185de527de8a[m
+Merge: 94608d1 bcb971e
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 30 09:17:10 2014 +0700
+
+    merge ricky_20141128 -> rama_20141124
+
+[33mcommit 94608d19f631199eec2c9f6c959d4ee25c972d59[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 29 20:47:15 2014 +0700
+
+    Refactor GetRooms Api
+
+[33mcommit ac004fe2e866142eefdd35e7a28639600e03ba54[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 29 19:40:10 2014 +0700
+
+    Create Controller for HotelSearch & HotelDetail in Lunggo.CustomerWeb
+    Create HotelRoomsSearchService in Lunggo.Apcommon
+    Create various request object related to hotel search in Lunggo. ApCommon
+
+[33mcommit bcb971ebcf94aa2620cc53f159ad259b1796d677[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 29 17:38:13 2014 +0700
+
+    Update layout
+
+[33mcommit 6ff4e1d5ad19de9c12428c1fa4abe54ac952270d[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 24 11:01:12 2014 +0700
+
+    Add Dummy Rooms API
+
+[33mcommit c8d266c8f537c6d0d4b64cf7a2c689415ab9617f[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 23 19:45:05 2014 +0700
+
+    Refactor Hotel Search API
+
+[33mcommit 1129260084135097d03163cc9752620918d4dd3e[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Wed Dec 17 16:21:54 2014 +0700
+
+    Add Reference to ASP.NET MVC in WebAPI
+
+[33mcommit 66c984a1dc6f84eb4783494a87d5c9d0dfb80836[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Dec 16 18:06:59 2014 +0700
+
+    Add Filter, sort, Paging Logic to Hotel Search API
+
+[33mcommit 5c5c88959841414ffa5dda3f440537fd2394ad05[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 15 14:56:16 2014 +0700
+
+    Create Dummy Hotel Search Result API
+
+[33mcommit 15588458a37640574404af7c283b65b524fdf871[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 15 09:41:46 2014 +0700
+
+    recreate Lunggo.API project
+
+[33mcommit eff2b223da287ee2e739b5fe3d196bb04d516413[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Dec 14 16:52:53 2014 +0700
+
+    delete api related directory
+
+[33mcommit 0b6bf21d2709595c462d5a8cbc45e4f689c155bb[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Dec 14 16:51:15 2014 +0700
+
+    remove api's project
+
+[33mcommit 3792af4f53e92c516ad9fa01070b999c9b8f45ba[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Dec 14 16:33:12 2014 +0700
+
+    1st Try Develop API
+
+[33mcommit 223f21018810db22fb8db1d26f3f085604b34f7e[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Dec 14 12:18:22 2014 +0700
+
+    Add Lunggo.API Cloud Service
+
+[33mcommit 0cb4c6f4721616890824c8e3b774d183699f00a1[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Sun Dec 14 12:11:21 2014 +0700
+
+    Test Redis in RamaDriver
+
+[33mcommit 70c603b61d1dca394cab7b4c997c31a5294f7180[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Dec 11 12:24:08 2014 +0700
+
+    Add StackExchange.Redis Library from NuGet
+
+[33mcommit 52c5c5f596f6805fc7d65872eee22e568728dfd5[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Thu Dec 11 12:07:25 2014 +0700
+
+    Upgrade to Azure SDK 2.5
+    Travo API Test
+
+[33mcommit 445e5f9cb82b5b0c5af145917ebedb9148742f36[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Fri Dec 5 10:49:12 2014 +0700
+
+    Hotelsservicesearchrequest experiment
+
+[33mcommit 2da61e305a5f948ac54fbd19724dacf8259e0181[m
+Author: Ricky Prahatama <ricky.prahatama@travelmadezy.com>
+Date:   Thu Dec 4 17:01:52 2014 +0700
+
+    Update view for Flight Search List
+
+[33mcommit d40b98f9a61f3e92b1ae02d6208c8eb0a9959de3[m
+Author: Ricky Prahatama <ricky.prahatama@travelmadezy.com>
+Date:   Thu Dec 4 14:41:39 2014 +0700
+
+    Update Views for Hotel Section
+
+[33mcommit 8f9323ae553f7dfdec963cb55b2327c13315c9cc[m
+Author: Ricky Prahatama <ricky.prahatama@travelmadezy.com>
+Date:   Wed Dec 3 11:33:31 2014 +0700
+
+    Update views
+
+[33mcommit 9dd35f255d83589ec0ea37f8eac7c55aa5609ec7[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Mon Dec 1 15:49:03 2014 +0700
+
+    Add Travolutionary Test Web Service Project
+
+[33mcommit b6300f9995790af8278afc5524c971bfe2e547ac[m
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Oct 14 10:41:33 2014 +0700
+
+    Bug Fix
+    Add Route for toppage in Lunggo.CustomerWeb route
+
+[33mcommit 3a38bb02aff545f0a007b496debe2943d4bd257f[m
+Merge: d87edb1 0d365a7
+Author: Rama Adhitia <rama.adhitia@travelmadezy.com>
+Date:   Tue Oct 14 10:24:26 2014 +0700
+
+    Merge developmentBayu -> development
+
+[33mcommit 0d365a78218fbdad6af5637101eb4e39a5d1c261[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Oct 13 14:08:46 2014 +0700
+
+    query get hotel
+
+[33mcommit 8dfec06ca318690f49f331c4b80937ec7b6986c4[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Oct 13 14:08:20 2014 +0700
+
+    query get hotel
+
+[33mcommit 8bd7c9f79beb75522303a8113caeec8082294614[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Oct 7 09:16:50 2014 +0700
+
+    create SearchViewModel Class
+
+[33mcommit 8adcc0cd4f81b819bd07924c7b06ef9156369e0e[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Oct 1 11:22:41 2014 +0700
+
+    add LunggoLogger and refine payment process
+
+[33mcommit 6c42843555ea00e8cb870661574ed3b604c95219[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Fri Sep 19 09:13:59 2014 +0700
+
+    fix mail service
+
+[33mcommit 451e8eb01911192a58de9b3a0195a75cdda52e72[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Sep 18 15:20:50 2014 +0700
+
+    update nugget and fix webjob
+
+[33mcommit d87edb1e9090e3a1c7825cf31a34fa5ae3a4e6af[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 14:15:33 2014 +0700
+
+    Refactor Table Storage Service
+
+[33mcommit 98dfbaedd9a4667cd6a191f9e06dc5a0f714e6f5[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 11:19:31 2014 +0700
+
+    Refactor TableStorageLibrary
+
+[33mcommit a7398896894ea0fe787c4cabd7641f7882f6c676[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Sep 18 11:17:52 2014 +0700
+
+    fix webjob 2
+
+[33mcommit 0fb042554c948f6d3407d3cc680be5b4ce83ab0d[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Sep 18 11:16:17 2014 +0700
+
+    fix webjob 1
+
+[33mcommit c84229abc82b55e4e1d2a6fb6b69864609a8765c[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 11:08:45 2014 +0700
+
+    Rename Lunggo.Framework.Message namespace -> Lunggo.Framework.I18nMessage
+
+[33mcommit f0ac15bfa67ad7dd17685a42963579a2d780aae9[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 11:02:38 2014 +0700
+
+    Refactor IBlobStorageClient
+
+[33mcommit f48df9dede017c131a1f8abc6ebb23371b8fb765[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 11:01:07 2014 +0700
+
+    Refactor Blob library
+
+[33mcommit 75d101bbfa0924ae045b8097b49e5560cf127019[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 10:59:17 2014 +0700
+
+    Refactor BlobStorageService
+
+[33mcommit c2a066174e2cff521f448d4a6ccbd7b37d8f84e4[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 10:56:54 2014 +0700
+
+    Fix Route Config in Customer Web
+
+[33mcommit 263d8aecc02ffbd6be1b91804fef3d325a27341f[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 10:53:53 2014 +0700
+
+    Refactor AzureBlobStorageClient
+
+[33mcommit e53314e21a7efbd40a34f6d107181e4497bd1006[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Sep 18 10:26:29 2014 +0700
+
+    Register Language Filter as Global Filter
+    Add Language Code Variable in route
+    Add sample usage of I8NHtmlString Html Helper in Views (/home/index.cshtml)
+    Add HTML Helper namespace in View's web.config
+    Add SystemConstant and OnlineContext to Lunggo.Framework
+    Add LanguageFilterAttribute in Lunggo.Framework
+    Add HTMLHelper Extension in Lunggo.Framework
+    Delete MessageReader from Lunggo.Framework
+    Delete Entity Framework related settings from Customer Web's web.config
+
+[33mcommit 27fb0c147cea6bab94ba5f5daf879865df5e518f[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Sep 16 17:25:28 2014 +0700
+
+    update newton and azure storage
+
+[33mcommit 38d8c6ed919f22080704eaeababff433cc02363d[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Sep 16 17:23:49 2014 +0700
+
+    add webjobs apibookingfailed and emailsuccessbooking
+
+[33mcommit fd32303ea492b86a778eefe6e9049d8190f75a9c[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Sep 15 15:48:53 2014 +0700
+
+    excel ketinggalan commit
+
+[33mcommit 51013153012b580c85bdfc14f82fbe1cbd699456[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Sep 15 15:47:59 2014 +0700
+
+    implement zendesk api
+
+[33mcommit c12a683f539d7376042bb8bbbffb57afe7a9a5ac[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Sep 11 14:21:49 2014 +0700
+
+    commit hotel+flight sequence and redis nugget package
+
+[33mcommit 19cb3f8f912f355324c2bfe5d7201a0009d1319a[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Sep 3 14:21:17 2014 +0700
+
+    Add azure storage queue example in RamaDriver
+
+[33mcommit be88fdb5d2ca1a401fd85361b2cc54c9128205e8[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Sep 2 15:41:26 2014 +0700
+
+    Enable Windows Azure Diagnostics
+
+[33mcommit 3c544bd958852b3e4dc494912dbe0696d9e4bba3[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Sep 2 10:05:11 2014 +0700
+
+    add veritrans url to excel
+
+[33mcommit 6965176ef7fe62ca692d137c30eacdb331b88e70[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Sep 2 09:41:46 2014 +0700
+
+    Upgrade Azure SDK to 2.4
+    Refactor Payment Logic
+
+[33mcommit 5728b6fa96d23437f9bd7ffb1dd9eeb1769bb802[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Sep 1 13:01:46 2014 +0700
+
+    Refactor Payment Part 3
+
+[33mcommit c58c65dd5334c1f3d9028c24f70a6f68ac870938[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Sep 1 11:49:55 2014 +0700
+
+    Refactor Payment Processor Part 2
+
+[33mcommit 09b61bc82f5ffcfb7b960e0e2bc938a165b9c5d1[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Sep 1 11:08:11 2014 +0700
+
+    Refactor Payment Processor
+
+[33mcommit 5fdece5ffe1188d952e9217c66dd3e05ef28aa8a[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Aug 28 11:57:58 2014 +0700
+
+    Implement DapperRoleStore
+    Exorcising Entity Framework from Lunggo
+
+[33mcommit 369396a690585d77db8ac0ab152a20df85c00115[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Aug 28 09:06:15 2014 +0700
+
+    commit identity with sequence userid
+
+[33mcommit f81099f85243b3f36a0cde77602c683dadd8907d[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Aug 27 10:53:00 2014 +0700
+
+    add db connection string to excel, and modify AppInitializer
+
+[33mcommit 98a4a105d45f4a05aadb352d2c0d9069483a1a71[m
+Merge: 5f206ab 31ceff1
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Aug 27 10:48:18 2014 +0700
+
+    Merge branch 'AspIdentity' of https://lunggo.visualstudio.com/DefaultCollection/_git/Lunggo
+
+[33mcommit 31ceff1a4e59611e2f46e6d7855c88684a8b1541[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 27 10:46:58 2014 +0700
+
+    Exorcising Asp.net Identity from EntityFramework - not yet finished
+
+[33mcommit 5f206ab900030d94b541902b3b5c97d19b502cde[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Aug 27 10:45:47 2014 +0700
+
+    dapperstore implement query
+
+[33mcommit 9800e84b0c8bea315f94396014e21822da83ef22[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 27 09:37:54 2014 +0700
+
+    Delete Custom User from Lunggo.CustomerWeb
+
+[33mcommit cba156012526836c2a5d9f43167d7c75b4bec5a7[m
+Merge: 252ec78 02de5c8
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 27 09:33:56 2014 +0700
+
+    Merge branch 'AspIdentity' of https://lunggo.visualstudio.com/DefaultCollection/_git/Lunggo
+
+[33mcommit 252ec7855cbb2cf991f33822bc1d956577bcc5f5[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 27 09:32:34 2014 +0700
+
+    Exorcising ASP.NET Identity Framework from Entity Framework - not yet finished
+
+[33mcommit 594074a24a61336d76f26eefe721ea56eba15b10[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Aug 26 16:32:25 2014 +0700
+
+    Add Identity related repo & record class to Lunggo.Repo
+    Edit TableRecord template in Lunggo.Generator
+
+[33mcommit 02de5c807cd20ae03d0297d463c983aba1096526[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Aug 26 10:22:12 2014 +0700
+
+    commit sql connection string in excel
+
+[33mcommit dc8ea0e3214aaf8690289502d28e789a11e1f641[m
+Merge: bb03579 e4195ba
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Aug 25 17:05:52 2014 +0700
+
+    Merge branch 'AspIdentity' of https://lunggo.visualstudio.com/DefaultCollection/_git/Lunggo
+
+[33mcommit bb035796c24859f3cdeabab4e3374336eafbcf6e[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Aug 25 16:50:32 2014 +0700
+
+    asp identity with full dapper version 1
+
+[33mcommit e4195ba0d8437e320d4c586bc2dcaf83a8682925[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Aug 25 12:12:40 2014 +0700
+
+    Add private Constructor to SampleQueryClass in Lunggo.Driver
+
+[33mcommit d6fece926e070ae3026908ffda402a7ee59be226[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Aug 25 12:07:03 2014 +0700
+
+    Modify QueryBase Class Definition in Lunggo.Framework
+    Add SingletonBase Class to Lunggo.Framework
+    Now SampleQuery in Lunggo.Driver inherits SingletonBase through QueryBase
+
+[33mcommit 2c041489af8dca0edb193310c73d2d843a329e27[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Aug 25 10:49:21 2014 +0700
+
+    Delete IQuery interface in Lunggo.Framework
+    Now QueryBase is generic class Lunggo.Framework
+    Add Execute method to QueryBase in Lunggo. Framework
+
+[33mcommit 4160c71751e8992f5606f42e021ac4fc4d8d0bb1[m
+Merge: b1a6aae 83fcddf
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Sun Aug 24 19:50:37 2014 +0700
+
+    Merge Query_HTML_Extension -> AspIdentity
+
+[33mcommit b1a6aaeb7cf4850c870afb4ff75a464d552f3daf[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Fri Aug 22 17:50:40 2014 +0700
+
+    comit5
+
+[33mcommit 83fcddfc55477adbd2367006f2dae57b3a27c905[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 20 16:25:57 2014 +0700
+
+    Implement DbService in Lunggo.Framework
+
+[33mcommit 42b012ad6aafa9ccb36159e1898042d7b64bf9d4[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 20 16:01:02 2014 +0700
+
+    Implement sql query mechanism
+
+[33mcommit 2d3cafa346c9e0b378967999a47127947ae69ae9[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 20 10:29:54 2014 +0700
+
+    Merge Lunggo_Config.xlsx SearchHotelDev1 -> Development
+
+[33mcommit fb20408590003b2e06d545b70f098fc00f1eae3a[m
+Merge: dd295c3 030419e
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Aug 20 10:21:35 2014 +0700
+
+    Merge branch 'SearchHotelDev1' to Development
+
+[33mcommit dd295c388cf8bb93abdf0f645ce885f113e0e36b[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Aug 19 18:08:28 2014 +0700
+
+    .gitignore experiment
+
+[33mcommit 6c44a881407fbfa3125d280855d4ab51a68ed165[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Aug 19 17:43:59 2014 +0700
+
+    Add Lunggo.ApCommon Project
+    Add Sequence Initializer to App Initializer in Lunggo.CustomerWeb
+    Edit .gitignore files
+
+[33mcommit 030419e7497e2a2401c9c84782320c0a5ac80af4[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Aug 19 14:16:32 2014 +0700
+
+    commit4
+
+[33mcommit b89ac0404ab7ae30039f18a58d010d506ffba1fa[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Aug 18 17:46:22 2014 +0700
+
+    commit3
+
+[33mcommit 11bd9b1600b1029c627450ebdb75061a8895a63d[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Aug 18 16:58:47 2014 +0700
+
+    Commit2
+
+[33mcommit 6b055f0e9a616481f0b0942bf5b36f0618e39f4f[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Aug 18 09:18:53 2014 +0700
+
+    first commit
+
+[33mcommit b6ce5e0db1087f830465d047d8b378dc0be8f372[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 17:24:30 2014 +0700
+
+    Update .gitignore file
+
+[33mcommit 9154ba0e0566119850db02665ed0d57fc40162a2[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 17:24:12 2014 +0700
+
+    Refactor I18n message stuff again
+
+[33mcommit 66baaa88d8065f0880607bc4acb516a31923d87f[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 16:54:05 2014 +0700
+
+    Refactored I18nMessage stuff
+
+[33mcommit e2b0f5d644132c8cdba1265d0c3db9f0c0ce2c3f[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 15:56:56 2014 +0700
+
+    Rename Cloud Service to Lunggo.CW
+
+[33mcommit 2164f7ffa15d9c7de7a09e5ec9213c72673903ff[m
+Merge: 8491fbd 238df68
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 15:35:12 2014 +0700
+
+    resolve conflict during merge MultiLanguage -> development
+
+[33mcommit 8491fbd48856af628ecb18442d731551bb53fd71[m
+Merge: 7c52ce1 862816d
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Jul 24 14:49:43 2014 +0700
+
+    resolve conflict in Lunggo.sln crawlflight -> development
+
+[33mcommit 238df68eed4b00a6d670cd2846a20bbccb70b54c[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Jul 24 09:25:11 2014 +0700
+
+    add multilanguage
+
+[33mcommit 1c6e1f8cef8ff7c04652b7aa27a10d0cf874ee66[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Fri Jul 18 15:01:13 2014 +0700
+
+    update generator template
+
+[33mcommit 862816d7c938bfa3df955b4d1f24fe5cb2f8da1d[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Jul 7 15:27:21 2014 +0700
+
+    search page dummy version 2
+
+[33mcommit f4ad645c510aa1445f3bc4bd0c351d9028d7004f[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Mon Jul 7 15:26:50 2014 +0700
+
+    search page dummy version
+
+[33mcommit 7c52ce18b3dfa4d7576bacd57ae47736c2f591b0[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri Jul 4 11:52:01 2014 +0700
+
+    Add IsSet Method to ITableRecord
+    Add IsSet implementation in TableRecord
+    Column in SQL Command for Insert, Update, and delete will be generated only  if that column has already been set
+
+[33mcommit 64567a82fc19e3650cbe3f7733e51168b9170aa8[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri Jul 4 09:48:42 2014 +0700
+
+    Remove duplicated using statement
+
+[33mcommit 05f6bd72170820b7a6ab9f31407a936650349db3[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri Jul 4 09:46:22 2014 +0700
+
+    IDBWrapper is no longer generic class, only Find All is generic
+
+[33mcommit e72cdb1d6bf41621a0acb60b80229df265945c10[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri Jul 4 09:10:06 2014 +0700
+
+    Modify DB Framework so that Update Operation update only columns that have been changed
+    Add test to Rama Driver
+
+[33mcommit 4cd4266b4ee00548813c42356dcf9ce95ceabb5a[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Thu Jul 3 08:51:10 2014 +0700
+
+    Crawl Flight and Search in costumer web
+
+[33mcommit 09374380d8626d00c77bee12f158d82e03169fda[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jul 2 13:55:15 2014 +0700
+
+    Add SequenceBase and SequenceProperties Class
+    Add Sample Class for Generating Sequence in RamaDriver
+
+[33mcommit 9ee0313848261db6e79f4279ba2f8209bc893920[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Jul 1 14:11:07 2014 +0700
+
+    Modify SnowMaker so that user can set iniial value for each sequence
+    Create Driver for this modification
+
+[33mcommit 0862e7789f7995098fd1129f07b50620ef3321ff[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Jul 1 08:59:06 2014 +0700
+
+    Remove unused "using" statement
+
+[33mcommit 5209160c4c1d6eed25c545e983c1ba33b19696e9[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Jul 1 08:52:49 2014 +0700
+
+    Add SnowMaker to Lunggo.Framework
+    Move SnowMaker Namespace to Lunggo.Framework.SnowMaker
+
+[33mcommit 6dc0a55feac13b281601c5d2ac257fc8154ad148[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Jul 1 08:26:18 2014 +0700
+
+    Add Lunggo.Hotel Project
+
+[33mcommit d63d61b34f81d73aca6638e2efd447dc8aa84383[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jun 11 17:49:11 2014 +0700
+
+    update .gitignore file
+
+[33mcommit 335aa3b10bdf01fb414c03d953029122d6a31709[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jun 11 17:29:30 2014 +0700
+
+    Finished ConfigGenerator modification in Lunggo.Configuration
+
+[33mcommit c7db0610414ed504ba3fabc747bf8f1651dd78ed[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Jun 10 09:27:28 2014 +0700
+
+    Finished modify ConfigManager.cs in Lunggo.Framework
+
+[33mcommit 391e72f52e428b85b31493172487c95a8c97bac4[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Jun 9 11:57:20 2014 +0700
+
+    Add Initialization code in Lunggo.CustomerWeb
+    Add Config Folder and application.properties file
+    Refactor ConfigManager in Lunggo.Framework
+
+[33mcommit c395fcbf3f21c80b924e0815f6eb3994a99dbd85[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon Jun 9 09:55:47 2014 +0700
+
+    Refactor ConfigManager in Lunggo.Framework
+
+[33mcommit 7abfeb52315d2934286a0b7b8739058488e439ab[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri Jun 6 17:27:20 2014 +0700
+
+    Development of TableRepo Generator is Finished
+
+[33mcommit 393e2a19bade94512cdcdbb9ebfe55e6ab5f3f42[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jun 4 14:52:26 2014 +0700
+
+    Create Lunggo.Generator Project
+    Install Dapper in Lunggo.Generator
+
+[33mcommit 56f3321d5e6f105002139a4d08a8901c6f60e4a8[m
+Merge: 944ae60 9280181
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jun 4 11:47:54 2014 +0700
+
+    Resolve Conflict during Merge branch 'addingConfigurationInDevelopment' to 'addingConfigurationInDevelopmentTodbdev'
+
+[33mcommit 944ae601b67ecb7962a9a93c327162ec342297d3[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed Jun 4 11:19:54 2014 +0700
+
+    TableRepo Implementation Finished
+
+[33mcommit 92801818fbe76e63d9c404ffa8055b106c21eae2[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed May 14 15:38:43 2014 +0700
+
+    adding mail template generator, fix bug in framework's mail template
+
+[33mcommit 866e5d1b9d7c0aa1aaad2f2b68a37d8f72559dab[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed May 14 14:53:46 2014 +0700
+
+    Finished  CUD Operation for TableRepository
+
+[33mcommit 1a3200140f019b85c448626a2b178583f9598929[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed May 14 11:42:31 2014 +0700
+
+    configuration manager v1
+
+[33mcommit 0051f00c15986b0c203163cb3dc0bf64253b661e[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon May 12 14:30:13 2014 +0700
+
+    Add Reflection & TypeConversionUtil
+    Add TableRepo Sample
+
+[33mcommit a06bf1947935bfe4c7cc2448f548fdf4c5dec204[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri May 9 11:46:57 2014 +0700
+
+    Add New Lunggo.Repository Project
+    Create Lunggo.Framework.Database Namespace
+    Add Reference to Lunggo.Repository in Lunggo.CustomerWeb
+
+[33mcommit 9070fadae3cc1007c770ff7d1ddbb6588cd07976[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Fri May 9 10:50:02 2014 +0700
+
+    Get Dapper From NuGet
+    Install Dapper In CustomerWeb, Driver, Framework
+
+[33mcommit 6111bb92aa445968d88c0f8e56cb74ebe537b25a[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu May 8 18:17:42 2014 +0700
+
+    Upgrade Visual Studio Tools Version to 2.3
+    Add Deployment Profile
+    Add Reference to Lunggo.Framework in Lunggo.CustomerWeb
+
+[33mcommit 4957314964d26c079c983ced46b5d56cb417e78e[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed May 7 15:32:37 2014 +0700
+
+    Add Azure Diagnostic Storage Connection String in Configuration
+
+[33mcommit 1a10ef06def8eaa1e8ddf1ad5b087bcf44c1d35c[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed May 7 15:27:06 2014 +0700
+
+    Removed unnecessary binding redirects in Lunggo.CustomerWeb and Lunggo.Framework
+
+[33mcommit 460f2d924733cae223770288d293085eaf7ee3a7[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed May 7 09:43:41 2014 +0700
+
+    NuGet Package cleanup part 2
+
+[33mcommit 1572b9bbd1c44be3112a273b2c21cf0f87dcd319[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Wed May 7 09:40:47 2014 +0700
+
+    NuGet packages cleanup
+
+[33mcommit ea30d5cb10a08408b1305507fb726432a9fa462d[m
+Merge: 2f30150 63cf275
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Mon May 5 18:46:18 2014 +0700
+
+    Merge branch 'branchBlobAndEmail' to development
+
+[33mcommit 63cf27586454ec568ae9fc8d933957c298363513[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Apr 30 11:06:29 2014 +0700
+
+    commit adding parameter for razor parse
+
+[33mcommit d3d3c16c4a64272d7c6b60e98255dd885c595ab9[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Apr 30 10:14:38 2014 +0700
+
+    include FileInfo Class in FileBlobModel
+
+[33mcommit 980d027fd56f379b5636834c264c6d1a1ad19442[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Apr 30 10:00:20 2014 +0700
+
+    fix Field Name
+
+[33mcommit a8f740c049a40f62fb33c46c0fc03a4ab4fcf080[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Apr 30 08:42:22 2014 +0700
+
+    adding Mail, ShareModel, and TableStorage Namespace
+
+[33mcommit 4eaf089fb3bd512722ffafc05fd7c7de2c43e283[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Apr 29 09:01:23 2014 +0700
+
+    Interface Blob Storage client, singleton blob storage service
+
+[33mcommit 577bbba99e1d3643830fe042747bf8c73861a3d8[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Fri Apr 25 10:01:00 2014 +0700
+
+    bit change in name in blobStorage Handler
+
+[33mcommit c28d52fb8baf3ed89a34a32ccb9644da15b325cc[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Fri Apr 25 09:36:10 2014 +0700
+
+    add BlobStorageHandler + Interface nya. add Util and Exception
+
+[33mcommit 2f301508c29cbc3bbe326493ef7e47e2c284b8d2[m
+Merge: ccdd934 e8ce625
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Apr 24 17:54:50 2014 +0700
+
+    Merge branch 'master' of https://lunggo.visualstudio.com/defaultcollection/_git/Lunggo
+
+[33mcommit ccdd9347e8f14d41cebd80f1634a40b0968325a4[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Apr 24 17:30:11 2014 +0700
+
+    Add HttpRestService  Implementation (incomplete). Initial Commit
+
+[33mcommit e8ce62597903004921d750fcf7b4de4a4e4f8ff9[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Wed Apr 23 17:10:02 2014 +0700
+
+    add Bayu Driver + Mandrill Nugget
+
+[33mcommit 9e205b5d52ab503cf0d92d109bb214d9a409609e[m
+Author: Bayu Alvian <bayu.alvian@moonlay.com>
+Date:   Tue Apr 22 09:06:03 2014 +0700
+
+    Add Mandrill API nugget
+
+[33mcommit 1d57780ad0ab8dfbdc586f6d6e195e47c965f9d4[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Apr 3 13:45:21 2014 +0700
+
+    Add Microsoft Http Client Library from NuGet
+
+[33mcommit e73bb2ef2878bb9cd14ad3115568cc1db088e344[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Thu Apr 3 13:44:41 2014 +0700
+
+    Commit HttpService library
+
+[33mcommit 423dbb4b043e5d4609a1cd71e17e3cdd8739e92b[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Apr 1 10:08:58 2014 +0700
+
+    Add Lunggo.Framework Project
+
+[33mcommit 4bdad3e8dd8d05c84e8afc178a639310c58082d1[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Apr 1 10:00:31 2014 +0700
+
+    Add Lunggo.Driver Project
+
+[33mcommit e6b7cf874a04f7977906870938ed532f2e9f3a7b[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Mar 25 16:41:21 2014 +0700
+
+    Initial Commit
+
+[33mcommit cc09d8a2b498870a0033913ac0994c3a24392e9f[m
+Author: Rama Adhitia <Rama.Adhitia@moonlay.com>
+Date:   Tue Mar 25 16:35:08 2014 +0700
+
+    Initial commit to add default .gitIgnore and .gitAttribute files.

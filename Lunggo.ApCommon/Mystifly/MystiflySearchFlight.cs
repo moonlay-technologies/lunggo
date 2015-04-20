@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web.UI.WebControls;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Flight.Dictionary;
 using CabinType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -48,12 +51,12 @@ namespace Lunggo.ApCommon.Mystifly
                         result.FlightItineraries = new List<FlightFareItinerary>();
                         if (!response.Errors.Any())
                         {
-                            var result1 = MapResult(response);
+                            var result1 = MapResult(response, conditions);
                             result.FlightItineraries.AddRange(result1.FlightItineraries);
                         }
                         if (!refundResponse.Errors.Any())
                         {
-                            var result2 = MapResult(refundResponse);
+                            var result2 = MapResult(refundResponse, conditions);
                             result.FlightItineraries.AddRange(result2.FlightItineraries);
                         }
                         result.IsSuccess = true;
@@ -88,14 +91,14 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static SearchFlightResult MapResult(AirLowFareSearchRS response)
+        private static SearchFlightResult MapResult(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            return new SearchFlightResult{ FlightItineraries = MapFlightFareItineraries(response) };
+            return new SearchFlightResult{ FlightItineraries = MapFlightFareItineraries(response, conditions) };
         }
 
         private static OriginDestinationInformation[] MapOriginDestinationInformations(SearchFlightConditions conditions)
         {
-            return conditions.OriDestInfos.Select(info => new OriginDestinationInformation()
+            return conditions.TripInfos.Select(info => new OriginDestinationInformation()
             {
                 DepartureDateTime = info.DepartureDate,
                 DestinationLocationCode = info.DestinationAirport,
@@ -151,7 +154,7 @@ namespace Lunggo.ApCommon.Mystifly
         private static AirTripType SetAirTripType(SearchFlightConditions conditions)
         {
             AirTripType airTripType;
-            var oriDestInfos = conditions.OriDestInfos;
+            var oriDestInfos = conditions.TripInfos;
             switch (oriDestInfos.Count)
             {
                 case 1:
@@ -190,13 +193,13 @@ namespace Lunggo.ApCommon.Mystifly
             return cabinType;
         }
 
-        private static List<FlightFareItinerary> MapFlightFareItineraries(AirLowFareSearchRS response)
+        private static List<FlightFareItinerary> MapFlightFareItineraries(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            var result = response.PricedItineraries.Select(MapFlightFareItinerary).ToList();
+            var result = response.PricedItineraries.Select(itin => MapFlightFareItinerary(itin, conditions)).ToList();
             return result;
         }
 
-        private static FlightFareItinerary MapFlightFareItinerary(PricedItinerary pricedItinerary)
+        private static FlightFareItinerary MapFlightFareItinerary(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
             var flightFareItinerary = new FlightFareItinerary();
             flightFareItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
@@ -208,11 +211,60 @@ namespace Lunggo.ApCommon.Mystifly
             flightFareItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
-            flightFareItinerary.FlightTrips = MapFlightTrips(pricedItinerary);
-            flightFareItinerary.Source = FlightSource.Wholesaler;
+            flightFareItinerary.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
+            flightFareItinerary.TotalTransit = CalculateTotalTransit(pricedItinerary);
+            flightFareItinerary.TransitDetails = MapTransitDetails(pricedItinerary);
+            flightFareItinerary.Airlines = 
+                GetAirlineList(pricedItinerary);
+            flightFareItinerary.Supplier = FlightSupplier.Mystifly;
             flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
+        }
+
+        private static List<string> GetAirlineList(PricedItinerary pricedItinerary)
+        {
+            var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments);
+            var airlines = segments.Select(segment => segment.MarketingAirlineCode);
+            return airlines.Distinct().ToList();
+        }
+
+        private static List<TransitDetail> MapTransitDetails(PricedItinerary itin)
+        {
+            var segments = itin.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToList();
+            var result = new List<TransitDetail>();
+            for (var i = 0; i < segments.Count; i++)
+            {
+                if (segments[i].StopQuantity > 0)
+                {
+                    result.Add(new TransitDetail
+                    {
+                        IsStop = true,
+                        Location = segments[i].StopQuantityInfo.LocationCode,
+                        Arrival = segments[i].StopQuantityInfo.ArrivalDateTime,
+                        Departure = segments[i].StopQuantityInfo.DepartureDateTime,
+                    });
+                }
+                if (i != 0)
+                {
+                    result.Add(new TransitDetail
+                    {
+                        IsStop = false,
+                        Location = segments[i].DepartureAirportLocationCode,
+                        Arrival = segments[i - 1].ArrivalDateTime,
+                        Departure = segments[i].DepartureDateTime
+                    });
+                }
+            }
+            return result;
+        }
+
+        private static int CalculateTotalTransit(PricedItinerary itin)
+        {
+            var segments = itin.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToList();
+            var transit = segments.Count() - 1;
+            var stop = segments.Sum(segment => segment.StopQuantity);
+            return transit + stop;
         }
 
         private static TripType MapTripType(string type)
@@ -227,6 +279,8 @@ namespace Lunggo.ApCommon.Mystifly
                     return TripType.OpenJaw;
                 case "Circle":
                     return TripType.Circle;
+                case "Other":
+                    return TripType.Other;
                 default:
                     return TripType.OpenJaw;
             }
@@ -293,43 +347,69 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static List<FlightFareTrip> MapFlightTrips(PricedItinerary pricedItinerary)
+        private static List<FlightFareTrip> MapFlightFareTrips(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
             var flightTrips = new List<FlightFareTrip>();
-            foreach (var flightSegment in pricedItinerary.OriginDestinationOptions.SelectMany(options => options.FlightSegments))
+            var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
+            var i = 0;
+            var totalTransitDuration = new TimeSpan();
+            foreach (var tripInfo in conditions.TripInfos)
             {
-                List<FlightStop> stops = null;
-                if (flightSegment.StopQuantity > 0)
+                var fareTrip = new FlightFareTrip
                 {
-                    stops = new List<FlightStop>
+                    OriginAirport = tripInfo.OriginAirport,
+                    DestinationAirport = tripInfo.DestinationAirport,
+                    DepartureDate = tripInfo.DepartureDate,
+                    FlightSegments = new List<FlightFareSegment>()
+                };
+                do
+                {
+                    fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
+                    if (i > 0)
+                        totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
+                    i++;
+                } while (i < segments.Count() && segments[i].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => segment.JourneyDuration)) +
+                                         totalTransitDuration;
+                flightTrips.Add(fareTrip);
+            }
+            return flightTrips;
+        }
+
+        private static FlightFareSegment MapFlightFareSegment(FlightSegment flightSegment)
+        {
+            List<FlightStop> stops = null;
+            if (flightSegment.StopQuantity > 0)
+            {
+                stops = new List<FlightStop>
                     {
                         new FlightStop
                         {
                             Airport = flightSegment.StopQuantityInfo.LocationCode,
                             Arrival = flightSegment.StopQuantityInfo.ArrivalDateTime,
                             Departure = flightSegment.StopQuantityInfo.DepartureDateTime,
-                            Duration = flightSegment.StopQuantityInfo.Duration
+                            Duration = TimeSpan.FromMinutes(flightSegment.StopQuantityInfo.Duration)
                         }
                     };
-                }
-                flightTrips.Add(new FlightFareTrip
-                {
-                    DepartureAirport = flightSegment.DepartureAirportLocationCode,
-                    ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
-                    DepartureTime = flightSegment.DepartureDateTime,
-                    ArrivalTime = flightSegment.ArrivalDateTime,
-                    Duration = flightSegment.JourneyDuration,
-                    AirlineCode = flightSegment.OperatingAirline.Code,
-                    FlightNumber = flightSegment.OperatingAirline.FlightNumber,
-                    AircraftCode = flightSegment.OperatingAirline.Equipment,
-                    CabinClass = flightSegment.CabinClassCode,
-                    Rbd = flightSegment.ResBookDesigCode,
-                    RemainingSeats = flightSegment.SeatsRemaining.Number,
-                    StopQuantity = flightSegment.StopQuantity,
-                    FlightStops = stops
-                });
             }
-            return flightTrips;
+            var segment = new FlightFareSegment
+            {
+                DepartureAirport = flightSegment.DepartureAirportLocationCode,
+                ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
+                DepartureTime = flightSegment.DepartureDateTime,
+                ArrivalTime = flightSegment.ArrivalDateTime,
+                Duration = TimeSpan.FromMinutes(flightSegment.JourneyDuration),
+                AirlineCode = flightSegment.MarketingAirlineCode,
+                FlightNumber = flightSegment.FlightNumber,
+                OperatingAirlineCode = flightSegment.OperatingAirline.Code,
+                AircraftCode = flightSegment.OperatingAirline.Equipment,
+                CabinClass = flightSegment.CabinClassCode,
+                Rbd = flightSegment.ResBookDesigCode,
+                RemainingSeats = flightSegment.SeatsRemaining.Number,
+                StopQuantity = flightSegment.StopQuantity,
+                FlightStops = stops
+            };
+            return segment;
         }
 
         private static void MapError(AirLowFareSearchRS response, ResultBase result)

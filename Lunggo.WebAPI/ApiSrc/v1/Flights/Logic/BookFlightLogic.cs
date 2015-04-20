@@ -150,18 +150,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 OriginalRequest = request
             };
             if (bookServiceResponse.IsSuccess)
-                switch (bookServiceResponse.BookResult.BookingStatus)
-                {
-                    case BookingStatus.Pending:
-                        apiResponse.Result = "Pending";
-                        apiResponse.BookingId = bookServiceResponse.BookResult.BookingId;
-                        break;
-                    case BookingStatus.Booked:
-                        apiResponse.Result = "Booked";
-                        apiResponse.BookingId = bookServiceResponse.BookResult.BookingId;
-                        apiResponse.TimeLimit = bookServiceResponse.BookResult.TimeLimit;
-                        break;
-                }
+            {
+                apiResponse.Result = "Booked";
+                apiResponse.BookingId = bookServiceResponse.BookResult.BookingId;
+                apiResponse.TimeLimit = bookServiceResponse.BookResult.TimeLimit;
+            }
             else
                 apiResponse.Result = "Failed";
             return apiResponse;

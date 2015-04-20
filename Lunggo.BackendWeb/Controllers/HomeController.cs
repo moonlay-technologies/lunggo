@@ -22,7 +22,7 @@ namespace Lunggo.BackendWeb.Controllers
     {
 
         public HotelReservationsTableRepo hotelBookTable = HotelReservationsTableRepo.GetInstance();
-        public FlightReservationsTableRepo flightBookTable = FlightReservationsTableRepo.GetInstance();
+        public FlightReservationTableRepo flightBookTable = FlightReservationTableRepo.GetInstance();
 
         public IDbConnection connOpen = DbService.GetInstance().GetOpenConnection();
 
@@ -154,7 +154,7 @@ namespace Lunggo.BackendWeb.Controllers
                     }
                     else if (record[i].Type == "Flight")
                     {
-                        var dataRecord = new FlightReservationsTableRecord
+                        var dataRecord = new FlightReservationTableRecord
                         {
                             RsvNo = record[i].RsvNo,
                             PaymentStatusCd = "02"

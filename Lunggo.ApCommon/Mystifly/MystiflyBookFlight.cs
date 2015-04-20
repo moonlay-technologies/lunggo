@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = client.BookFlight(request);
                     done = true;
-                    if (!response.Errors.Any() && response.Success)
+                    if (!response.Errors.Any() && response.Success && response.Status == "CONFIRMED")
                     {
                         result = MapResult(response);
                         result.IsSuccess = true;
@@ -181,24 +181,11 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 Status = new BookingStatusInfo
                 {
-                    BookingStatus = MapBookingStatus(response),
+                    BookingStatus = BookingStatus.Booked,
                     BookingId = response.UniqueID,
                     TimeLimit = response.TktTimeLimit
                 }
             };
-        }
-
-        private static BookingStatus MapBookingStatus(AirBookRS response)
-        {
-            switch (response.Status)
-            {
-                case "CONFIRMED" :
-                    return BookingStatus.Booked;
-                case "PENDING" :
-                    return BookingStatus.Pending;
-                default :
-                    return BookingStatus.Pending;
-            }
         }
 
         private static void MapError(AirBookRS response, ResultBase result)

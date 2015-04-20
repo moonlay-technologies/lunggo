@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.BackendWeb.Model;
+using Lunggo.Framework.Database;
 using Microsoft.Ajax.Utilities;
 
 namespace Lunggo.BackendWeb.Controllers
@@ -22,13 +23,14 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult Search(SearchFlightInput input)
         {
             var fs = FlightService.GetInstance();
-            fs.UpdateBookingStatus();
+            //fs.UpdateBookingStatus();
             var searchResult = fs.SearchFlight(input);
             var itin = searchResult.Itineraries[4];
 
             var revalidateInput = new RevalidateFlightInput
             {
-                FareId = itin.FareId
+                FareId = itin.FareId,
+                TripInfos = input.Conditions.TripInfos
             };
             var revalidateResult = fs.RevalidateFlight(revalidateInput);
 
@@ -40,7 +42,8 @@ namespace Lunggo.BackendWeb.Controllers
 
             var revalidateInput2 = new RevalidateFlightInput
             {
-                FareId = revalidateResult.Itinerary.FareId
+                FareId = revalidateResult.Itinerary.FareId,
+                TripInfos = input.Conditions.TripInfos
             };
             var revalidateResult2 = fs.RevalidateFlight(revalidateInput2);
 
@@ -57,7 +60,10 @@ namespace Lunggo.BackendWeb.Controllers
                         Phone = "0856123456789",
                     },
                     PassengerFareInfos = new List<PassengerFareInfo>()
-                }
+                },
+                Itinerary = revalidateResult2.Itinerary,
+                TripInfos = input.Conditions.TripInfos,
+                PaymentData = null
             };
             bookInput.BookingInfo.PassengerFareInfos.Add(new PassengerFareInfo
             {
@@ -69,10 +75,10 @@ namespace Lunggo.BackendWeb.Controllers
                 DateOfBirth = new DateTime(1987,5,5),
                 PassportOrIdNumber = "123456789o",
                 PassportCountry = "ID",
-                PassportExpiryDate = new DateTime(2020,7,7)
+                PassportExpiryDate = new DateTime(2020,7,7),
             });
             var bookResult = fs.BookFlight(bookInput);
-
+            /*
             var issueInput = new IssueTicketInput
             {
                 BookingId = bookResult.BookResult.BookingId
@@ -84,6 +90,7 @@ namespace Lunggo.BackendWeb.Controllers
                 BookingId = issueResult.BookingId
             };
             var detailsResult = fs.GetDetails(detailsInput);
+             * */
             return View();
         }
     }

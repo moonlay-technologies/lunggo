@@ -7,7 +7,12 @@ namespace Lunggo.ApCommon.Flight.Service
         public GetDetailsOutput GetDetails(GetDetailsInput input)
         {
             var output = new GetDetailsOutput();
-            var details = GetTripDetailsInternal(input.BookingId);
+            var request = new TripDetailsConditions
+            {
+                BookingId = input.BookingId,
+                TripInfos = input.TripInfos
+            };
+            var details = GetTripDetailsInternal(request);
             output.FlightDetails = MapDetails(details);
             return output;
         }

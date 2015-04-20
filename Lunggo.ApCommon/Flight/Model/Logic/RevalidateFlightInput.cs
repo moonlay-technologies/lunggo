@@ -9,5 +9,6 @@ namespace Lunggo.ApCommon.Flight.Model
     public class RevalidateFlightInput
     {
         public string FareId { get; set; }
+        public List<TripInfo> TripInfos { get; set; }
     }
 }

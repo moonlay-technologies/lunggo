@@ -52,10 +52,6 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.API", "Lunggo.API\Lu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebAPI", "Lunggo.WebAPI\Lunggo.WebAPI.csproj", "{94C45B65-F662-4262-A745-0D023F9C9FF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MystiflyOnePointAPI", "MystiflyOnePointAPI\MystiflyOnePointAPI.csproj", "{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{8387F82F-8624-49B3-A7C3-F6DB032D6835}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,26 +224,6 @@ Global
 		{94C45B65-F662-4262-A745-0D023F9C9FF9}.Release|ARM.ActiveCfg = Release|Any CPU
 		{94C45B65-F662-4262-A745-0D023F9C9FF9}.Release|x64.ActiveCfg = Release|Any CPU
 		{94C45B65-F662-4262-A745-0D023F9C9FF9}.Release|x86.ActiveCfg = Release|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Release|ARM.ActiveCfg = Release|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Release|x64.ActiveCfg = Release|Any CPU
-		{39E43B13-0914-4E73-9C03-E2A5EB4CC4FC}.Release|x86.ActiveCfg = Release|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Release|ARM.ActiveCfg = Release|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Release|x64.ActiveCfg = Release|Any CPU
-		{8387F82F-8624-49B3-A7C3-F6DB032D6835}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -46,9 +46,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return APIServiceWrapper.SpecificSearchFlight(conditions);
         }
 
-        private RevalidateFareResult RevalidateFareInternal(string fareId)
+        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            return APIServiceWrapper.RevalidateFare(fareId);
+            return APIServiceWrapper.RevalidateFare(conditions);
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
@@ -61,9 +61,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return APIServiceWrapper.OrderTicket(bookingId);
         }
 
-        private GetTripDetailsResult GetTripDetailsInternal(string bookingId)
+        private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
-            return APIServiceWrapper.GetTripDetails(bookingId);
+            return APIServiceWrapper.GetTripDetails(conditions);
         }
 
         private GetBookingStatusResult GetBookingStatusInternal()
