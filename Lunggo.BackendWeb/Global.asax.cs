@@ -12,6 +12,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.SnowMaker;
+using Microsoft.WindowsAzure.Storage;
 
 namespace Lunggo.BackendWeb
 {

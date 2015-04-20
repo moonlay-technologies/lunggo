@@ -7,7 +7,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
@@ -82,9 +81,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 ChildCount = request.Child,
                 InfantCount = request.Infant,
                 CabinClass = AssignCabinClass(request.Cabin),
-                OriDestInfos = new List<OriginDestinationInfo>
+                TripInfos = new List<TripInfo>
                 {
-                    new OriginDestinationInfo
+                    new TripInfo
                     {
                         OriginAirport = request.Ori,
                         DestinationAirport = request.Dest,
@@ -92,7 +91,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     }
                 }
                 /*
-                OriDestInfos = request.OriDestDate.Select(data => new OriginDestinationInfo
+                TripInfos = request.OriDestDate.Select(data => new TripInfo
                 {
                     OriginAirport = data.Ori,
                     DestinationAirport = data.Dest,

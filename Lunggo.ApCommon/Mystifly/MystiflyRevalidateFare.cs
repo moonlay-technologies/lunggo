@@ -13,13 +13,13 @@ namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override RevalidateFareResult RevalidateFare(string fareId)
+        internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
         {
             using (var client = new MystiflyClientHandler())
             {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = fareId,
+                    FareSourceCode = conditions.FareId,
                     SessionId = client.SessionId,
                     Target = MystiflyClientHandler.Target,
                     ExtensionData = null
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Mystifly
                     var response = client.AirRevalidate(request);
                     if (!response.Errors.Any() && response.Success)
                     {
-                        result = MapResult(response);
+                        result = MapResult(response, conditions);
                         result.IsSuccess = true;
                     }
                     else
@@ -68,12 +68,12 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static RevalidateFareResult MapResult(AirRevalidateRS response)
+        private static RevalidateFareResult MapResult(AirRevalidateRS response, RevalidateConditions conditions)
         {
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
             if (response.PricedItineraries.Any())
-                result.Itinerary = MapFlightFareItinerary(response.PricedItineraries[0]);
+                result.Itinerary = MapFlightFareItinerary(response.PricedItineraries[0], conditions);
             return result;
         }
 

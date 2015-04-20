@@ -41,6 +41,18 @@ namespace Lunggo.ApCommon.Autocomplete
             }
         }
 
+        public DateTime GetDictionaryLastUpdate(string type)
+        {
+            switch (type)
+            {
+                case "airport":
+                case "airline":
+                case "hotellocation":
+                default:
+                    return new DateTime(2015,1,1);
+            }
+        }
+
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
         {
             var airportIndex = TrieIndex.GetInstance().AirportIndex;

@@ -31,13 +31,13 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightItineraryDetails : FlightItineraryBase
     {
-        public Dictionary<int, FlightTripDetails> FlightTrips { get; set; }
+        public List<FlightTripDetails> FlightTrips { get; set; }
         public List<PassengerInfoDetails> PassengerInfo { get; set; }
     }
 
     public class FlightItineraryBase
     {
-        public FlightSource Source { get; set; }
+        public FlightSupplier Supplier { get; set; }
     }
     
 }

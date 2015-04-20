@@ -10,18 +10,18 @@ namespace Lunggo.ApCommon.Flight.Service
         public FlightFareItinerary BundleFlight(List<FlightFareItinerary> itineraries)
         {
             FlightFareItinerary output;
-            if (itineraries.Select(itin => itin.Source).All(source => source == itineraries[0].Source))
+            if (itineraries.Select(itin => itin.Supplier).All(source => source == itineraries[0].Supplier))
             {
                 var conditions = new SpecificSearchConditions
                 {
-                    FlightTrips = itineraries.SelectMany(itin => itin.FlightTrips).ToList(),
-                    CabinClass = MapCabinClass(itineraries.First().FlightTrips.First().CabinClass),
+                    FlightSegments = itineraries.SelectMany(itin => itin.FlightTrips).SelectMany(trip => trip.FlightSegments).ToList(),
+                    CabinClass = MapCabinClass(itineraries.First().FlightTrips.First().FlightSegments.First().CabinClass),
                     AdultCount = itineraries.First().AdultCount,
                     ChildCount = itineraries.First().ChildCount,
                     InfantCount = itineraries.First().InfantCount
                 };
                 var result = SpecificSearchFlightInternal(conditions);
-                output = result.IsSuccess ? Enumerable.First<FlightFareItinerary>(result.FlightItineraries) : null;
+                output = result.IsSuccess ? result.FlightItineraries.First() : null;
             }
             else
             {

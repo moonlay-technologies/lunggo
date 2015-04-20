@@ -130,6 +130,7 @@
     <Compile Include="Database\IDbTableRepository.cs" />
     <Compile Include="Database\IDbWrapper.cs" />
     <Compile Include="Database\ITableRecord.cs" />
+    <Compile Include="Database\NoReturnQueryBase.cs" />
     <Compile Include="Database\QueryBase.cs" />
     <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />

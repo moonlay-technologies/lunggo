@@ -20,40 +20,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("TripId");
 		    }
 		}
-		public String RsvNo
+		public long? ItineraryId
 		{
-		    get { return _RsvNo; }
+		    get { return _ItineraryId; }
 		    set
 		    {
-		        _RsvNo = value;
-		        IncrementLog("RsvNo");
-		    }
-		}
-		public String BookingNumber
-		{
-		    get { return _BookingNumber; }
-		    set
-		    {
-		        _BookingNumber = value;
-		        IncrementLog("BookingNumber");
-		    }
-		}
-		public String TripTypeCd
-		{
-		    get { return _TripTypeCd; }
-		    set
-		    {
-		        _TripTypeCd = value;
-		        IncrementLog("TripTypeCd");
-		    }
-		}
-		public Decimal? FinalPrice
-		{
-		    get { return _FinalPrice; }
-		    set
-		    {
-		        _FinalPrice = value;
-		        IncrementLog("FinalPrice");
+		        _ItineraryId = value;
+		        IncrementLog("ItineraryId");
 		    }
 		}
 		public String OriginAirportCd
@@ -74,49 +47,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DestinationAirportCd");
 		    }
 		}
-		public DateTime? DepartureTime
+		public DateTime? DepartureDate
 		{
-		    get { return _DepartureTime; }
+		    get { return _DepartureDate; }
 		    set
 		    {
-		        _DepartureTime = value;
-		        IncrementLog("DepartureTime");
-		    }
-		}
-		public DateTime? ReturnTime
-		{
-		    get { return _ReturnTime; }
-		    set
-		    {
-		        _ReturnTime = value;
-		        IncrementLog("ReturnTime");
-		    }
-		}
-		public short? AdultCount
-		{
-		    get { return _AdultCount; }
-		    set
-		    {
-		        _AdultCount = value;
-		        IncrementLog("AdultCount");
-		    }
-		}
-		public short? ChildCount
-		{
-		    get { return _ChildCount; }
-		    set
-		    {
-		        _ChildCount = value;
-		        IncrementLog("ChildCount");
-		    }
-		}
-		public short? InfantCount
-		{
-		    get { return _InfantCount; }
-		    set
-		    {
-		        _InfantCount = value;
-		        IncrementLog("InfantCount");
+		        _DepartureDate = value;
+		        IncrementLog("DepartureDate");
 		    }
 		}
 		public String InsertBy
@@ -176,17 +113,10 @@ namespace Lunggo.Repository.TableRecord
 
 		
 		private long? _TripId;
-		private String _RsvNo;
-		private String _BookingNumber;
-		private String _TripTypeCd;
-		private Decimal? _FinalPrice;
+		private long? _ItineraryId;
 		private String _OriginAirportCd;
 		private String _DestinationAirportCd;
-		private DateTime? _DepartureTime;
-		private DateTime? _ReturnTime;
-		private short? _AdultCount;
-		private short? _ChildCount;
-		private short? _InfantCount;
+		private DateTime? _DepartureDate;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -225,17 +155,10 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("TripId", true),
-				new ColumnMetadata("RsvNo", false),
-				new ColumnMetadata("BookingNumber", false),
-				new ColumnMetadata("TripTypeCd", false),
-				new ColumnMetadata("FinalPrice", false),
+				new ColumnMetadata("ItineraryId", false),
 				new ColumnMetadata("OriginAirportCd", false),
 				new ColumnMetadata("DestinationAirportCd", false),
-				new ColumnMetadata("DepartureTime", false),
-				new ColumnMetadata("ReturnTime", false),
-				new ColumnMetadata("AdultCount", false),
-				new ColumnMetadata("ChildCount", false),
-				new ColumnMetadata("InfantCount", false),
+				new ColumnMetadata("DepartureDate", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

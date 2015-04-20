@@ -14,13 +14,13 @@ namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override GetTripDetailsResult GetTripDetails(string bookingId)
+        internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
             using (var client = new MystiflyClientHandler())
             {
                 var request = new AirTripDetailsRQ
                 {
-                    UniqueID = bookingId,
+                    UniqueID = conditions.BookingId,
                     SendOnlyTicketed = false,
                     SessionId = client.SessionId,
                     Target = MystiflyClientHandler.Target,
@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Mystifly
                     var response = client.TripDetails(request);
                     if (!response.Errors.Any() && response.Success)
                     {
-                        result = MapResult(response);
+                        result = MapResult(response, conditions);
                         result.IsSuccess = true;
                     }
                     else
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static GetTripDetailsResult MapResult(AirTripDetailsRS response)
+        private static GetTripDetailsResult MapResult(AirTripDetailsRS response, ConditionsBase conditions)
         {
             var result = new GetTripDetailsResult();
             result.BookingId = response.TravelItinerary.UniqueID;
@@ -77,9 +77,9 @@ namespace Lunggo.ApCommon.Mystifly
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
             result.FlightItineraryDetails = new FlightItineraryDetails
             {
-                FlightTrips = MapDetailsFlightTrips(response),
+                FlightTrips = MapDetailsFlightTrips(response, conditions),
                 PassengerInfo = MapDetailsPassengerInfo(response),
-                Source = FlightSource.Wholesaler
+                Supplier = FlightSupplier.Mystifly
             };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
@@ -90,32 +90,56 @@ namespace Lunggo.ApCommon.Mystifly
             return result;
         }
 
-        private static Dictionary<int, FlightTripDetails> MapDetailsFlightTrips(AirTripDetailsRS response)
+        private static List<FlightTripDetails> MapDetailsFlightTrips(AirTripDetailsRS response, ConditionsBase conditions)
         {
-            var flightTripDetails = new Dictionary<int, FlightTripDetails>();
-            foreach (var reservationItem in response.TravelItinerary.ItineraryInfo.ReservationItems)
+            var flightTrips = new List<FlightTripDetails>();
+            var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
+            var i = 0;
+            var totalTransitDuration = new TimeSpan();
+            foreach (var tripInfo in conditions.TripInfos)
             {
-                var flightTrip = new FlightTripDetails
+                var fareTrip = new FlightTripDetails
                 {
-                    Pnr = reservationItem.AirlinePNR,
-                    DepartureTime = reservationItem.DepartureDateTime,
-                    ArrivalTime = reservationItem.ArrivalDateTime,
-                    Duration = int.Parse(reservationItem.JourneyDuration),
-                    DepartureAirport = reservationItem.DepartureAirportLocationCode,
-                    DepartureTerminal = reservationItem.DepartureTerminal,
-                    ArrivalAirport = reservationItem.ArrivalAirportLocationCode,
-                    ArrivalTerminal = reservationItem.ArrivalTerminal,
-                    AirlineCode = reservationItem.MarketingAirlineCode,
-                    FlightNumber = reservationItem.FlightNumber,
-                    OperatingAirlineCode = reservationItem.OperatingAirlineCode,
-                    AircraftCode = reservationItem.AirEquipmentType,
-                    Rbd = reservationItem.ResBookDesigCode,
-                    Baggage = reservationItem.Baggage,
-                    StopQuantity = reservationItem.StopQuantity
+                    OriginAirport = tripInfo.OriginAirport,
+                    DestinationAirport = tripInfo.DestinationAirport,
+                    DepartureDate = tripInfo.DepartureDate,
+                    FlightSegments = new List<FlightSegmentDetails>(),
                 };
-                flightTripDetails.Add(reservationItem.ItemRPH, flightTrip);
+                do
+                {
+                    fareTrip.FlightSegments.Add(MapFlightSegmentDetails(segments[i]));
+                    if (i > 0)
+                        totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
+                    i++;
+                } while (i < segments.Count() && segments[i].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => double.Parse(segment.JourneyDuration))) +
+                                         totalTransitDuration;
+                flightTrips.Add(fareTrip);
             }
-            return flightTripDetails;
+            return flightTrips;
+        }
+
+        private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
+        {
+            return new FlightSegmentDetails
+            {
+                Reference = item.ItemRPH,
+                DepartureAirport = item.DepartureAirportLocationCode,
+                ArrivalAirport = item.ArrivalAirportLocationCode,
+                DepartureTime = item.DepartureDateTime,
+                ArrivalTime = item.ArrivalDateTime,
+                DepartureTerminal = item.DepartureTerminal,
+                ArrivalTerminal = item.ArrivalTerminal,
+                Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
+                AirlineCode = item.MarketingAirlineCode,
+                FlightNumber = item.FlightNumber,
+                OperatingAirlineCode = item.OperatingAirlineCode,
+                AircraftCode = item.AirEquipmentType,
+                Rbd = item.ResBookDesigCode,
+                StopQuantity = item.StopQuantity,
+                Baggage = item.Baggage,
+                Pnr = item.AirlinePNR
+            };
         }
 
         private static List<PassengerInfoDetails> MapDetailsPassengerInfo(AirTripDetailsRS response)
@@ -123,10 +147,8 @@ namespace Lunggo.ApCommon.Mystifly
             var passengerInfoDetails = new List<PassengerInfoDetails>();
             foreach (var customerInfo in response.TravelItinerary.ItineraryInfo.CustomerInfos)
             {
-                var eTicketNumbers =
-                    customerInfo.ETickets.ToDictionary(
-                        eTicket => eTicket.ItemRPH,
-                        eTicket => eTicket.eTicketNumber);
+                var eTicket =
+                    MapETicket(customerInfo.ETickets);
                 var passengerInfo = new PassengerInfoDetails
                 {
                     Title = MapDetailsPassengerTitle(customerInfo),
@@ -134,11 +156,20 @@ namespace Lunggo.ApCommon.Mystifly
                     LastName = customerInfo.Customer.PaxName.PassengerLastName,
                     Type = MapDetailsPassengerType(customerInfo),
                     PassportOrIdNumber = customerInfo.Customer.PassportNumber,
-                    ETicketNumbers = eTicketNumbers
+                    ETicket = eTicket
                 };
                 passengerInfoDetails.Add(passengerInfo);
             }
             return passengerInfoDetails;
+        }
+
+        private static List<Eticket> MapETicket(IEnumerable<ETicket> eticket)
+        {
+            return eticket.Select(e => new Eticket
+            {
+                Reference = e.ItemRPH,
+                Number = e.eTicketNumber
+            }).ToList();
         }
 
         private static Title MapDetailsPassengerTitle(CustomerInfo customerInfo)

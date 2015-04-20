@@ -1,5 +1,10 @@
-﻿using Lunggo.ApCommon.Flight.Query;
+﻿using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Query;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -7,11 +12,18 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public void UpdateBookingStatus()
         {
-            var result = GetBookingStatusInternal();
+            var statusData = GetBookingStatusInternal();
+            var bookingStatusInfo = statusData.BookingStatusInfos;
             // TODO FLIGHT : Schedule change Notification
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                UpdateBookingStatusQuery.GetInstance().Execute(conn, result.BookingStatusInfos);
+                var query = UpdateFlightBookingStatusQuery.GetInstance();
+                var dbBookingStatusInfo = bookingStatusInfo.Select(info => new
+                {
+                    info.BookingId,
+                    BookingStatus = BookingStatusCd.Mnemonic(info.BookingStatus)
+                }).ToArray();
+                query.Execute(conn, dbBookingStatusInfo);
             }
         }
     }

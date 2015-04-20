@@ -9,7 +9,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.BackendWeb.Interface;
 using Lunggo.BackendWeb.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Http;
@@ -24,7 +23,7 @@ namespace Lunggo.BackendWeb.Controllers
         {
             return View();
         }
-
+        /*
         [HttpPost]
         public ActionResult Search(FlightReservationSearch search)
         {
@@ -43,6 +42,7 @@ namespace Lunggo.BackendWeb.Controllers
             var result = FlightReservationIntegrated.GetFromDb(search, QueryType.Complete).SingleOrDefault();
             return View(result);
         }
+         */
     }
 
 }
