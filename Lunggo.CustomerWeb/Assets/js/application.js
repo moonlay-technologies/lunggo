@@ -3,9 +3,9 @@
 $(document).ready(function(){
 
 	toggle_filter();
-	hotel_search();
-	hotel_detail();
-	flight_search();
+	hotelSearch();
+	hotelDetail();
+	flightSearch();
     switchSearchForm();
     hotelSearchFormFunctions();
     flightSearchFormFunctions();
@@ -57,7 +57,7 @@ function hotelSearchFormFunctions() {
 
     // activate functions
     $(document).ready(function() {
-        location_autocomplete();
+        locationAutocomplete();
         datePicker();
         stayLength();
         roomCount();
@@ -72,7 +72,7 @@ function hotelSearchFormFunctions() {
 
     // ******************************
     // location auto complete
-    var location_autocomplete = function () {
+    var locationAutocomplete = function () {
 
         // settings
         var elInput = 'input.input-location';
@@ -557,7 +557,7 @@ function toggle_filter() {
 
 //******************************************
 // hotel search functions
-function hotel_search() {
+function hotelSearch() {
 
     toggle_view();
 
@@ -585,7 +585,7 @@ function hotel_search() {
 
 //******************************************
 // hotel detail functions
-function hotel_detail() {
+function hotelDetail() {
 
     hotel_image();
 
@@ -603,13 +603,14 @@ function hotel_detail() {
 
 //******************************************
 // flight search functions
-function flight_search() {
+function flightSearch() {
 
-    toggle_flight_detail();
+    toggleFlightDetail();
 
     // toggle flight detail
-    function toggle_flight_detail() {
-        $('.flight-search-page .flight-list .flight .flight-toggle, .flight-search-page .flight-list-return .flight .flight-toggle').click(function (evt) {
+    function toggleFlightDetail() {
+        $('.flight-list').on('click', '.flight .flight-toggle', function (evt) {
+            console.log('JEMPING CLICKED');
             evt.preventDefault();
             $(this).closest('.flight').children('.flight-detail').stop().slideToggle();
             $(this).toggleClass('active');
@@ -656,174 +657,249 @@ var SearchRoomConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/rooms'
 };
 
+var FlightSearchConfig = {
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights'
+};
+
 // ************************
 // Angular app
-(function () {
+(function() {
 
     var app = angular.module('travorama', ['ngRoute']);
 
     // hotel controller
-    app.controller('HotelController', ['$http', '$scope', function ($http, $scope) {
+    app.controller('HotelController', [
+        '$http', '$scope', function($http, $scope) {
 
-        // run hotel search function on document ready
-        angular.element(document).ready(function () {
-            $scope.load_hotel_list();
-        });
+            // run hotel search function on document ready
+            angular.element(document).ready(function() {
+                $scope.load_hotel_list();
+            });
 
-        // hotel list
-        var hotel_list = this;
-        hotel_list.hotels = [];
+            // hotel list
+            var hotel_list = this;
+            hotel_list.hotels = [];
 
-        // hotel search params
-        $scope.HotelSearchParams = {};
+            // hotel search params
+            $scope.HotelSearchParams = {};
 
-        // *******************************
-        // default value
-        $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-StayDate');
-        $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-StayLength');
-        $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-LocationId');
-        $scope.HotelSearchParams.ResultCount = $('.search-page.hotel-search-page').attr('data-search-ResultCount');
-        $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
-        // *******************************
+            // *******************************
+            // default value
+            $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-StayDate');
+            $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-StayLength');
+            $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-LocationId');
+            $scope.HotelSearchParams.ResultCount = $('.search-page.hotel-search-page').attr('data-search-ResultCount');
+            $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
+            // *******************************
 
-        // load hotel list function
-        $scope.load_hotel_list = function (page) {
+            // load hotel list function
+            $scope.load_hotel_list = function(page) {
 
-            loading_overlay('show');
+                loading_overlay('show');
 
-            console.log('--------------------------------');
-            console.log('Searching for hotel with params:');
-            console.log($scope.HotelSearchParams);
+                console.log('--------------------------------');
+                console.log('Searching for hotel with params:');
+                console.log($scope.HotelSearchParams);
 
-            // set default page
-            $scope.CurrentPage = page || 1;
+                // set default page
+                $scope.CurrentPage = page || 1;
 
-            // set startIndex
-            $scope.CurrentPage = $scope.CurrentPage - 1;
-            $scope.HotelSearchParams.StartIndex = (SearchHotelConfig.ResultCount * $scope.CurrentPage);
-            
-            $scope.hotels = [];
+                // set startIndex
+                $scope.CurrentPage = $scope.CurrentPage - 1;
+                $scope.HotelSearchParams.StartIndex = (SearchHotelConfig.ResultCount * $scope.CurrentPage);
 
-            // generate StarRating
-            $scope.HotelSearchParams.StarRating = [$scope.HotelSearchParams.star0, $scope.HotelSearchParams.star1, $scope.HotelSearchParams.star2, $scope.HotelSearchParams.star3, $scope.HotelSearchParams.star4, $scope.HotelSearchParams.star5].join('');
-            if ($scope.HotelSearchParams.StarRating.length == 0) {
-                $scope.HotelSearchParams.StarRating = '-1,1,2,3,4,5';
-            }
+                $scope.hotels = [];
 
-            // http request
-            $http.get(SearchHotelConfig.Url, {
-                params: {
-                    LocationId: $scope.HotelSearchParams.LocationId,
-                    StayDate: $scope.HotelSearchParams.StayDate,
-                    StayLength: $scope.HotelSearchParams.StayLength,
-                    SearchId: $scope.HotelSearchParams.SearchId,
-                    SortBy: $scope.HotelSearchParams.SortBy,
-                    StartIndex: $scope.HotelSearchParams.StartIndex,
-                    ResultCount: SearchHotelConfig.ResultCount,
-                    MinPrice: $scope.HotelSearchParams.MinPrice,
-                    MaxPrice: $scope.HotelSearchParams.MaxPrice,
-                    StarRating: $scope.HotelSearchParams.StarRating
+                // generate StarRating
+                $scope.HotelSearchParams.StarRating = [$scope.HotelSearchParams.star0, $scope.HotelSearchParams.star1, $scope.HotelSearchParams.star2, $scope.HotelSearchParams.star3, $scope.HotelSearchParams.star4, $scope.HotelSearchParams.star5].join('');
+                if ($scope.HotelSearchParams.StarRating.length == 0) {
+                    $scope.HotelSearchParams.StarRating = '-1,1,2,3,4,5';
                 }
-                // if success
-            }).success(function (data) {
-                // console data
-                console.log('Hotel search result:');
-                console.log(data);
 
-                // add data to $scope
-                hotel_list.hotels = data.HotelList;
-                $scope.HotelSearchParams.SearchId = data.SearchId;
+                // http request
+                $http.get(SearchHotelConfig.Url, {
+                    params: {
+                        LocationId: $scope.HotelSearchParams.LocationId,
+                        StayDate: $scope.HotelSearchParams.StayDate,
+                        StayLength: $scope.HotelSearchParams.StayLength,
+                        SearchId: $scope.HotelSearchParams.SearchId,
+                        SortBy: $scope.HotelSearchParams.SortBy,
+                        StartIndex: $scope.HotelSearchParams.StartIndex,
+                        ResultCount: SearchHotelConfig.ResultCount,
+                        MinPrice: $scope.HotelSearchParams.MinPrice,
+                        MaxPrice: $scope.HotelSearchParams.MaxPrice,
+                        StarRating: $scope.HotelSearchParams.StarRating
+                    }
+                    // if success
+                }).success(function(data) {
+                    // console data
+                    console.log('Hotel search result:');
+                    console.log(data);
 
-                // pagination
-                $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
-                $scope.show_page($scope.MaxPage);
+                    // add data to $scope
+                    hotel_list.hotels = data.HotelList;
+                    $scope.HotelSearchParams.SearchId = data.SearchId;
 
-                console.log('loaded');
-                console.log('--------------------------------');
+                    // pagination
+                    $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
+                    $scope.show_page($scope.MaxPage);
 
-                loading_overlay('hide');
+                    console.log('loaded');
+                    console.log('--------------------------------');
 
-                // if error
-            }).error(function () {
-                console.log('REQUEST ERROR');
-                console.log('--------------------------------');
+                    loading_overlay('hide');
 
-                loading_overlay('hide');
+                    // if error
+                }).error(function() {
+                    console.log('REQUEST ERROR');
+                    console.log('--------------------------------');
 
-            });
+                    loading_overlay('hide');
 
-        };
+                });
 
-        // paging function
-        $scope.show_page = function (max_page) {
-            $('footer .pagination').html('');
-            for (n = 1 ; n <= max_page ; n++) {
-                $('footer .pagination').append('<li><a href="#" data-page="' + n + '">' + n + '</a></li>');
+            };
+
+            // paging function
+            $scope.show_page = function(max_page) {
+                $('footer .pagination').html('');
+                for (n = 1; n <= max_page; n++) {
+                    $('footer .pagination').append('<li><a href="#" data-page="' + n + '">' + n + '</a></li>');
+                }
+                $('footer .pagination a').click(function() {
+                    var page = $(this).attr('data-page');
+                    $scope.load_hotel_list(page);
+                });
             }
-            $('footer .pagination a').click(function () {
-                var page = $(this).attr('data-page');
-                $scope.load_hotel_list(page);
-            });
+
+
         }
-
-
-    }]);
+    ]);
 
     // room controller
-    app.controller('RoomController', ['$http', '$scope', function($http, $scope) {
+    app.controller('RoomController', [
+        '$http', '$scope', function($http, $scope) {
 
-        // run hotel search function on document ready
-        angular.element(document).ready(function () {
-            $scope.getRoomlist();
-        });
-
-        // get room list
-        var room_list = this;
-        room_list.rooms = [];
-        $scope.RoomSearchParams = {};
-        $scope.loaded = false;
-
-        // default value
-        $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
-        $scope.RoomSearchParams.StayDate = $('#form-room-checkin').val() || '2015-05-05';
-        $scope.RoomSearchParams.StayLength = $('#form-room-length').val() || 1;
-        $scope.RoomSearchParams.RoomCount = $('#form-room-qty').val() || 1;
-        $scope.RoomSearchParams.SearchId = '';
-
-        $scope.getRoomlist = function() {
-
-            console.log('--------------------------------');
-            console.log('Searching for Room with params:');
-            console.log($scope.RoomSearchParams);
-
-            $scope.loaded = false;
-
-            $http.get(SearchRoomConfig.Url, {
-                params : {
-                    HotelId: $scope.RoomSearchParams.HotelId,
-                    StayDate: $scope.RoomSearchParams.StayDate,
-                    StayLength: $scope.RoomSearchParams.StayLength,
-                    RoomCount: $scope.RoomSearchParams.RoomCount,
-                    SearchId: $scope.RoomSearchParams.SearchId,
-                }
-            }).success(function(data) {
-                console.log(data);
-
-                room_list.rooms = data.PackageList;
-
-                console.log('LOADED');
-                console.log('--------------------------------');
-
-                $scope.loaded = true;
-
-            }).error(function() {
-                console.log('REQUEST ERROR');
-                console.log('--------------------------------');
+            // run hotel search function on document ready
+            angular.element(document).ready(function() {
+                $scope.getRoomlist();
             });
 
-        }
+            // get room list
+            var room_list = this;
+            room_list.rooms = [];
+            $scope.RoomSearchParams = {};
+            $scope.loaded = false;
 
-    }]);
+            // default value
+            $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
+            $scope.RoomSearchParams.StayDate = $('#form-room-checkin').val() || '2015-05-05';
+            $scope.RoomSearchParams.StayLength = $('#form-room-length').val() || 1;
+            $scope.RoomSearchParams.RoomCount = $('#form-room-qty').val() || 1;
+            $scope.RoomSearchParams.SearchId = '';
+
+            $scope.getRoomlist = function() {
+
+                console.log('--------------------------------');
+                console.log('Searching for Room with params:');
+                console.log($scope.RoomSearchParams);
+
+                $scope.loaded = false;
+
+                $http.get(SearchRoomConfig.Url, {
+                    params: {
+                        HotelId: $scope.RoomSearchParams.HotelId,
+                        StayDate: $scope.RoomSearchParams.StayDate,
+                        StayLength: $scope.RoomSearchParams.StayLength,
+                        RoomCount: $scope.RoomSearchParams.RoomCount,
+                        SearchId: $scope.RoomSearchParams.SearchId,
+                    }
+                }).success(function(data) {
+                    console.log(data);
+
+                    room_list.rooms = data.PackageList;
+
+                    console.log('LOADED');
+                    console.log('--------------------------------');
+
+                    $scope.loaded = true;
+
+                }).error(function() {
+                    console.log('REQUEST ERROR');
+                    console.log('--------------------------------');
+                });
+
+            }
+
+        }
+    ]);
+
+    // fight controller
+    app.controller('FlightController', [
+        '$http', '$scope', function ($http, $scope) {
+
+            // run hotel search function on document ready
+            angular.element(document).ready(function () {
+                $scope.getFlightList();
+            });
+
+            // get room list
+            var flightList = this;
+            flightList.list = [];
+            $scope.FlightSearchParams = {};
+            $scope.loaded = false;
+
+            // default value
+            $scope.FlightSearchParams = {
+                Ori: 'CGK',
+                Dest: 'DPS',
+                Date: '2015-05-05',
+                Cabin: 'e',
+                Type: 'ONE',
+                Adult: '1',
+                Child: '0',
+                Infant: '0'
+            }
+
+            $scope.getFlightList = function () {
+
+                console.log('--------------------------------');
+                console.log('Searching for Room with params:');
+                console.log($scope.FlightSearchParams);
+
+                $scope.loaded = false;
+
+                $http.get(FlightSearchConfig.Url, {
+                    params: {
+                        Ori: $scope.FlightSearchParams.Ori,
+                        Dest: $scope.FlightSearchParams.Dest,
+                        Date: $scope.FlightSearchParams.Date,
+                        Cabin: $scope.FlightSearchParams.Cabin,
+                        Type: $scope.FlightSearchParams.Type,
+                        Adult: $scope.FlightSearchParams.Adult,
+                        Child: $scope.FlightSearchParams.Child,
+                        Infant: $scope.FlightSearchParams.Infant
+                    }
+                }).success(function (data) {
+                    console.log(data);
+
+                    flightList.list = data.FlightList;
+
+                    console.log('LOADED');
+                    console.log('--------------------------------');
+
+                    $scope.loaded = true;
+
+                }).error(function () {
+                    console.log('REQUEST ERROR');
+                    console.log('--------------------------------');
+                });
+
+            }
+
+        }
+    ]);
+
 
 })();
 

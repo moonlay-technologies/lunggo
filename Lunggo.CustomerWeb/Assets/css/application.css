@@ -858,6 +858,9 @@ hr {
       position: absolute;
       left: 0; }
 
+.flight-search-page .flight-loading {
+  display: block;
+  text-align: center; }
 .flight-search-page .page-header .site-nav {
   display: inline; }
   .flight-search-page .page-header .site-nav a {

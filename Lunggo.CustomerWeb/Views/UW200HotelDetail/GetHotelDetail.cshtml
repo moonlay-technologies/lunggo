@@ -10,7 +10,7 @@
 
 @section PageJavascript {
     <script>
-        
+
         // start google maps
         function initialize() {
             var hotelLat = $('.hotel-map').attr('data-lat');
@@ -39,7 +39,6 @@
 
 <!-- .search-page content start -->
 <div class="detail-page hotel-detail-page">
-
 
     <header>
         <div class="container">
@@ -162,7 +161,7 @@
                                     <div class="room-facilities">
                                         <h3>Facilities:</h3>
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <div class="col-xs-6">
                                                 <ul>
                                                     <li>Lorem ipsum</li>
                                                     <li>Lorem ipsum</li>
@@ -171,7 +170,7 @@
                                                     <li>Lorem ipsum</li>
                                                 </ul>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-xs-6">
                                                 <ul>
                                                     <li>Lorem ipsum</li>
                                                     <li>Lorem ipsum</li>
@@ -228,7 +227,7 @@
                             var leftSection = Math.Ceiling(faciLength / 2);
                             //var rightSection = Math.Floor(faciLength / 2);
                             var i = 0;
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <ul>
                                     @foreach (var faciLeft in (Model.HotelDetail.Facilities))
                                     {
@@ -241,7 +240,7 @@
                                 </ul>
                             </div>
                             
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <ul>
                                     @foreach (var faciRight in (Model.HotelDetail.Facilities))
                                     {
@@ -260,7 +259,7 @@
             </div>
         </div>
     </section><!-- .hotel-text -->
-    <section class="hotel-review container">
+    <section class="hotel-review container hide">
         <h3 class="section-title"><b>HOTEL</b> REVIEW</h3>
         <section class="review-sum">
             <div class="row">
@@ -310,7 +309,7 @@
             <!-- loop end here -->
         </section>
     </section><!-- .hotel-review -->
-    <section class="location container">
+    <section class="location container hide">
         <h3 class="section-title"><b>SUGGESTION</b> &amp; INFORMATION</h3>
         <img src="/assets/images/_sample/sample-tab.jpg" alt="">
     </section><!-- .location -->
@@ -318,7 +317,7 @@
         <h3 class="section-title"><b>YOU MAY</b> ALSO LIKE</h3>
         <div class="row">
 
-            <?php for($i=1; $i<=4; $i++){ ?>
+            <!-- hotel suggestion loop start here -->
 
             <div class="col-sm-3">
                 <div class="hotel">
@@ -329,7 +328,7 @@
                 </div>
             </div>
 
-            <?php } ?>
+            <!-- hotel suggestion loop end here -->
 
         </div>
     </section><!-- .suggestion -->
