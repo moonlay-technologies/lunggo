@@ -84,9 +84,16 @@
                             <input type="text" class="form-control" id="form-room-checkin" value="@Model.StayDate.ToString("yyyy MM dd")">
 
                         </div>
+                        @{
+                            var dataDate = Model.StayDate.ToString("dd");
+                            var dataStay = Model.StayLength;
+
+                            var getCheckOutDate = Convert.ToInt32(dataDate) + Convert.ToInt32(dataStay);    
+                            
+                        }
                         <div class="form-group checkout">
                             <label for="form-room-checkout" class="control-label">Check Out:</label>
-                            <input type="text" class="form-control" id="form-room-checkout">
+                            <input type="text" class="form-control" id="form-room-checkout" value="@Model.StayDate.ToString("yyyy MM") @getCheckOutDate">
                         </div>
                         <div class="form-group duration">
                             <label for="form-room-duration" class="control-label">Duration:</label>
@@ -96,7 +103,7 @@
                         </div>
                         <div class="form-group qty">
                             <label for="form-room-qty" class="control-label">Rooms:</label>
-                            <input type="text" class="form-control" id="form-room-qty">
+                            <input type="text" class="form-control" id="form-room-qty" value="@Model.RoomOccupants.Count()">
                         </div>
                         <div class="form-action">
                             <input type="image" src="/assets/images/search.png" class="btn btn-yellow">
