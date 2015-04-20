@@ -112,9 +112,16 @@
                             <input type="text" class="form-control" id="form-room-checkin" value="@Model.StayDate.ToString("yyyy-MM-dd")">
 
                         </div>
+                        @{
+                            var dataDate = Model.StayDate.ToString("dd");
+                            var dataStay = Model.StayLength;
+
+                            var getCheckOutDate = Convert.ToInt32(dataDate) + Convert.ToInt32(dataStay);    
+                            
+                        }
                         <div class="form-group checkout">
                             <label for="form-room-checkout" class="control-label">Check Out:</label>
-                            <input type="text" class="form-control" id="form-room-checkout">
+                            <input type="text" class="form-control" id="form-room-checkout" value="@Model.StayDate.ToString("yyyy MM") @getCheckOutDate">
                         </div>
                         <div class="form-group duration">
                             <label for="form-room-duration" class="control-label">Duration:</label>
@@ -124,7 +131,7 @@
                         </div>
                         <div class="form-group qty">
                             <label for="form-room-qty" class="control-label">Rooms:</label>
-                            <input type="text" class="form-control input-room select-room" id="form-room-qty" value="2">
+                            <input type="text" class="form-control" id="form-room-qty" value="@Model.RoomOccupants.Count()">
                         </div>
                         <div class="form-action">
                             <input type="image" src="/assets/images/search.png" class="btn btn-yellow">
@@ -133,7 +140,7 @@
                 </header>
                 <section ng-controller="RoomController as room_list">
                     <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>
-                    
+
                     <section class="room-loading" ng-if="!loaded">
                         <img src="/Assets/images/loading-image-dark.gif"/>
                     </section>
@@ -269,37 +276,37 @@
         </section>
         <section class="review-list">
             <!-- loop start here -->
-                <article class="review">
-                    <div class="row">
-                        <div class="col-sm-10 review-left">
-                            <header>
-                                <a href="#" class="review-user"><span class="fa fa-user"></span> Rama Adhitia</a>
-                                <span class="review-date pull-right"><span class="fa fa-calendar"></span> 2015 Februari 30</span>
-                            </header>
-                            <h3 class="review-title">Thank you AMARIS HOTEL</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel deserunt consequuntur voluptas neque fugiat porro quas accusamus blanditiis. Porro officiis a quas accusamus repellat, saepe atque libero non nesciunt aliquid.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae vero labore ab maxime animi impedit velit ducimus deleniti, quod hic omnis voluptatum deserunt ex incidunt placeat. Incidunt amet culpa, ratione?</p>
-                        </div><!-- .col-sm-9 -->
-                        <div class="col-sm-2 review-right">
-                            <summary>
-                                <p>SCORE:</p>
-                                <span class="score">
-                                    7.8
-                                </span>
-                                <span class="max-score">
-                                    / 10
-                                </span>
-                                <p class="score-circle">
-                                    <span class="fa fa-circle"></span>
-                                    <span class="fa fa-circle"></span>
-                                    <span class="fa fa-circle"></span>
-                                    <span class="fa fa-circle"></span>
-                                    <span class="fa fa-circle-o"></span>
-                                </p>
-                            </summary>
-                        </div><!-- .col-sm-3 -->
-                    </div>
-                </article>
+            <article class="review">
+                <div class="row">
+                    <div class="col-sm-10 review-left">
+                        <header>
+                            <a href="#" class="review-user"><span class="fa fa-user"></span> Rama Adhitia</a>
+                            <span class="review-date pull-right"><span class="fa fa-calendar"></span> 2015 Februari 30</span>
+                        </header>
+                        <h3 class="review-title">Thank you AMARIS HOTEL</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel deserunt consequuntur voluptas neque fugiat porro quas accusamus blanditiis. Porro officiis a quas accusamus repellat, saepe atque libero non nesciunt aliquid.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae vero labore ab maxime animi impedit velit ducimus deleniti, quod hic omnis voluptatum deserunt ex incidunt placeat. Incidunt amet culpa, ratione?</p>
+                    </div><!-- .col-sm-9 -->
+                    <div class="col-sm-2 review-right">
+                        <summary>
+                            <p>SCORE:</p>
+                            <span class="score">
+                                7.8
+                            </span>
+                            <span class="max-score">
+                                / 10
+                            </span>
+                            <p class="score-circle">
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle"></span>
+                                <span class="fa fa-circle-o"></span>
+                            </p>
+                        </summary>
+                    </div><!-- .col-sm-3 -->
+                </div>
+            </article>
             <!-- loop end here -->
         </section>
     </section><!-- .hotel-review -->
