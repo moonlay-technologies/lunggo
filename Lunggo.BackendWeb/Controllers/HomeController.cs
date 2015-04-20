@@ -150,8 +150,7 @@ namespace Lunggo.BackendWeb.Controllers
                             PaymentStatusCd = "02"
                         };
 
-                        var a = hotelBookTable.Update(connOpen, dataRecord);
-                        Console.WriteLine(a);
+                        hotelBookTable.Update(connOpen, dataRecord);
                     }
                     else if (record[i].Type == "Flight")
                     {
@@ -161,12 +160,9 @@ namespace Lunggo.BackendWeb.Controllers
                             PaymentStatusCd = "02"
                         };
 
-                        var b = flightBookTable.Update(connOpen, dataRecord);
-                        Console.WriteLine(b);
+                        flightBookTable.Update(connOpen, dataRecord);
                     }
                 }
-                
-                
             }
             return View("Index");
         }

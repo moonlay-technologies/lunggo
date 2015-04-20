@@ -6,8 +6,9 @@ $(document).ready(function(){
 	hotel_search();
 	hotel_detail();
 	flight_search();
-    animate_search_form();
-    hotel_search_form_functions();
+    switchSearchForm();
+    hotelSearchFormFunctions();
+    flightSearchFormFunctions();
 
 });
 
@@ -16,7 +17,7 @@ $(document).ready(function(){
 
 //******************************************
 // toggle search form
-function animate_search_form() {
+function switchSearchForm() {
 
     var scrollTarget;
     var buttonPosition;
@@ -52,105 +53,121 @@ function animate_search_form() {
 
 //******************************************
 // hotel search form
-function hotel_search_form_functions() {
+function hotelSearchFormFunctions() {
 
     // activate functions
     $(document).ready(function() {
         location_autocomplete();
-        date_picker();
-        stay_length();
-        room_count();
+        datePicker();
+        stayLength();
+        roomCount();
+        validateForm();
     });
+
+    // ******************************
+    // validate form
+    function validateForm() {
+        
+    }
 
     // ******************************
     // location auto complete
     var location_autocomplete = function () {
 
-        // setting
-        var el_input = 'input.input-location';
-        var ajax_url = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/hotellocation/';
-        var min_char = 3;
-        var list_wrapper = '.loc-auto';
+        // settings
+        var elInput = 'input.input-location';
+        var ajaxUrl = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/hotellocation/';
+        var minLength = 3;
+        var listWrapper = '.location-autocomplete';
+
+        // generate popup element
+        $('body').append('<div class="location-autocomplete"></div>');
+        $('.location-autocomplete').css({
+            position: 'absolute',
+            zIndex: 9999,
+            top: $(elInput).offset().top + $(elInput).outerHeight(),
+            left: $(elInput).offset().left,
+            width: $(elInput).outerWidth()
+        });
 
         // run function on keyup
-        $(el_input).keyup(function () {
+        $(elInput).keyup(function () {
             var reqVal = $(this).val();
             verifyInput(reqVal);
         });
 
-        $(el_input).focus(function () {
+        $(elInput).focus(function () {
             var reqVal = $(this).val();
             verifyInput(reqVal);
         });
 
         // function verified input
         function verifyInput(input_val) {
-            if (input_val.length >= min_char) {
-                $(list_wrapper).empty();
-                $(list_wrapper).append('<li class="text-center"> Loading </li>');
-                $(list_wrapper).wrapInner('<ul></ul>');
-                $(list_wrapper).show();
-                get_result(input_val);
+            if (input_val.length >= minLength) {
+                $(listWrapper).empty();
+                $(listWrapper).append('<li> Loading </li>');
+                $(listWrapper).wrapInner('<ul></ul>');
+                $(listWrapper).show();
+                getResult(input_val);
             } else {
-                $(list_wrapper).hide();
+                $(listWrapper).hide();
             }
         }
 
         // get result
-        function get_result(input_val) {
+        function getResult(inputVal) {
             $.ajax({
                 method: "GET",
                 dataType: "json",
-                url: ajax_url + input_val
+                url: ajaxUrl + inputVal
             })
             .done(function (result) {
-                show_result(result);
+                showResult(result);
             });
         }
 
         // show result
-        function show_result(data) {
+        function showResult(data) {
             if (data.length > 0) {
-                $(list_wrapper).empty();
+                $(listWrapper).empty();
                 for (i = 0; i < data.length; i++) {
-                    $(list_wrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
+                    $(listWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
                 }
-                $(list_wrapper).wrapInner('<ul></ul>');
-                $(list_wrapper).show().attr('data-active', 'true');
+                $(listWrapper).wrapInner('<ul></ul>');
+                $(listWrapper).show().attr('data-active', 'true');
             } else {
-                $(list_wrapper).empty();
-                $(list_wrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
-                $(list_wrapper).wrapInner('<ul></ul>');
-                $(list_wrapper).show();
+                $(listWrapper).empty();
+                $(listWrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
+                $(listWrapper).wrapInner('<ul></ul>');
+                $(listWrapper).show();
             }
         }
 
         // on click
-        select_result();
-        function select_result() {
-            $(list_wrapper).on('click', 'li', function () {
-                $(el_input).val($(this).text());
-                $(list_wrapper).hide();
-                $(el_input).attr('data-location-id', $(this).attr('data-location-id'));
+        selectResult();
+        function selectResult() {
+            $(listWrapper).on('click', 'li', function () {
+                $(elInput).val($(this).text());
+                $(listWrapper).hide();
+                $(elInput).attr('data-location-id', $(this).attr('data-location-id'));
                 $('.search-hotel-form .search-hotel-value.location').val($(this).attr('data-location-id'));
             });
         }
 
         // hide when click another element
         $('html').click(function () {
-            $(list_wrapper).hide();
+            $(listWrapper).hide();
         });
-        $("input.input-location , .loc-auto").on('click', function (evt) {
+        $("input.input-location , .location-autocomplete").on('click', function (evt) {
             evt.stopPropagation();
         });
-
 
 
     };
 
     // ******************************
     // date picker
-    var date_picker = function() {
+    var datePicker = function() {
         $('.input-checkin.select-date').pickmeup_twitter_bootstrap({
            calendars: 3,
             format: 'Y-m-d',
@@ -160,15 +177,15 @@ function hotel_search_form_functions() {
             separator: '-',
             min: new Date,
             change: function () {
-                date_picker_checkout($(this).pickmeup('get_date'));
+                datePickerCheckout($(this).pickmeup('get_date'));
                 $('.search-hotel-value.staydate').val( $(this).val() );
             }
         });
     }
 
-    function date_picker_checkout(the_date) {
+    function datePickerCheckout(the_date) {
 
-        var selected_date = the_date || new Date;
+        var selectedDate = the_date || new Date;
 
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
@@ -178,78 +195,83 @@ function hotel_search_form_functions() {
             select_month: false,
             select_year: false,
             separator: '-',
-            min: selected_date,
-            default_date: selected_date,
+            min: selectedDate,
+            default_date: selectedDate,
             change: function() {
-                calculate_date( $(this).pickmeup('get_date') );
+                calculateDate( $(this).pickmeup('get_date') );
             }
         });
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
 
     }
 
-    function calculate_date(checkout_date) {
-        var checkin_date = new Date($('.search-hotel-value.staydate').val());
-        var checkout_date = new Date( checkout_date );
-        var stay_length = Math.abs(checkout_date - checkin_date);
-        var stay_length_value = Math.ceil(stay_length/ (1000 * 3600 * 24));
-        $('.search-hotel-value.staylength').val(stay_length_value );
+    function calculateDate(checkoutDate) {
+        var checkinDate = new Date($('.search-hotel-value.staydate').val());
+        var checkoutDate = new Date( checkoutDate);
+        var stayLength = Math.abs(checkoutDate - checkinDate);
+        var stayLengthValue = Math.ceil(stayLength/ (1000 * 3600 * 24));
+        $('.search-hotel-value.staylength').val(stayLengthValue);
     }
 
     // ******************************
     // stay length
-    var stay_length = function() {
+    var stayLength = function() {
         
     }
 
     // ******************************
     // room count
-    var room_count = function (room) {
-        var max_room = room || 4;
-        var room_option = '.input-room.select-room';
+    var roomCount = function (room) {
+        var maxRoom = room || 4;
+        var roomOption = '.input-room.select-room';
+        var roomSelection = '.room-count-selection';
+
+        // generate location autocomplete
+        $('body').append('<div class="'+roomSelection.replace('.','')+'"></div>');
+        $(roomSelection).css({
+            top: $(roomOption).offset().top + $(roomOption).outerHeight(),
+            left: $(roomOption).offset().left,
+            width: $(roomOption).outerWidth()
+        });
+        for (var i = 1; i <= maxRoom; i++) {
+            var room;
+            if (i > 1) {
+                room = ' rooms'
+            } else {
+                room = ' room'
+            }
+            $(roomSelection).append('<li data-value="' + i + '">' + i + room + ' </li>');
+        }
+        $(roomSelection).wrapInner('<ul></ul>');
 
         // show
-        $(room_option).focus(function () {
-            if ($(this).siblings('div.option').length == 0) {
-                $(this).parent().addClass('option-wrapper').append('<div class="option"></div>');
-                for (var i = 1; i <= max_room; i++) {
-                    var room;
-                    if (i > 1) {
-                        room = ' rooms'
-                    } else {
-                        room = ' room'
-                    }
-                    $(this).siblings('div.option').append('<li data-value="' + i + '">' + i + room + ' </li>');
-                }
-                $(this).siblings('.option').wrapInner('<ul></ul>');
-            }
-            $(room_option).siblings('div.option').show();
+        $(roomOption).focus(function () {
+            $(roomSelection).show();
         });
 
-
-        $(room_option).on('keydown', function(evt) {
-            var key_value = evt.which;
-            var room_value;
-            if (key_value >= 49 && key_value <= 57) {
-                switch (key_value) {
+        // select room option based on keyboard key press
+        $(roomOption).on('keydown', function(evt) {
+            var keyValue = evt.which;
+            var roomValue;
+            if (keyValue >= 49 && keyValue<= 57) {
+                switch (keyValue) {
                     case 49:
-                        room_value = 1;
+                        roomValue = 1;
                         break;
                     case 50:
-                        room_value = 2;
+                        roomValue = 2;
                         break;
                     case 51:
-                        room_value = 3;
+                        roomValue = 3;
                         break;
                     case 52:
-                        room_value = 4;
+                        roomValue = 4;
                         break;
                     default:
-                        room_value = 4;
+                        roomValue = 4;
                         break;
                 }
-                console.log('JEMPING');
-                $(this).siblings('.option').children('ul').children('li:nth-child('+room_value+')').click();
+                $(roomSelection).children('ul').children('li:nth-child('+roomValue+')').click();
                 return false;
             } else {
                 return false;
@@ -257,25 +279,208 @@ function hotel_search_form_functions() {
         });
 
         // select room
-        $('.form-group').on('click', '.option li', function () {
-            $(room_option).val($(this).html());
-            $(room_option).attr('data-current-room', $(this).attr('data-value'));
-            $(room_option).blur();
+        $(roomSelection).on('click', 'li', function () {
+            $(roomOption).val($(this).html());
+            $(roomOption).attr('data-current-room', $(this).attr('data-value'));
+            $(roomOption).blur();
+            $(roomSelection).hide();
         });
 
 
         // hide room option
         $('html').click(function () {
-            $('.option-wrapper .option').hide();
+            $(roomSelection).hide();
         });
-        $(".input-room.select-room").on('click', function (evt) {
+        $(roomOption).on('click', function (evt) {
             evt.stopPropagation();
         });
 
     }
 
+}
 
-    
+//******************************************
+// flight search form
+function flightSearchFormFunctions() {
+
+    // activate functions
+    $(document).ready(function() {
+        airportAutocomplete();
+        validateForm();
+        switchFlightType();
+        datePicker();
+    });
+
+    // ******************************
+    // validate form
+    function validateForm() {
+        
+    }
+
+    // ******************************
+    // flight autocomplete
+    function airportAutocomplete() {
+
+        var autocompleteWrapper = '.airport-autocomplete';
+        var ajaxUrl = 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/airport/';
+        var minLength = 3;
+        var elInput = '.airport-autocomplete-input';
+        var elPosition = {};
+
+        // generate autocomplete wrapper
+        $('body').append('<div class="'+autocompleteWrapper.replace('.','')+'"></div>');
+
+        // run function on keyup
+        $(elInput).each(function() {
+            $(elInput).keyup(function () {
+                var reqVal = $(this).val();
+                verifyInput(reqVal);
+            });
+        });
+
+        $(elInput).each(function () {
+            var previousValue;
+            $(this).focus(function () {
+                previousValue = $(this).val();
+                $(this).val('');
+                $(autocompleteWrapper).empty();
+                $('.autocomplete-current').removeClass('autocomplete-current');
+                $(this).addClass('autocomplete-current');
+                elPosition.top = $(this).offset().top + $(this).outerHeight();
+                elPosition.left = $(this).offset().left;
+                $(autocompleteWrapper).css({
+                    top: elPosition.top,
+                    left: elPosition.left
+                });
+                $(autocompleteWrapper).attr('data-airport-for', $(this).attr('data-airport-for') );
+            });
+        });
+        
+        // verify input
+        function verifyInput(reqVal) {
+            if (reqVal.length >= minLength) {
+                getResult(reqVal);
+                $(autocompleteWrapper).show();
+            } else {
+                $(autocompleteWrapper).hide();
+            }
+        }
+
+        // get Ajax
+        function getResult(locationQuery) {
+            $.ajax({
+                method: "GET",
+                dataType: "json",
+                url: ajaxUrl + locationQuery
+            })
+            .done(function (result) {
+                showResult(result);
+                console.log(result);
+            });
+        }
+        
+        // show result
+        function showResult(data) {
+            if (data.length > 0) {
+                $(autocompleteWrapper).empty();
+                for (i = 0; i < data.length; i++) {
+                    $(autocompleteWrapper).append('<li data-code="' + data[i].Code + '"><span>' + data[i].Name + ' ,' + data[i].City + '</span></li>');
+                }
+                $(autocompleteWrapper).wrapInner('<ul></ul>');
+                $(autocompleteWrapper).show().attr('data-active', 'true');
+            } else {
+                $(autocompleteWrapper).empty();
+                $(autocompleteWrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
+                $(autocompleteWrapper).wrapInner('<ul></ul>');
+                $(autocompleteWrapper).show();
+            }
+        }
+
+        // select airport
+        $(autocompleteWrapper).on('click', 'li', function () {
+            $('.autocomplete-current').val($(this).text());
+            $(elInput).blur();
+            $(autocompleteWrapper).hide();
+            $('.autocomplete-current').removeClass('autocomplete-current');
+            var airportTarget = $(autocompleteWrapper).attr('data-airport-for');
+            if (airportTarget == 'Ori') {
+                $('.search-flight-form #flight-origin').val( $(this).attr('data-Code') );
+            } else if (airportTarget == 'Dest') {
+                $('.search-flight-form #flight-destination').val($(this).attr('data-Code'));
+            }
+        });
+
+        // hide airport autocomplete
+        $('html').click(function () {
+            $(autocompleteWrapper).hide();
+        });
+        $(autocompleteWrapper).on('click', function (evt) {
+            evt.stopPropagation();
+        });
+        
+
+    }
+
+    // ******************************
+    // flight type
+    function switchFlightType() {
+        $('form.search-flight-form #return-flight').change(function () {
+            var checked = $(this).prop('checked');
+            var inputTarget = 'form.search-flight-form .flight-return-date';
+            if (checked) {
+                $(inputTarget).prop('disabled', false);
+                $(inputTarget).attr('placeholder', 'return date');
+                $(inputTarget).val('');
+                $('.search-flight-form .flight-form-value#flight-type').val('RET');
+            } else {
+                $(inputTarget).prop('disabled', true);
+                $(inputTarget).attr('placeholder', '');
+                $(inputTarget).val('one way');
+                $('.search-flight-form .flight-form-value#flight-type').val('ONE');
+            }
+        });
+    }
+
+    // ******************************
+    // date picker
+    var datePicker = function () {
+        $('.flight-date.select-date').pickmeup_twitter_bootstrap({
+            calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: new Date,
+            change: function () {
+                datePickerReturn($(this).pickmeup('get_date'));
+                $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
+            }
+        });
+        
+    }
+
+    function datePickerReturn(theDate) {
+
+        var selectedDate = theDate || new Date;
+
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('destroy');
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap({
+            calendars: 3,
+            format: 'Y-m-d',
+            hide_on_select: true,
+            select_month: false,
+            select_year: false,
+            separator: '-',
+            min: selectedDate,
+            default_date: selectedDate,
+            change: function () {
+                $('.search-flight-form .flight-form-value#flight-return-date').val($(this).val());
+            }
+        });
+        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('update');
+
+    }
 
 }
 
