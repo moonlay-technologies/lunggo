@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
+using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Trie;
 
@@ -41,16 +43,9 @@ namespace Lunggo.ApCommon.Autocomplete
             }
         }
 
-        public DateTime GetDictionaryLastUpdate(string type)
+        public IEnumerable<Tuple<string,DateTime>> GetDictionaryLastUpdate()
         {
-            switch (type)
-            {
-                case "airport":
-                case "airline":
-                case "hotellocation":
-                default:
-                    return new DateTime(2015,1,1);
-            }
+           yield return new Tuple<string, DateTime> ("airport", new DateTime(2015,1,1));
         }
 
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)

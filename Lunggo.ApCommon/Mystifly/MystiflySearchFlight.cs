@@ -212,10 +212,59 @@ namespace Lunggo.ApCommon.Mystifly
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
+            flightFareItinerary.TotalTransit = CalculateTotalTransit(pricedItinerary);
+            flightFareItinerary.TransitDetails = MapTransitDetails(pricedItinerary);
+            flightFareItinerary.Airlines = 
+                GetAirlineList(pricedItinerary);
             flightFareItinerary.Supplier = FlightSupplier.Mystifly;
             flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
+        }
+
+        private static List<string> GetAirlineList(PricedItinerary pricedItinerary)
+        {
+            var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments);
+            var airlines = segments.Select(segment => segment.MarketingAirlineCode);
+            return airlines.Distinct().ToList();
+        }
+
+        private static List<TransitDetail> MapTransitDetails(PricedItinerary itin)
+        {
+            var segments = itin.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToList();
+            var result = new List<TransitDetail>();
+            for (var i = 0; i < segments.Count; i++)
+            {
+                if (segments[i].StopQuantity > 0)
+                {
+                    result.Add(new TransitDetail
+                    {
+                        IsStop = true,
+                        Location = segments[i].StopQuantityInfo.LocationCode,
+                        Arrival = segments[i].StopQuantityInfo.ArrivalDateTime,
+                        Departure = segments[i].StopQuantityInfo.DepartureDateTime,
+                    });
+                }
+                if (i != 0)
+                {
+                    result.Add(new TransitDetail
+                    {
+                        IsStop = false,
+                        Location = segments[i].DepartureAirportLocationCode,
+                        Arrival = segments[i - 1].ArrivalDateTime,
+                        Departure = segments[i].DepartureDateTime
+                    });
+                }
+            }
+            return result;
+        }
+
+        private static int CalculateTotalTransit(PricedItinerary itin)
+        {
+            var segments = itin.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToList();
+            var transit = segments.Count() - 1;
+            var stop = segments.Sum(segment => segment.StopQuantity);
+            return transit + stop;
         }
 
         private static TripType MapTripType(string type)

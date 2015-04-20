@@ -34,7 +34,9 @@ namespace Lunggo.CustomerWeb
             var dictionaryService = DictionaryService.GetInstance();
             var airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
             var airlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airlineFileName);
-            dictionaryService.Init(airlineFilePath);
+            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
+            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
+            dictionaryService.Init(airlineFilePath, airportFilePath);
         }
 
         private static void InitRedisService()

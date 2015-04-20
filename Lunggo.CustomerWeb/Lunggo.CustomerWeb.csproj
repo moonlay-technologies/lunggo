@@ -398,6 +398,7 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -464,6 +465,7 @@
     <Content Include="Assets\css\_font_face.scss" />
     <Content Include="Assets\css\_footer.scss" />
     <Content Include="Assets\css\_header.scss" />
+    <Content Include="Config\Airport.csv" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
