@@ -6,7 +6,4 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    
-    {
-    }
 }
