@@ -16,7 +16,9 @@ namespace Lunggo.CustomerWeb.Models
         public int Adult { get; set; }
         public int Child { get; set; }
         public int Infant { get; set; }
-        public List<OriDestDate> Info { get; set; }
+        public string Ori { get; set; }
+        public string Dest { get; set; }
+        public DateTime Date { get; set; }
         public string SearchId { get; set; }
         public int TotalFlightCount { get; set; }
         public List<FlightFareItinerary> FlightList { get; set; }

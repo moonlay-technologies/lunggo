@@ -7,7 +7,6 @@ namespace Lunggo.ApCommon.Flight.Model
     public class PassengerFareInfo : PassengerInfoBase
     {
         public Gender Gender { get; set; }
-        public DateTime? DateOfBirth { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string PassportCountry { get; set; }
     }
@@ -29,6 +28,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string PassportOrIdNumber { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string IdNumber { get; set; }
     }
 }

@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
+  <table name="FlightReservation" />
+  <table name="FlightItinerary" />
   <table name="FlightTrip" />
+  <table name="FlightSegment" />
+  <table name="FlightStop" />
+  <table name="FlightPassenger" />
 </tables> 

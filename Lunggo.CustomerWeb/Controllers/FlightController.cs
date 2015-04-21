@@ -151,7 +151,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    PassportOrIdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.PassportOrIdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();
@@ -167,7 +167,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    PassportOrIdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.PassportOrIdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();
@@ -183,7 +183,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    PassportOrIdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.PassportOrIdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();

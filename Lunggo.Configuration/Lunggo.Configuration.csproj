@@ -85,6 +85,7 @@
     <None Include="App.config" />
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
+    <None Include="Config\WebAPI\Airline.csv" />
     <None Include="Config\WebAPI\Airport.csv" />
     <None Include="Config\WebAPI\travolutionary.properties">
       <SubType>Designer</SubType>

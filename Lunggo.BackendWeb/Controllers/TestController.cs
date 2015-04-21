@@ -73,7 +73,7 @@ namespace Lunggo.BackendWeb.Controllers
                 FirstName = "Namaku",
                 LastName = "Nama",
                 DateOfBirth = new DateTime(1987,5,5),
-                PassportOrIdNumber = "123456789o",
+                IdNumber = "123456789o",
                 PassportCountry = "ID",
                 PassportExpiryDate = new DateTime(2020,7,7),
             });

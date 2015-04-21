@@ -14,8 +14,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FareId { get; set; }
         public List<FlightFareTrip> FlightTrips { get; set; }
         public int TotalTransit { get; set; }
-        public List<TransitDetail> TransitDetails { get; set; }
-        public List<string> Airlines { get; set; }
+        public List<Transit> Transits { get; set; }
+        public List<Airline> Airlines { get; set; }
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
@@ -43,7 +43,13 @@ namespace Lunggo.ApCommon.Flight.Model
         public FlightSupplier Supplier { get; set; }
     }
 
-    public class TransitDetail
+    public class Airline
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Transit
     {
         public bool IsStop { get; set; }
         public string Location { get; set; }

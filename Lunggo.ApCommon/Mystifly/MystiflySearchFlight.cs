@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
@@ -213,31 +214,34 @@ namespace Lunggo.ApCommon.Mystifly
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
             flightFareItinerary.TotalTransit = CalculateTotalTransit(pricedItinerary);
-            flightFareItinerary.TransitDetails = MapTransitDetails(pricedItinerary);
-            flightFareItinerary.Airlines = 
-                GetAirlineList(pricedItinerary);
+            flightFareItinerary.Transits = MapTransitDetails(pricedItinerary);
+            flightFareItinerary.Airlines = GetAirlineList(pricedItinerary);
             flightFareItinerary.Supplier = FlightSupplier.Mystifly;
             flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightFareItinerary);
             return flightFareItinerary;
         }
 
-        private static List<string> GetAirlineList(PricedItinerary pricedItinerary)
+        private static List<Airline> GetAirlineList(PricedItinerary pricedItinerary)
         {
-            var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments);
-            var airlines = segments.Select(segment => segment.MarketingAirlineCode);
-            return airlines.Distinct().ToList();
+            var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).Distinct();
+            var airlines = segments.Select(segment => new Airline
+            {
+                Code = segment.MarketingAirlineCode,
+                Name = DictionaryService.GetInstance().GetAirlineName(segment.MarketingAirlineCode)
+            });
+            return airlines.ToList();
         }
 
-        private static List<TransitDetail> MapTransitDetails(PricedItinerary itin)
+        private static List<Transit> MapTransitDetails(PricedItinerary itin)
         {
             var segments = itin.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToList();
-            var result = new List<TransitDetail>();
+            var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
                 if (segments[i].StopQuantity > 0)
                 {
-                    result.Add(new TransitDetail
+                    result.Add(new Transit
                     {
                         IsStop = true,
                         Location = segments[i].StopQuantityInfo.LocationCode,
@@ -247,7 +251,7 @@ namespace Lunggo.ApCommon.Mystifly
                 }
                 if (i != 0)
                 {
-                    result.Add(new TransitDetail
+                    result.Add(new Transit
                     {
                         IsStop = false,
                         Location = segments[i].DepartureAirportLocationCode,
@@ -351,8 +355,8 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var flightTrips = new List<FlightFareTrip>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
-            var i = 0;
             var totalTransitDuration = new TimeSpan();
+            var i = 0;
             foreach (var tripInfo in conditions.TripInfos)
             {
                 var fareTrip = new FlightFareTrip
@@ -368,7 +372,7 @@ namespace Lunggo.ApCommon.Mystifly
                     if (i > 0)
                         totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
-                } while (i < segments.Count() && segments[i].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
                 fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => segment.JourneyDuration)) +
                                          totalTransitDuration;
                 flightTrips.Add(fareTrip);

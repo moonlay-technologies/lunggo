@@ -94,8 +94,8 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var flightTrips = new List<FlightTripDetails>();
             var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
-            var i = 0;
             var totalTransitDuration = new TimeSpan();
+            var i = 0;
             foreach (var tripInfo in conditions.TripInfos)
             {
                 var fareTrip = new FlightTripDetails
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Mystifly
                     if (i > 0)
                         totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
-                } while (i < segments.Count() && segments[i].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
                 fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => double.Parse(segment.JourneyDuration))) +
                                          totalTransitDuration;
                 flightTrips.Add(fareTrip);
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommon.Mystifly
                     FirstName = customerInfo.Customer.PaxName.PassengerFirstName,
                     LastName = customerInfo.Customer.PaxName.PassengerLastName,
                     Type = MapDetailsPassengerType(customerInfo),
-                    PassportOrIdNumber = customerInfo.Customer.PassportNumber,
+                    IdNumber = customerInfo.Customer.PassportNumber,
                     ETicket = eTicket
                 };
                 passengerInfoDetails.Add(passengerInfo);

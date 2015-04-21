@@ -142,12 +142,14 @@
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
     <Compile Include="Flight\Model\TripInfo.cs" />
+    <Compile Include="Flight\Query\GetFlightSegment.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Query\GetFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\InsertFlightDb.cs" />
     <Compile Include="Flight\Query\Model\FlightDetailsRecord.cs" />
-    <Compile Include="Flight\Query\Model\FlightPrimKeys.cs" />
+    <Compile Include="Flight\Query\Model\GetFlightPassengerPrimKey.cs" />
     <Compile Include="Flight\Query\UpdateFlightBookingStatusQuery.cs" />
+    <Compile Include="Flight\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Service\BookFlight.cs" />
     <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
@@ -263,7 +265,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Travolutionary\TravolutionaryErrorMapper.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelBookResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />

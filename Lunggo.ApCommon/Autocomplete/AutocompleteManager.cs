@@ -43,9 +43,13 @@ namespace Lunggo.ApCommon.Autocomplete
             }
         }
 
-        public IEnumerable<Tuple<string,DateTime>> GetDictionaryLastUpdate()
+        public IEnumerable<UpdateSet> GetDictionaryLastUpdate()
         {
-           yield return new Tuple<string, DateTime> ("airport", new DateTime(2015,1,1));
+           yield return new UpdateSet
+           {
+               Type = "airport",
+               UpdateTime = new DateTime(2015,1,1)
+           };
         }
 
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
@@ -201,6 +205,12 @@ namespace Lunggo.ApCommon.Autocomplete
                 {45, new AirlineDict { Code = "IY", Name = "Yemenia"}},
             };
         }
+    }
+
+    public class UpdateSet
+    {
+        public string Type { get; set; }
+        public DateTime UpdateTime { get; set; }
     }
 
     public class AirlineDict

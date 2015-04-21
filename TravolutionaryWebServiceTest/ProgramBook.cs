@@ -16,7 +16,8 @@ namespace TravolutionaryWebServiceTest
 
         static void Main(String[] args)
         {
-            HotelRepricePackageFlow();
+            //HotelRepricePackageFlow();
+            HotelBookFlow();
         }
 
         static void HotelRepricePackageFlow()
@@ -83,13 +84,22 @@ namespace TravolutionaryWebServiceTest
                                new HotelRoomRequest()
                                    {
                                        AdultsCount = 2,
+                                   },
+                               new HotelRoomRequest()
+                                   {
+                                       AdultsCount = 2,
+                                   },
+                                new HotelRoomRequest()
+                                   {
+                                       AdultsCount = 2,
                                    }
                            },
-                HotelIds = new int[]
+                /*HotelIds = new int[]
                     {
                         4116550
-                    }
-                //HotelLocation = 640255 //Prague
+                    },*/
+                SupplierIds = new int[] { 21 },
+                HotelLocation = 640254 //Jakarta
             };
             return searchRequest;
         }
@@ -210,11 +220,73 @@ namespace TravolutionaryWebServiceTest
                                 Type = PersonType.Adult
                             },
                             Id = Guid.NewGuid().ToString()
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[1].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[1].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[2].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
+                        },
+                        new CustomerInfo
+                        {
+                            Allocation = firstPackage.Rooms[2].Id,
+                            PersonDetails = new Person
+                            {
+                                Name = new PersonName
+                                {
+                                    GivenName = "Rachel",
+                                    NamePrefix = "Mrs",
+                                    Surname = "Adhitia"
+                                },
+                                Type = PersonType.Adult
+                            },
+                            Id = Guid.NewGuid().ToString()
                         }
                     },
                 RoomsRemarks = new Dictionary<String, String>()
                     {
-                        {firstPackage.Rooms[0].Id,null}
+                        {firstPackage.Rooms[0].Id,null},
+                        {firstPackage.Rooms[1].Id,null},
+                        {firstPackage.Rooms[2].Id,null}
                     },
                 SelectedPaymentMethod = PaymentMethod.Cash
             };
@@ -235,7 +307,7 @@ namespace TravolutionaryWebServiceTest
                 Console.WriteLine("Booking Reference {0}", bookSegment.BookingReference);
                 Console.WriteLine("Booking Order ID {0}", bookSegment.OrderId);
                 Console.WriteLine("Booking Segment Id {0}", bookSegment.SegmentId);
-                Console.WriteLine("Boooking Status {0}", bookSegment.Status);
+                Console.WriteLine("Booking Status {0}", bookSegment.Status);
                 Console.WriteLine("--------------------------------------------------");
             }
         }

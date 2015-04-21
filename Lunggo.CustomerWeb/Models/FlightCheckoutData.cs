@@ -29,7 +29,7 @@ namespace Lunggo.CustomerWeb.Models
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string PassportOrIdNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string Country { get; set; }
