@@ -864,7 +864,7 @@ var FlightSearchConfig = {
             $scope.getFlightList = function () {
 
                 console.log('--------------------------------');
-                console.log('Searching for Room with params:');
+                console.log('Searching for Flights with params:');
                 console.log($scope.FlightSearchParams);
 
                 $scope.loaded = false;
