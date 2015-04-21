@@ -342,6 +342,9 @@ hr {border-color:#aaa;}
 // ----------------------------------------------
 // flight search page
 .flight-search-page {
+
+    .flight-loading {display:block; text-align:center;}
+
 	// page header
 	.page-header {
 		.site-nav {display:inline;
