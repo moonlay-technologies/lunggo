@@ -158,8 +158,5 @@ $RECYCLE.BIN/
 # Lunggo.Configuration Log Directory
 Lunggo.Configuration/Log/
 
-# Lunggo.CustomerWeb Config Directory
-Lunggo.CustomerWeb/Config/
-
 # Lunggo.Driver Config Directory
 Lunggo.Driver/Config/

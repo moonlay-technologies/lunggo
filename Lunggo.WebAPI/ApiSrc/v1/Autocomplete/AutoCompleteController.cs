@@ -14,11 +14,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/lastupdate")]
-        public IEnumerable<Tuple<string,DateTime>> LastUpdate()
+        public IEnumerable<UpdateSet> LastUpdate()
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
             return autocompleteManager.GetDictionaryLastUpdate();
         }
+
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airline/{prefix}")]
