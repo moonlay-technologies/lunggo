@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Query
                         ItineraryId = itineraryId,
                         RsvNo = rsvNo,
                         BookingId = record.BookResult.BookingId,
-                        BookingStatusCd = BookingStatusCd.Mnemonic(record.BookResult.BookingStatus),
+                        BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
                         SupplierCd = FlightSupplierCd.Mnemonic(FlightSupplier.Mystifly),
                         SupplierPrice = 999,
                         SupplierCurrencyCd = "xxx",
@@ -145,6 +145,56 @@ namespace Lunggo.ApCommon.Flight.Query
             }
         }
 
+        internal static void Details(FlightDetailsRecord detailsRecord)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var segmentRecords = GetFlightSegment.GetInstance().Execute(conn, new { detailsRecord.BookingId });
+                var segmentPrimKeys = segmentRecords.Select(segment => segment.SegmentId.GetValueOrDefault()).ToList();
+                foreach (var segment in detailsRecord.Segments)
+                {
+                    var record = new FlightDetailsSegmentRecord
+                    {
+                        BookingId = detailsRecord.BookingId,
+                        BookingStatus = BookingStatus.Ticketed,
+                        FlightSegmentPrimKeys = segmentPrimKeys,
+                        Pnr = segment.Pnr,
+                        DepartureTerminal = segment.DepartureTerminal,
+                        ArrivalTerminal = segment.ArrivalTerminal,
+                        Baggage = segment.Baggage,
+                        DepartureAirport = segment.DepartureAirport,
+                        ArrivalAirport = segment.ArrivalAirport,
+                        DepartureTime = segment.DepartureTime
+                    };
+                    UpdateFlightDetailsQuery.GetInstance().Execute(conn, record);
+                }
+                foreach (var passenger in detailsRecord.Passengers)
+                {
+                    var passengerPrimKey = GetFlightPassengerPrimKey.GetInstance().Execute(conn, new
+                    {
+                        passenger.FirstName,
+                        passenger.LastName,
+                        passenger.DateOfBirth,
+                        passenger.IdNumber
+                    });
+                    foreach (var eticket in passenger.ETicket)
+                    {
+                        var eticketId = 999;
+                        var referencedSegment =
+                            detailsRecord.Segments.Single(segment => segment.Reference == eticket.Reference);
+                        //var referencedRecord = segmentRecords.Single(segment => segment.DepartureAirportCd)
+                        var record = new FlightEticketTableRecord
+                        {
+                            EticketId = eticketId,
+                            
+
+                        };
+                    }
+                }
+                
+            }
+        }
+
         private static FlightPassengerTableRecord PassengerBookingRecord(PassengerFareInfo passenger, string rsvNo)
         {
             return new FlightPassengerTableRecord
@@ -158,7 +208,7 @@ namespace Lunggo.ApCommon.Flight.Query
                 LastName = passenger.LastName,
                 BirthDate = passenger.DateOfBirth,
                 CountryCd = passenger.PassportCountry,
-                PassportOrIdCardNo = passenger.PassportOrIdNumber,
+                IdNumber = passenger.IdNumber,
                 PassportExpiryDate = passenger.PassportExpiryDate,
                 InsertBy = "xxx",
                 InsertDate = DateTime.Now,

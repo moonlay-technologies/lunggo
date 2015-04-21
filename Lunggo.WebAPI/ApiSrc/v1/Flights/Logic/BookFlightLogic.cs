@@ -43,7 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 FirstName = data.FirstName,
                 LastName = data.LastName,
                 DateOfBirth = data.BirthDate,
-                PassportOrIdNumber = data.PassportOrIdNumber,
+                IdNumber = data.PassportOrIdNumber,
                 PassportExpiryDate = data.PassportExpiryDate,
                 PassportCountry = data.Country
             });

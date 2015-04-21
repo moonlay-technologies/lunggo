@@ -74,6 +74,33 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ContactAddress");
 		    }
 		}
+		public int? AdultCount
+		{
+		    get { return _AdultCount; }
+		    set
+		    {
+		        _AdultCount = value;
+		        IncrementLog("AdultCount");
+		    }
+		}
+		public int? ChildCount
+		{
+		    get { return _ChildCount; }
+		    set
+		    {
+		        _ChildCount = value;
+		        IncrementLog("ChildCount");
+		    }
+		}
+		public int? InfantCount
+		{
+		    get { return _InfantCount; }
+		    set
+		    {
+		        _InfantCount = value;
+		        IncrementLog("InfantCount");
+		    }
+		}
 		public String PaymentMethodCd
 		{
 		    get { return _PaymentMethodCd; }
@@ -245,6 +272,9 @@ namespace Lunggo.Repository.TableRecord
 		private String _ContactEmail;
 		private String _ContactPhone;
 		private String _ContactAddress;
+		private int? _AdultCount;
+		private int? _ChildCount;
+		private int? _InfantCount;
 		private String _PaymentMethodCd;
 		private String _PaymentStatusCd;
 		private String _LangCd;
@@ -301,6 +331,9 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ContactEmail", false),
 				new ColumnMetadata("ContactPhone", false),
 				new ColumnMetadata("ContactAddress", false),
+				new ColumnMetadata("AdultCount", false),
+				new ColumnMetadata("ChildCount", false),
+				new ColumnMetadata("InfantCount", false),
 				new ColumnMetadata("PaymentMethodCd", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("LangCd", false),

@@ -153,7 +153,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var passport = new Passport
             {
-                PassportNumber = passengerFareInfo.PassportOrIdNumber,
+                PassportNumber = passengerFareInfo.IdNumber,
                 ExpiryDate = passengerFareInfo.PassportExpiryDate.GetValueOrDefault(),
                 Country = passengerFareInfo.PassportCountry,
                 ExtensionData = null
