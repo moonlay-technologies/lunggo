@@ -241,7 +241,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Travolutionary\TravolutionaryErrorMapper.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelBookResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelRoomSearchResponse.cs" />
     <Compile Include="Travolutionary\TravolutionaryHotelSearchResponse.cs" />

@@ -10,7 +10,11 @@ namespace Lunggo.ApCommon.Travolutionary
 {
     public abstract class TravolutionaryResponseBase
     {
-        public IEnumerable<Error> Errors { get; set; }
+        public HashSet<Error> Errors { get; set; }
         public String SessionId { get; set; }
+        public bool IsErrorLess()
+        {
+            return Errors == null || !Errors.Any();
+        }
     }
 }
