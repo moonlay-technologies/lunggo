@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             var totalFilteredHotelCount = 0;
             IEnumerable<HotelDetail> hotelListToReturn = null;
 
-            if (hotelSearchResult.HotelIdList!=null)
+            if (hotelSearchResult.HotelIdList!=null && hotelSearchResult.HotelIdList.Any())
             {
                 var completeHotelList = RetrieveHotelsDetail(hotelSearchResult.HotelIdList);
                 var enumeratedCompleteHotelList = completeHotelList as IList<HotelDetail> ?? completeHotelList.ToList();
@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             var searchId = HotelSearchIdSequence.GetInstance().GetNext();
             var searchResponse = TravolutionaryHotelService.SearchHotel(request);
 
-            if (searchResponse.HotelIdList != null)
+            if (searchResponse.HotelIdList != null && searchResponse.HotelIdList.Any())
             {
                 SaveSearchResultToCache(searchId.ToString(CultureInfo.InvariantCulture),searchResponse.HotelIdList);
             }
@@ -179,6 +179,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             IEnumerable<HotelDetail> hotelsDetail = null;
             if (onMemHotelsDetail != null)
             {
+                //Do not include hotel which doesn't have detail in hotel cache
                 hotelsDetail = onMemHotelsDetail.Where(p => p != null).Select(ToHotelDetail);
             }
             return hotelsDetail;

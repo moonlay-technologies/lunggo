@@ -4,9 +4,12 @@ using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Config;
-using Room = Lunggo.ApCommon.Travolutionary.WebService.Hotel.Room;
+using Lunggo.Framework.Error;
+using CustomerInfo = Lunggo.ApCommon.Travolutionary.WebService.Hotel.CustomerInfo;
+using Error = Lunggo.ApCommon.Travolutionary.WebService.Hotel.Error;
 
 namespace Lunggo.ApCommon.Travolutionary
 {
@@ -23,7 +26,7 @@ namespace Lunggo.ApCommon.Travolutionary
 
         private readonly static String UserName = ConfigManager.GetInstance().GetConfigValue("travolutionary", "apiUserName");
         private readonly static String Password = ConfigManager.GetInstance().GetConfigValue("travolutionary", "apiPassword");
-        private static readonly TravolutionaryHotelServiceErrorDictionary ErrorDictionary = TravolutionaryHotelServiceErrorDictionary.GetInstance();
+        private static readonly TravolutionaryHotelServiceErrorMapper ErrorMapper = TravolutionaryHotelServiceErrorMapper.GetInstance();
 
         public static TravolutionaryHotelSearchResponse SearchHotel(HotelsSearchServiceRequest request)
         {
@@ -41,27 +44,29 @@ namespace Lunggo.ApCommon.Travolutionary
 
         public static TravolutionaryHotelBookResponse BookHotel(HotelBookServiceRequest bookRequest)
         {
-            
+            TravolutionaryHotelBookResponse hotelBookResponse = null;
             var preBookCheckResponse = PreBookCheck(bookRequest);    
-            if (preBookCheckResponse.IsBookable)
-            {
-                
-            }
-            else
+            if (preBookCheckResponse.IsErrorLess())
             {
                 var travolutionaryHotelBookRequest = CreateHotelBookRequest(bookRequest);
             }
-            return null;
+            else
+            {
+                hotelBookResponse =
+                    ErrorMappingAndTravolutionaryResponseInitialization<TravolutionaryHotelBookResponse>(
+                        preBookCheckResponse);
+            }
+            return hotelBookResponse;
         }
 
-        public static TravolutionaryHotelBookResponse BookHotelInternal(HotelBookRequest bookRequest, String sessionId)
+        private static TravolutionaryHotelBookResponse BookHotelInternal(HotelBookRequest bookRequest, String sessionId)
         {
             var bookResponse = CallHotelBookApi(bookRequest, sessionId);
             var retVal = ProcessHotelBookResponse(bookResponse);
             return retVal;
         }
 
-        public static DynamicDataServiceRsp CallHotelBookApi(HotelBookRequest bookRequest, String sessionId)
+        private static DynamicDataServiceRsp CallHotelBookApi(HotelBookRequest bookRequest, String sessionId)
         {
             using (var cli = new DynamicDataServiceClient("BasicHttpBinding_IDynamicDataService"))
             {
@@ -76,12 +81,34 @@ namespace Lunggo.ApCommon.Travolutionary
             }
         }
 
-        public static TravolutionaryHotelBookResponse ProcessHotelBookResponse(DynamicDataServiceRsp searchResponse)
+        private static TravolutionaryHotelBookResponse ProcessHotelBookResponse(DynamicDataServiceRsp apiBookResponse)
         {
-            return null;
+            var hotelBookResponse = ErrorMappingAndTravolutionaryResponseInitialization<TravolutionaryHotelBookResponse>(apiBookResponse
+                , TravolutionaryHotelServiceErrorMapper.HotelBookErrorMapper);
+            if (hotelBookResponse.IsErrorLess())
+            {
+                CopyApiBookResponse(apiBookResponse, hotelBookResponse);
+            }
+
+            return hotelBookResponse;
         }
 
-        static HotelRepricePackageRequest CreateRepricePackageRequest(HotelBookServiceRequest bookRequest)
+        private static void CopyApiBookResponse(DynamicDataServiceRsp apiBookResponse,TravolutionaryHotelBookResponse serviceResponse)
+        {
+            var hotelSegmentsFromApi = apiBookResponse.HotelOrderBookResponse.HotelSegments;
+            var hotelSegments = hotelSegmentsFromApi.Select(segment => new TravolutionaryHotelBookSegment
+            {
+                OrderId = segment.OrderId,
+                SegmentId = segment.SegmentId,
+                SegmentStatus = segment.Status,
+                SupplierBookingId = segment.BookingID,
+                SupplierBookingReference = segment.BookingReference
+            }).ToList();
+            serviceResponse.HotelSegments = hotelSegments;
+        }
+
+
+        private static HotelRepricePackageRequest CreateRepricePackageRequest(HotelBookServiceRequest bookRequest)
         {
             return new HotelRepricePackageRequest
             {
@@ -114,17 +141,16 @@ namespace Lunggo.ApCommon.Travolutionary
 
         private static TravolutionaryPreBookCheckResponse PreBookCheck(HotelBookServiceRequest request)
         {
-            //var response = PreBookCheckInternal(request);
-            return null;
+            var pricePackageRequest = CreateRepricePackageRequest(request);
+            var response = PreBookCheckInternal(pricePackageRequest);
+            return response;
         }
 
         private static TravolutionaryPreBookCheckResponse PreBookCheckInternal(HotelRepricePackageRequest repricePackageRequest)
         {
             var repricePackageApiResponse = CallRepricePackageApi(repricePackageRequest);
-            var preBookCheckResponse = ErrorMappingAndTravolutionaryResponseInitialization<TravolutionaryPreBookCheckResponse>(repricePackageApiResponse,TravolutionaryHotelServiceErrorMapper.RepricePackageErrorMapper);
-
-
-            return null;
+            var preBookCheckResponse = ErrorMappingAndTravolutionaryResponseInitialization<TravolutionaryPreBookCheckResponse>(repricePackageApiResponse,TravolutionaryHotelServiceErrorMapper.HotelPreBookErrorMapper);
+            return preBookCheckResponse;
         }
 
         private static DynamicDataServiceRsp CallRepricePackageApi(HotelRepricePackageRequest request)
@@ -254,13 +280,18 @@ namespace Lunggo.ApCommon.Travolutionary
 
         private static TravolutionaryHotelSearchResponse AssembleHotelSearchResponse(DynamicDataServiceRsp response)
         {
-            var hotelArray = response.HotelsSearchResponse.Result;
-            var searchResponse = new TravolutionaryHotelSearchResponse
+            var hotelSearchResponse =
+                ErrorMappingAndTravolutionaryResponseInitialization<TravolutionaryHotelSearchResponse>(response
+                    , TravolutionaryHotelServiceErrorMapper.HotelsSearchErrorMapper);
+
+            if (hotelSearchResponse.IsErrorLess())
             {
-                HotelIdList = hotelArray!= null ? hotelArray.Select(p => p.ID) : null,
-                SessionId = response.SessionID
-            };
-            return searchResponse;
+                var hotelArray = response.HotelsSearchResponse.Result;
+                hotelSearchResponse.HotelIdList = hotelArray != null ? hotelArray.Select(p => p.ID) : null;
+                hotelSearchResponse.SessionId = response.SessionID;    
+            }
+
+            return hotelSearchResponse;
         }
 
         private static TravolutionaryHotelRoomSearchResponse AssembleHotelRoomSearchResponse(
@@ -334,17 +365,17 @@ namespace Lunggo.ApCommon.Travolutionary
             }
         }
 
-        private static T ErrorMappingAndTravolutionaryResponseInitialization<T>(DynamicDataServiceRsp response, Action<Error[],List<Lunggo.Framework.Error.Error>> errorMapper) where T : TravolutionaryResponseBase,new()
+        private static T ErrorMappingAndTravolutionaryResponseInitialization<T>(DynamicDataServiceRsp response, Action<Error[],HashSet<Lunggo.Framework.Error.Error>> errorMapper) where T : TravolutionaryResponseBase,new()
         {
-            List<Lunggo.Framework.Error.Error> errorList = null;
+            HashSet<Lunggo.Framework.Error.Error> errorList = null;
             if (response == null)
             {
-                errorList = new List<Lunggo.Framework.Error.Error>
+                errorList = new HashSet<Lunggo.Framework.Error.Error>(new ErrorComparer())
                 {
                     new Framework.Error.Error()
                     {
                         Code = "E1001",
-                        Message = ErrorDictionary.Errors["E1001"]
+                        Message = ErrorMapper.Errors["E1001"]
                     }
                 };
             }
@@ -352,7 +383,7 @@ namespace Lunggo.ApCommon.Travolutionary
             {
                 if (response.Errors != null && response.Errors.Any())
                 {
-                    errorList = new List<Lunggo.Framework.Error.Error>();
+                    errorList = new HashSet<Lunggo.Framework.Error.Error>(new ErrorComparer());
                     errorMapper(response.Errors,errorList);
                 }    
             }
@@ -360,6 +391,26 @@ namespace Lunggo.ApCommon.Travolutionary
             return new T
             {
                 Errors = errorList
+            };
+        }
+
+        private static T ErrorMappingAndTravolutionaryResponseInitialization<T>(
+            Action<HashSet<Lunggo.Framework.Error.Error>>  errorMapper)  where T : TravolutionaryResponseBase,new()
+        {
+            var errorList = new HashSet<Framework.Error.Error>(new ErrorComparer());
+            errorMapper(errorList);
+
+            return new T
+            {
+                Errors = errorList
+            };
+        }
+
+        private static T ErrorMappingAndTravolutionaryResponseInitialization<T>(TravolutionaryResponseBase response) where T : TravolutionaryResponseBase, new()
+        {
+            return new T
+            {
+                Errors = response.Errors
             };
         }
 
@@ -431,18 +482,15 @@ namespace Lunggo.ApCommon.Travolutionary
         }
     }
 
-    class TravolutionaryHotelServiceErrorDictionary
+    class TravolutionaryHotelServiceErrorMapper
     {
-        private static readonly TravolutionaryHotelServiceErrorDictionary Instance = new TravolutionaryHotelServiceErrorDictionary();
-        private readonly Dictionary<String, String> _errors;
- 
-        public Dictionary<String, String> Errors
+        private static readonly TravolutionaryHotelServiceErrorMapper Instance = new TravolutionaryHotelServiceErrorMapper();
+        private static readonly Dictionary<String, String> ServiceErrors;
+        private static readonly Dictionary<String, String> ApiErrors; 
+
+        static TravolutionaryHotelServiceErrorMapper()
         {
-            get { return _errors; }
-        }
-        private TravolutionaryHotelServiceErrorDictionary()
-        {
-            _errors = new Dictionary<String, String>
+            ServiceErrors = new Dictionary<string, string>
             {
                 {"E1001", "API Response is null"},
                 {"E1002", "Invalid API Request"},
@@ -450,26 +498,235 @@ namespace Lunggo.ApCommon.Travolutionary
                 {"E1004", "Error from Travolutionary side"},
                 {"E1005", "Room Package cannot be booked"},
                 {"E1006", "Session Id is not Found / Failed to read session data"},
+                {"E1007", "Room Package Prebook Error"},
                 {"E1099", "Unknown Error"}
+            };
+
+            ApiErrors = new Dictionary<string, string>
+            {
+                {"E4000", "API response is null"},
+                {"E4050", "Item cannot be booked"},
+                {"E4051", "Booking is not allowed on this account"},
+                {"E4060", "Item cannot be booked - Funds Deposit Issue"},
+                {"E4100", "The booking cannot be confirmed, it is not available anymore"},
+                {"E4101", "Cannot book the same item twice in the same session"},
+                {"E3600", "Hotel Id x is not found in search results"},
+                {"E3601", "Package Id x is not found in search results"},
+                {"E2000", "User x is not authorized to perform y action"},
+                {"E2001", "User access denied"},
+                {"E2050", "Segment access denied"},
+                {"E2060", "Credential is not specified"},
+                {"E2061", "Couldn't verify credentials"},
+                {"E2062", "Providing Both credential and session id is not allowed"},
+                {"E0500", "Internal Error"},
+                {"E0999", "Unknown Error"},
+                {"E1000", "Supplier Error"},
+                {"E0502", "Supplier Action is not implemented"},
+                {"E4300", "Failed to retrieve searched details"},
+                {"E0300", "Session Id is not found"},
+                {"E4302", "Failed to read session data"},
+                {"E4301", "No matching item is found"},
+                {"E0501", "Request x y doesn't exist"},
+                {"E1100", "Invalid request data"},
+                {"E0400", "Action x cannot be performed on a segment with status y"},
+                {"E4303", "Currency x is not supported"}
             };
         }
 
-        public static TravolutionaryHotelServiceErrorDictionary GetInstance()
+        public Dictionary<string, string> Errors
+        {
+            get { return ServiceErrors; }
+        }
+
+
+        private TravolutionaryHotelServiceErrorMapper()
+        {
+        }
+
+        public static TravolutionaryHotelServiceErrorMapper GetInstance()
         {
             return Instance;
         }
-    }
 
-    class TravolutionaryHotelServiceErrorMapper
-    {
-        public static void RepricePackageErrorMapper(Error[] apiErrorList, List<Lunggo.Framework.Error.Error> serviceErrorList)
+        public static void HotelPreBookErrorMapper(Error[] apiErrorList, HashSet<Framework.Error.Error> serviceErrorList)
         {
-                   
+            foreach (var error in apiErrorList)
+            {
+                CheckPermissionAndAuthorizationError(error,serviceErrorList);
+                CheckErrorFromTravolutionarySide(error,serviceErrorList);
+                CheckSessionError(error,serviceErrorList);
+                CheckRoomPackagePreBookError(error,serviceErrorList);
+                CheckInvalidRequestError(error,serviceErrorList);
+                CheckUnknownError(error,serviceErrorList);
+            }
         }
 
-        public static void HotelRoomsSearchErrorMapper(Error[] apiErrorList, List<Lunggo.Framework.Error.Error> serviceErrorList)
+        public static void HotelBookErrorMapper(Error[] apiErrorList, HashSet<Framework.Error.Error> serviceErrorList)
         {
-               
+            foreach (var error in apiErrorList)
+            {
+                CheckPermissionAndAuthorizationError(error, serviceErrorList);
+                CheckErrorFromTravolutionarySide(error, serviceErrorList);
+                CheckSessionError(error, serviceErrorList);
+                CheckRoomPackageBookingError(error,serviceErrorList);
+                CheckInvalidRequestError(error, serviceErrorList);
+                CheckUnknownError(error, serviceErrorList);
+            }
+        }
+
+        public static void HotelRoomsSearchErrorMapper(Error[] apiErrorList, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            foreach (var error in apiErrorList)
+            {
+                CheckPermissionAndAuthorizationError(error,serviceErrorList);
+                CheckErrorFromTravolutionarySide(error,serviceErrorList);
+                CheckSessionError(error, serviceErrorList);
+                CheckInvalidRequestError(error, serviceErrorList);
+                CheckUnknownError(error, serviceErrorList);
+            }
+        }
+
+        public static void HotelsSearchErrorMapper(Error[] apiErrorList, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            foreach (var error in apiErrorList)
+            {
+                CheckPermissionAndAuthorizationError(error, serviceErrorList);
+                CheckErrorFromTravolutionarySide(error, serviceErrorList);
+                CheckSessionError(error, serviceErrorList);
+                CheckInvalidRequestError(error, serviceErrorList);
+                CheckUnknownError(error, serviceErrorList);
+            }
+        }
+
+        private static void CheckRoomPackageBookingError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                    apiErrorCode.Equals("E4000", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4050", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4051", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4060", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4100", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4101", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E3600", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E3601", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1005",
+                    Message = ServiceErrors["E1005"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckPermissionAndAuthorizationError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                    apiErrorCode.Equals("E2000", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E2001", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E2050", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E2060", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E2061", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E2062", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1003",
+                    Message = ServiceErrors["E1003"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckErrorFromTravolutionarySide(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                    apiErrorCode.Equals("E0500", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E0999", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E1000", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E0502", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4300", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1004",
+                    Message = ServiceErrors["E1004"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckSessionError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                    apiErrorCode.Equals("E0300", StringComparison.CurrentCultureIgnoreCase) ||
+                    apiErrorCode.Equals("E4302", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1006",
+                    Message = ServiceErrors["E1006"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckRoomPackagePreBookError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                   apiErrorCode.Equals("E4301", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1007",
+                    Message = ServiceErrors["E1007"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckInvalidRequestError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim();
+            if (
+                   apiErrorCode.Equals("E0501", StringComparison.CurrentCultureIgnoreCase) ||
+                   apiErrorCode.Equals("E1100", StringComparison.CurrentCultureIgnoreCase) ||
+                   apiErrorCode.Equals("E0400", StringComparison.CurrentCultureIgnoreCase) ||
+                   apiErrorCode.Equals("E4303", StringComparison.CurrentCultureIgnoreCase)
+                )
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1002",
+                    Message = ServiceErrors["E1002"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
+        }
+
+        private static void CheckUnknownError(Error apiError, HashSet<Framework.Error.Error> serviceErrorList)
+        {
+            var apiErrorCode = apiError.ErrorCode.Trim().ToUpperInvariant();
+            string dump;
+            if (!ApiErrors.TryGetValue(apiErrorCode, out dump))
+            {
+                var serviceError = new Framework.Error.Error
+                {
+                    Code = "E1099",
+                    Message = ServiceErrors["E1099"]
+                };
+                serviceErrorList.Add(serviceError);
+            }
         }
     }
 }
