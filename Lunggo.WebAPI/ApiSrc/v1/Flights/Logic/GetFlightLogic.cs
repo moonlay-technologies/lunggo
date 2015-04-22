@@ -4,12 +4,17 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Logic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.Redis;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
+using StackExchange.Redis;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
@@ -22,9 +27,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
+                var redis = RedisService.GetInstance();
+                var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 for (var i = 0; i < searchServiceResponse.Itineraries.Count; i++)
                 {
-                    DictionaryService.GetInstance().ItineraryDict.Add(searchId + i, searchServiceResponse.Itineraries[i]);
+                    var json = FlightCacheUtil.SerializeFlightItin(searchServiceResponse.Itineraries[i]);
+                    redisDb.StringSet(searchId + i, json);
                 }
                 var apiResponse = AssembleApiResponse(searchServiceResponse, request, searchId);
                 return apiResponse;

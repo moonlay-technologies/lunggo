@@ -6,12 +6,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Logic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Redis;
+using StackExchange.Redis;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -25,8 +29,10 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult SearchListOneWay(FlightSelectData data)
         {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var json = redis.StringGet(data.SearchId);
             var itinerary =
-                DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
+                FlightCacheUtil.DeserializeFlightItin(json);
             var revalidateResult =
                 FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = itinerary.FareId});
             if (revalidateResult.IsSuccess)
@@ -78,8 +84,10 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult SearchListReturn(FlightSelectData data)
         {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var json = redis.StringGet(data.SearchId);
             var itinerary =
-                DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
+                FlightCacheUtil.DeserializeFlightItin(json);
             var revalidateResult =
                 FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = itinerary.FareId });
             if (revalidateResult.IsSuccess)
