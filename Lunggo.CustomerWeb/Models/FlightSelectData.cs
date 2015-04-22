@@ -11,8 +11,7 @@ namespace Lunggo.CustomerWeb.Models
     public class FlightSelectData
     {
         public string Message { get; set; }
-        public FlightFareItinerary Itinerary { get; set; }
-        public List<OriDestDate> Info { get; set; }
+        public string FareId { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }

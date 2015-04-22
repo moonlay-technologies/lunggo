@@ -226,8 +226,7 @@ namespace Lunggo.CustomerWeb.Controllers
                                 });
                                 if (tripDetails.IsSuccess)
                                 {
-                                    // TODO FLIGHT : Show ETicket
-                                    return View();
+                                    return RedirectToAction("Eticket", tripDetails.FlightDetails);
                                 }
                                 else
                                 {
@@ -271,6 +270,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 data.Message = "Error" + revalidateResult.Errors;
                 return View(data);
             }
+        }
+
+        public ActionResult Eticket(FlightItineraryDetails itin)
+        {
+            return View(itin);
         }
     }
 }

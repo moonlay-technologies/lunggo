@@ -1671,6 +1671,7 @@
     <Content Include="Views\Flight\SearchListOneWay.cshtml" />
     <Content Include="Views\Flight\SearchListReturn.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
+    <Content Include="Views\Flight\Eticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
