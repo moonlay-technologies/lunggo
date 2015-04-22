@@ -26,7 +26,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult SearchListOneWay(FlightSelectData data)
         {
             var itinerary =
-                DictionaryService.GetInstance().ItineraryDict[new Tuple<string, int>(data.SearchId, data.ItinIndex)];
+                DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
             var revalidateResult =
                 FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = itinerary.FareId});
             if (revalidateResult.IsSuccess)
@@ -79,7 +79,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult SearchListReturn(FlightSelectData data)
         {
             var itinerary =
-                DictionaryService.GetInstance().ItineraryDict[new Tuple<string, int>(data.SearchId, data.ItinIndex)];
+                DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
             var revalidateResult =
                 FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = itinerary.FareId });
             if (revalidateResult.IsSuccess)

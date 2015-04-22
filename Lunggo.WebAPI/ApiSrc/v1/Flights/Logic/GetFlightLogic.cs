@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
                 for (var i = 0; i < searchServiceResponse.Itineraries.Count; i++)
                 {
-                    DictionaryService.GetInstance().ItineraryDict.Add(new Tuple<string, int>(searchId, i), searchServiceResponse.Itineraries[i]);
+                    DictionaryService.GetInstance().ItineraryDict.Add(searchId + i, searchServiceResponse.Itineraries[i]);
                 }
                 var apiResponse = AssembleApiResponse(searchServiceResponse, request, searchId);
                 return apiResponse;
