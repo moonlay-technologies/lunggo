@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
@@ -16,9 +19,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (IsValid(request))
             {
+                var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse, request);
+                for (var i = 0; i < searchServiceResponse.Itineraries.Count; i++)
+                {
+                    DictionaryService.GetInstance().ItineraryDict.Add(new Tuple<string, int>(searchId, i), searchServiceResponse.Itineraries[i]);
+                }
+                var apiResponse = AssembleApiResponse(searchServiceResponse, request, searchId);
                 return apiResponse;
             }
             else
@@ -53,12 +61,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 */
         }
 
-        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
+        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request, string searchId)
         {
             var apiResponse = new FlightSearchApiResponse
             {
                 OriginalRequest = request,
-                SearchId = null
+                SearchId = searchId
             };
             if (searchServiceResponse.Itineraries == null)
             {

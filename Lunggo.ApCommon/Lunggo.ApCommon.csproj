@@ -219,6 +219,7 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
     <Compile Include="Sequence\FlightStopIdSequence.cs" />

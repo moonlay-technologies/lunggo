@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -22,21 +25,21 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult SearchListOneWay(FlightSelectData data)
         {
+            var itinerary =
+                DictionaryService.GetInstance().ItineraryDict[new Tuple<string, int>(data.SearchId, data.ItinIndex)];
             var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = data.Itinerary.FareId});
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = itinerary.FareId});
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
                 {
                     return RedirectToAction("Checkout", new FlightSelectData
                     {
-                        Info = data.Info,
                         AdultCount = data.AdultCount,
                         ChildCount = data.ChildCount,
                         InfantCount = data.InfantCount,
                         IsBirthDateRequired = data.IsBirthDateRequired,
-                        IsPassportRequired = data.IsPassportRequired,
-                        Itinerary = data.Itinerary
+                        IsPassportRequired = data.IsPassportRequired
                     });
                 }
                 else
@@ -45,13 +48,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         return RedirectToAction("Checkout", new FlightSelectData
                         {
-                            Info = data.Info,
                             AdultCount = data.AdultCount,
                             ChildCount = data.ChildCount,
                             InfantCount = data.InfantCount,
                             IsBirthDateRequired = data.IsBirthDateRequired,
                             IsPassportRequired = data.IsPassportRequired,
-                            Itinerary = data.Itinerary,
                             Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
                         });
                     }
@@ -77,21 +78,21 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult SearchListReturn(FlightSelectData data)
         {
+            var itinerary =
+                DictionaryService.GetInstance().ItineraryDict[new Tuple<string, int>(data.SearchId, data.ItinIndex)];
             var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = data.Itinerary.FareId });
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = itinerary.FareId });
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
                 {
                     return RedirectToAction("Checkout", new FlightSelectData
                     {
-                        Info = data.Info,
                         AdultCount = data.AdultCount,
                         ChildCount = data.ChildCount,
                         InfantCount = data.InfantCount,
                         IsBirthDateRequired = data.IsBirthDateRequired,
                         IsPassportRequired = data.IsPassportRequired,
-                        Itinerary = data.Itinerary
                     });
                 }
                 else
@@ -100,13 +101,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         return RedirectToAction("Checkout", new FlightSelectData
                         {
-                            Info = data.Info,
                             AdultCount = data.AdultCount,
                             ChildCount = data.ChildCount,
                             InfantCount = data.InfantCount,
                             IsBirthDateRequired = data.IsBirthDateRequired,
                             IsPassportRequired = data.IsPassportRequired,
-                            Itinerary = data.Itinerary,
                             Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
                         });
                     }
