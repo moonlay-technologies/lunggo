@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query.Model;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -18,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNo = "rsvNo";
+                var rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
                 var reservationRecord = new FlightReservationTableRecord
                 {
                     RsvNo = rsvNo,
@@ -47,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Query
 
                 foreach (var record in bookingRecord.ItineraryRecords)
                 {
-                    var itineraryId = 999;
+                    var itineraryId = FlightItineraryIdSequence.GetInstance().GetNext();
                     var itineraryRecord = new FlightItineraryTableRecord
                     {
                         ItineraryId = itineraryId,
@@ -72,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Query
                     var i = 0;
                     foreach (var trip in record.Itinerary.FlightTrips)
                     {
-                        var tripId = i;
+                        var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord
                         {
                             TripId = tripId,
@@ -89,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Query
                         var orderedSegments = trip.FlightSegments.OrderBy(segment => segment.DepartureTime).ToList();
                         do
                         {
-                            var segmentId = i + 10;
+                            var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
                             var segmentRecord = new FlightSegmentTableRecord
                             {
                                 SegmentId = segmentId,
@@ -114,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Query
                             {
                                 foreach (var stop in orderedSegments[i].FlightStops)
                                 {
-                                    var stopId = i + 100;
+                                    var stopId = FlightStopIdSequence.GetInstance().GetNext();
                                     var stopRecord = new FlightStopTableRecord
                                     {
                                         StopId = stopId,
@@ -138,7 +140,23 @@ namespace Lunggo.ApCommon.Flight.Query
                     foreach (var passenger in bookingRecord.Passengers)
                     {
 
-                        var passengerRecord = PassengerBookingRecord(passenger, rsvNo);
+                        var passengerRecord = new FlightPassengerTableRecord
+                        {
+                            PassengerId = FlightPassengerIdSequence.GetInstance().GetNext(),
+                            RsvNo = rsvNo,
+                            PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
+                            GenderCd = GenderCd.Mnemonic(passenger.Gender),
+                            TitleCd = TitleCd.Mnemonic(passenger.Title),
+                            FirstName = passenger.FirstName,
+                            LastName = passenger.LastName,
+                            BirthDate = passenger.DateOfBirth,
+                            CountryCd = passenger.PassportCountry,
+                            IdNumber = passenger.IdNumber,
+                            PassportExpiryDate = passenger.PassportExpiryDate,
+                            InsertBy = "xxx",
+                            InsertDate = DateTime.Now,
+                            InsertPgId = "xxx"
+                        }; ;
                         FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
                     }
                 }
@@ -193,27 +211,6 @@ namespace Lunggo.ApCommon.Flight.Query
                 }
                 
             }
-        }
-
-        private static FlightPassengerTableRecord PassengerBookingRecord(PassengerFareInfo passenger, string rsvNo)
-        {
-            return new FlightPassengerTableRecord
-            {
-                PassengerId = 999,
-                RsvNo = rsvNo,
-                PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
-                GenderCd = GenderCd.Mnemonic(passenger.Gender),
-                TitleCd = TitleCd.Mnemonic(passenger.Title),
-                FirstName = passenger.FirstName,
-                LastName = passenger.LastName,
-                BirthDate = passenger.DateOfBirth,
-                CountryCd = passenger.PassportCountry,
-                IdNumber = passenger.IdNumber,
-                PassportExpiryDate = passenger.PassportExpiryDate,
-                InsertBy = "xxx",
-                InsertDate = DateTime.Now,
-                InsertPgId = "xxx"
-            };
         }
     }
 }
