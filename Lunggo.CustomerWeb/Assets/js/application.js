@@ -658,7 +658,8 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights'
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights',
+    Params: jQuery.parseJSON( $('.flight-search-page').attr('data-flight-search-params') )
 };
 
 // ************************
@@ -849,16 +850,22 @@ var FlightSearchConfig = {
             $scope.FlightSearchParams = {};
             $scope.loaded = false;
 
+            // add class on click
+            $scope.selectedItem = -1;
+            $scope.clickedItem = function($index) {
+                $scope.selectedItem = $index;
+            }
+
             // default value
             $scope.FlightSearchParams = {
-                Ori: 'CGK',
-                Dest: 'DPS',
-                Date: '2015-05-05',
+                Ori: FlightSearchConfig.Params.Ori,
+                Dest: FlightSearchConfig.Params.Dest,
+                Date: FlightSearchConfig.Params.Date,
                 Cabin: 'e',
-                Type: 'ONE',
-                Adult: '1',
-                Child: '0',
-                Infant: '0'
+                Type: FlightSearchConfig.Params.Type,
+                Adult: FlightSearchConfig.Params.Adult,
+                Child: FlightSearchConfig.Params.Child,
+                Infant: FlightSearchConfig.Params.Infant
             }
 
             $scope.getFlightList = function () {

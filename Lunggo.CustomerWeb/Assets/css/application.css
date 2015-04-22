@@ -965,6 +965,8 @@ hr {
   background: #fff; }
   .flight-search-page .flight-list.horizontal .flight.active {
     border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active .flight-detail {
+      display: block; }
   .flight-search-page .flight-list.horizontal .flight .flight-main {
     display: block;
     clear: both;
@@ -1155,7 +1157,8 @@ hr {
         background-image: url(../images/flight-toggle-up.png); }
   .flight-search-page .flight-list.horizontal .flight .flight-detail {
     border-top: 1px solid #62c7ec;
-    display: none; }
+    display: none;
+    transition: 1s linear all; }
     .flight-search-page .flight-list.horizontal .flight .flight-detail:after {
       content: "";
       display: block;

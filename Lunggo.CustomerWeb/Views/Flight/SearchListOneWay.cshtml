@@ -11,13 +11,16 @@
     var adult = Model.Adult;
     var child = Model.Child;
     var infant = Model.Infant;
+    var date = Model.Date.ToString("yyyy-MM-dd");
+    var ori = Model.Ori;
+    var dest = Model.Dest;
 }
 
 @section AdditionalPageJavascript {}
 
 @section PageJavascript {}
 
-<div class="search-page flight-search-page" data-flight-search-params='{ "Type": "" , "Date" : "" , "ReturnDate" : "" , "Ori" : "" , "Dest" : "" , "Adult" : "@adult" , "Child" : "@child" , "Infant" : "@infant" }'>
+<div class="search-page flight-search-page" data-flight-search-params='{ "Type": "ONE" , "Date" : "@date" , "ReturnDate" : "" , "Ori" : "@ori" , "Dest" : "@dest" , "Adult" : "@adult" , "Child" : "@child" , "Infant" : "@infant" }'>
 
     <header class="page-header">
         <div class="container">
@@ -78,21 +81,21 @@
 
             <!-- Loop start here -->
 
-            <article class="flight" ng-repeat="flight in flight_list.list">
+            <article class="flight" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list">
 
                 <div class="flight-main">
                     <div class="flight-left">
                         <div class="flight-header">
                             <div class="flight-airline">
                                 <h4>
-                                    <img ng-repeat="airline in flight.Airlines" ng-src="/assets/images/airlines/{{airline.Code}}.png"/>
+                                    <img ng-repeat="airline in flight.Airlines" ng-src="/assets/images/airlines/{{airline.Code}}.png" />
                                 </h4>
                             </div>
                             <!--
-                            <div class="flight-number">
-                                Flight number 
-                            </div>
-                            -->
+                    <div class="flight-number">
+                        Flight number
+                    </div>
+                    -->
                             <div class="flight-basic-data">
                                 <span class="flight-weight">10</span>
                                 <span class="flight-tax"><img src="/assets/images/flight-tax-true.png" alt="TAX Included"></span>
@@ -104,19 +107,19 @@
                                 <div class="departure">
                                     <span class="time">15.00</span>
                                     <img src="/assets/images/pinpoint.png" alt="Point">
-                                    <span class="location">{{flight.FlightTrips[0].OriginAirport}}</span>
+                                    <span class="location">{{flight.FlightTrips[0].OriginAirport | uppercase}}</span>
                                 </div>
-                                
-                                <div class="stop stop-1" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                                    <span class="number">1st STOP</span>
+
+                                <div class="stop stop-{{$index + 1}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" ng-repeat="transit in flight.Transits">
+                                    <span class="number"><!-- 1st -->STOP</span>
                                     <img src="/assets/images/stop.png" alt="Stop">
-                                    <span class="location">Yogyakarta (SBY)</span>
+                                    <span class="location">{{transit.Location | uppercase}}</span>
                                 </div>
 
                                 <div class="arrival">
                                     <span class="time">18.00</span>
                                     <img src="/assets/images/pinpoint.png" alt="Point">
-                                    <span class="location">{{flight.FlightTrips[0].DestinationAirport}}</span>
+                                    <span class="location">{{flight.FlightTrips[0].DestinationAirport | uppercase}}</span>
                                 </div>
                             </div><!-- .flight-route-detail -->
                             <div class="flight-time">
@@ -126,58 +129,41 @@
                         </div><!-- .flight-route -->
                     </div><!-- .flight-left -->
                     <div class="flight-right">
-                        <!-- <span class="tag red">Disc 20%</span> -->
-                        <p>Price / Person:</p>
-                        <h5 class="price-was"></h5>
-                        <h4 class="price-now">{{flight.TotalFare | number}}</h4>
-                        <small>harga sudah termasuk <b>pajak</b></small>
-                        <button class="btn btn-blue">Pesan</button>
+                        <form action="/id/flight/checkout" method="POST">
+                            <!-- <span class="tag red">Disc 20%</span> -->
+                            <p>Price / Person:</p>
+                            <h5 class="price-was"></h5>
+                            <h4 class="price-now">{{flight.TotalFare | number}}</h4>
+                                <input class="hidden" type="text" name="AdultCount" value="{{flight.AdultCount}}" />
+                                <input class="hidden" type="text" name="ChildCount" value="{{flight.ChildCount}}" />
+                                <input class="hidden" type="text" name="InfantCount" value="{{flight.InfantCount}}" />
+                                <input class="hidden" type="text" name="IsPassportRequired" value="{{flight.RequirePassport}}" />
+                                <input class="hidden" type="text" name="IsBirthDateRequired" value="{{flight.RequireBirthDate}}" />
+                                <input class="hidden" type="text" name="FareId" value="{{flight.FareId}}" />
+                            <small>harga sudah termasuk <b>pajak</b></small>
+                            <button class="btn btn-blue">Pesan</button>
+                        </form>
                     </div><!-- .flight-right -->
-                    <span class="flight-toggle"></span><!-- .flight-toggle -->
+                    <span class="flight-toggle" ng-click="clickedItem($index)"></span><!-- .flight-toggle -->
                 </div><!-- .flight-main -->
 
                 <div class="flight-detail">
                     <div class="detail-left">
-                        <h4 class="detail-title"> <b>FLIGHT</b> DETAILS <small> | Wed, 30 Februari 2015</small> </h4>
+                        <h4 class="detail-title"> <b>FLIGHT</b> DETAILS <small> | <!-- Wed, 30 Februari 2015 --></small> </h4>
                         <ol>
-                            <li>
+                            <li ng-repeat="transit in flight.FlightTrips[0].FlightSegments">
                                 <div class="detail-destination">
                                     <div class="departure">
                                         <span class="city">Jakarta</span>
-                                        <span class="airport">(CGK)</span>
+                                        <span class="airport">{{transit.DepartureAirport}}</span>
                                     </div>
                                     <div class="arrival">
                                         <span class="city">Surabaya</span>
-                                        <span class="airport">(SBY)</span>
+                                        <span class="airport">{{transit.ArrivalAirport}}</span>
                                     </div>
                                 </div>
                                 <div class="detail-airline">
-                                    <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
-                                </div>
-                                <div class="detail-time">
-                                    <div class="departure">
-                                        <span class="time">15.00</span>
-                                        <span class="day">Wed</span>
-                                    </div>
-                                    <div class="arrival">
-                                        <span class="time">16.00</span>
-                                        <span class="day">Wed</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="detail-destination">
-                                    <div class="departure">
-                                        <span class="city">Jakarta</span>
-                                        <span class="airport">(CGK)</span>
-                                    </div>
-                                    <div class="arrival">
-                                        <span class="city">Surabaya</span>
-                                        <span class="airport">(SBY)</span>
-                                    </div>
-                                </div>
-                                <div class="detail-airline">
-                                    <img src="/assets/images/airlines/garuda-indonesia.png" alt="Garuda Indonesia"> QZK-1234
+                                    <img src="/assets/images/airlines/{{transit.OperatingAirlineCode}}.png" alt="Garuda Indonesia"> {{transit.AirlineCode}}-{{transit.FlightNumber}}
                                 </div>
                                 <div class="detail-time">
                                     <div class="departure">
