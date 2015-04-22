@@ -45,9 +45,10 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = client.AirLowFareSearch(request);
                     request.IsRefundable = false;
-                    var refundResponse = client.AirLowFareSearch(request);
+                    //var refundResponse = client.AirLowFareSearch(request);
+                    var refundResponse = new AirLowFareSearchRS();
                     done = true;
-                    if (!response.Errors.Any() || !refundResponse.Errors.Any())
+                    if (!response.Errors.Any())// || !refundResponse.Errors.Any())
                     {
                         result.FlightItineraries = new List<FlightFareItinerary>();
                         if (!response.Errors.Any())
@@ -55,11 +56,13 @@ namespace Lunggo.ApCommon.Mystifly
                             var result1 = MapResult(response, conditions);
                             result.FlightItineraries.AddRange(result1.FlightItineraries);
                         }
+                        /*
                         if (!refundResponse.Errors.Any())
                         {
                             var result2 = MapResult(refundResponse, conditions);
                             result.FlightItineraries.AddRange(result2.FlightItineraries);
                         }
+                         */
                         result.IsSuccess = true;
                     }
                     else

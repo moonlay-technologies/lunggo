@@ -46,12 +46,9 @@ namespace Lunggo.CustomerWeb.Controllers
             }).Itineraries;
             data.TotalFlightCount = data.FlightList.Count;
             data.SearchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < data.FlightList.Count; i++)
             {
-                var json = FlightCacheUtil.SerializeFlightItin(data.FlightList[i]);
-                redisDb.StringSet(data.SearchId + i, json);
+                DictionaryService.GetInstance().ItineraryDict.Add(data.SearchId + i, data.FlightList[i]);
             }
             return View(data);
         }
@@ -59,12 +56,21 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult SearchList(FlightSelectData data)
         {
-            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
-            var json = redis.StringGet(data.SearchId);
-            var itinerary =
-                FlightCacheUtil.DeserializeFlightItin(json);
+            var itinerary = DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
             var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = itinerary.FareId });
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
+                {
+                    FareId = itinerary.FareId,
+                    TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport=  itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = itinerary.FlightTrips[0].DepartureDate
+                        }
+                    }
+                });
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
@@ -75,7 +81,9 @@ namespace Lunggo.CustomerWeb.Controllers
                         ChildCount = data.ChildCount,
                         InfantCount = data.InfantCount,
                         IsBirthDateRequired = data.IsBirthDateRequired,
-                        IsPassportRequired = data.IsPassportRequired
+                        IsPassportRequired = data.IsPassportRequired,
+                        SearchId = data.SearchId,
+                        ItinIndex = data.ItinIndex
                     });
                 }
                 else
@@ -89,6 +97,8 @@ namespace Lunggo.CustomerWeb.Controllers
                             InfantCount = data.InfantCount,
                             IsBirthDateRequired = data.IsBirthDateRequired,
                             IsPassportRequired = data.IsPassportRequired,
+                            SearchId = data.SearchId,
+                            ItinIndex = data.ItinIndex,
                             Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
                         });
                     }
@@ -118,7 +128,19 @@ namespace Lunggo.CustomerWeb.Controllers
             var itinerary =
                 FlightCacheUtil.DeserializeFlightItin(json);
             var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = itinerary.FareId});
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
+                {
+                    FareId = itinerary.FareId,
+                    TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport=  itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = itinerary.FlightTrips[0].DepartureDate
+                        }
+                    }
+                });
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
@@ -184,7 +206,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         ChildCount = data.ChildCount,
                         InfantCount = data.InfantCount,
                         IsBirthDateRequired = data.IsBirthDateRequired,
-                        IsPassportRequired = data.IsPassportRequired,
+                        IsPassportRequired = data.IsPassportRequired
                     });
                 }
                 else
@@ -223,7 +245,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 ChildCount = data.ChildCount,
                 InfantCount = data.InfantCount,
                 IsBirthDateRequired = data.IsBirthDateRequired,
-                IsPassportRequired = data.IsPassportRequired
+                IsPassportRequired = data.IsPassportRequired,
+                SearchId = data.SearchId,
+                ItinIndex = data.ItinIndex
             };
             return View(inputData);
         }
@@ -231,6 +255,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
+            data.Itinerary = DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
             var passengerInfo = new List<PassengerFareInfo>();
             if (data.AdultPassengerData != null)
             {
@@ -295,7 +320,19 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
             };
             var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = data.Itinerary.FareId });
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
+                {
+                    FareId = data.Itinerary.FareId,
+                    TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport=  data.Itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        }
+                    }
+                });
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
