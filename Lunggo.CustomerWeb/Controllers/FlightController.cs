@@ -267,7 +267,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();
@@ -283,7 +283,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();
@@ -299,7 +299,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate
                 }).ToList();
@@ -317,7 +317,19 @@ namespace Lunggo.CustomerWeb.Controllers
                         Email = data.ContactData.Email
                     },
                     PassengerFareInfos = passengerInfo
-                }
+                },
+                Itinerary = data.Itinerary,
+                TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport=  data.Itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        }
+                    },
+                OverallTripType = TripType.OneWay,
+                PaymentData = data.PaymentData
             };
             var revalidateResult =
                 FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
