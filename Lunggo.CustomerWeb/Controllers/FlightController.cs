@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -12,6 +13,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Logic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Redis;
@@ -21,6 +23,88 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
+        public ActionResult SearchList(FlightSearchData data)
+        {
+            data.FlightList = FlightService.GetInstance().SearchFlight(new SearchFlightInput
+            {
+                Conditions = new SearchFlightConditions
+                {
+                    AdultCount = data.Adult,
+                    ChildCount = data.Child,
+                    InfantCount = data.Infant,
+                    CabinClass = data.Cabin,
+                    TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = data.Ori,
+                            DestinationAirport = data.Dest,
+                            DepartureDate = data.Date
+                        }
+                    }
+                }
+            }).Itineraries;
+            data.TotalFlightCount = data.FlightList.Count;
+            data.SearchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+            var redis = RedisService.GetInstance();
+            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < data.FlightList.Count; i++)
+            {
+                var json = FlightCacheUtil.SerializeFlightItin(data.FlightList[i]);
+                redisDb.StringSet(data.SearchId + i, json);
+            }
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchList(FlightSelectData data)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var json = redis.StringGet(data.SearchId);
+            var itinerary =
+                FlightCacheUtil.DeserializeFlightItin(json);
+            var revalidateResult =
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = itinerary.FareId });
+            if (revalidateResult.IsSuccess)
+            {
+                if (revalidateResult.IsValid)
+                {
+                    return RedirectToAction("Checkout", new FlightSelectData
+                    {
+                        AdultCount = data.AdultCount,
+                        ChildCount = data.ChildCount,
+                        InfantCount = data.InfantCount,
+                        IsBirthDateRequired = data.IsBirthDateRequired,
+                        IsPassportRequired = data.IsPassportRequired
+                    });
+                }
+                else
+                {
+                    if (revalidateResult.Itinerary != null)
+                    {
+                        return RedirectToAction("Checkout", new FlightSelectData
+                        {
+                            AdultCount = data.AdultCount,
+                            ChildCount = data.ChildCount,
+                            InfantCount = data.InfantCount,
+                            IsBirthDateRequired = data.IsBirthDateRequired,
+                            IsPassportRequired = data.IsPassportRequired,
+                            Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
+                        });
+                    }
+                    else
+                    {
+                        data.Message = "No other fare available.";
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            else
+            {
+                data.Message = "Error" + revalidateResult.Errors;
+                return RedirectToAction("Index", "Home");
+            }
+        }
         public ActionResult SearchListOneWay(FlightSearchData data)
         {
             return View(data);
