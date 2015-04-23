@@ -42,7 +42,10 @@ namespace Lunggo.ApCommon.Flight.Query
                     GrossProfit = 999,
                     InsertBy = "xxx",
                     InsertDate = DateTime.Now,
-                    InsertPgId = "xxx"
+                    InsertPgId = "xxx",
+                    AdultCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Adult),
+                    ChildCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Child),
+                    InfantCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Infant)
                 };
 
                 FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
@@ -82,6 +85,7 @@ namespace Lunggo.ApCommon.Flight.Query
                             OriginAirportCd = trip.OriginAirport,
                             DestinationAirportCd = trip.DestinationAirport,
                             DepartureDate = trip.DepartureDate,
+                            TotalDuration = trip.TotalDuration,
                             InsertBy = "xxx",
                             InsertDate = DateTime.Now,
                             InsertPgId = "xxx"
@@ -134,7 +138,7 @@ namespace Lunggo.ApCommon.Flight.Query
                             }
 
                             i++;
-                        } while (orderedSegments[i].ArrivalAirport != trip.DestinationAirport);
+                        } while (i < orderedSegments.Count && orderedSegments[i - 1].ArrivalAirport != trip.DestinationAirport);
                     }
 
                     foreach (var passenger in bookingRecord.Passengers)

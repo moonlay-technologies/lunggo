@@ -10,6 +10,8 @@ namespace Lunggo.CustomerWeb.Models
 {
     public class FlightCheckoutData
     {
+        public string SearchId { get; set; }
+        public int ItinIndex { get; set; }
         public string Message { get; set; }
         public FlightFareItinerary Itinerary { get; set; }
         public int AdultCount { get; set; }
@@ -30,7 +32,7 @@ namespace Lunggo.CustomerWeb.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
-        public string PassportOrIdNumber { get; set; }
+        public string IdNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string Country { get; set; }
     }

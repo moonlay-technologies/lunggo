@@ -70,124 +70,138 @@
             <a href="#" class="btn btn-primary">FILTER</a>
         </section>
     </aside><!-- .flight-filter -->
-
+        
     <div class="container" ng-controller="FlightController as flight_list">
     
-        <section class="flight-loading" ng-if="!loaded">
+        <section class="flight-loading" style="display:none !important;">
             <img src="/Assets/images/loading-image-dark.gif" />
         </section>
 
-        <section class="flight-list horizontal" ng-if="loaded">
+        <section class="flight-list horizontal">
 
             <!-- Loop start here -->
 
-            <article class="flight" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list">
+                        @for (var i = 0; i<Model.FlightList.Count ; i++)
+            {
+                var flight = Model.FlightList[i];
+                            <article class="flight" >
+                                <div class="flight-main">
+                                    <div class="flight-left">
+                                        <div class="flight-header">
+                                            <div class="flight-airline">
+                                                <h4>
+                                                    @foreach (var airline in flight.Airlines)
+                                    {
+                                                        <img src="/assets/images/airlines/@(airline.Code).png" />
+                                    }
+                                                </h4>
+                                            </div>
+                                            <!--
+                                        <div class="flight-number">
+                                            Flight number
+                                        </div>
+                                        -->
+                                            <div class="flight-basic-data">
+                                                <span class="flight-weight">10</span>
+                                                <span class="flight-tax"><img src="/assets/images/flight-tax-true.png" alt="TAX Included"></span>
+                                            </div>
+                                        </div><!-- .flight-header -->
+                                        <div class="flight-route">
 
-                <div class="flight-main">
-                    <div class="flight-left">
-                        <div class="flight-header">
-                            <div class="flight-airline">
-                                <h4>
-                                    <img ng-repeat="airline in flight.Airlines" ng-src="/assets/images/airlines/{{airline.Code}}.png" />
-                                </h4>
-                            </div>
-                            <!--
-                    <div class="flight-number">
-                        Flight number
-                    </div>
-                    -->
-                            <div class="flight-basic-data">
-                                <span class="flight-weight">10</span>
-                                <span class="flight-tax"><img src="/assets/images/flight-tax-true.png" alt="TAX Included"></span>
-                            </div>
-                        </div><!-- .flight-header -->
-                        <div class="flight-route">
+                                            <div class="flight-route-detail transit-@(flight.TotalTransit)">
+                                                <div class="departure">
+                                                    <span class="time">15.00</span>
+                                                    <img src="/assets/images/pinpoint.png" alt="Point">
+                                                    <span class="location">@(flight.FlightTrips[0].OriginAirport.ToUpper())</span>
+                                                </div>
+                                                @for (var j = 0; j < flight.Transits.Count; j++)
+                            {
+                                var transit = flight.Transits[j];
+                                                    <div class="stop stop-@(j + 1)" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                                        <span class="number"><!-- 1st -->STOP</span>
+                                                        <img src="/assets/images/stop.png" alt="Stop">
+                                                        <span class="location">@transit.Location.ToUpper())</span>
+                                                    </div>
+                            }
 
-                            <div class="flight-route-detail transit-{{flight.TotalTransit}}">
-                                <div class="departure">
-                                    <span class="time">15.00</span>
-                                    <img src="/assets/images/pinpoint.png" alt="Point">
-                                    <span class="location">{{flight.FlightTrips[0].OriginAirport | uppercase}}</span>
+                                                <div class="arrival">
+                                                    <span class="time">18.00</span>
+                                                    <img src="/assets/images/pinpoint.png" alt="Point">
+                                                    <span class="location">@(flight.FlightTrips[0].DestinationAirport.ToUpper())</span>
+                                                </div>
+                                            </div><!-- .flight-route-detail -->
+                                            <div class="flight-time">
+                                                <span class="total-time"><img src="/assets/images/hourglass.png" alt="Hour Glass"> @(flight.FlightTrips[0].TotalDuration)</span>
+                                            </div><!-- .flight-time -->
+
+                                        </div><!-- .flight-route -->
+                                    </div><!-- .flight-left -->
+                                    <div class="flight-right">
+                                        <form action="/id/flight/SearchList" method="POST">
+                                            <!-- <span class="tag red">Disc 20%</span> -->
+                                            <p>Price / Person:</p>
+                                            <h5 class="price-was"></h5>
+                                            <h4 class="price-now">@(flight.TotalFare)</h4>
+                                            <input class="hidden" type="text" name="AdultCount" value="@(flight.AdultCount)" />
+                                            <input class="hidden" type="text" name="ChildCount" value="@(flight.ChildCount)" />
+                                            <input class="hidden" type="text" name="InfantCount" value="@(flight.InfantCount)" />
+                                            <input class="hidden" type="text" name="IsPassportRequired" value="true" />
+                                            <input class="hidden" type="text" name="IsBirthDateRequired" value="true" />
+                                            <input class="hidden" type="text" name="FareId" value="@(flight.FareId)" />
+                                            <input class="hidden" type="text" name="SearchId" value="@(Model.SearchId)" />
+                                            <small>harga sudah termasuk <b>pajak</b></small>
+                                            <button class="btn btn-blue">Pesan</button>
+                                        </form>
+                                    </div><!-- .flight-right -->
+                                    <span class="flight-toggle" ng-click="clickedItem($index)"></span><!-- .flight-toggle -->
                                 </div>
+                                <!-- .flight-main -->
 
-                                <div class="stop stop-{{$index + 1}}" data-toggle="tooltip" data-placement="top" title="Tooltip on top" ng-repeat="transit in flight.Transits">
-                                    <span class="number"><!-- 1st -->STOP</span>
-                                    <img src="/assets/images/stop.png" alt="Stop">
-                                    <span class="location">{{transit.Location | uppercase}}</span>
-                                </div>
-
-                                <div class="arrival">
-                                    <span class="time">18.00</span>
-                                    <img src="/assets/images/pinpoint.png" alt="Point">
-                                    <span class="location">{{flight.FlightTrips[0].DestinationAirport | uppercase}}</span>
-                                </div>
-                            </div><!-- .flight-route-detail -->
-                            <div class="flight-time">
-                                <span class="total-time"><img src="/assets/images/hourglass.png" alt="Hour Glass"> {{flight.FlightTrips[0].TotalDuration}}</span>
-                            </div><!-- .flight-time -->
-
-                        </div><!-- .flight-route -->
-                    </div><!-- .flight-left -->
-                    <div class="flight-right">
-                        <form action="/id/flight/checkout" method="POST">
-                            <!-- <span class="tag red">Disc 20%</span> -->
-                            <p>Price / Person:</p>
-                            <h5 class="price-was"></h5>
-                            <h4 class="price-now">{{flight.TotalFare | number}}</h4>
-                                <input class="hidden" type="text" name="AdultCount" value="{{flight.AdultCount}}" />
-                                <input class="hidden" type="text" name="ChildCount" value="{{flight.ChildCount}}" />
-                                <input class="hidden" type="text" name="InfantCount" value="{{flight.InfantCount}}" />
-                                <input class="hidden" type="text" name="IsPassportRequired" value="{{flight.RequirePassport}}" />
-                                <input class="hidden" type="text" name="IsBirthDateRequired" value="{{flight.RequireBirthDate}}" />
-                                <input class="hidden" type="text" name="FareId" value="{{flight.FareId}}" />
-                            <small>harga sudah termasuk <b>pajak</b></small>
-                            <button class="btn btn-blue">Pesan</button>
-                        </form>
-                    </div><!-- .flight-right -->
-                    <span class="flight-toggle" ng-click="clickedItem($index)"></span><!-- .flight-toggle -->
-                </div><!-- .flight-main -->
-
-                <div class="flight-detail">
-                    <div class="detail-left">
-                        <h4 class="detail-title"> <b>FLIGHT</b> DETAILS <small> | <!-- Wed, 30 Februari 2015 --></small> </h4>
-                        <ol>
-                            <li ng-repeat="transit in flight.FlightTrips[0].FlightSegments">
-                                <div class="detail-destination">
-                                    <div class="departure">
-                                        <span class="city">Jakarta</span>
-                                        <span class="airport">{{transit.DepartureAirport}}</span>
+                                <div class="flight-detail">
+                                    <div class="detail-left">
+                                        <h4 class="detail-title"> <b>FLIGHT</b> DETAILS <small> | <!-- Wed, 30 Februari 2015 --></small> </h4>
+                                        <ol>
+                                            @foreach (var transit in flight.FlightTrips[0].FlightSegments)
+                            {
+                                                <li>
+                                                    <div class="detail-destination">
+                                                        <div class="departure">
+                                                            <span class="city">Jakarta</span>
+                                                            <span class="airport">@(transit.DepartureAirport)</span>
+                                                        </div>
+                                                        <div class="arrival">
+                                                            <span class="city">Surabaya</span>
+                                                            <span class="airport">@(transit.ArrivalAirport)</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detail-airline">
+                                                        <img src="/assets/images/airlines/@(transit.OperatingAirlineCode).png" alt="Garuda Indonesia"> @(transit.AirlineCode)-@(transit.FlightNumber)
+                                                    </div>
+                                                    <div class="detail-time">
+                                                        <div class="departure">
+                                                            <span class="time">15.00</span>
+                                                            <span class="day">Wed</span>
+                                                        </div>
+                                                        <div class="arrival">
+                                                            <span class="time">16.00</span>
+                                                            <span class="day">Wed</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                            }
+                                        </ol>
                                     </div>
-                                    <div class="arrival">
-                                        <span class="city">Surabaya</span>
-                                        <span class="airport">{{transit.ArrivalAirport}}</span>
+                                    <div class="detail-right">
+                                        <h5>IMPORTANT:</h5>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe excepturi officia facere magnam animi iste suscipit praesentium.</p>
                                     </div>
                                 </div>
-                                <div class="detail-airline">
-                                    <img src="/assets/images/airlines/{{transit.OperatingAirlineCode}}.png" alt="Garuda Indonesia"> {{transit.AirlineCode}}-{{transit.FlightNumber}}
-                                </div>
-                                <div class="detail-time">
-                                    <div class="departure">
-                                        <span class="time">15.00</span>
-                                        <span class="day">Wed</span>
-                                    </div>
-                                    <div class="arrival">
-                                        <span class="time">16.00</span>
-                                        <span class="day">Wed</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="detail-right">
-                        <h5>IMPORTANT:</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe excepturi officia facere magnam animi iste suscipit praesentium.</p>
-                    </div>
-                </div><!-- .flight-details -->
+            <!-- .flight-details -->
+                                </article>
+                                }
+                                <!-- loop end here -->
 
-            </article><!-- .flight -->
-            <!-- loop end here -->
-
-        </section><!-- .flght-list -->
+</section><!-- .flght-list -->
 
     </div><!-- .container -->
 
