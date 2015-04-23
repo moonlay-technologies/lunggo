@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc.Routing;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Sequence;
 
 namespace Lunggo.ApCommon.Dictionary
 {
@@ -16,6 +17,7 @@ namespace Lunggo.ApCommon.Dictionary
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
         public Dictionary<string, FlightFareItinerary> ItineraryDict;
+        public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
          private DictionaryService()
         {
@@ -34,6 +36,7 @@ namespace Lunggo.ApCommon.Dictionary
                 AirlineDict = PopulateAirlineDict(airlineFilePath);
                 AirportDict = PopulateAirportDict(airportFilePath);
                 ItineraryDict = new Dictionary<string, FlightFareItinerary>();
+                DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
             }
             else

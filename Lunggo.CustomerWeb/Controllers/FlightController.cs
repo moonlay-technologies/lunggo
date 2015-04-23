@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
@@ -340,7 +341,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         new TripInfo
                         {
                             OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                            DestinationAirport=  data.Itinerary.FlightTrips[0].DestinationAirport,
+                            DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
                             DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
                         }
                     }
@@ -362,21 +363,31 @@ namespace Lunggo.CustomerWeb.Controllers
                             {
                                 var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
                                 {
-                                    BookingId = issueResult.BookingId
+                                    BookingId = issueResult.BookingId,
+                                    TripInfos = new List<TripInfo>
+                                    {
+                                        new TripInfo
+                                        {
+                                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                                            DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
+                                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                                        }
+                                    }
                                 });
                                 if (tripDetails.IsSuccess)
                                 {
-                                    return RedirectToAction("Eticket", tripDetails.FlightDetails);
+                                    DictionaryService.GetInstance().DetailsDict.Add(data.SearchId, tripDetails.FlightDetails.FlightItineraryDetails);
+                                    return RedirectToAction("Eticket", new Id { SearchId = data.SearchId});
                                 }
                                 else
                                 {
-                                    data.Message = "Error" + tripDetails.Errors;
+                                    data.Message = "Error : " + tripDetails.Errors[0];
                                     return View(data);
                                 }
                             }
                             else
                             {
-                                data.Message = "Error" + issueResult.Errors;
+                                data.Message = "Error : " + issueResult.Errors[0];
                                 return View(data);
                             }
                         }
@@ -387,7 +398,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        data.Message = "Error" + bookResult.Errors;
+                        data.Message = "Error : " + bookResult.Errors[0];
                         return View(data);
                     }
                 }
@@ -395,26 +406,32 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (revalidateResult.Itinerary != null)
                     {
-                        data.Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare;
+                        data.Message = "Fare is updated to : " + revalidateResult.Itinerary.TotalFare;
                         return View(data);
                     }
                     else
                     {
-                        data.Message = "No other fare available.";
+                        data.Message = "Error : No other fare available.";
                         return View(data);
                     }
                 }
             }
             else
             {
-                data.Message = "Error" + revalidateResult.Errors;
+                data.Message = "Error : " + revalidateResult.Errors[0];
                 return View(data);
             }
         }
 
-        public ActionResult Eticket(FlightItineraryDetails itin)
+        public ActionResult Eticket(Id id)
         {
-            return View(itin);
+            var details = DictionaryService.GetInstance().DetailsDict[id.SearchId];
+            return View(details);
         }
+    }
+
+    public class Id
+    {
+        public string SearchId { get; set; }
     }
 }

@@ -27,13 +27,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-                var redis = RedisService.GetInstance();
-                var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                for (var i = 0; i < searchServiceResponse.Itineraries.Count; i++)
-                {
-                    var json = FlightCacheUtil.SerializeFlightItin(searchServiceResponse.Itineraries[i]);
-                    redisDb.StringSet(searchId + i, json);
-                }
                 var apiResponse = AssembleApiResponse(searchServiceResponse, request, searchId);
                 return apiResponse;
             }

@@ -1,7 +1,15 @@
-﻿@model Lunggo.CustomerWeb.Models.FlightCheckoutData
+﻿@using Lunggo.ApCommon.Flight.Constant
+@model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
     ViewBag.Title = "FlightCheckout";
+}
+
+@{
+    var titleList = new List<Title>
+    {
+        Title.Mister, Title.Mistress, Title.Miss
+    };
 }
 
 <!-- .checkout-page content start -->
@@ -17,7 +25,7 @@
 
     <div class="container">
         <div class="row">
-
+            <h1><b>@Model.Message</b></h1>
             <div class="col-sm-8">
                 <section class="customer-detail">
                     <section class="customer-form">
@@ -41,7 +49,7 @@
                                 <label for="" class="control-label"><b>Passenger Adult @i</b></label>
                                 <div class="form-group">
                                     <label for="" class="control-label">Title :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Title" placeholder="">
+                                    @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList))
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="control-label">First Name :</label>
@@ -76,10 +84,7 @@
                                         <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
-                                <div class="form-group">
-                                    <label for="" class="control-label">Origin Country :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="">
-                                </div>
+                                <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
                             }
                             
                             @if (Model.ChildCount > 0)
@@ -89,7 +94,7 @@
                                     <label for="" class="control-label"><b>Passenger Child @i</b></label>
                                     <div class="form-group">
                                         <label for="" class="control-label">Title :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Title" placeholder="">
+                                        @Html.DropDownListFor(model => model.ChildPassengerData[i-1].Title, new SelectList(titleList))
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">First Name :</label>
@@ -124,10 +129,7 @@
                                             <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
                                         </div>
                                     }
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Origin Country :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="">
-                                    </div>
+                                    <input type="hidden" class="form-control" name="ChildPassengerData[@(i-1)].Country" placeholder="" value="ID">
                                 }
                             }
                             
@@ -138,7 +140,7 @@
                                     <label for="" class="control-label"><b>Passenger Infant @i</b></label>
                                     <div class="form-group">
                                         <label for="" class="control-label">Title :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Title" placeholder="">
+                                        @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(titleList))
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">First Name :</label>
@@ -173,10 +175,7 @@
                                             <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
                                         </div>
                                     }
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Origin Country :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="">
-                                    </div>
+                                    <input type="hidden" class="form-control" name="InfantPassengerData[@(i-1)].Country" placeholder="" value="ID">
                                 }
                             }
                             <div class="form-group">
