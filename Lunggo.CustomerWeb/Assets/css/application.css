@@ -804,6 +804,10 @@ hr {
     background-image: url(../images/payment-token.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label input[type="radio"] {
     display: none; }
+.hotel-checkout-page .customer-detail .payment-form .payment-detail > section {
+  display: none; }
+.hotel-checkout-page .customer-detail .payment-form .payment-detail > section.active {
+  display: block; }
 .hotel-checkout-page .customer-detail .payment-button {
   text-align: center; }
   .hotel-checkout-page .customer-detail .payment-button .btn {
