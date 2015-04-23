@@ -303,6 +303,10 @@ hr {border-color:#aaa;}
 					input[type="radio"] {display:none;}
 				}
 			}
+            .payment-detail {
+                &>section {display:none;}
+                &>section.active {display:block;}
+            }
 		}
 		.payment-button {text-align:center;
 			.btn {font-size:18px; font-weight:bold; padding:10px 35px;}

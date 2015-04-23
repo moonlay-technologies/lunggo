@@ -9,11 +9,26 @@ $(document).ready(function(){
     switchSearchForm();
     hotelSearchFormFunctions();
     flightSearchFormFunctions();
+    paymentOptionForm();
 
 });
 
 //******************************************
 // FUNCTIONS
+
+//******************************************
+// payment option form
+function paymentOptionForm() {
+
+    $('.payment-form .payment-option label').click(function () {
+        var activeClass = $(this).attr('for');
+        $('.payment-form .payment-option label').removeClass('active');
+        $(this).addClass('active');
+        $('.payment-form .payment-detail section').removeClass('active');
+        $('.payment-form .payment-detail section.'+activeClass+'-detail').addClass('active');
+    });
+
+}
 
 //******************************************
 // toggle search form
@@ -659,7 +674,7 @@ var SearchRoomConfig = {
 
 var FlightSearchConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights',
-    Params: jQuery.parseJSON( $('.flight-search-page').attr('data-flight-search-params') )
+    // Params: jQuery.parseJSON( $('.flight-search-page').attr('data-flight-search-params') )
 };
 
 // ************************
@@ -838,6 +853,8 @@ var FlightSearchConfig = {
     // fight controller
     app.controller('FlightController', [
         '$http', '$scope', function ($http, $scope) {
+
+            FlightSearchConfig.params = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
 
             // run hotel search function on document ready
             angular.element(document).ready(function () {
