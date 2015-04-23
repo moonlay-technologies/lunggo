@@ -708,6 +708,15 @@ var FlightSearchConfig = {
             $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
             // *******************************
 
+            $scope.getStar = function(starRating) {
+                return new Array(starRating);
+            }
+
+            $scope.getStarO = function (starRating) {
+                starRating = 5 - starRating;
+                return new Array(starRating);
+            }
+
             // load hotel list function
             $scope.load_hotel_list = function(page) {
 

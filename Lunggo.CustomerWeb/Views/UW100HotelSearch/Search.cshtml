@@ -68,7 +68,10 @@
                             <section class="hotel-sum">
                                 <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">
-                                    <span class="star generate-star" data-star="{{hotel.StarRating}}"></span>
+                                    <span class="star generate-star" data-generate-star="{{hotel.StarRating}}">
+                                        <span class="fa fa-star" ng-repeat="i in getStar(hotel.StarRating) track by $index"></span>
+                                        <!-- <span class="fa fa-star-o" ng-repeat="i in getStarO(hotel.StarRating) track by $index"></span> -->
+                                    </span>
                                 </h4>
                                 <h5 class="hotel-address">{{hotel.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
