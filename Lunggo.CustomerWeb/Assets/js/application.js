@@ -692,6 +692,8 @@ var FlightSearchConfig = {
                 $scope.load_hotel_list();
             });
 
+            $scope.loaded = false;
+
             // hotel list
             var hotel_list = this;
             hotel_list.hotels = [];
@@ -720,7 +722,7 @@ var FlightSearchConfig = {
             // load hotel list function
             $scope.load_hotel_list = function(page) {
 
-                loading_overlay('show');
+                $scope.loaded = false;
 
                 console.log('--------------------------------');
                 console.log('Searching for hotel with params:');
@@ -772,14 +774,14 @@ var FlightSearchConfig = {
                     console.log('loaded');
                     console.log('--------------------------------');
 
-                    loading_overlay('hide');
+                    $scope.loaded = true;
 
                     // if error
                 }).error(function() {
                     console.log('REQUEST ERROR');
                     console.log('--------------------------------');
 
-                    loading_overlay('hide');
+                    $scope.loaded = true;
 
                 });
 

@@ -360,6 +360,9 @@ hr {
   .hotel-search-page .page-header .display-option a.active {
     background: #3fabe3;
     color: #fff; }
+.hotel-search-page .hotel-loading {
+  text-align: center;
+  padding: 20px 0; }
 .hotel-search-page .hotel-filter {
   position: fixed;
   top: 0;
