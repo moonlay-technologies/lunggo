@@ -13,68 +13,65 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override GetRulesResult GetRules(string fareId)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirRulesRQ1
             {
-                var request = new AirRulesRQ1
+                FareSourceCode = fareId,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null
+            };
+            var result = new GetRulesResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.FareRules1_1(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    FareSourceCode = fareId,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
-                var result = new GetRulesResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
+                    result = MapResult(response);
+                    result.IsSuccess = true;
+                }
+                else
                 {
-                    var response = client.FareRules1_1(request);
-                    done = true;
-                    if (!response.Errors.Any() && response.Success)
+                    if (response.Errors.Any())
                     {
-                        result = MapResult(response);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
                         {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
-                            {
-                                result.Errors = null;
-                                result.ErrorMessages = null;
-                                result.IsSuccess = true;
-                                result.AirlineRules = null;
-                                result.BaggageRules = null;
-                            }
-                            else
-                            {
+                            result.Errors = null;
+                            result.ErrorMessages = null;
+                            result.IsSuccess = true;
+                            result.AirlineRules = null;
+                            result.BaggageRules = null;
+                        }
+                        else
+                        {
 
-                                foreach (var error in response.Errors)
+                            foreach (var error in response.Errors)
+                            {
+                                if (error.Code == "ERFRU013")
                                 {
-                                    if (error.Code == "ERFRU013")
+                                    result.Errors = null;
+                                    result.ErrorMessages = null;
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
                                     {
-                                        result.Errors = null;
-                                        result.ErrorMessages = null;
-                                        client.CreateSession();
-                                        request.SessionId = client.SessionId;
-                                        retry++;
-                                        if (retry <= 3)
-                                        {
-                                            done = false;
-                                            break;
-                                        }
+                                        done = false;
+                                        break;
                                     }
-                                    MapError(response, result);
                                 }
+                                MapError(response, result);
                             }
                         }
-                        result.IsSuccess = false;
                     }
+                    result.IsSuccess = false;
                 }
-                return result;
             }
+            return result;
         }
 
         private static GetRulesResult MapResult(AirRulesRS1 response)

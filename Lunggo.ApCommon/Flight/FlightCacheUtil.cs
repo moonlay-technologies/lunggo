@@ -32,14 +32,14 @@ namespace Lunggo.ApCommon.Flight.Logic
             return FlightIdList.Select(GetFlightDetailKeyInCache).ToArray();
         }
 
-        public static String SerializeFlightItin(FlightFareItinerary ItinList)
+        public static String SerializeFlightItin(FlightItineraryFare ItinList)
         {
             return JsonConvert.SerializeObject(ItinList);
         }
 
-        public static FlightFareItinerary DeserializeFlightItin(String FlightItinListJsoned)
+        public static FlightItineraryFare DeserializeFlightItin(String FlightItinListJsoned)
         {
-            return JsonConvert.DeserializeObject<FlightFareItinerary>(FlightItinListJsoned);
+            return JsonConvert.DeserializeObject<FlightItineraryFare>(FlightItinListJsoned);
         }
     }
 }

@@ -105,7 +105,6 @@
     <Compile Include="Flight\Constant\FlightSupplier.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
     <Compile Include="Flight\Constant\PassengerType.cs" />
-    <Compile Include="Flight\Constant\TargetServer.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
     <Compile Include="Flight\FlightCacheUtil.cs" />

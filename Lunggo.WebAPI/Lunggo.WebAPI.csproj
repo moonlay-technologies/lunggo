@@ -148,7 +148,7 @@
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\BookFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Logic\GetFlightLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\SearchFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetTripDetailsLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightBookingApiRequest.cs" />

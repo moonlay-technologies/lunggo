@@ -18,61 +18,57 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var airTravelers = bookInfo.PassengerFareInfos.Select(MapAirTraveler).ToList();
             var travelerInfo = MapTravelerInfo(bookInfo, airTravelers);
-            using (var client = new MystiflyClientHandler())
+            var request = new AirBookRQ
             {
-                var request = new AirBookRQ
+                FareSourceCode = bookInfo.FareId,
+                TravelerInfo = travelerInfo,
+                ClientMarkup = 0,
+                PaymentTransactionID = null,
+                PaymentCardInfo = null,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null,
+            };
+            var result = new BookFlightResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.BookFlight(request);
+                done = true;
+                if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                 {
-                    FareSourceCode = bookInfo.FareId,
-                    TravelerInfo = travelerInfo,
-                    ClientMarkup = 0,
-                    PaymentTransactionID = null,
-                    PaymentCardInfo = null,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null,
-                };
-                var result = new BookFlightResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    var response = client.BookFlight(request);
-                    done = true;
-                    if (!response.Errors.Any() && response.Success && response.Status == "CONFIRMED")
-                    {
-                        result = MapResult(response);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "ERBUK002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
-                    
+                    result = MapResult(response);
+                    result.IsSuccess = true;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "ERBUK002")
+                            {
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
         private static AirTraveler MapAirTraveler(PassengerFareInfo passengerFareInfo)
@@ -98,13 +94,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (passengerFareInfo.Type)
             {
-                case PassengerType.Adult :
+                case PassengerType.Adult:
                     return OnePointService.Flight.PassengerType.ADT;
-                case PassengerType.Child :
+                case PassengerType.Child:
                     return OnePointService.Flight.PassengerType.CHD;
-                case PassengerType.Infant :
+                case PassengerType.Infant:
                     return OnePointService.Flight.PassengerType.INF;
-                default :
+                default:
                     return OnePointService.Flight.PassengerType.Default;
             }
         }
@@ -113,11 +109,11 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (passengerFareInfo.Gender)
             {
-                case Gender.Male :
+                case Gender.Male:
                     return OnePointService.Flight.Gender.M;
-                case Gender.Female :
+                case Gender.Female:
                     return OnePointService.Flight.Gender.F;
-                default :
+                default:
                     return OnePointService.Flight.Gender.Default;
             }
         }
@@ -138,13 +134,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (passengerFareInfo.Title)
             {
-                case Title.Mister :
+                case Title.Mister:
                     return PassengerTitle.MR;
-                case Title.Mistress :
+                case Title.Mistress:
                     return PassengerTitle.MRS;
-                case Title.Miss :
+                case Title.Miss:
                     return PassengerTitle.MS;
-                default :
+                default:
                     return PassengerTitle.Default;
             }
         }

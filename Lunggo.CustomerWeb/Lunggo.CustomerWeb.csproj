@@ -672,7 +672,7 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
-    <None Include="Config\Airline.csv" />
+    <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -728,10 +728,6 @@
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
     <Content Include="Assets\js\jquery.cycle2.js.map" />
-    <Content Include="Assets\sass\application.scss" />
-    <Content Include="Assets\sass\_font_face.scss" />
-    <Content Include="Assets\sass\_footer.scss" />
-    <Content Include="Assets\sass\_header.scss" />
     <Content Include="Assets\js\angular-route.min.js.map" />
     <Content Include="Assets\js\angular.min.js.map" />
     <Content Include="Assets\css\application.css.map" />
@@ -739,7 +735,9 @@
     <Content Include="Assets\css\_font_face.scss" />
     <Content Include="Assets\css\_footer.scss" />
     <Content Include="Assets\css\_header.scss" />
-    <None Include="Config\Airport.csv" />
+    <Content Include="Config\Airport.csv" />
+    <Content Include="Config\HotelLocation.csv" />
+    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1927,7 +1925,6 @@
     <Content Include="Views\UW100HotelSearch\Search.cshtml" />
     <Content Include="Views\UW200HotelDetail\GetHotelDetail.cshtml" />
     <Content Include="Views\Template\HotelSearchList.cshtml" />
-    <Content Include="Views\Template\FlightSearchList.cshtml" />
     <Content Include="Views\Template\HotelDetail.cshtml" />
     <Content Include="Views\Template\HotelCheckout.cshtml" />
     <Content Include="Views\Template\HotelCheckoutPayment.cshtml" />

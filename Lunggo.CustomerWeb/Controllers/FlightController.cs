@@ -257,6 +257,20 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightCheckoutData data)
         {
             data.Itinerary = DictionaryService.GetInstance().ItineraryDict[data.SearchId + data.ItinIndex];
+            var revalidateResult =
+                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
+                {
+                    FareId = data.Itinerary.FareId,
+                    TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        }
+                    }
+                });
             var passengerInfo = new List<PassengerFareInfo>();
             if (data.AdultPassengerData != null)
             {
@@ -278,7 +292,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var childPassengerInfo = data.ChildPassengerData.Select(passenger => new PassengerFareInfo
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Child,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
@@ -294,7 +308,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var infantPassengerInfo = data.InfantPassengerData.Select(passenger => new PassengerFareInfo
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Infant,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
@@ -306,50 +320,41 @@ namespace Lunggo.CustomerWeb.Controllers
                 }).ToList();
                 passengerInfo.AddRange(infantPassengerInfo);
             }
-            var bookInfo = new BookFlightInput
-            {
-                BookingInfo = new FlightBookingInfo
-                {
-                    FareId = data.Itinerary.FareId,
-                    ContactData = new ContactData
-                    {
-                        Name = data.ContactData.Name,
-                        Phone = data.ContactData.Phone,
-                        Email = data.ContactData.Email
-                    },
-                    PassengerFareInfos = passengerInfo
-                },
-                Itinerary = data.Itinerary,
-                TripInfos = new List<TripInfo>
-                    {
-                        new TripInfo
-                        {
-                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                            DestinationAirport=  data.Itinerary.FlightTrips[0].DestinationAirport,
-                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                        }
-                    },
-                OverallTripType = TripType.OneWay,
-                PaymentData = data.PaymentData
-            };
-            var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
-                {
-                    FareId = data.Itinerary.FareId,
-                    TripInfos = new List<TripInfo>
-                    {
-                        new TripInfo
-                        {
-                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                            DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                        }
-                    }
-                });
             if (revalidateResult.IsSuccess)
             {
                 if (revalidateResult.IsValid)
                 {
+                    var rulesInput = new GetRulesInput
+                    {
+                        FareId = revalidateResult.Itinerary.FareId
+                    };
+                    var rulesResult = FlightService.GetInstance().GetRules(rulesInput);
+                    var bookInfo = new BookFlightInput
+                    {
+                        BookingInfo = new FlightBookingInfo
+                        {
+                            FareId = revalidateResult.Itinerary.FareId,
+                            ContactData = new ContactData
+                            {
+                                Name = data.ContactData.Name,
+                                Phone = data.ContactData.Phone,
+                                Email = data.ContactData.Email
+                            },
+                            PassengerFareInfos = passengerInfo
+                        },
+                        Itinerary = revalidateResult.Itinerary,
+                        TripInfos = new List<TripInfo>
+                    {
+                        new TripInfo
+                        {
+                            OriginAirport = revalidateResult.Itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport=  revalidateResult.Itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = revalidateResult.Itinerary.FlightTrips[0].DepartureDate
+                        }
+                    },
+                        OverallTripType = TripType.OneWay,
+                        PaymentData = data.PaymentData
+                    };
                     var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
                     if (bookResult.IsSuccess)
                     {

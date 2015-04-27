@@ -7,9 +7,9 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public FlightFareItinerary BundleFlight(List<FlightFareItinerary> itineraries)
+        public FlightItineraryFare BundleFlight(List<FlightItineraryFare> itineraries)
         {
-            FlightFareItinerary output;
+            FlightItineraryFare output;
             if (itineraries.Select(itin => itin.Supplier).All(source => source == itineraries[0].Supplier))
             {
                 var conditions = new SpecificSearchConditions

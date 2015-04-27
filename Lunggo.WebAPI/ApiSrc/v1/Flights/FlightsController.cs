@@ -14,9 +14,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
     {
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/flights")]
-        public FlightSearchApiResponse GetFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
         {
-            return FlightLogic.GetFlights(request);
+            return FlightLogic.SearchFlights(request);
         }
 
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]

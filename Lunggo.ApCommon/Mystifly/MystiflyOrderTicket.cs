@@ -15,57 +15,54 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override OrderTicketResult OrderTicket(string bookingId)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirOrderTicketRQ
             {
-                var request = new AirOrderTicketRQ
+                FareSourceCode = null,
+                UniqueID = bookingId,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null
+            };
+            var result = new OrderTicketResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.TicketOrder(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    FareSourceCode = null,
-                    UniqueID = bookingId,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
-                var result = new OrderTicketResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    var response = client.TicketOrder(request);
-                    done = true;
-                    if (!response.Errors.Any() && response.Success)
-                    {
-                        result = MapResult(response);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "EROTK002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
+                    result = MapResult(response);
+                    result.IsSuccess = true;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "EROTK002")
+                            {
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
         private static OrderTicketResult MapResult(AirOrderTicketRS response)

@@ -25,7 +25,7 @@
                         <th>Reservation Time</th>
                         <th>Flight</th>
                         <th>Type</th>
-                        <th>Departure Time</th>
+                        <th>DepartureTime Time</th>
                         <th>Return Time</th>
                         <th>Passenger</th>
                         <th>Total Price</th>
@@ -73,8 +73,8 @@
                                 }
                             </td>
                             <td>
-                                @trip.DepartureTime.GetValueOrDefault().ToString("d MMM yyyy")<br />
-                                @trip.DepartureTime.GetValueOrDefault().ToString("HHmm")
+                                @trip.DepartureTimeTime.GetValueOrDefault().ToString("d MMM yyyy")<br />
+                                @trip.DepartureTimeTime.GetValueOrDefault().ToString("HHmm")
                             </td>
                             <td>
                                 @if (trip.ReturnTime == null)

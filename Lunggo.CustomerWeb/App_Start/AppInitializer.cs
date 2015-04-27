@@ -3,6 +3,7 @@ using System.Web;
 using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
@@ -23,20 +24,11 @@ namespace Lunggo.CustomerWeb
             InitI18NMessageManager();
             InitUniqueIdGenerator();
             InitRedisService();
-            //InitDatabaseService();
+            InitDatabaseService();
             //InitQueueService();
             //InitLogger();
             InitDictionaryService();
-        }
-
-        private static void InitDictionaryService()
-        {
-            var dictionaryService = DictionaryService.GetInstance();
-            var airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
-            var airlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airlineFileName);
-            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
-            dictionaryService.Init(airlineFilePath, airportFilePath);
+            InitFlightService();
         }
 
         private static void InitRedisService()
@@ -105,5 +97,20 @@ namespace Lunggo.CustomerWeb
             LunggoLogger.GetInstance().init(Log);
         }
 
+        private static void InitDictionaryService()
+        {
+            var dictionary = DictionaryService.GetInstance();
+            var airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
+            var airlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airlineFileName);
+            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
+            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
+            dictionary.Init(airlineFilePath, airportFilePath);
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
+        }
     }
 }

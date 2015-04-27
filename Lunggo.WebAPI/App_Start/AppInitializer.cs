@@ -2,6 +2,8 @@
 using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
@@ -19,6 +21,8 @@ namespace Lunggo.WebAPI
             InitUniqueIdGenerator();
             InitRedisService();
             InitAutocompleteManager();
+            InitDictionaryService();
+            InitFlightService();
         }
 
         private static void InitConfigurationManager()
@@ -73,6 +77,22 @@ namespace Lunggo.WebAPI
             var hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
             var hotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), hotelLocationFileName);
             autocompleteManager.Init(airportFilePath, hotelLocationFilePath);
+        }
+
+        private static void InitDictionaryService()
+        {
+            var dictionary = DictionaryService.GetInstance();
+            var airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
+            var airlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airlineFileName);
+            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
+            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
+            dictionary.Init(airlineFilePath, airportFilePath);
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
         }
     }
 }
