@@ -109,8 +109,6 @@ namespace Lunggo.ApCommon.Mystifly
                         totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
                 } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
-                fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => double.Parse(segment.JourneyDuration))) +
-                                         totalTransitDuration;
                 flightTrips.Add(fareTrip);
             }
             return flightTrips;

@@ -9,6 +9,6 @@ namespace Lunggo.ApCommon.Flight.Model
     public class RevalidateFlightOutput : OutputBase
     {
         public bool IsValid { get; set; }
-        public FlightFareItinerary Itinerary { get; set; }
+        public FlightItineraryFare Itinerary { get; set; }
     }
 }

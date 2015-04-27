@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Query.Model
 
     internal class FlightBookingItineraryRecord
     {
-        internal FlightFareItinerary Itinerary { get; set; }
+        internal FlightItineraryFare Itinerary { get; set; }
         internal BookResult BookResult { get; set; }
     }
 }

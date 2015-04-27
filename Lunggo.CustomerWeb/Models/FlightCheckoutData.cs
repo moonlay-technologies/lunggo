@@ -13,7 +13,7 @@ namespace Lunggo.CustomerWeb.Models
         public string SearchId { get; set; }
         public int ItinIndex { get; set; }
         public string Message { get; set; }
-        public FlightFareItinerary Itinerary { get; set; }
+        public FlightItineraryFare Itinerary { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }

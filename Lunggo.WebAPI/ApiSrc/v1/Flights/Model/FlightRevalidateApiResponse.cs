@@ -10,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     {
         public bool IsValid { get; set; }
         public bool IsOtherFareAvailable { get; set; }
-        public FlightFareItinerary Itinerary { get; set; }
+        public FlightItineraryFare Itinerary { get; set; }
         public FlightRevalidateApiRequest OriginalRequest { get; set; }
     }
 }

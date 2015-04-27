@@ -21,6 +21,6 @@ namespace Lunggo.CustomerWeb.Models
         public DateTime Date { get; set; }
         public string SearchId { get; set; }
         public int TotalFlightCount { get; set; }
-        public List<FlightFareItinerary> FlightList { get; set; }
+        public List<FlightItineraryFare> FlightList { get; set; }
     }
 }

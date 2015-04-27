@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Dictionary
         private bool _isInitialized;
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
-        public Dictionary<string, FlightFareItinerary> ItineraryDict;
+        public Dictionary<string, FlightItineraryFare> ItineraryDict;
         public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
          private DictionaryService()
@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Dictionary
             {
                 AirlineDict = PopulateAirlineDict(airlineFilePath);
                 AirportDict = PopulateAirportDict(airportFilePath);
-                ItineraryDict = new Dictionary<string, FlightFareItinerary>();
+                ItineraryDict = new Dictionary<string, FlightItineraryFare>();
                 DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
             }

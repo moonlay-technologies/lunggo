@@ -85,7 +85,6 @@ namespace Lunggo.ApCommon.Flight.Query
                             OriginAirportCd = trip.OriginAirport,
                             DestinationAirportCd = trip.DestinationAirport,
                             DepartureDate = trip.DepartureDate,
-                            TotalDuration = trip.TotalDuration,
                             InsertBy = "xxx",
                             InsertDate = DateTime.Now,
                             InsertPgId = "xxx"
@@ -125,8 +124,8 @@ namespace Lunggo.ApCommon.Flight.Query
                                     {
                                         StopId = stopId,
                                         SegmentId = segmentId,
-                                        ArrivalTime = stop.Arrival,
-                                        DepartureTime = stop.Departure,
+                                        ArrivalTime = stop.ArrivalTime,
+                                        DepartureTime = stop.DepartureTime,
                                         Duration = stop.Duration,
                                         AirportCd = stop.Airport,
                                         InsertBy = "xxx",

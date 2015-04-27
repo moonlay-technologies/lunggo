@@ -117,7 +117,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static IntelliBestBuyInformation[] MapItineraryInformations(IEnumerable<FlightFareSegment> source)
+        private static IntelliBestBuyInformation[] MapItineraryInformations(IEnumerable<FlightSegmentFare> source)
         {
             return source.Select(item => new IntelliBestBuyInformation
             {

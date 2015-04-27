@@ -8,6 +8,6 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class SearchFlightOutput : OutputBase
     {
-        public List<FlightFareItinerary> Itineraries { get; set; }
+        public List<FlightItineraryFare> Itineraries { get; set; }
     }
 }
