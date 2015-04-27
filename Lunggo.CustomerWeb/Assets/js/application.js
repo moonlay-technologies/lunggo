@@ -691,10 +691,18 @@ var FlightSearchConfig = {
 
             // run hotel search function on document ready
             angular.element(document).ready(function() {
-                $scope.load_hotel_list();
+                $scope.loadHotelList();
             });
 
             $scope.loaded = false;
+
+            $scope.star = {
+                star1 : true,
+                star2 : true,
+                star3 : true,
+                star4 : true,
+                star5 : true
+            }
 
             // hotel list
             var hotel_list = this;
@@ -722,13 +730,9 @@ var FlightSearchConfig = {
             }
 
             // load hotel list function
-            $scope.load_hotel_list = function(page) {
+            $scope.loadHotelList = function(page) {
 
                 $scope.loaded = false;
-
-                console.log('--------------------------------');
-                console.log('Searching for hotel with params:');
-                console.log($scope.HotelSearchParams);
 
                 // set default page
                 $scope.CurrentPage = page || 1;
@@ -740,10 +744,19 @@ var FlightSearchConfig = {
                 $scope.hotels = [];
 
                 // generate StarRating
-                $scope.HotelSearchParams.StarRating = [$scope.HotelSearchParams.star0, $scope.HotelSearchParams.star1, $scope.HotelSearchParams.star2, $scope.HotelSearchParams.star3, $scope.HotelSearchParams.star4, $scope.HotelSearchParams.star5].join('');
-                if ($scope.HotelSearchParams.StarRating.length == 0) {
-                    $scope.HotelSearchParams.StarRating = '-1,1,2,3,4,5';
-                }
+                var tempArr = []
+                $scope.HotelSearchParams.StarRating;
+                ($scope.star.star1) ? tempArr.push('1') : null;
+                ($scope.star.star2) ? tempArr.push('2') : null;
+                ($scope.star.star3) ? tempArr.push('3') : null;
+                ($scope.star.star4) ? tempArr.push('4') : null;
+                ($scope.star.star5) ? tempArr.push('5') : null;
+                $scope.HotelSearchParams.StarRating = tempArr.join(',');
+
+
+                console.log('--------------------------------');
+                console.log('Searching for hotel with params:');
+                console.log($scope.HotelSearchParams);
 
                 // http request
                 $http.get(SearchHotelConfig.Url, {
@@ -797,7 +810,7 @@ var FlightSearchConfig = {
                 }
                 $('footer .pagination a').click(function() {
                     var page = $(this).attr('data-page');
-                    $scope.load_hotel_list(page);
+                    $scope.loadHotelList(page);
                 });
             }
 

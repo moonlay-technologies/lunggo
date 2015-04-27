@@ -523,6 +523,7 @@ hr {
   background: #fff;
   border: 1px solid #d5d5d5;
   margin-bottom: 30px;
+  height: 170px;
   box-shadow: 0 8px 15px -5px #d5d5d5;
   -moz-box-shadow: 0 8px 15px -5px #d5d5d5;
   -webkit-box-shadow: 0 8px 15px -5px #d5d5d5;
@@ -540,7 +541,7 @@ hr {
   .hotel-search-page .hotel-list.horizontal .hotel .hotel-image {
     float: left;
     width: 35%;
-    height: 150px;
+    height: 170px;
     overflow: hidden;
     background-size: cover;
     background-position: center center;
