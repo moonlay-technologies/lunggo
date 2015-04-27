@@ -24,12 +24,13 @@ namespace Lunggo.ApCommon.Dictionary
         public Dictionary<string, FlightItineraryFare> ItineraryDict;
         public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
+        private static readonly string RootPath = HttpContext.Current.Server.MapPath(@"~/Config/");
         private readonly static string AirlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
-        private readonly static string AirlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), AirlineFileName);
+        private readonly static string AirlineFilePath = Path.Combine(RootPath, AirlineFileName);
         private readonly static string AirportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-        private readonly static string AirportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), AirportFileName);
+        private readonly static string AirportFilePath = Path.Combine(RootPath, AirportFileName);
         private readonly static string HotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
-        private readonly static string HotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), HotelLocationFileName);
+        private readonly static string HotelLocationFilePath = Path.Combine(RootPath, HotelLocationFileName);
 
         private DictionaryService()
         {
