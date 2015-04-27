@@ -6,7 +6,7 @@
 }
 
 <!-- .search-page content start -->
-<div class="search-page hotel-search-page" data-search-staydate="@stayDate" data-search-staylength="@Html.DisplayFor(model=>model.StayLength)" data-search-locationid="@Html.DisplayFor(model=>model.LocationId)" data-search-roomcount="@Html.DisplayFor(model=>model.RoomOccupants)">
+<div class="search-page hotel-search-page" ng-controller="HotelController as hotel_list" data-search-staydate="@stayDate" data-search-staylength="@Html.DisplayFor(model=>model.StayLength)" data-search-locationid="@Html.DisplayFor(model=>model.LocationId)" data-search-roomcount="@Html.DisplayFor(model=>model.RoomOccupants)">
 
     <header class="page-header">
         <div class="container">
@@ -36,24 +36,24 @@
             <h3 class="section-title">Bintang Hotel</h3>
             <div class="star-selection">
                 <ul>
-                    <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                    <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                    <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                    <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
-                    <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-1" ng-model="star.star1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-2" ng-model="star.star2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-3" ng-model="star.star3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-4" ng-model="star.star4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
+                    <li><input type="checkbox" id="filter-hotel-star-5" ng-model="star.star5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
                 </ul>
             </div>
         </section>
-        <section class="filter-group hotel-discount">
+        <section class="filter-group hotel-discount hidden">
             <ul>
                 <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
             </ul>
         </section>
         <section class="filter-group search-filter">
-            <a href="#" class="btn btn-primary">FILTER</a>
+            <a class="btn btn-primary" ng-click="loadHotelList()">FILTER</a>
         </section>
     </aside><!-- .hotel-filter -->
-    <section class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
+    <section class="hotel-list horizontal">
         <section class="hotel-loading" ng-if="!loaded">
             <img src="/Assets/images/loading-image-dark.gif" />
         </section>
