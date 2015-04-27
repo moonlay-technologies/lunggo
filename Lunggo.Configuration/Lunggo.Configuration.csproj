@@ -106,8 +106,14 @@
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
     <None Include="Config\CustomerWeb\HotelLocation.csv" />
+    <None Include="Config\CustomerWeb\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\Airline.csv" />
     <None Include="Config\WebAPI\Airport.csv" />
+    <None Include="Config\WebAPI\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\travolutionary.properties">
       <SubType>Designer</SubType>
     </None>
