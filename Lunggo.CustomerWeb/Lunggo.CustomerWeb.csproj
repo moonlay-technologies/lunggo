@@ -736,6 +736,7 @@
     <Content Include="Assets\css\_footer.scss" />
     <Content Include="Assets\css\_header.scss" />
     <Content Include="Config\Airport.csv" />
+    <Content Include="Config\HotelLocation.csv" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
