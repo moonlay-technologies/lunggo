@@ -54,7 +54,10 @@
         </section>
     </aside><!-- .hotel-filter -->
     <section class="hotel-list horizontal" ng-controller="HotelController as hotel_list">
-        <div class="container">
+        <section class="hotel-loading" ng-if="!loaded">
+            <img src="/Assets/images/loading-image-dark.gif" />
+        </section>
+        <div class="container" ng-if="loaded">
 
             <div class="row">
 
@@ -68,7 +71,10 @@
                             <section class="hotel-sum">
                                 <h2 class="hotel-name">{{hotel.HotelName}}</h2>
                                 <h4 class="hotel-star">
-                                    <span class="star generate-star" data-star="{{hotel.StarRating}}"></span>
+                                    <span class="star generate-star" data-generate-star="{{hotel.StarRating}}">
+                                        <span class="fa fa-star" ng-repeat="i in getStar(hotel.StarRating) track by $index"></span>
+                                        <!-- <span class="fa fa-star-o" ng-repeat="i in getStarO(hotel.StarRating) track by $index"></span> -->
+                                    </span>
                                 </h4>
                                 <h5 class="hotel-address">{{hotel.Address}}</h5>
                                 <div class="hotel-feedback hotel-show-list">
@@ -110,14 +116,14 @@
                     <nav>
                         <ul class="pagination">
                             <!--
-                            <li><a href="#" ng-click="load_hotel_list()">&lt;</a></li>
-                            <li><a href="#" class="active">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&gt;</a></li>
-                             -->
+                                <li><a href="#" ng-click="load_hotel_list()">&lt;</a></li>
+                                <li><a href="#" class="active">1</a></li>
+                                <li class="active"><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&gt;</a></li>
+                                -->
                         </ul>
                     </nav>
                 </div><!-- .text-center -->

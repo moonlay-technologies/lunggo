@@ -107,23 +107,27 @@ function hotelSearchFormFunctions() {
 
         // run function on keyup
         $(elInput).keyup(function () {
+            $(elInput).attr('data-true-val', $(this).val());
             var reqVal = $(this).val();
             verifyInput(reqVal);
         });
 
         $(elInput).focus(function () {
+            if ($(this).attr('data-true-val').length > 0) {
+                $(elInput).val($(this).attr('data-true-val'));
+            }
             var reqVal = $(this).val();
             verifyInput(reqVal);
         });
 
         // function verified input
-        function verifyInput(input_val) {
-            if (input_val.length >= minLength) {
+        function verifyInput(inputVal) {
+            if (inputVal.length >= minLength) {
                 $(listWrapper).empty();
                 $(listWrapper).append('<li> Loading </li>');
                 $(listWrapper).wrapInner('<ul></ul>');
                 $(listWrapper).show();
-                getResult(input_val);
+                getResult(inputVal);
             } else {
                 $(listWrapper).hide();
             }
@@ -145,7 +149,7 @@ function hotelSearchFormFunctions() {
         function showResult(data) {
             if (data.length > 0) {
                 $(listWrapper).empty();
-                for (i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     $(listWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
                 }
                 $(listWrapper).wrapInner('<ul></ul>');
@@ -198,9 +202,9 @@ function hotelSearchFormFunctions() {
         });
     }
 
-    function datePickerCheckout(the_date) {
+    function datePickerCheckout(theDate) {
 
-        var selectedDate = the_date || new Date;
+        var selectedDate = theDate || new Date;
 
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
@@ -348,16 +352,14 @@ function flightSearchFormFunctions() {
         // run function on keyup
         $(elInput).each(function() {
             $(elInput).keyup(function () {
+                $(this).attr('data-true-val', $(this).val());
                 var reqVal = $(this).val();
                 verifyInput(reqVal);
             });
         });
 
         $(elInput).each(function () {
-            var previousValue;
             $(this).focus(function () {
-                previousValue = $(this).val();
-                $(this).val('');
                 $(autocompleteWrapper).empty();
                 $('.autocomplete-current').removeClass('autocomplete-current');
                 $(this).addClass('autocomplete-current');
@@ -692,6 +694,8 @@ var FlightSearchConfig = {
                 $scope.load_hotel_list();
             });
 
+            $scope.loaded = false;
+
             // hotel list
             var hotel_list = this;
             hotel_list.hotels = [];
@@ -708,10 +712,19 @@ var FlightSearchConfig = {
             $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
             // *******************************
 
+            $scope.getStar = function(starRating) {
+                return new Array(starRating);
+            }
+
+            $scope.getStarO = function (starRating) {
+                starRating = 5 - starRating;
+                return new Array(starRating);
+            }
+
             // load hotel list function
             $scope.load_hotel_list = function(page) {
 
-                loading_overlay('show');
+                $scope.loaded = false;
 
                 console.log('--------------------------------');
                 console.log('Searching for hotel with params:');
@@ -763,14 +776,14 @@ var FlightSearchConfig = {
                     console.log('loaded');
                     console.log('--------------------------------');
 
-                    loading_overlay('hide');
+                    $scope.loaded = true;
 
                     // if error
                 }).error(function() {
                     console.log('REQUEST ERROR');
                     console.log('--------------------------------');
 
-                    loading_overlay('hide');
+                    $scope.loaded = true;
 
                 });
 
