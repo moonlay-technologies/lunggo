@@ -108,7 +108,6 @@
     <Compile Include="Flight\Constant\TargetServer.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
-    <Compile Include="Flight\FlightCacheUtil.cs" />
     <Compile Include="Flight\Interface\IClientHandler.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />

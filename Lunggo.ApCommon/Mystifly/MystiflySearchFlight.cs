@@ -21,63 +21,48 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirLowFareSearchRQ
             {
-                var request = new AirLowFareSearchRQ
-                {
-                    OriginDestinationInformations = MapOriginDestinationInformations(conditions),
-                    IsRefundable = true,
-                    IsResidentFare = false,
-                    NearByAirports = false,
-                    PassengerTypeQuantities = MapPassengerTypes(conditions),
-                    PricingSourceType = PricingSourceType.Public,
-                    TravelPreferences = MapTravelPreferences(conditions),
-                    RequestOptions = RequestOptions.TwoHundred,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
+                OriginDestinationInformations = MapOriginDestinationInformations(conditions),
+                IsRefundable = false,
+                IsResidentFare = false,
+                NearByAirports = false,
+                PassengerTypeQuantities = MapPassengerTypes(conditions),
+                PricingSourceType = PricingSourceType.All,
+                TravelPreferences = MapTravelPreferences(conditions),
+                RequestOptions = RequestOptions.TwoHundred,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null
+            };
 
-                var result = new SearchFlightResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
+            var result = new SearchFlightResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.AirLowFareSearch(request);
+                done = true;
+                if ((response.Success && !response.Errors.Any()) ||
+                    (response.Errors.Count() == 1 && response.Errors.Single().Code == "ERSER021"))
                 {
-                    var response = client.AirLowFareSearch(request);
-                    request.IsRefundable = false;
-                    //var refundResponse = client.AirLowFareSearch(request);
-                    var refundResponse = new AirLowFareSearchRS();
-                    done = true;
-                    if (!response.Errors.Any())// || !refundResponse.Errors.Any())
-                    {
-                        result.FlightItineraries = new List<FlightFareItinerary>();
-                        if (!response.Errors.Any())
-                        {
-                            var result1 = MapResult(response, conditions);
-                            result.FlightItineraries.AddRange(result1.FlightItineraries);
-                        }
-                        /*
-                        if (!refundResponse.Errors.Any())
-                        {
-                            var result2 = MapResult(refundResponse, conditions);
-                            result.FlightItineraries.AddRange(result2.FlightItineraries);
-                        }
-                         */
-                        result.IsSuccess = true;
-                    }
-                    else
+                    result = MapResult(response, conditions);
+                    result.IsSuccess = true;
+                }
+                else
+                {
+                    if (response.Errors.Any())
                     {
                         result.Errors = new List<FlightError>();
                         result.ErrorMessages = new List<string>();
-                        var errors = response.Errors.Concat(refundResponse.Errors).Distinct();
-                        foreach (var error in errors)
+                        foreach (var error in response.Errors)
                         {
                             if (error.Code == "ERSER002")
                             {
                                 result.Errors = null;
                                 result.ErrorMessages = null;
-                                client.CreateSession();
-                                request.SessionId = client.SessionId;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
                                 retry++;
                                 if (retry <= 3)
                                 {
@@ -87,17 +72,18 @@ namespace Lunggo.ApCommon.Mystifly
                             }
                             MapError(response, result);
                         }
-                        result.IsSuccess = false;
                     }
+                    result.IsSuccess = false;
                 }
-                
-                return result;
             }
+            return result;
         }
 
         private static SearchFlightResult MapResult(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            return new SearchFlightResult{ FlightItineraries = MapFlightFareItineraries(response, conditions) };
+            return response.PricedItineraries.Any()
+                ? new SearchFlightResult {FlightItineraries = MapFlightFareItineraries(response, conditions)}
+                : new SearchFlightResult {FlightItineraries = new List<FlightFareItinerary>()};
         }
 
         private static OriginDestinationInformation[] MapOriginDestinationInformations(SearchFlightConditions conditions)

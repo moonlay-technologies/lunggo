@@ -14,68 +14,65 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override SearchFlightResult SpecificSearchFlight(SpecificSearchConditions conditions)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new IntelliBestBuyRQ
             {
-                var request = new IntelliBestBuyRQ
-                {
-                    IntelliFareInformations = MapItineraryInformations(conditions.FlightSegments),
-                    CabinPreference = MapCabinType(conditions.CabinClass),
-                    BookingClassPreference = BookingClassPreference.Any,
-                    PassengerTypeQuantities = MapPassengerTypes(conditions)
-                };
+                IntelliFareInformations = MapItineraryInformations(conditions.FlightSegments),
+                CabinPreference = MapCabinType(conditions.CabinClass),
+                BookingClassPreference = BookingClassPreference.Any,
+                PassengerTypeQuantities = MapPassengerTypes(conditions)
+            };
 
-                var result = new SearchFlightResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
+            var result = new SearchFlightResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.IntelliBestBuy(request);
+                done = true;
+                if (!response.Errors.Any())
                 {
-                    var response = client.IntelliBestBuy(request);
-                    done = true;
-                    if (!response.Errors.Any())
+                    result = MapResult(response, conditions);
+                    result.IsSuccess = true;
+                }
+                else
+                {
+                    result.Errors = new List<FlightError>();
+                    result.ErrorMessages = new List<string>();
+                    if (response.Errors.Length <= 3 &&
+                        (response.Errors.First().Code == "ERIFS012" ||
+                        response.Errors.First().Code == "ERIFS013" ||
+                        response.Errors.First().Code == "ERIFS014"))
                     {
-                        result = MapResult(response, conditions);
+                        result.Errors = null;
+                        result.ErrorMessages = null;
                         result.IsSuccess = true;
+                        result.FlightItineraries = null;
                     }
                     else
                     {
-                        result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
-                        if (response.Errors.Length <= 3 && 
-                            (response.Errors.First().Code == "ERIFS012" ||
-                            response.Errors.First().Code == "ERIFS013" ||
-                            response.Errors.First().Code == "ERIFS014"))
+                        foreach (var error in response.Errors)
                         {
-                            result.Errors = null;
-                            result.ErrorMessages = null;
-                            result.IsSuccess = true;
-                            result.FlightItineraries = null;
-                        }
-                        else
-                        {
-                            foreach (var error in response.Errors)
+                            if (error.Code == "ERIFS002")
                             {
-                                if (error.Code == "ERIFS002")
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
                                 {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
+                                    done = false;
+                                    break;
                                 }
-                                MapError(response, result);
-                                result.IsSuccess = false;
                             }
+                            MapError(response, result);
+                            result.IsSuccess = false;
                         }
                     }
-
                 }
-                return result;
+
             }
+            return result;
         }
 
         private static PassengerTypeQuantity[] MapPassengerTypes(SpecificSearchConditions conditions)

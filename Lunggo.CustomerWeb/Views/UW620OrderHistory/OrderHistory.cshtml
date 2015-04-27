@@ -1,0 +1,238 @@
+﻿@model IEnumerable<Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model.Uw620CompleteHistory>
+
+@{
+    Layout = "/Views/Shared/_Layout_account.cshtml";
+    ViewBag.Title = "Hotel Detail";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-account">
+
+        <header id="site-header" class="site-header">
+            @{ Html.RenderPartial("_Mainmenu"); }
+        </header>
+
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
+
+
+            <header class="page-header">
+                <div class="container">
+                    <div class="site-nav"> <a href="#">Beranda</a> / <strong>User Account</strong></div>
+                    <hr>
+                    <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+                </div>
+            </header><!-- .page-header -->
+
+            <section class="page-content">
+                <div class="container">
+                   
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" ><a href="/Uw600/UW610ChangeProfile?idMember=@Model.ToList()[0].IdMember" aria-controls="profile"><span class="fa fa-users"></span> Profile</a></li>
+                        <li role="presentation" class="active"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
+                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                       
+                        <div role="tabpanel" class="tab-pane active" id="history">
+                            <h4><b>HISTORY</b> ORDER</h4>
+
+                            <div class="history-wrapper">
+                                <ul class="history-list">
+                                    
+                                    
+                                    @{
+                                        var number = 1;
+                                        var arrayModel = Model.ToList();
+                                        
+                                        foreach (var historyList in Model)
+                                        {
+                                            
+                                            if (historyList.Type == "Hotel")
+                                            {
+
+                                                <li class="history">
+                                                    <div class="history-content-wrapper">
+                                                        <div class="history-number">
+                                                            <span class="number">@number</span>
+                                                        </div>
+                                                        <div class="history-detail">
+                                                            <div class="history-name">
+                                                                <a href="#">@historyList.HotelName</a>
+                                                                <p><i>@historyList.Address</i></p>
+                                                            </div>
+                                                            <div class="history-date">
+                                                                <div class="row">
+                                                                    <div class="col-sm-5"><b>Check in</b></div>
+                                                                    <div class="col-sm-7">@historyList.CheckInDateTime.ToString("dd MMMM yyyy")</div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-5"><b>Check out</b></div>
+                                                                    <div class="col-sm-7">@historyList.CheckOutDateTime.ToString("dd MMMM yyyy")</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="history-id">
+                                                                <div class="row">
+                                                                    <div class="col-sm-5"><b>Order ID</b></div>
+                                                                    <div class="col-sm-7">@historyList.OrderId</div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-5"><b>Status</b></div>
+                                                                    <div class="col-sm-7">@historyList.StatusPayment</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="history-action">
+                                                                <a href="#" class="btn btn-primary">DETAIL</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>                                    
+                                                <br />number++;
+                                            }
+                                            else
+                                            {
+
+                                                if (historyList.TypeWay == "RET")
+                                                {
+                                                    if (arrayModel[number - 1].OrderId != arrayModel[number - 2].OrderId)
+                                                    {
+                                                        if (historyList.OrderId == arrayModel[number - 1].OrderId)
+                                                        {
+                                                            <li class="history">
+                                                                <div class="history-content-wrapper">
+                                                                    <div class="history-number">
+                                                                        <span class="number">@number</span>
+                                                                    </div>
+                                                                    <div class="history-detail">
+                                                                        <div class="history-name">
+                                                                            <a href="#">@historyList.Airline - @arrayModel[number].Airline</a>
+                                                                            <p><i>Alternating</i></p>
+                                                                        </div>
+                                                                        <div class="history-date">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>1st Destination</b></div>
+                                                                                <div class="col-sm-7">@historyList.Origin - @historyList.Destination</div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>2nd Destination</b></div>
+                                                                                <div class="col-sm-7">@arrayModel[number].Origin - @arrayModel[number].Destination</div>
+                                                                            </div>
+                                                                                
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>Departure</b></div>
+                                                                                <div class="col-sm-7">@historyList.DepartureTime.ToString("dd MMMM yyyy")</div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>Return</b></div>
+                                                                                <div class="col-sm-7">@arrayModel[number].DepartureTime.ToString("dd MMMM yyyy")</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="history-id">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>Order ID</b></div>
+                                                                                <div class="col-sm-7">@historyList.OrderId</div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-5"><b>Status</b></div>
+                                                                                <div class="col-sm-7">@historyList.StatusPayment</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="history-action">
+                                                                            <a href="#" class="btn btn-primary">DETAIL</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <br />number++;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <li class="history">
+                                                        <div class="history-content-wrapper">
+                                                            <div class="history-number">
+                                                                <span class="number">@number</span>
+                                                            </div>
+                                                            <div class="history-detail">
+                                                                <div class="history-name">
+                                                                    <a href="#">@historyList.Airline</a>
+                                                                    <p><i>One Way</i></p>
+                                                                </div>
+                                                                <div class="history-date">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5"><b>Destination</b></div>
+                                                                        <div class="col-sm-7">@historyList.Origin - @historyList.Destination</div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5"><b>Date</b></div>
+                                                                        <div class="col-sm-7">@historyList.DepartureTime.ToString("dd MMMM yyyy")</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="history-id">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5"><b>Order ID</b></div>
+                                                                        <div class="col-sm-7">@historyList.OrderId</div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-5"><b>Status</b></div>
+                                                                        <div class="col-sm-7">@historyList.StatusPayment</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="history-action">
+                                                                    <a href="#" class="btn btn-primary">DETAIL</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <br />number++;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                </ul>
+                            </div>
+
+                            <nav class="row text-center">
+                                <ul class="pagination">
+                                    <li><a href="#">&lt;</a></li>
+                                    <li><a href="#" class="active">1</a></li>
+                                    <li class="active"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&gt;</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </section><!-- .page-content -->
+
+
+        </div>
+        <!-- site content end -->
+    </div>

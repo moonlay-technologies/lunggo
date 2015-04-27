@@ -15,6 +15,7 @@ namespace Lunggo.ApCommon.Mystifly
     {
         private static readonly MystiflyWrapper Instance = new MystiflyWrapper();
         private bool _isInitialized;
+        private static readonly MystiflyClientHandler Client = MystiflyClientHandler.GetClientInstance();
 
         private MystiflyWrapper()
         {
@@ -28,9 +29,9 @@ namespace Lunggo.ApCommon.Mystifly
 
         internal void Init(string accountNumber, string userName, string password, TargetServer target)
         {
-            MystiflyClientHandler.Init(accountNumber, userName, password, target);
             if (!_isInitialized)
             {
+                Client.Init(accountNumber, userName, password, target);
                 _isInitialized = true;
             }
             else

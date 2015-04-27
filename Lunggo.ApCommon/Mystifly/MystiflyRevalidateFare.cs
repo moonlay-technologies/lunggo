@@ -15,12 +15,10 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
         {
-            using (var client = new MystiflyClientHandler())
-            {
                 var request = new AirRevalidateRQ
                 {
                     FareSourceCode = conditions.FareId,
-                    SessionId = client.SessionId,
+                    SessionId = Client.SessionId,
                     Target = MystiflyClientHandler.Target,
                     ExtensionData = null
                 };
@@ -30,9 +28,9 @@ namespace Lunggo.ApCommon.Mystifly
                 var done = false;
                 while (!done)
                 {                                                            
+                    var response = Client.AirRevalidate(request);
                     done = true;
-                    var response = client.AirRevalidate(request);
-                    if (!response.Errors.Any() && response.Success)
+                    if (response.Success && !response.Errors.Any())
                     {
                         result = MapResult(response, conditions);
                         result.IsSuccess = true;
@@ -49,8 +47,8 @@ namespace Lunggo.ApCommon.Mystifly
                                 {
                                     result.Errors = null;
                                     result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
                                     retry++;
                                     if (retry <= 3)
                                     {
@@ -65,7 +63,6 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                 }
                 return result;
-            }
         }
 
         private static RevalidateFareResult MapResult(AirRevalidateRS response, RevalidateConditions conditions)

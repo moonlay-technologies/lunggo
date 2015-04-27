@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Flight.Constant;
+﻿using System;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
@@ -9,41 +10,56 @@ namespace Lunggo.ApCommon.Mystifly
     {
         private class MystiflyClientHandler : OnePointClient, IClientHandler
         {
+            private static readonly MystiflyClientHandler ClientInstance = new MystiflyClientHandler();
+            private bool _isInitialized;
             private static string _accountNumber;
             private static string _userName;
             private static string _password;
             private static Target _target;
-            public string SessionId;
+            public string SessionId = "";
 
             internal static Target Target
             {
                 get { return _target; }
             }
 
-            internal MystiflyClientHandler()
+            private MystiflyClientHandler()
             {
-                CreateSession();
+            
             }
 
-            internal static void Init(string accountNumber, string userName, string password, TargetServer target)
+            internal static MystiflyClientHandler GetClientInstance()
             {
-                _accountNumber = accountNumber;
-                _userName = userName;
-                _password = password;
-                switch (target)
+                return ClientInstance;
+            }
+
+            internal void Init(string accountNumber, string userName, string password, TargetServer target)
+            {
+                if (!_isInitialized)
                 {
-                    case TargetServer.Test:
-                        _target = Target.Test;
-                        break;
-                    case TargetServer.Development:
-                        _target = Target.Development;
-                        break;
-                    case TargetServer.Production:
-                        _target = Target.Production;
-                        break;
-                    default:
-                        _target = Target.Default;
-                        break;
+                    _accountNumber = accountNumber;
+                    _userName = userName;
+                    _password = password;
+                    switch (target)
+                    {
+                        case TargetServer.Test:
+                            _target = Target.Test;
+                            break;
+                        case TargetServer.Development:
+                            _target = Target.Development;
+                            break;
+                        case TargetServer.Production:
+                            _target = Target.Production;
+                            break;
+                        default:
+                            _target = Target.Default;
+                            break;
+                    }
+                    _isInitialized = true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("MystiflyClientHandler is already initialized");
                 }
             }
 

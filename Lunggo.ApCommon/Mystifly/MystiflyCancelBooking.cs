@@ -13,56 +13,53 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override CancelBookingResult CancelBooking(string bookingId)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirCancelRQ
             {
-                var request = new AirCancelRQ
+                UniqueID = bookingId,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null
+            };
+            var result = new CancelBookingResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.CancelBooking(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    UniqueID = bookingId,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
-                var result = new CancelBookingResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    var response = client.CancelBooking(request);
-                    done = true;
-                    if (!response.Errors.Any() && response.Success)
-                    {
-                        result = MapResult(response);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "ERCBK002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
+                    result = MapResult(response);
+                    result.IsSuccess = true;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "ERCBK002")
+                            {
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
         private static CancelBookingResult MapResult(AirCancelRS response)

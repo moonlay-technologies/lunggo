@@ -16,57 +16,54 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirTripDetailsRQ
             {
-                var request = new AirTripDetailsRQ
+                UniqueID = conditions.BookingId,
+                SendOnlyTicketed = false,
+                SessionId = Client.SessionId,
+                Target = MystiflyClientHandler.Target,
+                ExtensionData = null
+            };
+            var result = new GetTripDetailsResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.TripDetails(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    UniqueID = conditions.BookingId,
-                    SendOnlyTicketed = false,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
-                var result = new GetTripDetailsResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    done = true;
-                    var response = client.TripDetails(request);
-                    if (!response.Errors.Any() && response.Success)
-                    {
-                        result = MapResult(response, conditions);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "ERTDT002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
+                    result = MapResult(response, conditions);
+                    result.IsSuccess = true;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "ERTDT002")
+                            {
+                                result.Errors = null;
+                                result.ErrorMessages = null;
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
         private static GetTripDetailsResult MapResult(AirTripDetailsRS response, ConditionsBase conditions)
@@ -176,13 +173,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (customerInfo.Customer.PaxName.PassengerTitle)
             {
-                case "Mr" :
+                case "Mr":
                     return Title.Mister;
-                case "Mrs" :
+                case "Mrs":
                     return Title.Mistress;
-                case "Miss" :
+                case "Miss":
                     return Title.Miss;
-                default :
+                default:
                     return Title.Mister;
             }
         }
@@ -191,13 +188,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (customerInfo.Customer.PassengerType)
             {
-                case PassengerType.ADT :
+                case PassengerType.ADT:
                     return Flight.Constant.PassengerType.Adult;
-                case PassengerType.CHD :
+                case PassengerType.CHD:
                     return Flight.Constant.PassengerType.Child;
-                case PassengerType.INF :
+                case PassengerType.INF:
                     return Flight.Constant.PassengerType.Infant;
-                default :
+                default:
                     return Flight.Constant.PassengerType.Adult;
             }
         }
