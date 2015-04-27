@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Model;
-using Lunggo.ApCommon.Trie;
+using Lunggo.ApCommon.Dictionary;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
 {
