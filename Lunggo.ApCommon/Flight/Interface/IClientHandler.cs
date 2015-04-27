@@ -10,6 +10,6 @@ namespace Lunggo.ApCommon.Flight.Interface
 {
     internal interface IClientHandler
     {
-        void Init(string accountNumber, string userName, string password, TargetServer target);
+        void Init(string accountNumber, string userName, string password, string targetServer);
     }
 }

@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Mystifly
 {
@@ -16,6 +17,11 @@ namespace Lunggo.ApCommon.Mystifly
         private static readonly MystiflyWrapper Instance = new MystiflyWrapper();
         private bool _isInitialized;
         private static readonly MystiflyClientHandler Client = MystiflyClientHandler.GetClientInstance();
+
+        private readonly static string AccountNumber = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiAccountNumber");
+        private readonly static string UserName = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiUserName");
+        private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiPassword");
+        private readonly static string TargetServer = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiTargetServer");
 
         private MystiflyWrapper()
         {
@@ -27,11 +33,11 @@ namespace Lunggo.ApCommon.Mystifly
             return Instance;
         }
 
-        internal void Init(string accountNumber, string userName, string password, TargetServer target)
+        internal void Init()
         {
             if (!_isInitialized)
             {
-                Client.Init(accountNumber, userName, password, target);
+                Client.Init(AccountNumber, UserName, Password, TargetServer);
                 _isInitialized = true;
             }
             else

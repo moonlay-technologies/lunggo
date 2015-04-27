@@ -16,22 +16,11 @@ namespace Lunggo.CustomerWeb
 
         protected void Application_Start()
         {
-            
-           
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            FlightService.GetInstance().Init("MCN004085", "GOAXML", "GA2014_xml", TargetServer.Test);
-            InitDB();
-         }
-
-        private void InitDB()
-        {
-            const string connString = @"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234";
-            DbService.GetInstance().Init(connString);
         }
-
     }
 }

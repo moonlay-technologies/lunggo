@@ -33,22 +33,22 @@ namespace Lunggo.ApCommon.Mystifly
                 return ClientInstance;
             }
 
-            internal void Init(string accountNumber, string userName, string password, TargetServer target)
+            internal void Init(string accountNumber, string userName, string password, string targetServer)
             {
                 if (!_isInitialized)
                 {
                     _accountNumber = accountNumber;
                     _userName = userName;
                     _password = password;
-                    switch (target)
+                    switch (targetServer)
                     {
-                        case TargetServer.Test:
+                        case "Test":
                             _target = Target.Test;
                             break;
-                        case TargetServer.Development:
+                        case "Development":
                             _target = Target.Development;
                             break;
-                        case TargetServer.Production:
+                        case "Production":
                             _target = Target.Production;
                             break;
                         default:
@@ -63,9 +63,9 @@ namespace Lunggo.ApCommon.Mystifly
                 }
             }
 
-            void IClientHandler.Init(string accountNumber, string userName, string password, TargetServer target)
+            void IClientHandler.Init(string accountNumber, string userName, string password, string targetServer)
             {
-                Init(accountNumber, userName, password, target);
+                Init(accountNumber, userName, password, targetServer);
             }
 
             internal void CreateSession()

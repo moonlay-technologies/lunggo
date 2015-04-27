@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Web;
-using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
@@ -14,7 +13,7 @@ using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
 
 
-namespace Lunggo.CustomerWeb
+namespace Lunggo.BackendWeb
 {
     public class AppInitializer
     {
@@ -22,31 +21,10 @@ namespace Lunggo.CustomerWeb
         {
             InitConfigurationManager();
             InitI18NMessageManager();
-            InitUniqueIdGenerator();
-            InitRedisService();
             InitDatabaseService();
             //InitQueueService();
             //InitLogger();
             InitDictionaryService();
-            InitFlightService();
-        }
-
-        private static void InitRedisService()
-        {
-            var redisService = RedisService.GetInstance();
-            redisService.Init(new RedisConnectionProperty[]
-            {
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
-                },
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
-                }, 
-            });
         }
 
         private static void InitConfigurationManager()
@@ -63,19 +41,6 @@ namespace Lunggo.CustomerWeb
             messageManager.Init(configDirectoryPath);
         }
 
-        private static void InitUniqueIdGenerator()
-        {
-            var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
-            {
-                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
-            };
-            generator.Init(optimisticData);
-            generator.BatchSize = 100;
-        }
-
         private static void InitDatabaseService()
         {
             var database = DbService.GetInstance();
@@ -90,12 +55,6 @@ namespace Lunggo.CustomerWeb
             var queue = QueueService.GetInstance();
             queue.Init(queueClient);
         }
-        private static void InitLogger()
-        {
-            log4net.Config.XmlConfigurator.Configure();
-            ILog Log = log4net.LogManager.GetLogger("Log");
-            LunggoLogger.GetInstance().init(Log);
-        }
 
         private static void InitDictionaryService()
         {
@@ -105,12 +64,6 @@ namespace Lunggo.CustomerWeb
             var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
             var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
             dictionary.Init(airlineFilePath, airportFilePath);
-        }
-
-        private static void InitFlightService()
-        {
-            var flight = FlightService.GetInstance();
-            flight.Init();
         }
     }
 }
