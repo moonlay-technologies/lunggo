@@ -83,8 +83,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\BackendWeb\Airline.csv" />
+    <None Include="Config\BackendWeb\Airport.csv" />
+    <None Include="Config\BackendWeb\azurestorage.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\db.properties" />
+    <None Include="Config\BackendWeb\domain.properties" />
+    <None Include="Config\BackendWeb\freshdesk.properties" />
+    <None Include="Config\BackendWeb\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\HotelLocation.csv" />
+    <None Include="Config\BackendWeb\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\veritrans.properties" />
+    <None Include="Config\BackendWeb\zendesk.properties" />
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
+    <None Include="Config\CustomerWeb\HotelLocation.csv" />
     <None Include="Config\WebAPI\Airline.csv" />
     <None Include="Config\WebAPI\Airport.csv" />
     <None Include="Config\WebAPI\travolutionary.properties">
