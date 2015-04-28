@@ -7,6 +7,7 @@ using System.Web;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
@@ -24,10 +25,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (IsValid(request))
             {
-                var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
                 var searchServiceRequest = PreprocessServiceRequest(request);
                 var searchServiceResponse = FlightService.GetInstance().SearchFlight(searchServiceRequest);
-                var apiResponse = AssembleApiResponse(searchServiceResponse, request, searchId);
+                var apiResponse = AssembleApiResponse(searchServiceResponse, request);
                 return apiResponse;
             }
             else
@@ -62,12 +62,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 */
         }
 
-        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request, string searchId)
+        private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
         {
             var apiResponse = new FlightSearchApiResponse
             {
                 OriginalRequest = request,
-                SearchId = searchId
             };
             if (searchServiceResponse.Itineraries == null)
             {

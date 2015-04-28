@@ -25,6 +25,7 @@ namespace Lunggo.BackendWeb
             //InitQueueService();
             //InitLogger();
             InitDictionaryService();
+            InitFlightService();
         }
 
         private static void InitConfigurationManager()
@@ -60,6 +61,12 @@ namespace Lunggo.BackendWeb
         {
             var dictionary = DictionaryService.GetInstance();
             dictionary.Init();
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

@@ -27,6 +27,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (!_isInitialized)
             {
+                MystiflyWrapper.Init();
                 _isInitialized = true;
             }
             else

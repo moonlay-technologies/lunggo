@@ -98,6 +98,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\HotelLocation.csv" />
+    <None Include="Config\BackendWeb\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\redis.properties">
       <SubType>Designer</SubType>
     </None>

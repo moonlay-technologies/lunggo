@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.Framework.Payment.Data;
 
 namespace Lunggo.ApCommon.Flight.Query.Model

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using FlightService = Lunggo.ApCommon.Flight.Service.FlightService;
