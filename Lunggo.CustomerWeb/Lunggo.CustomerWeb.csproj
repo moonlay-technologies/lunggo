@@ -313,6 +313,7 @@
     </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -658,6 +659,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
+    <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
