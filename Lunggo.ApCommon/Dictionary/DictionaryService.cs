@@ -4,9 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc.Routing;
+using System.Web.WebPages;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Http;
 
 namespace Lunggo.ApCommon.Dictionary
 {
@@ -16,10 +20,19 @@ namespace Lunggo.ApCommon.Dictionary
         private bool _isInitialized;
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
+        public Dictionary<long, HotelLocationDict> HotelLocationDict;
         public Dictionary<string, FlightItineraryFare> ItineraryDict;
         public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
-         private DictionaryService()
+        private static readonly string RootPath = HttpContext.Current.Server.MapPath(@"~/Config/");
+        private readonly static string AirlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
+        private readonly static string AirlineFilePath = Path.Combine(RootPath, AirlineFileName);
+        private readonly static string AirportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
+        private readonly static string AirportFilePath = Path.Combine(RootPath, AirportFileName);
+        private readonly static string HotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
+        private readonly static string HotelLocationFilePath = Path.Combine(RootPath, HotelLocationFileName);
+
+        private DictionaryService()
         {
             
         }
@@ -29,12 +42,13 @@ namespace Lunggo.ApCommon.Dictionary
             return Instance;
         }
 
-        public void Init(string airlineFilePath, string airportFilePath)
+        public void Init()
         {
             if (!_isInitialized)
             {
-                AirlineDict = PopulateAirlineDict(airlineFilePath);
-                AirportDict = PopulateAirportDict(airportFilePath);
+                AirlineDict = PopulateAirlineDict(AirlineFilePath);
+                AirportDict = PopulateAirportDict(AirportFilePath);
+                HotelLocationDict = PopulateHotelLocationDict(HotelLocationFilePath);
                 ItineraryDict = new Dictionary<string, FlightItineraryFare>();
                 DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
@@ -128,6 +142,36 @@ namespace Lunggo.ApCommon.Dictionary
             }
             return result;
         }
+
+        private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)
+        {
+            var result = new Dictionary<long, HotelLocationDict>();
+            using (var file = new StreamReader(hotelLocationFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    result.Add(long.Parse(splittedLine[0]), new HotelLocationDict
+                    {
+                        LocationId = long.Parse(splittedLine[0]),
+                        CountryCode = splittedLine[1],
+                        CountryName = splittedLine[2],
+                        RegionName = splittedLine[3],
+                        LocationName = splittedLine[4],
+                        State = splittedLine[5],
+                        Priority = splittedLine[6].IsEmpty() ? (int?)null : int.Parse(splittedLine[6]),
+                        Latitude = splittedLine[7].IsEmpty() ? (decimal?)null : decimal.Parse(splittedLine[7]),
+                        Longitude = splittedLine[8].IsEmpty() ? (decimal?)null : decimal.Parse(splittedLine[8]),
+                        IsRegion = splittedLine[9].IsEmpty() ? (bool?)null : bool.Parse(splittedLine[9]),
+                        IsAirport = splittedLine[10].IsEmpty() ? (bool?)null : bool.Parse(splittedLine[10]),
+                        IsActive = splittedLine[11].IsEmpty() ? (bool?)null : bool.Parse(splittedLine[11])
+                    });
+                }
+            }
+            return result;
+        }
     }
 
     public class AirlineDict
@@ -143,5 +187,21 @@ namespace Lunggo.ApCommon.Dictionary
         public string Name { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+    }
+
+    public class HotelLocationDict
+    {
+        public long LocationId { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
+        public string RegionName { get; set; }
+        public string LocationName { get; set; }
+        public string State { get; set; }
+        public int? Priority { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
+        public bool? IsRegion { get; set; }
+        public bool? IsAirport { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

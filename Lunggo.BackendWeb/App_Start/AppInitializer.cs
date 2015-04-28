@@ -59,11 +59,7 @@ namespace Lunggo.BackendWeb
         private static void InitDictionaryService()
         {
             var dictionary = DictionaryService.GetInstance();
-            var airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
-            var airlineFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airlineFileName);
-            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
-            dictionary.Init(airlineFilePath, airportFilePath);
+            dictionary.Init();
         }
     }
 }
