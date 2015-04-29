@@ -10,13 +10,6 @@ namespace Lunggo.CustomerWeb.Models
 {
     public class FlightSelectData
     {
-        public string Message { get; set; }
-        public string SearchId { get; set; }
-        public int ItinIndex { get; set; }
-        public int AdultCount { get; set; }
-        public int ChildCount { get; set; }
-        public int InfantCount { get; set; }
-        public bool IsPassportRequired { get; set; }
-        public bool IsBirthDateRequired { get; set; }
+        public string token { get; set; }
     }
 }

@@ -7,28 +7,38 @@
 }
 
 @{
-    var parts = Model.info.Split('-');
-    var tripPart = parts.First();
-    var infoPart = parts.Last();
-    var tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
+    try
     {
-        OriginAirport = info.Substring(0, 3),
-        DestinationAirport = info.Substring(3, 3),
-        DepartureDate = new DateTime(
-            2000 + int.Parse(info.Substring(10, 2)), 
-            int.Parse(info.Substring(8, 2)), 
-            int.Parse(info.Substring(6, 2)))
-    }).ToList();
-    
-    var data = new FlightSearchData.Complete
+        var parts = Model.info.Split('-');
+        var tripPart = parts.First();
+        var infoPart = parts.Last();
+        var tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
+        {
+            OriginAirport = info.Substring(0, 3),
+            DestinationAirport = info.Substring(3, 3),
+            DepartureDate = new DateTime(
+                2000 + int.Parse(info.Substring(10, 2)),
+                int.Parse(info.Substring(8, 2)),
+                int.Parse(info.Substring(6, 2)))
+        }).ToList();
+
+        var data = new FlightSearchData.Complete
+        {
+            AdultCount = int.Parse(infoPart.Substring(0, 1)),
+            ChildCount = int.Parse(infoPart.Substring(1, 1)),
+            InfantCount = int.Parse(infoPart.Substring(2, 1)),
+            CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
+            TripInfos = tripInfos,
+            TripType = FlightSearchData.ParseTripType(tripInfos)
+        };
+    }
+    catch
     {
-        AdultCount = int.Parse(infoPart.Substring(0, 1)), 
-        ChildCount = int.Parse(infoPart.Substring(1, 1)),
-        InfantCount = int.Parse(infoPart.Substring(2, 1)),
-        CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
-        TripInfos = tripInfos,
-        TripType = FlightSearchData.ParseTripType(tripInfos)
-    };
+        var data = new FlightSearchData.Complete
+        {
+            Message = "Invalid Data"
+        };
+    }
 }
 
 <div class="search-page flight-search-page">

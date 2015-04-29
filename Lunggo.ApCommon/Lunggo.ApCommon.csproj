@@ -151,6 +151,7 @@
     <Compile Include="Flight\Service\BookFlight.cs" />
     <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
+    <Compile Include="Flight\Service\FlightCaching.cs" />
     <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
     <Compile Include="Flight\Service\GetRules.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Flight\Service\RevalidateFlight.cs" />
     <Compile Include="Flight\Service\SearchFlight.cs" />
     <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
+    <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Mystifly\MystiflyClientHandler.cs" />
     <Compile Include="Flight\Service\FlightServiceSingleton.cs" />

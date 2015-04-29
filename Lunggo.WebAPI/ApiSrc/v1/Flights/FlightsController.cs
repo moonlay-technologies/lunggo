@@ -26,7 +26,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights/revalidate")]
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {
-            return FlightLogic.RevalidateFlight(request);
+            var apiResponse = FlightLogic.RevalidateFlight(request);
+            return apiResponse;
         }
 
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]

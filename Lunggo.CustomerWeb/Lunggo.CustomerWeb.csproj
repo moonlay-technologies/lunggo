@@ -1966,6 +1966,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Flight\SearchResultList.cshtml" />
+    <Content Include="Views\Flight\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

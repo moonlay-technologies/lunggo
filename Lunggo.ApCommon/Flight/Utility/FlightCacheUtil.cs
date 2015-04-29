@@ -12,35 +12,35 @@ namespace Lunggo.ApCommon.Flight.Utility
 {
     internal class FlightCacheUtil
     {
-        public static RedisValue ConvertItineraryListToFlightCacheObject(List<FlightItineraryFare> itineraryList)
+        internal static RedisValue ConvertToCacheObject<T>(T input)
         {
-            var itineraryListJson = SerializeItineraryList(itineraryList);
-            var itineraryListJsonCompressed = CompressionUtil.Compress(itineraryListJson);
-            return itineraryListJsonCompressed;
+            var serializedInput = Serialize(input);
+            var compressedInput = CompressionUtil.Compress(serializedInput);
+            return compressedInput;
         }
 
-        public static List<FlightItineraryFare> ConvertFlightCacheObjectToItineraryList(RedisValue flightCacheObject)
+        internal static T DeconvertFromCacheObject<T>(RedisValue cacheObject)
         {
-            if (flightCacheObject.IsNullOrEmpty)
+            if (cacheObject.IsNullOrEmpty)
             {
-                return null;
+                return default(T);
             }
             else
             {
-                byte[] itineraryListJsonCompressed = flightCacheObject;
-                var itineraryListJson = CompressionUtil.Decompress(itineraryListJsonCompressed);
-                return DeserializeItineraryList(itineraryListJson);
+                byte[] compressedJson = cacheObject;
+                var json = CompressionUtil.Decompress(compressedJson);
+                return Deserialize<T>(json);
             }
         }
 
-        private static string SerializeItineraryList(List<FlightItineraryFare> itineraryList)
+        internal static string Serialize<T>(T input)
         {
-            return JsonConvert.SerializeObject(itineraryList);
+            return JsonConvert.SerializeObject(input);
         }
 
-        private static List<FlightItineraryFare> DeserializeItineraryList(string itineraryListJsoned)
+        internal static T Deserialize<T>(string jsonInput)
         {
-            return JsonConvert.DeserializeObject<List<FlightItineraryFare>>(itineraryListJsoned);
+            return JsonConvert.DeserializeObject<T>(jsonInput);
         }
     }
 }

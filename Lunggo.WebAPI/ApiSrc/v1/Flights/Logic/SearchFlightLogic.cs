@@ -46,19 +46,18 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return
                 request != null &&
-                request.Adult >= 1 &&
-                request.Child >= 0 &&
-                request.Infant >= 0 &&
-                request.Adult + request.Child <= 9 &&
-                request.Cabin != null;
-            /*
+                request.AdultCount >= 1 &&
+                request.ChildCount >= 0 &&
+                request.InfantCount >= 0 &&
+                request.AdultCount + request.ChildCount <= 9 &&
+                request.InfantCount <= request.AdultCount &&
                 (
-                    (request.Type == "One" && request.OriDestDate.Count == 1) ||
-                    (request.Type == "Ret" && request.OriDestDate.Count == 2) ||
-                    (request.Type == "Mul" && request.OriDestDate.Count >= 1)
+                    (request.TripType == TripType.OneWay && request.TripInfos.Count == 1) ||
+                    (request.TripType == TripType.Return && request.TripInfos.Count == 2) ||
+                    (request.TripType == TripType.OpenJaw && request.TripInfos.Count > 1) ||
+                    (request.TripType == TripType.Circle && request.TripInfos.Count > 2)
                 ) &&
-                request.OriDestDate.TrueForAll(data => data.Date >= DateTime.Now);
-                */
+                request.TripInfos.TrueForAll(data => data.DepartureDate >= DateTime.Now);
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
@@ -187,27 +186,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             var searchConditions = new SearchFlightConditions
             {
-                AdultCount = request.Adult,
-                ChildCount = request.Child,
-                InfantCount = request.Infant,
-                CabinClass = AssignCabinClass(request.Cabin),
-                TripInfos = new List<TripInfo>
-                {
-                    new TripInfo
-                    {
-                        OriginAirport = request.Ori,
-                        DestinationAirport = request.Dest,
-                        DepartureDate = request.Date
-                    }
-                }
-                /*
-                TripInfos = request.OriDestDate.Select(data => new TripInfo
-                {
-                    OriginAirport = data.Ori,
-                    DestinationAirport = data.Dest,
-                    DepartureDate = data.Date
-                }).ToList(),
-                 */
+                AdultCount = request.AdultCount,
+                ChildCount = request.ChildCount,
+                InfantCount = request.InfantCount,
+                CabinClass = request.CabinClass,
+                TripInfos = request.TripInfos
             };
             var searchServiceRequest = new SearchFlightInput
             {
@@ -215,21 +198,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 IsDateFlexible = false,
             };
             return searchServiceRequest;
-        }
-
-        private static CabinClass AssignCabinClass(string cabin)
-        {
-            switch (cabin)
-            {
-                case "E":
-                    return CabinClass.Economy;
-                case "B":
-                    return CabinClass.Business;
-                case "F":
-                    return CabinClass.First;
-                default:
-                    return CabinClass.Economy;
-            }
         }
     }
 }

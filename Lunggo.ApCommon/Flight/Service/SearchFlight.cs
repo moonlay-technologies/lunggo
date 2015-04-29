@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var cacheItin = GetItinerariesFromCache(input.SearchId);
+                var cacheItin = GetSearchResultFromCache(input.SearchId);
                 if (cacheItin == null)
                     result = SearchByThirdPartyService(input);
                 else
@@ -63,12 +63,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 ChildCount = input.Conditions.ChildCount,
                 InfantCount = input.Conditions.InfantCount,
                 CabinClass = input.Conditions.CabinClass,
-                TripInfos = input.Conditions.TripInfos.Select(data => new TripInfo
-                {
-                    OriginAirport = data.OriginAirport,
-                    DestinationAirport = data.DestinationAirport,
-                    DepartureDate = data.DepartureDate
-                }).ToList()
+                TripInfos = input.Conditions.TripInfos
             };
 
             var result = SearchFlightInternal(conditions);
@@ -76,33 +71,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 SaveSearchResultToCache(searchId, result.FlightItineraries);
             result.SearchId = searchId;
             return result;
-        }
-
-        private static void SaveSearchResultToCache(string searchId, List<FlightItineraryFare> itineraryList)
-        {
-            var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var flightCacheObject = FlightCacheUtil.ConvertItineraryListToFlightCacheObject(itineraryList);
-            redisDb.StringSet(searchId, flightCacheObject, TimeSpan.FromMinutes(
-                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "flightSearchResultCacheTimeout"))));
-        }
-
-        private static List<FlightItineraryFare> GetItinerariesFromCache(string searchId)
-        {
-            var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var rawItineraryListFromCache = redisDb.StringGet(searchId);
-
-            if (!rawItineraryListFromCache.IsNullOrEmpty)
-            {
-                var itineraryList = FlightCacheUtil.ConvertFlightCacheObjectToItineraryList(rawItineraryListFromCache);
-                return itineraryList;
-            }
-            else
-            {
-                return null;
-            }
-
         }
     }
 }

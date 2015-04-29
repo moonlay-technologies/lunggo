@@ -32,6 +32,6 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class ConditionsBase
     {
-        public List<TripInfo> TripInfos { get; set; }
+        public List<FlightTripInfo> TripInfos { get; set; }
     }
 }
