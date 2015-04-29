@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SessionCreateRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SessionCreateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SessionCreateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AccountNumber {
+        internal string AccountNumber {
             get {
                 return this.AccountNumberField;
             }
@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
+        internal string Password {
             get {
                 return this.PasswordField;
             }
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -84,7 +84,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
+        internal string UserName {
             get {
                 return this.UserNameField;
             }
@@ -108,7 +108,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Target", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum Target : int {
+    internal enum Target : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SessionCreateRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SessionCreateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SessionCreateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -168,7 +168,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -181,7 +181,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool SessionStatus {
+        internal bool SessionStatus {
             get {
                 return this.SessionStatusField;
             }
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -220,7 +220,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Error", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Error : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Error : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -242,7 +242,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Code {
+        internal string Code {
             get {
                 return this.CodeField;
             }
@@ -255,7 +255,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
+        internal string Message {
             get {
                 return this.MessageField;
             }
@@ -281,7 +281,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirLowFareSearchRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirLowFareSearchRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirLowFareSearchRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -327,7 +327,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public bool IsRefundable {
+        internal bool IsRefundable {
             get {
                 return this.IsRefundableField;
             }
@@ -340,7 +340,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public bool IsResidentFare {
+        internal bool IsResidentFare {
             get {
                 return this.IsResidentFareField;
             }
@@ -353,7 +353,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public bool NearByAirports {
+        internal bool NearByAirports {
             get {
                 return this.NearByAirportsField;
             }
@@ -366,7 +366,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.OriginDestinationInformation[] OriginDestinationInformations {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.OriginDestinationInformation[] OriginDestinationInformations {
             get {
                 return this.OriginDestinationInformationsField;
             }
@@ -379,7 +379,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
             get {
                 return this.PassengerTypeQuantitiesField;
             }
@@ -392,7 +392,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricingSourceType PricingSourceType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricingSourceType PricingSourceType {
             get {
                 return this.PricingSourceTypeField;
             }
@@ -405,7 +405,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.RequestOptions RequestOptions {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.RequestOptions RequestOptions {
             get {
                 return this.RequestOptionsField;
             }
@@ -418,7 +418,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -431,7 +431,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -444,7 +444,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelPreferences TravelPreferences {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelPreferences TravelPreferences {
             get {
                 return this.TravelPreferencesField;
             }
@@ -470,7 +470,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TravelPreferences", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class TravelPreferences : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class TravelPreferences : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -501,7 +501,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTripType AirTripType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTripType AirTripType {
             get {
                 return this.AirTripTypeField;
             }
@@ -514,7 +514,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType CabinPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType CabinPreference {
             get {
                 return this.CabinPreferenceField;
             }
@@ -527,7 +527,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.MaxStopsQuantity MaxStopsQuantity {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.MaxStopsQuantity MaxStopsQuantity {
             get {
                 return this.MaxStopsQuantityField;
             }
@@ -540,7 +540,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] VendorExcludeCodes {
+        internal string[] VendorExcludeCodes {
             get {
                 return this.VendorExcludeCodesField;
             }
@@ -553,7 +553,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] VendorPreferenceCodes {
+        internal string[] VendorPreferenceCodes {
             get {
                 return this.VendorPreferenceCodesField;
             }
@@ -579,7 +579,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OriginDestinationInformation", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class OriginDestinationInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class OriginDestinationInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -610,7 +610,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalWindow {
+        internal string ArrivalWindow {
             get {
                 return this.ArrivalWindowField;
             }
@@ -623,7 +623,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -636,7 +636,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureWindow {
+        internal string DepartureWindow {
             get {
                 return this.DepartureWindowField;
             }
@@ -649,7 +649,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DestinationLocationCode {
+        internal string DestinationLocationCode {
             get {
                 return this.DestinationLocationCodeField;
             }
@@ -662,7 +662,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginLocationCode {
+        internal string OriginLocationCode {
             get {
                 return this.OriginLocationCodeField;
             }
@@ -688,7 +688,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassengerTypeQuantity", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PassengerTypeQuantity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PassengerTypeQuantity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -710,7 +710,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType Code {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType Code {
             get {
                 return this.CodeField;
             }
@@ -723,7 +723,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Quantity {
+        internal int Quantity {
             get {
                 return this.QuantityField;
             }
@@ -747,7 +747,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PricingSourceType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum PricingSourceType : int {
+    internal enum PricingSourceType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -764,7 +764,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RequestOptions", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum RequestOptions : int {
+    internal enum RequestOptions : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -781,7 +781,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassengerType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum PassengerType : int {
+    internal enum PassengerType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -816,7 +816,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirTripType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum AirTripType : int {
+    internal enum AirTripType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -839,7 +839,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CabinType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum CabinType : int {
+    internal enum CabinType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -865,7 +865,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MaxStopsQuantity", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum MaxStopsQuantity : int {
+    internal enum MaxStopsQuantity : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -884,7 +884,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirLowFareSearchRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirLowFareSearchRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirLowFareSearchRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -912,7 +912,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -925,7 +925,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricedItinerary[] PricedItineraries {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricedItinerary[] PricedItineraries {
             get {
                 return this.PricedItinerariesField;
             }
@@ -938,7 +938,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -951,7 +951,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -977,7 +977,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PricedItinerary", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PricedItinerary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PricedItinerary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1023,7 +1023,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirItineraryPricingInfo AirItineraryPricingInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirItineraryPricingInfo AirItineraryPricingInfo {
             get {
                 return this.AirItineraryPricingInfoField;
             }
@@ -1036,7 +1036,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTripType DirectionInd {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTripType DirectionInd {
             get {
                 return this.DirectionIndField;
             }
@@ -1049,7 +1049,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsPassportMandatory {
+        internal bool IsPassportMandatory {
             get {
                 return this.IsPassportMandatoryField;
             }
@@ -1062,7 +1062,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public bool IsResidentFare {
+        internal bool IsResidentFare {
             get {
                 return this.IsResidentFareField;
             }
@@ -1075,7 +1075,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.OriginDestinationOption[] OriginDestinationOptions {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.OriginDestinationOption[] OriginDestinationOptions {
             get {
                 return this.OriginDestinationOptionsField;
             }
@@ -1088,7 +1088,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string[] RequiredFieldsToBook {
+        internal string[] RequiredFieldsToBook {
             get {
                 return this.RequiredFieldsToBookField;
             }
@@ -1101,7 +1101,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string[] ResidentFareDocumentTypeLists {
+        internal string[] ResidentFareDocumentTypeLists {
             get {
                 return this.ResidentFareDocumentTypeListsField;
             }
@@ -1114,7 +1114,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int SequenceNumber {
+        internal int SequenceNumber {
             get {
                 return this.SequenceNumberField;
             }
@@ -1127,7 +1127,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TicketType {
+        internal string TicketType {
             get {
                 return this.TicketTypeField;
             }
@@ -1140,7 +1140,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ValidatingAirlineCode {
+        internal string ValidatingAirlineCode {
             get {
                 return this.ValidatingAirlineCodeField;
             }
@@ -1166,7 +1166,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirItineraryPricingInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirItineraryPricingInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirItineraryPricingInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1200,7 +1200,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool DivideInPartyIndicator {
+        internal bool DivideInPartyIndicator {
             get {
                 return this.DivideInPartyIndicatorField;
             }
@@ -1213,7 +1213,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareInfo[] FareInfos {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareInfo[] FareInfos {
             get {
                 return this.FareInfosField;
             }
@@ -1226,7 +1226,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -1239,7 +1239,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType FareType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType FareType {
             get {
                 return this.FareTypeField;
             }
@@ -1252,7 +1252,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItinTotalFare ItinTotalFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItinTotalFare ItinTotalFare {
             get {
                 return this.ItinTotalFareField;
             }
@@ -1265,7 +1265,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PTC_FareBreakdown[] PTC_FareBreakdowns {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PTC_FareBreakdown[] PTC_FareBreakdowns {
             get {
                 return this.PTC_FareBreakdownsField;
             }
@@ -1291,7 +1291,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OriginDestinationOption", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class OriginDestinationOption : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class OriginDestinationOption : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1310,7 +1310,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightSegment[] FlightSegments {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightSegment[] FlightSegments {
             get {
                 return this.FlightSegmentsField;
             }
@@ -1336,7 +1336,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ItinTotalFare", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ItinTotalFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ItinTotalFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1367,7 +1367,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare BaseFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare BaseFare {
             get {
                 return this.BaseFareField;
             }
@@ -1380,7 +1380,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquivFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquivFare {
             get {
                 return this.EquivFareField;
             }
@@ -1393,7 +1393,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
             get {
                 return this.ServiceTaxField;
             }
@@ -1406,7 +1406,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
             get {
                 return this.TotalFareField;
             }
@@ -1419,7 +1419,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalTax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalTax {
             get {
                 return this.TotalTaxField;
             }
@@ -1445,7 +1445,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FareInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class FareInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FareInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1464,7 +1464,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareReference {
+        internal string FareReference {
             get {
                 return this.FareReferenceField;
             }
@@ -1488,7 +1488,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FareType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum FareType : int {
+    internal enum FareType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -1507,7 +1507,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PTC_FareBreakdown", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PTC_FareBreakdown : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PTC_FareBreakdown : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1532,7 +1532,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] FareBasisCodes {
+        internal string[] FareBasisCodes {
             get {
                 return this.FareBasisCodesField;
             }
@@ -1545,7 +1545,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerFare PassengerFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerFare PassengerFare {
             get {
                 return this.PassengerFareField;
             }
@@ -1558,7 +1558,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity PassengerTypeQuantity {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity PassengerTypeQuantity {
             get {
                 return this.PassengerTypeQuantityField;
             }
@@ -1584,7 +1584,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Fare", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Fare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Fare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1609,7 +1609,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Amount {
+        internal string Amount {
             get {
                 return this.AmountField;
             }
@@ -1622,7 +1622,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyCode {
+        internal string CurrencyCode {
             get {
                 return this.CurrencyCodeField;
             }
@@ -1635,7 +1635,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DecimalPlaces {
+        internal int DecimalPlaces {
             get {
                 return this.DecimalPlacesField;
             }
@@ -1661,7 +1661,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassengerFare", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PassengerFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PassengerFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1695,7 +1695,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare BaseFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare BaseFare {
             get {
                 return this.BaseFareField;
             }
@@ -1708,7 +1708,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquivFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquivFare {
             get {
                 return this.EquivFareField;
             }
@@ -1721,7 +1721,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
             get {
                 return this.ServiceTaxField;
             }
@@ -1734,7 +1734,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Surcharge[] Surcharges {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Surcharge[] Surcharges {
             get {
                 return this.SurchargesField;
             }
@@ -1747,7 +1747,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Tax[] Taxes {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Tax[] Taxes {
             get {
                 return this.TaxesField;
             }
@@ -1760,7 +1760,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
             get {
                 return this.TotalFareField;
             }
@@ -1786,7 +1786,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Surcharge", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Surcharge : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Surcharge : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1811,7 +1811,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Amount {
+        internal double Amount {
             get {
                 return this.AmountField;
             }
@@ -1824,7 +1824,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Indicator {
+        internal string Indicator {
             get {
                 return this.IndicatorField;
             }
@@ -1837,7 +1837,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Type {
+        internal string Type {
             get {
                 return this.TypeField;
             }
@@ -1863,7 +1863,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Tax", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Tax : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Tax : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -1891,7 +1891,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Amount {
+        internal string Amount {
             get {
                 return this.AmountField;
             }
@@ -1904,7 +1904,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyCode {
+        internal string CurrencyCode {
             get {
                 return this.CurrencyCodeField;
             }
@@ -1917,7 +1917,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DecimalPlaces {
+        internal int DecimalPlaces {
             get {
                 return this.DecimalPlacesField;
             }
@@ -1930,7 +1930,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TaxCode {
+        internal string TaxCode {
             get {
                 return this.TaxCodeField;
             }
@@ -1956,7 +1956,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FlightSegment", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class FlightSegment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FlightSegment : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2020,7 +2020,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalAirportLocationCode {
+        internal string ArrivalAirportLocationCode {
             get {
                 return this.ArrivalAirportLocationCodeField;
             }
@@ -2033,7 +2033,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ArrivalDateTime {
+        internal System.DateTime ArrivalDateTime {
             get {
                 return this.ArrivalDateTimeField;
             }
@@ -2046,7 +2046,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CabinClassCode {
+        internal string CabinClassCode {
             get {
                 return this.CabinClassCodeField;
             }
@@ -2059,7 +2059,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureAirportLocationCode {
+        internal string DepartureAirportLocationCode {
             get {
                 return this.DepartureAirportLocationCodeField;
             }
@@ -2072,7 +2072,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -2085,7 +2085,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Eticket {
+        internal bool Eticket {
             get {
                 return this.EticketField;
             }
@@ -2098,7 +2098,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -2111,7 +2111,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int JourneyDuration {
+        internal int JourneyDuration {
             get {
                 return this.JourneyDurationField;
             }
@@ -2124,7 +2124,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarketingAirlineCode {
+        internal string MarketingAirlineCode {
             get {
                 return this.MarketingAirlineCodeField;
             }
@@ -2137,7 +2137,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarriageGroup {
+        internal string MarriageGroup {
             get {
                 return this.MarriageGroupField;
             }
@@ -2150,7 +2150,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MealCode {
+        internal string MealCode {
             get {
                 return this.MealCodeField;
             }
@@ -2163,7 +2163,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.OperatingAirline OperatingAirline {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.OperatingAirline OperatingAirline {
             get {
                 return this.OperatingAirlineField;
             }
@@ -2176,7 +2176,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ResBookDesigCode {
+        internal string ResBookDesigCode {
             get {
                 return this.ResBookDesigCodeField;
             }
@@ -2189,7 +2189,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatsRemaining SeatsRemaining {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatsRemaining SeatsRemaining {
             get {
                 return this.SeatsRemainingField;
             }
@@ -2202,7 +2202,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int StopQuantity {
+        internal int StopQuantity {
             get {
                 return this.StopQuantityField;
             }
@@ -2215,7 +2215,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.StopQuantityInfo StopQuantityInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.StopQuantityInfo StopQuantityInfo {
             get {
                 return this.StopQuantityInfoField;
             }
@@ -2241,7 +2241,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="OperatingAirline", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class OperatingAirline : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class OperatingAirline : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2266,7 +2266,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Code {
+        internal string Code {
             get {
                 return this.CodeField;
             }
@@ -2279,7 +2279,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Equipment {
+        internal string Equipment {
             get {
                 return this.EquipmentField;
             }
@@ -2292,7 +2292,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -2318,7 +2318,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SeatsRemaining", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SeatsRemaining : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SeatsRemaining : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2340,7 +2340,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BelowMinimum {
+        internal bool BelowMinimum {
             get {
                 return this.BelowMinimumField;
             }
@@ -2353,7 +2353,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Number {
+        internal int Number {
             get {
                 return this.NumberField;
             }
@@ -2379,7 +2379,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StopQuantityInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class StopQuantityInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class StopQuantityInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2407,7 +2407,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ArrivalDateTime {
+        internal System.DateTime ArrivalDateTime {
             get {
                 return this.ArrivalDateTimeField;
             }
@@ -2420,7 +2420,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -2433,7 +2433,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Duration {
+        internal int Duration {
             get {
                 return this.DurationField;
             }
@@ -2446,7 +2446,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LocationCode {
+        internal string LocationCode {
             get {
                 return this.LocationCodeField;
             }
@@ -2472,7 +2472,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRevalidateRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRevalidateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRevalidateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2497,7 +2497,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -2510,7 +2510,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -2523,7 +2523,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -2549,7 +2549,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRevalidateRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRevalidateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRevalidateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2586,7 +2586,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -2599,7 +2599,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsValid {
+        internal bool IsValid {
             get {
                 return this.IsValidField;
             }
@@ -2612,7 +2612,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricedItinerary[] PricedItineraries {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PricedItinerary[] PricedItineraries {
             get {
                 return this.PricedItinerariesField;
             }
@@ -2625,7 +2625,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -2638,7 +2638,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -2651,7 +2651,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService ExtraServices {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService ExtraServices {
             get {
                 return this.ExtraServicesField;
             }
@@ -2664,7 +2664,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=6)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService1 ExtraServices1_1 {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService1 ExtraServices1_1 {
             get {
                 return this.ExtraServices1_1Field;
             }
@@ -2690,7 +2690,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ExtraService", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ExtraService : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ExtraService : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2709,7 +2709,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Service[] Services {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Service[] Services {
             get {
                 return this.ServicesField;
             }
@@ -2735,7 +2735,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ExtraService", Namespace="Mystifly.OnePoint.OnePointEntities")]
     [System.SerializableAttribute()]
-    public partial class ExtraService1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ExtraService1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2754,7 +2754,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Service1[] Services {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Service1[] Services {
             get {
                 return this.ServicesField;
             }
@@ -2780,7 +2780,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Service", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Service : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Service : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2805,7 +2805,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ExtraServiceId {
+        internal string ExtraServiceId {
             get {
                 return this.ExtraServiceIdField;
             }
@@ -2818,7 +2818,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceCost ServiceCost {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceCost ServiceCost {
             get {
                 return this.ServiceCostField;
             }
@@ -2831,7 +2831,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceDescription ServiceDescription {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceDescription ServiceDescription {
             get {
                 return this.ServiceDescriptionField;
             }
@@ -2857,7 +2857,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceCost", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ServiceCost : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ServiceCost : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2882,7 +2882,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Amount {
+        internal string Amount {
             get {
                 return this.AmountField;
             }
@@ -2895,7 +2895,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CurrencyCode {
+        internal string CurrencyCode {
             get {
                 return this.CurrencyCodeField;
             }
@@ -2908,7 +2908,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DecimalPlaces {
+        internal int DecimalPlaces {
             get {
                 return this.DecimalPlacesField;
             }
@@ -2934,7 +2934,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceDescription", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ServiceDescription : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ServiceDescription : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -2962,7 +2962,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
+        internal string Description {
             get {
                 return this.DescriptionField;
             }
@@ -2975,7 +2975,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Eligibility Eligibility {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Eligibility Eligibility {
             get {
                 return this.EligibilityField;
             }
@@ -2988,7 +2988,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsGroup {
+        internal bool IsGroup {
             get {
                 return this.IsGroupField;
             }
@@ -3001,7 +3001,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MaxQuantity {
+        internal string MaxQuantity {
             get {
                 return this.MaxQuantityField;
             }
@@ -3025,7 +3025,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Eligibility", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum Eligibility : int {
+    internal enum Eligibility : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -3059,7 +3059,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Service", Namespace="Mystifly.OnePoint.OnePointEntities")]
     [System.SerializableAttribute()]
-    public partial class Service1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Service1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3099,7 +3099,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Behavior {
+        internal string Behavior {
             get {
                 return this.BehaviorField;
             }
@@ -3112,7 +3112,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CheckInType {
+        internal string CheckInType {
             get {
                 return this.CheckInTypeField;
             }
@@ -3125,7 +3125,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
+        internal string Description {
             get {
                 return this.DescriptionField;
             }
@@ -3138,7 +3138,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsMandatory {
+        internal bool IsMandatory {
             get {
                 return this.IsMandatoryField;
             }
@@ -3151,7 +3151,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Relation {
+        internal string Relation {
             get {
                 return this.RelationField;
             }
@@ -3164,7 +3164,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceCost ServiceCost {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ServiceCost ServiceCost {
             get {
                 return this.ServiceCostField;
             }
@@ -3177,7 +3177,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServiceId {
+        internal string ServiceId {
             get {
                 return this.ServiceIdField;
             }
@@ -3190,7 +3190,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Type {
+        internal string Type {
             get {
                 return this.TypeField;
             }
@@ -3216,7 +3216,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3253,7 +3253,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal ClientMarkup {
+        internal decimal ClientMarkup {
             get {
                 return this.ClientMarkupField;
             }
@@ -3266,7 +3266,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -3279,7 +3279,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaymentCardInfo PaymentCardInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaymentCardInfo PaymentCardInfo {
             get {
                 return this.PaymentCardInfoField;
             }
@@ -3292,7 +3292,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PaymentTransactionID {
+        internal string PaymentTransactionID {
             get {
                 return this.PaymentTransactionIDField;
             }
@@ -3305,7 +3305,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -3318,7 +3318,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -3331,7 +3331,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
             get {
                 return this.TravelerInfoField;
             }
@@ -3357,7 +3357,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaymentCardInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PaymentCardInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PaymentCardInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3403,7 +3403,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.BillingAddress billingAddress {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.BillingAddress billingAddress {
             get {
                 return this.billingAddressField;
             }
@@ -3416,7 +3416,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardExpiry cardExpiry {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardExpiry cardExpiry {
             get {
                 return this.cardExpiryField;
             }
@@ -3429,7 +3429,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string cardHolderName {
+        internal string cardHolderName {
             get {
                 return this.cardHolderNameField;
             }
@@ -3442,7 +3442,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string cardNumber {
+        internal string cardNumber {
             get {
                 return this.cardNumberField;
             }
@@ -3455,7 +3455,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardScheme cardScheme {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardScheme cardScheme {
             get {
                 return this.cardSchemeField;
             }
@@ -3468,7 +3468,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardType cardType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardType cardType {
             get {
                 return this.cardTypeField;
             }
@@ -3481,7 +3481,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardValidFrom cardValidFrom {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CardValidFrom cardValidFrom {
             get {
                 return this.cardValidFromField;
             }
@@ -3494,7 +3494,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string computerIP {
+        internal string computerIP {
             get {
                 return this.computerIPField;
             }
@@ -3507,7 +3507,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public short cvv {
+        internal short cvv {
             get {
                 return this.cvvField;
             }
@@ -3520,7 +3520,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string securePassword {
+        internal string securePassword {
             get {
                 return this.securePasswordField;
             }
@@ -3546,7 +3546,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TravelerInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class TravelerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class TravelerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3577,7 +3577,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTraveler[] AirTravelers {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirTraveler[] AirTravelers {
             get {
                 return this.AirTravelersField;
             }
@@ -3590,7 +3590,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AreaCode {
+        internal string AreaCode {
             get {
                 return this.AreaCodeField;
             }
@@ -3603,7 +3603,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CountryCode {
+        internal string CountryCode {
             get {
                 return this.CountryCodeField;
             }
@@ -3616,7 +3616,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        internal string Email {
             get {
                 return this.EmailField;
             }
@@ -3629,7 +3629,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PhoneNumber {
+        internal string PhoneNumber {
             get {
                 return this.PhoneNumberField;
             }
@@ -3655,7 +3655,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BillingAddress", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class BillingAddress : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class BillingAddress : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3707,7 +3707,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string address1 {
+        internal string address1 {
             get {
                 return this.address1Field;
             }
@@ -3720,7 +3720,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string address2 {
+        internal string address2 {
             get {
                 return this.address2Field;
             }
@@ -3733,7 +3733,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string address3 {
+        internal string address3 {
             get {
                 return this.address3Field;
             }
@@ -3746,7 +3746,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string city {
+        internal string city {
             get {
                 return this.cityField;
             }
@@ -3759,7 +3759,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string country {
+        internal string country {
             get {
                 return this.countryField;
             }
@@ -3772,7 +3772,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string customerFirstName {
+        internal string customerFirstName {
             get {
                 return this.customerFirstNameField;
             }
@@ -3785,7 +3785,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string customerLastName {
+        internal string customerLastName {
             get {
                 return this.customerLastNameField;
             }
@@ -3798,7 +3798,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string customerMiddleName {
+        internal string customerMiddleName {
             get {
                 return this.customerMiddleNameField;
             }
@@ -3811,7 +3811,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string customerTitle {
+        internal string customerTitle {
             get {
                 return this.customerTitleField;
             }
@@ -3824,7 +3824,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string emailId {
+        internal string emailId {
             get {
                 return this.emailIdField;
             }
@@ -3837,7 +3837,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string state {
+        internal string state {
             get {
                 return this.stateField;
             }
@@ -3850,7 +3850,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string zip {
+        internal string zip {
             get {
                 return this.zipField;
             }
@@ -3876,7 +3876,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CardExpiry", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class CardExpiry : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class CardExpiry : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3898,7 +3898,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Month month {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Month month {
             get {
                 return this.monthField;
             }
@@ -3911,7 +3911,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public short year {
+        internal short year {
             get {
                 return this.yearField;
             }
@@ -3937,7 +3937,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CardValidFrom", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class CardValidFrom : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class CardValidFrom : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -3959,7 +3959,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Month month {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Month month {
             get {
                 return this.monthField;
             }
@@ -3972,7 +3972,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public short year {
+        internal short year {
             get {
                 return this.yearField;
             }
@@ -3996,7 +3996,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CardScheme", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum CardScheme : int {
+    internal enum CardScheme : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -4013,7 +4013,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CardType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum CardType : int {
+    internal enum CardType : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -4027,7 +4027,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Month", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum Month : int {
+    internal enum Month : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -4073,7 +4073,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirTraveler", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirTraveler : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirTraveler : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4119,7 +4119,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DateOfBirth {
+        internal System.Nullable<System.DateTime> DateOfBirth {
             get {
                 return this.DateOfBirthField;
             }
@@ -4132,7 +4132,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Services[] ExtraServices {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Services[] ExtraServices {
             get {
                 return this.ExtraServicesField;
             }
@@ -4145,7 +4145,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Services1[] ExtraServices1_1 {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Services1[] ExtraServices1_1 {
             get {
                 return this.ExtraServices1_1Field;
             }
@@ -4158,7 +4158,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FrequentFlyerNumber {
+        internal string FrequentFlyerNumber {
             get {
                 return this.FrequentFlyerNumberField;
             }
@@ -4171,7 +4171,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Gender Gender {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Gender Gender {
             get {
                 return this.GenderField;
             }
@@ -4184,7 +4184,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerName PassengerName {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerName PassengerName {
             get {
                 return this.PassengerNameField;
             }
@@ -4197,7 +4197,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType PassengerType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType PassengerType {
             get {
                 return this.PassengerTypeField;
             }
@@ -4210,7 +4210,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Passport Passport {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Passport Passport {
             get {
                 return this.PassportField;
             }
@@ -4223,7 +4223,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ResidentFareDocumentType ResidentFareDocumentType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ResidentFareDocumentType ResidentFareDocumentType {
             get {
                 return this.ResidentFareDocumentTypeField;
             }
@@ -4236,7 +4236,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SpecialServiceRequest SpecialServiceRequest {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SpecialServiceRequest SpecialServiceRequest {
             get {
                 return this.SpecialServiceRequestField;
             }
@@ -4262,7 +4262,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassengerName", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PassengerName : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PassengerName : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4287,7 +4287,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassengerFirstName {
+        internal string PassengerFirstName {
             get {
                 return this.PassengerFirstNameField;
             }
@@ -4300,7 +4300,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassengerLastName {
+        internal string PassengerLastName {
             get {
                 return this.PassengerLastNameField;
             }
@@ -4313,7 +4313,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTitle PassengerTitle {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTitle PassengerTitle {
             get {
                 return this.PassengerTitleField;
             }
@@ -4339,7 +4339,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Passport", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Passport : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Passport : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4364,7 +4364,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Country {
+        internal string Country {
             get {
                 return this.CountryField;
             }
@@ -4377,7 +4377,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ExpiryDate {
+        internal System.DateTime ExpiryDate {
             get {
                 return this.ExpiryDateField;
             }
@@ -4390,7 +4390,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassportNumber {
+        internal string PassportNumber {
             get {
                 return this.PassportNumberField;
             }
@@ -4416,7 +4416,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ResidentFareDocumentType", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ResidentFareDocumentType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ResidentFareDocumentType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4441,7 +4441,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DocumentNumber {
+        internal string DocumentNumber {
             get {
                 return this.DocumentNumberField;
             }
@@ -4454,7 +4454,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DocumentType {
+        internal string DocumentType {
             get {
                 return this.DocumentTypeField;
             }
@@ -4467,7 +4467,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Municipality {
+        internal string Municipality {
             get {
                 return this.MunicipalityField;
             }
@@ -4493,7 +4493,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SpecialServiceRequest", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SpecialServiceRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SpecialServiceRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4515,7 +4515,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.MealPreference MealPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.MealPreference MealPreference {
             get {
                 return this.MealPreferenceField;
             }
@@ -4528,7 +4528,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatPreference SeatPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatPreference SeatPreference {
             get {
                 return this.SeatPreferenceField;
             }
@@ -4554,7 +4554,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Services", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Services : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Services : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4576,7 +4576,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ExtraServiceId {
+        internal int ExtraServiceId {
             get {
                 return this.ExtraServiceIdField;
             }
@@ -4589,7 +4589,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Quantity {
+        internal int Quantity {
             get {
                 return this.QuantityField;
             }
@@ -4615,7 +4615,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Services", Namespace="Mystifly.OnePoint.OnePointEntities")]
     [System.SerializableAttribute()]
-    public partial class Services1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Services1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4634,7 +4634,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ExtraServiceId {
+        internal int ExtraServiceId {
             get {
                 return this.ExtraServiceIdField;
             }
@@ -4658,7 +4658,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Gender", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum Gender : int {
+    internal enum Gender : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -4672,7 +4672,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassengerTitle", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum PassengerTitle : int {
+    internal enum PassengerTitle : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -4707,7 +4707,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MealPreference", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum MealPreference : int {
+    internal enum MealPreference : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Any = 0,
@@ -4796,7 +4796,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SeatPreference", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum SeatPreference : int {
+    internal enum SeatPreference : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Any = 0,
@@ -4812,7 +4812,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4846,7 +4846,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -4859,7 +4859,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string Status {
+        internal string Status {
             get {
                 return this.StatusField;
             }
@@ -4872,7 +4872,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -4885,7 +4885,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -4898,7 +4898,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> TktTimeLimit {
+        internal System.Nullable<System.DateTime> TktTimeLimit {
             get {
                 return this.TktTimeLimitField;
             }
@@ -4911,7 +4911,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -4937,7 +4937,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRulesRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRulesRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRulesRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -4968,7 +4968,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRulesFareInfo[] FareInfos {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRulesFareInfo[] FareInfos {
             get {
                 return this.FareInfosField;
             }
@@ -4981,7 +4981,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -4994,7 +4994,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -5007,7 +5007,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5020,7 +5020,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ValidatingAirlineCode {
+        internal string ValidatingAirlineCode {
             get {
                 return this.ValidatingAirlineCodeField;
             }
@@ -5046,7 +5046,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRulesFareInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRulesFareInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRulesFareInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5080,7 +5080,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalAirportLocationCode {
+        internal string ArrivalAirportLocationCode {
             get {
                 return this.ArrivalAirportLocationCodeField;
             }
@@ -5093,7 +5093,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureAirportLocationCode {
+        internal string DepartureAirportLocationCode {
             get {
                 return this.DepartureAirportLocationCodeField;
             }
@@ -5106,7 +5106,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -5119,7 +5119,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareBasisCode {
+        internal string FareBasisCode {
             get {
                 return this.FareBasisCodeField;
             }
@@ -5132,7 +5132,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarketingAirlineCode {
+        internal string MarketingAirlineCode {
             get {
                 return this.MarketingAirlineCodeField;
             }
@@ -5145,7 +5145,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OperatingAirlineCode {
+        internal string OperatingAirlineCode {
             get {
                 return this.OperatingAirlineCodeField;
             }
@@ -5171,7 +5171,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRulesRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRulesRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRulesRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5199,7 +5199,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -5212,7 +5212,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRuleResponseInfo FareRuleResponseInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRuleResponseInfo FareRuleResponseInfo {
             get {
                 return this.FareRuleResponseInfoField;
             }
@@ -5225,7 +5225,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -5238,7 +5238,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5264,7 +5264,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FareRuleResponseInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class FareRuleResponseInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FareRuleResponseInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5286,7 +5286,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRuleInfo FareRuleInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRuleInfo FareRuleInfo {
             get {
                 return this.FareRuleInfoField;
             }
@@ -5299,7 +5299,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] FareRules {
+        internal string[] FareRules {
             get {
                 return this.FareRulesField;
             }
@@ -5325,7 +5325,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FareRuleInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class FareRuleInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FareRuleInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5356,7 +5356,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalAirportLocationCode {
+        internal string ArrivalAirportLocationCode {
             get {
                 return this.ArrivalAirportLocationCodeField;
             }
@@ -5369,7 +5369,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureAirportLocationCode {
+        internal string DepartureAirportLocationCode {
             get {
                 return this.DepartureAirportLocationCodeField;
             }
@@ -5382,7 +5382,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareReference {
+        internal string FareReference {
             get {
                 return this.FareReferenceField;
             }
@@ -5395,7 +5395,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarketingAirlineCode {
+        internal string MarketingAirlineCode {
             get {
                 return this.MarketingAirlineCodeField;
             }
@@ -5408,7 +5408,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OperatingAirlineCode {
+        internal string OperatingAirlineCode {
             get {
                 return this.OperatingAirlineCodeField;
             }
@@ -5434,7 +5434,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirCancelRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirCancelRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirCancelRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5459,7 +5459,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -5472,7 +5472,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5485,7 +5485,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -5511,7 +5511,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirCancelRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirCancelRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirCancelRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5539,7 +5539,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -5552,7 +5552,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -5565,7 +5565,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5578,7 +5578,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -5604,7 +5604,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirOrderTicketRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirOrderTicketRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirOrderTicketRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5632,7 +5632,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -5645,7 +5645,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -5658,7 +5658,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5671,7 +5671,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -5697,7 +5697,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirOrderTicketRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirOrderTicketRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirOrderTicketRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5728,7 +5728,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -5741,7 +5741,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
+        internal string Message {
             get {
                 return this.MessageField;
             }
@@ -5754,7 +5754,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -5767,7 +5767,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5780,7 +5780,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -5806,7 +5806,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirTripDetailsRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirTripDetailsRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirTripDetailsRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5834,7 +5834,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public bool SendOnlyTicketed {
+        internal bool SendOnlyTicketed {
             get {
                 return this.SendOnlyTicketedField;
             }
@@ -5847,7 +5847,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -5860,7 +5860,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5873,7 +5873,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -5899,7 +5899,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirTripDetailsRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirTripDetailsRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirTripDetailsRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -5930,7 +5930,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -5943,7 +5943,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string[] SpecialMessage {
+        internal string[] SpecialMessage {
             get {
                 return this.SpecialMessageField;
             }
@@ -5956,7 +5956,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -5969,7 +5969,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -5982,7 +5982,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelItinerary TravelItinerary {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelItinerary TravelItinerary {
             get {
                 return this.TravelItineraryField;
             }
@@ -6008,7 +6008,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TravelItinerary", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class TravelItinerary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class TravelItinerary : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6039,7 +6039,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] BookingNotes {
+        internal string[] BookingNotes {
             get {
                 return this.BookingNotesField;
             }
@@ -6052,7 +6052,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryInfo ItineraryInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryInfo ItineraryInfo {
             get {
                 return this.ItineraryInfoField;
             }
@@ -6065,7 +6065,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -6078,7 +6078,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService ExtraServices {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService ExtraServices {
             get {
                 return this.ExtraServicesField;
             }
@@ -6091,7 +6091,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService1 ExtraServices1_1 {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ExtraService1 ExtraServices1_1 {
             get {
                 return this.ExtraServices1_1Field;
             }
@@ -6117,7 +6117,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ItineraryInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ItineraryInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ItineraryInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6145,7 +6145,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CustomerInfo[] CustomerInfos {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CustomerInfo[] CustomerInfos {
             get {
                 return this.CustomerInfosField;
             }
@@ -6158,7 +6158,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryPricing ItineraryPricing {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryPricing ItineraryPricing {
             get {
                 return this.ItineraryPricingField;
             }
@@ -6171,7 +6171,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ReservationItem[] ReservationItems {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ReservationItem[] ReservationItems {
             get {
                 return this.ReservationItemsField;
             }
@@ -6184,7 +6184,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TripDetailsPTC_FareBreakdown[] TripDetailsPTC_FareBreakdowns {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TripDetailsPTC_FareBreakdown[] TripDetailsPTC_FareBreakdowns {
             get {
                 return this.TripDetailsPTC_FareBreakdownsField;
             }
@@ -6210,7 +6210,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ItineraryPricing", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ItineraryPricing : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ItineraryPricing : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6244,7 +6244,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ClientMarkup {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ClientMarkup {
             get {
                 return this.ClientMarkupField;
             }
@@ -6257,7 +6257,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquiFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquiFare {
             get {
                 return this.EquiFareField;
             }
@@ -6270,7 +6270,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ExtraServiceCharges {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ExtraServiceCharges {
             get {
                 return this.ExtraServiceChargesField;
             }
@@ -6283,7 +6283,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
             get {
                 return this.ServiceTaxField;
             }
@@ -6296,7 +6296,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare Tax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare Tax {
             get {
                 return this.TaxField;
             }
@@ -6309,7 +6309,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
             get {
                 return this.TotalFareField;
             }
@@ -6335,7 +6335,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CustomerInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class CustomerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class CustomerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6360,7 +6360,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Customer Customer {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Customer Customer {
             get {
                 return this.CustomerField;
             }
@@ -6373,7 +6373,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ETicket[] ETickets {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ETicket[] ETickets {
             get {
                 return this.ETicketsField;
             }
@@ -6386,7 +6386,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SSR[] SSRs {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SSR[] SSRs {
             get {
                 return this.SSRsField;
             }
@@ -6412,7 +6412,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ReservationItem", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ReservationItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ReservationItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6479,7 +6479,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirEquipmentType {
+        internal string AirEquipmentType {
             get {
                 return this.AirEquipmentTypeField;
             }
@@ -6492,7 +6492,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirlinePNR {
+        internal string AirlinePNR {
             get {
                 return this.AirlinePNRField;
             }
@@ -6505,7 +6505,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalAirportLocationCode {
+        internal string ArrivalAirportLocationCode {
             get {
                 return this.ArrivalAirportLocationCodeField;
             }
@@ -6518,7 +6518,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ArrivalDateTime {
+        internal System.DateTime ArrivalDateTime {
             get {
                 return this.ArrivalDateTimeField;
             }
@@ -6531,7 +6531,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalTerminal {
+        internal string ArrivalTerminal {
             get {
                 return this.ArrivalTerminalField;
             }
@@ -6544,7 +6544,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Baggage {
+        internal string Baggage {
             get {
                 return this.BaggageField;
             }
@@ -6557,7 +6557,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureAirportLocationCode {
+        internal string DepartureAirportLocationCode {
             get {
                 return this.DepartureAirportLocationCodeField;
             }
@@ -6570,7 +6570,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -6583,7 +6583,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureTerminal {
+        internal string DepartureTerminal {
             get {
                 return this.DepartureTerminalField;
             }
@@ -6596,7 +6596,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -6609,7 +6609,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ItemRPH {
+        internal int ItemRPH {
             get {
                 return this.ItemRPHField;
             }
@@ -6622,7 +6622,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string JourneyDuration {
+        internal string JourneyDuration {
             get {
                 return this.JourneyDurationField;
             }
@@ -6635,7 +6635,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarketingAirlineCode {
+        internal string MarketingAirlineCode {
             get {
                 return this.MarketingAirlineCodeField;
             }
@@ -6648,7 +6648,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NumberInParty {
+        internal int NumberInParty {
             get {
                 return this.NumberInPartyField;
             }
@@ -6661,7 +6661,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OperatingAirlineCode {
+        internal string OperatingAirlineCode {
             get {
                 return this.OperatingAirlineCodeField;
             }
@@ -6674,7 +6674,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ResBookDesigCode {
+        internal string ResBookDesigCode {
             get {
                 return this.ResBookDesigCodeField;
             }
@@ -6687,7 +6687,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int StopQuantity {
+        internal int StopQuantity {
             get {
                 return this.StopQuantityField;
             }
@@ -6713,7 +6713,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TripDetailsPTC_FareBreakdown", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class TripDetailsPTC_FareBreakdown : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class TripDetailsPTC_FareBreakdown : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6735,7 +6735,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity PassengerTypeQuantity {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity PassengerTypeQuantity {
             get {
                 return this.PassengerTypeQuantityField;
             }
@@ -6748,7 +6748,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TripDetailsPassengerFare TripDetailsPassengerFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TripDetailsPassengerFare TripDetailsPassengerFare {
             get {
                 return this.TripDetailsPassengerFareField;
             }
@@ -6774,7 +6774,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Customer", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Customer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Customer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6799,7 +6799,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType PassengerType {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType PassengerType {
             get {
                 return this.PassengerTypeField;
             }
@@ -6812,7 +6812,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassportNumber {
+        internal string PassportNumber {
             get {
                 return this.PassportNumberField;
             }
@@ -6825,7 +6825,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaxName PaxName {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaxName PaxName {
             get {
                 return this.PaxNameField;
             }
@@ -6851,7 +6851,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ETicket", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ETicket : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ETicket : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6873,7 +6873,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ItemRPH {
+        internal int ItemRPH {
             get {
                 return this.ItemRPHField;
             }
@@ -6886,7 +6886,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string eTicketNumber {
+        internal string eTicketNumber {
             get {
                 return this.eTicketNumberField;
             }
@@ -6912,7 +6912,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SSR", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SSR : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SSR : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -6937,7 +6937,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ItemRPH {
+        internal int ItemRPH {
             get {
                 return this.ItemRPHField;
             }
@@ -6950,7 +6950,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MealPreference {
+        internal string MealPreference {
             get {
                 return this.MealPreferenceField;
             }
@@ -6963,7 +6963,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatPreference {
+        internal string SeatPreference {
             get {
                 return this.SeatPreferenceField;
             }
@@ -6989,7 +6989,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PaxName", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PaxName : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PaxName : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7014,7 +7014,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassengerFirstName {
+        internal string PassengerFirstName {
             get {
                 return this.PassengerFirstNameField;
             }
@@ -7027,7 +7027,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassengerLastName {
+        internal string PassengerLastName {
             get {
                 return this.PassengerLastNameField;
             }
@@ -7040,7 +7040,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassengerTitle {
+        internal string PassengerTitle {
             get {
                 return this.PassengerTitleField;
             }
@@ -7066,7 +7066,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TripDetailsPassengerFare", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class TripDetailsPassengerFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class TripDetailsPassengerFare : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7097,7 +7097,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string AirportTaxBreakUp {
+        internal string AirportTaxBreakUp {
             get {
                 return this.AirportTaxBreakUpField;
             }
@@ -7110,7 +7110,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquiFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare EquiFare {
             get {
                 return this.EquiFareField;
             }
@@ -7123,7 +7123,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare ServiceTax {
             get {
                 return this.ServiceTaxField;
             }
@@ -7136,7 +7136,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare Tax {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare Tax {
             get {
                 return this.TaxField;
             }
@@ -7149,7 +7149,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Fare TotalFare {
             get {
                 return this.TotalFareField;
             }
@@ -7175,7 +7175,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookingNotesRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookingNotesRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookingNotesRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7203,7 +7203,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Notes {
+        internal string[] Notes {
             get {
                 return this.NotesField;
             }
@@ -7216,7 +7216,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -7229,7 +7229,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7242,7 +7242,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -7268,7 +7268,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookingNotesRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookingNotesRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookingNotesRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7290,7 +7290,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -7303,7 +7303,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -7329,7 +7329,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirMessageQueueRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirMessageQueueRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirMessageQueueRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7354,7 +7354,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.QueueCategory CategoryId {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.QueueCategory CategoryId {
             get {
                 return this.CategoryIdField;
             }
@@ -7367,7 +7367,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -7380,7 +7380,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7404,7 +7404,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="QueueCategory", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum QueueCategory : int {
+    internal enum QueueCategory : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Urgent = 0,
@@ -7432,7 +7432,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirMessageQueueRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirMessageQueueRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirMessageQueueRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7460,7 +7460,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -7473,7 +7473,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.MessageItem[] MessageItems {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.MessageItem[] MessageItems {
             get {
                 return this.MessageItemsField;
             }
@@ -7486,7 +7486,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -7499,7 +7499,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7525,7 +7525,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MessageItem", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MessageItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MessageItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7556,7 +7556,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BookingMode {
+        internal string BookingMode {
             get {
                 return this.BookingModeField;
             }
@@ -7569,7 +7569,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Messages {
+        internal string[] Messages {
             get {
                 return this.MessagesField;
             }
@@ -7582,7 +7582,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int RPH {
+        internal int RPH {
             get {
                 return this.RPHField;
             }
@@ -7595,7 +7595,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public System.Nullable<System.DateTime> TktTimeLimit {
+        internal System.Nullable<System.DateTime> TktTimeLimit {
             get {
                 return this.TktTimeLimitField;
             }
@@ -7608,7 +7608,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -7634,7 +7634,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRemoveMessageQueueRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRemoveMessageQueueRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRemoveMessageQueueRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7659,7 +7659,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Item[] Items {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Item[] Items {
             get {
                 return this.ItemsField;
             }
@@ -7672,7 +7672,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -7685,7 +7685,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7711,7 +7711,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Item", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class Item : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class Item : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7733,7 +7733,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.QueueCategory CategoryId {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.QueueCategory CategoryId {
             get {
                 return this.CategoryIdField;
             }
@@ -7746,7 +7746,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueId {
+        internal string UniqueId {
             get {
                 return this.UniqueIdField;
             }
@@ -7772,7 +7772,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRemoveMessageQueueRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRemoveMessageQueueRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRemoveMessageQueueRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7797,7 +7797,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -7810,7 +7810,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -7823,7 +7823,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7849,7 +7849,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirSeatMapRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirSeatMapRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirSeatMapRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7877,7 +7877,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -7890,7 +7890,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightInformation FlightInformation {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightInformation FlightInformation {
             get {
                 return this.FlightInformationField;
             }
@@ -7903,7 +7903,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -7916,7 +7916,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -7942,7 +7942,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FlightInformation", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class FlightInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FlightInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -7979,7 +7979,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string AirEquipType {
+        internal string AirEquipType {
             get {
                 return this.AirEquipTypeField;
             }
@@ -7992,7 +7992,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirlineCode {
+        internal string AirlineCode {
             get {
                 return this.AirlineCodeField;
             }
@@ -8005,7 +8005,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ArrivalAirport {
+        internal string ArrivalAirport {
             get {
                 return this.ArrivalAirportField;
             }
@@ -8018,7 +8018,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DepartureAirport {
+        internal string DepartureAirport {
             get {
                 return this.DepartureAirportField;
             }
@@ -8031,7 +8031,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -8044,7 +8044,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -8057,7 +8057,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ResBookDesigCode {
+        internal string ResBookDesigCode {
             get {
                 return this.ResBookDesigCodeField;
             }
@@ -8083,7 +8083,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirSeatMapRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirSeatMapRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirSeatMapRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8111,7 +8111,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -8124,7 +8124,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatMapResponse SeatMapResponse {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatMapResponse SeatMapResponse {
             get {
                 return this.SeatMapResponseField;
             }
@@ -8137,7 +8137,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -8150,7 +8150,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -8176,7 +8176,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SeatMapResponse", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SeatMapResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SeatMapResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8198,7 +8198,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightInformation FlightInformation {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightInformation FlightInformation {
             get {
                 return this.FlightInformationField;
             }
@@ -8211,7 +8211,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatMapDetails SeatMapDetails {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatMapDetails SeatMapDetails {
             get {
                 return this.SeatMapDetailsField;
             }
@@ -8237,7 +8237,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SeatMapDetails", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SeatMapDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SeatMapDetails : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8259,7 +8259,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRow[] AirRows {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRow[] AirRows {
             get {
                 return this.AirRowsField;
             }
@@ -8272,7 +8272,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinClass[] CabinClasses {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinClass[] CabinClasses {
             get {
                 return this.CabinClassesField;
             }
@@ -8298,7 +8298,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRow", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRow : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8323,7 +8323,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirSeat[] AirSeats {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirSeat[] AirSeats {
             get {
                 return this.AirSeatsField;
             }
@@ -8336,7 +8336,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RowCharacteristics {
+        internal string RowCharacteristics {
             get {
                 return this.RowCharacteristicsField;
             }
@@ -8349,7 +8349,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RowNumber {
+        internal string RowNumber {
             get {
                 return this.RowNumberField;
             }
@@ -8375,7 +8375,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CabinClass", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class CabinClass : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class CabinClass : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8418,7 +8418,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirRowEndNumber {
+        internal string AirRowEndNumber {
             get {
                 return this.AirRowEndNumberField;
             }
@@ -8431,7 +8431,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirRowStartNumber {
+        internal string AirRowStartNumber {
             get {
                 return this.AirRowStartNumberField;
             }
@@ -8444,7 +8444,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CabinLocation {
+        internal string CabinLocation {
             get {
                 return this.CabinLocationField;
             }
@@ -8457,7 +8457,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CabinType {
+        internal string CabinType {
             get {
                 return this.CabinTypeField;
             }
@@ -8470,7 +8470,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ColumnInformation[] ColumnInformations {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ColumnInformation[] ColumnInformations {
             get {
                 return this.ColumnInformationsField;
             }
@@ -8483,7 +8483,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MaxNumberOfSeats {
+        internal string MaxNumberOfSeats {
             get {
                 return this.MaxNumberOfSeatsField;
             }
@@ -8496,7 +8496,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatOccuptionDetails {
+        internal string SeatOccuptionDetails {
             get {
                 return this.SeatOccuptionDetailsField;
             }
@@ -8509,7 +8509,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WingRowEndNumber {
+        internal string WingRowEndNumber {
             get {
                 return this.WingRowEndNumberField;
             }
@@ -8522,7 +8522,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WingRowStartNumber {
+        internal string WingRowStartNumber {
             get {
                 return this.WingRowStartNumberField;
             }
@@ -8548,7 +8548,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirSeat", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirSeat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirSeat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8573,7 +8573,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatAvailability {
+        internal string SeatAvailability {
             get {
                 return this.SeatAvailabilityField;
             }
@@ -8586,7 +8586,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatCharacteristics {
+        internal string SeatCharacteristics {
             get {
                 return this.SeatCharacteristicsField;
             }
@@ -8599,7 +8599,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatNumber {
+        internal string SeatNumber {
             get {
                 return this.SeatNumberField;
             }
@@ -8625,7 +8625,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ColumnInformation", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ColumnInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ColumnInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8647,7 +8647,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
+        internal string Description {
             get {
                 return this.DescriptionField;
             }
@@ -8660,7 +8660,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Seat {
+        internal string Seat {
             get {
                 return this.SeatField;
             }
@@ -8686,7 +8686,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirSeatRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirSeatRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirSeatRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8714,7 +8714,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SegmentInfo SegmentInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SegmentInfo SegmentInfo {
             get {
                 return this.SegmentInfoField;
             }
@@ -8727,7 +8727,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -8740,7 +8740,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -8753,7 +8753,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -8779,7 +8779,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SegmentInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SegmentInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SegmentInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8810,7 +8810,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -8823,7 +8823,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DestinationLocation {
+        internal string DestinationLocation {
             get {
                 return this.DestinationLocationField;
             }
@@ -8836,7 +8836,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FlightNo {
+        internal int FlightNo {
             get {
                 return this.FlightNoField;
             }
@@ -8849,7 +8849,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginLocation {
+        internal string OriginLocation {
             get {
                 return this.OriginLocationField;
             }
@@ -8862,7 +8862,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassangerInfo[] PassangerInfoList {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassangerInfo[] PassangerInfoList {
             get {
                 return this.PassangerInfoListField;
             }
@@ -8888,7 +8888,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PassangerInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class PassangerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class PassangerInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8913,7 +8913,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassangerFirstName {
+        internal string PassangerFirstName {
             get {
                 return this.PassangerFirstNameField;
             }
@@ -8926,7 +8926,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassangerLastName {
+        internal string PassangerLastName {
             get {
                 return this.PassangerLastNameField;
             }
@@ -8939,7 +8939,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatNo {
+        internal string SeatNo {
             get {
                 return this.SeatNoField;
             }
@@ -8965,7 +8965,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirSeatRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirSeatRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirSeatRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -8993,7 +8993,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -9006,7 +9006,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -9019,7 +9019,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9032,7 +9032,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatReserveStatus[] seatReserveStatusList {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.SeatReserveStatus[] seatReserveStatusList {
             get {
                 return this.seatReserveStatusListField;
             }
@@ -9058,7 +9058,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SeatReserveStatus", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class SeatReserveStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class SeatReserveStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9080,7 +9080,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SeatNumber {
+        internal string SeatNumber {
             get {
                 return this.SeatNumberField;
             }
@@ -9093,7 +9093,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Status {
+        internal bool Status {
             get {
                 return this.StatusField;
             }
@@ -9119,7 +9119,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookingDataRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookingDataRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookingDataRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9144,7 +9144,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -9157,7 +9157,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9170,7 +9170,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -9196,7 +9196,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirBookingDataRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirBookingDataRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirBookingDataRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9233,7 +9233,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BookedBy {
+        internal string BookedBy {
             get {
                 return this.BookedByField;
             }
@@ -9246,7 +9246,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientBalance {
+        internal string ClientBalance {
             get {
                 return this.ClientBalanceField;
             }
@@ -9259,7 +9259,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -9272,7 +9272,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderBy {
+        internal string OrderBy {
             get {
                 return this.OrderByField;
             }
@@ -9285,7 +9285,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -9298,7 +9298,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9311,7 +9311,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelItinerary TravelItinerary {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelItinerary TravelItinerary {
             get {
                 return this.TravelItineraryField;
             }
@@ -9337,7 +9337,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MultiAirRevalidateRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MultiAirRevalidateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MultiAirRevalidateRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9362,7 +9362,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] FareSourceCodes {
+        internal string[] FareSourceCodes {
             get {
                 return this.FareSourceCodesField;
             }
@@ -9375,7 +9375,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -9388,7 +9388,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9414,7 +9414,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MultiAirRevalidateRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MultiAirRevalidateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MultiAirRevalidateRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9442,7 +9442,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -9455,7 +9455,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.MultiAirRevalidateItineraryInfo[] ItineraryInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.MultiAirRevalidateItineraryInfo[] ItineraryInfo {
             get {
                 return this.ItineraryInfoField;
             }
@@ -9468,7 +9468,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -9481,7 +9481,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9507,7 +9507,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MultiAirRevalidateItineraryInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MultiAirRevalidateItineraryInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MultiAirRevalidateItineraryInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9529,7 +9529,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRevalidateRS AirRevalidateRS {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.AirRevalidateRS AirRevalidateRS {
             get {
                 return this.AirRevalidateRSField;
             }
@@ -9542,7 +9542,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -9568,7 +9568,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MultiAirBookRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MultiAirBookRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MultiAirBookRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9602,7 +9602,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] FareSourceCodes {
+        internal string[] FareSourceCodes {
             get {
                 return this.FareSourceCodesField;
             }
@@ -9615,7 +9615,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaymentCardInfo PaymentCardInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PaymentCardInfo PaymentCardInfo {
             get {
                 return this.PaymentCardInfoField;
             }
@@ -9628,7 +9628,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PaymentTransactionID {
+        internal string PaymentTransactionID {
             get {
                 return this.PaymentTransactionIDField;
             }
@@ -9641,7 +9641,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -9654,7 +9654,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9667,7 +9667,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
             get {
                 return this.TravelerInfoField;
             }
@@ -9693,7 +9693,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MultiAirBookRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class MultiAirBookRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class MultiAirBookRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9724,7 +9724,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -9737,7 +9737,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryStatus[] ItineraryStatus {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.ItineraryStatus[] ItineraryStatus {
             get {
                 return this.ItineraryStatusField;
             }
@@ -9750,7 +9750,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -9763,7 +9763,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -9776,7 +9776,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -9802,7 +9802,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ItineraryStatus", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class ItineraryStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class ItineraryStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9830,7 +9830,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -9843,7 +9843,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Remarks {
+        internal string Remarks {
             get {
                 return this.RemarksField;
             }
@@ -9856,7 +9856,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Status {
+        internal string Status {
             get {
                 return this.StatusField;
             }
@@ -9869,7 +9869,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> TktTimeLimit {
+        internal System.Nullable<System.DateTime> TktTimeLimit {
             get {
                 return this.TktTimeLimitField;
             }
@@ -9895,7 +9895,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IntelliFareRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class IntelliFareRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class IntelliFareRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -9926,7 +9926,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.BookingClassPreference BookingClassPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.BookingClassPreference BookingClassPreference {
             get {
                 return this.BookingClassPreferenceField;
             }
@@ -9939,7 +9939,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.IntelliFareInformation[] IntelliFareInformations {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.IntelliFareInformation[] IntelliFareInformations {
             get {
                 return this.IntelliFareInformationsField;
             }
@@ -9952,7 +9952,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
             get {
                 return this.PassengerTypeQuantitiesField;
             }
@@ -9965,7 +9965,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -9978,7 +9978,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10002,7 +10002,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BookingClassPreference", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
-    public enum BookingClassPreference : int {
+    internal enum BookingClassPreference : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Default = 0,
@@ -10018,7 +10018,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IntelliFareInformation", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class IntelliFareInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class IntelliFareInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10055,7 +10055,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirlineCode {
+        internal string AirlineCode {
             get {
                 return this.AirlineCodeField;
             }
@@ -10068,7 +10068,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ArrivalDateTime {
+        internal System.DateTime ArrivalDateTime {
             get {
                 return this.ArrivalDateTimeField;
             }
@@ -10081,7 +10081,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BookingClass {
+        internal string BookingClass {
             get {
                 return this.BookingClassField;
             }
@@ -10094,7 +10094,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -10107,7 +10107,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DestinationLocationCode {
+        internal string DestinationLocationCode {
             get {
                 return this.DestinationLocationCodeField;
             }
@@ -10120,7 +10120,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -10133,7 +10133,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginLocationCode {
+        internal string OriginLocationCode {
             get {
                 return this.OriginLocationCodeField;
             }
@@ -10159,7 +10159,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IntelliBestBuyRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class IntelliBestBuyRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class IntelliBestBuyRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10193,7 +10193,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.BookingClassPreference BookingClassPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.BookingClassPreference BookingClassPreference {
             get {
                 return this.BookingClassPreferenceField;
             }
@@ -10206,7 +10206,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType CabinPreference {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType CabinPreference {
             get {
                 return this.CabinPreferenceField;
             }
@@ -10219,7 +10219,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.IntelliBestBuyInformation[] IntelliFareInformations {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.IntelliBestBuyInformation[] IntelliFareInformations {
             get {
                 return this.IntelliFareInformationsField;
             }
@@ -10232,7 +10232,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerTypeQuantity[] PassengerTypeQuantities {
             get {
                 return this.PassengerTypeQuantitiesField;
             }
@@ -10245,7 +10245,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -10258,7 +10258,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10284,7 +10284,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="IntelliBestBuyInformation", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class IntelliBestBuyInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class IntelliBestBuyInformation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10321,7 +10321,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AirlineCode {
+        internal string AirlineCode {
             get {
                 return this.AirlineCodeField;
             }
@@ -10334,7 +10334,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ArrivalDateTime {
+        internal System.DateTime ArrivalDateTime {
             get {
                 return this.ArrivalDateTimeField;
             }
@@ -10347,7 +10347,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BookingClass {
+        internal string BookingClass {
             get {
                 return this.BookingClassField;
             }
@@ -10360,7 +10360,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DepartureDateTime {
+        internal System.DateTime DepartureDateTime {
             get {
                 return this.DepartureDateTimeField;
             }
@@ -10373,7 +10373,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DestinationLocationCode {
+        internal string DestinationLocationCode {
             get {
                 return this.DestinationLocationCodeField;
             }
@@ -10386,7 +10386,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNumber {
+        internal string FlightNumber {
             get {
                 return this.FlightNumberField;
             }
@@ -10399,7 +10399,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginLocationCode {
+        internal string OriginLocationCode {
             get {
                 return this.OriginLocationCodeField;
             }
@@ -10425,7 +10425,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirQuoteRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirQuoteRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirQuoteRQ : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10453,7 +10453,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -10466,7 +10466,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -10479,7 +10479,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10492,7 +10492,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.TravelerInfo TravelerInfo {
             get {
                 return this.TravelerInfoField;
             }
@@ -10518,7 +10518,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirQuoteRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint")]
     [System.SerializableAttribute()]
-    public partial class AirQuoteRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirQuoteRS : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10546,7 +10546,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -10559,7 +10559,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -10572,7 +10572,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10585,7 +10585,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UniqueID {
+        internal string UniqueID {
             get {
                 return this.UniqueIDField;
             }
@@ -10611,7 +10611,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRulesRQ", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1")]
     [System.SerializableAttribute()]
-    public partial class AirRulesRQ1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRulesRQ1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10636,7 +10636,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FareSourceCode {
+        internal string FareSourceCode {
             get {
                 return this.FareSourceCodeField;
             }
@@ -10649,7 +10649,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SessionId {
+        internal string SessionId {
             get {
                 return this.SessionIdField;
             }
@@ -10662,7 +10662,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10688,7 +10688,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AirRulesRS", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1")]
     [System.SerializableAttribute()]
-    public partial class AirRulesRS1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class AirRulesRS1 : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10719,7 +10719,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.BaggageInfo[] BaggageInfos {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.BaggageInfo[] BaggageInfos {
             get {
                 return this.BaggageInfosField;
             }
@@ -10732,7 +10732,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Error[] Errors {
             get {
                 return this.ErrorsField;
             }
@@ -10745,7 +10745,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRule[] FareRules {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareRule[] FareRules {
             get {
                 return this.FareRulesField;
             }
@@ -10758,7 +10758,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
+        internal bool Success {
             get {
                 return this.SuccessField;
             }
@@ -10771,7 +10771,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.Target Target {
             get {
                 return this.TargetField;
             }
@@ -10797,7 +10797,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaggageInfo", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1")]
     [System.SerializableAttribute()]
-    public partial class BaggageInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class BaggageInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10825,7 +10825,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Arrival {
+        internal string Arrival {
             get {
                 return this.ArrivalField;
             }
@@ -10838,7 +10838,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Baggage {
+        internal string Baggage {
             get {
                 return this.BaggageField;
             }
@@ -10851,7 +10851,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Departure {
+        internal string Departure {
             get {
                 return this.DepartureField;
             }
@@ -10864,7 +10864,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlightNo {
+        internal string FlightNo {
             get {
                 return this.FlightNoField;
             }
@@ -10890,7 +10890,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FareRule", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1")]
     [System.SerializableAttribute()]
-    public partial class FareRule : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class FareRule : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -10918,7 +10918,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Airline {
+        internal string Airline {
             get {
                 return this.AirlineField;
             }
@@ -10931,7 +10931,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CityPair {
+        internal string CityPair {
             get {
                 return this.CityPairField;
             }
@@ -10944,7 +10944,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string FareBasis {
+        internal string FareBasis {
             get {
                 return this.FareBasisField;
             }
@@ -10957,7 +10957,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Lunggo.ApCommon.Mystifly.OnePointService.Flight.RuleDetail[] RuleDetails {
+        internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.RuleDetail[] RuleDetails {
             get {
                 return this.RuleDetailsField;
             }
@@ -10983,7 +10983,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RuleDetail", Namespace="http://schemas.datacontract.org/2004/07/Mystifly.OnePoint.AirRules1_1")]
     [System.SerializableAttribute()]
-    public partial class RuleDetail : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    internal partial class RuleDetail : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -11005,7 +11005,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Category {
+        internal string Category {
             get {
                 return this.CategoryField;
             }
@@ -11018,7 +11018,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Rules {
+        internal string Rules {
             get {
                 return this.RulesField;
             }
@@ -11042,7 +11042,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="Mystifly.OnePoint", ConfigurationName="Mystifly.OnePointService.Flight.OnePoint")]
-    public interface OnePoint {
+    internal interface OnePoint {
         
         [System.ServiceModel.OperationContractAttribute(Action="Mystifly.OnePoint/OnePoint/CreateSession", ReplyAction="Mystifly.OnePoint/OnePoint/CreateSessionResponse")]
         Lunggo.ApCommon.Mystifly.OnePointService.Flight.SessionCreateRS CreateSession(Lunggo.ApCommon.Mystifly.OnePointService.Flight.SessionCreateRQ rq);
@@ -11172,12 +11172,12 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface OnePointChannel : Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint, System.ServiceModel.IClientChannel {
+    internal interface OnePointChannel : Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class OnePointClient : System.ServiceModel.ClientBase<Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint>, Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint {
+    internal partial class OnePointClient : System.ServiceModel.ClientBase<Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint>, Lunggo.ApCommon.Mystifly.OnePointService.Flight.OnePoint {
         
         public OnePointClient() {
         }

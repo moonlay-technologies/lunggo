@@ -1945,12 +1945,7 @@
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
-    <Content Include="Views\Flight\Checkout.cshtml" />
-    <Content Include="Views\Flight\SearchListOneWay.cshtml" />
-    <Content Include="Views\Flight\SearchListReturn.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
-    <Content Include="Views\Flight\Eticket.cshtml" />
-    <Content Include="Views\Flight\SearchList.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -1970,6 +1965,7 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Flight\SearchResultList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

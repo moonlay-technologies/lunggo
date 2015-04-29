@@ -107,7 +107,6 @@
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
-    <Compile Include="Flight\FlightCacheUtil.cs" />
     <Compile Include="Flight\Interface\IClientHandler.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
@@ -141,7 +140,6 @@
     <Compile Include="Flight\Model\Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
-    <Compile Include="Flight\Model\TripInfo.cs" />
     <Compile Include="Flight\Query\GetFlightSegment.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Query\GetFlightBookingStatusQuery.cs" />
@@ -227,12 +225,12 @@
     <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
+    <Compile Include="Sequence\MemberIdCardSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Sequence\MemberIdCardSequence.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />

@@ -114,6 +114,9 @@
     </None>
     <None Include="Config\WebAPI\Airline.csv" />
     <None Include="Config\WebAPI\Airport.csv" />
+    <None Include="Config\WebAPI\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\mystifly.properties">
       <SubType>Designer</SubType>
     </None>

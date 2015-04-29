@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
+using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 {
@@ -14,9 +15,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
     {
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/flights")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
-            return FlightLogic.SearchFlights(request);
+            var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
+            var apiResponse = FlightLogic.SearchFlights(apiRequest);
+            return apiResponse;
         }
 
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]

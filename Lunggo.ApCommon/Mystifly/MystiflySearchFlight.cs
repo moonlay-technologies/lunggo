@@ -147,16 +147,26 @@ namespace Lunggo.ApCommon.Mystifly
             var oriDestInfos = conditions.TripInfos;
             switch (oriDestInfos.Count)
             {
+                case 0:
+                    airTripType = AirTripType.Other;
+                    break;
                 case 1:
                     airTripType = AirTripType.OneWay;
                     break;
                 case 2:
-                    airTripType = AirTripType.Return;
+                    airTripType = (oriDestInfos.First().DestinationAirport == oriDestInfos.Last().OriginAirport &&
+                            oriDestInfos.First().OriginAirport == oriDestInfos.Last().DestinationAirport)
+                        ? AirTripType.Return
+                        : AirTripType.OpenJaw;;
                     break;
                 default:
-                    airTripType = oriDestInfos.First().OriginAirport == oriDestInfos.Last().DestinationAirport
-                        ? AirTripType.Circle
-                        : AirTripType.OpenJaw;
+                    var circling = true;
+                    for (var i = 1; i < oriDestInfos.Count; i++)
+                        if (oriDestInfos[i].OriginAirport != oriDestInfos[i - 1].DestinationAirport)
+                            circling = false;
+                    if (oriDestInfos.First().OriginAirport != oriDestInfos.Last().DestinationAirport)
+                        circling = false;
+                    airTripType = circling ? AirTripType.Circle : AirTripType.OpenJaw;
                     break;
             }
             return airTripType;

@@ -6,16 +6,15 @@ using System.Security.Cryptography;
 using System.Web;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Redis;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using StackExchange.Redis;
-using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
