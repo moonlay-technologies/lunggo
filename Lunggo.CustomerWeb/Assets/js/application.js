@@ -577,6 +577,22 @@ function toggle_filter() {
 function hotelSearch() {
 
     toggle_view();
+    priceSlider();
+
+    // slider input
+    function priceSlider() {
+        
+        $('.slider-input').jRange({
+            from: 0,
+            to: 5000000,
+            step: 100000,
+            scale: [0, '5.000.000'],
+            width: 'auto',
+            showLabels: false,
+            isRange: true
+        });
+
+    }
 
     // hotel search view
     function toggle_view() {
@@ -753,6 +769,10 @@ var FlightSearchConfig = {
                 ($scope.star.star5) ? tempArr.push('5') : null;
                 $scope.HotelSearchParams.StarRating = tempArr.join(',');
 
+                // generate minimum and maximum price
+                var priceRange = $('#price-range').val().split(",");
+                $scope.HotelSearchParams.MinPrice = priceRange[0];
+                $scope.HotelSearchParams.MaxPrice = priceRange[1];
 
                 console.log('--------------------------------');
                 console.log('Searching for hotel with params:');
