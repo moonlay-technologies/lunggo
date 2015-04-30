@@ -935,6 +935,7 @@ var FlightSearchConfig = {
                     console.log(data);
 
                     flightList.list = data.FlightList;
+                    $scope.FlightSearchParams.SearchId = data.SearchId;
 
                     console.log('LOADED');
                     console.log('--------------------------------');

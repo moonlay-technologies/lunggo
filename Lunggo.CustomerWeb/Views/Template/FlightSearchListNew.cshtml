@@ -58,7 +58,7 @@
 
         <section class="flight-list horizontal">
         
-            <article class="flight flight-single">
+            <article class="flight flight-single" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list">
 
                 <div class="flight-main">
                     <div class="flight-left">
@@ -68,22 +68,22 @@
                             </div>
                         </div><!-- .flight-header -->
                         <div class="flight-content">
-                        
+
                             <div class="flight-airline-image">
-                                <img src="http://placehold.it/100x100.jpg"/>
+                                <img src="http://placehold.it/100x100.jpg" />
                             </div><!-- .flight-airline-image -->
 
                             <div class="flight-route">
-                                
+
                                 <div class="departure">
                                     <h2>13:45</h2>
                                     <h3>5 May2015</h3>
                                     <h2>CGK</h2>
                                     <h3>Jakarta</h3>
                                 </div><!-- .departure -->
-                            
+
                                 <div class="duration">
-                                    <h5>duration <br/> 10h 51m</h5>
+                                    <h5>duration <br /> 10h 51m</h5>
                                     <hr />
                                     <h5>1 stop</h5>
                                 </div><!-- .duration -->
@@ -100,26 +100,34 @@
                         </div><!-- .flight-content -->
                         <div class="flight-action">
                             <a href="#"><img src="http://placehold.it/25x25.jpg" /> Flight Details</a>
-                            <a href="#"><img src="http://placehold.it/25x25.jpg"/> Fares Rules</a>
+                            <a href="#"><img src="http://placehold.it/25x25.jpg" /> Fares Rules</a>
                         </div><!-- .flight-action -->
                     </div><!-- .flight-left -->
                     <div class="flight-right">
-                        <span class="tag red">Disc 20%</span>
-                        <p>Total Fare:</p>
-                        <h5 class="price-was"><del>Rp 1.800.000</del></h5>
-                        <h4 class="price-now">Rp 10.500.000</h4>
-                        <small>harga sudah termasuk <b>pajak</b></small>
-                        <button class="btn btn-blue">Book Now !</button>
+                        <form action="/id/flight/checkout" method="POST">
+                            <span class="tag red">Disc 20%</span>
+                            <p>Total Fare:</p>
+                            <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
+                            <h4 class="price-now">{{flight.TotalFare | number}}</h4>
+                            <small>harga sudah termasuk <b>pajak</b></small>
+                            <input class="hidden" type="text" name="AdultCount" value="{{flight.AdultCount}}" />
+                            <input class="hidden" type="text" name="ChildCount" value="{{flight.ChildCount}}" />
+                            <input class="hidden" type="text" name="InfantCount" value="{{flight.InfantCount}}" />
+                            <input class="hidden" type="text" name="IsPassportRequired" value="{{flight.RequirePassport}}" />
+                            <input class="hidden" type="text" name="IsBirthDateRequired" value="{{flight.RequireBirthDate}}" />
+                            <input class="hidden" type="text" name="FareId" value="{{flight.FareId}}" />
+                            <button class="btn btn-blue">Book Now !</button>
+                        </form>
                     </div><!-- .flight-right -->
                 </div><!-- .flight-main -->
-            
+
                 <div class="flight-detail">
                     <div class="flight-detail-content">
                         <h4 class="detail-title"> <b>FLIGHT</b> DETAILS</h4>
                         <ol>
                             <li class="route">
                                 <div class="flight-airline">
-                                    <img src="http://placehold.it/50.jpg"/>
+                                    <img src="http://placehold.it/50.jpg" />
                                     <h5>GA 1234</h5>
                                 </div><!-- .flight-airline-->
                                 <div class="flight-route">
@@ -133,7 +141,7 @@
                                         <h5>12 April 2015</h5>
                                     </div><!-- .flight-departure-time -->
                                     <div class="flight-duration">
-                                        <h5>Duration<br/>10h 59m</h5>
+                                        <h5>Duration<br />10h 59m</h5>
                                         <hr />
                                     </div><!-- .flight-departure-duration -->
                                     <div class="flight-arrival-time">
