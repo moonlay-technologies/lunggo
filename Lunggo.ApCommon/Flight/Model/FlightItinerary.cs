@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightItineraryApi : FlightItineraryBase
     {
+        public int SequenceNo { get; set; }
         public int TotalTransit { get; set; }
         public List<Transit> Transits { get; set; }
         public List<Airline> Airlines { get; set; }

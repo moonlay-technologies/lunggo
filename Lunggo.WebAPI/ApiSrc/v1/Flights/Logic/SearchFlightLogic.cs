@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -82,7 +83,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static List<FlightItineraryApi> MapItineraries(IEnumerable<FlightItineraryFare> itineraries)
         {
-            return itineraries.Select(itin => new FlightItineraryApi
+            var list = itineraries.Select(itin => new FlightItineraryApi
             {
                 AdultCount = itin.AdultCount, 
                 ChildCount = itin.ChildCount, 
@@ -103,6 +104,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 TotalTransit = CalculateTotalTransit(itin),
                 Transits = MapTransitDetails(itin)
             }).ToList();
+            for (var i = 0; i < list.Count; i++)
+            {
+                list[i].SequenceNo = i;
+            }
+            var orderedList = list.OrderBy(itin => itin.SequenceNo);
+            return orderedList.ToList();
         }
 
         private static List<FlightTripFare> MapTrips(IEnumerable<FlightTripFare> trips)
