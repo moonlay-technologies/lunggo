@@ -51,7 +51,7 @@ namespace Lunggo.CustomerWeb.Models
 
         public static CabinClass ParseCabinClass(string code)
         {
-            switch (code)
+            switch (code.ToUpper())
             {
                 case "Y":
                     return CabinClass.Economy;

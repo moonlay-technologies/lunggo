@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = FlightCacheUtil.ConvertToCacheObject(itins[itinIndex]);
             redisDb.StringSet(hash, cacheObject, TimeSpan.FromMinutes(
-                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "flightItineraryCacheTimeout"))));
+                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"))));
 
             return hash;
         }
@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = FlightCacheUtil.ConvertToCacheObject(itineraryList);
             redisDb.StringSet(searchId, cacheObject, TimeSpan.FromMinutes(
-                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "flightSearchResultCacheTimeout"))));
+                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"))));
         }
 
         private static List<FlightItineraryFare> GetSearchResultFromCache(string searchId)

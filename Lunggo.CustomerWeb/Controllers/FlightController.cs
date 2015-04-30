@@ -8,7 +8,7 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         public ActionResult SearchResultList(FlightSearchData search)
         {
-            return View();
+            return View(search);
         }
 
         [HttpPost]

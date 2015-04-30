@@ -18,7 +18,7 @@
     <!-- site header start -->
     <header id="site-header" class="site-header home-header">
         <div class="search-switch-button flight">
-            <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights"/>
+            <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" />
         </div><!-- .search-switch-button -->
         @{ Html.RenderPartial("_Mainmenu"); }
         <div class="header-form-wrapper home-page-header">
@@ -86,7 +86,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
 
-                                        <form action="/id/Flight/SearchList" method="GET" class="form-inline search-flight-form">
+                                        <form action="/id/Flight/SearchResultList" method="GET" class="form-inline search-flight-form">
                                             <div class="form-group loc-auto-wrapper">
                                                 <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori">
                                             </div>
@@ -104,18 +104,19 @@
                                                 <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Pulang Pergi</label>
                                             </div>
                                             <div class="form-group flight-passenger form-control">
-                                                <label class="adult-passenger"><span>A</span> <input type="text" name="Adult" class="" value="0" maxlength="1" /></label>
-                                                <label class="child-passenger"><span>C</span> <input type="text" name="Child" class="" value="0" maxlength="1" /></label>
-                                                <label class="infant-passenger"><span>I</span> <input type="text" name="Infant" class="" value="0" maxlength="1" /></label>
+                                                <label class="adult-passenger"><span>A</span> <input type="text" class="" value="1" maxlength="1" id="flight-adult" /></label>
+                                                <label class="child-passenger"><span>C</span> <input type="text" class="" value="0" maxlength="1" id="flight-child" /></label>
+                                                <label class="infant-passenger"><span>I</span> <input type="text" class="" value="0" maxlength="1" id="flight-infant" /></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="hidden flight-form-value" id="flight-origin" name="Ori" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-destination" name="Dest" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-date" name="Date" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-return-date" name="ReturnDate" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-type" name="Type" value="RET" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-cabin" name="Cabin" value="e" />
-                                                <button class="btn btn-primary btn-yellow">SEARCH</button>
+                                                <input type="text" class="hidden flight-form-value" id="flight-origin" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-destination" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-date" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-return-date" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-type" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-cabin" />
+                                                <input type="text" class="hidden flight-form-value" id="flight-info" name="info" />
+                                                <button class="btn btn-primary btn-yellow" id="flight-search">SEARCH</button>
                                             </div>
                                         </form>
 
@@ -213,20 +214,46 @@
         </section>
     </footer>
     <!-- site footer end -->
-
     <!-- javascripts -->
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/jquery.cycle2.min.js"></script>
-    
+
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
+
     <script src="/Assets/js/jquery.pickmeup.min.js"></script>
     <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
 
     <script src="/assets/js/application.js"></script>
+
+    <script>
+        $('#flight-search').click(function (evt) {
+            evt.preventDefault();
+            var info = function () {
+                var s = "";
+                var ori = $('#flight-origin').val();
+                var dest = $('#flight-destination').val();
+                var date = $('#flight-date').val();
+                s = s.concat(ori, dest, date.substring(8, 10), date.substring(5, 7), date.substring(2, 4));
+                if ($('#return-flight').checked) {
+                    var ori2 = $('#flight-destination').val();
+                    var dest2 = $('#flight-origin').val();
+                    var date2 = $('#flight-return-date').val();
+                    s = s.concat('.', ori2, dest2, date2.substring(8, 10), date2.substring(5, 7), date2.substring(2, 4));
+                }
+                var cabin = 'y';
+                var adult = $('#flight-adult').val();
+                var child = $('#flight-child').val();
+                var infant = $('#flight-infant').val();
+                s = s.concat('-', adult, child, infant, cabin);
+                return s;
+            }
+            $('#flight-info').val(info);
+            $(this).closest('form').submit();
+        })
+    </script>
 
 </body>
 </html>

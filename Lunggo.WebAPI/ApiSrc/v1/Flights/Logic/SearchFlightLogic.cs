@@ -73,6 +73,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             }
             else
             {
+                apiResponse.SearchId = searchServiceResponse.SearchId;
                 apiResponse.FlightList = MapItineraries(searchServiceResponse.Itineraries);
                 apiResponse.TotalFlightCount = searchServiceResponse.Itineraries.Count;
             }
@@ -89,7 +90,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 AdultTotalFare = itin.AdultTotalFare,
                 ChildTotalFare = itin.ChildTotalFare, 
                 InfantTotalFare = itin.InfantTotalFare, 
-                FareId = itin.FareId,
                 Supplier = itin.Supplier, 
                 RequireBirthDate = itin.RequireBirthDate,
                 RequirePassport = itin.RequirePassport,

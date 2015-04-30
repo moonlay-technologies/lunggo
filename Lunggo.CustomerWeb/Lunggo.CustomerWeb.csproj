@@ -1967,6 +1967,8 @@
     </None>
     <Content Include="Views\Flight\SearchResultList.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
+    <Content Include="Views\Flight\SearchResultList - Ori.cshtml" />
+    <Content Include="Views\Flight\Checkout - Ori.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
