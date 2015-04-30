@@ -555,6 +555,7 @@ hr {
     padding-bottom: 0; }
     .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name {
       font-size: 18px;
+      height: 40px;
       color: #3fabe3;
       font-weight: bold;
       margin-top: 0;
@@ -568,8 +569,7 @@ hr {
       font-style: italic;
       margin-top: 0; }
     .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-feedback {
-      color: #888;
-      padding-top: 10px; }
+      color: #888; }
       .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-feedback .hotel-like {
         margin-right: 10px; }
       .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-feedback .hotel-review {
@@ -968,20 +968,80 @@ hr {
     .flight-search-page .flight-filter .filter-group a {
       display: block; }
 .flight-search-page .flight-list.horizontal .flight {
-  border: 1px solid #d5d5d5;
   margin-bottom: 15px;
   border-radius: 5px;
   -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  background: #fff; }
+  -webkit-border-radius: 5px; }
   .flight-search-page .flight-list.horizontal .flight.active {
     border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active .flight-main {
+      border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active .flight-detail .flight-detail-content {
+      border-color: #3fabe3; }
     .flight-search-page .flight-list.horizontal .flight.active .flight-detail {
-      display: block; }
+      height: auto;
+      overflow: auto; }
+  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div {
+    float: left;
+    width: 50%; }
+    .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-header {
+      padding: 10px; }
+    .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content {
+      padding-top: 10px; }
+      .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content > div {
+        float: left; }
+      .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline {
+        width: 40%;
+        text-align: center; }
+        .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 5px; }
+      .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route {
+        width: 60%;
+        padding-top: 20px; }
+        .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper {
+          width: 100%; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper > div {
+            float: left;
+            text-align: center; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper h4 {
+            font-weight: bold;
+            margin: 0;
+            padding: 0; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper h5 {
+            margin: 0;
+            padding: 0; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper .departure {
+            width: 40%; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper .to {
+            width: 20%;
+            padding-top: 5px; }
+          .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route .route-wrapper .arrival {
+            width: 40%; }
+      .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .duration {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        clear: both;
+        padding-top: 10px; }
+  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div + div {
+    border-left: 1px solid #ddd; }
+  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > .flight-action {
+    display: block;
+    clear: both;
+    width: 100%;
+    border-left: 0; }
+  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail ol + h4 {
+    border-top: 2px solid #3fabe3; }
   .flight-search-page .flight-list.horizontal .flight .flight-main {
     display: block;
     clear: both;
-    position: relative; }
+    position: relative;
+    background: #fff;
+    border: 1px solid #ddd; }
     .flight-search-page .flight-list.horizontal .flight .flight-main:after {
       content: "";
       clear: both;
@@ -990,7 +1050,7 @@ hr {
     .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left {
       float: left;
       width: 73%;
-      padding-bottom: 30px; }
+      border-right: 1px solid #ddd; }
       .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header {
         border-bottom: 1px solid #ddd; }
         .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline {
@@ -1015,106 +1075,59 @@ hr {
             background: url(../images/flight-weight.png) bottom center no-repeat;
             color: #fff;
             padding: 10px 10px 2px; }
-      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route {
-        padding: 35px 60px;
-        padding-bottom: 0; }
-        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail {
-          border-bottom: 1px solid #ddd;
-          position: relative;
-          margin-bottom: 40px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail:after {
-            content: "";
-            display: block;
-            clear: both;
-            width: 100%; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail > div {
-            display: inline-block;
-            width: 120px;
-            text-align: center;
-            position: relative; }
-            .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail > div .number {
-              position: absolute;
-              width: 100%;
-              left: 0;
-              top: 0;
-              text-align: center;
-              display: block; }
-            .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail > div .time {
-              position: absolute;
-              text-align: center;
-              width: 100%;
-              top: -25px;
-              left: 0;
-              font-weight: bold;
-              font-size: 18px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail > div .location {
-              position: absolute;
-              display: block;
-              text-align: center;
-              width: 100%;
-              font-size: 14px;
-              bottom: -25px;
-              left: 0; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail .departure {
-            float: left;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail .arrival {
-            float: right;
-            margin-right: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail .stop {
-            position: absolute;
-            top: 3px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail .stop .number {
-              top: -5px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail .stop img {
-              position: relative;
-              top: 10px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-1 .stop-1 {
-            left: 50%;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-2 .stop-1 {
-            left: 33%;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-2 .stop-2 {
-            left: 67%;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-3 .stop-1 {
-            left: 25%;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-3 .stop-2 {
-            left: 50%;
-            margin-left: -60px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-route-detail.transit-3 .stop-3 {
-            left: 75%;
-            margin-left: -60px; }
-        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-time {
-          height: 10px;
-          width: 100%;
-          border-right: 1px solid #2fb4e6;
-          border-left: 1px solid #2fb4e6;
+      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content > div {
+        float: left; }
+      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-airline-image {
+        border-right: 1px solid #ddd;
+        width: 25%;
+        text-align: center; }
+      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route {
+        width: 75%;
+        padding-top: 15px;
+        color: #666; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route h2 {
+          padding: 0;
+          margin: 0;
+          font-size: 18px;
+          font-weight: bold; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route h3 {
+          padding: 0;
+          margin: 0;
+          font-size: 14px; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route h5 {
+          padding: 0;
+          margin: 0;
+          font-size: 12px; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route h3 + h2 {
+          margin-top: 10px; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route hr {
+          border-color: #3fabe3; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route > div {
+          float: left; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route .departure {
+          width: 33%;
+          text-align: right; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route .duration {
+          width: 33%;
           text-align: center;
-          position: relative; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-time:after {
-            content: "";
-            display: block;
-            width: 100%;
-            border-top: 1px dashed #2fb4e6;
-            z-index: 1;
-            margin-top: -15px;
-            position: relative; }
-          .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-route .flight-time .total-time {
-            background: #fff;
-            color: #2fb4e6;
-            font-weight: bold;
-            z-index: 2;
-            top: -5px;
-            position: relative;
-            padding: 0 5px; }
+          padding: 0 10px; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route .arrival {
+          width: 33%;
+          text-align: left; }
+      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content:after {
+        content: "";
+        clear: both;
+        width: 100%;
+        display: block; }
+      .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-action {
+        border-top: 1px solid #ddd;
+        padding: 10px; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-action a {
+          margin-right: 15px; }
     .flight-search-page .flight-list.horizontal .flight .flight-main .flight-right {
       float: left;
       width: 27%;
-      padding: 30px 20px;
-      border-left: 1px solid #ddd;
+      padding: 15px 20px 0;
       position: relative; }
       .flight-search-page .flight-list.horizontal .flight .flight-main .flight-right .tag {
         position: absolute;
@@ -1167,103 +1180,77 @@ hr {
       .flight-search-page .flight-list.horizontal .flight .flight-main .flight-toggle.active {
         background-image: url(../images/flight-toggle-up.png); }
   .flight-search-page .flight-list.horizontal .flight .flight-detail {
-    border-top: 1px solid #62c7ec;
-    display: none;
-    transition: 1s linear all; }
-    .flight-search-page .flight-list.horizontal .flight .flight-detail:after {
-      content: "";
-      display: block;
-      width: 100%;
-      clear: both; }
-    .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left {
-      float: left;
-      width: 73%;
-      padding: 20px; }
-      .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left .detail-title {
-        margin-bottom: 20px; }
-      .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol {
-        list-style: none;
-        counter-reset: listCounter; }
-        .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li {
-          position: relative;
-          margin-bottom: 15px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li:before {
-            counter-increment: listCounter;
-            content: counter(listCounter);
-            color: #444;
-            background: #f3b400;
-            font-weight: bold;
-            text-align: center;
-            width: 20px;
-            position: absolute;
-            top: 0;
-            left: -30px;
-            z-index: 10; }
-          .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li > div {
-            display: inline-block;
-            vertical-align: top; }
-          .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination {
-            width: 35%;
+    padding: 0 20px;
+    height: 0;
+    overflow: hidden; }
+    .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content {
+      border: 1px solid #ddd;
+      background: #fafafa;
+      border-top: 0; }
+      .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content:after {
+        content: "";
+        display: block;
+        width: 100%;
+        clear: both; }
+      .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content .detail-title {
+        margin: 0;
+        padding: 20px 0 10px 20px; }
+      .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol {
+        padding: 0;
+        margin: 0;
+        list-style: none; }
+        .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li {
+          padding-top: 10px;
+          padding-bottom: 10px; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li:after {
+            content: "";
+            display: block;
+            width: 100%;
+            clear: both; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route > div {
+            float: left; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-airline {
+            width: 15%;
             text-align: center; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination:after {
-              content: "";
-              display: block;
-              width: 100%;
-              border-top: 2px solid #aaa;
-              top: 20px;
-              position: relative;
-              z-index: 1; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination > div {
-              position: relative;
-              z-index: 2;
-              background: #fff; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination .departure {
-              float: left;
-              padding-right: 5px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination .arrival {
-              float: right;
-              padding-left: 5px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-destination .city {
-              display: block;
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route {
+            width: 85%; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route > div {
+              float: left; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route h4 {
               font-weight: bold;
-              font-size: 18px; }
-          .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-airline {
-            width: 35%;
-            vertical-align: middle;
-            padding-top: 5px;
-            font-size: 20px;
-            text-align: center; }
-          .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time {
-            width: 28%;
-            text-align: center; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time:after {
-              content: "";
-              display: block;
-              width: 100%;
-              border-top: 2px solid #aaa;
-              top: 20px;
-              position: relative;
-              z-index: 1; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time > div {
-              position: relative;
-              z-index: 2;
-              background: #fff; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time .departure {
-              float: left;
-              padding-right: 5px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time .arrival {
-              float: right;
-              padding-left: 5px; }
-            .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-left ol li .detail-time .time {
-              display: block;
-              font-weight: bold;
-              font-size: 18px; }
-    .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-right {
-      float: left;
-      width: 27%;
-      padding: 20px; }
-      .flight-search-page .flight-list.horizontal .flight .flight-detail .detail-right h5 {
-        font-weight: bold; }
+              margin: 0;
+              margin: 10px 0 5px;
+              font-size: 16px; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route h5 {
+              margin: 0;
+              margin-bottom: 5px;
+              font-size: 12px; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-departure-airport {
+              width: 25%;
+              text-align: right; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-departure-time {
+              width: 15%;
+              text-align: right; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-duration {
+              width: 20%;
+              text-align: center;
+              padding: 10px 20px 0;
+              font-size: 14px; }
+              .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-duration hr {
+                border-color: #3fabe3; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-arrival-time {
+              width: 15%;
+              text-align: left; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-arrival-airport {
+              width: 25%;
+              text-align: left; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.transit {
+            padding: 0 150px 20px;
+            font-size: 12px; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.transit h3 {
+              text-align: center; }
+        .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li + li {
+          border-top: 1px solid #ddd; }
 .flight-search-page .flight-list-return.horizontal .flight {
   border: 1px solid #d5d5d5;
   margin-bottom: 15px;
