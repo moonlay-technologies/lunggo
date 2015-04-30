@@ -1033,8 +1033,9 @@ hr {
     display: block;
     clear: both;
     width: 100%;
-    border-left: 0; }
-  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail ol + h4 {
+    border-left: 0;
+    cursor: pointer; }
+  .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail .return-flight-detail, .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail ol + h4 {
     border-top: 2px solid #3fabe3; }
   .flight-search-page .flight-list.horizontal .flight .flight-main {
     display: block;
