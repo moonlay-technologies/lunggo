@@ -108,6 +108,9 @@
     <None Include="Config\BackendWeb\zendesk.properties" />
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
+    <None Include="Config\CustomerWeb\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\HotelLocation.csv" />
     <None Include="Config\CustomerWeb\mystifly.properties">
       <SubType>Designer</SubType>

@@ -56,15 +56,12 @@
                                     <label for="" class="control-label">Last Name :</label>
                                     <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
                                 </div>
-                                if (Model.IsBirthDateRequired)
-                                {
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
-                                        <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
-                                    </div>
-                                }
                                 <div class="form-group">
-                                    @if (Model.IsPassportRequired)
+                                    <label for="" class="control-label">Birth Date :</label>
+                                    <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    @if (needPassport)
                                     {
                                         <label for="" class="control-label">Passport Number :</label>
                                     }
@@ -74,7 +71,7 @@
                                     }
                                     <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].IdNumber" placeholder="">
                                 </div>
-                                if (Model.IsPassportRequired)
+                                if (needPassport)
                                 {
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Expiry Date:</label>
@@ -104,15 +101,12 @@
                                         <label for="" class="control-label">Last Name :</label>
                                         <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
                                     </div>
-                                    if (Model.IsBirthDateRequired)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Birth Date :</label>
-                                            <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                        </div>
-                                    }
                                     <div class="form-group">
-                                        @if (Model.IsPassportRequired)
+                                        <label for="" class="control-label">Birth Date :</label>
+                                        <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        @if (needPassport)
                                         {
                                             <label for="" class="control-label">Passport Number :</label>
                                         }
@@ -122,7 +116,7 @@
                                         }
                                         <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].IdNumber" placeholder="">
                                     </div>
-                                    if (Model.IsPassportRequired)
+                                    if (needPassport)
                                     {
                                         <div class="form-group">
                                             <label for="" class="control-label">Passport Expiry Date:</label>
@@ -153,15 +147,12 @@
                                         <label for="" class="control-label">Last Name :</label>
                                         <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
                                     </div>
-                                    if (Model.IsBirthDateRequired)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Birth Date :</label>
-                                            <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                        </div>
-                                    }
                                     <div class="form-group">
-                                        @if (Model.IsPassportRequired)
+                                        <label for="" class="control-label">Birth Date :</label>
+                                        <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        @if (needPassport)
                                         {
                                             <label for="" class="control-label">Passport Number :</label>
                                         }
@@ -171,7 +162,7 @@
                                         }
                                         <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].IdNumber" placeholder="">
                                     </div>
-                                    if (Model.IsPassportRequired)
+                                    if (needPassport)
                                     {
                                         <div class="form-group">
                                             <label for="" class="control-label">Passport Expiry Date:</label>
