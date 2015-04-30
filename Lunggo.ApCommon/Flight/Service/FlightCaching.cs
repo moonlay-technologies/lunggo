@@ -24,8 +24,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var itins = GetSearchResultFromCache(searchId);
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "flightItinerary:" + hash;
             var cacheObject = FlightCacheUtil.ConvertToCacheObject(itins[itinIndex]);
-            redisDb.StringSet(hash, cacheObject, TimeSpan.FromMinutes(
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"))));
 
             return hash;
@@ -35,7 +36,8 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var cacheObject = redisDb.StringGet(hash);
+            var redisKey = "flightItinerary:" + hash;
+            var cacheObject = redisDb.StringGet(redisKey);
 
             if (!cacheObject.IsNullOrEmpty)
             {
@@ -52,8 +54,9 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "flightItineraries:" + searchId;
             var cacheObject = FlightCacheUtil.ConvertToCacheObject(itineraryList);
-            redisDb.StringSet(searchId, cacheObject, TimeSpan.FromMinutes(
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"))));
         }
 
@@ -61,7 +64,8 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var cacheObject = redisDb.StringGet(searchId);
+            var redisKey = "flightItineraries:" + searchId;
+            var cacheObject = redisDb.StringGet(redisKey);
 
             if (!cacheObject.IsNullOrEmpty)
             {
