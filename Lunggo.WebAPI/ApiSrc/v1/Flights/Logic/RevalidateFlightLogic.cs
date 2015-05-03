@@ -35,13 +35,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static RevalidateFlightInput PreprocessServiceRequest(FlightRevalidateApiRequest request)
         {
-            return new RevalidateFlightInput { FareId = request.FareId };
+            var service = FlightService.GetInstance();
+            var itin = service.GetItineraryFromCache(request.Hash);
+            return new RevalidateFlightInput { FareId = itin.FareId };
         }
 
         private static bool IsValid(FlightRevalidateApiRequest request)
         {
             return
-                request.FareId != null;
+                request.Hash != null;
         }
 
         private static FlightRevalidateApiResponse AssembleApiResponse(RevalidateFlightOutput revalidateServiceResponse, FlightRevalidateApiRequest request)

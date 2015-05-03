@@ -33,6 +33,8 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     result = MapResult(response, conditions);
                     result.IsSuccess = true;
+                    result.Errors = null;
+                    result.ErrorMessages = null;
                 }
                 else
                 {
@@ -54,8 +56,6 @@ namespace Lunggo.ApCommon.Mystifly
                         {
                             if (error.Code == "ERIFS002")
                             {
-                                result.Errors = null;
-                                result.ErrorMessages = null;
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
                                 retry++;

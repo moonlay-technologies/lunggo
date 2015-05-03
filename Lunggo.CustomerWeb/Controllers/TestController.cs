@@ -58,10 +58,10 @@ namespace Lunggo.BackendWeb.Controllers
                         Email = "ayey@aye.y",
                         Phone = "0856123456789",
                     },
-                    PassengerFareInfos = new List<PassengerFareInfo>()
+                    PassengerFareInfos = new List<PassengerInfoFare>()
                 }
             };
-            bookInput.BookingInfo.PassengerFareInfos.Add(new PassengerFareInfo
+            bookInput.BookingInfo.PassengerFareInfos.Add(new PassengerInfoFare
             {
                 Type = PassengerType.Adult,
                 Gender = Gender.Male,

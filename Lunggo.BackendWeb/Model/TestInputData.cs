@@ -18,7 +18,7 @@ namespace Lunggo.BackendWeb.Model
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
-        public List<PassengerFareInfo> PassengerData { get; set; }
+        public List<PassengerInfoFare> PassengerData { get; set; }
         public PaymentData PaymentData { get; set; }
     }
 }

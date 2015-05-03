@@ -7,6 +7,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightRevalidateApiRequest
     {
-        public string FareId { get; set; }
+        public string Hash { get; set; }
     }
 }

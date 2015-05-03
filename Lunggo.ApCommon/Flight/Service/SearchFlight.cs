@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var cacheItin = GetSearchResultFromCache(input.SearchId);
+                var cacheItin = GetItinerariesFromCache(input.SearchId);
                 if (cacheItin == null)
                     result = SearchByThirdPartyService(input);
                 else
@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             var result = SearchFlightInternal(conditions);
             if (result.FlightItineraries != null)
-                SaveSearchResultToCache(searchId, result.FlightItineraries);
+                SaveItinerariesToCache(searchId, result.FlightItineraries);
             result.SearchId = searchId;
             return result;
         }

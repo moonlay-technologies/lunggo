@@ -4,7 +4,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class PassengerFareInfo : PassengerInfoBase
+    public class PassengerInfoFare : PassengerInfoBase
     {
         public Gender Gender { get; set; }
         public DateTime? PassportExpiryDate { get; set; }

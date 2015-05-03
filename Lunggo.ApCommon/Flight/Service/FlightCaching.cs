@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Service
             plain.Append(itinIndex.ToString("000"));
             var hash = FlightHashUtil.Hash(plain.ToString());
 
-            var itins = GetSearchResultFromCache(searchId);
+            var itins = GetItinerariesFromCache(searchId);
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerary:" + hash;
@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private static void SaveSearchResultToCache(string searchId, List<FlightItineraryFare> itineraryList)
+        public void SaveItinerariesToCache(string searchId, List<FlightItineraryFare> itineraryList)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"))));
         }
 
-        private static List<FlightItineraryFare> GetSearchResultFromCache(string searchId)
+        public List<FlightItineraryFare> GetItinerariesFromCache(string searchId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);

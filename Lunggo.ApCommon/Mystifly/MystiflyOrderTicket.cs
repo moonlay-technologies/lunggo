@@ -34,6 +34,8 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     result = MapResult(response);
                     result.IsSuccess = true;
+                    result.Errors = null;
+                    result.ErrorMessages = null;
                 }
                 else
                 {
@@ -45,8 +47,6 @@ namespace Lunggo.ApCommon.Mystifly
                         {
                             if (error.Code == "EROTK002")
                             {
-                                result.Errors = null;
-                                result.ErrorMessages = null;
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
                                 retry++;
@@ -90,30 +90,46 @@ namespace Lunggo.ApCommon.Mystifly
                         goto case "BookingIdNoLongerValid";
                     case "EROTK007":
                         goto case "AlreadyBooked";
+                    case "EROTK002":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
+                        result.ErrorMessages.Add("Invalid account information!");
+                        goto case "TechnicalError";
                     case "EROTK008":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Insufficient balance!");
                         goto case "TechnicalError";
                     case "ERGEN007":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":
-                        result.Errors.Add(FlightError.InvalidInputData);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.InvalidInputData);
                         break;
                     case "FareIdNoLongerValid":
-                        result.Errors.Add(FlightError.FareIdNoLongerValid);
+                        if (!result.Errors.Contains(FlightError.FareIdNoLongerValid))
+                            result.Errors.Add(FlightError.FareIdNoLongerValid);
                         break;
                     case "BookingIdNoLongerValid":
-                        result.Errors.Add(FlightError.BookingIdNoLongerValid);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.BookingIdNoLongerValid);
                         break;
                     case "AlreadyBooked":
-                        result.Errors.Add(FlightError.AlreadyBooked);
+                        if (!result.Errors.Contains(FlightError.AlreadyBooked))
+                            result.Errors.Add(FlightError.AlreadyBooked);
                         break;
                     case "TechnicalError":
-                        result.Errors.Add(FlightError.TechnicalError);
+                        if (!result.Errors.Contains(FlightError.TechnicalError))
+                            result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }

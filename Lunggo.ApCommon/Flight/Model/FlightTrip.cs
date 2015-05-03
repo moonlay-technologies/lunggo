@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightTripApi : FlightTripFare
+    public class FlightTripApi : FlightTripBase
     {
+        public int TotalTransit { get; set; }
+        public List<Transit> Transits { get; set; }
+        public List<Airline> Airlines { get; set; }
+        public List<FlightSegmentApi> FlightSegments { get; set; }
+        public string OriginCity { get; set; }
+        public string OriginAirportName { get; set; }
+        public string DestinationCity { get; set; }
+        public string DestinationAirportName { get; set; }
         public TimeSpan TotalDuration { get; set; }
     }
 

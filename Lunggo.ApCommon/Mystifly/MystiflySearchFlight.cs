@@ -48,19 +48,17 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     result = MapResult(response, conditions);
                     result.IsSuccess = true;
+                    result.Errors = null;
                 }
                 else
                 {
                     if (response.Errors.Any())
                     {
                         result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
                         foreach (var error in response.Errors)
                         {
                             if (error.Code == "ERSER002")
                             {
-                                result.Errors = null;
-                                result.ErrorMessages = null;
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
                                 retry++;
@@ -404,23 +402,36 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERIFS015":
                     case "ERIFS016":
                         goto case "InvalidInputData";
+                    case "ERSER002":
+                    case "ERIFS002":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
+                        result.ErrorMessages.Add("Invalid account information!");
+                        goto case "TechnicalError";
                     case "ERSER027":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Daily maximum search limit reached!");
                         goto case "TechnicalError";
                     case "ERGEN002":
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
-                        goto case "TechnicalError";
                     case "ERGEN018":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
+
                     case "InvalidInputData":
-                        result.Errors.Add(FlightError.InvalidInputData);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.InvalidInputData);
                         break;
                     case "TechnicalError":
-                        result.Errors.Add(FlightError.TechnicalError);
+                        if (!result.Errors.Contains(FlightError.TechnicalError))
+                            result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }

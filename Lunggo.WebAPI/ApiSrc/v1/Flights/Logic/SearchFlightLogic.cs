@@ -40,7 +40,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     FlightList = null
                 };
             }
-            
         }
 
         private static bool IsValid(FlightSearchApiRequest request)
@@ -100,9 +99,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 TotalFare = itin.TotalFare,
                 PscFare = itin.PscFare, 
                 FlightTrips = MapTrips(itin.FlightTrips), 
-                Airlines = GetAirlineList(itin),
-                TotalTransit = CalculateTotalTransit(itin),
-                Transits = MapTransitDetails(itin)
             }).ToList();
             for (var i = 0; i < list.Count; i++)
             {
@@ -112,16 +108,50 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return orderedList.ToList();
         }
 
-        private static List<FlightTripFare> MapTrips(IEnumerable<FlightTripFare> trips)
+        private static List<FlightTripApi> MapTrips(IEnumerable<FlightTripFare> trips)
         {
+            var dict = DictionaryService.GetInstance();
             return trips.Select(trip => new FlightTripApi
             {
-                FlightSegments = trip.FlightSegments, 
-                OriginAirport = trip.OriginAirport, 
-                DestinationAirport = trip.DestinationAirport, 
+                FlightSegments = MapSegments(trip.FlightSegments), 
+                OriginAirport = trip.OriginAirport,
+                OriginCity = dict.GetAirportCity(trip.OriginAirport),
+                OriginAirportName = dict.GetAirportName(trip.OriginAirport),
+                DestinationAirport = trip.DestinationAirport,
+                DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
+                DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
                 DepartureDate = trip.DepartureDate, 
-                TotalDuration = CalculateTotalDuration(trip)
-            }).Cast<FlightTripFare>().ToList();
+                TotalDuration = CalculateTotalDuration(trip),
+                Airlines = GetAirlineList(trip),
+                TotalTransit = CalculateTotalTransit(trip),
+                Transits = MapTransitDetails(trip)
+            }).ToList();
+        }
+
+        private static List<FlightSegmentApi> MapSegments(IEnumerable<FlightSegmentFare> segments)
+        {
+            var dict = DictionaryService.GetInstance();
+            return segments.Select(segment => new FlightSegmentApi
+            {
+                DepartureAirport = segment.DepartureAirport,
+                DepartureCity = dict.GetAirportCity(segment.DepartureAirport),
+                DepartureAirportName = dict.GetAirportName(segment.DepartureAirport),
+                DepartureTime = segment.DepartureTime,
+                ArrivalAirport = segment.ArrivalAirport,
+                ArrivalCity = dict.GetAirportCity(segment.ArrivalAirport),
+                ArrivalAirportName = dict.GetAirportName(segment.ArrivalAirport),
+                ArrivalTime = segment.ArrivalTime,
+                Duration = segment.Duration,
+                AirlineCode = segment.AirlineCode,
+                FlightNumber = segment.FlightNumber,
+                OperatingAirlineCode = segment.OperatingAirlineCode,
+                AircraftCode = segment.AircraftCode,
+                CabinClass = segment.CabinClass,
+                StopQuantity = segment.StopQuantity,
+                FlightStops = segment.FlightStops,
+                Rbd = segment.Rbd,
+                RemainingSeats = segment.RemainingSeats
+            }).ToList();
         }
 
         private static TimeSpan CalculateTotalDuration(FlightTripFare trip)
@@ -138,10 +168,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return totalFlightDuration + totalTransitDuration;
         }
 
-        private static List<Airline> GetAirlineList(FlightItineraryFare itin)
+        private static List<Airline> GetAirlineList(FlightTripFare trip)
         {
             var dict = DictionaryService.GetInstance();
-            var segments = itin.FlightTrips.SelectMany(trip => trip.FlightSegments);
+            var segments = trip.FlightSegments;
             var airlineCodes = segments.Select(segment => segment.AirlineCode);
             var airlines = airlineCodes.Distinct().Select(code => new Airline
             {
@@ -151,9 +181,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return airlines.ToList();
         }
 
-        private static List<Transit> MapTransitDetails(FlightItineraryFare itin)
+        private static List<Transit> MapTransitDetails(FlightTripFare trip)
         {
-            var segments = itin.FlightTrips.SelectMany(trip => trip.FlightSegments).ToList();
+            var segments = trip.FlightSegments;
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
@@ -181,9 +211,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return result;
         }
 
-        private static int CalculateTotalTransit(FlightItineraryFare itin)
+        private static int CalculateTotalTransit(FlightTripFare trip)
         {
-            var segments = itin.FlightTrips.SelectMany(trip => trip.FlightSegments).ToList();
+            var segments = trip.FlightSegments;
             var transit = segments.Count() - 1;
             var stop = segments.Sum(segment => segment.StopQuantity);
             return transit + stop;

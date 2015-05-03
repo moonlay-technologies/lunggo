@@ -3,6 +3,16 @@ using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
+    public class FlightSegmentApi : FlightSegmentBase
+    {
+        public string DepartureCity { get; set; }
+        public string DepartureAirportName { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalAirportName { get; set; }
+        public string CabinClass { get; set; }
+        public int RemainingSeats { get; set; }
+        public List<FlightStop> FlightStops { get; set; }
+    }
     public class FlightSegmentFare : FlightSegmentBase
     {
         public string CabinClass { get; set; }

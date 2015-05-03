@@ -23,6 +23,16 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             return apiResponse;
         }
 
+        [HttpGet]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
+        [Route("api/v1/flights/filter")]
+        public FlightFilterApiResponse FilterFlights(HttpRequestMessage httpRequest, [FromUri] string request)
+        {
+            var apiRequest = JsonConvert.DeserializeObject<FlightFilterApiRequest>(request);
+            var apiResponse = FlightLogic.FilterFlights(apiRequest);
+            return apiResponse;
+        }
+
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/flights/revalidate")]
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
@@ -33,9 +43,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]
         [Route("api/v1/flights/book")]
-        public FlightBookingApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookingApiRequest request)
+        public FlightBookingApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookingApiRequest apiRequest)
         {
-            return FlightLogic.BookFlight(request);
+            apiRequest.PassengerData = JsonConvert.DeserializeObject<List<PassengerData>>(apiRequest.PassengerDataJson);
+            return FlightLogic.BookFlight(apiRequest);
         }
 
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321", headers: "*", methods: "*")]

@@ -78,10 +78,7 @@
                                         <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
-                                <div class="form-group">
-                                    <label for="" class="control-label">Origin Country :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="">
-                                </div>
+                                    <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
                             }
 
                             @if (Model.ChildCount > 0)
@@ -123,10 +120,7 @@
                                             <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
                                         </div>
                                     }
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Origin Country :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="">
-                                    </div>
+                                        <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value ="ID">
                                 }
                             }
 
@@ -169,15 +163,9 @@
                                             <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
                                         </div>
                                     }
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Origin Country :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="">
-                                    </div>
+                                        <input type="hidden" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="" value="ID">
                                 }
                             }
-                            <div class="form-group">
-                                <label for="" class="control-label">Special Request :</label>
-                            </div>
                         </form>
                     </section><!-- .customer-form -->
                     <section class="payment-form">

@@ -12,10 +12,7 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightItineraryApi : FlightItineraryBase
     {
         public int SequenceNo { get; set; }
-        public int TotalTransit { get; set; }
-        public List<Transit> Transits { get; set; }
-        public List<Airline> Airlines { get; set; }
-        public List<FlightTripFare> FlightTrips { get; set; }
+        public List<FlightTripApi> FlightTrips { get; set; }
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }

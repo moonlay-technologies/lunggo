@@ -36,15 +36,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookingApiRequest request)
         {
-            var passengerInfo = request.PassengerData.Select(data => new PassengerFareInfo
+            var passengerInfo = request.PassengerData.Select(data => new PassengerInfoFare
             {
-                Type = AssignType(data.Type),
-                Title = AssignTitle(data.Title),
+                Type = data.Type,
+                Title = data.Title,
                 Gender = AssignGender(data.Title),
                 FirstName = data.FirstName,
                 LastName = data.LastName,
                 DateOfBirth = data.BirthDate,
-                IdNumber = data.PassportOrIdNumber,
+                IdNumber = data.IdNumber,
                 PassportExpiryDate = data.PassportExpiryDate,
                 PassportCountry = data.Country
             });
@@ -78,7 +78,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 case "Infant":
                     return PassengerType.Infant;
                 default:
-                    return PassengerType.Adult;
+                    return PassengerType.Undefined;
             }
         }
 
@@ -93,22 +93,22 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 case "Ms":
                     return Title.Miss;
                 default:
-                    return Title.Mister;
+                    return Title.Undefined;
             }
         }
 
-        private static Gender AssignGender(string title)
+        private static Gender AssignGender(Title title)
         {
             switch (title)
             {
-                case "Mr":
+                case Title.Mister:
                     return Gender.Male;
-                case "Mrs":
+                case Title.Mistress:
                     return Gender.Female;
-                case "Ms":
+                case Title.Miss:
                     return Gender.Female;
                 default:
-                    return Gender.Male;
+                    return Gender.Undefined;
             }
         }
 
@@ -117,12 +117,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return
                 request.FareId != null &&
                 request.PassengerData.TrueForAll(data =>
-                    (data.Title == "Mr" || data.Title == "Mrs" || data.Title == "Ms") &&
-                    (data.Type == "Adult" || data.Type == "Child" || data.Type == "Infant") &&
+                    (data.Title == Title.Mister || data.Title == Title.Mistress || data.Title == Title.Miss) &&
+                    (data.Type == PassengerType.Adult || data.Type == PassengerType.Child || data.Type == PassengerType.Infant) &&
                     (
-                        (data.Type == "Adult" && GetAge(data.BirthDate) >= 12) ||
-                        (data.Type == "Child" && GetAge(data.BirthDate) >= 2 && GetAge(data.BirthDate) < 12) ||
-                        (data.Type == "Infant" && data.BirthDate >= DateTime.Now && GetAge(data.BirthDate) < 2)
+                        (data.Type == PassengerType.Adult && GetAge(data.BirthDate) >= 12) ||
+                        (data.Type == PassengerType.Child && GetAge(data.BirthDate) >= 2 && GetAge(data.BirthDate) < 12) ||
+                        (data.Type == PassengerType.Infant && data.BirthDate >= DateTime.Now && GetAge(data.BirthDate) < 2)
                     ) &&
                     !string.IsNullOrEmpty(data.FirstName) && data.FirstName.Length < 50 &&
                     !string.IsNullOrEmpty(data.LastName) && data.LastName.Length < 50 &&

@@ -31,6 +31,8 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     result = MapResult(response);
                     result.IsSuccess = true;
+                    result.Errors = null;
+                    result.ErrorMessages = null;
                 }
                 else
                 {
@@ -53,8 +55,6 @@ namespace Lunggo.ApCommon.Mystifly
                             {
                                 if (error.Code == "ERFRU013")
                                 {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
                                     Client.CreateSession();
                                     request.SessionId = Client.SessionId;
                                     retry++;
@@ -116,21 +116,33 @@ namespace Lunggo.ApCommon.Mystifly
                         goto case "InvalidInputData";
                     case "ERFRU003":
                         goto case "FareIdNoLongerValid";
+                    case "ERFRU013":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
+                        result.ErrorMessages.Add("Invalid account information!");
+                        goto case "TechnicalError";
                     case "ERGEN005":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":
-                        result.Errors.Add(FlightError.InvalidInputData);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.InvalidInputData);
                         break;
                     case "FareIdNoLongerValid":
-                        result.Errors.Add(FlightError.FareIdNoLongerValid);
+                        if (!result.Errors.Contains(FlightError.FareIdNoLongerValid))
+                            result.Errors.Add(FlightError.FareIdNoLongerValid);
                         break;
                     case "TechnicalError":
-                        result.Errors.Add(FlightError.TechnicalError);
+                        if (!result.Errors.Contains(FlightError.TechnicalError))
+                            result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }
