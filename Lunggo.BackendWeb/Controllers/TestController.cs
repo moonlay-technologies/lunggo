@@ -60,13 +60,13 @@ namespace Lunggo.BackendWeb.Controllers
                         Email = "ayey@aye.y",
                         Phone = "0856123456789",
                     },
-                    PassengerFareInfos = new List<PassengerInfoFare>()
+                    PassengerInfoFares = new List<PassengerInfoFare>()
                 },
                 Itinerary = revalidateResult2.Itinerary,
                 TripInfos = input.Conditions.TripInfos,
                 PaymentData = null
             };
-            bookInput.BookingInfo.PassengerFareInfos.Add(new PassengerInfoFare
+            bookInput.BookingInfo.PassengerInfoFares.Add(new PassengerInfoFare
             {
                 Type = PassengerType.Adult,
                 Gender = Gender.Male,

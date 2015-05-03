@@ -18,6 +18,10 @@
         <div class="container">
             <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
             <hr>
+            @if (ViewBag.Message != null)
+            {
+                <h1><b>@ViewBag.Message</b></h1>
+            }
             <h1><b>CUSTOMER</b> DETAIL</h1>
         </div>
     </header>

@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            var airTravelers = bookInfo.PassengerFareInfos.Select(MapAirTraveler).ToList();
+            var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
             var travelerInfo = MapTravelerInfo(bookInfo, airTravelers);
             var request = new AirBookRQ
             {

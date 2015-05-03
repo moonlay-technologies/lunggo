@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightBookingInfo
     {
         public string FareId { get; set; }
-        public List<PassengerInfoFare> PassengerFareInfos { get; set; }
+        public List<PassengerInfoFare> PassengerInfoFares { get; set; }
         public ContactData ContactData { get; set; }
     }
 }

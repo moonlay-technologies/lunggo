@@ -1972,6 +1972,7 @@
     <Content Include="Views\Flight\SearchResultList - Ori.cshtml" />
     <Content Include="Views\Flight\Checkout - Ori.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
+    <Content Include="Views\Flight\Eticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />

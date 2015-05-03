@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Email = input.BookingInfo.ContactData.Email,
                     Phone = input.BookingInfo.ContactData.Phone
                 },
-                PassengerFareInfos = input.BookingInfo.PassengerFareInfos
+                PassengerInfoFares = input.BookingInfo.PassengerInfoFares
             };
             var response = BookFlightInternal(bookInfo);
             output.BookResult = new BookResult();
@@ -51,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     },
                     ContactData = input.BookingInfo.ContactData,
                     PaymentData = input.PaymentData,
-                    Passengers = input.BookingInfo.PassengerFareInfos
+                    Passengers = input.BookingInfo.PassengerInfoFares
                 };
                 InsertFlightDb.Booking(bookingRecord);
             }

@@ -57,7 +57,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     Phone = request.ContactPhone,
                     Email = request.ContactEmail
                 },
-                PassengerFareInfos = passengerInfo.ToList()
+                PassengerInfoFares = passengerInfo.ToList()
             };
             var bookServiceRequest = new BookFlightInput
             {
