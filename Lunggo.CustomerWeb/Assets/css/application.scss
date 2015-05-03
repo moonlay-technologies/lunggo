@@ -419,11 +419,11 @@ hr {border-color:#aaa;}
                         &>div+div {border-left:1px solid #ddd;}
                         .flight-departure {}
                         .flight-return {}
-                        &>.flight-action {display:block; clear:both; width:100%; border-left:0;}
+                        &>.flight-action {display:block; clear:both; width:100%; border-left:0; cursor:pointer;}
                     }
                 }
                 .flight-detail {
-                    ol + h4 {border-top:2px solid #3fabe3;}
+                    .return-flight-detail, ol + h4 {border-top:2px solid #3fabe3;}
                 }
             }
 			.flight-main {display:block; clear:both; position:relative; background:#fff; border:1px solid #ddd;
@@ -511,7 +511,7 @@ hr {border-color:#aaa;}
             }
 		}
 	}
-	// flight list return fligt
+	// flight list return flight
 	.flight-list-return.horizontal {
 		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
             &.active {border-color:#3fabe3;}

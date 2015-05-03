@@ -919,6 +919,10 @@ var FlightSearchConfig = {
                 $scope.selectedItem = $index;
             }
 
+            $scope.getDateTime = function(dateTime) {
+                return new Date(dateTime);
+            }
+
             $scope.getFlightList = function () {
 
                 console.log('--------------------------------');
