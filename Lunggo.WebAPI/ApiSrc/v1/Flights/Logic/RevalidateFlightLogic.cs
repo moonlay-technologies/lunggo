@@ -15,14 +15,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static FlightRevalidateApiResponse RevalidateFlight(FlightRevalidateApiRequest request)
         {
-            if (request.Hash == null)
-            {
-                var service = FlightService.GetInstance();
-                request.Hash = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
-            }
-
             if (IsValid(request))
             {
+                if (request.Hash == null)
+                {
+                    var service = FlightService.GetInstance();
+                    request.Hash = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
+                }
                 var revalidateServiceRequest = PreprocessServiceRequest(request);
                 var revalidateServiceResponse = FlightService.GetInstance().RevalidateFlight(revalidateServiceRequest);
                 if (!revalidateServiceResponse.IsValid && revalidateServiceResponse.Itinerary != null)
@@ -113,7 +112,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static bool IsValid(FlightRevalidateApiRequest request)
         {
             return
-                request.Hash != null;
+                request != null &&
+                (request.SearchId != null || request.Hash != null);
         }
     }
 }
