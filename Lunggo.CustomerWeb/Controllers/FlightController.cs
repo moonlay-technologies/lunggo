@@ -17,14 +17,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(search);
         }
 
-        [HttpPost]
-        public ActionResult SearchResultList(string searchId, int itinIndex)
-        {
-            var service = FlightService.GetInstance();
-            var token = service.SaveItineraryToCache(searchId, itinIndex);
-            return RedirectToAction("Checkout", new FlightSelectData { token = token });
-        }
-
         public ActionResult Checkout(FlightSelectData select)
         {
             var service = FlightService.GetInstance();
