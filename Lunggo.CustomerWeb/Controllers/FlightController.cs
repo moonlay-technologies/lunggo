@@ -142,13 +142,13 @@ namespace Lunggo.CustomerWeb.Controllers
                                 }
                                 else
                                 {
-                                    ViewBag.Message = "Technical Error. Please try again.");
+                                    ViewBag.Message = "Technical Error. Please try again.";
                                     return View();
                                 }
                             }
                             else
                             {
-                                ViewBag.Message = "Technical Error. Please try again.");
+                                ViewBag.Message = "Technical Error. Please try again.";
                                 return View();
                             }
                         }
@@ -159,7 +159,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        ViewBag.Message = "Technical Error. Please try again.");
+                        ViewBag.Message = "Technical Error. Please try again.";
                         return View();
                     }
                 }
@@ -167,19 +167,19 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (revalidateResult.Itinerary != null)
                     {
-                        ViewBag.Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare + ".\nPlease submit again.");
+                        ViewBag.Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare + ".\nPlease submit again.";
                         return View();
                     }
                     else
                     {
-                        ViewBag.Message = "No other fare available on this flight.");
+                        ViewBag.Message = "No other fare available on this flight.";
                         return View();
                     }
                 }
             }
             else
             {
-                ViewBag.Message = "Technical Error. Please try again.");
+                ViewBag.Message = "Technical Error. Please try again.";
                 return View();
             }
         }

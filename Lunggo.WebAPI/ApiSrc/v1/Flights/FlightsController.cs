@@ -38,11 +38,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights/revalidate")]
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {
-            if (request.Hash == null)
-            {
-                var service = FlightService.GetInstance();
-                request.Hash = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
-            }
             var apiResponse = FlightLogic.RevalidateFlight(request);
             return apiResponse;
         }
