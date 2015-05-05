@@ -146,6 +146,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 ArrivalTime = segment.ArrivalTime,
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
+                AirlineName = dict.GetAirlineName(segment.AirlineCode),
+                AirlineLogoUrl = airlineLogoPath + segment.AirlineCode + airlineLogoExtension,
                 FlightNumber = segment.FlightNumber,
                 OperatingAirlineCode = segment.OperatingAirlineCode,
                 OperatingAirlineName = dict.GetAirlineName(segment.OperatingAirlineCode),
