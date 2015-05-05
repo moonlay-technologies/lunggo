@@ -1,14 +1,15 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightItineraryFare
+﻿@model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
     ViewBag.Title = "FlightCheckout";
 }
 
 @{
-    var adultCount = Model.AdultCount;
-    var childCount = Model.ChildCount;
-    var infantCount = Model.InfantCount;
-    var needPassport = Model.RequirePassport;
+    var adultCount = Model.Itinerary.AdultCount;
+    var childCount = Model.Itinerary.ChildCount;
+    var infantCount = Model.Itinerary.InfantCount;
+    var needPassport = Model.Itinerary.RequirePassport;
+    var hashKey = Model.HashKey;
 }
 
 <!-- .checkout-page content start -->
@@ -32,7 +33,7 @@
             <div class="col-sm-8">
                 <section class="customer-detail">
                     <section class="customer-form">
-                        <form action="" class="form" id="inilho" method="post">
+                        <form action="" class="form" id="flight-customer-form" method="post">
                             <div class="form-group">
                                 <label for="" class="control-label">Name (Buyer) :</label>
                                 <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
@@ -45,21 +46,23 @@
                                 <label for="" class="control-label">Email :</label>
                                 <input type="text" class="form-control" name="ContactData.EmailAddress" placeholder="ex : nama@email.com">
                             </div>
-                            @for (var i = 1; i <= Model.AdultCount; i++)
+                            @for (var i = 1; i <= Model.Itinerary.AdultCount; i++)
                             {
-                                <label for="" class="control-label"><b>Passenger Adult @i</b></label>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Title :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].Title" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">First Name :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].FirstName" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="control-label">Last Name :</label>
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
-                                </div>
+                                <h5 class="control-label"><b>Passenger Adult @i</b></h5>
+                                <div class="form-inline">
+                                    <div class="form-group" style="width:20%;">
+                                        <label for="">Title :</label>
+                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].Title" placeholder="">
+                                    </div>
+                                    <div class="form-group" style="width:39%;">
+                                        <label for="">First Name :</label>
+                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].FirstName" placeholder="">
+                                    </div>
+                                    <div class="form-group" style="width:39%;">
+                                        <label for="">Last Name :</label>
+                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
+                                    </div>
+                                </div><br/>
                                 <div class="form-group">
                                     <label for="" class="control-label">Birth Date :</label>
                                     <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
@@ -85,22 +88,24 @@
                                     <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
                             }
 
-                            @if (Model.ChildCount > 0)
+                            @if (Model.Itinerary.ChildCount > 0)
                             {
-                                for (var i = 1; i <= Model.ChildCount; i++)
+                                for (var i = 1; i <= Model.Itinerary.ChildCount; i++)
                                 {
-                                    <label for="" class="control-label"><b>Passenger Child @i</b></label>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Title :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Title" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">First Name :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].FirstName" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Last Name :</label>
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
+                                    <h5 class="control-label"><b>Passenger Child @i</b></h5>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Title :</label>
+                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].Title" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="control-label">First Name :</label>
+                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].FirstName" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Last Name :</label>
+                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">Birth Date :</label>
@@ -128,22 +133,24 @@
                                 }
                             }
 
-                            @if (Model.InfantCount > 0)
+                            @if (Model.Itinerary.InfantCount > 0)
                             {
-                                for (var i = 1; i <= Model.InfantCount; i++)
+                                for (var i = 1; i <= Model.Itinerary.InfantCount; i++)
                                 {
-                                    <label for="" class="control-label"><b>Passenger Infant @i</b></label>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Title :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Title" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">First Name :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].FirstName" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Last Name :</label>
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
+                                    <h5 class="control-label"><b>Passenger Infant @i</b></h5>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Title :</label>
+                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].Title" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="control-label">First Name :</label>
+                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].FirstName" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Last Name :</label>
+                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">Birth Date :</label>
@@ -177,8 +184,8 @@
 
                         <section class="payment-option">
                             <form action="#" class="form">
-                                <label class="payment-transfer" for="payment-transfer">
-                                    <input type="radio" name="payment-option" id="payment-transfer">
+                                <label class="payment-transfer active" for="payment-transfer">
+                                    <input type="radio" name="payment-option" id="payment-transfer" checked>
                                     <span>Transfer Bank</span>
                                 </label>
                                 <label class="payment-credit" for="payment-credit">
@@ -200,7 +207,7 @@
                             </form>
                         </section><!-- .payment-option -->
                         <section class="payment-detail">
-                            <section class="payment-transfer-detail">
+                            <section class="payment-transfer-detail active">
                                 <h4>Transfer</h4>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
                             </section>
@@ -224,7 +231,7 @@
 
                     </section><!-- .payment-form -->
                     <section class="payment-button">
-                        <button class="btn btn-primary btn-yellow" onclick="document.getElementById('inilho').submit()">BAYAR</button>
+                        <button class="btn btn-primary btn-yellow validate-fare" data-hashKey="@hashKey">BAYAR</button>
                     </section><!-- .payment-button -->
                 </section><!-- .customer-detail -->
             </div><!-- .col-sm-8 -->

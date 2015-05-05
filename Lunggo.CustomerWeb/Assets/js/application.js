@@ -654,6 +654,35 @@ function flightSearch() {
 }
 
 //******************************************
+// Checkout Page functions
+$('.validate-fare').click(function (evt) {
+    evt.preventDefault();
+
+    var hashKey = $(this).attr('data-hashKey');
+
+    if (RevalidateConfig.working == false) {
+        RevalidateConfig.working = true;
+
+        loading_overlay('show');
+
+        $.ajax({
+            method: 'GET',
+            url: RevalidateConfig.Url,
+            data: { HashKey: hashKey }
+        }).success(function (returnData) {
+            RevalidateConfig.working = false;
+
+            $('#flight-customer-form').submit();
+
+        });
+    } else {
+        console.log('system  busy. Please wait');
+    }
+
+});
+
+
+//******************************************
 // Show loading
 function loading_overlay(state) {
 
@@ -693,6 +722,11 @@ var SearchRoomConfig = {
 var FlightSearchConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights',
     // Params: jQuery.parseJSON( $('.flight-search-page').attr('data-flight-search-params') )
+};
+
+var RevalidateConfig = {
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights/revalidate',
+    working: false
 };
 
 // ************************
@@ -923,6 +957,7 @@ var FlightSearchConfig = {
                 return new Date(dateTime);
             }
 
+            // get  flight list
             $scope.getFlightList = function () {
 
                 console.log('--------------------------------');
@@ -952,6 +987,49 @@ var FlightSearchConfig = {
                 });
 
             }
+
+            // revalidate flight itinerary
+            $scope.revalidate = function(indexNo) {
+                var searchId = $scope.FlightSearchParams.SearchId;
+
+                loading_overlay('show');
+
+                console.log('validating :');
+
+                if (RevalidateConfig.working == false) {
+                    RevalidateConfig.working = true;
+
+                    $http.get(RevalidateConfig.Url, {
+                        params: {
+                            SearchId: searchId,
+                            ItinIndex: indexNo
+                        }
+                    }).success(function (returnData) {
+                        RevalidateConfig.working = false;
+
+                        console.log(returnData);
+
+                        RevalidateConfig.value = returnData;
+
+                        if (returnData.IsValid == true) {
+                            location.replace( location.origin + '/id/flight/Checkout?token=' + returnData.HashKey );
+                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                            loading_overlay('hide');
+                            console.log('JEMPING HARGA BERUBAH');
+                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                            loading_overlay('hide');
+                            console.log('JEMPING NGGA BISA');
+                        }
+
+                    }).error(function(data) {
+                        console.log(data)
+                    });
+                } else {
+                    console.log('Sistem busy, please wait');
+                }
+
+            }
+
 
         }
     ]);

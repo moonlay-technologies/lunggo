@@ -419,7 +419,9 @@ hr {border-color:#aaa;}
                         &>div+div {border-left:1px solid #ddd;}
                         .flight-departure {}
                         .flight-return {}
-                        &>.flight-action {display:block; clear:both; width:100%; border-left:0; cursor:pointer;}
+                        &>.flight-action {display:block; clear:both; width:100%; border-left:0;
+                            a {cursor:pointer;}
+                        }
                     }
                 }
                 .flight-detail {
