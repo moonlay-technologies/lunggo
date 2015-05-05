@@ -239,12 +239,20 @@ function hotelSearchFormFunctions() {
             min: selectedDate,
             default_date: selectedDate,
             change: function () {
+                $('.input-checkin').attr('data-picked','true');
                 calculateDate($(this).pickmeup('get_date'));
             }
         });
         $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
 
     }
+
+    $('.input-checkout').click(function() {
+        var checkinPicked = $('.input-checkin').attr('data-picked');
+        if (checkinPicked == 'false') {
+            $('.input-checkin').click();
+        }
+    });
 
     function calculateDate(checkoutDate) {
         var checkinDate = new Date($('.search-hotel-value.staydate').val());
@@ -492,7 +500,10 @@ function flightSearchFormFunctions() {
             separator: '-',
             min: new Date,
             change: function () {
-                datePickerReturn($(this).pickmeup('get_date'));
+                var flightType = $('.search-flight-form #flight-type').val();
+                if (flightType != 'ONE') {
+                    datePickerReturn($(this).pickmeup('get_date'));
+                }
                 $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
                 $(this).attr('data-picked', 'true');
                 $(this).attr('data-pickedDate', $(this).pickmeup('get_date') );
