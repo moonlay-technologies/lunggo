@@ -1014,11 +1014,14 @@ var RevalidateConfig = {
                         if (returnData.IsValid == true) {
                             location.replace( location.origin + '/id/flight/Checkout?token=' + returnData.HashKey );
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
-                            loading_overlay('hide');
-                            console.log('JEMPING HARGA BERUBAH');
+                            var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
+                            if (userConfirmation) {
+                                loading_overlay('hide');
+                                location.replace(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
                             loading_overlay('hide');
-                            console.log('JEMPING NGGA BISA');
+                            alert("Sorry, the flight is no longer valid. Please check another flight.");
                         }
 
                     }).error(function(data) {
