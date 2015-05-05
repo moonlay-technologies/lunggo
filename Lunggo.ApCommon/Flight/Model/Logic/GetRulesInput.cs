@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Lunggo.ApCommon.Flight.Model
+﻿namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class GetRulesInput
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.ApCommon.Sequence;
@@ -26,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Email = input.BookingInfo.ContactData.Email,
                     Phone = input.BookingInfo.ContactData.Phone
                 },
-                PassengerFareInfos = input.BookingInfo.PassengerFareInfos
+                PassengerInfoFares = input.BookingInfo.PassengerInfoFares
             };
             var response = BookFlightInternal(bookInfo);
             output.BookResult = new BookResult();
@@ -50,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     },
                     ContactData = input.BookingInfo.ContactData,
                     PaymentData = input.PaymentData,
-                    Passengers = input.BookingInfo.PassengerFareInfos
+                    Passengers = input.BookingInfo.PassengerInfoFares
                 };
                 InsertFlightDb.Booking(bookingRecord);
             }

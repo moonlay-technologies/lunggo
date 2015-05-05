@@ -8,6 +8,7 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class SearchFlightResult : ResultBase
     {
-        public List<FlightFareItinerary> FlightItineraries { get; set; }
+        public string SearchId { get; set; }
+        public List<FlightItineraryFare> FlightItineraries { get; set; }
     }
 }

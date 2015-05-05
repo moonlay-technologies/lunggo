@@ -9,13 +9,10 @@ using Lunggo.Framework.Error;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightFareItinerary : FlightItineraryBase
+    public class FlightItineraryApi : FlightItineraryBase
     {
-        public string FareId { get; set; }
-        public List<FlightFareTrip> FlightTrips { get; set; }
-        public int TotalTransit { get; set; }
-        public List<Transit> Transits { get; set; }
-        public List<Airline> Airlines { get; set; }
+        public int SequenceNo { get; set; }
+        public List<FlightTripApi> FlightTrips { get; set; }
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
@@ -29,7 +26,25 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal ChildTotalFare { get; set; }
         public decimal InfantTotalFare { get; set; }
         public decimal PscFare { get; set; }
-        public List<FlightRules> Rules { get; set; }
+    }
+
+    public class FlightItineraryFare : FlightItineraryBase
+    {
+        public string FareId { get; set; }
+        public List<FlightTripFare> FlightTrips { get; set; }
+        public bool RequirePassport { get; set; }
+        public bool RequireBirthDate { get; set; }
+        public bool RequireSameCheckIn { get; set; }
+        public bool CanHold { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildCount { get; set; }
+        public int InfantCount { get; set; }
+        public TripType TripType { get; set; }
+        public decimal TotalFare { get; set; }
+        public decimal AdultTotalFare { get; set; }
+        public decimal ChildTotalFare { get; set; }
+        public decimal InfantTotalFare { get; set; }
+        public decimal PscFare { get; set; }
     }
 
     public class FlightItineraryDetails : FlightItineraryBase
@@ -38,22 +53,10 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<PassengerInfoDetails> PassengerInfo { get; set; }
     }
 
+
+
     public class FlightItineraryBase
     {
         public FlightSupplier Supplier { get; set; }
-    }
-
-    public class Airline
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class Transit
-    {
-        public bool IsStop { get; set; }
-        public string Location { get; set; }
-        public DateTime Arrival { get; set; }
-        public DateTime Departure { get; set; }
     }
 }

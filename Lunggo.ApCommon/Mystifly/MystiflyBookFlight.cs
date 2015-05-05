@@ -16,74 +16,70 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            var airTravelers = bookInfo.PassengerFareInfos.Select(MapAirTraveler).ToList();
+            var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
             var travelerInfo = MapTravelerInfo(bookInfo, airTravelers);
-            using (var client = new MystiflyClientHandler())
+            var request = new AirBookRQ
             {
-                var request = new AirBookRQ
+                FareSourceCode = bookInfo.FareId,
+                TravelerInfo = travelerInfo,
+                ClientMarkup = 0,
+                PaymentTransactionID = null,
+                PaymentCardInfo = null,
+                SessionId = Client.SessionId,
+                Target = Client.Target,
+                ExtensionData = null,
+            };
+            var result = new BookFlightResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.BookFlight(request);
+                done = true;
+                if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                 {
-                    FareSourceCode = bookInfo.FareId,
-                    TravelerInfo = travelerInfo,
-                    ClientMarkup = 0,
-                    PaymentTransactionID = null,
-                    PaymentCardInfo = null,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null,
-                };
-                var result = new BookFlightResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    var response = client.BookFlight(request);
-                    done = true;
-                    if (!response.Errors.Any() && response.Success && response.Status == "CONFIRMED")
-                    {
-                        result = MapResult(response);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "ERBUK002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
-                    
+                    result = MapResult(response);
+                    result.IsSuccess = true;
+                    result.Errors = null;
+                    result.ErrorMessages = null;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "ERBUK002")
+                            {
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
-        private static AirTraveler MapAirTraveler(PassengerFareInfo passengerFareInfo)
+        private static AirTraveler MapAirTraveler(PassengerInfoFare passengerInfoFare)
         {
             var airTraveler = new AirTraveler
             {
-                PassengerName = MapPassengerName(passengerFareInfo),
-                PassengerType = MapPassengerType(passengerFareInfo),
-                Gender = MapGender(passengerFareInfo),
-                Passport = MapPassport(passengerFareInfo),
-                DateOfBirth = passengerFareInfo.DateOfBirth,
+                PassengerName = MapPassengerName(passengerInfoFare),
+                PassengerType = MapPassengerType(passengerInfoFare),
+                Gender = MapGender(passengerInfoFare),
+                Passport = MapPassport(passengerInfoFare),
+                DateOfBirth = passengerInfoFare.DateOfBirth,
                 ExtraServices = null,
                 ExtraServices1_1 = null,
                 SpecialServiceRequest = null,
@@ -94,68 +90,79 @@ namespace Lunggo.ApCommon.Mystifly
             return airTraveler;
         }
 
-        private static OnePointService.Flight.PassengerType MapPassengerType(PassengerFareInfo passengerFareInfo)
+        private static OnePointService.Flight.PassengerType MapPassengerType(PassengerInfoFare passengerInfoFare)
         {
-            switch (passengerFareInfo.Type)
+            switch (passengerInfoFare.Type)
             {
-                case PassengerType.Adult :
+                case PassengerType.Adult:
                     return OnePointService.Flight.PassengerType.ADT;
-                case PassengerType.Child :
+                case PassengerType.Child:
                     return OnePointService.Flight.PassengerType.CHD;
-                case PassengerType.Infant :
+                case PassengerType.Infant:
                     return OnePointService.Flight.PassengerType.INF;
-                default :
+                default:
                     return OnePointService.Flight.PassengerType.Default;
             }
         }
 
-        private static OnePointService.Flight.Gender MapGender(PassengerFareInfo passengerFareInfo)
+        private static OnePointService.Flight.Gender MapGender(PassengerInfoFare passengerInfoFare)
         {
-            switch (passengerFareInfo.Gender)
+            switch (passengerInfoFare.Gender)
             {
-                case Gender.Male :
+                case Gender.Male:
                     return OnePointService.Flight.Gender.M;
-                case Gender.Female :
+                case Gender.Female:
                     return OnePointService.Flight.Gender.F;
-                default :
+                default:
                     return OnePointService.Flight.Gender.Default;
             }
         }
 
-        private static PassengerName MapPassengerName(PassengerFareInfo passengerFareInfo)
+        private static PassengerName MapPassengerName(PassengerInfoFare passengerInfoFare)
         {
             var passengerName = new PassengerName
             {
-                PassengerTitle = MapPassengerTitle(passengerFareInfo),
-                PassengerFirstName = passengerFareInfo.FirstName,
-                PassengerLastName = passengerFareInfo.LastName,
+                PassengerTitle = MapPassengerTitle(passengerInfoFare),
+                PassengerFirstName = passengerInfoFare.FirstName,
+                PassengerLastName = passengerInfoFare.LastName,
                 ExtensionData = null
             };
             return passengerName;
         }
 
-        private static PassengerTitle MapPassengerTitle(PassengerFareInfo passengerFareInfo)
+        private static PassengerTitle MapPassengerTitle(PassengerInfoFare passengerInfoFare)
         {
-            switch (passengerFareInfo.Title)
-            {
-                case Title.Mister :
-                    return PassengerTitle.MR;
-                case Title.Mistress :
-                    return PassengerTitle.MRS;
-                case Title.Miss :
-                    return PassengerTitle.MS;
-                default :
-                    return PassengerTitle.Default;
-            }
+            if (passengerInfoFare.Type == PassengerType.Adult)
+                switch (passengerInfoFare.Title)
+                {
+                    case Title.Mister:
+                        return PassengerTitle.MR;
+                    case Title.Mistress:
+                        return PassengerTitle.MRS;
+                    case Title.Miss:
+                        return PassengerTitle.MS;
+                    default:
+                        return PassengerTitle.Default;
+                }
+            else
+                switch (passengerInfoFare.Title)
+                {
+                    case Title.Mister:
+                        return PassengerTitle.MSTR;
+                    case Title.Miss:
+                        return PassengerTitle.MISS;
+                    default:
+                        return PassengerTitle.Default;
+                }
         }
 
-        private static Passport MapPassport(PassengerFareInfo passengerFareInfo)
+        private static Passport MapPassport(PassengerInfoFare passengerInfoFare)
         {
             var passport = new Passport
             {
-                PassportNumber = passengerFareInfo.IdNumber,
-                ExpiryDate = passengerFareInfo.PassportExpiryDate.GetValueOrDefault(),
-                Country = passengerFareInfo.PassportCountry,
+                PassportNumber = passengerInfoFare.IdNumber,
+                ExpiryDate = passengerInfoFare.PassportExpiryDate.GetValueOrDefault(),
+                Country = passengerInfoFare.PassportCountry,
                 ExtensionData = null
             };
             return passport;
@@ -195,7 +202,6 @@ namespace Lunggo.ApCommon.Mystifly
                 switch (error.Code)
                 {
                     case "ERBUK001":
-                    case "ERBUK002":
                     case "ERBUK003":
                     case "ERBUK004":
                     case "ERBUK005":
@@ -297,36 +303,52 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERBUK082":
                     case "ERBUK083":
                         goto case "ProcessFailed";
+                    case "ERBUK002":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
+                        result.ErrorMessages.Add("Invalid account information!");
+                        goto case "TechnicalError";
                     case "ERBUK078":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Insufficient balance!");
                         goto case "TechnicalError";
                     case "ERBUK081":
-                        result.ErrorMessages.Add("Host not responding!");
-                        goto case "TechnicalError";
                     case "ERBUK085":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Host not responding!");
                         goto case "TechnicalError";
                     case "ERGEN003":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":
-                        result.Errors.Add(FlightError.InvalidInputData);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.InvalidInputData);
                         break;
                     case "FareIdNoLongerValid":
-                        result.Errors.Add(FlightError.FareIdNoLongerValid);
+                        if (!result.Errors.Contains(FlightError.FareIdNoLongerValid))
+                            result.Errors.Add(FlightError.FareIdNoLongerValid);
                         break;
                     case "AlreadyBooked":
-                        result.Errors.Add(FlightError.AlreadyBooked);
+                        if (!result.Errors.Contains(FlightError.AlreadyBooked))
+                            result.Errors.Add(FlightError.AlreadyBooked);
                         break;
                     case "ProcessFailed":
-                        result.Errors.Add(FlightError.ProcessFailed);
+                        if (!result.Errors.Contains(FlightError.ProcessFailed))
+                            result.Errors.Add(FlightError.ProcessFailed);
                         break;
                     case "TechnicalError":
-                        result.Errors.Add(FlightError.TechnicalError);
+                        if (!result.Errors.Contains(FlightError.TechnicalError))
+                            result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }

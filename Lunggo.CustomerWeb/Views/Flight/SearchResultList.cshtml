@@ -1,0 +1,339 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Autocomplete
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Trie
+@using Lunggo.CustomerWeb.Models
+@using Newtonsoft.Json
+@model FlightSearchData
+
+
+@{
+    ViewBag.Title = "Hotel Search List";
+}
+
+@{
+    var parts = Model.info.Split('-');
+    var tripPart = parts.First();
+    var infoPart = parts.Last();
+    var isValid = ((tripPart.Length + 1)%13 == 0) && (infoPart.Length == 4);
+    
+    List<FlightTripInfo> tripInfos = null;
+    FlightSearchData.Complete data = null;
+
+    String tripType="aaa";
+    try
+    {
+        tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
+        {
+            OriginAirport = info.Substring(0, 3),
+            DestinationAirport = info.Substring(3, 3),
+            DepartureDate = new DateTime(
+                2000 + int.Parse(info.Substring(10, 2)),
+                int.Parse(info.Substring(8, 2)),
+                int.Parse(info.Substring(6, 2)))
+        }).ToList();
+
+        data = new FlightSearchData.Complete
+        {
+            AdultCount = int.Parse(infoPart.Substring(0, 1)),
+            ChildCount = int.Parse(infoPart.Substring(1, 1)),
+            InfantCount = int.Parse(infoPart.Substring(2, 1)),
+            CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
+            TripInfos = tripInfos,
+            TripType = FlightSearchData.ParseTripType(tripInfos)
+        };
+
+        tripType = data.TripType == TripType.OneWay ? "single" : "return";
+    }
+    catch
+    {
+        isValid = false;
+    }
+
+}
+
+@section AdditionalPageJavascript {}
+
+@section PageJavascript {}
+
+@if (isValid)
+{
+
+    <div class="search-page flight-search-page" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
+
+        <header class="page-header">
+            <div class="container">
+                <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+                <hr>
+
+            </div>
+        </header><!-- .page-header -->
+        <div class="container">
+            <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+        </div>
+
+        <!-- -->
+        <section class="flight-date"></section><!-- .flight-date -->
+        <!-- -->
+
+        <aside class="flight-filter filter" data-active="false">
+            <div class="filter-button">
+                <span class="arrow">&gt;</span>
+                <span class="text">FILTER OFF</span>
+            </div>
+            <header>
+                <h3><b>FILTER</b> BY</h3>
+            </header>
+            <section class="filter-group hotel-price">
+                <h3 class="section-title">Harga</h3>
+                <input type="text" class="form-control">
+            </section>
+            <section class="filter-group hotel-star">
+                <h3 class="section-title">Bintang Hotel</h3>
+                <div class="star-selection">
+                    <ul>
+                        <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span> <span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                        <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                        <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                        <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
+                        <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
+                    </ul>
+                </div>
+            </section>
+            <section class="filter-group hotel-discount">
+                <ul>
+                    <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
+                </ul>
+            </section>
+            <section class="filter-group search-filter">
+                <a href="#" class="btn btn-primary">FILTER</a>
+            </section>
+        </aside><!-- .flight-filter -->
+
+        <div class="container" ng-controller="FlightController as flight_list">
+
+            <section class="flight-loading" ng-if="!loaded">
+                <img src="/Assets/images/loading-image-dark.gif" />
+            </section>
+
+            <section class="flight-list horizontal" ng-if="loaded">
+
+                <!-- Loop start here -->
+                <article class="flight flight-@tripType" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list">
+
+                    <div class="flight-main">
+                        <!-- start here if Single Flight Type -->
+                        <div class="flight-left" ng-if="'@tripType' == 'single'">
+                            <div class="flight-header">
+                                <div class="flight-airline">
+                                    <h4>{{flight.FlightTrips[0].Airlines[0].Name}}</h4>
+                                </div>
+                            </div><!-- .flight-header -->
+                            <div class="flight-content">
+
+                                <div class="flight-airline-image">
+                                    <img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" />
+                                </div><!-- .flight-airline-image -->
+
+                                <div class="flight-route">
+
+                                    <div class="departure">
+                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' }}</h2>
+                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' }}</h3>
+                                        <h2>{{flight.FlightTrips[0].OriginAirport}}</h2>
+                                        <!-- <h3>Jakarta</h3> -->
+                                    </div><!-- .departure -->
+
+                                    <div class="duration">
+                                        <h5>duration <br /> {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                        <hr />
+                                        <h5>{{flight.FlightTrips[0].TotalTransit}} stop</h5>
+                                    </div><!-- .duration -->
+
+                                    <div class="arrival">
+                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' }}</h2>
+                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' }}</h3>
+                                        <h2>{{flight.FlightTrips[0].DestinationAirport}}</h2>
+                                        <!-- <h3>Tokyo</h3> -->
+                                    </div><!-- .arrival -->
+
+                                </div><!-- .flight-route -->
+
+                            </div><!-- .flight-content -->
+                            <div class="flight-action">
+                                <a ng-click="clickedItem($index)"><img src="http://placehold.it/25x25.jpg" /> Flight Details</a>
+                                <a href="#"><img src="http://placehold.it/25x25.jpg" /> Fares Rules</a>
+                            </div><!-- .flight-action -->
+                        </div><!-- .flight-left -->
+                        <!-- end if single flight type -->
+                        <!-- start here if Return Flight Type-->
+                        <div class="flight-left" ng-if="'@tripType' == 'return'">
+                            <div class="flight-departure">
+                                <div class="flight-header">
+                                    <span>berangkat</span>
+                                    <span class="pull-right flight-cabin"><i>economy</i></span>
+                                </div><!-- .flight-header -->
+                                <div class="flight-content">
+                                    <div class="flight-airline">
+                                        <img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" />
+                                        <span>{{flight.FlightTrips[0].Airlines[0].Name}}</span>
+                                    </div>
+                                    <div class="flight-route">
+                                        <div class="route-wrapper">
+                                            <div class="departure">
+                                                <h4>{{flight.FlightTrips[0].FlightSegments[0].DepartureAirport}}</h4>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm'}}</h5>
+                                            </div>
+                                            <div class="to">to</div>
+                                            <div class="arrival">
+                                                <h4>{{flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalAirport}}</h4>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
+                                            </div>
+                                        </div>
+                                        <h5 class="duration">{{flight.FlightTrips[0].TotalTransit}} stop - {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                    </div>
+                                </div><!-- .flight-content -->
+                            </div><!-- .flight-departure -->
+                            <div class="flight-return">
+                                <div class="flight-header">
+                                    <span>kembali</span>
+                                    <span class="pull-right flight-cabin"><i>economy</i></span>
+                                </div><!-- .flight-header -->
+                                <div class="flight-content">
+                                    <div class="flight-airline">
+                                        <img ng-src="{{flight.FlightTrips[1].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[1].Airlines[0].Name}}" />
+                                        <span>{{flight.FlightTrips[1].Airlines[0].Name}}</span>
+                                    </div>
+                                    <div class="flight-route">
+                                        <div class="route-wrapper">
+                                            <div class="departure">
+                                                <h4>{{flight.FlightTrips[1].FlightSegments[0].DepartureAirport}}</h4>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'HH : mm'}}</h5>
+                                            </div>
+                                            <div class="to">to</div>
+                                            <div class="arrival">
+                                                <h4>{{flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalAirport}}</h4>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
+                                            </div>
+                                        </div>
+                                        <h5 class="duration">{{flight.FlightTrips[1].TotalTransit}} stop - {{flight.FlightTrips[1].TotalDuration}}</h5>
+                                    </div>
+                                </div><!-- .flight-content -->
+                            </div><!-- .flight-return -->
+                            <div class="flight-action">
+                                <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
+                                <a href="#"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
+                            </div><!-- .flight-action -->
+                        </div><!-- .flight-left -->
+                        <!-- end if Return Flight Type -->
+                        <div class="flight-right">
+                            <form ng-submit="revalidate($index)">
+                                <span class="tag red hidden">Disc 20%</span>
+                                <p>Total Fare:</p>
+                                <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
+                                <h4 class="price-now">{{flight.Currency}} {{flight.TotalFare | number}}</h4>
+                                <small>harga sudah termasuk <b>pajak</b></small>
+                                <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
+                                <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
+                                <button type="submit" class="btn btn-blue">Book now !</button>
+                            </form>
+                        </div><!-- .flight-right -->
+                    </div><!-- .flight-main -->
+
+                    <div class="flight-detail">
+                        <div class="flight-detail-content">
+                            <h4 class="detail-title" ng-if="'@tripType' == 'single'"> <b>FLIGHT</b> DETAILS</h4>
+                            <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>DEPARTURE</b> FLIGHTS</h4>
+                            <ol>
+                                <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
+                                    <div class="flight-airline">
+                                        <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                        <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
+                                    </div><!-- .flight-airline-->
+                                    <div class="flight-route">
+                                        <div class="flight-departure-airport">
+                                            <h4>{{trip.DepartureAirport}}</h4>
+                                            <h5>{{trip.DepartureCity}}</h5>
+                                            <h5>{{trip.DepartureAirportName}}</h5>
+                                        </div><!-- .flight-departure-airport -->
+                                        <div class="flight-departure-time">
+                                            <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm'}}</h4>
+                                            <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy'}}</h5>
+                                        </div><!-- .flight-departure-time -->
+                                        <div class="flight-duration">
+                                            <h5>Duration<br />{{trip.Duration}}</h5>
+                                            <hr />
+                                        </div><!-- .flight-departure-duration -->
+                                        <div class="flight-arrival-time">
+                                            <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm'}}</h4>
+                                            <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy'}}</h5>
+                                        </div><!-- .flight-arrival-time -->
+                                        <div class="flight-arrival-airport">
+                                            <h4>{{trip.ArrivalAirport}}</h4>  
+                                            <h5>{{trip.ArrivalCity}}</h5>
+                                            <h5>{{trip.ArrivalAirportName}}</h5>
+                                        </div><!-- .flight-departure-airport -->
+                                    </div>
+                                    <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                        <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
+                                    </div>
+                                </li>
+                            </ol>
+                            <div ng-if="'@tripType' == 'return'" class="return-flight-detail">
+                                <h4 class="detail-title"> <b>RETURN</b> FLIGHTS</h4>
+                                <ol>
+                                    <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
+                                        <div class="flight-airline">
+                                            <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                            <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
+                                        </div><!-- .flight-airline-->
+                                        <div class="flight-route">
+                                            <div class="flight-departure-airport">
+                                                <h4>{{trip.DepartureAirport}}</h4>
+                                                <h5>{{trip.DepartureCity}}</h5>
+                                                <h5>{{trip.DepartureAirportName}}</h5>
+                                            </div><!-- .flight-departure-airport -->
+                                            <div class="flight-departure-time">
+                                                <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm'}}</h4>
+                                                <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy'}}</h5>
+                                            </div><!-- .flight-departure-time -->
+                                            <div class="flight-duration">
+                                                <h5>Duration<br />{{trip.Duration}}</h5>
+                                                <hr />
+                                            </div><!-- .flight-departure-duration -->
+                                            <div class="flight-arrival-time">
+                                                <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm'}}</h4>
+                                                <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy'}}</h5>
+                                            </div><!-- .flight-arrival-time -->
+                                            <div class="flight-arrival-airport">
+                                                <h4>{{trip.ArrivalAirport}}</h4>
+                                                <h5>{{trip.ArrivalCity}}</h5>
+                                                <h5>{{trip.ArrivalAirportName}}</h5>
+                                            </div><!-- .flight-departure-airport -->
+                                        </div>
+                                        <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                            <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- .flight-details -->
+
+                </article><!-- .flight -->
+                <!-- loop end here -->
+
+            </section><!-- .flght-list -->
+
+        </div><!-- .container -->
+
+
+    </div>
+    <!-- .search-flight -->
+
+}

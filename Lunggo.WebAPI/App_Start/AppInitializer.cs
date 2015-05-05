@@ -2,6 +2,8 @@
 using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
@@ -19,6 +21,7 @@ namespace Lunggo.WebAPI
             InitUniqueIdGenerator();
             InitRedisService();
             InitAutocompleteManager();
+            InitFlightService();
         }
 
         private static void InitConfigurationManager()
@@ -68,11 +71,13 @@ namespace Lunggo.WebAPI
         private static void InitAutocompleteManager()
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
-            var airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-            var airportFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), airportFileName);
-            var hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
-            var hotelLocationFilePath = Path.Combine(HttpContext.Current.Server.MapPath(@"~/Config/"), hotelLocationFileName);
-            autocompleteManager.Init(airportFilePath, hotelLocationFilePath);
+            autocompleteManager.Init();
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
         }
     }
 }

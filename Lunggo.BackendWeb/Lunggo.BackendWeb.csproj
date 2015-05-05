@@ -147,6 +147,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AppInitializer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -308,6 +309,8 @@
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirBookRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.MultiAirRevalidateRS.datasource" />
     <Content Include="Properties\DataSources\MystiflyOnePointAPI.OnePointService.SessionCreateRS.datasource" />
+    <Content Include="Config\Airline.csv" />
+    <Content Include="Config\Airport.csv" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />

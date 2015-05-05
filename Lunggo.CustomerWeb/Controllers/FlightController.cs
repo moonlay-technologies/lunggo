@@ -1,149 +1,43 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.CustomerWeb.Models;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
-        public ActionResult SearchListOneWay(FlightSearchData data)
+        public ActionResult SearchResultList(FlightSearchData search)
         {
-            return View(data);
+            return View(search);
         }
 
-        [HttpPost]
-        public ActionResult SearchListOneWay(FlightSelectData data)
+        public ActionResult Checkout(FlightSelectData select)
         {
-            var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput {FareId = data.Itinerary.FareId});
-            if (revalidateResult.IsSuccess)
+            var service = FlightService.GetInstance();
+            var itinerary = service.GetItineraryFromCache(select.token);
+            return View(new FlightCheckoutData
             {
-                if (revalidateResult.IsValid)
-                {
-                    return RedirectToAction("Checkout", new FlightSelectData
-                    {
-                        Info = data.Info,
-                        AdultCount = data.AdultCount,
-                        ChildCount = data.ChildCount,
-                        InfantCount = data.InfantCount,
-                        IsBirthDateRequired = data.IsBirthDateRequired,
-                        IsPassportRequired = data.IsPassportRequired,
-                        Itinerary = data.Itinerary
-                    });
-                }
-                else
-                {
-                    if (revalidateResult.Itinerary != null)
-                    {
-                        return RedirectToAction("Checkout", new FlightSelectData
-                        {
-                            Info = data.Info,
-                            AdultCount = data.AdultCount,
-                            ChildCount = data.ChildCount,
-                            InfantCount = data.InfantCount,
-                            IsBirthDateRequired = data.IsBirthDateRequired,
-                            IsPassportRequired = data.IsPassportRequired,
-                            Itinerary = data.Itinerary,
-                            Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
-                        });
-                    }
-                    else
-                    {
-                        data.Message = "No other fare available.";
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-            }
-            else
-            {
-                data.Message = "Error" + revalidateResult.Errors;
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        public ActionResult SearchListReturn(FlightSearchData data)
-        {
-            return View(data);
-        }
-
-        [HttpPost]
-        public ActionResult SearchListReturn(FlightSelectData data)
-        {
-            var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = data.Itinerary.FareId });
-            if (revalidateResult.IsSuccess)
-            {
-                if (revalidateResult.IsValid)
-                {
-                    return RedirectToAction("Checkout", new FlightSelectData
-                    {
-                        Info = data.Info,
-                        AdultCount = data.AdultCount,
-                        ChildCount = data.ChildCount,
-                        InfantCount = data.InfantCount,
-                        IsBirthDateRequired = data.IsBirthDateRequired,
-                        IsPassportRequired = data.IsPassportRequired,
-                        Itinerary = data.Itinerary
-                    });
-                }
-                else
-                {
-                    if (revalidateResult.Itinerary != null)
-                    {
-                        return RedirectToAction("Checkout", new FlightSelectData
-                        {
-                            Info = data.Info,
-                            AdultCount = data.AdultCount,
-                            ChildCount = data.ChildCount,
-                            InfantCount = data.InfantCount,
-                            IsBirthDateRequired = data.IsBirthDateRequired,
-                            IsPassportRequired = data.IsPassportRequired,
-                            Itinerary = data.Itinerary,
-                            Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare
-                        });
-                    }
-                    else
-                    {
-                        data.Message = "No other fare available.";
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-            }
-            else
-            {
-                data.Message = "Error" + revalidateResult.Errors;
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        public ActionResult Checkout(FlightSelectData data)
-        {
-            var inputData = new FlightCheckoutData
-            {
-                AdultCount = data.AdultCount,
-                ChildCount = data.ChildCount,
-                InfantCount = data.InfantCount,
-                IsBirthDateRequired = data.IsBirthDateRequired,
-                IsPassportRequired = data.IsPassportRequired
-            };
-            return View(inputData);
+                HashKey = select.token,
+                Itinerary = itinerary,
+                Message = ""
+            });
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            var passengerInfo = new List<PassengerFareInfo>();
+            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
+            var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
             {
-                var adultPassengerInfo = data.AdultPassengerData.Select(passenger => new PassengerFareInfo
+                var adultPassengerInfo = data.AdultPassengerData.Select(passenger => new PassengerInfoFare
                 {
                     Type = PassengerType.Adult,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
@@ -151,41 +45,41 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(adultPassengerInfo);
             }
             if (data.ChildPassengerData != null)
             {
-                var childPassengerInfo = data.ChildPassengerData.Select(passenger => new PassengerFareInfo
+                var childPassengerInfo = data.ChildPassengerData.Select(passenger => new PassengerInfoFare
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Child,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(childPassengerInfo);
             }
             if (data.InfantPassengerData != null)
             {
-                var infantPassengerInfo = data.InfantPassengerData.Select(passenger => new PassengerFareInfo
+                var infantPassengerInfo = data.InfantPassengerData.Select(passenger => new PassengerInfoFare
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Infant,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.PassportOrIdNumber,
+                    IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(infantPassengerInfo);
             }
@@ -200,77 +94,75 @@ namespace Lunggo.CustomerWeb.Controllers
                         Phone = data.ContactData.Phone,
                         Email = data.ContactData.Email
                     },
-                    PassengerFareInfos = passengerInfo
-                }
-            };
-            var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput { FareId = data.Itinerary.FareId });
-            if (revalidateResult.IsSuccess)
-            {
-                if (revalidateResult.IsValid)
-                {
-                    var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
-                    if (bookResult.IsSuccess)
+                    PassengerInfoFares = passengerInfo
+                },
+                Itinerary = data.Itinerary,
+                TripInfos = new List<FlightTripInfo>
                     {
-                        if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+                        new FlightTripInfo
                         {
-                            var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                            DestinationAirport= data.Itinerary.FlightTrips[0].DestinationAirport,
+                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        }
+                    },
+                OverallTripType = TripType.OneWay
+            };
+            var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
+            if (bookResult.IsSuccess)
+            {
+                if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+                {
+                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                    {
+                        BookingId = bookResult.BookResult.BookingId
+                    });
+                    if (issueResult.IsSuccess)
+                    {
+                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
+                        {
+                            BookingId = issueResult.BookingId,
+                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
                             {
-                                BookingId = bookResult.BookResult.BookingId
-                            });
-                            if (issueResult.IsSuccess)
-                            {
-                                var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                                {
-                                    BookingId = issueResult.BookingId
-                                });
-                                if (tripDetails.IsSuccess)
-                                {
-                                    // TODO FLIGHT : Show ETicket
-                                    return View();
-                                }
-                                else
-                                {
-                                    data.Message = "Error" + tripDetails.Errors;
-                                    return View(data);
-                                }
-                            }
-                            else
-                            {
-                                data.Message = "Error" + issueResult.Errors;
-                                return View(data);
-                            }
+                                OriginAirport = trip.OriginAirport,
+                                DestinationAirport = trip.DestinationAirport,
+                                DepartureDate = trip.DepartureDate
+                            }).ToList()
+                        });
+                        if (tripDetails.IsSuccess)
+                        {
+                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
+                            return RedirectToAction("Eticket");
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            data.Message = "Technical Error. Please try again.";
+                            return View(data);
                         }
                     }
                     else
                     {
-                        data.Message = "Error" + bookResult.Errors;
+                        data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
                 }
                 else
                 {
-                    if (revalidateResult.Itinerary != null)
-                    {
-                        data.Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare;
-                        return View(data);
-                    }
-                    else
-                    {
-                        data.Message = "No other fare available.";
-                        return View(data);
-                    }
+                    data.Message = "Booking Failed. Please try again.";
+                    return View(data);
                 }
             }
             else
             {
-                data.Message = "Error" + revalidateResult.Errors;
+                data.Message = "Technical Error. Please try again.";
                 return View(data);
             }
+        }
+
+        public ActionResult Eticket()
+        {
+            var itin = FlightService.GetInstance().GetItineraryFromCache("111","a");
+            return View(itin);
         }
     }
 }

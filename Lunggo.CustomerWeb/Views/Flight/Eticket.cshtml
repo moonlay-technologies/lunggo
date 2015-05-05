@@ -1,0 +1,67 @@
+﻿@model Lunggo.ApCommon.Flight.Model.FlightItineraryDetails
+@using Lunggo.ApCommon.Dictionary
+
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>E-Ticket</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+</head>
+<body>
+    <div class="row">
+        <br /><br />
+        <div class="col-md-10 col-md-offset-1">
+            Flight Information
+            <hr />
+            @foreach (var info in Model.FlightTrips.SelectMany(trip => trip.FlightSegments))
+            {
+                <div class="row">
+                    <hr />
+                    <div class="col-md-4">
+                        Airline : @DictionaryService.GetInstance().GetAirlineName(info.AirlineCode)<br />
+                        Departure : @DictionaryService.GetInstance().GetAirportName(info.DepartureAirport)<br />
+                        Arrive : @DictionaryService.GetInstance().GetAirportName(info.ArrivalAirport)
+                    </div>
+                    <div class="col-md-4">
+                        Flight Number : @info.AirlineCode@info.FlightNumber<br />
+                        Date : @info.DepartureTime.ToString("d")<br />
+                        Date : @info.ArrivalTime.ToString("d")
+                    </div>
+                    <div class="col-md-4">
+                        PNR : @info.Pnr<br />
+                        Time : @info.DepartureTime.ToString("t")<br />
+                        Time : @info.ArrivalTime.ToString("t")
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            Passenger Information
+            <hr />
+            @foreach (var info in Model.PassengerInfo)
+            {
+                <div class="row">
+                    <hr />
+                    <div class="col-md-4">
+                        @info.Title @info.FirstName @info.LastName
+                    </div>
+                    <div class="col-md-4">
+                        ID Number : @info.IdNumber
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Constant;
-
-namespace Lunggo.ApCommon.Flight.Model
+﻿namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class SearchFlightInput
     {
+        public string SearchId { get; set; }
         public SearchFlightConditions Conditions { get; set; }
         public bool IsDateFlexible { get; set; }
     }

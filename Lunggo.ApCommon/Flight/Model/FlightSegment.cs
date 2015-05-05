@@ -3,7 +3,21 @@ using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightFareSegment : FlightSegmentBase
+    public class FlightSegmentApi : FlightSegmentBase
+    {
+        public string DepartureCity { get; set; }
+        public string DepartureAirportName { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalAirportName { get; set; }
+        public string CabinClass { get; set; }
+        public string AirlineName { get; set; }
+        public string AirlineLogoUrl { get; set; }
+        public string OperatingAirlineName { get; set; }
+        public string OperatingAirlineLogoUrl { get; set; }
+        public int RemainingSeats { get; set; }
+        public List<FlightStop> FlightStops { get; set; }
+    }
+    public class FlightSegmentFare : FlightSegmentBase
     {
         public string CabinClass { get; set; }
         public int RemainingSeats { get; set; }
@@ -37,8 +51,8 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightStop
     {
         public string Airport { get; set; }
-        public DateTime Arrival { get; set; }
-        public DateTime Departure { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public DateTime DepartureTime { get; set; }
         public TimeSpan Duration { get; set; }
     }
 }

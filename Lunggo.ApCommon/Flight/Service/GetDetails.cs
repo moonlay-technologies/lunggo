@@ -1,4 +1,5 @@
 ﻿using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -13,7 +14,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 TripInfos = input.TripInfos
             };
             var details = GetTripDetailsInternal(request);
-            output.FlightDetails = MapDetails(details);
+            if (details.IsSuccess)
+            {
+                output.IsSuccess = true;
+                output.FlightDetails = MapDetails(details);
+            }
+            else
+            {
+                output.IsSuccess = false;
+                output.Errors = details.Errors;
+                output.ErrorMessages = details.ErrorMessages;
+            }
             return output;
         }
 

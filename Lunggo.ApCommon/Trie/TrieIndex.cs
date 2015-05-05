@@ -1,5 +1,6 @@
 ﻿using System;
 using Lunggo.ApCommon.Autocomplete;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Model;
 
 namespace Lunggo.ApCommon.Trie
@@ -39,7 +40,7 @@ namespace Lunggo.ApCommon.Trie
 
         private void InitAirlineIndex()
         {
-            foreach (var airline in AutocompleteManager.GetInstance().AirlineDict)
+            foreach (var airline in DictionaryService.GetInstance().AirlineDict)
             {
                 AirlineIndex.InsertWord(airline.Value.Code, airline.Key);
                 AirlineIndex.InsertWordsBySentence(airline.Value.Name, airline.Key);
@@ -48,7 +49,7 @@ namespace Lunggo.ApCommon.Trie
 
         private void InitAirportIndex()
         {
-            foreach (var airport in AutocompleteManager.GetInstance().AirportDict)
+            foreach (var airport in DictionaryService.GetInstance().AirportDict)
             {
                 AirportIndex.InsertWord(airport.Value.Code, airport.Key);
                 AirportIndex.InsertWordsBySentence(airport.Value.Name, airport.Key);
@@ -58,7 +59,7 @@ namespace Lunggo.ApCommon.Trie
 
         private void InitHotelLocationIndex()
         {
-            foreach (var hotelLocation in AutocompleteManager.GetInstance().HotelLocationDict)
+            foreach (var hotelLocation in DictionaryService.GetInstance().HotelLocationDict)
             {
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.CountryName, hotelLocation.Key);
                 HotelLocationIndex.InsertWordsBySentence(hotelLocation.Value.LocationName, hotelLocation.Key);

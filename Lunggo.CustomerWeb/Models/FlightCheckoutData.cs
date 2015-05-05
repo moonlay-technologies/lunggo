@@ -10,18 +10,14 @@ namespace Lunggo.CustomerWeb.Models
 {
     public class FlightCheckoutData
     {
-        public string Message { get; set; }
-        public FlightFareItinerary Itinerary { get; set; }
-        public int AdultCount { get; set; }
-        public int ChildCount { get; set; }
-        public int InfantCount { get; set; }
-        public bool IsPassportRequired { get; set; }
-        public bool IsBirthDateRequired { get; set; }
+        public string HashKey { get; set; }
+        public FlightItineraryFare Itinerary { get; set; }
         public ContactData ContactData { get; set; }
         public List<PassengerData> AdultPassengerData { get; set; }
         public List<PassengerData> ChildPassengerData { get; set; }
         public List<PassengerData> InfantPassengerData { get; set; }
         public PaymentData PaymentData { get; set; }
+        public string Message { get; set; }
     }
 
     public class PassengerData
@@ -30,7 +26,7 @@ namespace Lunggo.CustomerWeb.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
-        public string PassportOrIdNumber { get; set; }
+        public string IdNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string Country { get; set; }
     }

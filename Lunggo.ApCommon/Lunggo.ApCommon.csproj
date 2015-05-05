@@ -105,7 +105,6 @@
     <Compile Include="Flight\Constant\FlightSupplier.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
     <Compile Include="Flight\Constant\PassengerType.cs" />
-    <Compile Include="Flight\Constant\TargetServer.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
     <Compile Include="Flight\Interface\IClientHandler.cs" />
@@ -123,7 +122,6 @@
     <Compile Include="Flight\Model\FlightBookingInfo.cs" />
     <Compile Include="Flight\Model\FlightItinerary.cs" />
     <Compile Include="Flight\Model\FlightSegment.cs" />
-    <Compile Include="Flight\Model\GetBookingStatusResult.cs" />
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
@@ -141,7 +139,6 @@
     <Compile Include="Flight\Model\Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
-    <Compile Include="Flight\Model\TripInfo.cs" />
     <Compile Include="Flight\Query\GetFlightSegment.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Query\GetFlightBookingStatusQuery.cs" />
@@ -153,7 +150,8 @@
     <Compile Include="Flight\Service\BookFlight.cs" />
     <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
-    <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
+    <Compile Include="Flight\Service\FlightCaching.cs" />
+    <Compile Include="Flight\Service\GetBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
     <Compile Include="Flight\Service\GetRules.cs" />
     <Compile Include="Flight\Model\Logic\GetRulesInput.cs" />
@@ -161,6 +159,8 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\RevalidateFlight.cs" />
     <Compile Include="Flight\Service\SearchFlight.cs" />
+    <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
+    <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Mystifly\MystiflyClientHandler.cs" />
     <Compile Include="Flight\Service\FlightServiceSingleton.cs" />
@@ -219,18 +219,19 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
     <Compile Include="Sequence\FlightStopIdSequence.cs" />
     <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
+    <Compile Include="Sequence\MemberIdCardSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Sequence\MemberIdCardSequence.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />

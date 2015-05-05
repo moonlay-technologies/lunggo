@@ -17,7 +17,7 @@ using Microsoft.WindowsAzure.Storage;
 
 namespace Lunggo.BackendWeb
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -26,13 +26,7 @@ namespace Lunggo.BackendWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            InitDb();
-            FlightService.GetInstance().Init("MCN004085", "GOAXML", "GA2014_xml", TargetServer.Test);
-        }
-        private static void InitDb()
-        {
-            const string connString = @"Data Source=""playdb.cloudapp.net, 63778"";Initial Catalog=Travorama;Persist Security Info=True;User ID=developer;Password=Standar1234";
-            DbService.GetInstance().Init(connString);
+            AppInitializer.Init();
         }
     }
 }

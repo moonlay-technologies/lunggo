@@ -127,6 +127,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis.StrongName, Version=1.0.316.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StackExchange.Redis.StrongName.1.0.322\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
@@ -139,6 +143,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -263,6 +269,11 @@
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Models\testHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="WebRole.cs" />
     <Compile Include="WebSrc\Common\Constant\CustomerWebConstant.cs" />
@@ -302,6 +313,7 @@
     </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
+    <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -309,7 +321,271 @@
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
+    <Content Include="Assets\images\adult-icon.png" />
+    <Content Include="Assets\images\airlines\0V.png" />
+    <Content Include="Assets\images\airlines\2J.png" />
+    <Content Include="Assets\images\airlines\2P.png" />
+    <Content Include="Assets\images\airlines\3K.png" />
+    <Content Include="Assets\images\airlines\3M.png" />
+    <Content Include="Assets\images\airlines\3U.png" />
+    <Content Include="Assets\images\airlines\4Q.png" />
+    <Content Include="Assets\images\airlines\4U.png" />
+    <Content Include="Assets\images\airlines\4Z.png" />
+    <Content Include="Assets\images\airlines\5J.png" />
+    <Content Include="Assets\images\airlines\7H.png" />
+    <Content Include="Assets\images\airlines\8M.png" />
+    <Content Include="Assets\images\airlines\8P.png" />
+    <Content Include="Assets\images\airlines\8U.png" />
+    <Content Include="Assets\images\airlines\9H.png" />
+    <Content Include="Assets\images\airlines\9M.png" />
+    <Content Include="Assets\images\airlines\9U.png" />
+    <Content Include="Assets\images\airlines\9W.png" />
+    <Content Include="Assets\images\airlines\A3.png" />
+    <Content Include="Assets\images\airlines\A5.png" />
+    <Content Include="Assets\images\airlines\AA.png" />
+    <Content Include="Assets\images\airlines\AB.png" />
+    <Content Include="Assets\images\airlines\AC.png" />
+    <Content Include="Assets\images\airlines\AE.png" />
+    <Content Include="Assets\images\airlines\AF.png" />
+    <Content Include="Assets\images\airlines\AH.png" />
+    <Content Include="Assets\images\airlines\AI.png" />
+    <Content Include="Assets\images\airlines\AK.png" />
+    <Content Include="Assets\images\airlines\AM.png" />
+    <Content Include="Assets\images\airlines\AN.png" />
+    <Content Include="Assets\images\airlines\AP.png" />
+    <Content Include="Assets\images\airlines\AR.png" />
+    <Content Include="Assets\images\airlines\AS.png" />
+    <Content Include="Assets\images\airlines\AT.png" />
+    <Content Include="Assets\images\airlines\AV.png" />
+    <Content Include="Assets\images\airlines\AY.png" />
+    <Content Include="Assets\images\airlines\AZ.png" />
+    <Content Include="Assets\images\airlines\B2.png" />
+    <Content Include="Assets\images\airlines\B6.png" />
+    <Content Include="Assets\images\airlines\B7.png" />
+    <Content Include="Assets\images\airlines\BA.png" />
+    <Content Include="Assets\images\airlines\BE.png" />
+    <Content Include="Assets\images\airlines\BG.png" />
+    <Content Include="Assets\images\airlines\BI.png" />
+    <Content Include="Assets\images\airlines\BL.png" />
+    <Content Include="Assets\images\airlines\BN.png" />
+    <Content Include="Assets\images\airlines\BR.png" />
+    <Content Include="Assets\images\airlines\BT.png" />
+    <Content Include="Assets\images\airlines\BW.png" />
+    <Content Include="Assets\images\airlines\BX.png" />
+    <Content Include="Assets\images\airlines\CA.png" />
+    <Content Include="Assets\images\airlines\CG.png" />
+    <Content Include="Assets\images\airlines\CI.png" />
+    <Content Include="Assets\images\airlines\CK.png" />
+    <Content Include="Assets\images\airlines\CL.png" />
+    <Content Include="Assets\images\airlines\CM.png" />
+    <Content Include="Assets\images\airlines\CQ.png" />
+    <Content Include="Assets\images\airlines\CT.png" />
+    <Content Include="Assets\images\airlines\CX.png" />
+    <Content Include="Assets\images\airlines\CY.png" />
+    <Content Include="Assets\images\airlines\CZ.png" />
+    <Content Include="Assets\images\airlines\D7.png" />
+    <Content Include="Assets\images\airlines\DC.png" />
+    <Content Include="Assets\images\airlines\DE.png" />
+    <Content Include="Assets\images\airlines\DG.png" />
+    <Content Include="Assets\images\airlines\DJ.png" />
+    <Content Include="Assets\images\airlines\DL.png" />
+    <Content Include="Assets\images\airlines\DT.png" />
+    <Content Include="Assets\images\airlines\DW.png" />
+    <Content Include="Assets\images\airlines\DY.png" />
+    <Content Include="Assets\images\airlines\EI.png" />
+    <Content Include="Assets\images\airlines\EK.png" />
+    <Content Include="Assets\images\airlines\EN.png" />
+    <Content Include="Assets\images\airlines\ES.png" />
+    <Content Include="Assets\images\airlines\ET.png" />
+    <Content Include="Assets\images\airlines\EY.png" />
+    <Content Include="Assets\images\airlines\F7.png" />
+    <Content Include="Assets\images\airlines\F9.png" />
+    <Content Include="Assets\images\airlines\FB.png" />
+    <Content Include="Assets\images\airlines\FD.png" />
+    <Content Include="Assets\images\airlines\FI.png" />
+    <Content Include="Assets\images\airlines\FJ.png" />
+    <Content Include="Assets\images\airlines\FL.png" />
+    <Content Include="Assets\images\airlines\FM.png" />
+    <Content Include="Assets\images\airlines\FQ.png" />
+    <Content Include="Assets\images\airlines\FV.png" />
+    <Content Include="Assets\images\airlines\FY.png" />
+    <Content Include="Assets\images\airlines\FZ.png" />
+    <Content Include="Assets\images\airlines\G3.png" />
+    <Content Include="Assets\images\airlines\GA.png" />
     <Content Include="Assets\images\airlines\garuda-indonesia.png" />
+    <Content Include="Assets\images\airlines\GE.png" />
+    <Content Include="Assets\images\airlines\GF.png" />
+    <Content Include="Assets\images\airlines\GK.png" />
+    <Content Include="Assets\images\airlines\GL.png" />
+    <Content Include="Assets\images\airlines\GS.png" />
+    <Content Include="Assets\images\airlines\H1.png" />
+    <Content Include="Assets\images\airlines\HA.png" />
+    <Content Include="Assets\images\airlines\HG.png" />
+    <Content Include="Assets\images\airlines\HM.png" />
+    <Content Include="Assets\images\airlines\HO.png" />
+    <Content Include="Assets\images\airlines\HU.png" />
+    <Content Include="Assets\images\airlines\HX.png" />
+    <Content Include="Assets\images\airlines\HY.png" />
+    <Content Include="Assets\images\airlines\I5.png" />
+    <Content Include="Assets\images\airlines\I9.png" />
+    <Content Include="Assets\images\airlines\IB.png" />
+    <Content Include="Assets\images\airlines\ID.png" />
+    <Content Include="Assets\images\airlines\IG.png" />
+    <Content Include="Assets\images\airlines\IL.png" />
+    <Content Include="Assets\images\airlines\IR.png" />
+    <Content Include="Assets\images\airlines\IT.png" />
+    <Content Include="Assets\images\airlines\IW.png" />
+    <Content Include="Assets\images\airlines\IY.png" />
+    <Content Include="Assets\images\airlines\J2.png" />
+    <Content Include="Assets\images\airlines\J9.png" />
+    <Content Include="Assets\images\airlines\JJ.png" />
+    <Content Include="Assets\images\airlines\JL.png" />
+    <Content Include="Assets\images\airlines\JQ.png" />
+    <Content Include="Assets\images\airlines\JT.png" />
+    <Content Include="Assets\images\airlines\JU.png" />
+    <Content Include="Assets\images\airlines\JW.png" />
+    <Content Include="Assets\images\airlines\K6.png" />
+    <Content Include="Assets\images\airlines\KA.png" />
+    <Content Include="Assets\images\airlines\KC.png" />
+    <Content Include="Assets\images\airlines\KD.png" />
+    <Content Include="Assets\images\airlines\KE.png" />
+    <Content Include="Assets\images\airlines\KK.png" />
+    <Content Include="Assets\images\airlines\KL.png" />
+    <Content Include="Assets\images\airlines\KM.png" />
+    <Content Include="Assets\images\airlines\KP.png" />
+    <Content Include="Assets\images\airlines\KQ.png" />
+    <Content Include="Assets\images\airlines\KU.png" />
+    <Content Include="Assets\images\airlines\KX.png" />
+    <Content Include="Assets\images\airlines\KZ.png" />
+    <Content Include="Assets\images\airlines\L6.png" />
+    <Content Include="Assets\images\airlines\LA.png" />
+    <Content Include="Assets\images\airlines\LG.png" />
+    <Content Include="Assets\images\airlines\LH.png" />
+    <Content Include="Assets\images\airlines\LI.png" />
+    <Content Include="Assets\images\airlines\LO.png" />
+    <Content Include="Assets\images\airlines\LR.png" />
+    <Content Include="Assets\images\airlines\LX.png" />
+    <Content Include="Assets\images\airlines\LY.png" />
+    <Content Include="Assets\images\airlines\M8.png" />
+    <Content Include="Assets\images\airlines\MD.png" />
+    <Content Include="Assets\images\airlines\ME.png" />
+    <Content Include="Assets\images\airlines\MF.png" />
+    <Content Include="Assets\images\airlines\MH.png" />
+    <Content Include="Assets\images\airlines\MI.png" />
+    <Content Include="Assets\images\airlines\MJ.png" />
+    <Content Include="Assets\images\airlines\MK.png" />
+    <Content Include="Assets\images\airlines\MN.png" />
+    <Content Include="Assets\images\airlines\MS.png" />
+    <Content Include="Assets\images\airlines\MU.png" />
+    <Content Include="Assets\images\airlines\MZ.png" />
+    <Content Include="Assets\images\airlines\NF.png" />
+    <Content Include="Assets\images\airlines\NH.png" />
+    <Content Include="Assets\images\airlines\NI.png" />
+    <Content Include="Assets\images\airlines\NK.png" />
+    <Content Include="Assets\images\airlines\NX.png" />
+    <Content Include="Assets\images\airlines\NZ.png" />
+    <Content Include="Assets\images\airlines\OA.png" />
+    <Content Include="Assets\images\airlines\OD.png" />
+    <Content Include="Assets\images\airlines\OK.png" />
+    <Content Include="Assets\images\airlines\OM.png" />
+    <Content Include="Assets\images\airlines\OR.png" />
+    <Content Include="Assets\images\airlines\OS.png" />
+    <Content Include="Assets\images\airlines\OU.png" />
+    <Content Include="Assets\images\airlines\OV.png" />
+    <Content Include="Assets\images\airlines\OZ.png" />
+    <Content Include="Assets\images\airlines\PC.png" />
+    <Content Include="Assets\images\airlines\PG.png" />
+    <Content Include="Assets\images\airlines\PK.png" />
+    <Content Include="Assets\images\airlines\PQ.png" />
+    <Content Include="Assets\images\airlines\PR.png" />
+    <Content Include="Assets\images\airlines\PS.png" />
+    <Content Include="Assets\images\airlines\PW.png" />
+    <Content Include="Assets\images\airlines\PX.png" />
+    <Content Include="Assets\images\airlines\PY.png" />
+    <Content Include="Assets\images\airlines\PZ.png" />
+    <Content Include="Assets\images\airlines\QC.png" />
+    <Content Include="Assets\images\airlines\QF.png" />
+    <Content Include="Assets\images\airlines\QG.png" />
+    <Content Include="Assets\images\airlines\QR.png" />
+    <Content Include="Assets\images\airlines\QS.png" />
+    <Content Include="Assets\images\airlines\QV.png" />
+    <Content Include="Assets\images\airlines\QZ.png" />
+    <Content Include="Assets\images\airlines\RA.png" />
+    <Content Include="Assets\images\airlines\RE.png" />
+    <Content Include="Assets\images\airlines\RI.png" />
+    <Content Include="Assets\images\airlines\RJ.png" />
+    <Content Include="Assets\images\airlines\RO.png" />
+    <Content Include="Assets\images\airlines\S2.png" />
+    <Content Include="Assets\images\airlines\S3.png" />
+    <Content Include="Assets\images\airlines\S4.png" />
+    <Content Include="Assets\images\airlines\S7.png" />
+    <Content Include="Assets\images\airlines\SA.png" />
+    <Content Include="Assets\images\airlines\SB.png" />
+    <Content Include="Assets\images\airlines\SC.png" />
+    <Content Include="Assets\images\airlines\SE.png" />
+    <Content Include="Assets\images\airlines\SI.png" />
+    <Content Include="Assets\images\airlines\SJ.png" />
+    <Content Include="Assets\images\airlines\SK.png" />
+    <Content Include="Assets\images\airlines\SL.png" />
+    <Content Include="Assets\images\airlines\SN.png" />
+    <Content Include="Assets\images\airlines\SQ.png" />
+    <Content Include="Assets\images\airlines\SS.png" />
+    <Content Include="Assets\images\airlines\SU.png" />
+    <Content Include="Assets\images\airlines\SV.png" />
+    <Content Include="Assets\images\airlines\SW.png" />
+    <Content Include="Assets\images\airlines\T7.png" />
+    <Content Include="Assets\images\airlines\TA.png" />
+    <Content Include="Assets\images\airlines\TF.png" />
+    <Content Include="Assets\images\airlines\TG.png" />
+    <Content Include="Assets\images\airlines\TK.png" />
+    <Content Include="Assets\images\airlines\TL.png" />
+    <Content Include="Assets\images\airlines\TM.png" />
+    <Content Include="Assets\images\airlines\TN.png" />
+    <Content Include="Assets\images\airlines\TP.png" />
+    <Content Include="Assets\images\airlines\TR.png" />
+    <Content Include="Assets\images\airlines\TT.png" />
+    <Content Include="Assets\images\airlines\TU.png" />
+    <Content Include="Assets\images\airlines\TX.png" />
+    <Content Include="Assets\images\airlines\TZ.png" />
+    <Content Include="Assets\images\airlines\U6.png" />
+    <Content Include="Assets\images\airlines\U8.png" />
+    <Content Include="Assets\images\airlines\UA.png" />
+    <Content Include="Assets\images\airlines\UL.png" />
+    <Content Include="Assets\images\airlines\UN.png" />
+    <Content Include="Assets\images\airlines\UO.png" />
+    <Content Include="Assets\images\airlines\US.png" />
+    <Content Include="Assets\images\airlines\UT.png" />
+    <Content Include="Assets\images\airlines\UU.png" />
+    <Content Include="Assets\images\airlines\UX.png" />
+    <Content Include="Assets\images\airlines\V0.png" />
+    <Content Include="Assets\images\airlines\VA.png" />
+    <Content Include="Assets\images\airlines\VE.png" />
+    <Content Include="Assets\images\airlines\VF.png" />
+    <Content Include="Assets\images\airlines\VJ.png" />
+    <Content Include="Assets\images\airlines\VN.png" />
+    <Content Include="Assets\images\airlines\VS.png" />
+    <Content Include="Assets\images\airlines\VV.png" />
+    <Content Include="Assets\images\airlines\VW.png" />
+    <Content Include="Assets\images\airlines\VX.png" />
+    <Content Include="Assets\images\airlines\W3.png" />
+    <Content Include="Assets\images\airlines\W5.png" />
+    <Content Include="Assets\images\airlines\WF.png" />
+    <Content Include="Assets\images\airlines\WP.png" />
+    <Content Include="Assets\images\airlines\WS.png" />
+    <Content Include="Assets\images\airlines\WX.png" />
+    <Content Include="Assets\images\airlines\WY.png" />
+    <Content Include="Assets\images\airlines\XJ.png" />
+    <Content Include="Assets\images\airlines\XL.png" />
+    <Content Include="Assets\images\airlines\XN.png" />
+    <Content Include="Assets\images\airlines\XY.png" />
+    <Content Include="Assets\images\airlines\Y6.png" />
+    <Content Include="Assets\images\airlines\YO.png" />
+    <Content Include="Assets\images\airlines\YW.png" />
+    <Content Include="Assets\images\airlines\Z2.png" />
+    <Content Include="Assets\images\airlines\Z6.png" />
+    <Content Include="Assets\images\airlines\ZH.png" />
+    <Content Include="Assets\images\airlines\ZI.png" />
+    <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airline\airasia.png" />
     <Content Include="Assets\images\airline\citilink.png" />
     <Content Include="Assets\images\airline\garuda.png" />
@@ -322,6 +598,7 @@
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
     <Content Include="Assets\images\cal-bg.png" />
+    <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
@@ -337,12 +614,14 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\no-image.png" />
+    <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
@@ -384,6 +663,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
+    <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
@@ -454,10 +734,6 @@
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
     <Content Include="Assets\js\jquery.cycle2.js.map" />
-    <Content Include="Assets\sass\application.scss" />
-    <Content Include="Assets\sass\_font_face.scss" />
-    <Content Include="Assets\sass\_footer.scss" />
-    <Content Include="Assets\sass\_header.scss" />
     <Content Include="Assets\js\angular-route.min.js.map" />
     <Content Include="Assets\js\angular.min.js.map" />
     <Content Include="Assets\css\application.css.map" />
@@ -466,6 +742,9 @@
     <Content Include="Assets\css\_footer.scss" />
     <Content Include="Assets\css\_header.scss" />
     <Content Include="Config\Airport.csv" />
+    <Content Include="Config\HotelLocation.csv" />
+    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -486,6 +765,13 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap-theme.min.css" />
     <Content Include="Statics\bootstrap-3.1.1\css\bootstrap.css" />
@@ -1646,7 +1932,6 @@
     <Content Include="Views\UW100HotelSearch\Search.cshtml" />
     <Content Include="Views\UW200HotelDetail\GetHotelDetail.cshtml" />
     <Content Include="Views\Template\HotelSearchList.cshtml" />
-    <Content Include="Views\Template\FlightSearchList.cshtml" />
     <Content Include="Views\Template\HotelDetail.cshtml" />
     <Content Include="Views\Template\HotelCheckout.cshtml" />
     <Content Include="Views\Template\HotelCheckoutPayment.cshtml" />
@@ -1667,10 +1952,32 @@
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
-    <Content Include="Views\Flight\Checkout.cshtml" />
-    <Content Include="Views\Flight\SearchListOneWay.cshtml" />
-    <Content Include="Views\Flight\SearchListReturn.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Flight\SearchResultList.cshtml" />
+    <Content Include="Views\Flight\Checkout.cshtml" />
+    <Content Include="Views\Flight\SearchResultList - Ori.cshtml" />
+    <Content Include="Views\Flight\Checkout - Ori.cshtml" />
+    <Content Include="Views\Template\FlightSearchListNew.cshtml" />
+    <Content Include="Views\Flight\Eticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\UW100\Views\Shared\" />
@@ -1709,6 +2016,12 @@
       <Project>{94C45B65-F662-4262-A745-0D023F9C9FF9}</Project>
       <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Mystifly.OnePointService.Flight\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

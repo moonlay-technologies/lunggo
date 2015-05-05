@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Database;
@@ -59,13 +60,13 @@ namespace Lunggo.BackendWeb.Controllers
                         Email = "ayey@aye.y",
                         Phone = "0856123456789",
                     },
-                    PassengerFareInfos = new List<PassengerFareInfo>()
+                    PassengerInfoFares = new List<PassengerInfoFare>()
                 },
                 Itinerary = revalidateResult2.Itinerary,
                 TripInfos = input.Conditions.TripInfos,
                 PaymentData = null
             };
-            bookInput.BookingInfo.PassengerFareInfos.Add(new PassengerFareInfo
+            bookInput.BookingInfo.PassengerInfoFares.Add(new PassengerInfoFare
             {
                 Type = PassengerType.Adult,
                 Gender = Gender.Male,

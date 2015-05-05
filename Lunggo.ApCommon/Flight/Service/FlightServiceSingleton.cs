@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         private static readonly FlightService Instance = new FlightService();
-        private static readonly MystiflyWrapper APIServiceWrapper = MystiflyWrapper.GetInstance();
+        private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
@@ -23,11 +23,11 @@ namespace Lunggo.ApCommon.Flight.Service
             return Instance;
         }
 
-        public void Init(string accountNumber, string userName, string password, TargetServer target)
+        public void Init()
         {
             if (!_isInitialized)
             {
-                APIServiceWrapper.Init(accountNumber, userName, password, target);
+                MystiflyWrapper.Init();
                 _isInitialized = true;
             }
             else
@@ -38,47 +38,47 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            return APIServiceWrapper.SearchFlight(conditions);
+            return MystiflyWrapper.SearchFlight(conditions);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
         {
-            return APIServiceWrapper.SpecificSearchFlight(conditions);
+            return MystiflyWrapper.SpecificSearchFlight(conditions);
         }
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            return APIServiceWrapper.RevalidateFare(conditions);
+            return MystiflyWrapper.RevalidateFare(conditions);
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            return APIServiceWrapper.BookFlight(bookInfo);
+            return MystiflyWrapper.BookFlight(bookInfo);
         }
 
         private OrderTicketResult OrderTicketInternal(string bookingId)
         {
-            return APIServiceWrapper.OrderTicket(bookingId);
+            return MystiflyWrapper.OrderTicket(bookingId);
         }
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
-            return APIServiceWrapper.GetTripDetails(conditions);
+            return MystiflyWrapper.GetTripDetails(conditions);
         }
 
-        private GetBookingStatusResult GetBookingStatusInternal()
+        private List<BookingStatusInfo> GetBookingStatusInternal()
         {
-            return APIServiceWrapper.GetBookingStatus();
+            return MystiflyWrapper.GetBookingStatus();
         }
 
         private CancelBookingResult CancelBookingInternal(string bookingId)
         {
-            return APIServiceWrapper.CancelBooking(bookingId);
+            return MystiflyWrapper.CancelBooking(bookingId);
         }
 
         private GetRulesResult GetRulesInternal(string fareId)
         {
-            return APIServiceWrapper.GetRules(fareId);
+            return MystiflyWrapper.GetRules(fareId);
         }
     }
 }

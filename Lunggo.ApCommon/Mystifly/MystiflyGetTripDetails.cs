@@ -16,57 +16,54 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
-            using (var client = new MystiflyClientHandler())
+            var request = new AirTripDetailsRQ
             {
-                var request = new AirTripDetailsRQ
+                UniqueID = conditions.BookingId,
+                SendOnlyTicketed = false,
+                SessionId = Client.SessionId,
+                Target = Client.Target,
+                ExtensionData = null
+            };
+            var result = new GetTripDetailsResult();
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.TripDetails(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    UniqueID = conditions.BookingId,
-                    SendOnlyTicketed = false,
-                    SessionId = client.SessionId,
-                    Target = MystiflyClientHandler.Target,
-                    ExtensionData = null
-                };
-                var result = new GetTripDetailsResult();
-                var retry = 0;
-                var done = false;
-                while (!done)
-                {
-                    done = true;
-                    var response = client.TripDetails(request);
-                    if (!response.Errors.Any() && response.Success)
-                    {
-                        result = MapResult(response, conditions);
-                        result.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (response.Errors.Any())
-                        {
-                            result.Errors = new List<FlightError>();
-                            result.ErrorMessages = new List<string>();
-                            foreach (var error in response.Errors)
-                            {
-                                if (error.Code == "ERTDT002")
-                                {
-                                    result.Errors = null;
-                                    result.ErrorMessages = null;
-                                    client.CreateSession();
-                                    request.SessionId = client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
-                                }
-                                MapError(response, result);
-                            }
-                        }
-                        result.IsSuccess = false;
-                    }
+                    result = MapResult(response, conditions);
+                    result.IsSuccess = true;
+                    result.Errors = null;
+                    result.ErrorMessages = null;
                 }
-                return result;
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        result.Errors = new List<FlightError>();
+                        result.ErrorMessages = new List<string>();
+                        foreach (var error in response.Errors)
+                        {
+                            if (error.Code == "ERTDT002")
+                            {
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
+                                {
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            MapError(response, result);
+                        }
+                    }
+                    result.IsSuccess = false;
+                }
             }
+            return result;
         }
 
         private static GetTripDetailsResult MapResult(AirTripDetailsRS response, ConditionsBase conditions)
@@ -112,8 +109,6 @@ namespace Lunggo.ApCommon.Mystifly
                         totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
                 } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
-                fareTrip.TotalDuration = TimeSpan.FromMinutes(segments.Sum(segment => double.Parse(segment.JourneyDuration))) +
-                                         totalTransitDuration;
                 flightTrips.Add(fareTrip);
             }
             return flightTrips;
@@ -176,13 +171,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (customerInfo.Customer.PaxName.PassengerTitle)
             {
-                case "Mr" :
+                case "Mr":
                     return Title.Mister;
-                case "Mrs" :
+                case "Mrs":
                     return Title.Mistress;
-                case "Miss" :
+                case "Miss":
                     return Title.Miss;
-                default :
+                default:
                     return Title.Mister;
             }
         }
@@ -191,13 +186,13 @@ namespace Lunggo.ApCommon.Mystifly
         {
             switch (customerInfo.Customer.PassengerType)
             {
-                case PassengerType.ADT :
+                case PassengerType.ADT:
                     return Flight.Constant.PassengerType.Adult;
-                case PassengerType.CHD :
+                case PassengerType.CHD:
                     return Flight.Constant.PassengerType.Child;
-                case PassengerType.INF :
+                case PassengerType.INF:
                     return Flight.Constant.PassengerType.Infant;
-                default :
+                default:
                     return Flight.Constant.PassengerType.Adult;
             }
         }
@@ -237,21 +232,33 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERTDT005":
                     case "ERTDT006":
                         goto case "BookingIdNoLongerValid";
+                    case "ERTDT002":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
+                        result.ErrorMessages.Add("Invalid account information!");
+                        goto case "TechnicalError";
                     case "ERGEN006":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
+                        if (result.ErrorMessages == null)
+                            result.ErrorMessages = new List<string>();
                         result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":
-                        result.Errors.Add(FlightError.InvalidInputData);
+                        if (!result.Errors.Contains(FlightError.InvalidInputData))
+                            result.Errors.Add(FlightError.InvalidInputData);
                         break;
                     case "BookingIdNoLongerValid":
-                        result.Errors.Add(FlightError.BookingIdNoLongerValid);
+                        if (!result.Errors.Contains(FlightError.BookingIdNoLongerValid))
+                            result.Errors.Add(FlightError.BookingIdNoLongerValid);
                         break;
                     case "TechnicalError":
-                        result.Errors.Add(FlightError.TechnicalError);
+                        if (!result.Errors.Contains(FlightError.TechnicalError))
+                            result.Errors.Add(FlightError.TechnicalError);
                         break;
                 }
             }

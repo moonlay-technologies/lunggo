@@ -193,6 +193,11 @@ namespace Lunggo.Repository.TableRecord
             return record;
         }
 
+		public FlightPassengerTableRecord()
+        {
+            ;
+        }
+
         static FlightPassengerTableRecord()
         {
             InitTableName();

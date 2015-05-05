@@ -93,6 +93,7 @@ hr {border-color:#aaa;}
 			}
 		}
 	}
+    .hotel-loading {text-align:center; padding:20px 0;}
 	.hotel-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
 		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
 			.arrow {display:block; cursor:pointer; background:#2196c3; color:#fff; padding:5px; text-align:center;}
@@ -146,17 +147,17 @@ hr {border-color:#aaa;}
 		}
 		&.horizontal {
 			.hotel-wrapper {width:100%;}
-			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
+			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; height:170px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
 				&:after {content:""; clear:both; display:block;}
 				.hotel-link {color:#555;}
-				.hotel-image {float:left; width:35%; height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
+				.hotel-image {float:left; width:35%; height:170px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
 				}
 				.hotel-sum {padding:20px; float:left; width:35%; padding-bottom:0;
-					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
+					.hotel-name {font-size:18px; height:40px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:10px;}
 					.hotel-address {margin-bottom:10px; font-style:italic; margin-top:0;}
-					.hotel-feedback {color:#888; padding-top:10px;
+					.hotel-feedback {color:#888;
 						.hotel-like {margin-right:10px;}
 						.hotel-review {border-left:1px solid #ddd; padding-left:15px;}
 						.fa {font-size:16px;}
@@ -282,9 +283,9 @@ hr {border-color:#aaa;}
 		.payment-form {
 			h2 {font-size:21px;}
 			.payment-option {
-				label {cursor:pointer; color:#fff; width:30%; display:inline-block; border:2px solid #82d4ff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; background: #7cdbfe; /* Old browsers */ background: -moz-linear-gradient(top,  #7cdbfe 0%, #2fb4e6 46%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7cdbfe), color-stop(46%,#2fb4e6)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* IE10+ */ background: linear-gradient(to bottom,  #7cdbfe 0%,#2fb4e6 46%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cdbfe', endColorstr='#2fb4e6',GradientType=0 ); /* IE6-9 */
+				label {cursor:pointer; opacity:0.7; color:#fff; width:30%; display:inline-block; border:2px solid #82d4ff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; background: #7cdbfe; /* Old browsers */ background: -moz-linear-gradient(top,  #7cdbfe 0%, #2fb4e6 46%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7cdbfe), color-stop(46%,#2fb4e6)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* IE10+ */ background: linear-gradient(to bottom,  #7cdbfe 0%,#2fb4e6 46%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cdbfe', endColorstr='#2fb4e6',GradientType=0 ); /* IE6-9 */
 					span {display:block; padding:10px 0px 10px 50px; background-repeat:no-repeat; background-position:10px center;}
-					&.active {}
+					&.active {opacity:1;}
 					&.payment-transfer {
 						span {background-image:url(../images/payment-transfer.png);}
 					}
@@ -303,6 +304,10 @@ hr {border-color:#aaa;}
 					input[type="radio"] {display:none;}
 				}
 			}
+            .payment-detail {
+                &>section {display:none;}
+                &>section.active {display:block;}
+            }
 		}
 		.payment-button {text-align:center;
 			.btn {font-size:18px; font-weight:bold; padding:10px 35px;}
@@ -382,11 +387,50 @@ hr {border-color:#aaa;}
 	}
 	// flight list horizontal
 	.flight-list.horizontal {
-		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
-            &.active {border-color:#3fabe3;}
-			.flight-main {display:block; clear:both; position:relative;
+		.flight {margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+            &.active {border-color:#3fabe3;
+                .flight-main {border-color:#3fabe3;}
+                .flight-detail .flight-detail-content {border-color:#3fabe3;}
+                .flight-detail {height:auto; overflow:auto;}
+            }
+            &.flight-return {
+                .flight-main {
+                    .flight-left {
+                        &>div {float:left; width:50%;
+                            .flight-header {padding:10px;}
+                            .flight-content {padding-top:10px;
+                                &>div {float:left;}
+                                .flight-airline {width:40%; text-align:center;
+                                    img {display:block; margin-left:auto; margin-right:auto; margin-bottom:5px; width:100px;}
+                                }
+                                .flight-route {width:60%; padding-top:20px;
+                                    .route-wrapper {width:100%;
+                                        &>div {float:left; text-align:center;}
+                                        h4 {font-weight:bold; margin:0; padding:0;}
+                                        h5 {margin:0; padding:0;}
+                                        .departure {width:40%;}
+                                        .to {width:20%; padding-top:5px;}
+                                        .arrival {width:40%;}
+                                    }
+                                }
+                                .duration {width:100%; padding:0; margin:0; text-align:center; clear:both; padding-top:10px;}
+                            }
+                        }
+                        &>div+div {border-left:1px solid #ddd;}
+                        .flight-departure {}
+                        .flight-return {}
+                        &>.flight-action {display:block; clear:both; width:100%; border-left:0;
+                            a {cursor:pointer;}
+                        }
+                    }
+                }
+                .flight-detail {
+                    .return-flight-detail, ol + h4 {border-top:2px solid #3fabe3;}
+                }
+            }
+			.flight-main {display:block; clear:both; position:relative; background:#fff; border:1px solid #ddd;
 				&:after {content:""; clear:both; display:block; width:100%;}
-				.flight-left {float:left; width:73%; padding-bottom:30px;
+				.flight-left {float:left; width:73%; border-right:1px solid #ddd;
 					.flight-header {border-bottom:1px solid #ddd;
 						.flight-airline {@extend .gotham; color:#3fabe3; display:inline-block; padding-left:10px; width:72%;
 							img {height:25px; margin-right:5px;}
@@ -396,41 +440,29 @@ hr {border-color:#aaa;}
 							.flight-weight {background:url(../images/flight-weight.png) bottom center no-repeat; color:#fff; padding:10px 10px 2px;}
 						}
 					}
-					.flight-route {padding:35px 60px; padding-bottom:0;
-						.flight-route-detail {border-bottom:1px solid #ddd; position:relative; margin-bottom:40px;
-							&:after {content:""; display:block; clear:both; width:100%;}
-							&>div {display:inline-block; width:120px; text-align:center; position:relative;
-								.number {position:absolute; width:100%; left:0; top:0; text-align:center; display:block;}
-								.time {position:absolute; text-align:center; width:100%; top:-25px; left:0; font-weight:bold; font-size:18px;}
-								img {}
-								.location {position:absolute; display:block; text-align:center; width:100%; font-size:14px; bottom:-25px; left:0;}
-							}
-							.departure {float:left; margin-left:-60px;}
-							.arrival {float:right; margin-right:-60px;}
-							.stop {position:absolute; top:3px;
-								.number {top:-5px;}
-								img {position:relative; top:10px;}
-							}
-							&.transit-1 {
-								.stop-1 {left:50%; margin-left:-60px;}
-							}
-							&.transit-2 {
-								.stop-1 {left:33%; margin-left:-60px;}
-								.stop-2 {left:67%; margin-left:-60px;}
-							}
-							&.transit-3 {
-								.stop-1 {left:25%; margin-left:-60px;}
-								.stop-2 {left:50%; margin-left:-60px;}
-								.stop-3 {left:75%; margin-left:-60px;}
-							}
-						}
-						.flight-time {height:10px; width:100%; border-right:1px solid #2fb4e6; border-left:1px solid #2fb4e6; text-align:center; position:relative;
-							&:after {content:""; display:block; width:100%; border-top:1px dashed #2fb4e6; z-index:1; margin-top:-15px; position:relative;}
-							.total-time {background:#fff; color:#2fb4e6; font-weight:bold; z-index:2; top:-5px; position:relative; padding:0 5px;}
-						}
-					}
+                    .flight-content {
+                        &>div {float:left;}
+                        .flight-airline-image {border-right:1px solid #ddd; width:25%; text-align:center;
+                            img {width:100px;}
+                        }
+					    .flight-route {width:75%; padding-top:15px; color:#666;
+                            h2 {padding:0; margin:0; font-size:18px; font-weight:bold;}
+                            h3 {padding:0; margin:0; font-size:14px;}
+                            h5 {padding:0; margin:0; font-size:12px;}
+                            h3 + h2 {margin-top:10px;}
+                            hr {border-color:#3fabe3;}
+                            &>div {float:left;}
+                            .departure {width:33%; text-align:right;}
+                            .duration {width:33%; text-align:center; padding:0 10px;}
+                            .arrival {width:33%; text-align:left;}
+					    }
+                        &:after {content:""; clear:both; width:100%; display:block;}
+                    }
+                    .flight-action {border-top:1px solid #ddd; padding:10px;
+                        a {margin-right:15px; cursor:pointer;}
+                    }
 				}
-				.flight-right {float:left; width:27%; padding:30px 20px; border-left:1px solid #ddd; position:relative;
+				.flight-right {float:left; width:27%; padding:15px 20px 0; position:relative;
 					.tag {position:absolute; top:0; left:50%; margin-left:-50px; width:100px; height:25px; padding-top:2px; background-position:top center; background-repeat:no-repeat; text-align:center; color:#fff;
 						&.red {background-image:url(../images/tag-red.png);}
 						&.orange {background-image:url(../images/tag-orange.png);}
@@ -447,43 +479,44 @@ hr {border-color:#aaa;}
 					&.active {background-image:url(../images/flight-toggle-up.png);}
 				}
 			}
-			.flight-detail {border-top:1px solid #62c7ec; display:none;
-				&:after {content:""; display:block; width:100%; clear:both;}
-				.detail-left {float:left; width:73%; padding:20px;
-					.detail-title {margin-bottom:20px;}
-					ol {list-style:none; counter-reset: listCounter;
-						li {position:relative; margin-bottom:15px;
-							&:before {
-							    counter-increment: listCounter; content: counter(listCounter); color: #444; background:#f3b400; font-weight:bold; text-align:center; width:20px; position:absolute; top:0; left:-30px; z-index:10;
-							}
-							&>div {display:inline-block; vertical-align:top;}
-							.detail-destination {width:35%; text-align:center;
-								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
-								&>div {position:relative; z-index:2; background:#fff;}
-								.departure {float:left; padding-right:5px;}
-								.arrival {float:right; padding-left:5px;}
-									.city {display:block; font-weight:bold; font-size:18px;}
-									.airport {}
-							}
-							.detail-airline {width:35%; vertical-align:middle; padding-top:5px; font-size:20px; text-align:center;}
-							.detail-time {width:28%; text-align:center;
-								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
-								&>div {position:relative; z-index:2; background:#fff;}
-								.departure {float:left; padding-right:5px;}
-								.arrival {float:right; padding-left:5px;}
-									.time {display:block; font-weight:bold; font-size:18px;}
-									.day {}
-							}
-						}
-					}
-				}
-				.detail-right {float:left; width:27%; padding:20px;
-					h5 {font-weight:bold;}
-				}
-			}
+            .flight-detail {padding:0 20px; height:0; overflow:hidden;
+			    .flight-detail-content {border:1px solid #ddd; background:#fafafa; border-top:0;
+				    &:after {content:""; display:block; width:100%; clear:both;}
+				    .detail-title {margin:0; padding:20px 0 10px 20px;}
+                    ol {padding:0; margin:0; list-style:none;
+                        li {padding-top:10px; padding-bottom:10px;
+                            &:after {content:""; display:block; width:100%; clear:both;}
+                            &.route>div {float:left;}
+                            &.route {
+                                .flight-airline {width:15%; text-align:center;
+                                    img {max-width:75px; height:auto;}
+                                }
+                                .flight-route {width:85%;
+                                    &>div {float:left;}
+                                    h4 {font-weight:bold; margin:0; margin:10px 0 5px; font-size:16px;}
+                                    h5 {margin:0; margin-bottom:5px; font-size:12px;}
+                                    .flight-departure-airport {width:25%; text-align:right;}
+                                    .flight-departure-time {width:15%; text-align:right;}
+                                    .flight-duration {width:20%; text-align:center; padding:10px 20px 0; font-size:14px;
+                                        hr {border-color:#3fabe3;}
+                                    }
+                                    .flight-arrival-time {width:15%; text-align:left;}
+                                    .flight-arrival-airport {width:25%; text-align:left;}
+                                }
+                                .flight-operator {display:block; width:100%; clear:both; padding-left:20px;}
+                            }
+                            &.transit {padding:0 150px 20px; font-size:12px;
+                                h3 {text-align:center;}
+                                h4 {}
+                            }
+                        }
+                        li+li {border-top:1px solid #ddd;}
+                    }
+			    }
+            }
 		}
 	}
-	// flight list return fligt
+	// flight list return flight
 	.flight-list-return.horizontal {
 		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
             &.active {border-color:#3fabe3;}
