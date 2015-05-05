@@ -122,7 +122,6 @@
     <Compile Include="Flight\Model\FlightBookingInfo.cs" />
     <Compile Include="Flight\Model\FlightItinerary.cs" />
     <Compile Include="Flight\Model\FlightSegment.cs" />
-    <Compile Include="Flight\Model\GetBookingStatusResult.cs" />
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
@@ -152,7 +151,7 @@
     <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
     <Compile Include="Flight\Service\FlightCaching.cs" />
-    <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
+    <Compile Include="Flight\Service\GetBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
     <Compile Include="Flight\Service\GetRules.cs" />
     <Compile Include="Flight\Model\Logic\GetRulesInput.cs" />

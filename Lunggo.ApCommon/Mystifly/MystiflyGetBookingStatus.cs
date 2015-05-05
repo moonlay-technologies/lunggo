@@ -11,115 +11,138 @@ namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override GetBookingStatusResult GetBookingStatus()
+        internal override List<BookingStatusInfo> GetBookingStatus()
         {
-            var result = new GetBookingStatusResult();
-            var takeRequest = new AirMessageQueueRQ
+            var statusInfos = new List<BookingStatusInfo>();
+            statusInfos.AddRange(GetQueues(QueueCategory.Ticketed));
+            statusInfos.AddRange(GetQueues(QueueCategory.ScheduleChange));
+            RemoveQueues(statusInfos);
+            return statusInfos;
+        }
+
+        private static IEnumerable<BookingStatusInfo> GetQueues(QueueCategory category)
+        {
+            var request = new AirMessageQueueRQ
             {
+                CategoryId = category,
                 SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
+                Target = Client.Target,
                 ExtensionData = null
             };
-            AirMessageQueueRS takeResponse;
-            var items = new List<Item>();
-
-            takeRequest.CategoryId = QueueCategory.Booking;
-            takeResponse = Client.MessageQueues(takeRequest);
-            if (takeResponse.Success)
+            var result = new List<BookingStatusInfo>();
+            var retry = 0;
+            var done = false;
+            while (!done)
             {
-                items.AddRange(takeResponse.MessageItems.Select(message => new Item
+                var response = Client.MessageQueues(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
                 {
-                    UniqueId = message.UniqueID,
-                    CategoryId = QueueCategory.Booking,
-                    ExtensionData = null
-                }));
-                result.BookingStatusInfos.AddRange(takeResponse.MessageItems.Select(item => new BookingStatusInfo
+                    result.AddRange(response.MessageItems.Select(item => new BookingStatusInfo
+                    {
+                        BookingId = item.UniqueID,
+                        BookingStatus = MapMessageCategory(category),
+                        TimeLimit = null
+                    }));
+                }
+                else
                 {
-                    BookingId = item.UniqueID,
-                    BookingStatus = BookingStatus.Booked,
-                    TimeLimit = item.TktTimeLimit
-                }));
+                    if (response.Errors.Any())
+                    {
+                        if (retry <= 3 && response.Errors.Select(error => error.Code).Contains("ERMQU003"))
+                        {
+                            Client.CreateSession();
+                            request.SessionId = Client.SessionId;
+                            retry++;
+                            done = false;
+                        }
+                        else
+                        {
+                            if (response.Errors.Select(error => error.Code).Contains("ERMQU001") ||
+                                response.Errors.Select(error => error.Code).Contains("ERMQU003"))
+                            {
+                                //TODO Flight Error logging
+                            }
+                        }
+                    }
+                }
             }
-
-            takeRequest.CategoryId = QueueCategory.Cancelled;
-            takeResponse = Client.MessageQueues(takeRequest);
-            if (takeResponse.Success)
-            {
-                items.AddRange(takeResponse.MessageItems.Select(message => new Item
-                {
-                    UniqueId = message.UniqueID,
-                    CategoryId = QueueCategory.Cancelled,
-                    ExtensionData = null
-                }));
-                result.BookingStatusInfos.AddRange(takeResponse.MessageItems.Select(item => new BookingStatusInfo
-                {
-                    BookingId = item.UniqueID,
-                    BookingStatus = BookingStatus.Cancelled,
-                    TimeLimit = null
-                }));
-            }
-
-            takeRequest.CategoryId = QueueCategory.Ticketed;
-            takeResponse = Client.MessageQueues(takeRequest);
-            if (takeResponse.Success)
-            {
-                items.AddRange(takeResponse.MessageItems.Select(message => new Item
-                {
-                    UniqueId = message.UniqueID,
-                    CategoryId = QueueCategory.Ticketed,
-                    ExtensionData = null
-                }));
-                result.BookingStatusInfos.AddRange(takeResponse.MessageItems.Select(item => new BookingStatusInfo
-                {
-                    BookingId = item.UniqueID,
-                    BookingStatus = BookingStatus.Ticketed,
-                    TimeLimit = null
-                }));
-            }
-
-            takeRequest.CategoryId = QueueCategory.ScheduleChange;
-            takeResponse = Client.MessageQueues(takeRequest);
-            if (takeResponse.Success)
-            {
-                items.AddRange(takeResponse.MessageItems.Select(message => new Item
-                {
-                    UniqueId = message.UniqueID,
-                    CategoryId = QueueCategory.ScheduleChange,
-                    ExtensionData = null
-                }));
-                result.ChangedScheduleBooking.AddRange(takeResponse.MessageItems.Select(item => item.UniqueID));
-            }
-
-            takeRequest.CategoryId = QueueCategory.Urgent;
-            takeResponse = Client.MessageQueues(takeRequest);
-            if (takeResponse.Success)
-            {
-                items.AddRange(takeResponse.MessageItems.Select(message => new Item
-                {
-                    UniqueId = message.UniqueID,
-                    CategoryId = QueueCategory.Urgent,
-                    ExtensionData = null
-                }));
-                result.BookingStatusInfos.AddRange(takeResponse.MessageItems.Select(item => new BookingStatusInfo
-                {
-                    BookingId = item.UniqueID,
-                    BookingStatus = BookingStatus.Ticketed,
-                    TimeLimit = null
-                }));
-            }
-
-            var deleteRequest = new AirRemoveMessageQueueRQ
-            {
-                Items = items.ToArray(),
-                SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
-                ExtensionData = null
-            };
-
-            var x = Client.RemoveMessageQueues(deleteRequest);
-
             return result;
         }
 
+        private static void RemoveQueues(IEnumerable<BookingStatusInfo> infos)
+        {
+            var items = infos.Select(info => new Item
+            {
+                UniqueId = info.BookingId,
+                CategoryId = MapMessageCategory(info.BookingStatus),
+                ExtensionData = null
+            }).ToArray();
+            var request = new AirRemoveMessageQueueRQ
+            {
+                Items = items,
+                SessionId = Client.SessionId,
+                Target = Client.Target,
+                ExtensionData = null
+            };
+            var retry = 0;
+            var done = false;
+            while (!done)
+            {
+                var response = Client.RemoveMessageQueues(request);
+                done = true;
+                if (response.Success && !response.Errors.Any())
+                {
+
+                }
+                else
+                {
+                    if (response.Errors.Any())
+                    {
+                        if (retry <= 3 && response.Errors.Select(error => error.Code).Contains("ERRMQ006"))
+                        {
+                            Client.CreateSession();
+                            request.SessionId = Client.SessionId;
+                            retry++;
+                            done = false;
+                        }
+                        else
+                        {
+                            if (response.Errors.Select(error => error.Code).Contains("ERRMQ001") ||
+                                response.Errors.Select(error => error.Code).Contains("ERRMQ006"))
+                            {
+                                //TODO Flight Error logging
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static BookingStatus MapMessageCategory(QueueCategory category)
+        {
+            switch (category)
+            {
+                case QueueCategory.Ticketed:
+                    return BookingStatus.Ticketed;
+                case QueueCategory.ScheduleChange:
+                    return BookingStatus.ScheduleChanged;
+                default:
+                    return BookingStatus.Undefined;
+            }
+        }
+
+        private static QueueCategory MapMessageCategory(BookingStatus status)
+        {
+            switch (status)
+            {
+                case BookingStatus.Ticketed:
+                    return QueueCategory.Ticketed;
+                case BookingStatus.ScheduleChanged:
+                    return QueueCategory.ScheduleChange;
+                default:
+                    return QueueCategory.Urgent;
+            }
+        }
     }
 }

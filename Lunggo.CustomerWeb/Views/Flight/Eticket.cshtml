@@ -32,13 +32,13 @@
                     </div>
                     <div class="col-md-4">
                         Flight Number : @info.AirlineCode@info.FlightNumber<br />
-                        Date : @info.DepartureTime.Date<br />
-                        Date : @info.ArrivalTime.Date
+                        Date : @info.DepartureTime.ToString("d")<br />
+                        Date : @info.ArrivalTime.ToString("d")
                     </div>
                     <div class="col-md-4">
                         PNR : @info.Pnr<br />
-                        Time : @info.DepartureTime.TimeOfDay<br />
-                        Time : @info.ArrivalTime.TimeOfDay
+                        Time : @info.DepartureTime.ToString("t")<br />
+                        Time : @info.ArrivalTime.ToString("t")
                     </div>
                 </div>
             }

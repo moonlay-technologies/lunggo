@@ -19,7 +19,10 @@ namespace Lunggo.ApCommon.Mystifly
                 IntelliFareInformations = MapItineraryInformations(conditions.FlightSegments),
                 CabinPreference = MapCabinType(conditions.CabinClass),
                 BookingClassPreference = BookingClassPreference.Any,
-                PassengerTypeQuantities = MapPassengerTypes(conditions)
+                PassengerTypeQuantities = MapPassengerTypes(conditions),
+                SessionId = Client.SessionId,
+                Target = Client.Target,
+                ExtensionData = null
             };
 
             var result = new SearchFlightResult();

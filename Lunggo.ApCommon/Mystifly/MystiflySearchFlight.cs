@@ -12,7 +12,6 @@ using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Flight.Dictionary;
-using CabinType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinType;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -32,7 +31,7 @@ namespace Lunggo.ApCommon.Mystifly
                 TravelPreferences = MapTravelPreferences(conditions),
                 RequestOptions = RequestOptions.TwoHundred,
                 SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
+                Target = Client.Target,
                 ExtensionData = null
             };
 
@@ -314,8 +313,6 @@ namespace Lunggo.ApCommon.Mystifly
                 do
                 {
                     fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
-                    if (i > 0)
-                        totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
                 } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
                 flightTrips.Add(fareTrip);

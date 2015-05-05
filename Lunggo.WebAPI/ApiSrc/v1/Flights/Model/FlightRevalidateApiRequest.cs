@@ -9,6 +9,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     {
         public string SearchId { get; set; }
         public int ItinIndex { get; set; }
-        public string Hash { get; set; }
+        public string HashKey { get; set; }
     }
 }

@@ -20,6 +20,8 @@
     
     List<FlightTripInfo> tripInfos = null;
     FlightSearchData.Complete data = null;
+
+    String tripType="aaa";
     try
     {
         tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
@@ -41,20 +43,12 @@
             TripInfos = tripInfos,
             TripType = FlightSearchData.ParseTripType(tripInfos)
         };
+
+        tripType = data.TripType == TripType.OneWay ? "single" : "return";
     }
     catch
     {
         isValid = false;
-    }
-
-    String tripType;
-    if (data.TripType == TripType.OneWay)
-    {
-        tripType = "single";
-    }
-    else
-    {
-        tripType = "return";
     }
 
 }

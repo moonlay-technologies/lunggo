@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 UniqueID = bookingId,
                 SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
+                Target = Client.Target,
                 ExtensionData = null
             };
             var result = new CancelBookingResult();

@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     FareSourceCode = conditions.FareId,
                     SessionId = Client.SessionId,
-                    Target = MystiflyClientHandler.Target,
+                    Target = Client.Target,
                     ExtensionData = null
                 };
                 

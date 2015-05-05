@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Mystifly
                 UniqueID = conditions.BookingId,
                 SendOnlyTicketed = false,
                 SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
+                Target = Client.Target,
                 ExtensionData = null
             };
             var result = new GetTripDetailsResult();

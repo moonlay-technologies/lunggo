@@ -27,7 +27,7 @@ namespace Lunggo.CustomerWeb
             InitDatabaseService();
             //InitQueueService();
             //InitLogger();
-            //InitDictionaryService();
+            InitDictionaryService();
             InitFlightService();
         }
 

@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Interface
         internal abstract OrderTicketResult OrderTicket(string bookingId);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
         internal abstract CancelBookingResult CancelBooking(string bookingId);
-        internal abstract GetBookingStatusResult GetBookingStatus();
+        internal abstract List<BookingStatusInfo> GetBookingStatus();
         internal abstract GetRulesResult GetRules(string fareId);
     }
 }

@@ -10,8 +10,8 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public void UpdateBookingStatus()
-        {
+        public void GetBookingStatus()
+        {/*
             var statusData = GetBookingStatusInternal();
             var bookingStatusInfo = statusData.BookingStatusInfos;
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -24,6 +24,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 }).ToArray();
                 query.Execute(conn, dbBookingStatusInfo);
             }
-        }
+        */}
     }
 }
