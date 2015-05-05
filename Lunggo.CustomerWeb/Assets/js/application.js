@@ -493,7 +493,7 @@ function flightSearchFormFunctions() {
     var datePicker = function () {
         $('.flight-date.select-date').pickmeup_twitter_bootstrap({
             calendars: 3,
-            format: 'Y-m-d',
+            format: 'd-m-Y',
             hide_on_select: true,
             select_month: false,
             select_year: false,
@@ -506,7 +506,7 @@ function flightSearchFormFunctions() {
                 }
                 $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
                 $(this).attr('data-picked', 'true');
-                $(this).attr('data-pickedDate', $(this).pickmeup('get_date') );
+                $(this).attr('data-pickedDate', $(this).pickmeup('get_date'));
             }
         });
 
@@ -524,10 +524,11 @@ function flightSearchFormFunctions() {
 
         var selectedDate = theDate || new Date;
 
+        $('.search-flight-form .flight-return-date').val('');
         $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('destroy');
         $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap({
             calendars: 3,
-            format: 'Y-m-d',
+            format: 'd-m-Y',
             hide_on_select: true,
             select_month: false,
             select_year: false,
