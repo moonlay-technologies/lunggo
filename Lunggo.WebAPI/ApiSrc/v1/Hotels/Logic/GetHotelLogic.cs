@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Logic;
@@ -23,7 +24,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
 
         private static IEnumerable<HotelExcerpt> ConvertToHotelExcerptList(IEnumerable<HotelDetail> sourceList, HotelSearchApiRequest request)
         {
-            var hotelExcerptList = sourceList.Select(
+            IEnumerable<HotelExcerpt> hotelExcerpts = null;
+            if (sourceList != null)
+            {
+                var hotelExcerptList = sourceList.Select(
                 hotel => new HotelExcerpt
                 {
                     Address = hotel.Address,
@@ -41,14 +45,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic
                     Facilities = hotel.Facilities
                 });
 
-            var convertToHotelExcerptList = hotelExcerptList as IList<HotelExcerpt> ?? hotelExcerptList.ToList();
-            foreach (var hotel in convertToHotelExcerptList)
-            {
-                SetImageUrlList(hotel);
-                SetFacilitiesName(hotel,request);
+                var convertToHotelExcerptList = hotelExcerptList as IList<HotelExcerpt> ?? hotelExcerptList.ToList();
+                foreach (var hotel in convertToHotelExcerptList)
+                {
+                    SetImageUrlList(hotel);
+                    SetFacilitiesName(hotel, request);
+                }
+                hotelExcerpts = convertToHotelExcerptList;
             }
-
-            return convertToHotelExcerptList;
+            return hotelExcerpts;
         }
 
         private static void SetImageUrlList(HotelExcerpt hotel)
