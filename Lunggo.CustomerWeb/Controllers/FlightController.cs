@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Dictionary;
@@ -24,7 +25,8 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(new FlightCheckoutData
             {
                 HashKey = select.token,
-                Itinerary = itinerary
+                Itinerary = itinerary,
+                Message = ""
             });
         }
 
@@ -45,7 +47,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(adultPassengerInfo);
             }
@@ -53,7 +55,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var childPassengerInfo = data.ChildPassengerData.Select(passenger => new PassengerInfoFare
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Child,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
@@ -61,7 +63,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(childPassengerInfo);
             }
@@ -69,7 +71,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 var infantPassengerInfo = data.InfantPassengerData.Select(passenger => new PassengerInfoFare
                 {
-                    Type = PassengerType.Adult,
+                    Type = PassengerType.Infant,
                     Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
                     Title = passenger.Title,
                     FirstName = passenger.FirstName,
@@ -77,7 +79,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
                 }).ToList();
                 passengerInfo.AddRange(infantPassengerInfo);
             }
@@ -104,92 +106,61 @@ namespace Lunggo.CustomerWeb.Controllers
                             DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
                         }
                     },
-                OverallTripType = TripType.OneWay,
-                PaymentData = data.PaymentData
+                OverallTripType = TripType.OneWay
             };
-            var revalidateResult =
-                FlightService.GetInstance().RevalidateFlight(new RevalidateFlightInput
-                {
-                    FareId = data.Itinerary.FareId,
-                    TripInfos = new List<FlightTripInfo>
-                    {
-                        new FlightTripInfo
-                        {
-                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                            DestinationAirport= data.Itinerary.FlightTrips[0].DestinationAirport,
-                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                        }
-                    }
-                });
-            if (revalidateResult.IsSuccess)
+            var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
+            if (bookResult.IsSuccess)
             {
-                if (revalidateResult.IsValid)
+                if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
                 {
-                    var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
-                    if (bookResult.IsSuccess)
+                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
-                        if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+                        BookingId = bookResult.BookResult.BookingId
+                    });
+                    if (issueResult.IsSuccess)
+                    {
+                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
                         {
-                            var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                            BookingId = issueResult.BookingId,
+                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
                             {
-                                BookingId = bookResult.BookResult.BookingId
-                            });
-                            if (issueResult.IsSuccess)
-                            {
-                                var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                                {
-                                    BookingId = issueResult.BookingId
-                                });
-                                if (tripDetails.IsSuccess)
-                                {
-                                    return RedirectToAction("Eticket", tripDetails.FlightDetails);
-                                }
-                                else
-                                {
-                                    ViewBag.Message = "Technical Error. Please try again.";
-                                    return View();
-                                }
-                            }
-                            else
-                            {
-                                ViewBag.Message = "Technical Error. Please try again.";
-                                return View();
-                            }
+                                OriginAirport = trip.OriginAirport,
+                                DestinationAirport = trip.DestinationAirport,
+                                DepartureDate = trip.DepartureDate
+                            }).ToList()
+                        });
+                        if (tripDetails.IsSuccess)
+                        {
+                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
+                            return RedirectToAction("Eticket");
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            data.Message = "Technical Error. Please try again.";
+                            return View(data);
                         }
                     }
                     else
                     {
-                        ViewBag.Message = "Technical Error. Please try again.";
-                        return View();
+                        data.Message = "Technical Error. Please try again.";
+                        return View(data);
                     }
                 }
                 else
                 {
-                    if (revalidateResult.Itinerary != null)
-                    {
-                        ViewBag.Message = "Fare is updated to" + revalidateResult.Itinerary.TotalFare + ".\nPlease submit again.";
-                        return View();
-                    }
-                    else
-                    {
-                        ViewBag.Message = "No other fare available on this flight.";
-                        return View();
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else
             {
-                ViewBag.Message = "Technical Error. Please try again.";
-                return View();
+                data.Message = "Technical Error. Please try again.";
+                return View(data);
             }
         }
 
-        public ActionResult Eticket(FlightItineraryDetails itin)
+        public ActionResult Eticket()
         {
+            var itin = FlightService.GetInstance().GetItineraryFromCache("111","a");
             return View(itin);
         }
     }

@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return MystiflyWrapper.GetTripDetails(conditions);
         }
 
-        private GetBookingStatusResult GetBookingStatusInternal()
+        private List<BookingStatusInfo> GetBookingStatusInternal()
         {
             return MystiflyWrapper.GetBookingStatus();
         }

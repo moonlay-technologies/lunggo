@@ -17,15 +17,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (IsValid(request))
             {
-                if (request.Hash == null)
+                if (request.HashKey == null)
                 {
                     var service = FlightService.GetInstance();
-                    request.Hash = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
+                    request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
                 }
                 var revalidateServiceRequest = PreprocessServiceRequest(request);
                 var revalidateServiceResponse = FlightService.GetInstance().RevalidateFlight(revalidateServiceRequest);
                 if (!revalidateServiceResponse.IsValid && revalidateServiceResponse.Itinerary != null)
-                    UpdateItinerary(revalidateServiceResponse.Itinerary, request.Hash);
+                    UpdateItinerary(revalidateServiceResponse.Itinerary, request.HashKey);
                 var apiResponse = AssembleApiResponse(revalidateServiceResponse, request);
                 return apiResponse;
             }
@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRevalidateApiResponse
                 {
-                    Hash = null,
+                    HashKey = null,
                     IsValid = false,
                     IsOtherFareAvailable = false,
                     NewFare = 0,
@@ -45,8 +45,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static RevalidateFlightInput PreprocessServiceRequest(FlightRevalidateApiRequest request)
         {
             var service = FlightService.GetInstance();
-            var itin = service.GetItineraryFromCache(request.Hash);
-            return new RevalidateFlightInput { FareId = itin.FareId };
+            var itin = service.GetItineraryFromCache(request.HashKey);
+            return new RevalidateFlightInput
+            {
+                FareId = itin.FareId,
+                TripInfos = itin.FlightTrips.Select(trip => new FlightTripInfo
+                {
+                    OriginAirport = trip.OriginAirport,
+                    DestinationAirport = trip.DestinationAirport,
+                    DepartureDate = trip.DepartureDate,
+                }).ToList()
+            };
         }
 
         private static void UpdateItinerary(FlightItineraryFare itin, string hash)
@@ -63,10 +72,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightRevalidateApiResponse
                     {
-                        Hash = request.Hash,
+                        HashKey = request.HashKey,
                         IsValid = true,
-                        IsOtherFareAvailable = false,
-                        NewFare = revalidateServiceResponse.Itinerary.TotalFare,
+                        IsOtherFareAvailable = null,
+                        NewFare = null,
                         OriginalRequest = request
                     };
                 }
@@ -76,10 +85,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Hash = null,
+                            HashKey = null,
                             IsValid = false,
                             IsOtherFareAvailable = false,
-                            NewFare = 0,
+                            NewFare = null,
                             OriginalRequest = request
                         };
                     }
@@ -87,7 +96,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Hash = request.Hash,
+                            HashKey = request.HashKey,
                             IsValid = false,
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.Itinerary.TotalFare,
@@ -100,7 +109,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRevalidateApiResponse
                 {
-                    Hash = null,
+                    HashKey = null,
                     IsValid = false,
                     IsOtherFareAvailable = false,
                     NewFare = 0,
@@ -113,7 +122,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return
                 request != null &&
-                (request.SearchId != null || request.Hash != null);
+                (request.SearchId != null || request.HashKey != null);
         }
     }
 }

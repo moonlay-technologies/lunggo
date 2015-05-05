@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Mystifly
                 PaymentTransactionID = null,
                 PaymentCardInfo = null,
                 SessionId = Client.SessionId,
-                Target = MystiflyClientHandler.Target,
+                Target = Client.Target,
                 ExtensionData = null,
             };
             var result = new BookFlightResult();

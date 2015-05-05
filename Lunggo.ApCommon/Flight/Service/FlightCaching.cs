@@ -14,6 +14,16 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
+        //TODO Dummy
+        public void SaveItineraryToCache(FlightItineraryDetails itin, string hash)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "flightItineraryD:" + hash;
+            var cacheObject = FlightCacheUtil.ConvertToCacheObject(itin);
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(
+                Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"))));
+        }
         public void SaveItineraryToCache(FlightItineraryFare itin, string hash)
         {
             var redisService = RedisService.GetInstance();
@@ -40,6 +50,25 @@ namespace Lunggo.ApCommon.Flight.Service
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"))));
 
             return hash;
+        }
+
+        //TODO Dummy
+        public FlightItineraryDetails GetItineraryFromCache(string hash, string a)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "flightItineraryD:" + hash;
+            var cacheObject = redisDb.StringGet(redisKey);
+
+            if (!cacheObject.IsNullOrEmpty)
+            {
+                var itinerary = FlightCacheUtil.DeconvertFromCacheObject<FlightItineraryDetails>(cacheObject);
+                return itinerary;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public FlightItineraryFare GetItineraryFromCache(string hash)

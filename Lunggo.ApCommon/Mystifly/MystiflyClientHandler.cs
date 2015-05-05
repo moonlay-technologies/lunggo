@@ -16,9 +16,9 @@ namespace Lunggo.ApCommon.Mystifly
             private static string _userName;
             private static string _password;
             private static Target _target;
-            public string SessionId = "";
+            internal string SessionId = "";
 
-            internal static Target Target
+            internal Target Target
             {
                 get { return _target; }
             }

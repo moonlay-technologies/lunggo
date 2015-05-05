@@ -74,7 +74,6 @@ namespace Lunggo.ApCommon.Flight.Query
                     };
                     FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
-                    var i = 0;
                     foreach (var trip in record.Itinerary.FlightTrips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
@@ -92,6 +91,7 @@ namespace Lunggo.ApCommon.Flight.Query
                         FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
                         var orderedSegments = trip.FlightSegments.OrderBy(segment => segment.DepartureTime).ToList();
+                        var i = 0;
                         do
                         {
                             var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
