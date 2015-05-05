@@ -775,7 +775,7 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'http://dv1-cw.azurewebsites.net/api/v1/flights',
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights',
     // Params: jQuery.parseJSON( $('.flight-search-page').attr('data-flight-search-params') )
 };
 
