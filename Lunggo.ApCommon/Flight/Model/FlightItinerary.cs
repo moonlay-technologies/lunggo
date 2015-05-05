@@ -59,18 +59,4 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public FlightSupplier Supplier { get; set; }
     }
-
-    public class Airline
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class Transit
-    {
-        public bool IsStop { get; set; }
-        public string Airport { get; set; }
-        public DateTime ArrivalTime { get; set; }
-        public DateTime DepartureTime { get; set; }
-    }
 }
