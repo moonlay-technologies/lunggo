@@ -1038,7 +1038,7 @@ var RevalidateConfig = {
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
                                 loading_overlay('hide');
-                                location.replace(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
                             }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
                             loading_overlay('hide');
