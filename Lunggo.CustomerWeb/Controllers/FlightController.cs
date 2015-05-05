@@ -142,13 +142,14 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        data.Message = "Technical Error. Please try again.";
+                        data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    data.Message = "Booking Failed. Please try again.";
+                    return View(data);
                 }
             }
             else
