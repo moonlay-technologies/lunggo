@@ -16,9 +16,9 @@
 <body ng-app="travorama" class="page home-page">
 
     <!-- site header start -->
-    <header id="site-header" class="site-header home-header">
+    <header id="site-header" class="site-header home-header" data-activeTab="hotel">
         <div class="search-switch-button flight">
-            <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" />
+            <a href="#flight"><img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" /></a>
         </div><!-- .search-switch-button -->
         @{ Html.RenderPartial("_Mainmenu"); }
         <div class="header-form-wrapper home-page-header">
@@ -88,25 +88,25 @@
 
                                         <form action="/id/Flight/SearchResultList" method="GET" class="form-inline search-flight-form">
                                             <div class="form-group loc-auto-wrapper">
-                                                <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori">
+                                                <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori" data-inputValue="">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" data-airport-for="Dest" />
+                                                <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" data-airport-for="Dest" data-inputValue="" />
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control flight-date select-date" placeholder="flight date">
+                                                <input type="text" class="form-control flight-date select-date" placeholder="flight date" data-picked="false" data-pickedDate="" />
                                             </div>
                                             <div class="form-group">
                                                 <span class="form-dash">-</span>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control flight-return-date select-date" placeholder="return date">
+                                                <input type="text" class="form-control flight-return-date select-date" placeholder="return date" data-picker="false" />
                                                 <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Return Flight</label>
                                             </div>
                                             <div class="form-group flight-passenger form-control">
-                                                <label class="adult-passenger"><span>A</span> <input type="text" class="" value="1" maxlength="1" id="flight-adult" /></label>
-                                                <label class="child-passenger"><span>C</span> <input type="text" class="" value="0" maxlength="1" id="flight-child" /></label>
-                                                <label class="infant-passenger"><span>I</span> <input type="text" class="" value="0" maxlength="1" id="flight-infant" /></label>
+                                                <label class="adult-passenger"><span><img src="/Assets/images/adult-icon.png" alt="Adult"/></span> <input type="text" class="" value="1" maxlength="1" id="flight-adult" /></label>
+                                                <label class="child-passenger"><span><img src="/Assets/images/child-icon.png" alt="Child"/></span> <input type="text" class="" value="0" maxlength="1" id="flight-child" /></label>
+                                                <label class="infant-passenger"><span><img src="/Assets/images/infant-icon.png" alt="Infant"/></span> <input type="text" class="" value="0" maxlength="1" id="flight-infant" /></label>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="hidden flight-form-value" id="flight-origin" />

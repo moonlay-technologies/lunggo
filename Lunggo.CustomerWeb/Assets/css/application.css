@@ -143,6 +143,8 @@
         .flight-form section.search section.search-flight .flight-passenger label span {
           text-align: center;
           display: inline-block; }
+        .flight-form section.search section.search-flight .flight-passenger label img {
+          width: 20px; }
         .flight-form section.search section.search-flight .flight-passenger label input[type="text"] {
           text-align: center;
           width: 25px;

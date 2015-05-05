@@ -321,6 +321,7 @@
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
+    <Content Include="Assets\images\adult-icon.png" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
     <Content Include="Assets\images\airlines\2P.png" />
@@ -597,6 +598,7 @@
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
     <Content Include="Assets\images\cal-bg.png" />
+    <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
@@ -612,6 +614,7 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />

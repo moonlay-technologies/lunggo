@@ -36,6 +36,13 @@ function switchSearchForm() {
 
     var scrollTarget;
     var buttonPosition;
+    var activeTab = $('.site-header').attr('data-activeTab');
+
+    $(document).ready(function() {
+        if (window.location.hash == '#flight') {
+            $('#site-header .search-switch-button').click();
+        }
+    });
 
     $('#site-header .search-switch-button').click(function () {
         // get scroll value
@@ -43,12 +50,16 @@ function switchSearchForm() {
             buttonPosition = { left: '0', marginLeft: '5%' };
             scrollTarget = $('#site-header .header-form-wrapper .flight-form').position().left;
             $(this).removeClass('flight').addClass('hotel');
-            $(this).children('img').attr('src', '/Assets/images/search-form-switch-hotel.png');
+            $(this).children().children('img').attr('src', '/Assets/images/search-form-switch-hotel.png');
+            $(this).children().attr('href', '#flight');
+            $('.site-header').attr('data-activeTab', 'flight');
         } else {
             buttonPosition = { left: '100%', marginLeft: '-10%' };
             scrollTarget = 0;
             $(this).removeClass('hotel').addClass('flight');
-            $(this).children('img').attr('src', '/Assets/images/search-form-switch-flight.png');
+            $(this).children().children('img').attr('src', '/Assets/images/search-form-switch-flight.png');
+            $(this).children().attr('href', '#hotel');
+            $('.site-header').attr('data-activeTab', 'hotel');
         }
 
         // scrollLeft the element
@@ -472,10 +483,20 @@ function flightSearchFormFunctions() {
             change: function () {
                 datePickerReturn($(this).pickmeup('get_date'));
                 $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
+                $(this).attr('data-picked', 'true');
+                $(this).attr('data-pickedDate', $(this).pickmeup('get_date') );
             }
         });
 
     }
+
+    $('.flight-return-date').click(function () {
+        var departDate = $('.flight-date').attr('data-picked');
+        if (departDate == 'false') {
+            $('.flight-date').click();
+        }
+
+    });
 
     function datePickerReturn(theDate) {
 
