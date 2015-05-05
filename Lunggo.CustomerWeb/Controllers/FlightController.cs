@@ -21,13 +21,17 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var service = FlightService.GetInstance();
             var itinerary = service.GetItineraryFromCache(select.token);
-            return View(itinerary);
+            return View(new FlightCheckoutData
+            {
+                HashKey = select.token,
+                Itinerary = itinerary
+            });
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.Hash);
+            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
             {
