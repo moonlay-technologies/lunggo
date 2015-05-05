@@ -15,27 +15,52 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
     public class FlightsController : ApiController
     {
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights")]
         public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
-            var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
-            var apiResponse = FlightLogic.SearchFlights(apiRequest);
-            return apiResponse;
+            try
+            {
+                var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
+                var apiResponse = FlightLogic.SearchFlights(apiRequest);
+                return apiResponse;
+            } catch
+            {
+                return new FlightSearchApiResponse
+                {
+                    SearchId = null,
+                    OriginalRequest = null,
+                    TotalFlightCount = 0,
+                    FlightList = null
+                };
+            }
+            
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights/filter")]
         public FlightFilterApiResponse FilterFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
-            var apiRequest = JsonConvert.DeserializeObject<FlightFilterApiRequest>(request);
-            var apiResponse = FlightLogic.FilterFlights(apiRequest);
-            return apiResponse;
+            try
+            {
+                var apiRequest = JsonConvert.DeserializeObject<FlightFilterApiRequest>(request);
+                var apiResponse = FlightLogic.FilterFlights(apiRequest);
+                return apiResponse;
+            }
+            catch
+            {
+                return new FlightFilterApiResponse
+                {
+                    FlightList = null,
+                    TotalFlightCount = 0,
+                    OriginalRequest = null
+                };
+            }
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights/revalidate")]
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {
@@ -44,7 +69,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights/book")]
         public FlightBookingApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookingApiRequest apiRequest)
         {
@@ -53,7 +78,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights/cancel")]
         public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
         {
@@ -61,7 +86,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/flights/details")]
         public FlightDetailsApiResponse GetFlightTripDetails(HttpRequestMessage httpRequest, [FromUri] FlightDetailsApiRequest request)
         {

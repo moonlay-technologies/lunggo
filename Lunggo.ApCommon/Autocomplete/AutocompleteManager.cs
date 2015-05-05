@@ -29,7 +29,14 @@ namespace Lunggo.ApCommon.Autocomplete
         {
             if (!_isInitialized)
             {
-                DictionaryService.GetInstance().Init();
+                try
+                {
+                    DictionaryService.GetInstance().Init();
+                }
+                catch
+                {
+                    
+                }
                 TrieIndex.GetInstance().Init();
                 _isInitialized = true;
             }

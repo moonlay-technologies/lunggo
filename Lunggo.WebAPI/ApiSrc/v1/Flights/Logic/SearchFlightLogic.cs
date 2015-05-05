@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Redis;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
@@ -131,6 +132,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static List<FlightSegmentApi> MapSegments(IEnumerable<FlightSegmentFare> segments)
         {
             var dict = DictionaryService.GetInstance();
+            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
+            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             return segments.Select(segment => new FlightSegmentApi
             {
                 DepartureAirport = segment.DepartureAirport,
@@ -145,6 +148,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 AirlineCode = segment.AirlineCode,
                 FlightNumber = segment.FlightNumber,
                 OperatingAirlineCode = segment.OperatingAirlineCode,
+                OperatingAirlineName = dict.GetAirlineName(segment.OperatingAirlineCode),
+                OperatingAirlineLogoUrl = airlineLogoPath + segment.OperatingAirlineCode + airlineLogoExtension,
                 AircraftCode = segment.AircraftCode,
                 CabinClass = segment.CabinClass,
                 StopQuantity = segment.StopQuantity,
@@ -171,12 +176,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static List<Airline> GetAirlineList(FlightTripFare trip)
         {
             var dict = DictionaryService.GetInstance();
+            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
+            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             var segments = trip.FlightSegments;
             var airlineCodes = segments.Select(segment => segment.AirlineCode);
             var airlines = airlineCodes.Distinct().Select(code => new Airline
             {
                 Code = code,
-                Name = dict.GetAirlineName(code)
+                Name = dict.GetAirlineName(code),
+                LogoUrl = airlineLogoPath + code + airlineLogoExtension
             });
             return airlines.ToList();
         }
