@@ -101,7 +101,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control flight-return-date select-date" placeholder="return date">
-                                                <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Pulang Pergi</label>
+                                                <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Return Flight</label>
                                             </div>
                                             <div class="form-group flight-passenger form-control">
                                                 <label class="adult-passenger"><span>A</span> <input type="text" class="" value="1" maxlength="1" id="flight-adult" /></label>
@@ -239,7 +239,7 @@
                 var dest = $('#flight-destination').val();
                 var date = $('#flight-date').val();
                 s = s.concat(ori, dest, date.substring(8, 10), date.substring(5, 7), date.substring(2, 4));
-                if ($('#return-flight').checked) {
+                if ($('#return-flight').prop('checked')) {
                     var ori2 = $('#flight-destination').val();
                     var dest2 = $('#flight-origin').val();
                     var date2 = $('#flight-return-date').val();

@@ -14,7 +14,6 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var statusData = GetBookingStatusInternal();
             var bookingStatusInfo = statusData.BookingStatusInfos;
-            // TODO FLIGHT : Schedule change Notification
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var query = UpdateFlightBookingStatusQuery.GetInstance();
