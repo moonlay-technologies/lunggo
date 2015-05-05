@@ -492,7 +492,10 @@ function flightSearchFormFunctions() {
             separator: '-',
             min: new Date,
             change: function () {
-                datePickerReturn($(this).pickmeup('get_date'));
+                var flightType = $('.search-flight-form #flight-type').val();
+                if (flightType == 'RET') {
+                    datePickerReturn($(this).pickmeup('get_date'));
+                }
                 $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
                 $(this).attr('data-picked', 'true');
                 $(this).attr('data-pickedDate', $(this).pickmeup('get_date') );
