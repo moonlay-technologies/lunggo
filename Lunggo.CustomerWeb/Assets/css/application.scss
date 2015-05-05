@@ -401,7 +401,7 @@ hr {border-color:#aaa;}
                             .flight-content {padding-top:10px;
                                 &>div {float:left;}
                                 .flight-airline {width:40%; text-align:center;
-                                    img {display:block; margin-left:auto; margin-right:auto; margin-bottom:5px;}
+                                    img {display:block; margin-left:auto; margin-right:auto; margin-bottom:5px; width:100px;}
                                 }
                                 .flight-route {width:60%; padding-top:20px;
                                     .route-wrapper {width:100%;
@@ -443,7 +443,7 @@ hr {border-color:#aaa;}
                     .flight-content {
                         &>div {float:left;}
                         .flight-airline-image {border-right:1px solid #ddd; width:25%; text-align:center;
-                            img {}
+                            img {width:100px;}
                         }
 					    .flight-route {width:75%; padding-top:15px; color:#666;
                             h2 {padding:0; margin:0; font-size:18px; font-weight:bold;}
@@ -459,7 +459,7 @@ hr {border-color:#aaa;}
                         &:after {content:""; clear:both; width:100%; display:block;}
                     }
                     .flight-action {border-top:1px solid #ddd; padding:10px;
-                        a {margin-right:15px;}
+                        a {margin-right:15px; cursor:pointer;}
                     }
 				}
 				.flight-right {float:left; width:27%; padding:15px 20px 0; position:relative;
@@ -488,7 +488,9 @@ hr {border-color:#aaa;}
                             &:after {content:""; display:block; width:100%; clear:both;}
                             &.route>div {float:left;}
                             &.route {
-                                .flight-airline {width:15%; text-align:center;}
+                                .flight-airline {width:15%; text-align:center;
+                                    img {max-width:75px; height:auto;}
+                                }
                                 .flight-route {width:85%;
                                     &>div {float:left;}
                                     h4 {font-weight:bold; margin:0; margin:10px 0 5px; font-size:16px;}
@@ -501,6 +503,7 @@ hr {border-color:#aaa;}
                                     .flight-arrival-time {width:15%; text-align:left;}
                                     .flight-arrival-airport {width:25%; text-align:left;}
                                 }
+                                .flight-operator {display:block; width:100%; clear:both; padding-left:20px;}
                             }
                             &.transit {padding:0 150px 20px; font-size:12px;
                                 h3 {text-align:center;}
