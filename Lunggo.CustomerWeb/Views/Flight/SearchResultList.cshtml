@@ -60,7 +60,7 @@
 @if (isValid)
 {
 
-    <div class="search-page flight-search-page" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass" }'>
+    <div class="search-page flight-search-page" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
 
         <header class="page-header">
             <div class="container">
@@ -226,8 +226,8 @@
                                 </div><!-- .flight-content -->
                             </div><!-- .flight-return -->
                             <div class="flight-action">
-                                <a ng-click="clickedItem($index)"><img src="http://placehold.it/25x25.jpg" /> Flight Details</a>
-                                <a href="#"><img src="http://placehold.it/25x25.jpg" /> Fares Rules</a>
+                                <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
+                                <a href="#"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if Return Flight Type -->
@@ -236,7 +236,7 @@
                                 <span class="tag red hidden">Disc 20%</span>
                                 <p>Total Fare:</p>
                                 <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
-                                <h4 class="price-now">{{flight.TotalFare | number}}</h4>
+                                <h4 class="price-now">{{flight.Currency}} {{flight.TotalFare | number}}</h4>
                                 <small>harga sudah termasuk <b>pajak</b></small>
                                 <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                 <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
