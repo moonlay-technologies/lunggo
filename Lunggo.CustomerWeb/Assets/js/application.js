@@ -44,6 +44,17 @@ function switchSearchForm() {
         }
     });
 
+    $(window).on('hashchange', function () {
+        activeTab = $('.site-header').attr('data-activeTab');
+
+        if (window.location.hash == '#flight' && activeTab == "hotel") {
+            $('#site-header .search-switch-button').click();
+        } else if (window.location.hash == '#hotel' && activeTab == "flight") {
+            $('#site-header .search-switch-button').click();
+        }
+
+    });
+
     $('#site-header .search-switch-button').click(function () {
         // get scroll value
         if ($(this).hasClass('flight')) {
