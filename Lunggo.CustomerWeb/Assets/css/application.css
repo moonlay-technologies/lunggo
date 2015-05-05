@@ -999,7 +999,8 @@ hr {
           display: block;
           margin-left: auto;
           margin-right: auto;
-          margin-bottom: 5px; }
+          margin-bottom: 5px;
+          width: 100px; }
       .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-route {
         width: 60%;
         padding-top: 20px; }
@@ -1085,6 +1086,8 @@ hr {
         border-right: 1px solid #ddd;
         width: 25%;
         text-align: center; }
+        .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-airline-image img {
+          width: 100px; }
       .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-content .flight-route {
         width: 75%;
         padding-top: 15px;
@@ -1127,7 +1130,8 @@ hr {
         border-top: 1px solid #ddd;
         padding: 10px; }
         .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-action a {
-          margin-right: 15px; }
+          margin-right: 15px;
+          cursor: pointer; }
     .flight-search-page .flight-list.horizontal .flight .flight-main .flight-right {
       float: left;
       width: 27%;
@@ -1216,6 +1220,9 @@ hr {
           .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-airline {
             width: 15%;
             text-align: center; }
+            .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-airline img {
+              max-width: 75px;
+              height: auto; }
           .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route {
             width: 85%; }
             .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route > div {
@@ -1248,6 +1255,11 @@ hr {
             .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-route .flight-arrival-airport {
               width: 25%;
               text-align: left; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-operator {
+            display: block;
+            width: 100%;
+            clear: both;
+            padding-left: 20px; }
           .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.transit {
             padding: 0 150px 20px;
             font-size: 12px; }

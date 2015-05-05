@@ -133,7 +133,7 @@
                             <div class="flight-content">
 
                                 <div class="flight-airline-image">
-                                    <img src="http://placehold.it/100x100.jpg" />
+                                    <img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" />
                                 </div><!-- .flight-airline-image -->
 
                                 <div class="flight-route">
@@ -176,7 +176,7 @@
                                 </div><!-- .flight-header -->
                                 <div class="flight-content">
                                     <div class="flight-airline">
-                                        <img src="http://placehold.it/75.jpg" alt="Garuda Indonesia" />
+                                        <img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" />
                                         <span>{{flight.FlightTrips[0].Airlines[0].Name}}</span>
                                     </div>
                                     <div class="flight-route">
@@ -204,7 +204,7 @@
                                 </div><!-- .flight-header -->
                                 <div class="flight-content">
                                     <div class="flight-airline">
-                                        <img src="http://placehold.it/75.jpg" alt="Garuda Indonesia" />
+                                        <img ng-src="{{flight.FlightTrips[1].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[1].Airlines[0].Name}}" />
                                         <span>{{flight.FlightTrips[1].Airlines[0].Name}}</span>
                                     </div>
                                     <div class="flight-route">
@@ -252,7 +252,7 @@
                             <ol>
                                 <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
                                     <div class="flight-airline">
-                                        <img src="http://placehold.it/50.jpg" />
+                                        <img ng-src="{{trip.AirlineLogoUrl}}" />
                                         <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
                                     </div><!-- .flight-airline-->
                                     <div class="flight-route">
@@ -279,6 +279,9 @@
                                             <h5>{{trip.ArrivalAirportName}}</h5>
                                         </div><!-- .flight-departure-airport -->
                                     </div>
+                                    <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                        <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
+                                    </div>
                                 </li>
                             </ol>
                             <div ng-if="'@tripType' == 'return'" class="return-flight-detail">
@@ -286,7 +289,7 @@
                                 <ol>
                                     <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
                                         <div class="flight-airline">
-                                            <img src="http://placehold.it/50.jpg" />
+                                            <img ng-src="{{trip.AirlineLogoUrl}}" />
                                             <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
                                         </div><!-- .flight-airline-->
                                         <div class="flight-route">
@@ -312,6 +315,9 @@
                                                 <h5>{{trip.ArrivalCity}}</h5>
                                                 <h5>{{trip.ArrivalAirportName}}</h5>
                                             </div><!-- .flight-departure-airport -->
+                                        </div>
+                                        <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                            <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
                                         </div>
                                     </li>
                                 </ol>

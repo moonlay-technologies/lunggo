@@ -1004,7 +1004,12 @@ var RevalidateConfig = {
             // add class on click
             $scope.selectedItem = -1;
             $scope.clickedItem = function ($index) {
-                $scope.selectedItem = $index;
+                if ($index == $scope.selectedItem) {
+                    $scope.selectedItem = -1;
+                } else if($index != $scope.selectedItem) {
+                    $scope.selectedItem = $index;
+                }
+
             }
 
             $scope.getDateTime = function(dateTime) {
