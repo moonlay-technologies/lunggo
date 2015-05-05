@@ -704,7 +704,18 @@ $('.validate-fare').click(function (evt) {
         }).success(function (returnData) {
             RevalidateConfig.working = false;
 
-            $('#flight-customer-form').submit();
+            if (returnData.IsValid == true) {
+                $('#flight-customer-form').submit();
+            } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
+                if (userConfirmation) {
+                    loading_overlay('hide');
+                    $('#flight-customer-form').submit();
+                }
+            } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                loading_overlay('hide');
+                alert("Sorry, the flight is no longer valid. Please check another flight.");
+            }
 
         });
     } else {
@@ -1044,7 +1055,7 @@ var RevalidateConfig = {
                         RevalidateConfig.value = returnData;
 
                         if (returnData.IsValid == true) {
-                            location.replace( location.origin + '/id/flight/Checkout?token=' + returnData.HashKey );
+                            window.location.assign( location.origin + '/id/flight/Checkout?token=' + returnData.HashKey );
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
