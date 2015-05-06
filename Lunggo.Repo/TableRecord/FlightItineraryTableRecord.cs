@@ -92,13 +92,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("SupplierCurrencyCd");
 		    }
 		}
-		public Decimal? SupplierIdrExchangeRate
+		public Decimal? SupplierExchangeRate
 		{
-		    get { return _SupplierIdrExchangeRate; }
+		    get { return _SupplierExchangeRate; }
 		    set
 		    {
-		        _SupplierIdrExchangeRate = value;
-		        IncrementLog("SupplierIdrExchangeRate");
+		        _SupplierExchangeRate = value;
+		        IncrementLog("SupplierExchangeRate");
 		    }
 		}
 		public Decimal? LocalPrice
@@ -119,13 +119,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("LocalCurrencyCd");
 		    }
 		}
-		public Decimal? LocalIdrExchangeRate
+		public Decimal? LocalExchangeRate
 		{
-		    get { return _LocalIdrExchangeRate; }
+		    get { return _LocalExchangeRate; }
 		    set
 		    {
-		        _LocalIdrExchangeRate = value;
-		        IncrementLog("LocalIdrExchangeRate");
+		        _LocalExchangeRate = value;
+		        IncrementLog("LocalExchangeRate");
 		    }
 		}
 		public Decimal? IdrPrice
@@ -202,10 +202,10 @@ namespace Lunggo.Repository.TableRecord
 		private String _SupplierCd;
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
-		private Decimal? _SupplierIdrExchangeRate;
+		private Decimal? _SupplierExchangeRate;
 		private Decimal? _LocalPrice;
 		private String _LocalCurrencyCd;
-		private Decimal? _LocalIdrExchangeRate;
+		private Decimal? _LocalExchangeRate;
 		private Decimal? _IdrPrice;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
@@ -253,10 +253,10 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("SupplierCd", false),
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),
-				new ColumnMetadata("SupplierIdrExchangeRate", false),
+				new ColumnMetadata("SupplierExchangeRate", false),
 				new ColumnMetadata("LocalPrice", false),
 				new ColumnMetadata("LocalCurrencyCd", false),
-				new ColumnMetadata("LocalIdrExchangeRate", false),
+				new ColumnMetadata("LocalExchangeRate", false),
 				new ColumnMetadata("IdrPrice", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
