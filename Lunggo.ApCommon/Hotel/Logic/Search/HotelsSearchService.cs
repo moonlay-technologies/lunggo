@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             if (!String.IsNullOrEmpty(request.SearchId))
             {
                 searchResult = ExecuteSearchUsingCache(request);
-                if (searchResult.HotelIdList == null)
+                if (searchResult.HotelIdList == null || !searchResult.HotelIdList.Any())
                 {
                     needApiCall = true;
                 }
@@ -118,6 +118,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             {
                 searchResult = ExecuteSearchUsingThirdPartyService(request);
             }
+
             return searchResult;
         }
 
@@ -132,7 +133,7 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
 
         private static HotelsSearchResult ExecuteSearchUsingThirdPartyService(HotelsSearchServiceRequest request)
         {
-            var searchId = HotelSearchIdSequence.GetInstance().GetNext();
+            var searchId = GenerateNewHotelSearchId();
             var searchResponse = TravolutionaryHotelService.SearchHotel(request);
 
             if (searchResponse.HotelIdList != null && searchResponse.HotelIdList.Any())
@@ -145,6 +146,11 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
                 SearchId = searchId.ToString(CultureInfo.InvariantCulture),
                 HotelIdList = searchResponse.HotelIdList
             };
+        }
+
+        private static long GenerateNewHotelSearchId()
+        {
+            return HotelSearchIdSequence.GetInstance().GetNext();
         }
 
         private static void SaveSearchResultToCache(String searchId, IEnumerable<int> hotelIdList)
@@ -161,7 +167,6 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var rawHotelIdListFromCache =  redisDb.StringGet(request.SearchId);
-
             if (!rawHotelIdListFromCache.IsNullOrEmpty)
             {
                 var hotelIdList = HotelCacheUtil.ConvertHotelCacheObjectToHotelIdList(rawHotelIdListFromCache);
@@ -171,7 +176,6 @@ namespace Lunggo.ApCommon.Hotel.Logic.Search
             {
                 return null;
             }
-
         }
 
         private static IEnumerable<HotelDetail> ToHotelDetailList(IEnumerable<OnMemHotelDetail> onMemHotelsDetail)
