@@ -238,12 +238,12 @@
                 var ori = $('#flight-origin').val();
                 var dest = $('#flight-destination').val();
                 var date = $('#flight-date').val();
-                s = s.concat(ori, dest, date.substring(8, 10), date.substring(5, 7), date.substring(2, 4));
+                s = s.concat(ori, dest, date.substring(0, 2), date.substring(3, 5), date.substring(8, 10));
                 if ($('#return-flight').prop('checked')) {
                     var ori2 = $('#flight-destination').val();
                     var dest2 = $('#flight-origin').val();
                     var date2 = $('#flight-return-date').val();
-                    s = s.concat('.', ori2, dest2, date2.substring(8, 10), date2.substring(5, 7), date2.substring(2, 4));
+                    s = s.concat('.', ori2, dest2, date2.substring(0, 2), date2.substring(3, 5), date2.substring(8, 10));
                 }
                 var cabin = 'y';
                 var adult = $('#flight-adult').val();
