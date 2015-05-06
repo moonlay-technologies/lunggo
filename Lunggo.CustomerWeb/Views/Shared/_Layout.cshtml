@@ -89,7 +89,7 @@
                                                     <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Pulang Pergi</label>
                                                 </div>
                                                 <div class="form-group flight-passenger form-control">
-                                                    <label class="adult-passenger"><span>A</span> <input type="text" name="Adult" class="" value="0" maxlength="1" /></label>
+                                                    <label class="adult-passenger"><span>A</span> <input type="text" name="Adult" class="" value="1" maxlength="1" /></label>
                                                     <label class="child-passenger"><span>C</span> <input type="text" name="Child" class="" value="0" maxlength="1" /></label>
                                                     <label class="infant-passenger"><span>I</span> <input type="text" name="Infant" class="" value="0" maxlength="1" /></label>
                                                 </div>
@@ -215,7 +215,8 @@
     {
         @RenderSection("AdditionalPageJavascript");
     }
-
+    
+    <script src="/Assets/js/_prod_cfg.js"></script>
     <script src="/assets/js/application.js"></script>
     
     @if (IsSectionDefined("PageJavascript"))

@@ -664,6 +664,9 @@
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
+    <Content Include="Assets\js\_dev2_cfg.js" />
+    <Content Include="Assets\js\_dev1_cfg.js" />
+    <Content Include="Assets\js\_prod_cfg.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
