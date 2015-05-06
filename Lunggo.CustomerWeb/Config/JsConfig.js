@@ -1,4 +1,4 @@
-﻿//******************************************
+//******************************************
 // Variables
 var SystemConfig = {
     SystemBusy: false
@@ -14,7 +14,7 @@ var SearchRoomConfig = {
 };
 
 var FlightSearchConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/flights'
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights'
 };
 
 var RevalidateConfig = {

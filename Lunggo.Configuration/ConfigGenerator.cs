@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Antlr3.ST;
 using Lunggo.Configuration.MailTemplate;
+using Microsoft.Data.OData;
 using Microsoft.Office.Interop.Excel;
 
 namespace Lunggo.Configuration
@@ -32,6 +34,7 @@ namespace Lunggo.Configuration
         private const int ExcelRowDefaultStart = 2;
         private const int ExcelSheetNumber = 1;
         private const string FormatDate = "yyyyMMdd-HHmmss";
+        const string JsConfigTemplatePath = (@"Template\JsConfig.txt");
         
         private static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private static readonly string WorkspacePath = Directory.GetParent(ParentPath).FullName;
@@ -56,7 +59,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Development, projectList);
+            generator.StartConfig(DeploymentEnvironment.Local, projectList);
             //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -76,6 +79,7 @@ namespace Lunggo.Configuration
             SetCurrentExecutionDirectory();
             SetConfigDictionary(GetExcelFile(),environment);
             ReadAndCopyProcess(projectList);
+            GenerateFiles(projectList);
         }
 
         private void SetCurrentExecutionDirectory()
@@ -271,6 +275,65 @@ namespace Lunggo.Configuration
         private bool IsKeyExist(string value, Dictionary<string, string> configDictionary)
         {
             return configDictionary.Keys.Contains(value);
+        }
+
+        public void GenerateFiles(String[] projectList)
+        {
+            GenerateJsConfigFile();
+        }
+
+        private void GenerateJsConfigFile()
+        {
+            WriteJsConfigFile();
+        }
+
+        private static String ReadFileToEnd(String fileName)
+        {
+            using (var templateFile = new StreamReader(fileName))
+            {
+                try
+                {
+                    return templateFile.ReadToEnd();
+                }
+                finally
+                {
+                    templateFile.Close();
+                }
+            }
+        }
+
+        private void WriteJsConfigFile()
+        {
+            var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
+            var hotelPath = _configDictionary["@@.*.api.hotelPath@@"];
+            var roomPath = _configDictionary["@@.*.api.roomPath@@"];
+            var flightPath = _configDictionary["@@.*.api.flightPath@@"];
+            var flightRevalidatePath = _configDictionary["@@.*.api.flightRevalidatePath@@"];
+            var autocompleteHotelLocationPath = _configDictionary["@@.*.api.autocompleteHotelLocationPath@@"];
+            var autocompleteAirportPath = _configDictionary["@@.*.api.autocompleteAirportPath@@"];
+
+            var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
+            fileTemplate.Reset();
+            fileTemplate.SetAttribute("apiUrl", apiUrl);
+            fileTemplate.SetAttribute("hotelPath", hotelPath);
+            fileTemplate.SetAttribute("roomPath", roomPath);
+            fileTemplate.SetAttribute("flightPath", flightPath);
+            fileTemplate.SetAttribute("flightRevalidatePath", flightRevalidatePath);
+            fileTemplate.SetAttribute("autocompleteHotelLocationPath", autocompleteHotelLocationPath);
+            fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
+
+            var fileContent = fileTemplate.ToString();
+            string[] projectList = {"CustomerWeb"};
+            SaveFile("JsConfig.js", fileContent, projectList);
+        }
+
+        private void SaveFile(string fileName, string fileContent, IEnumerable<string> projectNames)
+        {
+            foreach (var projectName in projectNames)
+            {
+                File.WriteAllText(Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", fileName),
+                    fileContent);
+            }
         }
     }
 }
