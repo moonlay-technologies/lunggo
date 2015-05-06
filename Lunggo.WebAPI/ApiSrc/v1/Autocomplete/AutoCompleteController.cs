@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
     public class AutocompleteController : ApiController
     {
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/lastupdate")]
         public IEnumerable<UpdateSet> LastUpdate()
         {
@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airline/{prefix}")]
         public IEnumerable<AirlineDict> Airline(string prefix)
         {
@@ -29,7 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airport/{prefix}")]
         public IEnumerable<AirportDict> Airport(string prefix)
         {
@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/airport")]
         public IEnumerable<AirportDict> GetAllAirport()
         {
@@ -47,7 +47,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         }
 
         [HttpGet]
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/hotellocation/{prefix}")]
         public IEnumerable<object> HotelLocation(string prefix)
         {
