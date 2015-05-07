@@ -8,6 +8,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Trie;
 
 namespace Lunggo.ApCommon.Autocomplete
@@ -29,14 +30,7 @@ namespace Lunggo.ApCommon.Autocomplete
         {
             if (!_isInitialized)
             {
-                try
-                {
-                    DictionaryService.GetInstance().Init();
-                }
-                catch
-                {
-                    
-                }
+                DictionaryService.GetInstance().Init();
                 TrieIndex.GetInstance().Init();
                 _isInitialized = true;
             }
@@ -81,7 +75,7 @@ namespace Lunggo.ApCommon.Autocomplete
             return airlineAutocomplete;
         }
 
-        public IEnumerable<object> GetHotelLocationAutocomplete(string prefix)
+        public IEnumerable<HotelLocationApi> GetHotelLocationAutocomplete(string prefix)
         {
             var hotelLocationDict = DictionaryService.GetInstance().HotelLocationDict;
             var hotelLocationIndex = TrieIndex.GetInstance().HotelLocationIndex;
@@ -96,17 +90,27 @@ namespace Lunggo.ApCommon.Autocomplete
             }
             var distinctHotelLocationIds = hotelLocationIds.Distinct();
             var hotelLocationAutocomplete = distinctHotelLocationIds
-                .Select(id => new
+                .Select(id => new HotelLocationApi
                 {
-                    hotelLocationDict[id].LocationId,
-                    hotelLocationDict[id].LocationName,
-                    hotelLocationDict[id].RegionName,   
-                    hotelLocationDict[id].CountryName,
-                    hotelLocationDict[id].Priority,
-                })
+                    LocationId = hotelLocationDict[id].LocationId,
+                    LocationName = hotelLocationDict[id].LocationName,
+                    RegionName = hotelLocationDict[id].RegionName,
+                    CountryName = hotelLocationDict[id].CountryName,
+                    Priority = hotelLocationDict[id].Priority,
+                }
+                    )
                 .OrderBy(dict => dict.Priority);
             return hotelLocationAutocomplete;
         }
+    }
+
+    public class HotelLocationApi
+    {
+        public long LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string RegionName { get; set; }
+        public string CountryName { get; set; }
+        public int? Priority { get; set; }
     }
 
     public class UpdateSet

@@ -49,7 +49,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Autocomplete
         [HttpGet]
         [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net,http://dv2-cw.azurewebsites.net", headers: "*", methods: "*")]
         [Route("api/v1/autocomplete/hotellocation/{prefix}")]
-        public IEnumerable<object> HotelLocation(string prefix)
+        public IEnumerable<HotelLocationApi> HotelLocation(string prefix)
         {
             var autocompleteManager = AutocompleteManager.GetInstance();
             return autocompleteManager.GetHotelLocationAutocomplete(prefix);

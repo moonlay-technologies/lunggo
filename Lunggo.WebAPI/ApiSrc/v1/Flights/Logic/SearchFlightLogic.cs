@@ -88,17 +88,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 AdultCount = itin.AdultCount, 
                 ChildCount = itin.ChildCount, 
                 InfantCount = itin.InfantCount, 
-                AdultTotalFare = itin.AdultTotalFare,
-                ChildTotalFare = itin.ChildTotalFare, 
-                InfantTotalFare = itin.InfantTotalFare, 
                 Supplier = itin.Supplier, 
                 RequireBirthDate = itin.RequireBirthDate,
                 RequirePassport = itin.RequirePassport,
                 RequireSameCheckIn = itin.RequireSameCheckIn, 
                 CanHold = itin.CanHold,
                 TripType = itin.TripType, 
-                TotalFare = itin.TotalFare,
-                PscFare = itin.PscFare, 
+                TotalFare = itin.IdrPrice,
                 FlightTrips = MapTrips(itin.FlightTrips), 
             }).ToList();
             for (var i = 0; i < list.Count; i++)

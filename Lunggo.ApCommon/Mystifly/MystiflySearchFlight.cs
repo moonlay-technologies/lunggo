@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
+using Lunggo.ApCommon.Currency;
+using Lunggo.ApCommon.Currency.Constant;
+using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
@@ -198,14 +201,20 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static FlightItineraryFare MapFlightFareItinerary(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
+            var currency = CurrencyService.GetInstance();
+            var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
+
             var flightFareItinerary = new FlightItineraryFare();
             flightFareItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
-            MapPtcFareBreakdowns(pricedItinerary, flightFareItinerary);
-            flightFareItinerary.PscFare =
-                decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalTax.Amount);
-            flightFareItinerary.TotalFare =
-                decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
             flightFareItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
+            flightFareItinerary.SupplierPrice =
+                decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
+            flightFareItinerary.SupplierCurrency = "USD";
+            flightFareItinerary.SupplierRate = rate;
+            flightFareItinerary.LocalPrice = flightFareItinerary.SupplierPrice*rate;
+            flightFareItinerary.LocalCurrency = "IDR";
+            flightFareItinerary.LocalRate = 1;
+            flightFareItinerary.IdrPrice = flightFareItinerary.LocalPrice;
             if (pricedItinerary.RequiredFieldsToBook != null)
                 MapRequiredFields(pricedItinerary, flightFareItinerary);
             flightFareItinerary.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
@@ -252,30 +261,6 @@ namespace Lunggo.ApCommon.Mystifly
                 }
             }
         }
-
-        private static void MapPtcFareBreakdowns(PricedItinerary pricedItinerary, FlightItineraryFare flightItineraryFare)
-        {
-            var ptcFareBreakdowns = pricedItinerary.AirItineraryPricingInfo.PTC_FareBreakdowns;
-            foreach (var ptcFareBreakdown in ptcFareBreakdowns)
-            {
-                switch (ptcFareBreakdown.PassengerTypeQuantity.Code)
-                {
-                    case PassengerType.ADT:
-                        flightItineraryFare.AdultTotalFare =
-                            decimal.Parse(ptcFareBreakdown.PassengerFare.TotalFare.Amount);
-                        break;
-                    case PassengerType.CHD:
-                        flightItineraryFare.ChildTotalFare =
-                            decimal.Parse(ptcFareBreakdown.PassengerFare.TotalFare.Amount);
-                        break;
-                    case PassengerType.INF:
-                        flightItineraryFare.InfantTotalFare =
-                            decimal.Parse(ptcFareBreakdown.PassengerFare.TotalFare.Amount);
-                        break;
-                }
-            }
-        }
-
         private static void MapRequiredFields(PricedItinerary pricedItinerary, FlightItineraryFare flightItineraryFare)
         {
             foreach (var field in pricedItinerary.RequiredFieldsToBook)

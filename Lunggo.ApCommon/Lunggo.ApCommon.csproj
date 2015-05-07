@@ -98,6 +98,9 @@
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Currency\Service\CurrencyService.cs" />
+    <Compile Include="Currency\Model\Deposit.cs" />
+    <Compile Include="Currency\Constant\Supplier.cs" />
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
@@ -219,6 +222,8 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
@@ -273,6 +278,8 @@
     <Compile Include="Travolutionary\TravolutionaryResponseBase.cs" />
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
+    <Compile Include="Veritrans\Model\Request.cs" />
+    <Compile Include="Veritrans\VeritransWrapperSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
@@ -483,6 +490,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
