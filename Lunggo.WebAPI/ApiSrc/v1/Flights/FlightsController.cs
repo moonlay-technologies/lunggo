@@ -19,22 +19,34 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights")]
         public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
+            var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
+            var apiResponse = FlightLogic.SearchFlights(apiRequest);
+            return apiResponse;
+            /*
             try
             {
                 var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
                 var apiResponse = FlightLogic.SearchFlights(apiRequest);
                 return apiResponse;
-            } catch
-            {
-                return new FlightSearchApiResponse
-                {
-                    SearchId = null,
-                    OriginalRequest = null,
-                    TotalFlightCount = 0,
-                    FlightList = null
-                };
             }
-            
+            catch (Exception e)
+            {
+                if (e.Source == "Newtonsoft.Json")
+                {
+                    return new FlightSearchApiResponse
+                    {
+                        SearchId = null,
+                        OriginalRequest = null,
+                        TotalFlightCount = 0,
+                        FlightList = null
+                    };
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            */
         }
 
         [HttpGet]
@@ -48,14 +60,21 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
                 var apiResponse = FlightLogic.FilterFlights(apiRequest);
                 return apiResponse;
             }
-            catch
+            catch (Exception e)
             {
-                return new FlightFilterApiResponse
+                if (e.Source == "Newtonsoft.Json")
                 {
-                    FlightList = null,
-                    TotalFlightCount = 0,
-                    OriginalRequest = null
-                };
+                    return new FlightFilterApiResponse
+                    {
+                        FlightList = null,
+                        TotalFlightCount = 0,
+                        OriginalRequest = null
+                    };
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

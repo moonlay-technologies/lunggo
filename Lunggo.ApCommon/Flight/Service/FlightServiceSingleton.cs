@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -28,7 +31,6 @@ namespace Lunggo.ApCommon.Flight.Service
             if (!_isInitialized)
             {
                 MystiflyWrapper.Init();
-                _isInitialized = true;
             }
             else
             {
