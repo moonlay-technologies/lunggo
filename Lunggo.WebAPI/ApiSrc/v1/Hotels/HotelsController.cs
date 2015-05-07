@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Hotels.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Hotels.Object;
 
@@ -11,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Hotels
 
     public class HotelsController : ApiController
     {
-        [EnableCors(origins: "http://localhost,https://localhost,http://localhost:23321,https://localhost:23321,http://dv1-cw.azurewebsites.net", headers: "*", methods: "*")]
+        [LunggoCorsPolicy]
         [Route("api/v1/hotels")]
         public HotelSearchApiResponse GetHotels(HttpRequestMessage httpRequest,[FromUri] HotelSearchApiRequest request)
         {
