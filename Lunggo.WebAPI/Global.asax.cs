@@ -19,8 +19,8 @@ namespace Lunggo.WebAPI
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
             AppInitializer.Init();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
 }
