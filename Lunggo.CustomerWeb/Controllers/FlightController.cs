@@ -7,7 +7,9 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Payment.Data;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -113,7 +115,45 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
                 {
-                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                    var transactionDetail = new TransactionDetail
+                    {
+                        OrderId = "ALALALALA",
+                        GrossAmount = (int) data.Itinerary.IdrPrice
+                    };
+                    var itemdetails = new List<ItemDetail>
+                    {
+                        new ItemDetail
+                        {
+                            Id = "ALALAA",
+                            Name = "pesawat",
+                            Quantity = 1,
+                            Price = (int) data.Itinerary.IdrPrice
+                        }
+                    };
+                    var url = PaymentService.GetInstance().GetThirdPartyPaymentUrl(transactionDetail, itemdetails);
+                    if (url != null)
+                    {
+                        return Redirect(url);
+                    }
+                    else
+                    {
+                        return RedirectToAction("PaymentError");
+                    }
+                }
+                else
+                {
+                    data.Message = "Booking Failed. Please try again.";
+                    return View(data);
+                }
+            }
+            else
+            {
+                data.Message = "Technical Error. Please try again.";
+                return View(data);
+            }
+
+            /*
+             var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
                         BookingId = bookResult.BookResult.BookingId
                     });
@@ -145,23 +185,22 @@ namespace Lunggo.CustomerWeb.Controllers
                         data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
-                }
-                else
-                {
-                    data.Message = "Booking Failed. Please try again.";
-                    return View(data);
-                }
-            }
-            else
-            {
-                data.Message = "Technical Error. Please try again.";
-                return View(data);
-            }
+             */
         }
 
-        public ActionResult PaymentResult(string result)
+        public ActionResult PaymentFinish()
         {
-            return null;
+            return View();
+        }
+
+        public ActionResult PaymentUnfinish()
+        {
+            return View();
+        }
+
+        public ActionResult PaymentError()
+        {
+            return View();
         }
 
         public ActionResult Eticket()

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.Payment.Data;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Veritrans
 {
@@ -47,14 +50,39 @@ namespace Lunggo.ApCommon.Veritrans
             {
                 PaymentType = "vtweb",
                 TransactionDetail = transactionDetail,
-                ItemDetail = itemDetails
+                ItemDetail = itemDetails,
+                VtWeb = new VtWeb
+                {
+                    CreditCard3DSecure = true
+                }
             };
-            var webRequest = WebRequest.Create("https://api.sandbox.veritrans.co.id/v2/charge");
+            var jsonRequest = JsonConvert.SerializeObject(request);
+            var webRequest = (HttpWebRequest) WebRequest.Create("https://api.sandbox.veritrans.co.id/v2/charge");
             webRequest.Headers.Add("Authorization", "Basic " + hashedServerKey);
-            webRequest.Headers.Add("Content-type", "application/json");
-            webRequest.Headers.Add("Accept", "application/json");
-            var webResponse = webRequest.GetResponse();
-            return null;
+            webRequest.Accept = "application/json";
+            webRequest.ContentType = "application/json";
+            webRequest.Method = "POST";
+            var dataStream = webRequest.GetRequestStream();
+            byte[] bytes = new byte[jsonRequest.Length * sizeof(char)];
+            System.Buffer.BlockCopy(jsonRequest.ToCharArray(), 0, bytes, 0, bytes.Length);
+            dataStream.Write(bytes, 0, bytes.Length);
+            dataStream.Close();
+            var webResponse = (HttpWebResponse) webRequest.GetResponse();
+            var streamContent = webResponse.GetResponseStream();
+            string jsonContent;
+            using (var reader = new StreamReader(streamContent))
+            {
+                jsonContent = reader.ReadToEnd();
+            }
+            var content = JsonConvert.DeserializeObject<Response>(jsonContent);
+            if (content.StatusCode == "201")
+            {
+                return content.RedirectUrl;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

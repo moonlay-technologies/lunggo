@@ -40,8 +40,8 @@ namespace Lunggo.ApCommon.Payment
 
         public string GetThirdPartyPaymentUrl(TransactionDetail transactionDetail, List<ItemDetail> itemDetails)
         {
-            VeritransWrapper.VtWeb(transactionDetail, itemDetails);
-            return null;
+            var url = VeritransWrapper.VtWeb(transactionDetail, itemDetails);
+            return url;
         }
     }
 }

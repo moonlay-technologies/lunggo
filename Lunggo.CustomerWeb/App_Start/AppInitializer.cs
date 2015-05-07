@@ -4,6 +4,7 @@ using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
@@ -29,6 +30,7 @@ namespace Lunggo.CustomerWeb
             //InitLogger();
             InitDictionaryService();
             InitFlightService();
+            PaymentService.GetInstance().Init();
         }
 
         private static void InitRedisService()

@@ -279,6 +279,7 @@
     <Compile Include="Util\HotelFacilityUtil.cs" />
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="Veritrans\Model\Request.cs" />
+    <Compile Include="Veritrans\Model\Response.cs" />
     <Compile Include="Veritrans\VeritransWrapperSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
