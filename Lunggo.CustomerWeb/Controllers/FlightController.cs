@@ -159,6 +159,11 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        public ActionResult PaymentResult(string result)
+        {
+            if (result = "success")
+        }
+
         public ActionResult Eticket()
         {
             var itin = FlightService.GetInstance().GetItineraryFromCache("111","a");
