@@ -2,11 +2,11 @@
 // on document ready
 $(document).ready(function () {
 
-    toggle_filter();
+    homePageFunctions();
+    toggleFilter();
     hotelSearch();
     hotelDetail();
-    flightSearch();
-    switchSearchForm();
+    flightSearchFunctions();
     hotelSearchFormFunctions();
     flightSearchFormFunctions();
     paymentOptionForm();
@@ -28,320 +28,114 @@ function paymentOptionForm() {
 }
 
 //******************************************
-// toggle search form
-function switchSearchForm() {
+// Home page functions
+function homePageFunctions() {
 
-    var scrollTarget;
-    var buttonPosition;
-    var activeTab = $('.site-header').attr('data-activeTab');
+    switchForm();
 
-    $(document).ready(function() {
-        if (window.location.hash == '#flight') {
-            $('#site-header .search-switch-button').click();
-        }
-    });
+    //**********
+    function switchForm() {
+        $('.form-switch .switch label').click(function() {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
 
-    $(window).on('hashchange', function () {
-        activeTab = $('.site-header').attr('data-activeTab');
+            var targetForm = $(this).attr('data-target');
 
-        if (window.location.hash == '#flight' && activeTab == "hotel") {
-            $('#site-header .search-switch-button').click();
-        } else if (window.location.hash == '#hotel' && activeTab == "flight") {
-            $('#site-header .search-switch-button').click();
-        }
+            $('.form-main-content > div').removeClass('active');
+            $('.form-main-content .form-'+targetForm+'-search').addClass('active');
 
-    });
-
-    $('#site-header .search-switch-button').click(function () {
-        // get scroll value
-        if ($(this).hasClass('flight')) {
-            buttonPosition = { left: '0', marginLeft: '5%' };
-            scrollTarget = $('#site-header .header-form-wrapper .flight-form').position().left;
-            $(this).removeClass('flight').addClass('hotel');
-            $(this).children().children('img').attr('src', '/Assets/images/search-form-switch-hotel.png');
-            $(this).children().attr('href', '#flight');
-            $('.site-header').attr('data-activeTab', 'flight');
-        } else {
-            buttonPosition = { left: '100%', marginLeft: '-10%' };
-            scrollTarget = 0;
-            $(this).removeClass('hotel').addClass('flight');
-            $(this).children().children('img').attr('src', '/Assets/images/search-form-switch-flight.png');
-            $(this).children().attr('href', '#hotel');
-            $('.site-header').attr('data-activeTab', 'hotel');
-        }
-
-        // scrollLeft the element
-        $('#site-header .header-form-wrapper').stop().animate({
-            scrollLeft: scrollTarget
-        }, {
-            duration: 1000
         });
-
-        // animate button
-        $(this).stop().animate(buttonPosition, 1000);
-    });
-
-
+    }
 
 }
+
 
 //******************************************
 // hotel search form
 function hotelSearchFormFunctions() {
 
-    // activate functions
-    $(document).ready(function () {
-        locationAutocomplete();
-        datePicker();
-        stayLength();
-        roomCount();
-        validateForm();
-    });
-
-    // ******************************
-    // validate form
-    function validateForm() {
-
-    }
-
     // ******************************
     // location auto complete
-    var locationAutocomplete = function () {
-
-        // settings
-        var elInput = 'input.input-location';
-        var ajaxUrl = HotelAutocompleteConfig.Url;
-        var minLength = 3;
-        var listWrapper = '.location-autocomplete';
-
-        // generate popup element
-        $('body').append('<div class="location-autocomplete"></div>');
-        $('.location-autocomplete').css({
-            position: 'absolute',
-            zIndex: 9999,
-            top: $(elInput).offset().top + $(elInput).outerHeight(),
-            left: $(elInput).offset().left,
-            width: $(elInput).outerWidth()
-        });
-
-        // run function on keyup
-        $(elInput).keyup(function () {
-            $(elInput).attr('data-true-val', $(this).val());
-            var reqVal = $(this).val();
-            verifyInput(reqVal);
-        });
-
-        $(elInput).focus(function () {
-            if ($(this).attr('data-true-val').length > 0) {
-                $(elInput).val($(this).attr('data-true-val'));
+    var hotelAutocompleteCache = {};
+    $('.hotel-location.autocomplete').autocomplete({
+        minLength: 3,
+        source: function (request, response) {
+            var term = request.term;
+            if (term in hotelAutocompleteCache) {
+                response(hotelAutocompleteCache[term]);
+                return;
             }
-            var reqVal = $(this).val();
-            verifyInput(reqVal);
-        });
-
-        // function verified input
-        function verifyInput(inputVal) {
-            if (inputVal.length >= minLength) {
-                $(listWrapper).empty();
-                $(listWrapper).append('<li> Loading </li>');
-                $(listWrapper).wrapInner('<ul></ul>');
-                $(listWrapper).show();
-                getResult(inputVal);
-            } else {
-                $(listWrapper).hide();
-            }
-        }
-
-        // get result
-        function getResult(inputVal) {
-            $.ajax({
-                method: "GET",
-                dataType: "json",
-                url: ajaxUrl + inputVal
-            })
-            .done(function (result) {
-                showResult(result);
-            });
-        }
-
-        // show result
-        function showResult(data) {
-            if (data.length > 0) {
-                $(listWrapper).empty();
+            $.getJSON(HotelAutocompleteConfig.Url+request.term, function (data, status, xhr) {
+                var cleanData = [];
                 for (var i = 0; i < data.length; i++) {
-                    $(listWrapper).append('<li data-location-id="' + data[i].LocationId + '"><span>' + data[i].LocationName + ',' + data[i].RegionName + ',' + data[i].CountryName + '</span></li>');
+                    var newData = {
+                        label: data[i].LocationName + ' ,'+data[i].RegionName+' ,'+data[i].CountryName,
+                        value: data[i].LocationId
+                    };
+                    cleanData.push(newData);
                 }
-                $(listWrapper).wrapInner('<ul></ul>');
-                $(listWrapper).show().attr('data-active', 'true');
-            } else {
-                $(listWrapper).empty();
-                $(listWrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
-                $(listWrapper).wrapInner('<ul></ul>');
-                $(listWrapper).show();
-            }
-        }
-
-        // on click
-        selectResult();
-        function selectResult() {
-            $(listWrapper).on('click', 'li', function () {
-                $(elInput).val($(this).text());
-                $(listWrapper).hide();
-                $(elInput).attr('data-location-id', $(this).attr('data-location-id'));
-                $('.search-hotel-form .search-hotel-value.location').val($(this).attr('data-location-id'));
+                hotelAutocompleteCache[term] = cleanData;
+                response(cleanData);
             });
+        },
+        select: function (event, ui) {
+            var userInputValue = $('.hotel-location.autocomplete').val();
+            $('.hotel-location.autocomplete').attr('data-userInputValue', userInputValue);
+            event.preventDefault();
+            $('.hotel-location.autocomplete').val(ui.item.label);
+            $('#hotel-search-location').val(ui.item.value);
+            $('.hotel-checkin').focus();
         }
-
-        // hide when click another element
-        $('html').click(function () {
-            $(listWrapper).hide();
-        });
-        $("input.input-location , .location-autocomplete").on('click', function (evt) {
-            evt.stopPropagation();
-        });
-
-
-    };
+    });
+    $('.hotel-location.autocomplete').focus(function() {
+        var currentValue = $(this).val();
+        var userInputValue = $(this).attr('data-userInputValue');
+        $(this).val(userInputValue);
+    });
 
     // ******************************
     // date picker
-    var datePicker = function () {
-        $('.input-checkin.select-date').pickmeup_twitter_bootstrap({
-            calendars: 3,
-            format: 'Y-m-d',
-            hide_on_select: true,
-            select_month: false,
-            select_year: false,
-            separator: '-',
-            min: new Date,
-            change: function () {
-                datePickerCheckout($(this).pickmeup('get_date'));
-                $('.search-hotel-value.staydate').val($(this).val());
-            }
-        });
-    }
-
-    function datePickerCheckout(theDate) {
-
-        var selectedDate = theDate || new Date;
-
-        $('.input-checkout.select-date').pickmeup_twitter_bootstrap('destroy');
-        $('.input-checkout.select-date').pickmeup_twitter_bootstrap({
-            calendars: 3,
-            format: 'Y-m-d',
-            hide_on_select: true,
-            select_month: false,
-            select_year: false,
-            separator: '-',
-            min: selectedDate,
-            default_date: selectedDate,
-            change: function () {
-                $('.input-checkin').attr('data-picked','true');
-                calculateDate($(this).pickmeup('get_date'));
-            }
-        });
-        $('.input-checkout.select-date').pickmeup_twitter_bootstrap('update');
-
-    }
-
-    $('.input-checkout').click(function() {
-        var checkinPicked = $('.input-checkin').attr('data-picked');
-        if (checkinPicked == 'false') {
-            $('.input-checkin').click();
+    $('.hotel-checkin.date-picker').datepicker({
+        minDate: 0,
+        numberOfMonths: 3,
+        firstDay: 1,
+        dateFormat: "dd-MM-yy",
+        altField: '#hotel-search-checkin',
+        altFormat: 'yy-mm-dd',
+        onClose: function (selectedDate) {
+            // set checkout minDate to checkin date + 1
+            var checkoutMinDate = new Date(selectedDate);
+            var checkoutMaxDate = new Date(selectedDate);
+            checkoutMinDate.setDate(checkoutMinDate.getDate() + 1);
+            checkoutMaxDate.setDate(checkoutMaxDate.getDate() + 5);
+            $('.hotel-checkout.date-picker').datepicker('option', 'minDate', checkoutMinDate);
+            $('.hotel-checkout.date-picker').datepicker('option', 'maxDate', checkoutMaxDate);
+            $('.hotel-checkout.date-picker').focus();
+            calculateDate();
+        }
+    });
+    $('.hotel-checkout.date-picker').datepicker({
+        numberOfMonths: 3,
+        firstDay: 1,
+        dateFormat:"dd-MM-yy",
+        onClose: function(selectedDate) {
+            calculateDate();
         }
     });
 
-    function calculateDate(checkoutDate) {
-        var checkinDate = new Date($('.search-hotel-value.staydate').val());
-        var checkoutDate = new Date(checkoutDate);
+    function calculateDate() {
+        var checkinDate = new Date( $('.hotel-checkin.date-picker').val() );
+        var checkoutDate = new Date( $('.hotel-checkout.date-picker').val() );
         var stayLength = Math.abs(checkoutDate - checkinDate);
         var stayLengthValue = Math.ceil(stayLength / (1000 * 3600 * 24));
-        $('.search-hotel-value.staylength').val(stayLengthValue);
+        $('.hotel-room').val(stayLengthValue);
     }
 
     // ******************************
-    // stay length
-    var stayLength = function () {
-
-    }
-
-    // ******************************
-    // room count
-    var roomCount = function (room) {
-        var maxRoom = room || 4;
-        var roomOption = '.input-room.select-room';
-        var roomSelection = '.room-count-selection';
-
-        // generate location autocomplete
-        $('body').append('<div class="' + roomSelection.replace('.', '') + '"></div>');
-        $(roomSelection).css({
-            top: $(roomOption).offset().top + $(roomOption).outerHeight(),
-            left: $(roomOption).offset().left,
-            width: $(roomOption).outerWidth()
-        });
-        for (var i = 1; i <= maxRoom; i++) {
-            var room;
-            if (i > 1) {
-                room = ' rooms'
-            } else {
-                room = ' room'
-            }
-            $(roomSelection).append('<li data-value="' + i + '">' + i + room + ' </li>');
-        }
-        $(roomSelection).wrapInner('<ul></ul>');
-
-        // show
-        $(roomOption).focus(function () {
-            $(roomSelection).show();
-        });
-
-        // select room option based on keyboard key press
-        $(roomOption).on('keydown', function (evt) {
-            var keyValue = evt.which;
-            var roomValue;
-            if (keyValue >= 49 && keyValue <= 57) {
-                switch (keyValue) {
-                    case 49:
-                        roomValue = 1;
-                        break;
-                    case 50:
-                        roomValue = 2;
-                        break;
-                    case 51:
-                        roomValue = 3;
-                        break;
-                    case 52:
-                        roomValue = 4;
-                        break;
-                    default:
-                        roomValue = 4;
-                        break;
-                }
-                $(roomSelection).children('ul').children('li:nth-child(' + roomValue + ')').click();
-                return false;
-            } else {
-                return false;
-            }
-        });
-
-        // select room
-        $(roomSelection).on('click', 'li', function () {
-            $(roomOption).val($(this).html());
-            $(roomOption).attr('data-current-room', $(this).attr('data-value'));
-            $(roomOption).blur();
-            $(roomSelection).hide();
-        });
-
-
-        // hide room option
-        $('html').click(function () {
-            $(roomSelection).hide();
-        });
-        $(roomOption).on('click', function (evt) {
-            evt.stopPropagation();
-        });
-
-    }
+    // submit form
+    $('.form-hotel-search .submit-button').click(function() {
+        $('.form-hotel-search form').submit();
+    });
 
 }
 
@@ -350,245 +144,45 @@ function hotelSearchFormFunctions() {
 function flightSearchFormFunctions() {
 
     // activate functions
-    $(document).ready(function () {
-        airportAutocomplete();
-        validateForm();
-        switchFlightType();
-        datePicker();
-    });
+    $(document).ready(function () {});
 
     // ******************************
     // validate form
     function validateForm() {
 
-    }
+    };
 
     // ******************************
     // flight autocomplete
-    function airportAutocomplete() {
-
-        var autocompleteWrapper = '.airport-autocomplete';
-        var ajaxUrl = FlightAutocompleteConfig.Url;
-        var minLength = 3;
-        var elInput = '.airport-autocomplete-input';
-        var elPosition = {};
-
-        // generate autocomplete wrapper
-        $('body').append('<div class="' + autocompleteWrapper.replace('.', '') + '"></div>');
-
-        // run function on keyup
-        $(elInput).each(function () {
-            $(elInput).keyup(function () {
-                $(this).attr('data-true-val', $(this).val());
-                var reqVal = $(this).val();
-                verifyInput(reqVal);
-            });
-        });
-
-        $(elInput).each(function () {
-            $(this).focus(function () {
-                $(autocompleteWrapper).empty();
-                $('.autocomplete-current').removeClass('autocomplete-current');
-                $(this).addClass('autocomplete-current');
-                elPosition.top = $(this).offset().top + $(this).outerHeight();
-                elPosition.left = $(this).offset().left;
-                $(autocompleteWrapper).css({
-                    top: elPosition.top,
-                    left: elPosition.left
-                });
-                $(autocompleteWrapper).attr('data-airport-for', $(this).attr('data-airport-for'));
-            });
-        });
-
-        // verify input
-        function verifyInput(reqVal) {
-            if (reqVal.length >= minLength) {
-                getResult(reqVal);
-                $(autocompleteWrapper).show();
-            } else {
-                $(autocompleteWrapper).hide();
-            }
-        }
-
-        // get Ajax
-        function getResult(locationQuery) {
-            $.ajax({
-                method: "GET",
-                dataType: "json",
-                url: ajaxUrl + locationQuery
-            })
-            .done(function (result) {
-                showResult(result);
-                console.log(result);
-            });
-        }
-
-        // show result
-        function showResult(data) {
-            if (data.length > 0) {
-                $(autocompleteWrapper).empty();
-                for (i = 0; i < data.length; i++) {
-                    $(autocompleteWrapper).append('<li data-code="' + data[i].Code + '"><span>' + data[i].Name + ' ,' + data[i].City + '</span></li>');
-                }
-                $(autocompleteWrapper).wrapInner('<ul></ul>');
-                $(autocompleteWrapper).show().attr('data-active', 'true');
-            } else {
-                $(autocompleteWrapper).empty();
-                $(autocompleteWrapper).append('<li class="text-center">Lokasi tidak ditemukan</li>');
-                $(autocompleteWrapper).wrapInner('<ul></ul>');
-                $(autocompleteWrapper).show();
-            }
-        }
-
-        // select airport
-        $(autocompleteWrapper).on('click', 'li', function () {
-            $('.autocomplete-current').val($(this).text());
-            $(elInput).blur();
-            $(autocompleteWrapper).hide();
-            $('.autocomplete-current').removeClass('autocomplete-current');
-            var airportTarget = $(autocompleteWrapper).attr('data-airport-for');
-            if (airportTarget == 'Ori') {
-                $('.search-flight-form #flight-origin').val($(this).attr('data-Code'));
-            } else if (airportTarget == 'Dest') {
-                $('.search-flight-form #flight-destination').val($(this).attr('data-Code'));
-            }
-        });
-
-        // hide airport autocomplete
-        $('html').click(function () {
-            $(autocompleteWrapper).hide();
-        });
-        $(autocompleteWrapper).on('click', function (evt) {
-            evt.stopPropagation();
-        });
-
-
-    }
+    function airportAutocomplete() {};
 
     // ******************************
     // flight type
-    function switchFlightType() {
-        $('form.search-flight-form #return-flight').change(function () {
-            var checked = $(this).prop('checked');
-            var inputTarget = 'form.search-flight-form .flight-return-date';
-            if (checked) {
-                $(inputTarget).prop('disabled', false);
-                $(inputTarget).attr('placeholder', 'return date');
-                $(inputTarget).val('');
-                $('.search-flight-form .flight-form-value#flight-type').val('RET');
-            } else {
-                $(inputTarget).prop('disabled', true);
-                $(inputTarget).attr('placeholder', '');
-                $(inputTarget).val('one way');
-                $('.search-flight-form .flight-form-value#flight-type').val('ONE');
-            }
-        });
-    }
+    $('.flight-type-wrapper label').click(function() {
+        
+    });
 
     // ******************************
     // date picker
-    var datePicker = function () {
-        $('.flight-date.select-date').pickmeup_twitter_bootstrap({
-            calendars: 3,
-            format: 'd-m-Y',
-            hide_on_select: true,
-            select_month: false,
-            select_year: false,
-            separator: '-',
-            min: new Date,
-            change: function () {
-                var flightType = $('.search-flight-form #flight-type').val();
-                if (flightType != 'ONE') {
-                    datePickerReturn($(this).pickmeup('get_date'));
-                }
-                $('.search-flight-form .flight-form-value#flight-date').val($(this).val());
-                $(this).attr('data-picked', 'true');
-                $(this).attr('data-pickedDate', $(this).pickmeup('get_date'));
-            }
-        });
-
-    }
-
-    $('.flight-return-date').click(function () {
-        var departDate = $('.flight-date').attr('data-picked');
-        if (departDate == 'false') {
-            $('.flight-date').click();
-        }
-
-    });
-
-    function datePickerReturn(theDate) {
-
-        var selectedDate = theDate || new Date;
-
-        $('.search-flight-form .flight-return-date').val('');
-        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('destroy');
-        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap({
-            calendars: 3,
-            format: 'd-m-Y',
-            hide_on_select: true,
-            select_month: false,
-            select_year: false,
-            separator: '-',
-            min: selectedDate,
-            default_date: selectedDate,
-            change: function () {
-                $('.search-flight-form .flight-form-value#flight-return-date').val($(this).val());
-            }
-        });
-        $('.search-flight-form .flight-return-date.select-date').pickmeup_twitter_bootstrap('update');
-
-    }
-
-}
-
-//******************************************
-// generate hotel star
-function generate_star() {
-    $('.generate-star').each(function () {
-        var star_rating = $(this).attr('data-star');
-        $(this).html('');
-        for (var i = 1; i <= star_rating; i++) {
-            $(this).append('<span class="fa fa-star></span>');
-        }
-        for (var i = 5; i > star_rating; i--) {
-            $(this).append('<span class="fa fa-star-o></span>');
+    $('.flight-departure-date.date-picker').datepicker({
+        numberOfMonths: 3,
+        minDate: 0,
+        dateFormat: 'dd-MM-yy',
+        onClose: function(selectedDate) {
+            $('.flight-return-date.date-picker').datepicker('option','minDate',selectedDate);
         }
     });
-}
-
-//******************************************
-// news hover
-$('.page.home-page section.news .news-wrapper').hover(
-    function () {
-        $(this).children('.news-link').children('.news-content').stop(true).animate({
-            height: '100%',
-            padding: '70px 30px 0'
-        });
-    }
-    , function () {
-        $(this).children('.news-link').children('.news-content').stop(true).animate({
-            height: '0',
-            padding: '0 30px'
-        });
-    }
-);
-
-//******************************************
-// slider
-$('.page.home-page section.slider .slide').each(function () {
-    var slide_bg = $(this).children('.slide-bg').attr('src');
-    var slide_bg_color = $(this).children('.slide-bg').attr('data-color');
-    $(this).children('.slide-bg').remove();
-    $(this).css({
-        background: 'url(' + slide_bg + ') top center no-repeat ' + slide_bg_color,
-        backgroundSize: 'cover'
+    $('.flight-return-date.date-picker').datepicker({
+        numberOfMonths: 3,
+        dateFormat: 'dd-MM-yy',
+        onClose: function(selectedDate) {}
     });
-});
+
+};
 
 //******************************************
 // toggle filter functions
-function toggle_filter() {
+function toggleFilter() {
     $('aside.filter .filter-button').click(function (evt) {
         evt.preventDefault();
         var filter_el = 'aside.filter';
@@ -618,22 +212,6 @@ function toggle_filter() {
 function hotelSearch() {
 
     toggle_view();
-    priceSlider();
-
-    // slider input
-    function priceSlider() {
-        
-        $('.slider-input').jRange({
-            from: 0,
-            to: 5000000,
-            step: 100000,
-            scale: [0, '5.000.000'],
-            width: 'auto',
-            showLabels: false,
-            isRange: true
-        });
-
-    }
 
     // hotel search view
     function toggle_view() {
@@ -677,7 +255,7 @@ function hotelDetail() {
 
 //******************************************
 // flight search functions
-function flightSearch() {
+function flightSearchFunctions() {
 
     toggleFlightDetail();
 
@@ -741,7 +319,7 @@ function loading_overlay(state) {
     if (state == 'show') {
 
         if ($('body').has('.loading-overlay').length == 0) {
-            create_loading();
+            createLoading();
             $('body').children('.loading-overlay').show();
         } else {
             $('body').children('.loading-overlay').show();
@@ -752,326 +330,8 @@ function loading_overlay(state) {
     }
 
     // create loading screen
-    function create_loading() {
+    function createLoading() {
         $('body').append('<div class="loading-overlay"> <div class="loading-content"><img src="/assets/images/loading-image.gif" /></div> </div>');
     }
 
 }
-
-// ************************
-// Angular app
-(function () {
-
-    var app = angular.module('travorama', ['ngRoute']);
-
-    // hotel controller
-    app.controller('HotelController', [
-        '$http', '$scope', function ($http, $scope) {
-
-            // run hotel search function on document ready
-            angular.element(document).ready(function () {
-                $scope.loadHotelList();
-            });
-
-            $scope.loaded = false;
-
-            $scope.star = {
-                star1: true,
-                star2: true,
-                star3: true,
-                star4: true,
-                star5: true
-            }
-
-            // hotel list
-            var hotel_list = this;
-            hotel_list.hotels = [];
-
-            // hotel search params
-            $scope.HotelSearchParams = {};
-
-            // *******************************
-            // default value
-            $scope.HotelSearchParams.StayDate = $('.search-page.hotel-search-page').attr('data-search-StayDate');
-            $scope.HotelSearchParams.StayLength = $('.search-page.hotel-search-page').attr('data-search-StayLength');
-            $scope.HotelSearchParams.LocationId = $('.search-page.hotel-search-page').attr('data-search-LocationId');
-            $scope.HotelSearchParams.ResultCount = $('.search-page.hotel-search-page').attr('data-search-ResultCount');
-            $scope.HotelSearchParams.RoomCount = $('.search-page.hotel-search-page').attr('data-search-RoomCount');
-            // *******************************
-
-            $scope.getStar = function (starRating) {
-                return new Array(starRating);
-            }
-
-            $scope.getStarO = function (starRating) {
-                starRating = 5 - starRating;
-                return new Array(starRating);
-            }
-
-            // load hotel list function
-            $scope.loadHotelList = function (page) {
-
-                $scope.loaded = false;
-
-                // set default page
-                $scope.CurrentPage = page || 1;
-
-                // set startIndex
-                $scope.CurrentPage = $scope.CurrentPage - 1;
-                $scope.HotelSearchParams.StartIndex = (SearchHotelConfig.ResultCount * $scope.CurrentPage);
-
-                $scope.hotels = [];
-
-                // generate StarRating
-                var tempArr = []
-                $scope.HotelSearchParams.StarRating;
-                ($scope.star.star1) ? tempArr.push('1') : null;
-                ($scope.star.star2) ? tempArr.push('2') : null;
-                ($scope.star.star3) ? tempArr.push('3') : null;
-                ($scope.star.star4) ? tempArr.push('4') : null;
-                ($scope.star.star5) ? tempArr.push('5') : null;
-                $scope.HotelSearchParams.StarRating = tempArr.join(',');
-
-                // generate minimum and maximum price
-                var priceRange = $('#price-range').val().split(",");
-                $scope.HotelSearchParams.MinPrice = priceRange[0];
-                $scope.HotelSearchParams.MaxPrice = priceRange[1];
-
-                console.log('--------------------------------');
-                console.log('Searching for hotel with params:');
-                console.log($scope.HotelSearchParams);
-
-                // http request
-                $http.get(SearchHotelConfig.Url, {
-                    params: {
-                        LocationId: $scope.HotelSearchParams.LocationId,
-                        StayDate: $scope.HotelSearchParams.StayDate,
-                        StayLength: $scope.HotelSearchParams.StayLength,
-                        SearchId: $scope.HotelSearchParams.SearchId,
-                        SortBy: $scope.HotelSearchParams.SortBy,
-                        StartIndex: $scope.HotelSearchParams.StartIndex,
-                        ResultCount: SearchHotelConfig.ResultCount,
-                        MinPrice: $scope.HotelSearchParams.MinPrice,
-                        MaxPrice: $scope.HotelSearchParams.MaxPrice,
-                        StarRating: $scope.HotelSearchParams.StarRating
-                    }
-                    // if success
-                }).success(function (data) {
-                    // console data
-                    console.log('Hotel search result:');
-                    console.log(data);
-
-                    // add data to $scope
-                    hotel_list.hotels = data.HotelList;
-                    $scope.HotelSearchParams.SearchId = data.SearchId;
-
-                    // pagination
-                    $scope.MaxPage = Math.ceil(data.TotalFilteredCount / SearchHotelConfig.ResultCount);
-                    $scope.show_page($scope.MaxPage);
-
-                    console.log('loaded');
-                    console.log('--------------------------------');
-
-                    $scope.loaded = true;
-
-                    // if error
-                }).error(function () {
-                    console.log('REQUEST ERROR');
-                    console.log('--------------------------------');
-
-                    $scope.loaded = true;
-
-                });
-
-            };
-
-            // paging function
-            $scope.show_page = function (max_page) {
-                $('footer .pagination').html('');
-                for (n = 1; n <= max_page; n++) {
-                    $('footer .pagination').append('<li><a href="#" data-page="' + n + '">' + n + '</a></li>');
-                }
-                $('footer .pagination a').click(function () {
-                    var page = $(this).attr('data-page');
-                    $scope.loadHotelList(page);
-                });
-            }
-
-
-        }
-    ]);
-
-    // room controller
-    app.controller('RoomController', [
-        '$http', '$scope', function ($http, $scope) {
-
-            // run hotel search function on document ready
-            angular.element(document).ready(function () {
-                $scope.getRoomlist();
-            });
-
-            // get room list
-            var room_list = this;
-            room_list.rooms = [];
-            $scope.RoomSearchParams = {};
-            $scope.loaded = false;
-
-            // default value
-            $scope.RoomSearchParams.HotelId = $('#form-room').attr('data-hotelId');
-            $scope.RoomSearchParams.StayDate = $('#form-room-checkin').val() || '2015-05-05';
-            $scope.RoomSearchParams.StayLength = $('#form-room-length').val() || 1;
-            $scope.RoomSearchParams.RoomCount = $('#form-room-qty').val() || 1;
-            $scope.RoomSearchParams.SearchId = '';
-
-            $scope.getRoomlist = function () {
-
-                console.log('--------------------------------');
-                console.log('Searching for Room with params:');
-                console.log($scope.RoomSearchParams);
-
-                $scope.loaded = false;
-
-                $http.get(SearchRoomConfig.Url, {
-                    params: {
-                        HotelId: $scope.RoomSearchParams.HotelId,
-                        StayDate: $scope.RoomSearchParams.StayDate,
-                        StayLength: $scope.RoomSearchParams.StayLength,
-                        RoomCount: $scope.RoomSearchParams.RoomCount,
-                        SearchId: $scope.RoomSearchParams.SearchId,
-                    }
-                }).success(function (data) {
-                    console.log(data);
-
-                    room_list.rooms = data.PackageList;
-
-                    console.log('LOADED');
-                    console.log('--------------------------------');
-
-                    $scope.loaded = true;
-
-                }).error(function () {
-                    console.log('REQUEST ERROR');
-                    console.log('--------------------------------');
-                });
-
-            }
-
-        }
-    ]);
-
-    // fight controller
-    app.controller('FlightController', [
-        '$http', '$scope', function ($http, $scope) {
-
-            FlightSearchConfig.params = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
-
-            // run hotel search function on document ready
-            angular.element(document).ready(function () {
-                $scope.getFlightList();
-            });
-
-            // get room list
-            var flightList = this;
-            flightList.list = [];
-            $scope.FlightSearchParams = {};
-            $scope.loaded = false;
-
-            // add class on click
-            $scope.selectedItem = -1;
-            $scope.clickedItem = function ($index) {
-                if ($index == $scope.selectedItem) {
-                    $scope.selectedItem = -1;
-                } else if($index != $scope.selectedItem) {
-                    $scope.selectedItem = $index;
-                }
-
-            }
-
-            $scope.getDateTime = function(dateTime) {
-                return new Date(dateTime);
-            }
-
-            // get  flight list
-            $scope.getFlightList = function () {
-
-                console.log('--------------------------------');
-                console.log('Searching for Flights with params:');
-                console.log($scope.FlightSearchParams);
-
-                $scope.loaded = false;
-
-                $http.get(FlightSearchConfig.Url, {
-                    params: {
-                        request: $('.flight-search-page').attr('data-flight-search-params')
-                    }
-                }).success(function (data) {
-                    console.log(data);
-
-                    flightList.list = data.FlightList;
-                    $scope.FlightSearchParams.SearchId = data.SearchId;
-
-                    console.log('LOADED');
-                    console.log('--------------------------------');
-
-                    $scope.loaded = true;
-
-                }).error(function () {
-                    console.log('REQUEST ERROR');
-                    console.log('--------------------------------');
-                });
-
-            }
-
-            // revalidate flight itinerary
-            $scope.revalidate = function(indexNo) {
-                var searchId = $scope.FlightSearchParams.SearchId;
-
-                loading_overlay('show');
-
-                console.log('validating :');
-
-                if (RevalidateConfig.working == false) {
-                    RevalidateConfig.working = true;
-
-                    $http.get(RevalidateConfig.Url, {
-                        params: {
-                            SearchId: searchId,
-                            ItinIndex: indexNo
-                        }
-                    }).success(function (returnData) {
-                        RevalidateConfig.working = false;
-
-                        console.log(returnData);
-
-                        RevalidateConfig.value = returnData;
-
-                        if (returnData.IsValid == true) {
-                            window.location.assign( location.origin + '/id/flight/Checkout?token=' + returnData.HashKey );
-                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
-                            var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
-                            if (userConfirmation) {
-                                loading_overlay('hide');
-                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
-                            }
-                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
-                            loading_overlay('hide');
-                            alert("Sorry, the flight is no longer valid. Please check another flight.");
-                        }
-
-                    }).error(function(data) {
-                        console.log(data)
-                    });
-                } else {
-                    console.log('Sistem busy, please wait');
-                }
-
-            }
-
-
-        }
-    ]);
-
-
-})();
-
-

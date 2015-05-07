@@ -8,136 +8,102 @@
     <title>Travorama</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="Assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="Assets/css/application.css">
+    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Assets/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/Assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Assets/css/application.css">
 
 </head>
 <body ng-app="travorama" class="page home-page">
 
-    <!-- site header start -->
     <header id="site-header" class="site-header home-header" data-activeTab="hotel">
-        <div class="search-switch-button flight">
-            <a href="#flight"><img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" /></a>
-        </div><!-- .search-switch-button -->
         @{ Html.RenderPartial("_Mainmenu"); }
-        <div class="header-form-wrapper home-page-header">
-            <section class="header-form">
-                <section class="hotel-form">
-                    <section class="site-tag">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h1><img src="assets/images/enjoy.png" alt="Enjoy Your Every Moment"><br />However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h1>
-                                </div>
-                            </div>
+    
+        @if (ViewBag.ShowTagline == true)
+        {
+            <div class="container">
+                <div class="site-slogan">
+                    <h1><img src="assets/images/enjoy.png" alt="Enjoy Your Every Moment"></h1>
+                    <h2>However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h2>
+                </div><!-- .site-slogan -->
+            </div>
+        }
+    
+        @if (ViewBag.ShowHeaderForm == true)
+        {
+            <div class="container">
+                <div class="site-header-search-form">
+                    <div class="form-switch">
+                        <div class="switch">
+                            <label class="active" data-target="hotel"><span class="fa fa-building"></span><input type="radio" name="form-switch" value="hotel" /></label>
+                            <label class="" data-target="flight"><span class="fa fa-plane"></span><input type="radio" name="form-switch" value="flight" /></label>
                         </div>
-                    </section>
-                    <section class="search">
-                        <section class="search-hotel">
-                            <div class="container wide">
-                                <div class="row">
-                                    <div class="col-sm-12">
-
-                                        <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
-                                            <div class="form-group">
-                                                <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-checkin select-date" placeholder="checkin" data-picked="false" data-pickedDate="">
-                                            </div>
-                                            <div class="form-group">
-                                                <span class="form-dash">-</span>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-checkout select-date" placeholder="checkout">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-room select-room" placeholder="room">
-                                            </div>
-                                            <div class="form-group">
-                                                <input class="hidden search-hotel-value location" name="LocationId" />
-                                                <input class="hidden search-hotel-value staydate" name="StayDate" />
-                                                <input class="hidden search-hotel-value staylength" name="StayLength" />
-                                                <input class="hidden search-hotel-value roomcount" name="RoomCount" />
-                                                <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                            </div>
-                                        </form>
-
-                                    </div>
+                    </div><!-- .form-switch -->
+                    <div class="form-main-content">
+                        <div class="form-hotel-search active">
+                            <h3><b>Hotel</b> Booking</h3>
+                            <form action="/UW100/UW100HotelSearch" method="GET">
+                                <div class="hotel-location-wrapper">
+                                    <input type="text" class="hotel-location autocomplete" placeholder="Location" />
                                 </div>
-                            </div>
-                        </section><!-- .search-hotel -->
-                    </section>
-                </section><!-- .hotel-form -->
-                <section class="flight-form">
-                    <section class="site-tag">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h1><img src="assets/images/enjoy.png" alt="Enjoy Your Every Moment"><br />However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h1>
+                                <div class="hotel-data-wrapper">
+                                    <input type="text" class="hotel-checkin date-picker" placeholder="Checkin Date"/>
+                                    <span class="separator">-</span>
+                                    <input type="text" class="hotel-checkout date-picker" placeholder="Checkout Date"/>
+                                    <!-- <input type="text" class="hotel-room" placeholder="Rooms"/> -->
+                                    <select class="hotel-room" name="RoomCount">
+                                        <option value="1">1 Room</option>
+                                        <option value="2">2 Rooms</option>
+                                        <option value="3">3 Rooms</option>
+                                        <option value="4">4 Room</option>
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="search">
-                        <section class="search-flight">
-                            <div class="container wide">
-                                <div class="row">
-                                    <div class="col-sm-12">
-
-                                        <form action="/id/Flight/SearchResultList" method="GET" class="form-inline search-flight-form">
-                                            <div class="form-group loc-auto-wrapper">
-                                                <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori" data-inputValue="">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" data-airport-for="Dest" data-inputValue="" />
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control flight-date select-date" placeholder="flight date" data-picked="false" data-pickedDate="" />
-                                            </div>
-                                            <div class="form-group">
-                                                <span class="form-dash">-</span>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control flight-return-date select-date" placeholder="return date" data-picker="false" />
-                                                <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Return Flight</label>
-                                            </div>
-                                            <div class="form-group flight-passenger form-control">
-                                                <label class="adult-passenger"><span><img src="/Assets/images/adult-icon.png" alt="Adult"/></span> <input type="text" class="" value="1" maxlength="1" id="flight-adult" /></label>
-                                                <label class="child-passenger"><span><img src="/Assets/images/child-icon.png" alt="Child"/></span> <input type="text" class="" value="0" maxlength="1" id="flight-child" /></label>
-                                                <label class="infant-passenger"><span><img src="/Assets/images/infant-icon.png" alt="Infant"/></span> <input type="text" class="" value="0" maxlength="1" id="flight-infant" /></label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="hidden flight-form-value" id="flight-origin" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-destination" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-date" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-return-date" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-type" val="RET" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-cabin" />
-                                                <input type="text" class="hidden flight-form-value" id="flight-info" name="info" />
-                                                <button class="btn btn-primary btn-yellow" id="flight-search">SEARCH</button>
-                                            </div>
-                                        </form>
-
-                                    </div>
+                                <div class="hotel-submit-wrapper">
+                                    <input type="text" class="hidden" name="LocationId" id="hotel-search-location" />
+                                    <input type="text" class="hidden" name="StayDate" id="hotel-search-checkin" />
+                                    <input type="text" class="hidden" name="StayLength" id="hotel-search-length" />
+                                    <a class="submit-button btn btn-yellow">SEARCH</a>
                                 </div>
-                            </div>
-                        </section><!-- .search-hotel -->
-                    </section>
-                </section><!-- .flight-form -->
-            </section><!-- .header-form -->
-        </div><!-- .header-form-wrapper -->
-    </header>
-    <!-- site header end -->
-    <!-- site content start -->
+                            </form><!-- .form-hotel-search -->
+                        </div><!-- .form-hotel-search -->
+                        <div class="form-flight-search">
+                            <h3><b>Flight</b> Booking</h3>
+                            <form action="/id/Flight/SearchResultList" method="GET">
+                                <div class="flight-type-wrapper">
+                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> Round-Trip</label>
+                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
+                                </div>
+                                <div class="flight-airport-wrapper">
+                                    <input type="text" class="flight-origin" placeholder="Initial Airport"/>
+                                    <input type="text" class="flight-destination" placeholder="Destination Airport" />
+                                </div>
+                                <div class="flight-date-wrapper">
+                                    <input type="text" class="flight-departure-date date-picker" placeholder="departure date" />
+                                    <span class="separator">-</span>
+                                    <input type="text" class="flight-return-date date-picker" placeholder="return date" />
+                                    <input type="text" class="flight-cabin" placeholder="cabin" />
+                                </div>
+                                <div class="flight-submit-wrapper">
+                                    <input type="text" class="flight-adult" placeholder="Adult" />
+                                    <input type="text" class="flight-child" placeholder="Child" />
+                                    <input type="text" class="flight-infant" placeholder="Infant" />
+                                    <input type="text" id="flight-date-info" name="info" class="hidden" />
+                                    <a class="submit-button btn btn-yellow">SEARCH</a>
+                                </div>
+                            </form><!-- .form-flight-search -->
+                        </div><!-- .form-flight-search -->
+                    </div><!-- .form-main-content -->
+                </div><!-- .site-header-search-form -->
+            </div>
+        }
+        
+
+    </header><!-- .site-header -->
+
     <div id="site-content" class="site-content">
-
         @RenderBody()
-
-    </div>
-    <!-- site content end -->
-    <!-- site footer start -->
+    </div><!-- .site-content -->
+    
     <footer id="site-footer" class="site-footer">
         <section class="footer-menu">
             <div class="container">
@@ -212,51 +178,30 @@
                 </div>
             </div>
         </section>
-    </footer>
-    <!-- site footer end -->
+    </footer><!-- .site-footer -->
+    
+    <!-- ****************************** -->
     <!-- javascripts -->
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/jquery.cycle2.min.js"></script>
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
 
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     
-    <script src="/Assets/js/jquery.range-min.js"></script>
+    @if (IsSectionDefined("AdditionalPageJavascript"))
+    {
+        @RenderSection("AdditionalPageJavascript");
+    }
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-    <script src="/Assets/js/jquery.pickmeup.min.js"></script>
-    <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
-    
     <script src="/Config/JsConfig.js"></script>
-    <script src="/assets/js/application.js"></script>
+    <script src="/Assets/js/application.js"></script>
+    <script src="/Assets/js/angularApp.js"></script>
 
-    <script>
-        $('#flight-search').click(function (evt) {
-            evt.preventDefault();
-            var info = function () {
-                var s = "";
-                var ori = $('#flight-origin').val();
-                var dest = $('#flight-destination').val();
-                var date = $('#flight-date').val();
-                s = s.concat(ori, dest, date.substring(0, 2), date.substring(3, 5), date.substring(8, 10));
-                if ($('#return-flight').prop('checked')) {
-                    var ori2 = $('#flight-destination').val();
-                    var dest2 = $('#flight-origin').val();
-                    var date2 = $('#flight-return-date').val();
-                    s = s.concat('.', ori2, dest2, date2.substring(0, 2), date2.substring(3, 5), date2.substring(8, 10));
-                }
-                var cabin = 'y';
-                var adult = $('#flight-adult').val();
-                var child = $('#flight-child').val();
-                var infant = $('#flight-infant').val();
-                s = s.concat('-', adult, child, infant, cabin);
-                return s;
-            }
-            $('#flight-info').val(info);
-            $(this).closest('form').submit();
-        })
-    </script>
+    @if (IsSectionDefined("PageJavascript"))
+    {
+        @RenderSection("PageJavascript");
+    }
+
 
 </body>
 </html>

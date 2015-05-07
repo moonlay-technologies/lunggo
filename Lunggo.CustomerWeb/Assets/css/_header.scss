@@ -1,4 +1,4 @@
-#site-header {background:url(../images/header-bg.jpg) center top no-repeat #005892; padding:20px 0 40px; position:relative;}
+.site-header {background:url(../images/header-bg-2.jpg) center top no-repeat #005892; padding:20px 0 40px; position:relative;}
 
 .main-menu {color:#fff; text-transform:uppercase; text-align:center;
 	img {}
@@ -10,83 +10,70 @@
 	a {color:#fff;}
 }
 
-.site-tag {text-align:center; color:#fff; margin-bottom:20px; margin-top:20px;
-	img {margin-bottom:10px;}
-	h1 {font-size:15px;}
-}
-.home-header .search {margin-top:0;}
+.ui-autocomplete {max-height:200px; overflow:auto;}
 
-.home-page #site-header section.search {margin-top:0;}
+.site-header-search-form {padding:30px 50px; background:rgba(100,100,100,0.8); margin-top:20px; margin-bottom:20px; min-height:280px;
+    &:before, &:after {clear:both; display:block; width:100%; content:"";}
 
-// hotel search form
-.hotel-form {
-    section.search {margin-top:40px;
-	    section.search-hotel {color:#fff; text-align:center;
-		    .fa {font-size:42px; vertical-align:middle;}
-		    input[type="text"] {padding:20px 10px; font-size:14px;}
-		    .form-dash {font-size:32px;}
-		    .input-location {width:250px;}
-		    input.input-checkin, input.input-checkout {width:150px; background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px;}
-		    input.input-room {width:200px; background:url(../images/bed-bg.png) 10px center no-repeat #fff; padding-left:50px;}
-		    .btn {@extend .gotham; padding:10px 20px;}
-
-		    // if container wide
-		    .container.wide {
-			    input[type="text"] {font-size:18px;}
-			    input.input-location {width:350px;}
-			    input.input-checkin {width:150px;}
-			    input.input-checkout {width:150px;}
-			    input.input-room {width:200px;}
-		    }
-	    }
-    }
-}
-
-// flight search form
-.flight-form {
-    section.search {margin-top:40px;
-        section.search-flight {text-align:center; color:#fff;
-            .form-group {position:relative;}
-            .fa {font-size:42px; vertical-align:middle;}
-		    input[type="text"] {padding:20px 10px; font-size:14px;}
-		    .form-dash {font-size:32px;}
-		    .btn {@extend .gotham; padding:10px 20px;}
-
-            input.flight-date, input.flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:45px; width:120px;}
-            input.flight-return-date:disabled {background:#ddd;}
-
-            label[for="return-flight"] {position:absolute; left:0; cursor:pointer;}
-
-            .flight-passenger {height:42px; padding-top:8px;
-                label {width:40px; display:inline-block;
-                    span {text-align:center; display:inline-block;}
-                    img {width:20px;}
-                    input[type="text"] {text-align:center; width:25px; padding:0; color:#000; border:0;}
-                }
+    .form-switch {width:20%; float:left;
+        .switch {background:#ffb911; width:100px; padding:2px;
+            label {cursor:pointer; display:block; width:100%; text-align:center; margin-bottom:0; color:#fff;
+                &.active {background:#ffe794; color:#5c470c;}
+                span {font-size:50px; padding:20px 0;}
+                input[type="radio"] {display:none;}
             }
-
-		    // if container wide
-		    .container.wide {
-                input[type="text"] {font-size:17px;}
-                input.flight-date, input.flight-return-date {padding-left:45px; width:150px;}
-                .flight-passenger label {width:50px;}
-		    }
         }
     }
-}
+    .form-main-content {color:#fff; width:80%; float:left;
+        .form-hotel-search {display:none;
+            &.active {display:block;}
+            form {
+                .hotel-location-wrapper {
+                    .hotel-location {width:100%; margin-bottom:15px;}
+                }
+                .hotel-data-wrapper {margin-bottom:10px;
+                    input[type="text"], select {padding-left:50px;}
+                    .hotel-checkin {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%;}
+                    .hotel-checkout {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%; margin-right:1%;}
+                    .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; width:30%; font-size:18px; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; border:0;}
+                    .separator {font-size:18px; font-weight:bold; display:inline-block; text-align:center; width:1%;}
+                }
+                .hotel-submit-wrapper {text-align:right;
+                    .submit-button {font-weight:bold; padding:10px; width:22%;}
+                }
+                // *****
+                input[type="text"], select {padding:10px; color:#000;}
+            }
+        }
+        .form-flight-search {display:none;
+            &.active {display:block;}
+            form {
+                .flight-type-wrapper {
+                    label {margin-right:10px; cursor:pointer; font-size:16px;}
+                }
+                .flight-airport-wrapper {margin-bottom:10px;
+                    .flight-origin {width:49%; margin-right:1%;}
+                    .flight-destination {width:48%;}
+                }
+                .flight-date-wrapper {margin-bottom:10px;
+                    .flight-departure-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:33%}
+                    .flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:33%; margin-right:1%;}
+                    .flight-cabin {width:29%;}
+                    .separator {display:inline-block; font-weight:bold; font-size:18px; text-align:center; width:1%;}
+                }
+                .flight-submit-wrapper {
+                    .flight-adult {width:24%; margin-right:1%; background:url(../images/adult-icon.png) 10px center no-repeat #fff; padding-left:40px;}
+                    .flight-child {width:24%; margin-right:1%; background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px;}
+                    .flight-infant {width:24%; margin-right:1%; background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px;}
+                    .submit-button {width:22%; padding:10px; font-weight:bold;}
+                }
+                // *****
+                input[type="text"] {padding:10px;}
+            }
+        }
+        // *****
+        h3 {margin:0; padding:0; margin-bottom:15px;}
+        input[type="text"] {color:#333; font-size:16px; border:0; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+    }
 
-#site-header .search-switch-button {font-size:42px; color:#fff; position:absolute; top:50%; cursor:pointer; left:100%; margin-left:-10%;
-    img {max-width:none;}
-    &.flight {}
-    &.hotel {}
 }
-.header-form-wrapper {width:100%; overflow:hidden;
-    &.home-page-header {height:230px;}
-}
-#site-header .header-form {width:200%;
-    &>section {display:block; width:50%; float:left;}
-    &.hotel-form {}
-    &.flight-form {}
-}
-
-
