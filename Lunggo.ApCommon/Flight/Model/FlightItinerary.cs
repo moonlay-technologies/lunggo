@@ -22,10 +22,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public decimal TotalFare { get; set; }
-        public decimal AdultTotalFare { get; set; }
-        public decimal ChildTotalFare { get; set; }
-        public decimal InfantTotalFare { get; set; }
-        public decimal PscFare { get; set; }
     }
 
     public class FlightItineraryFare : FlightItineraryBase
@@ -40,11 +36,13 @@ namespace Lunggo.ApCommon.Flight.Model
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
-        public decimal TotalFare { get; set; }
-        public decimal AdultTotalFare { get; set; }
-        public decimal ChildTotalFare { get; set; }
-        public decimal InfantTotalFare { get; set; }
-        public decimal PscFare { get; set; }
+        public decimal SupplierPrice { get; set; }
+        public string SupplierCurrency { get; set; }
+        public decimal SupplierRate { get; set; }
+        public decimal LocalPrice { get; set; }
+        public string LocalCurrency { get; set; }
+        public decimal LocalRate { get; set; }
+        public decimal IdrPrice { get; set; }
     }
 
     public class FlightItineraryDetails : FlightItineraryBase

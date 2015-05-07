@@ -98,6 +98,7 @@
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Currency\CurrencyService.cs" />
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
