@@ -1,10 +1,11 @@
-﻿using System.Web.Mvc;
-using Lunggo.ApCommon.Constant;
+﻿using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Currency.Constant;
+using Lunggo.ApCommon.Currency.Model;
 using Lunggo.Framework.Redis;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace Lunggo.ApCommon.Currency
+namespace Lunggo.ApCommon.Currency.Service
 {
     public class CurrencyService
     {
@@ -54,12 +55,12 @@ namespace Lunggo.ApCommon.Currency
             return deposit.ExchangeRate;
         }
 
-        public static void SetCurrencyRate(string currency, decimal rate)
+        public static void SetCurrencyExchangeRate(string currency, decimal rate)
         {
             SetCurrencyRateInCache(currency, rate);
         }
 
-        public static decimal GetCurrencyRate(string currency)
+        public static decimal GetCurrencyExchangeRate(string currency)
         {
             return GetCurrencyRateInCache(currency);
         }
@@ -122,17 +123,5 @@ namespace Lunggo.ApCommon.Currency
         {
             return JsonConvert.DeserializeObject<T>(jsonInput);
         }
-    }
-
-    internal class Deposit
-    {
-        public decimal Balance { get; set; }
-        public decimal ExchangeRate { get; set; }
-    }
-
-    public enum Supplier
-    {
-        Mystifly = 0,
-        HotelsPro = 1
     }
 }

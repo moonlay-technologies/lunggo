@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
 using Lunggo.ApCommon.Currency;
+using Lunggo.ApCommon.Currency.Constant;
+using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
