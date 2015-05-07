@@ -161,7 +161,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentResult(string result)
         {
-            if (result = "success")
+            return null;
         }
 
         public ActionResult Eticket()

@@ -54,6 +54,7 @@ namespace Lunggo.ApCommon.Veritrans
             webRequest.Headers.Add("Content-type", "application/json");
             webRequest.Headers.Add("Accept", "application/json");
             var webResponse = webRequest.GetResponse();
+            return null;
         }
     }
 }
