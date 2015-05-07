@@ -35,12 +35,12 @@
                 <div class="site-header-search-form">
                     <div class="form-switch">
                         <div class="switch">
-                            <label class="active" data-target="hotel"><span class="fa fa-building"></span><input type="radio" name="form-switch" value="hotel" /></label>
-                            <label class="" data-target="flight"><span class="fa fa-plane"></span><input type="radio" name="form-switch" value="flight" /></label>
+                            <label class="" data-target="hotel"><span class="fa fa-building"></span><input type="radio" name="form-switch" value="hotel" /></label>
+                            <label class="active" data-target="flight"><span class="fa fa-plane"></span><input type="radio" name="form-switch" value="flight" /></label>
                         </div>
                     </div><!-- .form-switch -->
                     <div class="form-main-content">
-                        <div class="form-hotel-search active">
+                        <div class="form-hotel-search">
                             <h3><b>Hotel</b> Booking</h3>
                             <form action="/UW100/UW100HotelSearch" method="GET">
                                 <div class="hotel-location-wrapper">
@@ -66,29 +66,53 @@
                                 </div>
                             </form><!-- .form-hotel-search -->
                         </div><!-- .form-hotel-search -->
-                        <div class="form-flight-search">
+                        <div class="form-flight-search active">
                             <h3><b>Flight</b> Booking</h3>
-                            <form action="/id/Flight/SearchResultList" method="GET">
+                            <form action="/id/Flight/SearchResultList" method="GET" data-flightType="round-trip">
                                 <div class="flight-type-wrapper">
                                     <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> Round-Trip</label>
                                     <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
                                 </div>
                                 <div class="flight-airport-wrapper">
-                                    <input type="text" class="flight-origin" placeholder="Initial Airport"/>
-                                    <input type="text" class="flight-destination" placeholder="Destination Airport" />
+                                    <input type="text" class="flight-origin autocomplete" placeholder="Initial Airport" data-userInputvalue="" data-airportCode=""/>
+                                    <input type="text" class="flight-destination autocomplete" placeholder="Destination Airport" data-userInputValue="" data-airportCode="" />
                                 </div>
                                 <div class="flight-date-wrapper">
                                     <input type="text" class="flight-departure-date date-picker" placeholder="departure date" />
                                     <span class="separator">-</span>
                                     <input type="text" class="flight-return-date date-picker" placeholder="return date" />
-                                    <input type="text" class="flight-cabin" placeholder="cabin" />
+                                    <input type="text" class="flight-return-disable" placeholder="One way" disabled />
+                                    <select class="flight-cabin" placeholder="Cabin">
+                                        <option value="y">Economy</option>
+                                        <option value="c">Business</option>
+                                        <option value="f">First</option>
+                                    </select>
                                 </div>
                                 <div class="flight-submit-wrapper">
-                                    <input type="text" class="flight-adult" placeholder="Adult" />
-                                    <input type="text" class="flight-child" placeholder="Child" />
-                                    <input type="text" class="flight-infant" placeholder="Infant" />
-                                    <input type="text" id="flight-date-info" name="info" class="hidden" />
-                                    <a class="submit-button btn btn-yellow">SEARCH</a>
+                                    <select class="flight-adult" placeholder="Adult">
+                                        <option value="1">1 Adult</option>
+                                        <option value="2">2 Adults</option>
+                                        <option value="3">3 Adults</option>
+                                        <option value="4">4 Adults</option>
+                                    </select>
+                                    <select class="flight-child" placeholder="Child">
+                                        <option value="0">0 Child</option>
+                                        <option value="1">1 Child</option>
+                                        <option value="2">2 Childs</option>
+                                        <option value="3">3 Childs</option>
+                                        <option value="4">4 Childs</option>
+                                    </select>
+                                    <select class="flight-infant" placeholder="Infant">
+                                        <option value="0">0 Infant</option>
+                                        <option value="1">1 Infant</option>
+                                        <option value="2">2 Infants</option>
+                                        <option value="3">3 Infants</option>
+                                        <option value="4">4 Infants</option>
+                                    </select>
+                                    <input type="text" class="hidden flight-departure-date-real" value="" />
+                                    <input type="text" class="hidden flight-return-date-real" value="" />
+                                    <input type="text" id="flight-data-info" name="info" class="hidden" />
+                                    <a class="submit-button flight-submit-button btn btn-yellow">SEARCH</a>
                                 </div>
                             </form><!-- .form-flight-search -->
                         </div><!-- .form-flight-search -->

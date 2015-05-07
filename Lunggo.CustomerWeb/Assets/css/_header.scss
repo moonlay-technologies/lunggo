@@ -35,14 +35,14 @@
                     input[type="text"], select {padding-left:50px;}
                     .hotel-checkin {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%;}
                     .hotel-checkout {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%; margin-right:1%;}
-                    .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; width:30%; font-size:18px; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; border:0;}
+                    .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; width:30%; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; border:0;}
                     .separator {font-size:18px; font-weight:bold; display:inline-block; text-align:center; width:1%;}
                 }
                 .hotel-submit-wrapper {text-align:right;
                     .submit-button {font-weight:bold; padding:10px; width:22%;}
                 }
                 // *****
-                input[type="text"], select {padding:10px; color:#000;}
+                input[type="text"], select {padding:10px;}
             }
         }
         .form-flight-search {display:none;
@@ -57,7 +57,8 @@
                 }
                 .flight-date-wrapper {margin-bottom:10px;
                     .flight-departure-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:33%}
-                    .flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:33%; margin-right:1%;}
+                    .flight-return-date, .flight-return-disable {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:33%; margin-right:1%;}
+                    .flight-return-disable {display:none; background-color:#aaa;}
                     .flight-cabin {width:29%;}
                     .separator {display:inline-block; font-weight:bold; font-size:18px; text-align:center; width:1%;}
                 }
@@ -68,12 +69,13 @@
                     .submit-button {width:22%; padding:10px; font-weight:bold;}
                 }
                 // *****
-                input[type="text"] {padding:10px;}
+                input[type="text"], select {padding:10px;}
             }
         }
         // *****
         h3 {margin:0; padding:0; margin-bottom:15px;}
-        input[type="text"] {color:#333; font-size:16px; border:0; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+        input[type="text"], select {color:#333; font-size:16px; border:0; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+        select {font-size:20px;}
     }
 
 }
