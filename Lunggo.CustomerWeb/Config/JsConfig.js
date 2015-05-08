@@ -5,27 +5,27 @@ var SystemConfig = {
 };
 
 var SearchHotelConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/hotels',
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/hotels',
     ResultCount: 24
 };
 
 var SearchRoomConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/rooms'
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/rooms'
 };
 
 var FlightSearchConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/flights'
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights'
 };
 
 var RevalidateConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/flights/revalidate',
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights/revalidate',
     working: false
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/autocomplete/airport/'
+    Url: 'http://dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
 };
