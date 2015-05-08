@@ -53,6 +53,7 @@ namespace Lunggo.ApCommon.Veritrans
                 ItemDetail = itemDetails,
                 VtWeb = new VtWeb
                 {
+                    EnabledPayments = @"[""credit_card""]",
                     CreditCard3DSecure = true
                 }
             };
@@ -63,10 +64,10 @@ namespace Lunggo.ApCommon.Veritrans
             webRequest.ContentType = "application/json";
             webRequest.Method = "POST";
             var dataStream = webRequest.GetRequestStream();
-            byte[] bytes = new byte[jsonRequest.Length * sizeof(char)];
-            System.Buffer.BlockCopy(jsonRequest.ToCharArray(), 0, bytes, 0, bytes.Length);
-            dataStream.Write(bytes, 0, bytes.Length);
-            dataStream.Close();
+            using (var streamWriter = new StreamWriter(dataStream))
+            {
+                streamWriter.Write(jsonRequest);
+            }
             var webResponse = (HttpWebResponse) webRequest.GetResponse();
             var streamContent = webResponse.GetResponseStream();
             string jsonContent;

@@ -118,7 +118,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var transactionDetail = new TransactionDetail
                     {
                         OrderId = "ALALALALA",
-                        GrossAmount = (int) data.Itinerary.IdrPrice
+                        GrossAmount = (long) data.Itinerary.IdrPrice
                     };
                     var itemdetails = new List<ItemDetail>
                     {
