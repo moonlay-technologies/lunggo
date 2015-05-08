@@ -16,8 +16,9 @@ namespace Lunggo.Configuration
     public enum DeploymentEnvironment
     {
         Local = 5,
-        Development = 6,
-        Production = 7
+        Development1 = 6,
+        Development2 = 7,
+        Production = 8
     }
 
     public class ConfigGenerator
@@ -59,7 +60,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
+            generator.StartConfig(DeploymentEnvironment.Development1, projectList);
             //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }

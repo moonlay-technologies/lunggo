@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    
+    Layout = "/Views/Shared/_layout_home.cshtml";
+}
+
+<!-- section.slider start -->
+<section class="slider">
+    <div class="slide-wrapper cycle-slideshow" data-cycle-fx="scrollHorz" data-cycle-slides="> article.slide" data-pause-on-hover="false" data-cycle-next=".slide-control .slide-next" data-cycle-prev=".slide-control .slide-prev">
+        <?php for($i=1; $i<=3; $i++){ ?>
+        <article class="slide">
+            <img src="assets/images/_sample/slide_1.jpg" alt="Slider 1" class="slide-bg" data-color="#62d1fd">
+            <div class="slide-content">
+                <div class="container wide">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-8 text-center">
+                            <img src="assets/images/_sample/hot-deal.png" alt="HOT DEAL - Save Up To 20% This Summer">
+                            <br>
+                            <br>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae maiores similique accusantium ullam aliquid dicta quo a ipsum ratione corporis amet accusamus veritatis in nam, beatae nesciunt quae, ipsam blanditiis.</p>
+                            <a href="#" class="btn btn-slide btn-yellow">EXPLORE MORE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <?php } ?>
+    </div>
+</section>
+<!-- section.slider end -->
+<!-- section.news start -->
+<section class="news">
+    <div class="container wide">
+        <h2 class="section-title"><b>TOP</b> REVIEW</h2>
+        <div class="row news-list">
+
+            @for (var i = 1; i <= 4; i++) { 
+                <div class="col-sm-3">
+                    <article class="news-wrapper">
+                        <a href="#" class="news-link">
+                            <div class="news-content">
+                                <div class="news-star">
+                                    <div class="star star-3">
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star-o"></span>
+                                    </div>
+                                </div>
+                                <div class="news-author">Oleh : Shinta Tamara</div>
+                                <p class="news-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis tempora cum repudiandae ad eveniet.</p>
+                                <span class="news-button">Details</span>
+                            </div>
+                            <img src="assets/images/_sample/gadogado.jpg" alt="Gado Gado" class="news-image">
+                        </a>
+                        <h3 class="news-title">GADO GADO PAK ASEP</h3>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- section.news end -->

@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Mystifly
                 IsResidentFare = false,
                 NearByAirports = false,
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
-                PricingSourceType = PricingSourceType.All,
+                PricingSourceType = PricingSourceType.Public,
                 TravelPreferences = MapTravelPreferences(conditions),
                 RequestOptions = RequestOptions.TwoHundred,
                 SessionId = Client.SessionId,

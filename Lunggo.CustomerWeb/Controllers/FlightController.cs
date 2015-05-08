@@ -115,45 +115,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
                 {
-                    var transactionDetail = new TransactionDetail
-                    {
-                        OrderId = "ALALALALA",
-                        GrossAmount = (long) data.Itinerary.IdrPrice
-                    };
-                    var itemdetails = new List<ItemDetail>
-                    {
-                        new ItemDetail
-                        {
-                            Id = "ALALAA",
-                            Name = "pesawat",
-                            Quantity = 1,
-                            Price = (int) data.Itinerary.IdrPrice
-                        }
-                    };
-                    var url = PaymentService.GetInstance().GetThirdPartyPaymentUrl(transactionDetail, itemdetails);
-                    if (url != null)
-                    {
-                        return Redirect(url);
-                    }
-                    else
-                    {
-                        return RedirectToAction("PaymentError");
-                    }
-                }
-                else
-                {
-                    data.Message = "Booking Failed. Please try again.";
-                    return View(data);
-                }
-            }
-            else
-            {
-                data.Message = "Technical Error. Please try again.";
-                return View(data);
-            }
-
-            /*
-             var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
                         BookingId = bookResult.BookResult.BookingId
                     });
@@ -176,7 +138,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                         else
                         {
-                            data.Message = "Technical Error. Please try again.";
+                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
                             return View(data);
                         }
                     }
@@ -186,15 +148,15 @@ namespace Lunggo.CustomerWeb.Controllers
                         return View(data);
                     }
              */
-        }
+                }
 
         public ActionResult PaymentFinish()
-        {
+                {
             return View();
-        }
+            }
 
         public ActionResult PaymentUnfinish()
-        {
+            {
             return View();
         }
 
