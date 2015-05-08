@@ -912,7 +912,8 @@ hr {
     color: #fff; }
 .flight-search-page .flight-search-form {
   margin-bottom: 20px;
-  margin-top: -10px; }
+  margin-top: -10px;
+  display: none; }
   .flight-search-page .flight-search-form form {
     padding: 15px;
     background: #ddd; }

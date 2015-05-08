@@ -19,22 +19,22 @@
             <div class="pull-right list-option">Show : <select name="#" id="hotel-list"><option value="24">24 Hotels</option><option value="36">36 Hotels</option><option value="48">48 Hotels</option></select> / page</div>
         </div>
     </header><!-- .page-header -->
-    <section class="hotel-search-form">
+    <section class="hotel-search-form form-hotel-search">
         <div class="container">
             <form class="form-inline" action="/UW100/UW100HotelSearch" method="GET">
-                <input type="text" class="hotel-location form-control" placeholder="Location" />
-                <input type="text" class="hotel-checkindate form-control" placeholder="Checkin Date" />
+                <input type="text" class="hotel-location form-control autocomplete" placeholder="Location" />
+                <input type="text" class="hotel-checkin form-control date-picker" placeholder="Checkin Date" />
                 <span class="separator">-</span>
-                <input type="text" class="hotel-checkoutdate form-control" placeholder="Checkout Date" name="RoomCount" />
-                <select class="form-control hotel-room">
+                <input type="text" class="hotel-checkout form-control date-picker" placeholder="Checkout Date" name="RoomCount" />
+                <select class="form-control hotel-room" name="RoomCount">
                     <option value="1">1 Room</option>
                     <option value="2">2 Rooms</option>
                     <option value="3">3 Rooms</option>
                     <option value="4">4 Rooms</option>
                 </select>
-                <input class="hidden" id="hotel-checkin-date" name="StayDate"/>
-                <input class="hidden" id="hotel-staylength" name="StayLength" />
-                <input class="hidden" id="hotel-location" name="LocationId" />
+                <input type="text" class="hidden" name="LocationId" id="hotel-search-location" />
+                <input type="text" class="hidden" name="StayDate" id="hotel-search-checkin" />
+                <input type="text" class="hidden" name="StayLength" id="hotel-search-length" />
                 <a href="#" class="btn btn-yellow submit-button">SEARCH</a>
             </form>
         </div>
