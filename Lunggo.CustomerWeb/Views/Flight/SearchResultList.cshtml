@@ -68,35 +68,36 @@
             <div class="container">
                 <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
                 <hr>
-                <a href="#" class="btn btn-yellow btn-sm">CHANGE</a>
+                <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
             </div>
         </header><!-- .page-header -->
         
-        <section class="flight-search-form">
+        <section class="flight-search-form form-flight-search">
             <div class="container">
-                <form class="form-inline" action="/id/flight">
+                <form class="form-inline" action="/id/Flight/SearchResultList" data-flightType="round-trip">
                     <div class="row flight-type-wrapper">
                         <div class="col-sm-12">
-                            <label for="round-trip"><input id="round-trip" type="radio" /> Round-Trip</label>
-                            <label for="one-way"><input id="one-way" type="radio" /> One-Way</label>
+                            <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> Round-Trip</label>
+                            <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
                         </div>
                     </div>
                     <div class="row airport-wrapper">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control flight-airport-origin" placeholder="Origin Airpot"/>
-                            <input type="text" class="form-control flight-airport-destination" placeholder="Destination Airport"/>
+                            <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" />
+                            <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" />
                             <select class="flight-cabin form-control">
-                                <option value="y">ECONOMY</option>
-                                <option value="c">BUSINESS</option>
-                                <option value="f">FIRST CLASS</option>
+                                <option value="y">Economy Class</option>
+                                <option value="c">Business Class</option>
+                                <option value="f">First Class</option>
                             </select>
                         </div>
                     </div>
                     <div class="row passenger-wrapper">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control flight-departure-date ui-datepicker-multi-4 " placeholder="Departure Date"/>
+                            <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" />
                             <span class="separator">-</span>
-                            <input type="text" class="form-control flight-return-date datepicker" placeholder="Return Date"/>
+                            <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" />
+                            <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
                             <select class="form-control flight-adult">
                                 <option value="1">1 Adult</option>
                                 <option value="2">2 Adults</option>
@@ -104,18 +105,23 @@
                                 <option value="4">4 Adults</option>
                             </select>
                             <select class="form-control flight-child">
+                                <option value="0">0 Child</option>
                                 <option value="1">1 Child</option>
                                 <option value="2">2 Childs</option>
                                 <option value="3">3 Childs</option>
                                 <option value="4">4 Childs</option>
                             </select>
                             <select class="form-control flight-infant">
+                                <option value="0">0 Child</option>
                                 <option value="1">1 Infant</option>
                                 <option value="2">2 Infants</option>
                                 <option value="3">3 Infants</option>
                                 <option value="4">4 Infants</option>
                             </select>
-                            <a href="#" class="btn btn-yellow submit-button">SEARCH</a>
+                            <input type="text" class="hidden flight-departure-date-real" value="" />
+                            <input type="text" class="hidden flight-return-date-real" value="" />
+                            <input type="text" id="flight-data-info" name="info" class="hidden" />
+                            <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
                         </div>
                     </div>
                 </form>
@@ -286,7 +292,7 @@
                                 <span class="tag red hidden">Disc 20%</span>
                                 <p>Total Fare:</p>
                                 <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
-                                <h4 class="price-now">{{flight.Currency}} {{flight.TotalFare | number}}</h4>
+                                <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number}}</h4>
                                 <small>harga sudah termasuk <b>pajak</b></small>
                                 <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                 <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />

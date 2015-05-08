@@ -233,7 +233,7 @@ function flightSearchFormFunctions() {
     });
 
     // ******************************
-    // generate
+    // generate flight info data
     $('.flight-submit-button').click(function(evt) {
         evt.preventDefault();
         var flightSearchData = {};
@@ -261,7 +261,7 @@ function flightSearchFormFunctions() {
 
         $('#flight-data-info').val(flightSearchData.info);
 
-        console.log(flightSearchData.info);
+        // console.log(flightSearchData.info);
 
         $('.form-flight-search form').submit();
 
@@ -302,17 +302,11 @@ function hotelSearch() {
 
     toggleSearchForm();
     toggleView();
-    hotelSearchForm();
-
-    // hotel search form
-    function hotelSearchForm() {
-        
-    }
 
     // toggle search form
     function toggleSearchForm() {
         $('.show-hotel-search-form').click(function() {
-            $('.hotel-search-form').stop().slideToggle();
+            $('section.hotel-search-form').stop().slideToggle();
         });
     }
 
@@ -360,7 +354,15 @@ function hotelDetail() {
 // flight search functions
 function flightSearchFunctions() {
 
+    toggleSearchForm();
     toggleFlightDetail();
+    
+    // toggle search form
+    function toggleSearchForm() {
+        $('.show-flight-search-form').click(function() {
+            $('section.flight-search-form').stop().slideToggle();
+        });
+    }
 
     // toggle flight detail
     function toggleFlightDetail() {

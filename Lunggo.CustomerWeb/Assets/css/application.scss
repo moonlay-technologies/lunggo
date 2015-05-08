@@ -94,7 +94,7 @@ hr {border-color:#aaa;}
         .btn.btn-yellow {font-size:12px; font-weight:bold; padding:3px 5px;}
 	}
     .hotel-search-form {margin-bottom:20px; margin-top:-10px; display:none;
-        form {padding:10px; background:#ddd;
+        form {padding:15px; background:#ddd;
             .hotel-location {width:30%;}
             .hotel-checkindate {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
             .separator {display:inline-block; width:1%;}
@@ -373,17 +373,18 @@ hr {border-color:#aaa;}
 		}
 	}
     .flight-search-form {margin-bottom:20px; margin-top:-10px;
-        form {padding:10px; background:#ddd;
+        form {padding:15px; background:#ddd;
             .flight-type-wrapper {}
             .airport-wrapper {margin-bottom:10px;}
             .passenger-wrapper {}
-            label {}
+            label {cursor:pointer; margin-right:15px;}
             .flight-airport-origin {width:35%;}
             .separator {display:inline-block; width:1%;}
             .flight-airport-destination {width:35%;}
             .flight-cabin {width:29%;}
             .flight-departure-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
-            .flight-return-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .flight-return-date, .flight-return-disable {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .flight-return-disable {display:none;}
             .flight-adult {background:url(../images/adult-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
             .flight-child {background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
             .flight-infant {background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
