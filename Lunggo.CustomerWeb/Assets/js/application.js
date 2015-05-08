@@ -118,7 +118,7 @@ function hotelSearchFormFunctions() {
         numberOfMonths: 3,
         firstDay: 1,
         dateFormat:"dd-MM-yy",
-        onClose: function(selectedDate) {
+        onClose: function() {
             calculateDate();
         }
     });
@@ -229,7 +229,7 @@ function flightSearchFormFunctions() {
         altFormat: 'dd-mm-yy',
         numberOfMonths: 3,
         dateFormat: 'dd-MM-yy',
-        onClose: function(selectedDate) {}
+        onClose: function() {}
     });
 
     // ******************************
@@ -274,19 +274,19 @@ function flightSearchFormFunctions() {
 function toggleFilter() {
     $('aside.filter .filter-button').click(function (evt) {
         evt.preventDefault();
-        var filter_el = 'aside.filter';
-        var state = $(filter_el).attr('data-active');
+        var filterEl = 'aside.filter';
+        var state = $(filterEl).attr('data-active');
 
         if (state == 'true') {
-            $(filter_el).attr('data-active', 'false');
-            $(filter_el).stop(true).animate({
+            $(filterEl).attr('data-active', 'false');
+            $(filterEl).stop(true).animate({
                 left: '-200px'
             });
             $(this).children('.arrow').html('&GT;');
             $(this).children('.text').html('FILTER OFF');
         } else if (state == 'false') {
-            $(filter_el).attr('data-active', 'true');
-            $(filter_el).stop(true).animate({
+            $(filterEl).attr('data-active', 'true');
+            $(filterEl).stop(true).animate({
                 left: '0'
             });
             $(this).children('.arrow').html('&LT;');
@@ -300,10 +300,24 @@ function toggleFilter() {
 // hotel search functions
 function hotelSearch() {
 
-    toggle_view();
+    toggleSearchForm();
+    toggleView();
+    hotelSearchForm();
+
+    // hotel search form
+    function hotelSearchForm() {
+        
+    }
+
+    // toggle search form
+    function toggleSearchForm() {
+        $('.show-hotel-search-form').click(function() {
+            $('.hotel-search-form').stop().slideToggle();
+        });
+    }
 
     // hotel search view
-    function toggle_view() {
+    function toggleView() {
         $('.hotel-search-page .display-option a').click(function (evt) {
             evt.preventDefault();
             $(this).siblings().removeClass('active');
@@ -312,10 +326,10 @@ function hotelSearch() {
         });
 
         function rearrange() {
-            var view_type = $('.hotel-search-page .display-option a.active span').attr('class');
-            if (view_type == 'fa fa-list') {
+            var viewType = $('.hotel-search-page .display-option a.active span').attr('class');
+            if (viewType == 'fa fa-list') {
                 $('section.hotel-list').removeClass('square').addClass('horizontal');
-            } else if (view_type == 'fa fa-th') {
+            } else if (viewType == 'fa fa-th') {
                 $('section.hotel-list').removeClass('horizontal').addClass('square');
             }
         }
@@ -328,15 +342,15 @@ function hotelSearch() {
 // hotel detail functions
 function hotelDetail() {
 
-    hotel_image();
+    hotelImage();
 
     // hotel image
-    function hotel_image() {
-        var main_image = '.hotel-detail-page .hotel-image .hotel-main-image img';
+    function hotelImage() {
+        var mainImage = '.hotel-detail-page .hotel-image .hotel-main-image img';
         $('.hotel-detail-page .hotel-image .hotel-thumb a').click(function (evt) {
             evt.preventDefault();
-            var selected_image = $(this).children('img').attr('data-image-url');
-            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url(' + selected_image + ')');
+            var selectedImage = $(this).children('img').attr('data-image-url');
+            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url(' + selectedImage + ')');
         });
     }
 

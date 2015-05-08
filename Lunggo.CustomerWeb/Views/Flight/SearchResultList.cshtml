@@ -68,16 +68,64 @@
             <div class="container">
                 <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
                 <hr>
-
+                <a href="#" class="btn btn-yellow btn-sm">CHANGE</a>
             </div>
         </header><!-- .page-header -->
+        
+        <section class="flight-search-form">
+            <div class="container">
+                <form class="form-inline" action="/id/flight">
+                    <div class="row flight-type-wrapper">
+                        <div class="col-sm-12">
+                            <label for="round-trip"><input id="round-trip" type="radio" /> Round-Trip</label>
+                            <label for="one-way"><input id="one-way" type="radio" /> One-Way</label>
+                        </div>
+                    </div>
+                    <div class="row airport-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-airport-origin" placeholder="Origin Airpot"/>
+                            <input type="text" class="form-control flight-airport-destination" placeholder="Destination Airport"/>
+                            <select class="flight-cabin form-control">
+                                <option value="y">ECONOMY</option>
+                                <option value="c">BUSINESS</option>
+                                <option value="f">FIRST CLASS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row passenger-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-departure-date ui-datepicker-multi-4 " placeholder="Departure Date"/>
+                            <span class="separator">-</span>
+                            <input type="text" class="form-control flight-return-date datepicker" placeholder="Return Date"/>
+                            <select class="form-control flight-adult">
+                                <option value="1">1 Adult</option>
+                                <option value="2">2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                            </select>
+                            <select class="form-control flight-child">
+                                <option value="1">1 Child</option>
+                                <option value="2">2 Childs</option>
+                                <option value="3">3 Childs</option>
+                                <option value="4">4 Childs</option>
+                            </select>
+                            <select class="form-control flight-infant">
+                                <option value="1">1 Infant</option>
+                                <option value="2">2 Infants</option>
+                                <option value="3">3 Infants</option>
+                                <option value="4">4 Infants</option>
+                            </select>
+                            <a href="#" class="btn btn-yellow submit-button">SEARCH</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section><!-- .flight-search-form -->
+
         <div class="container">
             <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
         </div>
 
-        <!-- -->
-        <section class="flight-date"></section><!-- .flight-date -->
-        <!-- -->
 
         <aside class="flight-filter filter" data-active="false">
             <div class="filter-button">
