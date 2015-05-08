@@ -222,7 +222,10 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Payment\Model\AddressingDetails.cs" />
+    <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
@@ -280,7 +283,8 @@
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="Veritrans\Model\Request.cs" />
     <Compile Include="Veritrans\Model\Response.cs" />
-    <Compile Include="Veritrans\VeritransWrapperSingleton.cs" />
+    <Compile Include="Veritrans\Model\VtWeb.cs" />
+    <Compile Include="Veritrans\VeritransWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">

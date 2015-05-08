@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans;
 using Lunggo.Framework.Payment.Data;
@@ -38,9 +39,15 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        public string GetThirdPartyPaymentUrl(TransactionDetail transactionDetail, List<ItemDetail> itemDetails)
+        public void ProcessViaThirdPartyWeb(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, out string url)
         {
-            var url = VeritransWrapper.VtWeb(transactionDetail, itemDetails);
+            url = GetThirdPartyPaymentUrl(transactionDetails, itemDetails);
+        }
+
+
+        private string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails)
+        {
+            var url = VeritransWrapper.GetPaymentUrl(transactionDetails, itemDetails);
             return url;
         }
     }
