@@ -136,7 +136,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                         else
                         {
-                            data.Message = "Technical Error. Please try again.";
+                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
                             return View(data);
                         }
                     }
@@ -154,7 +154,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
             {
-                data.Message = "Technical Error. Please try again.";
+                data.Message = "Technical Error : Booking Failed. Please try again.";
                 return View(data);
             }
         }
