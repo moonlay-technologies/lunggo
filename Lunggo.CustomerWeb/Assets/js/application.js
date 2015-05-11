@@ -356,7 +356,19 @@ function flightSearchFunctions() {
 
     toggleSearchForm();
     toggleFlightDetail();
-    
+    toggleFlightFilter();
+
+    // toggle flight filter
+    function toggleFlightFilter() {
+        $('.flight-search-filter .filter a.toggle').each(function () {
+            $(this).click(function (evt) {
+                evt.preventDefault();
+                $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
+                $(this).siblings('.filter-container').stop().slideToggle('fast');
+            });
+        });
+    }
+
     // toggle search form
     function toggleSearchForm() {
         $('.show-flight-search-form').click(function() {
@@ -376,6 +388,7 @@ function flightSearchFunctions() {
     }
 
 }
+
 
 //******************************************
 // Checkout Page functions

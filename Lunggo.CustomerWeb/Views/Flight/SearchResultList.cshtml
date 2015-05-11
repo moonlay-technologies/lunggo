@@ -62,7 +62,7 @@
 @if (isValid)
 {
 
-    <div class="search-page flight-search-page" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
+    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
 
         <header class="page-header">
             <div class="container">
@@ -71,10 +71,10 @@
                 <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
             </div>
         </header><!-- .page-header -->
-        
+
         <section class="flight-search-form form-flight-search">
             <div class="container">
-                <form class="form-inline" action="/id/Flight/SearchResultList" data-flightType="round-trip">
+                <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
                     <div class="row flight-type-wrapper">
                         <div class="col-sm-12">
                             <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> Round-Trip</label>
@@ -133,7 +133,8 @@
         </div>
 
 
-        <aside class="flight-filter filter" data-active="false">
+        <!--
+            <aside class="flight-filter filter" data-active="false">
             <div class="filter-button">
                 <span class="arrow">&gt;</span>
                 <span class="text">FILTER OFF</span>
@@ -167,7 +168,41 @@
             </section>
         </aside><!-- .flight-filter -->
 
-        <div class="container" ng-controller="FlightController as flight_list">
+        <section class="flight-search-filter hidden">
+            <div class="filter price">
+                <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
+                <div class="filter-container">
+                    <h3>Price Filter</h3>
+                    <div class="filter-content">
+                        <div id="price-range" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter airlines">
+                <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Airlines</a>
+                <div class="filter-container">
+                    <h3>Airline Filter</h3>
+                    <div class="filter-content">
+                        <label ng-repeat="airline in FlightSearchFilter.Airlines">
+                            <input type="checkbox" value="{{airline.Code}}" checked />
+                            <img ng-src="{{airline.LogoUrl}}" />
+                            <span>{{airline.Name}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="filter stops">
+                <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Stops</a>
+                <div class="filter-container">
+                    <h3>Stops Filter</h3>
+                    <div class="filter-content">
+                        <div slider-price></div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- .flight-search-filter -->
+
+        <div class="container">
 
             <section class="flight-loading" ng-if="!loaded">
                 <img src="/Assets/images/loading-image-dark.gif" />
@@ -176,7 +211,7 @@
             <section class="flight-list horizontal" ng-if="loaded">
 
                 <!-- Loop start here -->
-                <article class="flight flight-@tripType" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list">
+                <article class="flight flight-@tripType" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list | filter:search">
 
                     <div class="flight-main">
                         <!-- start here if Single Flight Type -->
@@ -218,8 +253,8 @@
 
                             </div><!-- .flight-content -->
                             <div class="flight-action">
-                                <a ng-click="clickedItem($index)"><img src="http://placehold.it/25x25.jpg" /> Flight Details</a>
-                                <a href="#"><img src="http://placehold.it/25x25.jpg" /> Fares Rules</a>
+                                <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
+                                <a href="#"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if single flight type -->
@@ -228,7 +263,7 @@
                             <div class="flight-departure">
                                 <div class="flight-header">
                                     <span>berangkat</span>
-                                    <span class="pull-right flight-cabin"><i>economy</i></span>
+                                    <span class="pull-right flight-cabin hidden"><i>economy</i></span>
                                 </div><!-- .flight-header -->
                                 <div class="flight-content">
                                     <div class="flight-airline">
@@ -256,7 +291,7 @@
                             <div class="flight-return">
                                 <div class="flight-header">
                                     <span>kembali</span>
-                                    <span class="pull-right flight-cabin"><i>economy</i></span>
+                                    <span class="pull-right flight-cabin hidden"><i>economy</i></span>
                                 </div><!-- .flight-header -->
                                 <div class="flight-content">
                                     <div class="flight-airline">
@@ -292,7 +327,7 @@
                                 <span class="tag red hidden">Disc 20%</span>
                                 <p>Total Fare:</p>
                                 <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
-                                <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number}}</h4>
+                                <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number:0}}</h4>
                                 <small>harga sudah termasuk <b>pajak</b></small>
                                 <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                 <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
@@ -330,7 +365,7 @@
                                             <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy'}}</h5>
                                         </div><!-- .flight-arrival-time -->
                                         <div class="flight-arrival-airport">
-                                            <h4>{{trip.ArrivalAirport}}</h4>  
+                                            <h4>{{trip.ArrivalAirport}}</h4>
                                             <h5>{{trip.ArrivalCity}}</h5>
                                             <h5>{{trip.ArrivalAirportName}}</h5>
                                         </div><!-- .flight-departure-airport -->

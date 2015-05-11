@@ -63,7 +63,7 @@
                 $scope.hotels = [];
 
                 // generate StarRating
-                var tempArr = []
+                var tempArr = [];
                 $scope.HotelSearchParams.StarRating;
                 ($scope.star.star1) ? tempArr.push('1') : null;
                 ($scope.star.star2) ? tempArr.push('2') : null;
@@ -215,6 +215,11 @@
             flightList.list = [];
             $scope.FlightSearchParams = {};
             $scope.loaded = false;
+            $scope.FlightSearchFilter = {};
+            $scope.FlightSearchFilter.Airlines = [];
+            $scope.FlightSearchFilter.Prices = [];
+            $scope.FlightSearchFilter.Stops = [];
+            $scope.FlightSearchFilter.AirlinesList = [];
 
             // add class on click
             $scope.selectedItem = -1;
@@ -250,8 +255,35 @@
                     flightList.list = data.FlightList;
                     $scope.FlightSearchParams.SearchId = data.SearchId;
 
+                    // generate flight list for search filtering
+                    for (var i = 0; i < flightList.list.length ; i++) {
+                        $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
+                        $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[0].TotalTransit);
+                        $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[0].Airlines[0]);
+                        if (flightList.list[i].TripType == 2) {
+                            $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[1].TotalTransit);
+                            $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[1].Airlines[0]);
+                        }
+                    }
+
+                    // generate filter data
+
+                    $scope.FlightSearchFilter.Prices = $scope.FlightSearchFilter.Prices.sort();
+                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops.sort();
+                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops[$scope.FlightSearchFilter.Stops.length - 1];
+
+                    var dupes = {};
+                    $.each($scope.FlightSearchFilter.AirlinesList, function (i, el) {
+                        if (!dupes[el.Code]) {
+                            dupes[el.Code] = true;
+                            $scope.FlightSearchFilter.Airlines.push(el);
+                        }
+                    });
+                    
                     console.log('LOADED');
                     console.log('--------------------------------');
+
+                    console.log($scope.FlightSearchFilter);
 
                     $scope.loaded = true;
 
