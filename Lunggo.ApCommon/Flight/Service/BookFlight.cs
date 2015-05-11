@@ -21,13 +21,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new BookFlightOutput();
             var bookInfo = new FlightBookingInfo
             {
-                FareId = input.BookingInfo.FareId,
-                ContactData = new ContactData
-                {
-                    Email = input.BookingInfo.ContactData.Email,
-                    Phone = input.BookingInfo.ContactData.Phone
-                },
-                PassengerInfoFares = input.BookingInfo.PassengerInfoFares
+                FareId = input.Itinerary.FareId,
+                FareType = input.Itinerary.FareType,
+                Supplier = input.Itinerary.Supplier
             };
             var response = BookFlightInternal(bookInfo);
             output.BookResult = new BookResult();
@@ -49,11 +45,16 @@ namespace Lunggo.ApCommon.Flight.Service
                             BookResult = output.BookResult,
                         }
                     },
-                    ContactData = input.BookingInfo.ContactData,
+                    ContactData = input.ContactData,
                     PaymentData = input.PaymentData,
-                    Passengers = input.BookingInfo.PassengerInfoFares
+                    Passengers = input.PassengerInfoFares
                 };
-                InsertFlightDb.Booking(bookingRecord);
+                string rsvNo;
+                InsertFlightDb.Booking(bookingRecord, out rsvNo);
+                output.ReservationDetails = new ReservationDetails
+                {
+                    RsvNo = rsvNo
+                };
             }
             else
             {

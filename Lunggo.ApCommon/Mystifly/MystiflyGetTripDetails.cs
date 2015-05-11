@@ -76,7 +76,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 FlightTrips = MapDetailsFlightTrips(response, conditions),
                 PassengerInfo = MapDetailsPassengerInfo(response),
-                Supplier = FlightSupplier.Mystifly
             };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);

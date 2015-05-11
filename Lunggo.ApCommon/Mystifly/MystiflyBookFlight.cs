@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
 using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
 
@@ -16,59 +17,74 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
-            var travelerInfo = MapTravelerInfo(bookInfo, airTravelers);
-            var request = new AirBookRQ
+            if (bookInfo.FareType != FareType.Lcc)
             {
-                FareSourceCode = bookInfo.FareId,
-                TravelerInfo = travelerInfo,
-                ClientMarkup = 0,
-                PaymentTransactionID = null,
-                PaymentCardInfo = null,
-                SessionId = Client.SessionId,
-                Target = Client.Target,
-                ExtensionData = null,
-            };
-            var result = new BookFlightResult();
-            var retry = 0;
-            var done = false;
-            while (!done)
-            {
-                var response = Client.BookFlight(request);
-                done = true;
-                if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
+                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
+                var request = new AirBookRQ
                 {
-                    result = MapResult(response);
-                    result.IsSuccess = true;
-                    result.Errors = null;
-                    result.ErrorMessages = null;
-                }
-                else
+                    FareSourceCode = bookInfo.FareId,
+                    TravelerInfo = travelerInfo,
+                    ClientMarkup = 0,
+                    PaymentTransactionID = null,
+                    PaymentCardInfo = null,
+                    SessionId = Client.SessionId,
+                    Target = Client.Target,
+                    ExtensionData = null,
+                };
+                var result = new BookFlightResult();
+                var retry = 0;
+                var done = false;
+                while (!done)
                 {
-                    if (response.Errors.Any())
+                    var response = Client.BookFlight(request);
+                    done = true;
+                    if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                     {
-                        result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
-                        foreach (var error in response.Errors)
-                        {
-                            if (error.Code == "ERBUK002")
-                            {
-                                Client.CreateSession();
-                                request.SessionId = Client.SessionId;
-                                retry++;
-                                if (retry <= 3)
-                                {
-                                    done = false;
-                                    break;
-                                }
-                            }
-                            MapError(response, result);
-                        }
+                        result = MapResult(response);
+                        result.IsSuccess = true;
+                        result.Errors = null;
+                        result.ErrorMessages = null;
                     }
-                    result.IsSuccess = false;
+                    else
+                    {
+                        if (response.Errors.Any())
+                        {
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
+                            {
+                                if (error.Code == "ERBUK002")
+                                {
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
+                                }
+                                MapError(response, result);
+                            }
+                        }
+                        result.IsSuccess = false;
+                    }
                 }
+                return result;
             }
-            return result;
+            else
+            {
+                var result = new BookFlightResult
+                {
+                    IsSuccess = true,
+                    Status = new BookingStatusInfo
+                    { 
+                        BookingStatus = BookingStatus.Booked
+                    }
+                };
+                return result;
+            }
         }
 
         private static AirTraveler MapAirTraveler(PassengerInfoFare passengerInfoFare)
@@ -168,14 +184,14 @@ namespace Lunggo.ApCommon.Mystifly
             return passport;
         }
 
-        private static TravelerInfo MapTravelerInfo(FlightBookingInfo bookInfo, List<AirTraveler> airTravelers)
+        private static TravelerInfo MapTravelerInfo(ContactData contactData, List<AirTraveler> airTravelers)
         {
             var travelerInfo = new TravelerInfo
             {
                 CountryCode = "",
                 AreaCode = "",
-                PhoneNumber = bookInfo.ContactData.Phone,
-                Email = bookInfo.ContactData.Email,
+                PhoneNumber = contactData.Phone,
+                Email = contactData.Email,
                 AirTravelers = airTravelers.ToArray(),
                 ExtensionData = null
             };

@@ -8,69 +8,132 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using StackExchange.Redis;
+using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
 namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId)
+        internal override OrderTicketResult OrderTicket(FlightOrderInfo orderInfo)
         {
-            var request = new AirOrderTicketRQ
+            if (orderInfo.FareType != FareType.Lcc)
             {
-                FareSourceCode = null,
-                UniqueID = bookingId,
-                SessionId = Client.SessionId,
-                Target = Client.Target,
-                ExtensionData = null
-            };
-            var result = new OrderTicketResult();
-            var retry = 0;
-            var done = false;
-            while (!done)
-            {
-                var response = Client.TicketOrder(request);
-                done = true;
-                if (response.Success && !response.Errors.Any())
+                var request = new AirOrderTicketRQ
                 {
-                    result = MapResult(response);
-                    result.IsSuccess = true;
-                    result.Errors = null;
-                    result.ErrorMessages = null;
-                }
-                else
+                    FareSourceCode = null,
+                    UniqueID = orderInfo.BookingId,
+                    SessionId = Client.SessionId,
+                    Target = Client.Target,
+                    ExtensionData = null
+                };
+                var result = new OrderTicketResult();
+                var retry = 0;
+                var done = false;
+                while (!done)
                 {
-                    if (response.Errors.Any())
+                    var response = Client.TicketOrder(request);
+                    done = true;
+                    if (response.Success && !response.Errors.Any())
                     {
-                        result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
-                        foreach (var error in response.Errors)
-                        {
-                            if (error.Code == "EROTK002")
-                            {
-                                Client.CreateSession();
-                                request.SessionId = Client.SessionId;
-                                retry++;
-                                if (retry <= 3)
-                                {
-                                    done = false;
-                                    break;
-                                }
-                            }
-                            MapError(response, result);
-                        }
+                        result = MapResult(response);
+                        result.IsSuccess = true;
+                        result.Errors = null;
+                        result.ErrorMessages = null;
                     }
-                    result.IsSuccess = false;
+                    else
+                    {
+                        if (response.Errors.Any())
+                        {
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
+                            {
+                                if (error.Code == "EROTK002")
+                                {
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
+                                }
+                                MapError(response, result);
+                            }
+                        }
+                        result.IsSuccess = false;
+                    }
                 }
+                return result;
             }
-            return result;
+            else
+            {
+                var airTravelers = orderInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var travelerInfo = MapTravelerInfo(orderInfo.ContactData, airTravelers);
+                var request = new AirBookRQ
+                {
+                    FareSourceCode = orderInfo.BookingId,
+                    TravelerInfo = travelerInfo,
+                    ClientMarkup = 0,
+                    PaymentTransactionID = null,
+                    PaymentCardInfo = null,
+                    SessionId = Client.SessionId,
+                    Target = Client.Target,
+                    ExtensionData = null,
+                };
+                var result = new OrderTicketResult();
+                var retry = 0;
+                var done = false;
+                while (!done)
+                {
+                    var response = Client.BookFlight(request);
+                    done = true;
+                    if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
+                    {
+                        result = MapBookResult(response);
+                        result.IsSuccess = true;
+                        result.Errors = null;
+                        result.ErrorMessages = null;
+                    }
+                    else
+                    {
+                        if (response.Errors.Any())
+                        {
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
+                            {
+                                if (error.Code == "ERBUK002")
+                                {
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
+                                }
+                                MapError(response, result);
+                            }
+                        }
+                        result.IsSuccess = false;
+                    }
+                }
+                return result;
+            }
         }
 
         private static OrderTicketResult MapResult(AirOrderTicketRS response)
         {
-            return new OrderTicketResult
-            {
-                BookingId = response.UniqueID,
-            };
+            return new OrderTicketResult { BookingId = response.UniqueID };
+        }
+
+        private static OrderTicketResult MapBookResult(AirBookRS response)
+        {
+            return new OrderTicketResult { BookingId = response.UniqueID };
         }
 
         private static void MapError(AirOrderTicketRS response, ResultBase result)

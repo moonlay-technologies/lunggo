@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Mystifly
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
             if (response.PricedItineraries.Any())
-                result.Itinerary = MapFlightFareItinerary(response.PricedItineraries[0], conditions);
+                result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions);
             return result;
         }
 

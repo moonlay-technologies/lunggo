@@ -127,6 +127,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StackExchange.Redis.1.0.371\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -256,6 +260,7 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2023,6 +2028,7 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Helper\" />
+    <Folder Include="Views\Veritrans\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />
   </ItemGroup>

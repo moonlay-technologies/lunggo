@@ -25,6 +25,9 @@ namespace Lunggo.ApCommon.Veritrans
         private readonly static string VeritransEndPoint = "https://api.sandbox.veritrans.co.id/v2/charge";
         private readonly static string ServerKey = "VT-server-NMbr8EGtsINe4Rsw9SjmWxsl";
         private readonly static string Password = "";
+        private readonly static string FinishRedirectUrl = "http://localhost:23321/id/Flight/PaymentFinish";
+        private readonly static string UnfinishRedirectUrl = "http://localhost:23321/id/Flight/PaymentUnfinish";
+        private readonly static string ErrorRedirectUrl = "http://localhost:23321/id/Flight/PaymentError";
 
         private VeritransWrapper()
         {
@@ -85,7 +88,10 @@ namespace Lunggo.ApCommon.Veritrans
                 ItemDetail = itemDetails,
                 VtWeb = new VtWeb
                 {
-                    CreditCard3DSecure = true
+                    CreditCard3DSecure = true,
+                    FinishRedirectUrl = FinishRedirectUrl,
+                    UnfinishRedirectUrl = UnfinishRedirectUrl,
+                    ErrorRedirectUrl = ErrorRedirectUrl
                 }
             };
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);

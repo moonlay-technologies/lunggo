@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Flight.Interface
         internal abstract SearchFlightResult SpecificSearchFlight(SpecificSearchConditions flightFareItinerary);
         internal abstract RevalidateFareResult RevalidateFare(RevalidateConditions conditions);
         internal abstract BookFlightResult BookFlight(FlightBookingInfo bookInfo);
-        internal abstract OrderTicketResult OrderTicket(string bookingId);
+        internal abstract OrderTicketResult OrderTicket(FlightOrderInfo orderInfo);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
         internal abstract CancelBookingResult CancelBooking(string bookingId);
         internal abstract List<BookingStatusInfo> GetBookingStatus();

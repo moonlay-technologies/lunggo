@@ -36,6 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookingApiRequest request)
         {
+            // TODO Flight Complete this
             var passengerInfo = request.PassengerData.Select(data => new PassengerInfoFare
             {
                 Type = data.Type,
@@ -48,22 +49,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 PassportExpiryDate = data.PassportExpiryDate,
                 PassportCountry = data.Country
             });
-            var bookInfo = new FlightBookingInfo
-            {
-                FareId = request.FareId,
-                ContactData = new ContactData
-                {
-                    Name = request.ContactName,
-                    Phone = request.ContactPhone,
-                    Email = request.ContactEmail
-                },
-                PassengerInfoFares = passengerInfo.ToList()
-            };
-            var bookServiceRequest = new BookFlightInput
-            {
-                BookingInfo = bookInfo
-                //TODO FLIGHT : Booking Payment
-            };
             return null;
         }
 

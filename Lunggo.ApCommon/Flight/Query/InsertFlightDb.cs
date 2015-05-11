@@ -16,11 +16,11 @@ namespace Lunggo.ApCommon.Flight.Query
 {
     internal class InsertFlightDb
     {
-        internal static void Booking(FlightBookingRecord bookingRecord)
+        internal static void Booking(FlightBookingRecord bookingRecord, out string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
+                rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
                 var reservationRecord = new FlightReservationTableRecord
                 {
                     RsvNo = rsvNo,

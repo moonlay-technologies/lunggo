@@ -56,12 +56,25 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            return MystiflyWrapper.BookFlight(bookInfo);
+            switch (bookInfo.Supplier)
+            {
+                case FlightSupplier.Mystifly:
+                    return MystiflyWrapper.BookFlight(bookInfo);
+                default:
+                    return null;
+            }
+            
         }
 
-        private OrderTicketResult OrderTicketInternal(string bookingId)
+        private OrderTicketResult OrderTicketInternal(FlightOrderInfo orderInfo)
         {
-            return MystiflyWrapper.OrderTicket(bookingId);
+            switch (orderInfo.Supplier)
+            {
+                case FlightSupplier.Mystifly:
+                    return MystiflyWrapper.OrderTicket(orderInfo);
+                default:
+                    return null;
+            }
         }
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)

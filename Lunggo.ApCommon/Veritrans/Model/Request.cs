@@ -12,12 +12,12 @@ namespace Lunggo.ApCommon.Veritrans.Model
     internal class Request
     {
         [JsonProperty("payment_type")]
-        public string PaymentType { get; set; }
+        internal string PaymentType { get; set; }
         [JsonProperty("vtweb")]
-        public VtWeb VtWeb { get; set; }
+        internal VtWeb VtWeb { get; set; }
         [JsonProperty("transaction_details")]
-        public TransactionDetails TransactionDetail { get; set; }
+        internal TransactionDetails TransactionDetail { get; set; }
         [JsonProperty("item_details")]
-        public List<ItemDetails> ItemDetail { get; set; }
+        internal List<ItemDetails> ItemDetail { get; set; }
     }
 }

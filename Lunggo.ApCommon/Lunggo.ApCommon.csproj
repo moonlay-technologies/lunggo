@@ -104,6 +104,7 @@
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
+    <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
     <Compile Include="Flight\Constant\FlightSupplier.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
+    <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />
