@@ -68,7 +68,11 @@
             <div class="container">
                 <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
                 <hr>
-                <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
+                <b>@data.TripInfos[0].OriginAirport</b> to <b>@data.TripInfos[0].DestinationAirport</b> | @data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy") @if (data.TripInfos[1] != null)
+                                                                                                                                                                    {
+                                                                                                                                                                        <span>&lt;&lt; round-trip &gt;&gt;</span>
+                                                                                                                                                                        <span>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
+                                                                                                                                                                    } | @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
             </div>
         </header><!-- .page-header -->
 
@@ -120,6 +124,8 @@
                             </select>
                             <input type="text" class="hidden flight-departure-date-real" value="" />
                             <input type="text" class="hidden flight-return-date-real" value="" />
+                            <input type="text" class="hidden flight-origin-airport-real" value="" />
+                            <input type="text" class="hidden flight-destination-airport-real" value="" />
                             <input type="text" id="flight-data-info" name="info" class="hidden" />
                             <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
                         </div>
@@ -135,40 +141,40 @@
 
         <!--
             <aside class="flight-filter filter" data-active="false">
-            <div class="filter-button">
-                <span class="arrow">&gt;</span>
-                <span class="text">FILTER OFF</span>
-            </div>
-            <header>
-                <h3><b>FILTER</b> BY</h3>
-            </header>
-            <section class="filter-group hotel-price">
-                <h3 class="section-title">Harga</h3>
-                <input type="text" class="form-control">
-            </section>
-            <section class="filter-group hotel-star">
-                <h3 class="section-title">Bintang Hotel</h3>
-                <div class="star-selection">
-                    <ul>
-                        <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span> <span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                        <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                        <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                        <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
-                        <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
-                    </ul>
+                <div class="filter-button">
+                    <span class="arrow">&gt;</span>
+                    <span class="text">FILTER OFF</span>
                 </div>
-            </section>
-            <section class="filter-group hotel-discount">
-                <ul>
-                    <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
-                </ul>
-            </section>
-            <section class="filter-group search-filter">
-                <a href="#" class="btn btn-primary">FILTER</a>
-            </section>
-        </aside><!-- .flight-filter -->
+                <header>
+                    <h3><b>FILTER</b> BY</h3>
+                </header>
+                <section class="filter-group hotel-price">
+                    <h3 class="section-title">Harga</h3>
+                    <input type="text" class="form-control">
+                </section>
+                <section class="filter-group hotel-star">
+                    <h3 class="section-title">Bintang Hotel</h3>
+                    <div class="star-selection">
+                        <ul>
+                            <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span> <span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                            <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                            <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
+                            <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
+                            <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="filter-group hotel-discount">
+                    <ul>
+                        <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
+                    </ul>
+                </section>
+                <section class="filter-group search-filter">
+                    <a href="#" class="btn btn-primary">FILTER</a>
+                </section>
+            </aside><!-- .flight-filter -->
 
-        <section class="flight-search-filter">
+        <section class="flight-search-filter hidden">
             <div class="filter price">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
                 <div class="filter-container">
@@ -215,6 +221,11 @@
 
             <section class="flight-loading" ng-if="!loaded">
                 <img src="/Assets/images/loading-image-dark.gif" />
+            </section>
+        
+            <section class="flight-noflight text-center" ng-if="noFlight">
+                <h1>Sorry, No flight available</h1>
+                <h2>Please refine your flight search</h2>
             </section>
 
             <section class="flight-list horizontal" ng-if="loaded">
@@ -436,4 +447,90 @@
     </div>
     <!-- .search-flight -->
 
+}
+else
+{
+    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list">
+
+        <header class="page-header">
+            <div class="container">
+                <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+                <hr>
+                Data invalid, please change your data <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
+            </div>
+        </header><!-- .page-header -->
+        
+        <section class="flight-search-form form-flight-search">
+            <div class="container">
+                <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
+                    <div class="row flight-type-wrapper">
+                        <div class="col-sm-12">
+                            <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> Round-Trip</label>
+                            <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
+                        </div>
+                    </div>
+                    <div class="row airport-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" />
+                            <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" />
+                            <select class="flight-cabin form-control">
+                                <option value="y">Economy Class</option>
+                                <option value="c">Business Class</option>
+                                <option value="f">First Class</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row passenger-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" />
+                            <span class="separator">-</span>
+                            <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" />
+                            <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
+                            <select class="form-control flight-adult">
+                                <option value="1">1 Adult</option>
+                                <option value="2">2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                            </select>
+                            <select class="form-control flight-child">
+                                <option value="0">0 Child</option>
+                                <option value="1">1 Child</option>
+                                <option value="2">2 Childs</option>
+                                <option value="3">3 Childs</option>
+                                <option value="4">4 Childs</option>
+                            </select>
+                            <select class="form-control flight-infant">
+                                <option value="0">0 Child</option>
+                                <option value="1">1 Infant</option>
+                                <option value="2">2 Infants</option>
+                                <option value="3">3 Infants</option>
+                                <option value="4">4 Infants</option>
+                            </select>
+                            <input type="text" class="hidden flight-departure-date-real" value="" />
+                            <input type="text" class="hidden flight-return-date-real" value="" />
+                            <input type="text" class="hidden flight-origin-airport-real" value="" />
+                            <input type="text" class="hidden flight-destination-airport-real" value="" />
+                            <input type="text" id="flight-data-info" name="info" class="hidden" />
+                            <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section><!-- .flight-search-form -->
+
+        <div class="container">
+            <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+        </div>
+        
+        <div class="container">
+
+            <section class="flight-noflight text-center">
+                <h1>Sorry, No flight available</h1>
+                <h2>Please refine your flight search</h2>
+            </section>
+
+        </div>
+
+        </div>
+    
 }

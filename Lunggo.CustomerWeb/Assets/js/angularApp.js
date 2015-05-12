@@ -214,6 +214,8 @@
             var flightList = this;
             flightList.list = [];
 
+            $scope.noFlight = false;
+
             // generate flight filter
             $scope.FlightSearchParams = {};
             $scope.loaded = false;
@@ -294,10 +296,15 @@
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
                 }).success(function (data) {
+
                     console.log(data);
 
                     flightList.list = data.FlightList;
                     $scope.FlightSearchParams.SearchId = data.SearchId;
+
+                    if (flightList.list.length == 0) {
+                        $scope.noFlight = true;
+                    }
 
                     // *****
                     // generate flight list for search filtering
@@ -338,6 +345,9 @@
                     $scope.loaded = true;
 
                 }).error(function () {
+
+                    $scope.noFlight = true;
+
                     console.log('REQUEST ERROR');
                     console.log('--------------------------------');
                 });
