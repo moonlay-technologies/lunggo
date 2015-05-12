@@ -224,6 +224,9 @@
             $scope.FlightSearchFilter.Prices = [];
             $scope.FlightSearchFilter.Stops = [];
             $scope.FlightSearchFilter.StopFilter = {};
+            $scope.FlightSearchFilter.StopFilter.direct = true;
+            $scope.FlightSearchFilter.StopFilter.one = true;
+            $scope.FlightSearchFilter.StopFilter.two = true;
             $scope.FlightSearchFilter.AirlinesList = [];
             $scope.FlightSearchFilter.AirlinesFilter = [];
             $scope.FlightSearchFilter.PriceFilterMin = 0;
@@ -252,7 +255,24 @@
 
             $scope.stopFilter = function (flight) {
                 // return (flight.FightTrips[0].TotalTransit);
-                return (flight);
+
+                if ($scope.FlightSearchFilter.StopFilter.direct) {
+                    if ( flight.FlightTrips[0].TotalTransit == 0 ) {
+                        return flight;
+                    }
+                }
+                if ( $scope.FlightSearchFilter.StopFilter.one ) {
+                    if (flight.FlightTrips[0].TotalTransit == 1) {
+                        return flight;
+                    }
+                }
+                if ($scope.FlightSearchFilter.StopFilter.two) {
+                    if (flight.FlightTrips[0].TotalTransit > 1) {
+                        return flight;
+                    }
+                }
+
+
             }
 
             $scope.airlineFilter = function (flight) {
