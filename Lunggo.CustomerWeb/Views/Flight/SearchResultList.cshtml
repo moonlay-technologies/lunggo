@@ -15,10 +15,7 @@
 }
 
 @{
-    var parts = Model.info.Split('-');
-    var tripPart = parts.First();
-    var infoPart = parts.Last();
-    var isValid = ((tripPart.Length + 1)%13 == 0) && (infoPart.Length == 4);
+    bool isValid;
     
     List<FlightTripInfo> tripInfos = null;
     FlightSearchData.Complete data = null;
@@ -26,6 +23,11 @@
     String tripType="aaa";
     try
     {
+        var parts = Model.info.Split('-');
+        var tripPart = parts.First();
+        var infoPart = parts.Last();
+        isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
+        
         tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
         {
             OriginAirport = info.Substring(0, 3),
@@ -68,7 +70,7 @@
             <div class="container">
                 <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
                 <hr>
-                <b>@data.TripInfos[0].OriginAirport</b> to <b>@data.TripInfos[0].DestinationAirport</b> | @data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy") @if (data.TripInfos[1] != null)
+                <b>@data.TripInfos[0].OriginAirport</b> to <b>@data.TripInfos[0].DestinationAirport</b> | @data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy") @if (data.TripType == TripType.Return)
                                                                                                                                                                     {
                                                                                                                                                                         <span>&lt;&lt; round-trip &gt;&gt;</span>
                                                                                                                                                                         <span>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
