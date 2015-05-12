@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Config;
@@ -56,7 +57,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            switch (bookInfo.Supplier)
+            var supplier = FlightIdUtil.GetSupplier(bookInfo.FareId);
+            switch (supplier)
             {
                 case FlightSupplier.Mystifly:
                     return MystiflyWrapper.BookFlight(bookInfo);
@@ -66,12 +68,13 @@ namespace Lunggo.ApCommon.Flight.Service
             
         }
 
-        private OrderTicketResult OrderTicketInternal(FlightOrderInfo orderInfo)
+        private OrderTicketResult OrderTicketInternal(string bookingId)
         {
-            switch (orderInfo.Supplier)
+            var supplier = FlightIdUtil.GetSupplier(bookingId);
+            switch (supplier)
             {
                 case FlightSupplier.Mystifly:
-                    return MystiflyWrapper.OrderTicket(orderInfo);
+                    return MystiflyWrapper.OrderTicket(bookingId);
                 default:
                     return null;
             }

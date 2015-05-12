@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        //TODO Dummy
+        //TODO Flight Remove this details dummy when done
         public void SaveItineraryToCache(FlightItineraryDetails itin, string hash)
         {
             var redisService = RedisService.GetInstance();
@@ -24,6 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"))));
         }
+
         public void SaveItineraryToCache(FlightItineraryFare itin, string hash)
         {
             var redisService = RedisService.GetInstance();
@@ -52,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return hash;
         }
 
-        //TODO Dummy
+        //TODO Flight Remove this details dummy when done
         public FlightItineraryDetails GetItineraryFromCache(string hash, string a)
         {
             var redisService = RedisService.GetInstance();

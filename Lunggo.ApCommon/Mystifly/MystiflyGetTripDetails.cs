@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -18,7 +19,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirTripDetailsRQ
             {
-                UniqueID = conditions.BookingId,
+                UniqueID = FlightIdUtil.GetCoreId(conditions.BookingId),
                 SendOnlyTicketed = false,
                 SessionId = Client.SessionId,
                 Target = Client.Target,

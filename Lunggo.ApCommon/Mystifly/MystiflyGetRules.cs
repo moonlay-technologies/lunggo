@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -15,7 +16,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirRulesRQ1
             {
-                FareSourceCode = fareId,
+                FareSourceCode = FlightIdUtil.GetCoreId(fareId),
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null

@@ -43,11 +43,13 @@ namespace Lunggo.CustomerWeb
                     ConnectionName = ApConstant.SearchResultCacheName,
                     ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
                 },
+                /*
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
                 }, 
+                 */
             });
         }
 

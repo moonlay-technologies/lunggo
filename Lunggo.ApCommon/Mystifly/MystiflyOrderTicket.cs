@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Redis;
 using StackExchange.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
@@ -15,14 +20,15 @@ namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override OrderTicketResult OrderTicket(FlightOrderInfo orderInfo)
+        internal override OrderTicketResult OrderTicket(string bookingId)
         {
-            if (orderInfo.FareType != FareType.Lcc)
+            var fareType = FlightIdUtil.GetFareType(bookingId);
+            if (fareType != FareType.Lcc)
             {
                 var request = new AirOrderTicketRQ
                 {
                     FareSourceCode = null,
-                    UniqueID = orderInfo.BookingId,
+                    UniqueID = FlightIdUtil.GetCoreId(bookingId),
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null
@@ -36,7 +42,7 @@ namespace Lunggo.ApCommon.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any())
                     {
-                        result = MapResult(response);
+                        result = MapResult(response, fareType);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -70,11 +76,12 @@ namespace Lunggo.ApCommon.Mystifly
             }
             else
             {
-                var airTravelers = orderInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
-                var travelerInfo = MapTravelerInfo(orderInfo.ContactData, airTravelers);
+                var bookInfo = WebfareBooking(FlightIdUtil.GetCoreId(bookingId));
+                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = orderInfo.BookingId,
+                    FareSourceCode = FlightIdUtil.GetCoreId(bookInfo.FareId),
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,
@@ -92,7 +99,7 @@ namespace Lunggo.ApCommon.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                     {
-                        result = MapBookResult(response);
+                        result = MapBookResult(response, fareType);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -126,14 +133,38 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static OrderTicketResult MapResult(AirOrderTicketRS response)
+        private static FlightBookingInfo WebfareBooking(string bookingId)
         {
-            return new OrderTicketResult { BookingId = response.UniqueID };
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "MystiflyWebfare:" + bookingId;
+            var cacheObject = redisDb.StringGet(redisKey);
+
+            if (!cacheObject.IsNullOrEmpty)
+            {
+                var bookInfo = FlightCacheUtil.DeconvertFromCacheObject<FlightBookingInfo>(bookingId);
+                return bookInfo;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private static OrderTicketResult MapBookResult(AirBookRS response)
+        private static OrderTicketResult MapResult(AirOrderTicketRS response, FareType fareType)
         {
-            return new OrderTicketResult { BookingId = response.UniqueID };
+            return new OrderTicketResult
+            {
+                BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType)
+            };
+        }
+
+        private static OrderTicketResult MapBookResult(AirBookRS response, FareType fareType)
+        {
+            return new OrderTicketResult
+            {
+                BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType)
+            };
         }
 
         private static void MapError(AirOrderTicketRS response, ResultBase result)

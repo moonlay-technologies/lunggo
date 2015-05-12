@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
 using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
@@ -17,13 +23,14 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            if (bookInfo.FareType != FareType.Lcc)
+            var fareType = FlightIdUtil.GetFareType(bookInfo.FareId);
+            if (fareType != FareType.Lcc)
             {
                 var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = bookInfo.FareId,
+                    FareSourceCode = FlightIdUtil.GetCoreId(bookInfo.FareId),
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,
@@ -41,7 +48,7 @@ namespace Lunggo.ApCommon.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                     {
-                        result = MapResult(response);
+                        result = MapResult(response, fareType);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -75,16 +82,32 @@ namespace Lunggo.ApCommon.Mystifly
             }
             else
             {
+                var bookingId = WebfareBooking(bookInfo);
                 var result = new BookFlightResult
                 {
                     IsSuccess = true,
                     Status = new BookingStatusInfo
                     { 
-                        BookingStatus = BookingStatus.Booked
+                        BookingId = FlightIdUtil.ConstructIntegratedId(bookingId, FlightSupplier.Mystifly, fareType),
+                        BookingStatus = BookingStatus.Booked,
+                        TimeLimit = DateTime.Now.AddHours(2)
                     }
                 };
                 return result;
             }
+        }
+
+        private static string WebfareBooking(FlightBookingInfo bookInfo)
+        {
+            var bookingId = FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "MystiflyWebfare:" + bookingId;
+            var cacheObject = FlightCacheUtil.ConvertToCacheObject(bookInfo);
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromHours(2));
+
+            return bookingId;
         }
 
         private static AirTraveler MapAirTraveler(PassengerInfoFare passengerInfoFare)
@@ -198,14 +221,14 @@ namespace Lunggo.ApCommon.Mystifly
             return travelerInfo;
         }
 
-        private static BookFlightResult MapResult(AirBookRS response)
+        private static BookFlightResult MapResult(AirBookRS response, FareType fareType)
         {
             return new BookFlightResult
             {
                 Status = new BookingStatusInfo
                 {
                     BookingStatus = BookingStatus.Booked,
-                    BookingId = response.UniqueID,
+                    BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
                     TimeLimit = response.TktTimeLimit
                 }
             };

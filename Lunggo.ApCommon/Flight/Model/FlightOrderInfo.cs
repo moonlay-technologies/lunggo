@@ -10,8 +10,6 @@ namespace Lunggo.ApCommon.Flight.Model
     internal class FlightOrderInfo
     {
         internal string BookingId { get; set; }
-        internal FlightSupplier Supplier { get; set; }
-        internal FareType FareType { get; set; }
         internal List<PassengerInfoFare> PassengerInfoFares { get; set; }
         internal ContactData ContactData { get; set; }
     }

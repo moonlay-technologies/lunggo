@@ -65,6 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("TripTypeCd");
 		    }
 		}
+		public String FareTypeCd
+		{
+		    get { return _FareTypeCd; }
+		    set
+		    {
+		        _FareTypeCd = value;
+		        IncrementLog("FareTypeCd");
+		    }
+		}
 		public String SupplierCd
 		{
 		    get { return _SupplierCd; }
@@ -199,6 +208,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _BookingStatusCd;
 		private DateTime? _TicketTimeLimit;
 		private String _TripTypeCd;
+		private String _FareTypeCd;
 		private String _SupplierCd;
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
@@ -250,6 +260,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BookingStatusCd", false),
 				new ColumnMetadata("TicketTimeLimit", false),
 				new ColumnMetadata("TripTypeCd", false),
+				new ColumnMetadata("FareTypeCd", false),
 				new ColumnMetadata("SupplierCd", false),
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),

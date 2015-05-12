@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
@@ -209,7 +210,6 @@ namespace Lunggo.ApCommon.Mystifly
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
 
             var flightItineraryFare = new FlightItineraryFare();
-            flightItineraryFare.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
             flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
             flightItineraryFare.SupplierPrice =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
@@ -226,6 +226,11 @@ namespace Lunggo.ApCommon.Mystifly
             flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
             flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
             MapPassengerCount(pricedItinerary, flightItineraryFare);
+            flightItineraryFare.FareId =
+                FlightIdUtil.ConstructIntegratedId(
+                    pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
+                    FlightSupplier.Mystifly,
+                    MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));
             return flightItineraryFare;
         }
 

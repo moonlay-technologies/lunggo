@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -17,7 +18,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = conditions.FareId,
+                    FareSourceCode = FlightIdUtil.GetCoreId(conditions.FareId),
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null

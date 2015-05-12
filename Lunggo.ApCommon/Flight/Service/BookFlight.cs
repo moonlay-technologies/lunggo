@@ -22,8 +22,8 @@ namespace Lunggo.ApCommon.Flight.Service
             var bookInfo = new FlightBookingInfo
             {
                 FareId = input.Itinerary.FareId,
-                FareType = input.Itinerary.FareType,
-                Supplier = input.Itinerary.Supplier
+                ContactData = input.ContactData,
+                PassengerInfoFares = input.PassengerInfoFares
             };
             var response = BookFlightInternal(bookInfo);
             output.BookResult = new BookResult();

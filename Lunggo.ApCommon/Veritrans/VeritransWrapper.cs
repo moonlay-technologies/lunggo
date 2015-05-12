@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Payment.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -22,12 +23,14 @@ namespace Lunggo.ApCommon.Veritrans
         private static readonly VeritransWrapper Instance = new VeritransWrapper();
         private bool _isInitialized;
 
-        private readonly static string VeritransEndPoint = "https://api.sandbox.veritrans.co.id/v2/charge";
-        private readonly static string ServerKey = "VT-server-NMbr8EGtsINe4Rsw9SjmWxsl";
-        private readonly static string Password = "";
-        private readonly static string FinishRedirectUrl = "http://localhost:23321/id/Flight/PaymentFinish";
-        private readonly static string UnfinishRedirectUrl = "http://localhost:23321/id/Flight/PaymentUnfinish";
-        private readonly static string ErrorRedirectUrl = "http://localhost:23321/id/Flight/PaymentError";
+        private readonly static string EndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
+        private readonly static string ServerKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
+        private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
+
+        private static readonly string RootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
+        private readonly static string FinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
+        private readonly static string UnfinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
+        private readonly static string ErrorRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "errorRedirectUrl");
 
         private VeritransWrapper()
         {
@@ -70,7 +73,7 @@ namespace Lunggo.ApCommon.Veritrans
 
         private static WebRequest CreateRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
         {
-            var request = (HttpWebRequest) WebRequest.Create(VeritransEndPoint);
+            var request = (HttpWebRequest) WebRequest.Create(EndPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";

@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -59,7 +60,8 @@ namespace Lunggo.ApCommon.Flight.Query
                         RsvNo = rsvNo,
                         BookingId = record.BookResult.BookingId,
                         BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
-                        SupplierCd = FlightSupplierCd.Mnemonic(FlightSupplier.Mystifly),
+                        FareTypeCd = FareTypeCd.Mnemonic(FlightIdUtil.GetFareType(record.BookResult.BookingId)),
+                        SupplierCd = FlightSupplierCd.Mnemonic(FlightIdUtil.GetSupplier(record.BookResult.BookingId)),
                         SupplierPrice = 999,
                         SupplierCurrencyCd = "xxx",
                         SupplierExchangeRate = 999,
