@@ -118,7 +118,7 @@ function hotelSearchFormFunctions() {
         numberOfMonths: 3,
         firstDay: 1,
         dateFormat:"dd-MM-yy",
-        onClose: function(selectedDate) {
+        onClose: function() {
             calculateDate();
         }
     });
@@ -149,6 +149,59 @@ function flightSearchFormFunctions() {
     // ******************************
     // validate form
     function validateForm() {
+
+        var formInvalidStatus = "";
+        function insertInvalidStatus(statusText) {
+            $('.form-flight-search form').attr('data-invalid-status', statusText);
+        }
+
+        validateOriginAirport();
+
+        // ***
+        function validateOriginAirport() {
+            if ($('.flight-origin-airport-real').val().length > 0) {
+                $('.flight-origin-airport-real').attr('data-valid', 'true');
+                validateDestinationAirport();
+            } else {
+                formInvalidStatus = "Please select your airport origin";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateDestinationAirport() {
+            if ($('.flight-destination-airport-real').val().length > 0) {
+                $('.flight-destination-airport-real').attr('data-valid', 'true');
+                validateDepartDate();
+            } else {
+                formInvalidStatus = "Please select your airport destination";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateDepartDate() {
+            if ($('.flight-departure-date-real').val().length > 0) {
+                $('.flight-departure-date-real').attr('data-valid', 'true');
+                validateReturnDate();
+            } else {
+                formInvalidStatus = "Please select your departure date";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateReturnDate() {
+            if ($('.form-flight-search form').attr('data-flightType') == 'round-trip') {
+                if ($('.flight-return-date-real').val().length > 0) {
+                    $('.flight-return-date-real').attr('data-valid', 'true');
+                    $('.form-flight-search form').attr('data-valid', 'true');
+                } else {
+                    formInvalidStatus = "Please select your return date";
+                    insertInvalidStatus(formInvalidStatus);
+                }
+            } else {
+                $('.form-flight-search form').attr('data-valid', 'true');
+            }
+        }
+
 
     };
 
@@ -182,10 +235,14 @@ function flightSearchFormFunctions() {
             $(event.target).val(ui.item.label);
             $(event.target).attr('data-airportCode', ui.item.value);
             if ($(event.target).hasClass('flight-origin')) {
+                $('.flight-origin-airport-real').val(ui.item.value);
+                $('.flight-origin-airport-real').attr('data-valid','true');
                 if ($('.form-flight-search form').attr('data-flightType') == 'round-trip') {
                     $('.flight-destination').focus();
                 }
             } else if ($(event.target).hasClass('flight-destination')) {
+                $('.flight-destination-airport-real').val(ui.item.value);
+                $('.flight-destination-airport-real').attr('data-valid','true');
                 $('.flight-departure-date').focus();
             }
         }
@@ -219,7 +276,8 @@ function flightSearchFormFunctions() {
         numberOfMonths: 3,
         minDate: 0,
         dateFormat: 'dd-MM-yy',
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
+            $('.flight-departure-date-real').attr('data-valid','true');
             $('.flight-return-date.date-picker').datepicker('option', 'minDate', selectedDate);
             $('.flight-return-date.date-picker').focus();
         }
@@ -229,17 +287,20 @@ function flightSearchFormFunctions() {
         altFormat: 'dd-mm-yy',
         numberOfMonths: 3,
         dateFormat: 'dd-MM-yy',
-        onClose: function(selectedDate) {}
+        onClose: function() {
+            $('.flight-return-date-real').attr('data-valid','true');
+        }
     });
 
     // ******************************
-    // generate
+    // generate flight info data
     $('.flight-submit-button').click(function(evt) {
         evt.preventDefault();
+        validateForm();
         var flightSearchData = {};
         flightSearchData.flightType = $('.form-flight-search form').attr('data-flightType');
-        flightSearchData.originAirport = $('.form-flight-search .flight-origin').attr('data-airportCode');
-        flightSearchData.destinationAirport = $('.form-flight-search .flight-destination').attr('data-airportCode');
+        flightSearchData.originAirport = $('.form-flight-search .flight-origin-airport-real').val();
+        flightSearchData.destinationAirport = $('.form-flight-search .flight-destination-airport-real').val();
         flightSearchData.departureDateTemp = $('.form-flight-search .flight-departure-date-real').val();
         flightSearchData.departureDate = flightSearchData.departureDateTemp.substring(0, 2) + flightSearchData.departureDateTemp.substring(3, 5) + flightSearchData.departureDateTemp.substring(8, 10);
         flightSearchData.returnDateTemp = $('.form-flight-search .flight-return-date-real').val();
@@ -261,9 +322,14 @@ function flightSearchFormFunctions() {
 
         $('#flight-data-info').val(flightSearchData.info);
 
-        console.log(flightSearchData.info);
+        // console.log(flightSearchData.info);
 
-        $('.form-flight-search form').submit();
+        if ( $('.form-flight-search form').attr('data-valid') == 'true' ) {
+            $('.form-flight-search form').submit();
+        } else {
+            alert( $('.form-flight-search form').attr('data-invalid-status') );
+        }       
+
 
     });
 
@@ -274,19 +340,19 @@ function flightSearchFormFunctions() {
 function toggleFilter() {
     $('aside.filter .filter-button').click(function (evt) {
         evt.preventDefault();
-        var filter_el = 'aside.filter';
-        var state = $(filter_el).attr('data-active');
+        var filterEl = 'aside.filter';
+        var state = $(filterEl).attr('data-active');
 
         if (state == 'true') {
-            $(filter_el).attr('data-active', 'false');
-            $(filter_el).stop(true).animate({
+            $(filterEl).attr('data-active', 'false');
+            $(filterEl).stop(true).animate({
                 left: '-200px'
             });
             $(this).children('.arrow').html('&GT;');
             $(this).children('.text').html('FILTER OFF');
         } else if (state == 'false') {
-            $(filter_el).attr('data-active', 'true');
-            $(filter_el).stop(true).animate({
+            $(filterEl).attr('data-active', 'true');
+            $(filterEl).stop(true).animate({
                 left: '0'
             });
             $(this).children('.arrow').html('&LT;');
@@ -300,10 +366,18 @@ function toggleFilter() {
 // hotel search functions
 function hotelSearch() {
 
-    toggle_view();
+    toggleSearchForm();
+    toggleView();
+
+    // toggle search form
+    function toggleSearchForm() {
+        $('.show-hotel-search-form').click(function() {
+            $('section.hotel-search-form').stop().slideToggle();
+        });
+    }
 
     // hotel search view
-    function toggle_view() {
+    function toggleView() {
         $('.hotel-search-page .display-option a').click(function (evt) {
             evt.preventDefault();
             $(this).siblings().removeClass('active');
@@ -312,10 +386,10 @@ function hotelSearch() {
         });
 
         function rearrange() {
-            var view_type = $('.hotel-search-page .display-option a.active span').attr('class');
-            if (view_type == 'fa fa-list') {
+            var viewType = $('.hotel-search-page .display-option a.active span').attr('class');
+            if (viewType == 'fa fa-list') {
                 $('section.hotel-list').removeClass('square').addClass('horizontal');
-            } else if (view_type == 'fa fa-th') {
+            } else if (viewType == 'fa fa-th') {
                 $('section.hotel-list').removeClass('horizontal').addClass('square');
             }
         }
@@ -328,15 +402,15 @@ function hotelSearch() {
 // hotel detail functions
 function hotelDetail() {
 
-    hotel_image();
+    hotelImage();
 
     // hotel image
-    function hotel_image() {
-        var main_image = '.hotel-detail-page .hotel-image .hotel-main-image img';
+    function hotelImage() {
+        var mainImage = '.hotel-detail-page .hotel-image .hotel-main-image img';
         $('.hotel-detail-page .hotel-image .hotel-thumb a').click(function (evt) {
             evt.preventDefault();
-            var selected_image = $(this).children('img').attr('data-image-url');
-            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url(' + selected_image + ')');
+            var selectedImage = $(this).children('img').attr('data-image-url');
+            $('.hotel-detail-page .hotel-image .hotel-main-image').css('background-image', 'url(' + selectedImage + ')');
         });
     }
 
@@ -346,7 +420,32 @@ function hotelDetail() {
 // flight search functions
 function flightSearchFunctions() {
 
+    toggleSearchForm();
     toggleFlightDetail();
+    toggleFlightFilter();
+
+    // toggle flight filter
+    function toggleFlightFilter() {
+        $('.flight-search-filter .filter a.toggle').each(function () {
+            $(this).click(function (evt) {
+                evt.preventDefault();
+                $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
+                $(this).siblings('.filter-container').stop().slideToggle('fast');
+            });
+        });
+
+        // $(window).scroll(function() {
+        //     $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
+        // });
+
+    }
+
+    // toggle search form
+    function toggleSearchForm() {
+        $('.show-flight-search-form').click(function() {
+            $('section.flight-search-form').stop().slideToggle();
+        });
+    }
 
     // toggle flight detail
     function toggleFlightDetail() {
@@ -360,6 +459,7 @@ function flightSearchFunctions() {
     }
 
 }
+
 
 //******************************************
 // Checkout Page functions

@@ -1,3 +1,10 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
 @import '_font_face.scss';
 @import '_header.scss';
 @import '_footer.scss';
@@ -44,6 +51,16 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// jquery ui
+
+.ui-autocomplete {width:500px;
+    .ui-menu-item {border-bottom:1px solid #ddd; padding:10px 5px;
+        &.ui-state-focus {background:#eee; border:none; margin:0;}
+    }
+}
+
+
+// ----------------------------------------------
 // home page
 .home-page {
     .site-slogan {text-align:center; color:#fff; margin-top:50px;
@@ -74,7 +91,18 @@ hr {border-color:#aaa;}
 				&.active {background:#3fabe3; color:#fff;}
 			}
 		}
+        .btn.btn-yellow {font-size:12px; font-weight:bold; padding:3px 5px;}
 	}
+    .hotel-search-form {margin-bottom:20px; margin-top:-10px; display:none;
+        form {padding:15px; background:#ddd;
+            .hotel-location {width:30%;}
+            .hotel-checkindate {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .separator {display:inline-block; width:1%;}
+            .hotel-checkoutdate {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; padding-left:50px; width:15%;}
+            .submit-button {font-weight:bold; width:12%;}
+        }
+    }
     .hotel-loading {text-align:center; padding:20px 0;}
 	.hotel-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
 		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
@@ -102,7 +130,7 @@ hr {border-color:#aaa;}
 	}
 	.hotel-list {
 		&.square {
-			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
+			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; @include border-radius(3px);
 				.hotel-link {color:#555;}
 				.hotel-image {height:150px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
@@ -129,8 +157,9 @@ hr {border-color:#aaa;}
 		}
 		&.horizontal {
 			.hotel-wrapper {width:100%;}
-			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; height:170px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -o-border-radius:3px;
+			.hotel {background:#fff; border:1px solid #d5d5d5; margin-bottom:30px; height:170px; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; @include border-radius(3px);
 				&:after {content:""; clear:both; display:block;}
+                &:hover {border-color:#3fabe3;}
 				.hotel-link {color:#555;}
 				.hotel-image {float:left; width:35%; height:170px; overflow:hidden; background-size:cover; background-position:center center; background-repeat:no-repeat;
                     img {width:100%;}
@@ -231,7 +260,7 @@ hr {border-color:#aaa;}
 			p:after {content:':'; position:absolute; right:10px;}
 		}
 		.review-list {
-			.review {margin-bottom:15px; padding:20px; border:1px solid #ddd; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; -o-border-radius:5px;
+			.review {margin-bottom:15px; padding:20px; border:1px solid #ddd; @include border-radius(5px);
 				header {padding:0  0 20px; color:#3fabe3;}
 				.review-left {border-right:1px solid #ddd; padding-right:25px;
 					.review-title {margin-top:0; @extend .gotham; font-size:18px;}
@@ -265,7 +294,7 @@ hr {border-color:#aaa;}
 		.payment-form {
 			h2 {font-size:21px;}
 			.payment-option {
-				label {cursor:pointer; opacity:0.7; color:#fff; width:30%; display:inline-block; border:2px solid #82d4ff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; background: #7cdbfe; /* Old browsers */ background: -moz-linear-gradient(top,  #7cdbfe 0%, #2fb4e6 46%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7cdbfe), color-stop(46%,#2fb4e6)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* IE10+ */ background: linear-gradient(to bottom,  #7cdbfe 0%,#2fb4e6 46%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cdbfe', endColorstr='#2fb4e6',GradientType=0 ); /* IE6-9 */
+				label {cursor:pointer; opacity:0.7; color:#fff; width:30%; display:inline-block; border:2px solid #82d4ff; @include border-radius(3px); background: #7cdbfe; /* Old browsers */ background: -moz-linear-gradient(top,  #7cdbfe 0%, #2fb4e6 46%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7cdbfe), color-stop(46%,#2fb4e6)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #7cdbfe 0%,#2fb4e6 46%); /* IE10+ */ background: linear-gradient(to bottom,  #7cdbfe 0%,#2fb4e6 46%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7cdbfe', endColorstr='#2fb4e6',GradientType=0 ); /* IE6-9 */
 					span {display:block; padding:10px 0px 10px 50px; background-repeat:no-repeat; background-position:10px center;}
 					&.active {opacity:1;}
 					&.payment-transfer {
@@ -343,6 +372,25 @@ hr {border-color:#aaa;}
 			}
 		}
 	}
+    .flight-search-form {margin-bottom:20px; margin-top:-10px; display:none;
+        form {padding:15px; background:#ddd;
+            .flight-type-wrapper {}
+            .airport-wrapper {margin-bottom:10px;}
+            .passenger-wrapper {}
+            label {cursor:pointer; margin-right:15px;}
+            .flight-airport-origin {width:35%;}
+            .separator {display:inline-block; width:1%;}
+            .flight-airport-destination {width:35%;}
+            .flight-cabin {width:29%;}
+            .flight-departure-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .flight-return-date, .flight-return-disable {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
+            .flight-return-disable {display:none;}
+            .flight-adult {background:url(../images/adult-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
+            .flight-child {background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
+            .flight-infant {background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
+            .submit-button {font-weight:bold; width:11%;}
+        }
+    }
 	.flight-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
 		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
 			.arrow {display:block; cursor:pointer; background:#2196c3; color:#fff; padding:5px; text-align:center;}
@@ -367,9 +415,32 @@ hr {border-color:#aaa;}
 			a {display:block;}
 		}
 	}
+
+    // flight filter
+    .flight-search-filter {position:fixed; left:50%; margin-left:-530px; top:30%; z-index:9999;
+        .filter {background:#777; margin-bottom:5px; width:50px; position:relative;
+            &:before, &:after {content:""; clear:both; display:block; width:100%;}
+            a.toggle {text-align:center; cursor:pointer; text-align:center;}
+            .filter-container {position:absolute; top:0; left:100%; background:#fff; border:1px solid #ddd; padding:20px; display:none; z-index:999; height:auto !important;
+                h3 {margin-top:0;}
+            }
+        }
+        .filter.airlines {
+            .filter-container {width:800px; 
+                label {width:33%; cursor:pointer;
+                    img {width:25px; height:auto;}
+                }
+            }
+        }
+        .filter.stops {
+            .filter-container {width:450px;}
+                label {width:32%; cursor:pointer;}
+        }
+    }
+
 	// flight list horizontal
 	.flight-list.horizontal {
-		.flight {margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+		.flight {margin-bottom:15px; @include border-radius(5px);
             &.active {border-color:#3fabe3;
                 .flight-main {border-color:#3fabe3;}
                 .flight-detail .flight-detail-content {border-color:#3fabe3;}
@@ -444,7 +515,7 @@ hr {border-color:#aaa;}
                         a {margin-right:15px; cursor:pointer;}
                     }
 				}
-				.flight-right {float:left; width:27%; padding:15px 20px 0; position:relative;
+				.flight-right {float:left; width:27%; padding:15px 20px 0; position:relative; padding-right:0;
 					.tag {position:absolute; top:0; left:50%; margin-left:-50px; width:100px; height:25px; padding-top:2px; background-position:top center; background-repeat:no-repeat; text-align:center; color:#fff;
 						&.red {background-image:url(../images/tag-red.png);}
 						&.orange {background-image:url(../images/tag-orange.png);}
@@ -455,7 +526,15 @@ hr {border-color:#aaa;}
 					.price-was {margin-bottom:0;}
 					.price-now {margin-top:0; font-weight:bold; font-size:32px;}
 					small {display:block; margin-bottom:10px;}
-					.btn {display:block; width:70%; background:#2fb4e6; color:#fff;}
+					.btn {display:block; width:70%; background:#2fb4e6; color:#fff; font-weight:bold; font-size:18px; background: #80ddff; /* Old browsers */
+                    background: -moz-linear-gradient(top,  #80ddff 0%, #2eb5e5 100%); /* FF3.6+ */
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#80ddff), color-stop(100%,#2eb5e5)); /* Chrome,Safari4+ */
+                    background: -webkit-linear-gradient(top,  #80ddff 0%,#2eb5e5 100%); /* Chrome10+,Safari5.1+ */
+                    background: -o-linear-gradient(top,  #80ddff 0%,#2eb5e5 100%); /* Opera 11.10+ */
+                    background: -ms-linear-gradient(top,  #80ddff 0%,#2eb5e5 100%); /* IE10+ */
+                    background: linear-gradient(to bottom,  #80ddff 0%,#2eb5e5 100%); /* W3C */
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ddff', endColorstr='#2eb5e5',GradientType=0 ); /* IE6-9 */
+                    }
 				}
 				.flight-toggle {position:absolute; background:url(../images/flight-toggle-down.png) center bottom no-repeat; color:#fff; left:45%; width:50px; height:20px; bottom:0; cursor:pointer; text-decoration:none; text-align:center;
 					&.active {background-image:url(../images/flight-toggle-up.png);}
@@ -500,7 +579,7 @@ hr {border-color:#aaa;}
 	}
 	// flight list return flight
 	.flight-list-return.horizontal {
-		.flight {border:1px solid #d5d5d5; margin-bottom:15px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#fff;
+		.flight {border:1px solid #d5d5d5; margin-bottom:15px; @include border-radius(5px); background:#fff;
             &.active {border-color:#3fabe3;}
 			.flight-main {display:block; clear:both; position:relative;
 				&:after {content:""; display:block; width:100%; clear:both;}
@@ -641,7 +720,7 @@ hr {border-color:#aaa;}
 			.or-right {right:0;}
 		}
 		.facebook-login {margin:30px 0;
-			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; @include border-radius(3px); }
 		}
 	}
 	.benefit {
@@ -673,7 +752,7 @@ hr {border-color:#aaa;}
 			.or-right {right:0;}
 		}
 		.facebook-login {margin:30px 0;
-			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+			a {background:#3b5998; color:#fff; padding:10px 20px; display:inline-block; font-size:18px; @include border-radius(3px);}
 		}
 	}
 	.benefit {
@@ -691,7 +770,7 @@ hr {border-color:#aaa;}
 	.site-content {
 		.nav-tabs {
 			li {
-				a {background:#b2b2b2; color:#fff; margin-top:10px; font-size:18px; font-weight:bold; border-color:#aaa; border-radius:0; -moz-border-radius:0; -webkit-border-radius:0; margin-right:0;}
+				a {background:#b2b2b2; color:#fff; margin-top:10px; font-size:18px; font-weight:bold; border-color:#aaa; @include border-radius(0); margin-right:0;}
 				&.active {
 					a {background:#fff; color:#444; padding-bottom:11px; margin-top:-5px; border-bottom-color:#fff; font-size:24px; padding-top:15px;}
 				}
@@ -717,7 +796,7 @@ hr {border-color:#aaa;}
 
 // ----------------------------------------------
 // Hotel Search Form
-.location-autocomplete {background:#fff; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; height:auto; max-height:200px; display:none; overflow:auto;
+.location-autocomplete {background:#fff; @include border-radius(3px); height:auto; max-height:200px; display:none; overflow:auto;
     ul {padding:0; margin:0; list-style:none;
         li {color:#000; border-bottom:1px solid #ddd; padding:10px 0; padding-left:20px; cursor:pointer; text-align:left;
             &:hover {background:#ddd;}
@@ -736,7 +815,7 @@ hr {border-color:#aaa;}
     .pmu-selected {background:#2fb4e6;}
 }
 
-.room-count-selection {position:absolute; height:auto; background:#fff; z-index:9999; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; display:none;
+.room-count-selection {position:absolute; height:auto; background:#fff; z-index:9999; @include border-radius(3px); display:none;
     ul {padding:0; margin:0; list-style:none;
         li {display:block; color:#000; text-align:left; padding:10px 0; padding-left:50px; border-bottom:1px solid #ddd; cursor:pointer;
             &:hover {background:#ddd;}
@@ -746,7 +825,7 @@ hr {border-color:#aaa;}
 
 // ----------------------------------------------
 // Flight Search Form
-.airport-autocomplete {width:300px; max-height:200px; overflow:auto; background:#fff; position:absolute; z-index:9999; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; display:none;
+.airport-autocomplete {width:300px; max-height:200px; overflow:auto; background:#fff; position:absolute; z-index:9999; @include border-radius(3px); display:none;
     ul {padding:0; margin:0; list-style:none;
         li {display:block; color:#000; text-align:left; padding:10px 0; padding-left:30px; border-bottom:1px solid #ddd; cursor:pointer;
             &:hover {background:#ddd;}

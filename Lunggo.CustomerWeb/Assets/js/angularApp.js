@@ -63,7 +63,7 @@
                 $scope.hotels = [];
 
                 // generate StarRating
-                var tempArr = []
+                var tempArr = [];
                 $scope.HotelSearchParams.StarRating;
                 ($scope.star.star1) ? tempArr.push('1') : null;
                 ($scope.star.star2) ? tempArr.push('2') : null;
@@ -210,11 +210,63 @@
                 $scope.getFlightList();
             });
 
-            // get room list
+            // flight list            
             var flightList = this;
             flightList.list = [];
+
+            $scope.noFlight = false;
+
+            // generate flight filter
             $scope.FlightSearchParams = {};
             $scope.loaded = false;
+            $scope.FlightSearchFilter = {};
+            $scope.FlightSearchFilter.Airlines = [];
+            $scope.FlightSearchFilter.Prices = [];
+            $scope.FlightSearchFilter.Stops = [];
+            $scope.FlightSearchFilter.StopFilter = {};
+            $scope.FlightSearchFilter.AirlinesList = [];
+            $scope.FlightSearchFilter.AirlinesFilter = [];
+            $scope.FlightSearchFilter.PriceFilterMin = 0;
+            $scope.FlightSearchFilter.PriceFilterMax = 0;
+
+            // log on click
+            $scope.consoleLog = function (dataToLog) {
+                console.log(dataToLog);
+            }
+
+            // generate Airlines Filter
+            $scope.checkAirline = function () {
+                $scope.FlightSearchFilter.AirlinesFilter = [];
+                for (var i =0; i < $scope.FlightSearchFilter.Airlines.length; i++) {
+                    if ($scope.FlightSearchFilter.Airlines[i].checked == true) {
+                        $scope.FlightSearchFilter.AirlinesFilter.push($scope.FlightSearchFilter.Airlines[i].Code);
+                    }
+                }
+            };
+
+            // filtering
+            $scope.priceFilter = function(flight) {
+                // return( flight.TotalFare > 2000000 && flight.TotalFare < 5000000 );
+                return (flight);
+            }
+
+            $scope.stopFilter = function (flight) {
+                // return (flight.FightTrips[0].TotalTransit);
+                return (flight);
+            }
+
+            $scope.airlineFilter = function (flight) {
+                if ( $scope.FlightSearchFilter.AirlinesFilter.length > 0 ) {
+                    for (var i in flight.AirlinesTag) {
+                        if ($scope.FlightSearchFilter.AirlinesFilter.indexOf(flight.AirlinesTag[i]) != -1) {
+                            return flight;
+                        }
+                    }
+                    return false;
+                } else {
+                    return flight;
+                }
+            }
 
             // add class on click
             $scope.selectedItem = -1;
@@ -224,7 +276,6 @@
                 } else if ($index != $scope.selectedItem) {
                     $scope.selectedItem = $index;
                 }
-
             }
 
             $scope.getDateTime = function (dateTime) {
@@ -245,17 +296,58 @@
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
                 }).success(function (data) {
+
                     console.log(data);
 
                     flightList.list = data.FlightList;
                     $scope.FlightSearchParams.SearchId = data.SearchId;
 
+                    if (flightList.list.length == 0) {
+                        $scope.noFlight = true;
+                    }
+
+                    // *****
+                    // generate flight list for search filtering
+                    for (var i = 0; i < flightList.list.length ; i++) {
+                        flightList.list[i].AirlinesTag = [];
+                        $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
+                        $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[0].TotalTransit);
+                        for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
+                            $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[0].Airlines[x]);
+                            flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[0].Airlines[x].Code);
+                        }
+                        if (flightList.list[i].TripType == 2) {
+                            $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[1].TotalTransit);
+                            for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
+                                $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[1].Airlines[x]);
+                                flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[1].Airlines[x].Code);
+                            }
+                        }
+                    }
+
+                    $scope.FlightSearchFilter.Prices = $scope.FlightSearchFilter.Prices.sort();
+                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops.sort();
+                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops[$scope.FlightSearchFilter.Stops.length - 1];
+
+                    var dupes = {};
+                    $.each($scope.FlightSearchFilter.AirlinesList, function (i, el) {
+                        if (!dupes[el.Code]) {
+                            dupes[el.Code] = true;
+                            $scope.FlightSearchFilter.Airlines.push(el);
+                        }
+                    });
+                    $scope.FlightSearchFilter.AirlinesList = {};
+
+                    // *****
                     console.log('LOADED');
                     console.log('--------------------------------');
 
                     $scope.loaded = true;
 
                 }).error(function () {
+
+                    $scope.noFlight = true;
+
                     console.log('REQUEST ERROR');
                     console.log('--------------------------------');
                 });

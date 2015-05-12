@@ -35,7 +35,7 @@
                     input[type="text"], select {padding-left:50px;}
                     .hotel-checkin {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%;}
                     .hotel-checkout {background:url(../images/cal-bg.png) 10px center no-repeat #fff; width:33%; margin-right:1%;}
-                    .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; width:30%; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; border:0;}
+                    .hotel-room {background:url(../images/bed-bg.png) 10px center no-repeat #fff; width:30%; @include border-radius(3px); border:0;}
                     .separator {font-size:18px; font-weight:bold; display:inline-block; text-align:center; width:1%;}
                 }
                 .hotel-submit-wrapper {text-align:right;
@@ -74,7 +74,7 @@
         }
         // *****
         h3 {margin:0; padding:0; margin-bottom:15px;}
-        input[type="text"], select {color:#333; font-size:16px; border:0; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
+        input[type="text"], select {color:#333; font-size:16px; border:0; @include border-radius(3px);}
         select {font-size:20px;}
     }
 
