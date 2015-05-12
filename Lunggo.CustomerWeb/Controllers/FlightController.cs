@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Payment.Data;
@@ -133,6 +134,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
                     return Redirect(url);
                      */
+                    
                     var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
                         BookingId = bookResult.BookResult.BookingId,
@@ -165,6 +167,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
+                     
                 }
                 else
                 {
@@ -179,48 +182,10 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-
-        public ActionResult PaymentFinish()
+        public ActionResult Thankyou(PaymentStatus status)
         {
-            /*
-            var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                    {
-                        BookingId = bookResult.BookResult.BookingId
-                    });
-                    if (issueResult.IsSuccess)
-                    {
-                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                        {
-                            BookingId = issueResult.BookingId,
-                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
-                            {
-                                OriginAirport = trip.OriginAirport,
-                                DestinationAirport = trip.DestinationAirport,
-                                DepartureDate = trip.DepartureDate
-                            }).ToList()
-                        });
-                        if (tripDetails.IsSuccess)
-                        {
-                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
-                            return RedirectToAction("Eticket");
-                        }
-                        else
-                        {
-                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
-                            return View(data);
-                        }
-                    }
-                    else
-                    {
-                        data.Message = "Already Booked. Please try again.";
-                        return View(data);
-                    }
-                }
-             */
-            return View();
+            return View(status);
         }
-
-        
 
         public ActionResult Eticket()
         {

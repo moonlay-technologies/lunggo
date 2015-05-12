@@ -2016,14 +2016,10 @@
     </None>
     <Content Include="Views\Flight\SearchResultList.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
-    <Content Include="Views\Flight\SearchResultList - Ori.cshtml" />
-    <Content Include="Views\Flight\Checkout - Ori.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
-    <Content Include="Views\Flight\PaymentUnfinish.cshtml" />
-    <Content Include="Views\Flight\PaymentError.cshtml" />
-    <Content Include="Views\Flight\PaymentFinish.cshtml" />
+    <Content Include="Views\Flight\Thankyou.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

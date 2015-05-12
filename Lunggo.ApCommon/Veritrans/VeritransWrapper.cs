@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Veritrans
         private readonly static string ServerKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
         private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
 
-        private static readonly string RootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
+        private readonly static string RootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
         private readonly static string FinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
         private readonly static string UnfinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
         private readonly static string ErrorRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "errorRedirectUrl");
