@@ -168,7 +168,7 @@
             </section>
         </aside><!-- .flight-filter -->
 
-        <section class="flight-search-filter hidden">
+        <section class="flight-search-filter">
             <div class="filter price">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
                 <div class="filter-container">
@@ -184,8 +184,8 @@
                     <h3>Airline Filter</h3>
                     <div class="filter-content">
                         <label ng-repeat="airline in FlightSearchFilter.Airlines">
-                            <input type="checkbox" value="{{airline.Code}}" checked />
-                            <img ng-src="{{airline.LogoUrl}}" />
+                            <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
+                            <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
                             <span>{{airline.Name}}</span>
                         </label>
                     </div>
@@ -196,7 +196,16 @@
                 <div class="filter-container">
                     <h3>Stops Filter</h3>
                     <div class="filter-content">
-                        <div slider-price></div>
+                        <p>Show flight with :</p>
+                        <label for="flight-stop-0">
+                            <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> Direct Flight
+                        </label>
+                        <label for="flight-stop-1">
+                            <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> 1 stop
+                        </label>
+                        <label for="flight-stop-2">
+                            <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> more than 1 stop
+                        </label>
                     </div>
                 </div>
             </div>
@@ -211,7 +220,7 @@
             <section class="flight-list horizontal" ng-if="loaded">
 
                 <!-- Loop start here -->
-                <article class="flight flight-@tripType" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list | filter:search">
+                <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter">
 
                     <div class="flight-main">
                         <!-- start here if Single Flight Type -->

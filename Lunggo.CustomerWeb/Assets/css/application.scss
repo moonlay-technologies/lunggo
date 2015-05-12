@@ -421,14 +421,20 @@ hr {border-color:#aaa;}
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center;}
-            .filter-container {position:absolute; width:800px; top:0; left:100%; background:#fff; border:1px solid #ddd; padding:20px; display:none; z-index:999; height:auto !important;
+            .filter-container {position:absolute; top:0; left:100%; background:#fff; border:1px solid #ddd; padding:20px; display:none; z-index:999; height:auto !important;
                 h3 {margin-top:0;}
             }
         }
         .filter.airlines {
-            label {width:33%; cursor:pointer;
-                img {width:25px; height:auto;}
+            .filter-container {width:800px; 
+                label {width:33%; cursor:pointer;
+                    img {width:25px; height:auto;}
+                }
             }
+        }
+        .filter.stops {
+            .filter-container {width:450px;}
+                label {width:32%; cursor:pointer;}
         }
     }
 

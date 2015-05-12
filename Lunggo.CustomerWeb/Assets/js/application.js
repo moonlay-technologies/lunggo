@@ -367,6 +367,11 @@ function flightSearchFunctions() {
                 $(this).siblings('.filter-container').stop().slideToggle('fast');
             });
         });
+
+        // $(window).scroll(function() {
+        //     $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
+        // });
+
     }
 
     // toggle search form
