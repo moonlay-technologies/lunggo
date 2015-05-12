@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Halaman Error Global</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Halaman Error Global</h1>
+
+        <h2>Action Name : @Model.ActionName</h2>
+        <h2>Controller Name : @Model.ControllerName</h2>
+
+        <h2>Exception</h2>
+        <h3>Exception Message : @Model.Exception.Message</h3>
+        <h3>Exception Stack Trace: @Model.Exception.StackTrace</h3>
+        <h3>Exception Source: @Model.Exception.Source</h3>
+
+
+
+    </hgroup>
+</body>
+</html>
+

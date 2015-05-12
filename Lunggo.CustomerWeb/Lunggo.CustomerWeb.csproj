@@ -1980,6 +1980,7 @@
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
+    <Content Include="Views\Shared\GlobalError.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>
