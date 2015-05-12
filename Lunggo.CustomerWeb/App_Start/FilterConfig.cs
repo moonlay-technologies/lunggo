@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Lunggo.Framework.Filter;
 
 namespace Lunggo.CustomerWeb
@@ -8,8 +7,17 @@ namespace Lunggo.CustomerWeb
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(CreateGlobalErrorHandler());
             filters.Add(new LanguageFilterAttribute());
+        }
+
+        private static HandleErrorAttribute CreateGlobalErrorHandler()
+        {
+            return new HandleErrorAttribute
+            {
+                Order = 1,
+                View = "GlobalError"
+            };
         }
     }
 }
