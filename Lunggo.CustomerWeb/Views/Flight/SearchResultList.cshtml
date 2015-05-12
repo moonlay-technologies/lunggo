@@ -70,11 +70,11 @@
             <div class="container">
                 <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
                 <hr>
-                <b>@data.TripInfos[0].OriginAirport</b> to <b>@data.TripInfos[0].DestinationAirport</b> | @data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy") @if (data.TripType == TripType.Return)
+                <b>@data.TripInfos[0].OriginAirport</b> to <b>@data.TripInfos[0].DestinationAirport</b> on @data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy") @if (data.TripType == TripType.Return)
                                                                                                                                                                     {
                                                                                                                                                                         <span>&lt;&lt; round-trip &gt;&gt;</span>
                                                                                                                                                                         <span>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
-                                                                                                                                                                    } | @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
+                                                                                                                                                                    } for @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
             </div>
         </header><!-- .page-header -->
 
@@ -176,8 +176,8 @@
                 </section>
             </aside><!-- .flight-filter -->
 
-        <section class="flight-search-filter hidden">
-            <div class="filter price">
+        <section class="flight-search-filter" ng-if="loaded">
+            <div class="filter price hidden">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
                 <div class="filter-container">
                     <h3>Price Filter</h3>
@@ -199,7 +199,7 @@
                     </div>
                 </div>
             </div>
-            <div class="filter stops">
+            <div class="filter stops hidden">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Stops</a>
                 <div class="filter-container">
                     <h3>Stops Filter</h3>
