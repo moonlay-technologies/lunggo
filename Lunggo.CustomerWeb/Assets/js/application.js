@@ -150,6 +150,59 @@ function flightSearchFormFunctions() {
     // validate form
     function validateForm() {
 
+        var formInvalidStatus = "";
+        function insertInvalidStatus(statusText) {
+            $('.form-flight-search form').attr('data-invalid-status', statusText);
+        }
+
+        validateOriginAirport();
+
+        // ***
+        function validateOriginAirport() {
+            if ($('.flight-origin-airport-real').val().length > 0) {
+                $('.flight-origin-airport-real').attr('data-valid', 'true');
+                validateDestinationAirport();
+            } else {
+                formInvalidStatus = "Please select your airport origin";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateDestinationAirport() {
+            if ($('.flight-destination-airport-real').val().length > 0) {
+                $('.flight-destination-airport-real').attr('data-valid', 'true');
+                validateDepartDate();
+            } else {
+                formInvalidStatus = "Please select your airport destination";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateDepartDate() {
+            if ($('.flight-departure-date-real').val().length > 0) {
+                $('.flight-departure-date-real').attr('data-valid', 'true');
+                validateReturnDate();
+            } else {
+                formInvalidStatus = "Please select your departure date";
+                insertInvalidStatus(formInvalidStatus);
+            }
+        }
+
+        function validateReturnDate() {
+            if ($('.form-flight-search form').attr('data-flightType') == 'round-trip') {
+                if ($('.flight-return-date-real').val().length > 0) {
+                    $('.flight-return-date-real').attr('data-valid', 'true');
+                    $('.form-flight-search form').attr('data-valid', 'true');
+                } else {
+                    formInvalidStatus = "Please select your return date";
+                    insertInvalidStatus(formInvalidStatus);
+                }
+            } else {
+                $('.form-flight-search form').attr('data-valid', 'true');
+            }
+        }
+
+
     };
 
     // ******************************
@@ -182,10 +235,14 @@ function flightSearchFormFunctions() {
             $(event.target).val(ui.item.label);
             $(event.target).attr('data-airportCode', ui.item.value);
             if ($(event.target).hasClass('flight-origin')) {
+                $('.flight-origin-airport-real').val(ui.item.value);
+                $('.flight-origin-airport-real').attr('data-valid','true');
                 if ($('.form-flight-search form').attr('data-flightType') == 'round-trip') {
                     $('.flight-destination').focus();
                 }
             } else if ($(event.target).hasClass('flight-destination')) {
+                $('.flight-destination-airport-real').val(ui.item.value);
+                $('.flight-destination-airport-real').attr('data-valid','true');
                 $('.flight-departure-date').focus();
             }
         }
@@ -219,7 +276,8 @@ function flightSearchFormFunctions() {
         numberOfMonths: 3,
         minDate: 0,
         dateFormat: 'dd-MM-yy',
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
+            $('.flight-departure-date-real').attr('data-valid','true');
             $('.flight-return-date.date-picker').datepicker('option', 'minDate', selectedDate);
             $('.flight-return-date.date-picker').focus();
         }
@@ -229,17 +287,20 @@ function flightSearchFormFunctions() {
         altFormat: 'dd-mm-yy',
         numberOfMonths: 3,
         dateFormat: 'dd-MM-yy',
-        onClose: function() {}
+        onClose: function() {
+            $('.flight-return-date-real').attr('data-valid','true');
+        }
     });
 
     // ******************************
     // generate flight info data
     $('.flight-submit-button').click(function(evt) {
         evt.preventDefault();
+        validateForm();
         var flightSearchData = {};
         flightSearchData.flightType = $('.form-flight-search form').attr('data-flightType');
-        flightSearchData.originAirport = $('.form-flight-search .flight-origin').attr('data-airportCode');
-        flightSearchData.destinationAirport = $('.form-flight-search .flight-destination').attr('data-airportCode');
+        flightSearchData.originAirport = $('.form-flight-search .flight-origin-airport-real').val();
+        flightSearchData.destinationAirport = $('.form-flight-search .flight-destination-airport-real').val();
         flightSearchData.departureDateTemp = $('.form-flight-search .flight-departure-date-real').val();
         flightSearchData.departureDate = flightSearchData.departureDateTemp.substring(0, 2) + flightSearchData.departureDateTemp.substring(3, 5) + flightSearchData.departureDateTemp.substring(8, 10);
         flightSearchData.returnDateTemp = $('.form-flight-search .flight-return-date-real').val();
@@ -263,7 +324,12 @@ function flightSearchFormFunctions() {
 
         // console.log(flightSearchData.info);
 
-        $('.form-flight-search form').submit();
+        if ( $('.form-flight-search form').attr('data-valid') == 'true' ) {
+            $('.form-flight-search form').submit();
+        } else {
+            alert( $('.form-flight-search form').attr('data-invalid-status') );
+        }       
+
 
     });
 
