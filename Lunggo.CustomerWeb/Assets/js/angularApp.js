@@ -384,6 +384,8 @@
                             if (userConfirmation) {
                                 loading_overlay('hide');
                                 window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            } else {
+                                loading_overlay('hide');
                             }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
                             loading_overlay('hide');
