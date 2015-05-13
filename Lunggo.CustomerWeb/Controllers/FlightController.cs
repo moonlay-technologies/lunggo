@@ -129,12 +129,12 @@ namespace Lunggo.CustomerWeb.Controllers
                             Price = data.Itinerary.IdrPrice
                         }
                     };
-                    /*
+                    
                     string url;
                     PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
                     return Redirect(url);
-                     */
-                    
+                     
+                    /*
                     var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
                         BookingId = bookResult.BookResult.BookingId,
@@ -167,7 +167,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
-                     
+                     */
                 }
                 else
                 {
@@ -182,9 +182,9 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        public ActionResult Thankyou(PaymentStatus status)
+        public ActionResult Thankyou(FlightThankyouData data)
         {
-            return View(status);
+            return View(data.Status);
         }
 
         public ActionResult Eticket()

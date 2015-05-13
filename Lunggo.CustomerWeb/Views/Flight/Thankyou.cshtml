@@ -1,12 +1,14 @@
 ﻿@using Lunggo.ApCommon.Payment.Constant
-@model Lunggo.ApCommon.Payment.Constant.PaymentStatus
+@model Lunggo.CustomerWeb.Models.FlightThankyouData
 
 @{
     ViewBag.Title = "FlightCheckoutThankyou";
     Layout = "/Views/Shared/_layout_20150506.cshtml";
 }
 
-@switch (Model)
+@Model.RsvNo
+
+@switch (Model.Status)
 {
 
     case PaymentStatus.Cancelled:
