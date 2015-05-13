@@ -431,14 +431,12 @@ function flightSearchFunctions() {
                 evt.preventDefault();
                 $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
                 $(this).siblings('.filter-container').stop().slideToggle('fast');
-                console.log('JEMPING TOGGLE FLIGHT FITLER');
             });
         });
 
         // $(window).scroll(function() {
         //     $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
         // });
-
     }
 
     // toggle search form
