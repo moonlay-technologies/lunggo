@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        private class MystiflyClientHandler : OnePointClient, IClientHandler
+        private class MystiflyClientHandler : OnePointClient
         {
             private static readonly MystiflyClientHandler ClientInstance = new MystiflyClientHandler();
             private bool _isInitialized;
@@ -61,11 +61,6 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     throw new InvalidOperationException("MystiflyClientHandler is already initialized");
                 }
-            }
-
-            void IClientHandler.Init(string accountNumber, string userName, string password, string targetServer)
-            {
-                Init(accountNumber, userName, password, targetServer);
             }
 
             internal void CreateSession()
