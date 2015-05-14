@@ -276,7 +276,7 @@
                             </div><!-- .flight-content -->
                             <div class="flight-action">
                                 <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
-                                <a href="#"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
+                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if single flight type -->
@@ -340,7 +340,7 @@
                             </div><!-- .flight-return -->
                             <div class="flight-action">
                                 <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
-                                <a href="#"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
+                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if Return Flight Type -->

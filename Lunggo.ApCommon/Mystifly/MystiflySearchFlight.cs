@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.Errors = new List<FlightError>();
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERSER002")
+                            if (error.Code == "ERSER001" || error.Code == "ERSER002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
@@ -372,7 +372,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERSER001":
                     case "ERSER003":
                     case "ERSER004":
                     case "ERSER005":
@@ -396,7 +395,6 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERSER024":
                     case "ERSER025":
                     case "ERSER026":
-                    case "ERIFS001":
                     case "ERIFS003":
                     case "ERIFS004":
                     case "ERIFS005":
@@ -409,7 +407,9 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERIFS015":
                     case "ERIFS016":
                         goto case "InvalidInputData";
+                    case "ERSER001":
                     case "ERSER002":
+                    case "ERIFS001":
                     case "ERIFS002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

@@ -401,7 +401,62 @@
 
             }
 
+            // get flight rules
+            $scope.getRules = function (indexNo) {
+                var searchId = $scope.FlightSearchParams.SearchId;
 
+                loading_overlay('show');
+
+                console.log('getting rules :');
+
+                if (GetRulesConfig.working == false) {
+                    GetRulesConfig.working = true;
+
+                    $http.get(GetRulesConfig.Url, {
+                        params: {
+                            SearchId: searchId,
+                            ItinIndex: indexNo
+                        }
+                    }).success(function (returnData) {
+                        GetRulesConfig.working = false;
+
+                        console.log(returnData);
+
+                        GetRulesConfig.value = returnData;
+
+                        var rules = '';
+                        var airlineRules = returnData.AirlineRules;
+                        var baggageRules = returnData.BaggageRules;
+
+                        if (airlineRules.length == 0 && baggageRules == 0) {
+                            rules = 'No rules for this fare';
+                        } else {
+                            rules = rules.concat('\n');
+                            for (var i = 0; i < airlineRules.length; i++) {
+                                rules = rules.concat(airlineRules[i].AirlineCode + ' | ' + airlineRules[i].DepartureAirport + ' -> ' + airlineRules[i].ArrivalAirport);
+                                rules = rules.concat('\n\nRULES :\n');
+                                for (var j = 0; j < airlineRules[i].Rules.length; j++) {
+                                    rules = rules.concat(airlineRules[i].Rules[j] + '\n');
+                                }
+                            }
+
+                            for (var i = 0; i < baggageRules.length; i++) {
+                                rules = rules.concat('\n' + baggageRules[i].AirlineCode + baggageRules[i].FlightNumber + ' | ' + baggageRules[i].DepartureAirport + ' -> ' + baggageRules[i].ArrivalAirport);
+                                rules = rules.concat('\nBAGGAGE : ' + baggageRules[i].Baggage + '\n');
+                            }
+                        }
+
+                        alert(rules);
+
+                        loading_overlay('hide');
+
+                    }).error(function (data) {
+                        console.log(data)
+                    });
+                } else {
+                    console.log('Sistem busy, please wait');
+                }
+            }
         }
     ]);
 
