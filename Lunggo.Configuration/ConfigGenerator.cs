@@ -49,7 +49,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "Driver", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler", "WebAPI" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "Driver", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler", "WebAPI" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -60,7 +60,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Development2, projectList);
+            generator.StartConfig(DeploymentEnvironment.Development1, projectList);
             //new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -310,6 +310,7 @@ namespace Lunggo.Configuration
             var roomPath = _configDictionary["@@.*.api.roomPath@@"];
             var flightPath = _configDictionary["@@.*.api.flightPath@@"];
             var flightRevalidatePath = _configDictionary["@@.*.api.flightRevalidatePath@@"];
+            var flightRulesPath = _configDictionary["@@.*.api.flightRulesPath@@"];
             var autocompleteHotelLocationPath = _configDictionary["@@.*.api.autocompleteHotelLocationPath@@"];
             var autocompleteAirportPath = _configDictionary["@@.*.api.autocompleteAirportPath@@"];
 
@@ -320,6 +321,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("roomPath", roomPath);
             fileTemplate.SetAttribute("flightPath", flightPath);
             fileTemplate.SetAttribute("flightRevalidatePath", flightRevalidatePath);
+            fileTemplate.SetAttribute("flightRulesPath", flightRulesPath);
             fileTemplate.SetAttribute("autocompleteHotelLocationPath", autocompleteHotelLocationPath);
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
 

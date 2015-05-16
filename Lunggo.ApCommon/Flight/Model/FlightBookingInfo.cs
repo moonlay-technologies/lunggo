@@ -3,13 +3,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightBookingInfo
+    internal class FlightBookingInfo
     {
-        public string FareId { get; set; }
-        public List<PassengerInfoFare> PassengerInfoFares { get; set; }
-        public ContactData ContactData { get; set; }
+        internal string FareId { get; set; }
+        internal List<PassengerInfoFare> PassengerInfoFares { get; set; }
+        internal ContactData ContactData { get; set; }
     }
 }

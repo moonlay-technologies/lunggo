@@ -17,13 +17,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (IsValid(request))
             {
+                var service = FlightService.GetInstance();
                 if (request.HashKey == null)
-                {
-                    var service = FlightService.GetInstance();
                     request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
-                }
                 var revalidateServiceRequest = PreprocessServiceRequest(request);
-                var revalidateServiceResponse = FlightService.GetInstance().RevalidateFlight(revalidateServiceRequest);
+                var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
                 if (!revalidateServiceResponse.IsValid && revalidateServiceResponse.Itinerary != null)
                     UpdateItinerary(revalidateServiceResponse.Itinerary, request.HashKey);
                 var apiResponse = AssembleApiResponse(revalidateServiceResponse, request);

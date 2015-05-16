@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -18,7 +19,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirTripDetailsRQ
             {
-                UniqueID = conditions.BookingId,
+                UniqueID = FlightIdUtil.GetCoreId(conditions.BookingId),
                 SendOnlyTicketed = false,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
@@ -46,7 +47,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.ErrorMessages = new List<string>();
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERTDT002")
+                            if (error.Code == "ERTDT001" || error.Code == "ERTDT002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
@@ -76,7 +77,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 FlightTrips = MapDetailsFlightTrips(response, conditions),
                 PassengerInfo = MapDetailsPassengerInfo(response),
-                Supplier = FlightSupplier.Mystifly
             };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
@@ -225,13 +225,13 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERTDT001":
                     case "ERTDT003":
                         goto case "InvalidInputData";
                     case "ERTDT004":
                     case "ERTDT005":
                     case "ERTDT006":
                         goto case "BookingIdNoLongerValid";
+                    case "ERTDT001":
                     case "ERTDT002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

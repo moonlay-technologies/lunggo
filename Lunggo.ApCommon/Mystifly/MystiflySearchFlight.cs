@@ -11,10 +11,12 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Flight.Dictionary;
+using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -30,7 +32,7 @@ namespace Lunggo.ApCommon.Mystifly
                 IsResidentFare = false,
                 NearByAirports = false,
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
-                PricingSourceType = PricingSourceType.Public,
+                PricingSourceType = PricingSourceType.All,
                 TravelPreferences = MapTravelPreferences(conditions),
                 RequestOptions = RequestOptions.TwoHundred,
                 SessionId = Client.SessionId,
@@ -59,7 +61,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.Errors = new List<FlightError>();
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERSER002")
+                            if (error.Code == "ERSER001" || error.Code == "ERSER002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
@@ -82,7 +84,7 @@ namespace Lunggo.ApCommon.Mystifly
         private static SearchFlightResult MapResult(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
             return response.PricedItineraries.Any()
-                ? new SearchFlightResult {FlightItineraries = MapFlightFareItineraries(response, conditions)}
+                ? new SearchFlightResult {FlightItineraries = MapFlightItineraryFares(response, conditions)}
                 : new SearchFlightResult {FlightItineraries = new List<FlightItineraryFare>()};
         }
 
@@ -193,35 +195,58 @@ namespace Lunggo.ApCommon.Mystifly
             return cabinType;
         }
 
-        private static List<FlightItineraryFare> MapFlightFareItineraries(AirLowFareSearchRS response, SearchFlightConditions conditions)
+        private static List<FlightItineraryFare> MapFlightItineraryFares(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            var result = response.PricedItineraries.Select(itin => MapFlightFareItinerary(itin, conditions)).ToList();
+            var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions)).ToList();
             return result;
         }
 
-        private static FlightItineraryFare MapFlightFareItinerary(PricedItinerary pricedItinerary, ConditionsBase conditions)
+        private static FlightItineraryFare MapFlightItineraryFare(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
             var currency = CurrencyService.GetInstance();
+            // TODO Flight Currency Dummy
+            currency.SetSupplierExchangeRate(Supplier.Mystifly, 1, 1097);
+            currency.SetSupplierExchangeRate(Supplier.HotelsPro, 1, 1097);
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
 
-            var flightFareItinerary = new FlightItineraryFare();
-            flightFareItinerary.FareId = pricedItinerary.AirItineraryPricingInfo.FareSourceCode;
-            flightFareItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
-            flightFareItinerary.SupplierPrice =
+            var flightItineraryFare = new FlightItineraryFare();
+            flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
+            flightItineraryFare.SupplierPrice =
                 decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
-            flightFareItinerary.SupplierCurrency = "USD";
-            flightFareItinerary.SupplierRate = rate;
-            flightFareItinerary.LocalPrice = flightFareItinerary.SupplierPrice*rate;
-            flightFareItinerary.LocalCurrency = "IDR";
-            flightFareItinerary.LocalRate = 1;
-            flightFareItinerary.IdrPrice = flightFareItinerary.LocalPrice;
+            flightItineraryFare.SupplierCurrency = "USD";
+            flightItineraryFare.SupplierRate = rate;
+            flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
+            flightItineraryFare.LocalCurrency = "IDR";
+            flightItineraryFare.LocalRate = 1;
+            flightItineraryFare.IdrPrice = flightItineraryFare.LocalPrice;
             if (pricedItinerary.RequiredFieldsToBook != null)
-                MapRequiredFields(pricedItinerary, flightFareItinerary);
-            flightFareItinerary.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
-            flightFareItinerary.Supplier = FlightSupplier.Mystifly;
-            flightFareItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
-            MapPassengerCount(pricedItinerary, flightFareItinerary);
-            return flightFareItinerary;
+                MapRequiredFields(pricedItinerary, flightItineraryFare);
+            flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
+            flightItineraryFare.Supplier = FlightSupplier.Mystifly;
+            flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
+            flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
+            MapPassengerCount(pricedItinerary, flightItineraryFare);
+            flightItineraryFare.FareId =
+                FlightIdUtil.ConstructIntegratedId(
+                    pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
+                    FlightSupplier.Mystifly,
+                    MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));
+            return flightItineraryFare;
+        }
+
+        private static Flight.Constant.FareType MapFareType(FareType fareType)
+        {
+            switch (fareType)
+            {
+                case FareType.Public:
+                    return Flight.Constant.FareType.Published;
+                case FareType.WebFare:
+                    return Flight.Constant.FareType.Lcc;
+                case FareType.Private:
+                    return Flight.Constant.FareType.Consolidated;
+                default:
+                    return Flight.Constant.FareType.Undefined;
+            }
         }
 
         private static TripType MapTripType(string type)
@@ -285,7 +310,6 @@ namespace Lunggo.ApCommon.Mystifly
             var flightTrips = new List<FlightTripFare>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
             var totalTransitDuration = new TimeSpan();
-            var i = 0;
             foreach (var tripInfo in conditions.TripInfos)
             {
                 var fareTrip = new FlightTripFare
@@ -295,6 +319,7 @@ namespace Lunggo.ApCommon.Mystifly
                     DepartureDate = tripInfo.DepartureDate,
                     FlightSegments = new List<FlightSegmentFare>()
                 };
+                var i = 0;
                 do
                 {
                     fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
@@ -347,7 +372,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERSER001":
                     case "ERSER003":
                     case "ERSER004":
                     case "ERSER005":
@@ -371,7 +395,6 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERSER024":
                     case "ERSER025":
                     case "ERSER026":
-                    case "ERIFS001":
                     case "ERIFS003":
                     case "ERIFS004":
                     case "ERIFS005":
@@ -384,7 +407,9 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERIFS015":
                     case "ERIFS016":
                         goto case "InvalidInputData";
+                    case "ERSER001":
                     case "ERSER002":
+                    case "ERIFS001":
                     case "ERIFS002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

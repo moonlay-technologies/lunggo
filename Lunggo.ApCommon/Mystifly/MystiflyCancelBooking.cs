@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -15,7 +16,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirCancelRQ
             {
-                UniqueID = bookingId,
+                UniqueID = FlightIdUtil.GetCoreId(bookingId),
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null
@@ -42,7 +43,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.ErrorMessages = new List<string>();
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERCBK002")
+                            if (error.Code == "ERCBK001" || error.Code == "ERCBK002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
@@ -76,7 +77,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERCBK001":
                     case "ERCBK004":
                         goto case "InvalidInputData";
                     case "ERCBK003":
@@ -86,6 +86,7 @@ namespace Lunggo.ApCommon.Mystifly
                         goto case "ProcessFailed";
                     case "ERCBK007":
                         goto case "AlreadyBooked";
+                    case "ERCBK001":
                     case "ERCBK002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

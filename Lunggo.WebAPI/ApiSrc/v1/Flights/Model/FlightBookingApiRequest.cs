@@ -9,6 +9,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     public class FlightBookingApiRequest
     {
         public string FareId { get; set; }
+        public bool CanHold { get; set; }
         public string ContactName { get; set; }
         public string ContactPhone { get; set; }
         public string ContactEmail { get; set; }

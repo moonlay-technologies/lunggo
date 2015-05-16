@@ -7,10 +7,10 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class BookingStatusInfo
+    internal class BookingStatusInfo
     {
-        public BookingStatus BookingStatus { get; set; }
-        public string BookingId { get; set; }
-        public DateTime? TimeLimit { get; set; }
+        internal BookingStatus BookingStatus { get; set; }
+        internal string BookingId { get; set; }
+        internal DateTime? TimeLimit { get; set; }
     }
 }

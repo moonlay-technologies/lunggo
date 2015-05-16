@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     SearchId = null,
                     OriginalRequest = request,
                     TotalFlightCount = 0,
-                    FlightList = null
+                    FlightList = new List<FlightItineraryApi>()
                 };
             }
         }
@@ -88,7 +88,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 AdultCount = itin.AdultCount, 
                 ChildCount = itin.ChildCount, 
                 InfantCount = itin.InfantCount, 
-                Supplier = itin.Supplier, 
                 RequireBirthDate = itin.RequireBirthDate,
                 RequirePassport = itin.RequirePassport,
                 RequireSameCheckIn = itin.RequireSameCheckIn, 

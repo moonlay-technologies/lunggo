@@ -61,11 +61,13 @@ namespace Lunggo.WebAPI
                     ConnectionName = ApConstant.SearchResultCacheName,
                     ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
                 },
+                /*
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
-                }, 
+                },
+                 */ 
             });
         }
         private static void InitAutocompleteManager()
