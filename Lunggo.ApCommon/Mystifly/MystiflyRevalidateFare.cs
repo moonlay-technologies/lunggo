@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Mystifly
                             result.ErrorMessages = new List<string>();
                             foreach (var error in response.Errors)
                             {
-                                if (error.Code == "ERREV002")
+                                if (error.Code == "ERREV001" || error.Code == "ERREV002")
                                 {
                                     Client.CreateSession();
                                     request.SessionId = Client.SessionId;
@@ -86,12 +86,12 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERREV001" :
                     case "ERREV003" :
                         goto case "InvalidInputData";
                     case "ERREV004" :
                     case "ERREV005" :
                         goto case "FareIdNoLongerValid";
+                    case "ERREV001":
                     case "ERREV002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

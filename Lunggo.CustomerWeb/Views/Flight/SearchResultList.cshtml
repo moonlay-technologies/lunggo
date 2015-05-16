@@ -136,7 +136,7 @@
             </div>
         </section><!-- .flight-search-form -->
 
-        <div class="container">
+        <div class="container" ng-if="loaded">
             <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
         </div>
 
@@ -176,13 +176,26 @@
                 </section>
             </aside><!-- .flight-filter -->
 
-        <section class="flight-search-filter" ng-if="loaded">
-            <div class="filter price hidden">
+        <section class="flight-search-filter">
+            <div class="filter price" data-min="{{FlightSearchFilter.PriceFilter.min}}" data-max="{{FlightSearchFilter.PriceFilter.max}}">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
                 <div class="filter-container">
                     <h3>Price Filter</h3>
                     <div class="filter-content">
-                        <div id="price-range" ></div>
+
+                        <div class="price-slider"></div>
+                        <div class="price-slider-text">
+                            <br/>
+                            <span>Min Price</span>
+                            <span class="pull-right">Max Price</span>
+                        </div>
+                        <div class="price-slider-text">
+                            <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                            <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                        </div>
+                        <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin"/>
+                        <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
+
                     </div>
                 </div>
             </div>
@@ -199,20 +212,20 @@
                     </div>
                 </div>
             </div>
-            <div class="filter stops hidden">
+            <div class="filter stops">
                 <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Stops</a>
                 <div class="filter-container">
                     <h3>Stops Filter</h3>
                     <div class="filter-content">
                         <p>Show flight with :</p>
                         <label for="flight-stop-0">
-                            <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> Direct Flight
+                            <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> Direct Flight
                         </label>
                         <label for="flight-stop-1">
-                            <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> 1 stop
+                            <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> 1 stop
                         </label>
                         <label for="flight-stop-2">
-                            <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" ng-click="consoleLog(FlightSearchFilter.StopFilter)" /> more than 1 stop
+                            <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> more than 1 stop
                         </label>
                     </div>
                 </div>
@@ -229,6 +242,12 @@
                 <h1>Sorry, No flight available</h1>
                 <h2>Please refine your flight search</h2>
             </section>
+        
+            <!--
+                <section class="flight-noresult text-center" ng-if="">
+                
+                </section>
+            -->
 
             <section class="flight-list horizontal" ng-if="loaded">
 
@@ -261,7 +280,8 @@
                                     <div class="duration">
                                         <h5>duration <br /> {{flight.FlightTrips[0].TotalDuration}}</h5>
                                         <hr />
-                                        <h5>{{flight.FlightTrips[0].TotalTransit}} stop</h5>
+                                        <h5 ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</h5>
+                                        <h5 ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop</h5>
                                     </div><!-- .duration -->
 
                                     <div class="arrival">
@@ -276,7 +296,7 @@
                             </div><!-- .flight-content -->
                             <div class="flight-action">
                                 <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
-                                <a href="#"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
+                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if single flight type -->
@@ -306,7 +326,8 @@
                                                 <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
                                             </div>
                                         </div>
-                                        <h5 class="duration">{{flight.FlightTrips[0].TotalTransit}} stop - {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                        <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                        <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop - {{flight.FlightTrips[0].TotalDuration}}</h5>
                                     </div>
                                 </div><!-- .flight-content -->
                             </div><!-- .flight-departure -->
@@ -334,13 +355,14 @@
                                                 <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
                                             </div>
                                         </div>
-                                        <h5 class="duration">{{flight.FlightTrips[1].TotalTransit}} stop - {{flight.FlightTrips[1].TotalDuration}}</h5>
+                                        <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[1].TotalDuration}}</h5>
+                                        <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} stop - {{flight.FlightTrips[1].TotalDuration}}</h5>
                                     </div>
                                 </div><!-- .flight-content -->
                             </div><!-- .flight-return -->
                             <div class="flight-action">
                                 <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
-                                <a href="#"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
+                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if Return Flight Type -->

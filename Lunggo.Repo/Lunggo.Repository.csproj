@@ -60,6 +60,7 @@
     <Compile Include="TableRecord\TableCobaSemuaTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRecord\UsdExchangeRateTableRecord.cs" />
     <Compile Include="TableRecord\UserClaimsTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,6 +92,7 @@
     <Compile Include="TableRepository\TableCobaSemuaRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\UsdExchangeRateRepository.cs" />
     <Compile Include="TableRepository\UserClaimsRepository.cs">
       <SubType>Code</SubType>
     </Compile>

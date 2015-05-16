@@ -22,6 +22,11 @@ var RevalidateConfig = {
     working: false
 };
 
+var GetRulesConfig = {
+    Url: 'http://dv1-api.azurewebsites.net/api/v1/flights/rules',
+    working: false
+};
+
 var HotelAutocompleteConfig = {
     Url: 'http://travorama-apidev.azurewebsites.net/api/v1/autocomplete/hotellocation/'
 };

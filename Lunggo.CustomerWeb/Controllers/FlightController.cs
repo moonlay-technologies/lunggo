@@ -52,7 +52,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(adultPassengerInfo);
             }
@@ -68,7 +68,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(childPassengerInfo);
             }
@@ -84,7 +84,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(infantPassengerInfo);
             }
@@ -93,6 +93,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ContactData = new ContactData
                 {
                     Name = data.ContactData.Name,
+                    CountryCode = data.ContactData.CountryCode,
                     Phone = data.ContactData.Phone,
                     Email = data.ContactData.Email
                 },

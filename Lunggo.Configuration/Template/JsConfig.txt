@@ -22,6 +22,11 @@ var RevalidateConfig = {
     working: false
 };
 
+var GetRulesConfig = {
+    Url: '$apiUrl$$flightRulesPath$',
+    working: false
+};
+
 var HotelAutocompleteConfig = {
     Url: '$apiUrl$$autocompleteHotelLocationPath$'
 };

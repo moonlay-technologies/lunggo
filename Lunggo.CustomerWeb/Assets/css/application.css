@@ -1046,7 +1046,8 @@ hr {
   left: 50%;
   margin-left: -530px;
   top: 30%;
-  z-index: 9999; }
+  z-index: 9999;
+  display: none; }
   .flight-search-page .flight-search-filter .filter {
     background: #777;
     margin-bottom: 5px;
@@ -1073,6 +1074,8 @@ hr {
       height: auto !important; }
       .flight-search-page .flight-search-filter .filter .filter-container h3 {
         margin-top: 0; }
+  .flight-search-page .flight-search-filter .filter.price .filter-container {
+    width: 450px; }
   .flight-search-page .flight-search-filter .filter.airlines .filter-container {
     width: 800px; }
     .flight-search-page .flight-search-filter .filter.airlines .filter-container label {

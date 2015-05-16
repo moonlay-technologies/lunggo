@@ -437,7 +437,6 @@ function flightSearchFunctions() {
         // $(window).scroll(function() {
         //     $('.flight-search-filter .filter .filter-container').stop().slideUp('fast');
         // });
-
     }
 
     // toggle search form

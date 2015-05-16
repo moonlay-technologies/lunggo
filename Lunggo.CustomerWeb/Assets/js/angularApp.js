@@ -222,12 +222,13 @@
             $scope.FlightSearchFilter = {};
             $scope.FlightSearchFilter.Airlines = [];
             $scope.FlightSearchFilter.Prices = [];
-            $scope.FlightSearchFilter.Stops = [];
             $scope.FlightSearchFilter.StopFilter = {};
+            $scope.FlightSearchFilter.StopFilter.direct = true;
+            $scope.FlightSearchFilter.StopFilter.one = true;
+            $scope.FlightSearchFilter.StopFilter.two = true;
             $scope.FlightSearchFilter.AirlinesList = [];
             $scope.FlightSearchFilter.AirlinesFilter = [];
-            $scope.FlightSearchFilter.PriceFilterMin = 0;
-            $scope.FlightSearchFilter.PriceFilterMax = 0;
+            $scope.FlightSearchFilter.PriceFilter = {};
 
             // log on click
             $scope.consoleLog = function (dataToLog) {
@@ -245,14 +246,36 @@
             };
 
             // filtering
-            $scope.priceFilter = function(flight) {
-                // return( flight.TotalFare > 2000000 && flight.TotalFare < 5000000 );
-                return (flight);
+            $scope.priceFilter = function (flight) {
+                if (flight.TotalFare >= $scope.FlightSearchFilter.PriceFilter.currentMin && flight.TotalFare <= $scope.FlightSearchFilter.PriceFilter.currentMax) {
+                    return flight;
+                }
             }
 
             $scope.stopFilter = function (flight) {
                 // return (flight.FightTrips[0].TotalTransit);
-                return (flight);
+
+                if ($scope.FlightSearchFilter.StopFilter.direct == false && $scope.FlightSearchFilter.StopFilter.one == false && $scope.FlightSearchFilter.StopFilter.two == false) {
+                    return flight;
+                }
+
+                if ($scope.FlightSearchFilter.StopFilter.direct) {
+                    if ( flight.FlightTrips[0].TotalTransit == 0 ) {
+                        return flight;
+                    }
+                }
+                if ( $scope.FlightSearchFilter.StopFilter.one ) {
+                    if (flight.FlightTrips[0].TotalTransit == 1) {
+                        return flight;
+                    }
+                }
+                if ($scope.FlightSearchFilter.StopFilter.two) {
+                    if (flight.FlightTrips[0].TotalTransit > 1) {
+                        return flight;
+                    }
+                }
+
+
             }
 
             $scope.airlineFilter = function (flight) {
@@ -311,13 +334,11 @@
                     for (var i = 0; i < flightList.list.length ; i++) {
                         flightList.list[i].AirlinesTag = [];
                         $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
-                        $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[0].TotalTransit);
                         for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
                             $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[0].Airlines[x]);
                             flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[0].Airlines[x].Code);
                         }
                         if (flightList.list[i].TripType == 2) {
-                            $scope.FlightSearchFilter.Stops.push(flightList.list[i].FlightTrips[1].TotalTransit);
                             for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
                                 $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[1].Airlines[x]);
                                 flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[1].Airlines[x].Code);
@@ -325,9 +346,13 @@
                         }
                     }
 
-                    $scope.FlightSearchFilter.Prices = $scope.FlightSearchFilter.Prices.sort();
-                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops.sort();
-                    $scope.FlightSearchFilter.Stops = $scope.FlightSearchFilter.Stops[$scope.FlightSearchFilter.Stops.length - 1];
+                    // set prices min and max value for filtering
+                    function sortNumber(a, b) {
+                        return a - b;
+                    }
+                    $scope.FlightSearchFilter.Prices.sort(sortNumber);
+                    $scope.FlightSearchFilter.PriceFilter.min = Math.floor($scope.FlightSearchFilter.Prices[0]);
+                    $scope.FlightSearchFilter.PriceFilter.max = Math.round($scope.FlightSearchFilter.Prices[ $scope.FlightSearchFilter.Prices.length-1 ]);
 
                     var dupes = {};
                     $.each($scope.FlightSearchFilter.AirlinesList, function (i, el) {
@@ -343,6 +368,30 @@
                     console.log('--------------------------------');
 
                     $scope.loaded = true;
+                    FlightSearchConfig.loaded = true;
+
+                    // show filter
+                    $('.flight-search-page .flight-search-filter').show();
+
+                    // generate price slider
+                    $('.price-slider').slider({
+                        range: true,
+                        min: $scope.FlightSearchFilter.PriceFilter.min,
+                        max: $scope.FlightSearchFilter.PriceFilter.max,
+                        values: [$scope.FlightSearchFilter.PriceFilter.min, $scope.FlightSearchFilter.PriceFilter.max],
+                        create: function(event, ui) {
+                            $('.price-slider-min').val( $scope.FlightSearchFilter.PriceFilter.min );
+                            $('.price-slider-min').trigger('input');
+                            $('.price-slider-max').val( $scope.FlightSearchFilter.PriceFilter.max );
+                            $('.price-slider-max').trigger('input');
+                        },
+                        slide: function(event, ui) {
+                            $('.price-slider-min').val(ui.values[0]);
+                            $('.price-slider-min').trigger('input');
+                            $('.price-slider-max').val(ui.values[1]);
+                            $('.price-slider-max').trigger('input');
+                        }
+                    });
 
                 }).error(function () {
 
@@ -401,10 +450,94 @@
 
             }
 
+            // get flight rules
+            $scope.getRules = function (indexNo) {
+                var searchId = $scope.FlightSearchParams.SearchId;
 
+                loading_overlay('show');
+
+                console.log('getting rules :');
+
+                if (GetRulesConfig.working == false) {
+                    GetRulesConfig.working = true;
+
+                    $http.get(GetRulesConfig.Url, {
+                        params: {
+                            SearchId: searchId,
+                            ItinIndex: indexNo
+                        }
+                    }).success(function (returnData) {
+                        GetRulesConfig.working = false;
+
+                        console.log(returnData);
+
+                        GetRulesConfig.value = returnData;
+
+                        var rules = '';
+                        var airlineRules = returnData.AirlineRules;
+                        var baggageRules = returnData.BaggageRules;
+
+                        if (airlineRules.length == 0 && baggageRules == 0) {
+                            rules = 'No rules for this fare';
+                        } else {
+                            rules = rules.concat('\n');
+                            for (var i = 0; i < airlineRules.length; i++) {
+                                rules = rules.concat(airlineRules[i].AirlineCode + ' | ' + airlineRules[i].DepartureAirport + ' -> ' + airlineRules[i].ArrivalAirport);
+                                rules = rules.concat('\n\nRULES :\n');
+                                for (var j = 0; j < airlineRules[i].Rules.length; j++) {
+                                    rules = rules.concat(airlineRules[i].Rules[j] + '\n');
+                                }
+                            }
+
+                            for (var i = 0; i < baggageRules.length; i++) {
+                                rules = rules.concat('\n' + baggageRules[i].AirlineCode + baggageRules[i].FlightNumber + ' | ' + baggageRules[i].DepartureAirport + ' -> ' + baggageRules[i].ArrivalAirport);
+                                rules = rules.concat('\nBAGGAGE : ' + baggageRules[i].Baggage + '\n');
+                            }
+                        }
+
+                        alert(rules);
+
+                        loading_overlay('hide');
+
+                    }).error(function (data) {
+                        console.log(data)
+                    });
+                } else {
+                    console.log('Sistem busy, please wait');
+                }
+            }
         }
     ]);
 
+    app.directive("slider", function () {
+        return {
+            restrict: 'A',
+            scope: {
+                config: "=config",
+                price: "=model"
+            },
+            link: function (scope, elem, attrs) {
+                var setModel = function (value) {
+                    scope.model = value;
+                }
+
+                $(elem).slider({
+                    range: true,
+                    min: scope.config.min,
+                    max: scope.config.max,
+                    values: [scope.config.min, scope.config.max],
+                    change: function (event, ui) {
+                        scope.$apply(function () {
+                            scope.price.currentMin = ui.values[0];
+                            scope.price.currentMax = ui.values[1];
+                        });
+                        console.log(scope.config);
+                        console.log(scope.price);
+                    }
+                });
+            }
+        }
+    });
 
 })();
 

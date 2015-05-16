@@ -417,13 +417,16 @@ hr {border-color:#aaa;}
 	}
 
     // flight filter
-    .flight-search-filter {position:fixed; left:50%; margin-left:-530px; top:30%; z-index:9999;
+    .flight-search-filter {position:fixed; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center;}
             .filter-container {position:absolute; top:0; left:100%; background:#fff; border:1px solid #ddd; padding:20px; display:none; z-index:999; height:auto !important;
                 h3 {margin-top:0;}
             }
+        }
+        .filter.price {
+            .filter-container {width:450px;}
         }
         .filter.airlines {
             .filter-container {width:800px; 

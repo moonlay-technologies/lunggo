@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERIFS002")
+                            if (error.Code == "ERIFS001" || error.Code == "ERIFS002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;

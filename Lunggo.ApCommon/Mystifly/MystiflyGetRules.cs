@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentSharp.CoreLib;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
@@ -28,7 +29,8 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var response = Client.FareRules1_1(request);
                 done = true;
-                if (response.Success && !response.Errors.Any())
+                if (response.Success && !response.Errors.Any() ||
+                    response.Errors.Count() == 1 && response.Errors.Single().Code == "ERFRU012")
                 {
                     result = MapResult(response);
                     result.IsSuccess = true;
@@ -40,33 +42,20 @@ namespace Lunggo.ApCommon.Mystifly
                     if (response.Errors.Any())
                     {
                         result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
-                        if (response.Errors.Length == 1 && response.Errors.Single().Code == "ERFRU012")
+                        foreach (var error in response.Errors)
                         {
-                            result.Errors = null;
-                            result.ErrorMessages = null;
-                            result.IsSuccess = true;
-                            result.AirlineRules = null;
-                            result.BaggageRules = null;
-                        }
-                        else
-                        {
-
-                            foreach (var error in response.Errors)
+                            if (error.Code == "ERFRU001" || error.Code == "ERFRU013")
                             {
-                                if (error.Code == "ERFRU013")
+                                Client.CreateSession();
+                                request.SessionId = Client.SessionId;
+                                retry++;
+                                if (retry <= 3)
                                 {
-                                    Client.CreateSession();
-                                    request.SessionId = Client.SessionId;
-                                    retry++;
-                                    if (retry <= 3)
-                                    {
-                                        done = false;
-                                        break;
-                                    }
+                                    done = false;
+                                    break;
                                 }
-                                MapError(response, result);
                             }
+                            MapError(response, result);
                         }
                     }
                     result.IsSuccess = false;
@@ -77,24 +66,37 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static GetRulesResult MapResult(AirRulesRS1 response)
         {
-            return new GetRulesResult
+            var result = new GetRulesResult();
+            if (response.FareRules != null)
             {
-                AirlineRules = response.FareRules.Select(fareRule => new AirlineRules
+                result.AirlineRules = response.FareRules.Select(fareRule => new AirlineRules
                 {
                     AirlineCode = fareRule.Airline,
                     DepartureAirport = fareRule.CityPair.Substring(0, 3),
                     ArrivalAirport = fareRule.CityPair.Substring(3, 3),
                     Rules = fareRule.RuleDetails.Select(rule => rule.Rules).ToList()
-                }).ToList(),
-                BaggageRules = response.BaggageInfos.Select(baggageRule => new BaggageRules
+                }).ToList();
+            }
+            else
+            {
+                result.AirlineRules = new List<AirlineRules>();
+            }
+            if (response.BaggageInfos != null)
+            {
+                result.BaggageRules = response.BaggageInfos.Select(baggageRule => new BaggageRules
                 {
                     AirlineCode = baggageRule.FlightNo.Substring(0, 2),
                     FlightNumber = baggageRule.FlightNo.Substring(2),
                     DepartureAirport = baggageRule.Departure,
                     ArrivalAirport = baggageRule.Arrival,
                     Baggage = baggageRule.Baggage
-                }).ToList()
-            };
+                }).ToList();
+            }
+            else
+            {
+                result.BaggageRules = new List<BaggageRules>();
+            }
+            return result;
         }
 
         private static void MapError(AirRulesRS1 response, ResultBase result)
@@ -103,7 +105,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERFRU001":
                     case "ERFRU002":
                     case "ERFRU004":
                     case "ERFRU005":
@@ -117,6 +118,7 @@ namespace Lunggo.ApCommon.Mystifly
                         goto case "InvalidInputData";
                     case "ERFRU003":
                         goto case "FareIdNoLongerValid";
+                    case "ERFRU001":
                     case "ERFRU013":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

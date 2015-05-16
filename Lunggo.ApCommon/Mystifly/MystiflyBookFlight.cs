@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Mystifly
                             result.ErrorMessages = new List<string>();
                             foreach (var error in response.Errors)
                             {
-                                if (error.Code == "ERBUK002")
+                                if (error.Code == "ERBUK001" || error.Code == "ERBUK002")
                                 {
                                     Client.CreateSession();
                                     request.SessionId = Client.SessionId;
@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var travelerInfo = new TravelerInfo
             {
-                CountryCode = "",
+                CountryCode = contactData.CountryCode,
                 AreaCode = "",
                 PhoneNumber = contactData.Phone,
                 Email = contactData.Email,
@@ -240,7 +240,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERBUK001":
                     case "ERBUK003":
                     case "ERBUK004":
                     case "ERBUK005":
@@ -342,6 +341,7 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERBUK082":
                     case "ERBUK083":
                         goto case "ProcessFailed";
+                    case "ERBUK001":
                     case "ERBUK002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

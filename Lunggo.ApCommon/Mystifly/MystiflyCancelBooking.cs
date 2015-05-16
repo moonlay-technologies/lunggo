@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.ErrorMessages = new List<string>();
                         foreach (var error in response.Errors)
                         {
-                            if (error.Code == "ERCBK002")
+                            if (error.Code == "ERCBK001" || error.Code == "ERCBK002")
                             {
                                 Client.CreateSession();
                                 request.SessionId = Client.SessionId;
@@ -77,7 +77,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERCBK001":
                     case "ERCBK004":
                         goto case "InvalidInputData";
                     case "ERCBK003":
@@ -87,6 +86,7 @@ namespace Lunggo.ApCommon.Mystifly
                         goto case "ProcessFailed";
                     case "ERCBK007":
                         goto case "AlreadyBooked";
+                    case "ERCBK001":
                     case "ERCBK002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

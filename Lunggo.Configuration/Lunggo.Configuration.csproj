@@ -109,6 +109,29 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\azurestorage.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\db.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\domain.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\freshdesk.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\hotel.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\veritrans.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\zendesk.properties" />
     <None Include="Config\CustomerWeb\Airline.csv" />
     <None Include="Config\CustomerWeb\Airport.csv" />
     <None Include="Config\CustomerWeb\flight.properties">
