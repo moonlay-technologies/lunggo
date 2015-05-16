@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var travelerInfo = new TravelerInfo
             {
-                CountryCode = "",
+                CountryCode = contactData.CountryCode,
                 AreaCode = "",
                 PhoneNumber = contactData.Phone,
                 Email = contactData.Email,

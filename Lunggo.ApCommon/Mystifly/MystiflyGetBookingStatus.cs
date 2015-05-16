@@ -49,7 +49,9 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     if (response.Errors.Any())
                     {
-                        if (retry <= 3 && response.Errors.Select(error => error.Code).Contains("ERMQU003"))
+                        if (retry <= 3 && 
+                            (response.Errors.Select(error => error.Code).Contains("ERMQU001") ||
+                            response.Errors.Select(error => error.Code).Contains("ERMQU003")))
                         {
                             Client.CreateSession();
                             request.SessionId = Client.SessionId;
@@ -99,7 +101,9 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     if (response.Errors.Any())
                     {
-                        if (retry <= 3 && response.Errors.Select(error => error.Code).Contains("ERRMQ006"))
+                        if (retry <= 3 && 
+                            (response.Errors.Select(error => error.Code).Contains("ERRMQ001") ||
+                            response.Errors.Select(error => error.Code).Contains("ERRMQ006")))
                         {
                             Client.CreateSession();
                             request.SessionId = Client.SessionId;

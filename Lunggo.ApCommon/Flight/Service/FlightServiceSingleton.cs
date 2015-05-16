@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         private static readonly FlightService Instance = new FlightService();
-        private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
+        private static MystiflyWrapper _mystiflyWrapper;
         private bool _isInitialized;
 
         private FlightService()
@@ -31,7 +31,8 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (!_isInitialized)
             {
-                MystiflyWrapper.Init();
+                _mystiflyWrapper = MystiflyWrapper.GetInstance();
+                _mystiflyWrapper.Init();
                 _isInitialized = true;
             }
             else
@@ -42,17 +43,17 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            return MystiflyWrapper.SearchFlight(conditions);
+            return _mystiflyWrapper.SearchFlight(conditions);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
         {
-            return MystiflyWrapper.SpecificSearchFlight(conditions);
+            return _mystiflyWrapper.SpecificSearchFlight(conditions);
         }
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            return MystiflyWrapper.RevalidateFare(conditions);
+            return _mystiflyWrapper.RevalidateFare(conditions);
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
@@ -61,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Service
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
-                    return MystiflyWrapper.BookFlight(bookInfo);
+                    return _mystiflyWrapper.BookFlight(bookInfo);
                 default:
                     return null;
             }
@@ -74,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Service
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
-                    return MystiflyWrapper.OrderTicket(bookingId);
+                    return _mystiflyWrapper.OrderTicket(bookingId);
                 default:
                     return null;
             }
@@ -82,22 +83,22 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
-            return MystiflyWrapper.GetTripDetails(conditions);
+            return _mystiflyWrapper.GetTripDetails(conditions);
         }
 
         private List<BookingStatusInfo> GetBookingStatusInternal()
         {
-            return MystiflyWrapper.GetBookingStatus();
+            return _mystiflyWrapper.GetBookingStatus();
         }
 
         private CancelBookingResult CancelBookingInternal(string bookingId)
         {
-            return MystiflyWrapper.CancelBooking(bookingId);
+            return _mystiflyWrapper.CancelBooking(bookingId);
         }
 
         private GetRulesResult GetRulesInternal(string fareId)
         {
-            return MystiflyWrapper.GetRules(fareId);
+            return _mystiflyWrapper.GetRules(fareId);
         }
     }
 }
