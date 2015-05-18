@@ -417,10 +417,10 @@ hr {border-color:#aaa;}
 	}
 
     // flight filter
-    .flight-search-filter {position:fixed; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
-        .filter {background:#777; margin-bottom:5px; width:50px; position:relative;
+    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
+        .filter {background:#777; margin-bottom:5px; width:50px; position:relative; background:#3fabe3; border:1px solid #3fabe3;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
-            a.toggle {text-align:center; cursor:pointer; text-align:center;}
+            a.toggle {text-align:center; cursor:pointer; text-align:center; color:#fff;}
             .filter-container {position:absolute; top:0; left:100%; background:#fff; border:1px solid #ddd; padding:20px; display:none; z-index:999; height:auto !important;
                 h3 {margin-top:0;}
             }

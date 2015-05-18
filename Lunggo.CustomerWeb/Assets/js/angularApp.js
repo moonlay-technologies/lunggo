@@ -372,7 +372,7 @@
 
                     // show filter
                     $('.flight-search-page .flight-search-filter').show();
-
+                    
                     // generate price slider
                     $('.price-slider').slider({
                         range: true,
