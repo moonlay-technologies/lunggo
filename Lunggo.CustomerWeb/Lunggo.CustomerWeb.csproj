@@ -54,6 +54,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -126,6 +129,10 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -256,6 +263,7 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2008,15 +2016,10 @@
     </None>
     <Content Include="Views\Flight\SearchResultList.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
-    <Content Include="Views\Flight\SearchResultList - Ori.cshtml" />
-    <Content Include="Views\Flight\Checkout - Ori.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
-    <Content Include="Views\Shared\GlobalError.cshtml" />
-    <Content Include="Views\Flight\PaymentUnfinish.cshtml" />
-    <Content Include="Views\Flight\PaymentError.cshtml" />
-    <Content Include="Views\Flight\PaymentFinish.cshtml" />
+    <Content Include="Views\Flight\Thankyou.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>
@@ -2024,6 +2027,7 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Helper\" />
+    <Folder Include="Views\Veritrans\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />
   </ItemGroup>
@@ -2091,6 +2095,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.2\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.2\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

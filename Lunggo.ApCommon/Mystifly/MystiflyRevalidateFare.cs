@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -17,7 +18,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = conditions.FareId,
+                    FareSourceCode = FlightIdUtil.GetCoreId(conditions.FareId),
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null
@@ -45,7 +46,7 @@ namespace Lunggo.ApCommon.Mystifly
                             result.ErrorMessages = new List<string>();
                             foreach (var error in response.Errors)
                             {
-                                if (error.Code == "ERREV002")
+                                if (error.Code == "ERREV001" || error.Code == "ERREV002")
                                 {
                                     Client.CreateSession();
                                     request.SessionId = Client.SessionId;
@@ -70,7 +71,7 @@ namespace Lunggo.ApCommon.Mystifly
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
             if (response.PricedItineraries.Any())
-                result.Itinerary = MapFlightFareItinerary(response.PricedItineraries[0], conditions);
+                result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions);
             return result;
         }
 
@@ -85,12 +86,12 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERREV001" :
                     case "ERREV003" :
                         goto case "InvalidInputData";
                     case "ERREV004" :
                     case "ERREV005" :
                         goto case "FareIdNoLongerValid";
+                    case "ERREV001":
                     case "ERREV002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

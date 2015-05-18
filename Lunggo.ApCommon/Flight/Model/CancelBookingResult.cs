@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class CancelBookingResult : ResultBase
+    internal class CancelBookingResult : ResultBase
     {
-        public string BookingId { get; set; }
+        internal string BookingId { get; set; }
     }
 }

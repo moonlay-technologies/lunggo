@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Redis;
+using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
 using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
 
@@ -16,59 +23,91 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
-            var travelerInfo = MapTravelerInfo(bookInfo, airTravelers);
-            var request = new AirBookRQ
+            var fareType = FlightIdUtil.GetFareType(bookInfo.FareId);
+            if (fareType != FareType.Lcc)
             {
-                FareSourceCode = bookInfo.FareId,
-                TravelerInfo = travelerInfo,
-                ClientMarkup = 0,
-                PaymentTransactionID = null,
-                PaymentCardInfo = null,
-                SessionId = Client.SessionId,
-                Target = Client.Target,
-                ExtensionData = null,
-            };
-            var result = new BookFlightResult();
-            var retry = 0;
-            var done = false;
-            while (!done)
-            {
-                var response = Client.BookFlight(request);
-                done = true;
-                if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
+                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
+                var request = new AirBookRQ
                 {
-                    result = MapResult(response);
-                    result.IsSuccess = true;
-                    result.Errors = null;
-                    result.ErrorMessages = null;
-                }
-                else
+                    FareSourceCode = FlightIdUtil.GetCoreId(bookInfo.FareId),
+                    TravelerInfo = travelerInfo,
+                    ClientMarkup = 0,
+                    PaymentTransactionID = null,
+                    PaymentCardInfo = null,
+                    SessionId = Client.SessionId,
+                    Target = Client.Target,
+                    ExtensionData = null,
+                };
+                var result = new BookFlightResult();
+                var retry = 0;
+                var done = false;
+                while (!done)
                 {
-                    if (response.Errors.Any())
+                    var response = Client.BookFlight(request);
+                    done = true;
+                    if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                     {
-                        result.Errors = new List<FlightError>();
-                        result.ErrorMessages = new List<string>();
-                        foreach (var error in response.Errors)
-                        {
-                            if (error.Code == "ERBUK002")
-                            {
-                                Client.CreateSession();
-                                request.SessionId = Client.SessionId;
-                                retry++;
-                                if (retry <= 3)
-                                {
-                                    done = false;
-                                    break;
-                                }
-                            }
-                            MapError(response, result);
-                        }
+                        result = MapResult(response, fareType);
+                        result.IsSuccess = true;
+                        result.Errors = null;
+                        result.ErrorMessages = null;
                     }
-                    result.IsSuccess = false;
+                    else
+                    {
+                        if (response.Errors.Any())
+                        {
+                            result.Errors = new List<FlightError>();
+                            result.ErrorMessages = new List<string>();
+                            foreach (var error in response.Errors)
+                            {
+                                if (error.Code == "ERBUK001" || error.Code == "ERBUK002")
+                                {
+                                    Client.CreateSession();
+                                    request.SessionId = Client.SessionId;
+                                    retry++;
+                                    if (retry <= 3)
+                                    {
+                                        done = false;
+                                        break;
+                                    }
+                                }
+                                MapError(response, result);
+                            }
+                        }
+                        result.IsSuccess = false;
+                    }
                 }
+                return result;
             }
-            return result;
+            else
+            {
+                var bookingId = WebfareBooking(bookInfo);
+                var result = new BookFlightResult
+                {
+                    IsSuccess = true,
+                    Status = new BookingStatusInfo
+                    { 
+                        BookingId = FlightIdUtil.ConstructIntegratedId(bookingId, FlightSupplier.Mystifly, fareType),
+                        BookingStatus = BookingStatus.Booked,
+                        TimeLimit = DateTime.Now.AddHours(2)
+                    }
+                };
+                return result;
+            }
+        }
+
+        private static string WebfareBooking(FlightBookingInfo bookInfo)
+        {
+            var bookingId = FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisKey = "MystiflyWebfare:" + bookingId;
+            var cacheObject = FlightCacheUtil.ConvertToCacheObject(bookInfo);
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromHours(2));
+
+            return bookingId;
         }
 
         private static AirTraveler MapAirTraveler(PassengerInfoFare passengerInfoFare)
@@ -168,28 +207,28 @@ namespace Lunggo.ApCommon.Mystifly
             return passport;
         }
 
-        private static TravelerInfo MapTravelerInfo(FlightBookingInfo bookInfo, List<AirTraveler> airTravelers)
+        private static TravelerInfo MapTravelerInfo(ContactData contactData, List<AirTraveler> airTravelers)
         {
             var travelerInfo = new TravelerInfo
             {
-                CountryCode = "",
+                CountryCode = contactData.CountryCode,
                 AreaCode = "",
-                PhoneNumber = bookInfo.ContactData.Phone,
-                Email = bookInfo.ContactData.Email,
+                PhoneNumber = contactData.Phone,
+                Email = contactData.Email,
                 AirTravelers = airTravelers.ToArray(),
                 ExtensionData = null
             };
             return travelerInfo;
         }
 
-        private static BookFlightResult MapResult(AirBookRS response)
+        private static BookFlightResult MapResult(AirBookRS response, FareType fareType)
         {
             return new BookFlightResult
             {
                 Status = new BookingStatusInfo
                 {
                     BookingStatus = BookingStatus.Booked,
-                    BookingId = response.UniqueID,
+                    BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
                     TimeLimit = response.TktTimeLimit
                 }
             };
@@ -201,7 +240,6 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 switch (error.Code)
                 {
-                    case "ERBUK001":
                     case "ERBUK003":
                     case "ERBUK004":
                     case "ERBUK005":
@@ -303,6 +341,7 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERBUK082":
                     case "ERBUK083":
                         goto case "ProcessFailed";
+                    case "ERBUK001":
                     case "ERBUK002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();

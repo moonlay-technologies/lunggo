@@ -68,16 +68,16 @@ namespace Lunggo.Framework.Payment.Data
         [JsonProperty("order_id")]
         public String OrderId { get; set; }
         [JsonProperty("gross_amount")]
-        public decimal GrossAmount { get; set; }
+        public long GrossAmount { get; set; }
     }
     public class ItemDetail
     {
         [JsonProperty("id")]
         public String Id { get; set; }
         [JsonProperty("price")]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         [JsonProperty("quantity")]
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
         [JsonProperty("name")]
         public String Name { get; set; }
     }

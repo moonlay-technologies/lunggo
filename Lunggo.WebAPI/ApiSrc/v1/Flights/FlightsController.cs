@@ -90,6 +90,15 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Route("api/v1/flights/rules")]
+        public FlightRulesApiResponse GetFlightRules(HttpRequestMessage httpRequest, [FromUri] FlightRulesApiRequest request)
+        {
+            var apiResponse = FlightLogic.GetRules(request);
+            return apiResponse;
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
         [Route("api/v1/flights/book")]
         public FlightBookingApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookingApiRequest apiRequest)
         {

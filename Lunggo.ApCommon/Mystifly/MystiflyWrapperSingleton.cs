@@ -18,10 +18,10 @@ namespace Lunggo.ApCommon.Mystifly
         private bool _isInitialized;
         private static readonly MystiflyClientHandler Client = MystiflyClientHandler.GetClientInstance();
 
-        private readonly static string AccountNumber = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiAccountNumber");
-        private readonly static string UserName = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiUserName");
-        private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiPassword");
-        private readonly static string TargetServer = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiTargetServer");
+        private static string _accountNumber;
+        private static string _userName;
+        private static string _password;
+        private static string _targetServer;
 
         private MystiflyWrapper()
         {
@@ -37,7 +37,11 @@ namespace Lunggo.ApCommon.Mystifly
         {
             if (!_isInitialized)
             {
-                Client.Init(AccountNumber, UserName, Password, TargetServer);
+                _accountNumber = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiAccountNumber");
+                _userName = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiUserName");
+                _password = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiPassword");
+                _targetServer = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiTargetServer");
+                Client.Init(_accountNumber, _userName, _password, _targetServer);
                 _isInitialized = true;
             }
             else

@@ -7,13 +7,17 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public GetRulesOutput GetRules(GetRulesInput input)
         {
-            var output = new GetRulesOutput();
             var rules = GetRulesInternal(input.FareId);
-            output.Rules = new FlightRules();
+            var output = new GetRulesOutput
+            {
+                IsSuccess = rules.IsSuccess,
+                Errors = rules.Errors,
+                ErrorMessages = rules.ErrorMessages
+            };
             if (rules.IsSuccess)
             {
-                output.Rules.AirlineRules = rules.AirlineRules;
-                output.Rules.BaggageRules = rules.BaggageRules;
+                output.AirlineRules = rules.AirlineRules;
+                output.BaggageRules = rules.BaggageRules;
             }
             return output;
         }

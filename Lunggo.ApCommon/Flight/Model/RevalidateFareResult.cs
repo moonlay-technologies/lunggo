@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class RevalidateFareResult : ResultBase
+    internal class RevalidateFareResult : ResultBase
     {
-        public bool IsValid { get; set; }
-        public FlightItineraryFare Itinerary { get; set; }
+        internal bool IsValid { get; set; }
+        internal FlightItineraryFare Itinerary { get; set; }
     }
 }

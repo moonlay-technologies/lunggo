@@ -7,10 +7,10 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightBooking
+    internal class FlightBooking
     {
-        public string BookingId { get; set; }
-        public BookingStatus BookingStatus { get; set; }
-        public bool IsTicketOrdered { get; set; }
+        internal string BookingId { get; set; }
+        internal BookingStatus BookingStatus { get; set; }
+        internal bool IsTicketOrdered { get; set; }
     }
 }

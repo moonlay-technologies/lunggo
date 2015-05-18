@@ -7,7 +7,12 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Payment.Data;
+using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -47,7 +52,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(adultPassengerInfo);
             }
@@ -63,7 +68,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(childPassengerInfo);
             }
@@ -79,33 +84,30 @@ namespace Lunggo.CustomerWeb.Controllers
                     DateOfBirth = passenger.BirthDate,
                     IdNumber = passenger.IdNumber,
                     PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1)
+                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
                 passengerInfo.AddRange(infantPassengerInfo);
             }
             var bookInfo = new BookFlightInput
             {
-                BookingInfo = new FlightBookingInfo
+                ContactData = new ContactData
                 {
-                    FareId = data.Itinerary.FareId,
-                    ContactData = new ContactData
-                    {
-                        Name = data.ContactData.Name,
-                        Phone = data.ContactData.Phone,
-                        Email = data.ContactData.Email
-                    },
-                    PassengerInfoFares = passengerInfo
+                    Name = data.ContactData.Name,
+                    CountryCode = data.ContactData.CountryCode,
+                    Phone = data.ContactData.Phone,
+                    Email = data.ContactData.Email
                 },
+                PassengerInfoFares = passengerInfo,
                 Itinerary = data.Itinerary,
                 TripInfos = new List<FlightTripInfo>
+                {
+                    new FlightTripInfo
                     {
-                        new FlightTripInfo
-                        {
-                            OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                            DestinationAirport= data.Itinerary.FlightTrips[0].DestinationAirport,
-                            DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                        }
-                    },
+                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
+                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                    }
+                },
                 OverallTripType = TripType.OneWay
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
@@ -113,9 +115,30 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
                 {
+                    var transactionDetails = new TransactionDetails
+                    {
+                        OrderId = bookResult.ReservationDetails.RsvNo,
+                        Amount = data.Itinerary.IdrPrice
+                    };
+                    var itemDetails = new List<ItemDetails>
+                    {
+                        new ItemDetails
+                        {
+                            Id = "1",
+                            Name = "pesawat",
+                            Quantity = 1,
+                            Price = data.Itinerary.IdrPrice
+                        }
+                    };
+                    /*
+                    string url;
+                    PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
+                    return Redirect(url);
+                     */
+                    
                     var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
-                        BookingId = bookResult.BookResult.BookingId
+                        BookingId = bookResult.BookResult.BookingId,
                     });
                     if (issueResult.IsSuccess)
                     {
@@ -145,28 +168,29 @@ namespace Lunggo.CustomerWeb.Controllers
                         data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
+                     
                 }
                 else
                 {
-                    data.Message = "Booking Failed. Please try again.";
+                    data.Message = "Already Booked. Please try again.";
                     return View(data);
                 }
             }
             else
             {
-                data.Message = "Technical Error : Booking Failed. Please try again.";
+                data.Message = "Already Booked. Please try again.";
                 return View(data);
             }
         }
 
-        public ActionResult PaymentResult(string result)
+        public ActionResult Thankyou(PaymentStatus status)
         {
-            return null;
+            return View(status);
         }
 
         public ActionResult Eticket()
         {
-            var itin = FlightService.GetInstance().GetItineraryFromCache("111","a");
+            var itin = FlightService.GetInstance().GetItineraryFromCache("111", "a");
             return View(itin);
         }
     }

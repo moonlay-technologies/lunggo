@@ -37,7 +37,7 @@
     }
     catch
     {
-        
+
     }
 }
 
@@ -60,14 +60,20 @@
                 <section class="customer-detail">
                     <section class="customer-form">
                         <form action="" class="form" id="flight-customer-form" method="post">
-                            <input type="text" class="hidden" name="HashKey" value="@Model.HashKey"/>
+                            <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
                                 <label for="" class="control-label">Name (Buyer) :</label>
                                 <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
                             </div>
-                            <div class="form-group">
-                                <label for="" class="control-label">Phone Number :</label>
-                                <input type="text" class="form-control" name="ContactData.Phone" placeholder="">
+                            <div class="form-inline">
+                                <div class="form-group" style="width:25%;">
+                                    <label for="">Country Code :</label>
+                                    <input type="text" class="form-control" style="width:100%;" name="ContactData.CountryCode" placeholder="ex : 62">
+                                </div>
+                                <div class="form-group" style="width:74%;">
+                                    <label for="">Phone Number :</label>
+                                    <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="" class="control-label">Email :</label>
@@ -79,7 +85,7 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"));
+                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"))
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
@@ -89,7 +95,7 @@
                                         <label for="">Last Name :</label>
                                         <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
                                     </div>
-                                </div><br/>
+                                </div><br />
                                 <div class="form-group">
                                     <label for="" class="control-label">Birth Date :</label>
                                     <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
@@ -123,7 +129,7 @@
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"));
+                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"))
                                         </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">First Name :</label>
@@ -156,7 +162,7 @@
                                             <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
                                         </div>
                                     }
-                                    <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value ="ID">
+                                    <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value="ID">
                                 }
                             }
 
@@ -168,7 +174,7 @@
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"));
+                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"))
                                         </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">First Name :</label>
@@ -258,7 +264,7 @@
 
                     </section><!-- .payment-form -->
                     <section class="payment-button">
-                        <button class="btn btn-primary btn-yellow validate-fare" data-hashKey="@hashKey">BAYAR</button>
+                        <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
                     </section><!-- .payment-button -->
                 </section><!-- .customer-detail -->
             </div><!-- .col-sm-8 -->

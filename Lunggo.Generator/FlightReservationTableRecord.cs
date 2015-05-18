@@ -38,6 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvStatusCd");
 		    }
 		}
+		public String InvoiceNo
+		{
+		    get { return _InvoiceNo; }
+		    set
+		    {
+		        _InvoiceNo = value;
+		        IncrementLog("InvoiceNo");
+		    }
+		}
 		public String ContactName
 		{
 		    get { return _ContactName; }
@@ -268,6 +277,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _RsvNo;
 		private DateTime? _RsvTime;
 		private String _RsvStatusCd;
+		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
 		private String _ContactPhone;
@@ -327,6 +337,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("RsvTime", false),
 				new ColumnMetadata("RsvStatusCd", false),
+				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
 				new ColumnMetadata("ContactPhone", false),
