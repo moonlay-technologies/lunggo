@@ -423,6 +423,36 @@ function flightSearchFunctions() {
     toggleSearchForm();
     toggleFlightDetail();
     toggleFlightFilter();
+    defaultFormValue();
+
+    // default form value
+    function defaultFormValue() {
+        $(document).ready(function() {
+
+            var defaultValue = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
+
+            console.log(defaultValue);
+
+            // if trip type == One Way
+            if (defaultValue.TripType == 'OneWay') {
+                $('.flight-search-form form input#one-way').click();
+            }
+            // passengers
+            $('.flight-search-form form .flight-adult').val(defaultValue.AdultCount);
+            $('.flight-search-form form .flight-child').val(defaultValue.ChildCount);
+            $('.flight-search-form form .flight-infant').val(defaultValue.InfantCount);
+            // cabin class
+            if ( defaultValue.CabinClass == 'Economy' ) {
+                defaultValue.CabinClass = 'y';
+            } else if (defaultValue.CabinClass == 'Business') {
+                defaultValue.CabinClass = 'c';
+            } else if (defaultValue.CabinClass == 'First') {
+                defaultValue.CabinClass = 'f';
+            }
+            $('.flight-search-form form .flight-cabin').val(defaultValue.CabinClass);
+
+        });
+    }
 
     // toggle flight filter
     function toggleFlightFilter() {

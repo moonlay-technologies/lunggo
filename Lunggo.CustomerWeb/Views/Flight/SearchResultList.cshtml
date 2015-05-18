@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
+@using FluentSharp.CoreLib
 @using Lunggo.ApCommon.Autocomplete
+@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Trie
@@ -19,6 +21,12 @@
     
     List<FlightTripInfo> tripInfos = null;
     FlightSearchData.Complete data = null;
+    var originAirportNames = new List<string>();
+    var destinationAirportNames = new List<string>();
+    var originCityNames = new List<string>();
+    var destinationCityNames = new List<string>();
+    var originCountryNames = new List<string>();
+    var destinationCountryNames = new List<string>();
 
     String tripType="aaa";
     try
@@ -37,6 +45,16 @@
                 int.Parse(info.Substring(8, 2)),
                 int.Parse(info.Substring(6, 2)))
         }).ToList();
+
+        foreach (var tripInfo in tripInfos)
+        {
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.DestinationAirport));
+        }
 
         data = new FlightSearchData.Complete
         {
@@ -63,6 +81,7 @@
 
 @if (isValid)
 {
+  
 
     <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
 
@@ -89,8 +108,8 @@
                     </div>
                     <div class="row airport-wrapper">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" />
-                            <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" />
+                            <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" value="@originAirportNames[0], @originCityNames[0], @originCountryNames[0] " />
+                            <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" value="@destinationAirportNames[0], @destinationCityNames[0], @destinationCountryNames[0]" />
                             <select class="flight-cabin form-control">
                                 <option value="y">Economy Class</option>
                                 <option value="c">Business Class</option>
@@ -98,11 +117,13 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="row passenger-wrapper">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" />
+                            <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" value="@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
                             <span class="separator">-</span>
-                            <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" />
+                            <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
+
                             <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
                             <select class="form-control flight-adult">
                                 <option value="1">1 Adult</option>
@@ -124,10 +145,10 @@
                                 <option value="3">3 Infants</option>
                                 <option value="4">4 Infants</option>
                             </select>
-                            <input type="text" class="hidden flight-departure-date-real" value="" />
-                            <input type="text" class="hidden flight-return-date-real" value="" />
-                            <input type="text" class="hidden flight-origin-airport-real" value="" />
-                            <input type="text" class="hidden flight-destination-airport-real" value="" />
+                            <input type="text" class="hidden flight-departure-date-real" value="@data.TripInfos[0].DepartureDate.ToString("dd-MM-yyyy")" />
+                            <input type="text" class="hidden flight-return-date-real" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MM-yyyy")  }" />
+                            <input type="text" class="hidden flight-origin-airport-real" value="@data.TripInfos[0].OriginAirport" />
+                            <input type="text" class="hidden flight-destination-airport-real" value="@data.TripInfos[0].DestinationAirport" />
                             <input type="text" id="flight-data-info" name="info" class="hidden" />
                             <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
                         </div>
