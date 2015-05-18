@@ -431,8 +431,6 @@ function flightSearchFunctions() {
 
             var defaultValue = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
 
-            console.log(defaultValue);
-
             // if trip type == One Way
             if (defaultValue.TripType == 'OneWay') {
                 $('.flight-search-form form input#one-way').click();
