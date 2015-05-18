@@ -14,9 +14,6 @@ namespace Lunggo.ApCommon.Sriwijaya
         private bool _isInitialized;
         private static readonly SriwijayaClientHandler Client = SriwijayaClientHandler.GetClientInstance();
 
-        private static readonly string UserName = "MLWAG0215";
-        private static readonly string Password = "TRAVELMADEZY";
-
         private SriwijayaWrapper()
         {
             
@@ -31,7 +28,7 @@ namespace Lunggo.ApCommon.Sriwijaya
         {
             if (!_isInitialized)
             {
-                Client.Init(UserName, Password);
+                Client.Init();
                 _isInitialized = true;
             }
             else

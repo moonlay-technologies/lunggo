@@ -23,7 +23,7 @@ var RevalidateConfig = {
 };
 
 var GetRulesConfig = {
-    Url: 'http://dv1-api.azurewebsites.net/api/v1/flights/rules',
+    Url: 'http://travorama-apidev.azurewebsites.net/api/v1/flights/rules',
     working: false
 };
 

@@ -3,6 +3,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Mystifly
 {
@@ -33,13 +34,14 @@ namespace Lunggo.ApCommon.Mystifly
                 return ClientInstance;
             }
 
-            internal void Init(string accountNumber, string userName, string password, string targetServer)
+            internal void Init()
             {
                 if (!_isInitialized)
                 {
-                    _accountNumber = accountNumber;
-                    _userName = userName;
-                    _password = password;
+                    _accountNumber = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiAccountNumber");
+                    _userName = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiUserName");
+                    _password = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiPassword");
+                    var targetServer = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiTargetServer");
                     switch (targetServer)
                     {
                         case "Test":

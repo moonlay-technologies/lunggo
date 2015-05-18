@@ -17,12 +17,10 @@ namespace Lunggo.ApCommon.Sriwijaya
             private bool _isInitialized;
             private static string _userName;
             private static string _password;
+            private static string _agentUrl;
+            private static string _publicUrl;
             private static CookieCollection _cookie;
-
-            private static readonly string LoginUrl = "https://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in";
-            private static readonly string UserName = "MLWAG0215";
-            private static readonly string Password = "TRAVELMADEZY";
-
+            
             public CookieCollection Cookie
             {
                 get { return _cookie; }
@@ -38,12 +36,15 @@ namespace Lunggo.ApCommon.Sriwijaya
                 return ClientInstance;
             }
 
-            internal void Init(string userName, string password)
+            internal void Init()
             {
                 if (!_isInitialized)
                 {
-                    _userName = userName;
-                    _password = password;
+                    _userName = "MLWAG0215";
+                    _password = "TRAVELMADEZY";
+                    _agentUrl = "https://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in";
+                    _publicUrl = "https://www.sriwijayaair.co.id/welcome.php";
+                    _cookie = new CookieCollection();
                     _isInitialized = true;
                 }
                 else
@@ -55,8 +56,10 @@ namespace Lunggo.ApCommon.Sriwijaya
             internal void CreateSession()
             {
                 _cookie = new CookieCollection();
-                var request = ConstructRequest();
-                var result = GetResponse(request);
+                var agentRequest = ConstructAgentRequest();
+                var publicRequest = ConstructPublicRequest();
+                var agentResult = GetResponse(agentRequest);
+                var publicResult = GetResponse(publicRequest);
             }
 
             private static bool GetResponse(HttpWebRequest request)
@@ -67,16 +70,18 @@ namespace Lunggo.ApCommon.Sriwijaya
                 {
                     response = (HttpWebResponse) request.GetResponse();
                     ExtractInlineCookies(response, request);
-                    _cookie = response.Cookies;
+                    _cookie.Add(response.Cookies);
+                    _cookie.Add(new Cookie("_ga", "GA1.3.1531481575.1431844122", "/", "sriwijayaair.co.id"));
+                    _cookie.Add(new Cookie("_gat", "1", "/", "sriwijayaair.co.id"));
                     i++;
                 } while (i < 3 & response.StatusCode != HttpStatusCode.OK);
                 return response.StatusCode == HttpStatusCode.OK;
 
             }
 
-            private static HttpWebRequest ConstructRequest()
+            private static HttpWebRequest ConstructAgentRequest()
             {
-                var request = (HttpWebRequest) WebRequest.Create(LoginUrl);
+                var request = (HttpWebRequest)WebRequest.Create(_agentUrl);
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.CookieContainer = new CookieContainer();
@@ -85,10 +90,20 @@ namespace Lunggo.ApCommon.Sriwijaya
                 using (var requestStream = new StreamWriter(request.GetRequestStream()))
                 {
                     requestStream.Write(
-                        "username=" + UserName +
-                        "&password=" + Password +
+                        "username=" + _userName +
+                        "&password=" + _password +
                         "&Submit=Login&actions=LOGIN");
                 }
+                return request;
+            }
+
+            private static HttpWebRequest ConstructPublicRequest()
+            {
+                var request = (HttpWebRequest)WebRequest.Create(_publicUrl);
+                request.Method = "GET";
+                request.CookieContainer = new CookieContainer();
+                request.CookieContainer.Add(_cookie);
+                request.AllowAutoRedirect = false;
                 return request;
             }
 
