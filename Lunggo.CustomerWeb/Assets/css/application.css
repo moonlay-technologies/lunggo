@@ -1107,6 +1107,15 @@ hr {
     .flight-search-page .flight-list.horizontal .flight.active .flight-detail {
       height: auto;
       overflow: auto; }
+  .flight-search-page .flight-list.horizontal .flight.active-rules {
+    border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active-rules .flight-main {
+      border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active-rules .flight-rules .flight-rules-content {
+      border-color: #3fabe3; }
+    .flight-search-page .flight-list.horizontal .flight.active-rules .flight-rules {
+      height: auto;
+      overflow: auto; }
   .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div {
     float: left;
     width: 50%; }
@@ -1410,6 +1419,20 @@ hr {
               text-align: center; }
         .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li + li {
           border-top: 1px solid #ddd; }
+  .flight-search-page .flight-list.horizontal .flight .flight-rules {
+    padding: 0 20px;
+    height: 0;
+    overflow: hidden; }
+    .flight-search-page .flight-list.horizontal .flight .flight-rules .flight-rules-content {
+      border: 1px solid #ddd;
+      background: #fafafa;
+      border-top: 0;
+      padding: 20px; }
+    .flight-search-page .flight-list.horizontal .flight .flight-rules:after {
+      content: "";
+      display: block;
+      width: 100%;
+      clear: both; }
 .flight-search-page .flight-list-return.horizontal .flight {
   border: 1px solid #d5d5d5;
   margin-bottom: 15px;
