@@ -300,6 +300,7 @@
                     $scope.selectedItem = $index;
                 }
             }
+            $scope.selectedRules = -1;
 
             $scope.getDateTime = function (dateTime) {
                 return new Date(dateTime);
@@ -339,11 +340,13 @@
                             flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[0].Airlines[x].Code);
                         }
                         if (flightList.list[i].TripType == 2) {
-                            for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
+                            for (var x = 0 ; x < flightList.list[i].FlightTrips[1].Airlines.length; x++) {
                                 $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[1].Airlines[x]);
                                 flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[1].Airlines[x].Code);
                             }
                         }
+                        flightList.list[i].FareLoaded = false;
+                        flightList.list[i].FareRules = '';
                     }
 
                     // set prices min and max value for filtering
@@ -451,93 +454,74 @@
             }
 
             // get flight rules
-            $scope.getRules = function (indexNo) {
+            $scope.getRules = function (sequenceNo) {
                 var searchId = $scope.FlightSearchParams.SearchId;
 
-                loading_overlay('show');
-
-                console.log('getting rules :');
+                $scope.selectedItem = -1;
+                if ($scope.selectedRules == sequenceNo) {
+                    $scope.selectedRules = -1;
+                } else {
+                    $scope.selectedRules = sequenceNo;
+                }
+                
 
                 if (GetRulesConfig.working == false) {
                     GetRulesConfig.working = true;
 
-                    $http.get(GetRulesConfig.Url, {
-                        params: {
-                            SearchId: searchId,
-                            ItinIndex: indexNo
-                        }
-                    }).success(function (returnData) {
-                        GetRulesConfig.working = false;
+                    if ( flightList.list[$scope.selectedRules].FareLoaded == false ) {
 
-                        console.log(returnData);
+                        console.log('getting rules for : ');
 
-                        GetRulesConfig.value = returnData;
+                        $http.get(GetRulesConfig.Url, {
+                            params: {
+                                SearchId: searchId,
+                                ItinIndex: sequenceNo
+                            }
+                        }).success(function(returnData) {
+                            GetRulesConfig.working = false;
 
-                        var rules = '';
-                        var airlineRules = returnData.AirlineRules;
-                        var baggageRules = returnData.BaggageRules;
+                            GetRulesConfig.value = returnData;
 
-                        if (airlineRules.length == 0 && baggageRules == 0) {
-                            rules = 'No rules for this fare';
-                        } else {
-                            rules = rules.concat('\n');
-                            for (var i = 0; i < airlineRules.length; i++) {
-                                rules = rules.concat(airlineRules[i].AirlineCode + ' | ' + airlineRules[i].DepartureAirport + ' -> ' + airlineRules[i].ArrivalAirport);
-                                rules = rules.concat('\n\nRULES :\n');
-                                for (var j = 0; j < airlineRules[i].Rules.length; j++) {
-                                    rules = rules.concat(airlineRules[i].Rules[j] + '\n');
+                            var rules = '';
+                            var airlineRules = returnData.AirlineRules;
+                            var baggageRules = returnData.BaggageRules;
+
+                            if (airlineRules.length == 0 && baggageRules == 0) {
+                                rules = 'No rules for this fare';
+                            } else {
+                                rules = rules.concat('\n');
+                                for (var i = 0; i < airlineRules.length; i++) {
+                                    rules = rules.concat(airlineRules[i].AirlineCode + ' | ' + airlineRules[i].DepartureAirport + ' -> ' + airlineRules[i].ArrivalAirport);
+                                    rules = rules.concat('\n\nRULES :\n');
+                                    for (var j = 0; j < airlineRules[i].Rules.length; j++) {
+                                        rules = rules.concat(airlineRules[i].Rules[j] + '\n');
+                                    }
+                                }
+
+                                for (var i = 0; i < baggageRules.length; i++) {
+                                    rules = rules.concat('\n' + baggageRules[i].AirlineCode + baggageRules[i].FlightNumber + ' | ' + baggageRules[i].DepartureAirport + ' -> ' + baggageRules[i].ArrivalAirport);
+                                    rules = rules.concat('\nBAGGAGE : ' + baggageRules[i].Baggage + '\n');
                                 }
                             }
 
-                            for (var i = 0; i < baggageRules.length; i++) {
-                                rules = rules.concat('\n' + baggageRules[i].AirlineCode + baggageRules[i].FlightNumber + ' | ' + baggageRules[i].DepartureAirport + ' -> ' + baggageRules[i].ArrivalAirport);
-                                rules = rules.concat('\nBAGGAGE : ' + baggageRules[i].Baggage + '\n');
-                            }
-                        }
+                            flightList.list[$scope.selectedRules].FareLoaded = true;
+                            flightList.list[$scope.selectedRules].FareRules = rules;
 
-                        alert(rules);
+                        }).error(function(data) {
+                            console.log(data)
+                        });
 
-                        loading_overlay('hide');
+                    } else if (flightList.list[$scope.selectedRules].FareLoaded == true) {
+                        GetRulesConfig.working = false;
+                    }
 
-                    }).error(function (data) {
-                        console.log(data)
-                    });
                 } else {
                     console.log('Sistem busy, please wait');
                 }
             }
+
         }
     ]);
-
-    app.directive("slider", function () {
-        return {
-            restrict: 'A',
-            scope: {
-                config: "=config",
-                price: "=model"
-            },
-            link: function (scope, elem, attrs) {
-                var setModel = function (value) {
-                    scope.model = value;
-                }
-
-                $(elem).slider({
-                    range: true,
-                    min: scope.config.min,
-                    max: scope.config.max,
-                    values: [scope.config.min, scope.config.max],
-                    change: function (event, ui) {
-                        scope.$apply(function () {
-                            scope.price.currentMin = ui.values[0];
-                            scope.price.currentMax = ui.values[1];
-                        });
-                        console.log(scope.config);
-                        console.log(scope.price);
-                    }
-                });
-            }
-        }
-    });
 
 })();
 

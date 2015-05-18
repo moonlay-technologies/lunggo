@@ -273,7 +273,7 @@
             <section class="flight-list horizontal" ng-if="loaded">
 
                 <!-- Loop start here -->
-                <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': $index == selectedItem }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter">
+                <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter">
 
                     <div class="flight-main">
                         <!-- start here if Single Flight Type -->
@@ -316,8 +316,8 @@
 
                             </div><!-- .flight-content -->
                             <div class="flight-action">
-                                <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
-                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
+                                <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
+                                <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if single flight type -->
@@ -382,8 +382,8 @@
                                 </div><!-- .flight-content -->
                             </div><!-- .flight-return -->
                             <div class="flight-action">
-                                <a ng-click="clickedItem($index)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
-                                <a ng-click="getRules($index)"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
+                                <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
+                                <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
                             </div><!-- .flight-action -->
                         </div><!-- .flight-left -->
                         <!-- end if Return Flight Type -->
@@ -480,6 +480,17 @@
                             </div>
                         </div>
                     </div><!-- .flight-details -->
+                
+                    <div class="flight-rules">
+                        <div class="flight-rules-content">
+                            <div class="text-center" ng-if="flight.FareLoaded == false">
+                                <img src="/assets/images/loading-image-dark.gif" alt="Loading" />
+                            </div>
+                            <div ng-if="flight.FareLoaded == true">
+                                {{flight.FareRules}}
+                            </div>
+                        </div>
+                    </div><!-- .flight-rules -->
 
                 </article><!-- .flight -->
                 <!-- loop end here -->
