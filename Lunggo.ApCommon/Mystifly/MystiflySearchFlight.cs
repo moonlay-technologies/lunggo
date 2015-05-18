@@ -310,6 +310,7 @@ namespace Lunggo.ApCommon.Mystifly
             var flightTrips = new List<FlightTripFare>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
             var totalTransitDuration = new TimeSpan();
+            var i = 0;
             foreach (var tripInfo in conditions.TripInfos)
             {
                 var fareTrip = new FlightTripFare
@@ -319,7 +320,6 @@ namespace Lunggo.ApCommon.Mystifly
                     DepartureDate = tripInfo.DepartureDate,
                     FlightSegments = new List<FlightSegmentFare>()
                 };
-                var i = 0;
                 do
                 {
                     fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
