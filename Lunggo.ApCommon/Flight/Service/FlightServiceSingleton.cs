@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            _sriwijayaWrapper.SearchFlight(conditions);
+            //_sriwijayaWrapper.SearchFlight(conditions);
             return _mystiflyWrapper.SearchFlight(conditions);
         }
 
