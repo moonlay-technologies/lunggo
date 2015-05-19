@@ -441,11 +441,25 @@
                 
                     <div class="flight-rules">
                         <div class="flight-rules-content">
-                            <div class="text-center" ng-if="flight.FareLoaded == false">
+                            <div class="text-center rules-loading" ng-if="flight.FareLoaded == false">
                                 <img src="/assets/images/loading-image-dark.gif" alt="Loading" />
                             </div>
                             <div ng-if="flight.FareLoaded == true">
-                                {{flight.FareRules}}
+                                <div class="no-rules" ng-if="flight.FareRules.BaggageRules.length == 0 && flight.FareRules.AirlineRules.length == 0">
+                                    <p>No rules for this fare</p>
+                                </div>
+                                <div class="baggage-rules" ng-if="flight.FareRules.BaggageRules.length > 0">
+                                    <h4><b>BAGGAGE</b> RULES</h4>
+                                    <div class="rules-content">
+                                        {{flight.FareRules.BaggageRules}}
+                                    </div>
+                                </div>
+                                <div class="airline-rules" ng-if="flight.FareRules.AirlineRules.length > 0">
+                                    <h4><b>AIRLINE</b> RULES</h4>
+                                    <div class="rules-content">
+                                        {{flight.FareRules.AirlineRules}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div><!-- .flight-rules -->

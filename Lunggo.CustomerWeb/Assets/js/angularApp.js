@@ -459,6 +459,7 @@
             $scope.getRules = function (sequenceNo) {
                 var searchId = $scope.FlightSearchParams.SearchId;
 
+                // switch flight rules
                 $scope.selectedItem = -1;
                 if ($scope.selectedRules == sequenceNo) {
                     $scope.selectedRules = -1;
@@ -466,61 +467,35 @@
                     $scope.selectedRules = sequenceNo;
                 }
                 
-                if (GetRulesConfig.working == false) {
-                    GetRulesConfig.working = true;
+                // get flight rules
+                if ( flightList.list[sequenceNo].FareLoaded == false ) {
 
-                    if ( flightList.list[$scope.selectedRules].FareLoaded == false ) {
+                    console.log('getting rules for '+sequenceNo+'... ');
 
-                        console.log('getting rules for : ');
-
-                        $http.get(GetRulesConfig.Url, {
-                            params: {
-                                SearchId: searchId,
-                                ItinIndex: sequenceNo
-                            }
-                        }).success(function(returnData) {
-                            GetRulesConfig.working = false;
-
-                            GetRulesConfig.value = returnData;
-
-                            console.log(returnData);
-
-                            var rules = '';
-                            var airlineRules = returnData.AirlineRules;
-                            var baggageRules = returnData.BaggageRules;
-
-                            if (airlineRules.length == 0 && baggageRules == 0) {
-                                rules = 'No rules for this fare';
-                            } else {
-                                rules = rules.concat('\n');
-                                for (var i = 0; i < airlineRules.length; i++) {
-                                    rules = rules.concat(airlineRules[i].AirlineCode + ' | ' + airlineRules[i].DepartureAirport + ' -> ' + airlineRules[i].ArrivalAirport);
-                                    rules = rules.concat('\n\nRULES :\n');
-                                    for (var j = 0; j < airlineRules[i].Rules.length; j++) {
-                                        rules = rules.concat(airlineRules[i].Rules[j] + '\n');
-                                    }
-                                }
-
-                                for (var i = 0; i < baggageRules.length; i++) {
-                                    rules = rules.concat('\n' + baggageRules[i].AirlineCode + baggageRules[i].FlightNumber + ' | ' + baggageRules[i].DepartureAirport + ' -> ' + baggageRules[i].ArrivalAirport);
-                                    rules = rules.concat('\nBAGGAGE : ' + baggageRules[i].Baggage + '\n');
-                                }
-                            }
-
-                            flightList.list[$scope.selectedRules].FareLoaded = true;
-                            flightList.list[$scope.selectedRules].FareRules = rules;
-
-                        }).error(function(data) {
-                            console.log(data)
-                        });
-
-                    } else if (flightList.list[$scope.selectedRules].FareLoaded == true) {
+                    $http.get(GetRulesConfig.Url, {
+                        params: {
+                            SearchId: searchId,
+                            ItinIndex: sequenceNo
+                        }
+                    }).success(function(returnData) {
                         GetRulesConfig.working = false;
-                    }
 
-                } else {
-                    console.log('Sistem busy, please wait');
+                        GetRulesConfig.value = returnData;
+
+                        console.log(returnData);
+
+                        flightList.list[sequenceNo].FareLoaded = true;
+                        flightList.list[sequenceNo].FareRules = returnData;
+
+                        console.log('...Fare rules '+sequenceNo+' loaded');
+
+                    }).error(function(returnData) {
+                        console.log(returnData)
+                    });
+
                 }
+
+                
             }
 
         }
