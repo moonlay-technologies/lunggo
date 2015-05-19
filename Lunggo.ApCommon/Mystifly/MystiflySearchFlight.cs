@@ -197,7 +197,7 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static List<FlightItineraryFare> MapFlightItineraryFares(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
-            var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions)).ToList();
+            var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions)).Where(itin => itin != null).ToList();
             return result;
         }
 
@@ -209,29 +209,50 @@ namespace Lunggo.ApCommon.Mystifly
             currency.SetSupplierExchangeRate(Supplier.HotelsPro, 1, 1097);
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
 
-            var flightItineraryFare = new FlightItineraryFare();
-            flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
-            flightItineraryFare.SupplierPrice =
-                decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
-            flightItineraryFare.SupplierCurrency = "USD";
-            flightItineraryFare.SupplierRate = rate;
-            flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
-            flightItineraryFare.LocalCurrency = "IDR";
-            flightItineraryFare.LocalRate = 1;
-            flightItineraryFare.IdrPrice = flightItineraryFare.LocalPrice;
-            if (pricedItinerary.RequiredFieldsToBook != null)
-                MapRequiredFields(pricedItinerary, flightItineraryFare);
-            flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
-            flightItineraryFare.Supplier = FlightSupplier.Mystifly;
-            flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
-            flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
-            MapPassengerCount(pricedItinerary, flightItineraryFare);
-            flightItineraryFare.FareId =
-                FlightIdUtil.ConstructIntegratedId(
-                    pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
-                    FlightSupplier.Mystifly,
-                    MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));
-            return flightItineraryFare;
+            if (ItineraryValid(pricedItinerary))
+            {
+                var flightItineraryFare = new FlightItineraryFare();
+                flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
+                flightItineraryFare.SupplierPrice =
+                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
+                flightItineraryFare.SupplierCurrency = "USD";
+                flightItineraryFare.SupplierRate = rate;
+                flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
+                flightItineraryFare.LocalCurrency = "IDR";
+                flightItineraryFare.LocalRate = 1;
+                flightItineraryFare.IdrPrice = flightItineraryFare.LocalPrice;
+                if (pricedItinerary.RequiredFieldsToBook != null)
+                    MapRequiredFields(pricedItinerary, flightItineraryFare);
+                flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
+                flightItineraryFare.Supplier = FlightSupplier.Mystifly;
+                flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
+                flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
+                MapPassengerCount(pricedItinerary, flightItineraryFare);
+                flightItineraryFare.FareId =
+                    FlightIdUtil.ConstructIntegratedId(
+                        pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
+                        FlightSupplier.Mystifly,
+                        MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));
+                return flightItineraryFare;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static bool ItineraryValid(PricedItinerary pricedItinerary)
+        {
+            foreach (var segment in pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments))
+            {
+                var dict = DictionaryService.GetInstance();
+                if (!dict.IsAirportCodeExists(segment.DepartureAirportLocationCode) ||
+                    !dict.IsAirportCodeExists(segment.ArrivalAirportLocationCode))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private static Flight.Constant.FareType MapFareType(FareType fareType)
@@ -324,7 +345,9 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
                     i++;
-                } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                } while (i < segments.Count() && 
+                    segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
+                    DictionaryService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) != tripInfo.DestinationAirport);
                 flightTrips.Add(fareTrip);
             }
             return flightTrips;

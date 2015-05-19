@@ -73,6 +73,12 @@ namespace Lunggo.ApCommon.Dictionary
             return searchedValue.Name;
         }
 
+        public bool IsAirportCodeExists(string code)
+        {
+            var valueList = AirportDict.Select(dict => dict.Value.Code);
+            return valueList.Contains(code);
+        }
+
         public string GetAirportCode(string name)
         {
             var valueList = AirportDict.Select(dict => dict.Value);
@@ -87,11 +93,25 @@ namespace Lunggo.ApCommon.Dictionary
             return searchedValue.Name;
         }
 
+        public string GetAirportCityCode(string code)
+        {
+            var valueList = AirportDict.Select(dict => dict.Value);
+            var searchedValue = valueList.Single(value => value.Code == code);
+            return searchedValue.CityCode;
+        }
+
         public string GetAirportCity(string code)
         {
             var valueList = AirportDict.Select(dict => dict.Value);
             var searchedValue = valueList.Single(value => value.Code == code);
             return searchedValue.City;
+        }
+
+        public string GetAirportCountryCode(string code)
+        {
+            var valueList = AirportDict.Select(dict => dict.Value);
+            var searchedValue = valueList.Single(value => value.Code == code);
+            return searchedValue.CountryCode;
         }
 
         public string GetAirportCountry(string code)
@@ -135,8 +155,10 @@ namespace Lunggo.ApCommon.Dictionary
                     {
                         Code = splittedLine[1],
                         Name = splittedLine[2],
-                        City = splittedLine[3],
-                        Country = splittedLine[4]
+                        CityCode = splittedLine[3],
+                        City = splittedLine[4],
+                        CountryCode = splittedLine[5],
+                        Country = splittedLine[6],
                     });
                 }
             }
@@ -184,7 +206,9 @@ namespace Lunggo.ApCommon.Dictionary
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public string CityCode { get; set; }
         public string City { get; set; }
+        public string CountryCode { get; set; }
         public string Country { get; set; }
     }
 

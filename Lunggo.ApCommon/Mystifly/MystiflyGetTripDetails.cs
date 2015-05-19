@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel.PeerResolvers;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
@@ -108,7 +109,9 @@ namespace Lunggo.ApCommon.Mystifly
                     if (i > 0)
                         totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
                     i++;
-                } while (i < segments.Count() && segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport);
+                } while (i < segments.Count() && 
+                    segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
+                    DictionaryService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) != tripInfo.DestinationAirport);
                 flightTrips.Add(fareTrip);
             }
             return flightTrips;
