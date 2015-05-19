@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
@@ -65,14 +66,18 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static GetRulesResult MapResult(AirRulesRS1 response)
         {
+            var dict = DictionaryService.GetInstance();
             var result = new GetRulesResult();
             if (response.FareRules != null)
             {
                 result.AirlineRules = response.FareRules.Select(fareRule => new AirlineRules
                 {
                     AirlineCode = fareRule.Airline,
+                    AirlineName = dict.GetAirlineName(fareRule.Airline),
                     DepartureAirport = fareRule.CityPair.Substring(0, 3),
+                    DepartureAirportName = dict.GetAirportName(fareRule.CityPair.Substring(0, 3)),
                     ArrivalAirport = fareRule.CityPair.Substring(3, 3),
+                    ArrivalAirportName = dict.GetAirportName(fareRule.CityPair.Substring(3, 3)),
                     Rules = fareRule.RuleDetails.Select(rule => rule.Rules).ToList()
                 }).ToList();
             }
@@ -85,9 +90,12 @@ namespace Lunggo.ApCommon.Mystifly
                 result.BaggageRules = response.BaggageInfos.Select(baggageRule => new BaggageRules
                 {
                     AirlineCode = baggageRule.FlightNo.Substring(0, 2),
+                    AirlineName = dict.GetAirlineName(baggageRule.FlightNo.Substring(0, 2)),
                     FlightNumber = baggageRule.FlightNo.Substring(2),
                     DepartureAirport = baggageRule.Departure,
+                    DepartureAirportName = dict.GetAirportName(baggageRule.Departure),
                     ArrivalAirport = baggageRule.Arrival,
+                    ArrivalAirportName = dict.GetAirportName(baggageRule.Arrival),
                     Baggage = baggageRule.Baggage
                 }).ToList();
             }
