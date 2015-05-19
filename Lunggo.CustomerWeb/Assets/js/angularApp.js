@@ -294,6 +294,7 @@
             // add class on click
             $scope.selectedItem = -1;
             $scope.clickedItem = function ($index) {
+                $scope.selectedRules = -1;
                 if ($index == $scope.selectedItem) {
                     $scope.selectedItem = -1;
                 } else if ($index != $scope.selectedItem) {
@@ -399,6 +400,7 @@
                 }).error(function () {
 
                     $scope.noFlight = true;
+                    $scope.loaded = true;
 
                     console.log('REQUEST ERROR');
                     console.log('--------------------------------');
@@ -464,7 +466,6 @@
                     $scope.selectedRules = sequenceNo;
                 }
                 
-
                 if (GetRulesConfig.working == false) {
                     GetRulesConfig.working = true;
 
@@ -481,6 +482,8 @@
                             GetRulesConfig.working = false;
 
                             GetRulesConfig.value = returnData;
+
+                            console.log(returnData);
 
                             var rules = '';
                             var airlineRules = returnData.AirlineRules;

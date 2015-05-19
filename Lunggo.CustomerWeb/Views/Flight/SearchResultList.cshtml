@@ -157,45 +157,9 @@
             </div>
         </section><!-- .flight-search-form -->
 
-        <div class="container" ng-if="loaded">
+        <div class="container" ng-if="loaded && !noFlight">
             <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
         </div>
-
-
-        <!--
-            <aside class="flight-filter filter" data-active="false">
-                <div class="filter-button">
-                    <span class="arrow">&gt;</span>
-                    <span class="text">FILTER OFF</span>
-                </div>
-                <header>
-                    <h3><b>FILTER</b> BY</h3>
-                </header>
-                <section class="filter-group hotel-price">
-                    <h3 class="section-title">Harga</h3>
-                    <input type="text" class="form-control">
-                </section>
-                <section class="filter-group hotel-star">
-                    <h3 class="section-title">Bintang Hotel</h3>
-                    <div class="star-selection">
-                        <ul>
-                            <li><input type="checkbox" id="filter-hotel-star-1"> <label class="star star-1" for="filter-hotel-star-1"> <span class="fa fa-star"></span> <span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                            <li><input type="checkbox" id="filter-hotel-star-2"> <label class="star star-2" for="filter-hotel-star-2"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                            <li><input type="checkbox" id="filter-hotel-star-3"> <label class="star star-3" for="filter-hotel-star-3"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span> </label></li>
-                            <li><input type="checkbox" id="filter-hotel-star-4"> <label class="star star-4" for="filter-hotel-star-4"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </label></li>
-                            <li><input type="checkbox" id="filter-hotel-star-5"> <label class="star star-5" for="filter-hotel-star-5"> <span class="fa fa-star"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </label></li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="filter-group hotel-discount">
-                    <ul>
-                        <li><input type="checkbox" id="filter-hotel-discount"> <label for="filter-hotel-discount">Punya diskon</label></li>
-                    </ul>
-                </section>
-                <section class="filter-group search-filter">
-                    <a href="#" class="btn btn-primary">FILTER</a>
-                </section>
-            </aside><!-- .flight-filter -->
 
         <section class="flight-search-filter">
             <div class="filter price" data-min="{{FlightSearchFilter.PriceFilter.min}}" data-max="{{FlightSearchFilter.PriceFilter.max}}">
@@ -263,12 +227,6 @@
                 <h1>Sorry, No flight available</h1>
                 <h2>Please refine your flight search</h2>
             </section>
-        
-            <!--
-                <section class="flight-noresult text-center" ng-if="">
-                
-                </section>
-            -->
 
             <section class="flight-list horizontal" ng-if="loaded">
 
@@ -365,13 +323,13 @@
                                     <div class="flight-route">
                                         <div class="route-wrapper">
                                             <div class="departure">
-                                                <h4>{{flight.FlightTrips[1].OriginAirport}}</h4>
+                                                <h4>{{flight.FlightTrips[1].FlightSegments[0].DepartureAirport}}</h4>
                                                 <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy'}}</h5>
                                                 <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'HH : mm'}}</h5>
                                             </div>
                                             <div class="to">to</div>
                                             <div class="arrival">
-                                                <h4>{{flight.FlightTrips[1].DestinationAirport}}</h4>
+                                                <h4>{{flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalAirport}}</h4>
                                                 <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy'}}</h5>
                                                 <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
                                             </div>
