@@ -49,20 +49,8 @@
     <Reference Include="Fizzler.Systems.HtmlAgilityPack">
       <HintPath>..\packages\Fizzler.Systems.HtmlAgilityPack.1.0.0\lib\net35\Fizzler.Systems.HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="FluentSharp.CoreLib">
-      <HintPath>..\packages\FluentSharp.CoreLib.5.5.172\lib\net35\FluentSharp.CoreLib.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentSharp.HtmlAgilityPack">
-      <HintPath>..\packages\FluentSharp.HtmlAgilityPack.5.5.172\lib\net35\FluentSharp.HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentSharp.Xml">
-      <HintPath>..\packages\FluentSharp.Xml.5.5.172\lib\net35\FluentSharp.Xml.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack-PCL">
-      <HintPath>..\packages\HtmlAgilityPack-PCL.1.4.6\lib\HtmlAgilityPack-PCL.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack.CssSelectors">
       <HintPath>..\packages\HtmlAgilityPack.CssSelectors.1.0.0\lib\net45\HtmlAgilityPack.CssSelectors.dll</HintPath>
@@ -136,7 +124,6 @@
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
-    <Compile Include="Flight\Interface\IClientHandler.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
@@ -270,6 +257,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Sriwijaya\SriwijayaClientHandler.cs" />
+    <Compile Include="Sriwijaya\SriwijayaSearchFlight.cs" />
+    <Compile Include="Sriwijaya\SriwijayaWrapperSingleton.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />

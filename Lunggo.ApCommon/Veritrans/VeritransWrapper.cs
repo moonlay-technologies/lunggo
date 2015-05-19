@@ -23,14 +23,13 @@ namespace Lunggo.ApCommon.Veritrans
         private static readonly VeritransWrapper Instance = new VeritransWrapper();
         private bool _isInitialized;
 
-        private readonly static string EndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
-        private readonly static string ServerKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
-        private readonly static string Password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
-
-        private readonly static string RootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
-        private readonly static string FinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
-        private readonly static string UnfinishRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
-        private readonly static string ErrorRedirectUrl = RootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "errorRedirectUrl");
+        private static string _endPoint;
+        private static string _serverKey;
+        private static string _password;
+        private static string _rootRedirectUrl;
+        private static string _finishRedirectUrl;
+        private static string _unfinishRedirectUrl;
+        private static string _errorRedirectUrl;
 
         private VeritransWrapper()
         {
@@ -46,6 +45,13 @@ namespace Lunggo.ApCommon.Veritrans
         {
             if (!_isInitialized)
             {
+                _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
+                _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
+                _password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
+                _rootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
+                _finishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
+                _unfinishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
+                _errorRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "errorRedirectUrl");
                 _isInitialized = true;
             }
             else
@@ -56,7 +62,7 @@ namespace Lunggo.ApCommon.Veritrans
 
         internal string GetPaymentUrl(TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
         {
-            var authorizationKey = ProcessAuthorizationKey(ServerKey, Password);
+            var authorizationKey = ProcessAuthorizationKey(_serverKey, _password);
             var request = CreateRequest(authorizationKey, transactionDetail, itemDetails);
             var response = SubmitRequest(request);
             var url = GetUrlFromResponse(response);
@@ -73,7 +79,7 @@ namespace Lunggo.ApCommon.Veritrans
 
         private static WebRequest CreateRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
         {
-            var request = (HttpWebRequest) WebRequest.Create(EndPoint);
+            var request = (HttpWebRequest) WebRequest.Create(_endPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
@@ -92,9 +98,9 @@ namespace Lunggo.ApCommon.Veritrans
                 VtWeb = new VtWeb
                 {
                     CreditCard3DSecure = true,
-                    FinishRedirectUrl = FinishRedirectUrl,
-                    UnfinishRedirectUrl = UnfinishRedirectUrl,
-                    ErrorRedirectUrl = ErrorRedirectUrl
+                    FinishRedirectUrl = _finishRedirectUrl,
+                    UnfinishRedirectUrl = _unfinishRedirectUrl,
+                    ErrorRedirectUrl = _errorRedirectUrl
                 }
             };
             var jsonRequestParams = JsonConvert.SerializeObject(requestParams);
