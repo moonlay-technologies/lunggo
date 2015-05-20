@@ -186,7 +186,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Thankyou(FlightThankyouData data)
         {
-            return View(data.Status);
+            return View(data);
         }
 
         public ActionResult Eticket()
