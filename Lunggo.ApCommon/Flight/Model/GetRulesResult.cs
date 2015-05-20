@@ -25,8 +25,12 @@ namespace Lunggo.ApCommon.Flight.Model
         public string AirlineName { get; set; }
         public string DepartureAirport { get; set; }
         public string DepartureAirportName { get; set; }
+        public string DepartureCity { get; set; }
+        public string DepartureCountry { get; set; }
         public string ArrivalAirport { get; set; }
         public string ArrivalAirportName { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalCountry { get; set; }
         public List<string> Rules { get; set; }
     }
 
@@ -37,8 +41,12 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FlightNumber { get; set; }
         public string DepartureAirport { get; set; }
         public string DepartureAirportName { get; set; }
+        public string DepartureCity { get; set; }
+        public string DepartureCountry { get; set; }
         public string ArrivalAirport { get; set; }
         public string ArrivalAirportName { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalCountry { get; set; }
         public string Baggage { get; set; }
     }
 }

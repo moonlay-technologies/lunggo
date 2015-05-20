@@ -76,8 +76,12 @@ namespace Lunggo.ApCommon.Mystifly
                     AirlineName = dict.GetAirlineName(fareRule.Airline),
                     DepartureAirport = fareRule.CityPair.Substring(0, 3),
                     DepartureAirportName = dict.GetAirportName(fareRule.CityPair.Substring(0, 3)),
+                    DepartureCity = dict.GetAirportCity(fareRule.CityPair.Substring(0, 3)),
+                    DepartureCountry = dict.GetAirportCountry(fareRule.CityPair.Substring(0, 3)),
                     ArrivalAirport = fareRule.CityPair.Substring(3, 3),
                     ArrivalAirportName = dict.GetAirportName(fareRule.CityPair.Substring(3, 3)),
+                    ArrivalCity = dict.GetAirportCity(fareRule.CityPair.Substring(3, 3)),
+                    ArrivalCountry = dict.GetAirportCountry(fareRule.CityPair.Substring(3, 3)),
                     Rules = fareRule.RuleDetails.Select(rule => rule.Rules).ToList()
                 }).ToList();
             }
@@ -94,8 +98,12 @@ namespace Lunggo.ApCommon.Mystifly
                     FlightNumber = baggageRule.FlightNo.Substring(2),
                     DepartureAirport = baggageRule.Departure,
                     DepartureAirportName = dict.GetAirportName(baggageRule.Departure),
+                    DepartureCity = dict.GetAirportCity(baggageRule.Departure),
+                    DepartureCountry = dict.GetAirportCountry(baggageRule.Departure),
                     ArrivalAirport = baggageRule.Arrival,
                     ArrivalAirportName = dict.GetAirportName(baggageRule.Arrival),
+                    ArrivalCity = dict.GetAirportCity(baggageRule.Arrival),
+                    ArrivalCountry = dict.GetAirportCountry(baggageRule.Arrival),
                     Baggage = baggageRule.Baggage
                 }).ToList();
             }

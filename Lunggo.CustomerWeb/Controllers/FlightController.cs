@@ -131,11 +131,12 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                     };
                     
+                    /*
                     string url;
                     PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
                     return Redirect(url);
-                     
-                    /*
+                     */
+                    
                     var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
                     {
                         BookingId = bookResult.BookResult.BookingId,
@@ -168,7 +169,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         data.Message = "Already Booked. Please try again.";
                         return View(data);
                     }
-                     */
+                     
                 }
                 else
                 {

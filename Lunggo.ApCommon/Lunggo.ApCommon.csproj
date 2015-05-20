@@ -141,6 +141,7 @@
     <Compile Include="Flight\Model\FlightSegment.cs" />
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
+    <Compile Include="Flight\Model\MarginRules.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
     <Compile Include="Flight\Model\PassengerInfo.cs" />
     <Compile Include="Flight\Model\ResultBase.cs" />

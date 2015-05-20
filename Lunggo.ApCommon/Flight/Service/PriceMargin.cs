@@ -8,6 +8,6 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-
+        
     }
 }
