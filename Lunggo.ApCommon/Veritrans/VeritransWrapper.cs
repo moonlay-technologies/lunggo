@@ -45,9 +45,11 @@ namespace Lunggo.ApCommon.Veritrans
         {
             if (!_isInitialized)
             {
+                // TODO flight replace password override
                 _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
-                _password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
+                _password = "";
+                //_password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
                 _rootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
                 _finishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
                 _unfinishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
