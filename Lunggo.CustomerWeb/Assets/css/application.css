@@ -1683,6 +1683,20 @@ hr {
       padding: 20px; }
       .flight-search-page .flight-list-return.horizontal .flight .flight-detail .detail-right h5 {
         font-weight: bold; }
+  .flight-search-page .flight-list-return.horizontal .flight .flight-rules {
+    padding: 0 20px;
+    height: 0;
+    overflow: hidden; }
+    .flight-search-page .flight-list-return.horizontal .flight .flight-rules .flight-rules-content {
+      border: 1px solid #ddd;
+      background: #fafafa;
+      border-top: 0;
+      padding: 20px; }
+    .flight-search-page .flight-list-return.horizontal .flight .flight-rules:after {
+      content: "";
+      display: block;
+      width: 100%;
+      clear: both; }
 
 .tab-pane#history .history-wrapper .history-list {
   padding: 0;

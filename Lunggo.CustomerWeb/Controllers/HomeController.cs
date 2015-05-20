@@ -18,6 +18,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Index()
         {
+            throw new Exception();
             try
             {
                 //LunggoLogger.Info("test aja");

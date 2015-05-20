@@ -6,7 +6,6 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.ApCommon.Sriwijaya;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 
@@ -16,7 +15,6 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         private static readonly FlightService Instance = new FlightService();
         private static MystiflyWrapper _mystiflyWrapper;
-        private static SriwijayaWrapper _sriwijayaWrapper;
         private bool _isInitialized;
 
         private FlightService()
@@ -35,8 +33,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 _mystiflyWrapper = MystiflyWrapper.GetInstance();
                 _mystiflyWrapper.Init();
-                _sriwijayaWrapper = SriwijayaWrapper.GetInstance();
-                _sriwijayaWrapper.Init();
                 _isInitialized = true;
             }
             else

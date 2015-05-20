@@ -678,6 +678,10 @@ hr {border-color:#aaa;}
 					h5 {font-weight:bold;}
 				}
 			}
+            .flight-rules {padding:0 20px; height:0; overflow:hidden;
+                .flight-rules-content {border:1px solid #ddd; background:#fafafa; border-top:0; padding:20px;}
+                &:after {content:""; display:block; width:100%; clear:both;}
+            }
 		}
 	}
 }

@@ -259,9 +259,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Sriwijaya\SriwijayaClientHandler.cs" />
-    <Compile Include="Sriwijaya\SriwijayaSearchFlight.cs" />
-    <Compile Include="Sriwijaya\SriwijayaWrapperSingleton.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndex.cs" />
     <Compile Include="Trie\TrieNode.cs" />
