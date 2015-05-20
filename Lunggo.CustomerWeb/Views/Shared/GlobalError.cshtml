@@ -7,11 +7,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Halaman Error Global</title>
+    
+    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+
 </head>
 <body>
-    <hgroup>
+    
+    <div class="error-detail hidden">
         <h1>Halaman Error Global</h1>
 
         <h2>Action Name : @Model.ActionName</h2>
@@ -21,10 +28,8 @@
         <h3>Exception Message : @Model.Exception.Message</h3>
         <h3>Exception Stack Trace: @Model.Exception.StackTrace</h3>
         <h3>Exception Source: @Model.Exception.Source</h3>
+    </div>
 
-        asdadasdasd
-
-    </hgroup>
 </body>
 </html>
 
