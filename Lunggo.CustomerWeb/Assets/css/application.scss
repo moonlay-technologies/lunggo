@@ -486,7 +486,7 @@ hr {border-color:#aaa;}
                     }
                 }
                 .flight-detail {
-                    .return-flight-detail, ol + h4 {border-top:2px solid #3fabe3;}
+                    .return-flight-detail, ol + h4 {border-top:1px solid #3fabe3;}
                 }
             }
 			.flight-main {display:block; clear:both; position:relative; background:#fff; border:1px solid #ddd;
@@ -655,7 +655,7 @@ hr {border-color:#aaa;}
 							}
 							&>div {display:inline-block; vertical-align:top;}
 							.detail-destination {width:35%; text-align:center;
-								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&:after {content:""; display:block; width:100%; border-top:1px solid #aaa; top:20px; position:relative; z-index:1;}
 								&>div {position:relative; z-index:2; background:#fff;}
 								.departure {float:left; padding-right:5px;}
 								.arrival {float:right; padding-left:5px;}
@@ -664,7 +664,7 @@ hr {border-color:#aaa;}
 							}
 							.detail-airline {width:35%; vertical-align:middle; padding-top:5px; font-size:20px; text-align:center;}
 							.detail-time {width:28%; text-align:center;
-								&:after {content:""; display:block; width:100%; border-top:2px solid #aaa; top:20px; position:relative; z-index:1;}
+								&:after {content:""; display:block; width:100%; border-top:1px solid #aaa; top:20px; position:relative; z-index:1;}
 								&>div {position:relative; z-index:2; background:#fff;}
 								.departure {float:left; padding-right:5px;}
 								.arrival {float:right; padding-left:5px;}

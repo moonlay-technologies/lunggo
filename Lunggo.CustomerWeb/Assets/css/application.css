@@ -1173,7 +1173,7 @@ hr {
     .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > .flight-action a {
       cursor: pointer; }
   .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail .return-flight-detail, .flight-search-page .flight-list.horizontal .flight.flight-return .flight-detail ol + h4 {
-    border-top: 2px solid #3fabe3; }
+    border-top: 1px solid #3fabe3; }
   .flight-search-page .flight-list.horizontal .flight .flight-main {
     display: block;
     clear: both;
@@ -1628,7 +1628,7 @@ hr {
               content: "";
               display: block;
               width: 100%;
-              border-top: 2px solid #aaa;
+              border-top: 1px solid #aaa;
               top: 20px;
               position: relative;
               z-index: 1; }
@@ -1659,7 +1659,7 @@ hr {
               content: "";
               display: block;
               width: 100%;
-              border-top: 2px solid #aaa;
+              border-top: 1px solid #aaa;
               top: 20px;
               position: relative;
               z-index: 1; }
