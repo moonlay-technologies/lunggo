@@ -686,13 +686,19 @@
     <Content Include="Assets\images\_sample\bar-3.png" />
     <Content Include="Assets\images\_sample\bar-4.png" />
     <Content Include="Assets\images\_sample\bar-5.png" />
+    <Content Include="Assets\images\_sample\bg-1.jpg" />
+    <Content Include="Assets\images\_sample\bg-1.png" />
+    <Content Include="Assets\images\_sample\bg-2.png" />
     <Content Include="Assets\images\_sample\gadogado.jpg" />
     <Content Include="Assets\images\_sample\hot-deal.png" />
     <Content Include="Assets\images\_sample\hotel-image.jpg" />
     <Content Include="Assets\images\_sample\hotel-thumb.jpg" />
+    <Content Include="Assets\images\_sample\people-1.png" />
+    <Content Include="Assets\images\_sample\people-2.png" />
     <Content Include="Assets\images\_sample\room-thumb.jpg" />
     <Content Include="Assets\images\_sample\sample-tab.jpg" />
     <Content Include="Assets\images\_sample\save.png" />
+    <Content Include="Assets\images\_sample\sky.jpg" />
     <Content Include="Assets\images\_sample\slide_1.jpg" />
     <Content Include="Assets\images\_sample\travorama-display-large.png" />
     <Content Include="Assets\js\angular-route.min.js" />
@@ -706,6 +712,7 @@
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
+    <Content Include="Assets\js\plax.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
