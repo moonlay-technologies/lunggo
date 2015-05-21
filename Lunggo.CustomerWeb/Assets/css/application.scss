@@ -372,6 +372,8 @@ hr {border-color:#aaa;}
 
     .flight-loading {display:block; text-align:center;}
 
+    .sticky-wrapper {height:0 !important;}
+
 	// page header
 	.page-header {
 		.site-nav {display:inline;
@@ -428,7 +430,7 @@ hr {border-color:#aaa;}
 	}
 
     // flight filter
-    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
+    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:281px; z-index:9999; display:none;
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative; background:#3fabe3; border:1px solid #3fabe3;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center; color:#fff;}

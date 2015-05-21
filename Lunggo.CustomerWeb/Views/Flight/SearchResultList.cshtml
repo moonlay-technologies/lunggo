@@ -74,9 +74,15 @@
 
 }
 
-@section AdditionalPageJavascript {}
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.sticky.js"></script>
+}
 
-@section PageJavascript {}
+@section PageJavascript {
+    <script>
+        $('.flight-search-filter').sticky({topSpacing : 20});
+    </script>
+}
 
 @if (isValid)
 {

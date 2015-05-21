@@ -959,6 +959,9 @@ hr {
   display: block;
   text-align: center; }
 
+.flight-search-page .sticky-wrapper {
+  height: 0 !important; }
+
 .flight-search-page .page-header .site-nav {
   display: inline; }
   .flight-search-page .page-header .site-nav a {
@@ -1108,7 +1111,7 @@ hr {
   position: absolute;
   left: 50%;
   margin-left: -530px;
-  top: 30%;
+  top: 281px;
   z-index: 9999;
   display: none; }
   .flight-search-page .flight-search-filter .filter {
