@@ -1,15 +1,15 @@
 ﻿/* FONT FACE */
 @font-face {
   font-family: 'din';
-  src: url('../fonts/DINB-webfont.eot');
-  src: url('../fonts/DINB-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/DINB-webfont.woff2') format('woff2'), url('../fonts/DINB-webfont.woff') format('woff'), url('../fonts/DINB-webfont.ttf') format('truetype'), url('../fonts/DINB-webfont.svg#din-boldregular') format('svg');
+  src: url("../fonts/DINB-webfont.eot");
+  src: url("../fonts/DINB-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINB-webfont.woff2") format("woff2"), url("../fonts/DINB-webfont.woff") format("woff"), url("../fonts/DINB-webfont.ttf") format("truetype"), url("../fonts/DINB-webfont.svg#din-boldregular") format("svg");
   font-weight: bold;
   font-style: normal; }
 
 @font-face {
   font-family: 'din';
-  src: url('../fonts/DINR-webfont.eot');
-  src: url('../fonts/DINR-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/DINR-webfont.woff2') format('woff2'), url('../fonts/DINR-webfont.woff') format('woff'), url('../fonts/DINR-webfont.ttf') format('truetype'), url('../fonts/DINR-webfont.svg#din-regularregular') format('svg');
+  src: url("../fonts/DINR-webfont.eot");
+  src: url("../fonts/DINR-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINR-webfont.woff2") format("woff2"), url("../fonts/DINR-webfont.woff") format("woff"), url("../fonts/DINR-webfont.ttf") format("truetype"), url("../fonts/DINR-webfont.svg#din-regularregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -18,17 +18,17 @@
 
 @font-face {
   font-family: 'gotham';
-  src: url('../fonts/Gotham-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/Gotham-Bold.otf') format('opentype'), url('../fonts/Gotham-Bold.woff') format('woff'), url('../fonts/Gotham-Bold.ttf') format('truetype'), url('../fonts/Gotham-Bold.svg#Gotham-Bold') format('svg');
+  src: url("../fonts/Gotham-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Gotham-Bold.otf") format("opentype"), url("../fonts/Gotham-Bold.woff") format("woff"), url("../fonts/Gotham-Bold.ttf") format("truetype"), url("../fonts/Gotham-Bold.svg#Gotham-Bold") format("svg");
   font-weight: bold;
   font-style: normal; }
 
 @font-face {
   font-family: 'gotham';
-  src: url('../fonts/Gotham-Medium.eot?#iefix') format('embedded-opentype'), url('../fonts/Gotham-Medium.otf') format('opentype'), url('../fonts/Gotham-Medium.woff') format('woff'), url('../fonts/Gotham-Medium.ttf') format('truetype'), url('../fonts/Gotham-Medium.svg#Gotham-Medium') format('svg');
+  src: url("../fonts/Gotham-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/Gotham-Medium.otf") format("opentype"), url("../fonts/Gotham-Medium.woff") format("woff"), url("../fonts/Gotham-Medium.ttf") format("truetype"), url("../fonts/Gotham-Medium.svg#Gotham-Medium") format("svg");
   font-weight: normal;
   font-style: normal; }
 
-.gotham, .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name, .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name, .hotel-detail-page header h1, .hotel-detail-page .hotel-review .review-list .review .review-left .review-title, .hotel-detail-page .suggestion .hotel h2, .hotel-checkout-page .order-detail .hotel-detail .hotel-name, .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .departure .detail .airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .arrival .detail .airline, .user-page-login .user-login .login-form button.btn.btn-yellow, .user-page-login .user-login .or, .user-page-login .benefit h4, .user-page-register .user-register .login-form button.btn.btn-yellow, .user-page-register .user-register .or, .user-page-register .benefit h4 {
+.gotham, .hotel-search-page .hotel-list.square .hotel .hotel-sum .hotel-name, .hotel-search-page .hotel-list.horizontal .hotel .hotel-sum .hotel-name, .hotel-detail-page header h1, .hotel-detail-page .hotel-review .review-list .review .review-left .review-title, .hotel-detail-page .suggestion .hotel h2, .hotel-checkout-page .order-detail .hotel-detail .hotel-name, .hotel-checkout-page .order-detail .flight-detail .hotel-name, .flight-search-page .flight-list.horizontal .flight .flight-main .flight-left .flight-header .flight-airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .departure .detail .airline, .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-left .arrival .detail .airline, .user-page-login .user-login .login-form button.btn.btn-yellow, .user-page-login .user-login .or, .user-page-login .benefit h4, .user-page-register .user-register .login-form button.btn.btn-yellow, .user-page-register .user-register .or, .user-page-register .benefit h4 {
   font-family: 'gotham', helvetica, arial, sans-serif; }
 
 .site-header {
@@ -328,6 +328,7 @@ hr {
   margin-top: 50px; }
   .home-page .site-slogan h2 {
     font-size: 16px; }
+
 .home-page .home-info {
   text-align: center; }
   .home-page .home-info h2 {
@@ -347,6 +348,7 @@ hr {
   display: inline; }
   .hotel-search-page .page-header .site-nav a {
     color: inherit; }
+
 .hotel-search-page .page-header .display-option a {
   padding: 5px;
   font-size: 18px;
@@ -354,10 +356,12 @@ hr {
   .hotel-search-page .page-header .display-option a.active {
     background: #3fabe3;
     color: #fff; }
+
 .hotel-search-page .page-header .btn.btn-yellow {
   font-size: 12px;
   font-weight: bold;
   padding: 3px 5px; }
+
 .hotel-search-page .hotel-search-form {
   margin-bottom: 20px;
   margin-top: -10px;
@@ -385,9 +389,11 @@ hr {
     .hotel-search-page .hotel-search-form form .submit-button {
       font-weight: bold;
       width: 12%; }
+
 .hotel-search-page .hotel-loading {
   text-align: center;
   padding: 20px 0; }
+
 .hotel-search-page .hotel-filter {
   position: fixed;
   top: 0;
@@ -473,6 +479,7 @@ hr {
       cursor: pointer; }
     .hotel-search-page .hotel-filter .filter-group a {
       display: block; }
+
 .hotel-search-page .hotel-list.square .hotel {
   background: #fff;
   border: 1px solid #d5d5d5;
@@ -542,8 +549,10 @@ hr {
     display: none; }
   .hotel-search-page .hotel-list.square .hotel .hotel-show-square {
     display: block; }
+
 .hotel-search-page .hotel-list.horizontal .hotel-wrapper {
   width: 100%; }
+
 .hotel-search-page .hotel-list.horizontal .hotel {
   background: #fff;
   border: 1px solid #d5d5d5;
@@ -637,6 +646,7 @@ hr {
     .hotel-detail-page header .star .fa {
       margin-right: 5px;
       font-size: 18px; }
+
 .hotel-detail-page .hotel-image .hotel-main-image {
   height: 380px;
   text-align: center;
@@ -647,6 +657,7 @@ hr {
   .hotel-detail-page .hotel-image .hotel-main-image img {
     width: auto;
     max-height: 100%; }
+
 .hotel-detail-page .hotel-image .hotel-thumb {
   background: #000;
   text-align: center;
@@ -659,6 +670,7 @@ hr {
     overflow: hidden; }
     .hotel-detail-page .hotel-image .hotel-thumb a img {
       width: 50px; }
+
 .hotel-detail-page .hotel-map {
   position: relative; }
   .hotel-detail-page .hotel-map .hotel-address {
@@ -673,6 +685,7 @@ hr {
   .hotel-detail-page .hotel-map .hotel-map-placeholder {
     height: 450px;
     background: #000; }
+
 .hotel-detail-page .room-search header {
   padding: 10px 0; }
   .hotel-detail-page .room-search header form .form-group {
@@ -689,9 +702,11 @@ hr {
   .hotel-detail-page .room-search header form .option-wrapper li {
     padding-left: 0;
     text-align: center; }
+
 .hotel-detail-page .room-search .room-loading {
   text-align: center;
   padding: 20px 0; }
+
 .hotel-detail-page .room-search .room-list .room {
   border: 1px solid #ddd;
   margin-bottom: 15px;
@@ -741,6 +756,7 @@ hr {
         margin-bottom: 10px; }
       .hotel-detail-page .room-search .room-list .room .room-detail .room-content .room-price a {
         display: block; }
+
 .hotel-detail-page .hotel-review .review-sum {
   padding: 20px 0; }
   .hotel-detail-page .hotel-review .review-sum p {
@@ -752,6 +768,7 @@ hr {
     content: ':';
     position: absolute;
     right: 10px; }
+
 .hotel-detail-page .hotel-review .review-list .review {
   margin-bottom: 15px;
   padding: 20px;
@@ -779,6 +796,7 @@ hr {
     .hotel-detail-page .hotel-review .review-list .review .review-right summary .score-circle {
       color: #f3bd00;
       font-size: 18px; }
+
 .hotel-detail-page .suggestion .hotel h2 {
   background: #ffc600;
   color: #555;
@@ -791,8 +809,13 @@ hr {
 .hotel-checkout-page .page-header h1 {
   margin: 0;
   font-size: 20px; }
+
+.hotel-checkout-page .customer-detail .form-control.user-title {
+  width: 100%; }
+
 .hotel-checkout-page .customer-detail .payment-form h2 {
   font-size: 21px; }
+
 .hotel-checkout-page .customer-detail .payment-form .payment-option label {
   cursor: pointer;
   opacity: 0.7;
@@ -839,77 +862,115 @@ hr {
     background-image: url(../images/payment-token.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label input[type="radio"] {
     display: none; }
+
 .hotel-checkout-page .customer-detail .payment-form .payment-detail > section {
   display: none; }
+
 .hotel-checkout-page .customer-detail .payment-form .payment-detail > section.active {
   display: block; }
+
 .hotel-checkout-page .customer-detail .payment-button {
   text-align: center; }
   .hotel-checkout-page .customer-detail .payment-button .btn {
     font-size: 18px;
     font-weight: bold;
     padding: 10px 35px; }
+
 .hotel-checkout-page .order-detail h2 {
   background: #dadada;
   font-size: 21px;
   text-align: center;
   padding: 10px 0;
   margin: 0; }
-.hotel-checkout-page .order-detail .hotel-detail {
+
+.hotel-checkout-page .order-detail .hotel-detail, .hotel-checkout-page .order-detail .flight-detail {
   padding: 10px;
   background: #ededed; }
-  .hotel-checkout-page .order-detail .hotel-detail .hotel-image {
+  .hotel-checkout-page .order-detail .hotel-detail .hotel-image, .hotel-checkout-page .order-detail .flight-detail .hotel-image {
     margin-bottom: 10px; }
-  .hotel-checkout-page .order-detail .hotel-detail .hotel-name {
+  .hotel-checkout-page .order-detail .hotel-detail .hotel-name, .hotel-checkout-page .order-detail .flight-detail .hotel-name {
     color: #3fabe3;
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 0; }
-  .hotel-checkout-page .order-detail .hotel-detail .hotel-star {
+  .hotel-checkout-page .order-detail .hotel-detail .hotel-star, .hotel-checkout-page .order-detail .flight-detail .hotel-star {
     margin-bottom: 0;
     color: #f3bd00;
     font-size: 16px; }
-    .hotel-checkout-page .order-detail .hotel-detail .hotel-star .fa {
+    .hotel-checkout-page .order-detail .hotel-detail .hotel-star .fa, .hotel-checkout-page .order-detail .flight-detail .hotel-star .fa {
       margin-right: 3px; }
-  .hotel-checkout-page .order-detail .hotel-detail .hotel-address {
+  .hotel-checkout-page .order-detail .hotel-detail .hotel-address, .hotel-checkout-page .order-detail .flight-detail .hotel-address {
     margin-bottom: 0;
     font-style: italic; }
+
 .hotel-checkout-page .order-detail .checkin-detail {
   padding: 10px;
-  background: #ededed;
-  margin-bottom: 20px; }
+  background: #ededed; }
   .hotel-checkout-page .order-detail .checkin-detail .row div:last-child {
     font-weight: bold; }
     .hotel-checkout-page .order-detail .checkin-detail .row div:last-child:before {
       content: " : ";
       position: absolute;
       left: 0; }
-.hotel-checkout-page .order-detail .price-detail .content-wrapper {
-  padding: 10px;
-  background: #ededed; }
-  .hotel-checkout-page .order-detail .price-detail .content-wrapper hr {
-    border-color: #aaa; }
-  .hotel-checkout-page .order-detail .price-detail .content-wrapper .row div:last-child {
-    text-align: right;
-    font-weight: bold; }
-    .hotel-checkout-page .order-detail .price-detail .content-wrapper .row div:last-child:before {
-      content: " : ";
-      position: absolute;
-      left: 0; }
+
+.hotel-checkout-page .order-detail .flight-detail + .flight-detail {
+  border-top: 1px solid #bbb; }
+
+.hotel-checkout-page .order-detail .flight-detail h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold; }
+
+.hotel-checkout-page .order-detail .flight-detail .airline-logo {
+  height: 30px; }
+
+.hotel-checkout-page .order-detail .flight-detail .airline-name {
+  text-align: center; }
+
+.hotel-checkout-page .order-detail .flight-detail .flight-route {
+  position: relative; }
+  .hotel-checkout-page .order-detail .flight-detail .flight-route .separator {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 10px;
+    margin-left: -5px;
+    text-align: center; }
+  .hotel-checkout-page .order-detail .flight-detail .flight-route h4, .hotel-checkout-page .order-detail .flight-detail .flight-route h5 {
+    margin-top: 5px;
+    margin-bottom: 5px; }
+
+.hotel-checkout-page .order-detail .price-detail {
+  margin-top: 20px; }
+  .hotel-checkout-page .order-detail .price-detail .content-wrapper {
+    padding: 10px;
+    background: #ededed; }
+    .hotel-checkout-page .order-detail .price-detail .content-wrapper hr {
+      border-color: #aaa; }
+    .hotel-checkout-page .order-detail .price-detail .content-wrapper .row div:last-child {
+      text-align: right;
+      font-weight: bold; }
+      .hotel-checkout-page .order-detail .price-detail .content-wrapper .row div:last-child:before {
+        content: " : ";
+        position: absolute;
+        left: 0; }
 
 .flight-search-page .flight-loading {
   display: block;
   text-align: center; }
+
 .flight-search-page .page-header .site-nav {
   display: inline; }
   .flight-search-page .page-header .site-nav a {
     color: inherit; }
+
 .flight-search-page .page-header .display-option a {
   padding: 5px;
   font-size: 18px; }
   .flight-search-page .page-header .display-option a.active {
     background: #3fabe3;
     color: #fff; }
+
 .flight-search-page .flight-search-form {
   margin-bottom: 20px;
   margin-top: -10px;
@@ -956,6 +1017,7 @@ hr {
     .flight-search-page .flight-search-form form .submit-button {
       font-weight: bold;
       width: 11%; }
+
 .flight-search-page .flight-filter {
   position: fixed;
   top: 0;
@@ -1041,6 +1103,7 @@ hr {
       cursor: pointer; }
     .flight-search-page .flight-filter .filter-group a {
       display: block; }
+
 .flight-search-page .flight-search-filter {
   position: absolute;
   left: 50%;
@@ -1092,6 +1155,7 @@ hr {
   .flight-search-page .flight-search-filter .filter.stops label {
     width: 32%;
     cursor: pointer; }
+
 .flight-search-page .flight-list.horizontal .flight {
   margin-bottom: 15px;
   -webkit-border-radius: 5px;
@@ -1433,6 +1497,7 @@ hr {
       display: block;
       width: 100%;
       clear: both; }
+
 .flight-search-page .flight-list-return.horizontal .flight {
   border: 1px solid #d5d5d5;
   margin-bottom: 15px;
@@ -1748,6 +1813,7 @@ hr {
 
 .user-page-login #site-header {
   background: none; }
+
 .user-page-login .user-login {
   background: url(../images/user-login-bg.jpg) center top no-repeat #a9a9a9;
   margin-bottom: 30px; }
@@ -1795,15 +1861,19 @@ hr {
       -moz-border-radius: 3px;
       -ms-border-radius: 3px;
       border-radius: 3px; }
+
 .user-page-login .benefit h3 {
   margin-bottom: 10px; }
+
 .user-page-login .benefit hr {
   margin-bottom: 30px; }
+
 .user-page-login .benefit h4 {
   color: #2fb4e6; }
 
 .user-page-register #site-header {
   background: none; }
+
 .user-page-register .user-register {
   background: url(../images/user-register-bg.jpg) center top no-repeat #a9a9a9;
   margin-bottom: 30px; }
@@ -1851,10 +1921,13 @@ hr {
       -moz-border-radius: 3px;
       -ms-border-radius: 3px;
       border-radius: 3px; }
+
 .user-page-register .benefit h3 {
   margin-bottom: 10px; }
+
 .user-page-register .benefit hr {
   margin-bottom: 30px; }
+
 .user-page-register .benefit h4 {
   color: #2fb4e6; }
 
@@ -1862,6 +1935,7 @@ hr {
   background-image: url(../images/header-bg-gray.jpg);
   background-color: #81868b;
   padding-bottom: 20px; }
+
 .user-account .site-content .nav-tabs li a {
   background: #b2b2b2;
   color: #fff;
@@ -1874,6 +1948,7 @@ hr {
   -ms-border-radius: 0;
   border-radius: 0;
   margin-right: 0; }
+
 .user-account .site-content .nav-tabs li.active a {
   background: #fff;
   color: #444;
@@ -1882,6 +1957,7 @@ hr {
   border-bottom-color: #fff;
   font-size: 24px;
   padding-top: 15px; }
+
 .user-account .site-content .tab-content {
   border: 1px solid #aaa;
   border-top: 0;

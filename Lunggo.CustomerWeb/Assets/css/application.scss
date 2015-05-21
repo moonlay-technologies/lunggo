@@ -290,6 +290,7 @@ hr {border-color:#aaa;}
 		h1 {margin:0; font-size:20px;}
 	}
 	.customer-detail {
+        .form-control.user-title {width:100%;}
 		.customer-form {}
 		.payment-form {
 			h2 {font-size:21px;}
@@ -326,7 +327,7 @@ hr {border-color:#aaa;}
 	}
 	.order-detail {
 		h2 {background:#dadada; font-size:21px; text-align:center; padding:10px 0; margin:0;}
-		.hotel-detail {padding:10px; background:#ededed;
+		.hotel-detail, .flight-detail {padding:10px; background:#ededed;
 			.hotel-image {margin-bottom:10px;}
 			.hotel-name {color:#3fabe3; @extend .gotham; font-size:18px; margin-top:10px; margin-bottom:0;}
 			.hotel-star {margin-bottom:0; color:#f3bd00; font-size:16px;
@@ -334,14 +335,24 @@ hr {border-color:#aaa;}
 			}
 			.hotel-address {margin-bottom:0; font-style:italic;}
 		}
-		.checkin-detail {padding:10px; background:#ededed; margin-bottom:20px;
+		.checkin-detail {padding:10px; background:#ededed;
 			.row {
 				div:last-child {font-weight:bold;
 					&:before {content:" : "; position:absolute; left:0;}
 				}
 			}
 		}
-		.price-detail {
+        .flight-detail {
+            & + .flight-detail {border-top:1px solid #bbb;}
+            h3 {margin-top:10px; font-size:18px; font-weight:bold;}
+            .airline-logo {height:30px;}
+            .airline-name {text-align:center;}
+            .flight-route {position:relative;
+                .separator {position:absolute; top:40%; left:50%; width:10px; margin-left:-5px; text-align:center;}
+                h4, h5 {margin-top:5px; margin-bottom:5px;}
+            }
+        }
+		.price-detail {margin-top:20px;
 			.content-wrapper {padding:10px; background:#ededed;
 				hr {border-color:#aaa;}
 				.row {
