@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Payment.Constant
 {
-    public enum PaymentStatus 
+    public enum PaymentMethod
     {
-        // TODO flight fix this
+        // TODO flight add this
         Undefined = 0,
-        Cancelled = 1,
-        Pending = 2,
-        BeingAuthorized = 3,
-        Accepted = 4,
-        Denied = 5,
-        Error = 6
+        CreditCard = 1,
+        Transfer = 2
     }
 }
