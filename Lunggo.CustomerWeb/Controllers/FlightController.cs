@@ -134,10 +134,39 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                     };
 
+                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                    {
+                        BookingId = bookResult.BookResult.BookingId,
+                    });
+                    if (issueResult.IsSuccess)
+                    {
+                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
+                        {
+                            BookingId = issueResult.BookingId,
+                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
+                            {
+                                OriginAirport = trip.OriginAirport,
+                                DestinationAirport = trip.DestinationAirport,
+                                DepartureDate = trip.DepartureDate
+                            }).ToList()
+                        });
+                        if (tripDetails.IsSuccess)
+                        {
+                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
+                            return RedirectToAction("Eticket");
+                        }
+                        else
+                        {
+                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
+                            return View(data);
+                        }
+                    }
+                    else
+                    {
+                        data.Message = "Already Booked. Please try again.";
+                        return View(data);
+                    }
 
-                    string url;
-                    PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
-                    return Redirect(url);
                 }
                 else
                 {
@@ -161,33 +190,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var itin = FlightService.GetInstance().GetItineraryFromCache("111", "a");
             return View(itin);
-        }
-
-        public void PaymentConfirmation(FlightPaymentConfirmationData data)
-        {
-            if (data.PaymentStatus == PaymentStatus.Accepted)
-            {
-                using (var conn = DbService.GetInstance().GetOpenConnection())
-                {
-                    var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
-
-                    foreach (var bookingId in bookingIds)
-                    {
-                        var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                            {
-                                BookingId = bookingId
-                            });
-                        if (issueResult.IsSuccess)
-                        {
-                            var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                            {
-                                BookingId = bookingId,
-                                TripInfos = 
-                            })
-                        }
-                    }
-                }
-            }
         }
     }
 }
