@@ -11,7 +11,8 @@ namespace Lunggo.CustomerWeb.Models
     public class FlightCheckoutData
     {
         public string HashKey { get; set; }
-        public FlightItineraryFare Itinerary { get; set; }
+        public FlightItineraryApi Itinerary { get; set; }
+        public FlightItineraryFare ItineraryFare { get; set; }
         public ContactData ContactData { get; set; }
         public List<PassengerData> AdultPassengerData { get; set; }
         public List<PassengerData> ChildPassengerData { get; set; }

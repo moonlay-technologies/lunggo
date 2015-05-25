@@ -28,7 +28,8 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightSelectData select)
         {
             var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryFromCache(select.token);
+            var itineraryFare = service.GetItineraryFromCache(select.token);
+            var itinerary = service.ConvertToItineraryApi(itineraryFare);
             return View(new FlightCheckoutData
             {
                 HashKey = select.token,
@@ -40,7 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
+            data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
             {
@@ -100,7 +101,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     Email = data.ContactData.Email
                 },
                 PassengerInfoFares = passengerInfo,
-                Itinerary = data.Itinerary,
+                Itinerary = data.ItineraryFare,
                 TripInfos = new List<FlightTripInfo>
                 {
                     new FlightTripInfo
@@ -120,7 +121,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var transactionDetails = new TransactionDetails
                     {
                         OrderId = bookResult.ReservationDetails.RsvNo,
-                        Amount = data.Itinerary.IdrPrice
+                        Amount = data.ItineraryFare.IdrPrice
                     };
                     var itemDetails = new List<ItemDetails>
                     {
@@ -129,7 +130,7 @@ namespace Lunggo.CustomerWeb.Controllers
                             Id = "1",
                             Name = "pesawat",
                             Quantity = 1,
-                            Price = data.Itinerary.IdrPrice
+                            Price = data.ItineraryFare.IdrPrice
                         }
                     };
 

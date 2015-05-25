@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Mystifly
 
             if (!cacheObject.IsNullOrEmpty)
             {
-                var bookInfo = FlightCacheUtil.DeconvertFromCacheObject<FlightBookingInfo>(bookingId);
+                var bookInfo = FlightCacheUtil.DeconvertFromCacheObject<FlightBookingInfo>(cacheObject);
                 return bookInfo;
             }
             else
