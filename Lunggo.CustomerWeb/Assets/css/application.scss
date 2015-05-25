@@ -365,12 +365,23 @@ hr {border-color:#aaa;}
 	}
 }
 
+// modal
+.modal-wrapper {background:rgba(100,100,100,0.5); position:fixed; width:100%; height:100%; top:0; left:0; display:none;
+    .modal-dialog {
+        .modal-header {}
+        .modal-body {}
+    }
+}
+
+
 
 // ----------------------------------------------
 // flight search page
 .flight-search-page {
 
     .flight-loading {display:block; text-align:center;}
+
+    .sticky-wrapper {height:0 !important;}
 
 	// page header
 	.page-header {
@@ -428,7 +439,7 @@ hr {border-color:#aaa;}
 	}
 
     // flight filter
-    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
+    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:281px; z-index:9999; display:none; width:auto !important;
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative; background:#3fabe3; border:1px solid #3fabe3;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center; color:#fff;}
