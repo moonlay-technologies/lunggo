@@ -134,6 +134,8 @@ namespace Lunggo.CustomerWeb.Controllers
         public string transaction_time { get; set; }
         public string transaction_status { get; set; }
         public string fraud_status { get; set; }
+        public string bank { get; set; }
+        public string permata_va_number { get; set; }
     }
 
     public class VeritransResponse
