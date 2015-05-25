@@ -7,10 +7,10 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    internal class FlightBookingInfo
+    public class FlightBookingInfo
     {
-        internal string FareId { get; set; }
-        internal List<PassengerInfoFare> PassengerInfoFares { get; set; }
-        internal ContactData ContactData { get; set; }
+        public string FareId { get; set; }
+        public List<PassengerInfoFare> PassengerInfoFares { get; set; }
+        public ContactData ContactData { get; set; }
     }
 }
