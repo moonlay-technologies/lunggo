@@ -106,9 +106,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     new FlightTripInfo
                     {
-                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        OriginAirport = data.ItineraryFare.FlightTrips[0].OriginAirport,
+                        DestinationAirport = data.ItineraryFare.FlightTrips[0].DestinationAirport,
+                        DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
                 OverallTripType = TripType.OneWay
