@@ -434,6 +434,7 @@
                         if (returnData.IsValid == true) {
                             window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                            flightList.list[indexNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
                                 loading_overlay('hide');
@@ -444,6 +445,7 @@
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
                             loading_overlay('hide');
                             alert("Sorry, the flight is no longer valid. Please check another flight.");
+                            flightList.list[indexNo].hidden = true;
                         }
 
                     }).error(function (data) {

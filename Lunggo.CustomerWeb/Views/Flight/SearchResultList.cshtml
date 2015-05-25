@@ -74,9 +74,15 @@
 
 }
 
-@section AdditionalPageJavascript {}
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.sticky.js"></script>
+}
 
-@section PageJavascript {}
+@section PageJavascript {
+    <script>
+        $('.flight-search-filter').sticky({topSpacing : 20});
+    </script>
+}
 
 @if (isValid)
 {
@@ -230,7 +236,7 @@
             <section class="flight-list horizontal" ng-if="loaded">
 
                 <!-- Loop start here -->
-                <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter">
+                <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules , 'hidden' : flight.hidden == true }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter">
 
                     <div class="flight-main">
                         <!-- start here if Single Flight Type -->

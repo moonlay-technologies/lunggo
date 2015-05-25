@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Flight.Constant
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -65,19 +66,25 @@
                                 <label for="" class="control-label">Name (Buyer) :</label>
                                 <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
                             </div>
-                            <div class="form-inline">
-                                <div class="form-group" style="width:25%;">
-                                    <label for="">Country Code :</label>
-                                    <input type="text" class="form-control" style="width:100%;" name="ContactData.CountryCode" placeholder="ex : 62">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-inline">
+                                        <div class="form-group" style="width:34%;">
+                                            <label for="">Country Code :</label>
+                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.CountryCode" placeholder="ex : 62">
+                                        </div>
+                                        <div class="form-group" style="width:64%;">
+                                            <label for="">Phone Number :</label>
+                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
+                                        </div>
+                                    </div>  
                                 </div>
-                                <div class="form-group" style="width:74%;">
-                                    <label for="">Phone Number :</label>
-                                    <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Email :</label>
+                                        <input type="text" class="form-control" name="ContactData.Email" placeholder="ex : nama@email.com">
+                                    </div>  
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="control-label">Email :</label>
-                                <input type="text" class="form-control" name="ContactData.Email" placeholder="ex : nama@email.com">
                             </div>
                             @for (var i = 1; i <= Model.Itinerary.AdultCount; i++)
                             {
@@ -85,7 +92,7 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"))
+                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"), new{@class = "form-control user-title"})
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
@@ -129,7 +136,7 @@
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"))
+                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
                                         </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">First Name :</label>
@@ -174,7 +181,7 @@
                                     <div class="form-inline">
                                         <div class="form-group">
                                             <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"))
+                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
                                         </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">First Name :</label>
@@ -212,7 +219,7 @@
                             }
                         </form>
                     </section><!-- .customer-form -->
-                    <section class="payment-form">
+                    <section class="payment-form hidden">
                         <h2><b>PAYMENT</b> METHOD</h2>
 
                         <section class="payment-option">
@@ -272,53 +279,67 @@
             <div class="col-sm-4">
                 <section class="order-detail">
                     <h2><b>ORDER</b> DETAILS</h2>
-                    <section class="hotel-detail">
-                        <img src="/assets/images/_sample/hotel-thumb.jpg" alt="Hotel" class="hotel-image">
-                        <h3 class="hotel-name">AMARIS HOTEL</h3>
-                        <p class="hotel-star"> <span class="star"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span> </span> </p>
-                        <p class="hotel-address">Jl. Karet Pasar Gang Tiong No.62</p>
-                    </section><!-- .hotel-detail -->
-                    <section class="checkin-detail">
-                        <div class="row">
-                            <div class="col-sm-6">Check-in Date</div>
-                            <div class="col-sm-6">2015 Februari 30</div>
+                    <section class="flight-detail">
+                        <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                        <h5 class="airline-name"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="airline-logo" /> Garuda Indonesia - GA 1234</h5>
+                        <div class="row flight-route">
+                            <div class="col-sm-6 text-right flight-origin">
+                                <h5>25 May 2015</h5>
+                                <h5>13:00</h5>
+                                <h5>Soekarno Hatta inlt.</h5>
+                                <h5>Jakarta</h5>
+                                <h5>Indonesia</h5>
+                            </div>
+                            <div class="separator">to</div>
+                            <div class="col-sm-6 flight-destination">
+                                <h5>25 May 2015</h5>
+                                <h5>13:00</h5>
+                                <h5>Soekarno Hatta inlt.</h5>
+                                <h5>Jakarta</h5>
+                                <h5>Indonesia</h5>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">Check-out Date</div>
-                            <div class="col-sm-6">2015 Februari 31</div>
+                    </section><!-- .flight-detail -->
+                    <section class="flight-detail">
+                        <h3 class="text-center">RETURN FLIGHT</h3>
+                        <h5 class="airline-name"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="airline-logo" /> Garuda Indonesia - GA 1234</h5>
+                        <div class="row flight-route">
+                            <div class="col-sm-6 text-right flight-origin">
+                                <h5>25 May 2015</h5>
+                                <h5>13:00</h5>
+                                <h5>Soekarno Hatta inlt.</h5>
+                                <h5>Jakarta</h5>
+                                <h5>Indonesia</h5>
+                            </div>
+                            <div class="separator">to</div>
+                            <div class="col-sm-6 flight-destination">
+                                <h5>25 May 2015</h5>
+                                <h5>13:00</h5>
+                                <h5>Soekarno Hatta inlt.</h5>
+                                <h5>Jakarta</h5>
+                                <h5>Indonesia</h5>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">Number of Rooms</div>
-                            <div class="col-sm-6">3 Rooms</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">Nights</div>
-                            <div class="col-sm-6">3 Nights</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">Room Package</div>
-                            <div class="col-sm-6">3 Deluxe Room Package</div>
-                        </div>
-                    </section><!-- .checkin-detail -->
+                    </section><!-- .flight-detail -->
                     <section class="price-detail">
                         <h2><b>PRICE</b> DETAIL</h2>
                         <div class="content-wrapper">
                             <div class="row">
-                                <div class="col-sm-6">3 Rooms</div>
-                                <div class="col-sm-6">Rp 3.900.000</div>
+                                <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
+                                <div class="col-sm-6">IDR @Model.Itinerary.IdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">Tax</div>
-                                <div class="col-sm-6">0</div>
+                                <div class="col-sm-6">INCLUDED</div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">Travorama Fee</div>
-                                <div class="col-sm-6">0</div>
+                                <div class="col-sm-6">FREE</div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">TOTAL</div>
-                                <div class="col-sm-6">Rp 3.900.000</div>
+                                <div class="col-sm-6">IDR @Model.Itinerary.IdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                         </div>
                     </section><!-- .price-detail -->
@@ -334,3 +355,16 @@
 
 </div>
 <!-- .checkout-page content end -->
+
+<div class="modal-wrapper" id="redirectModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                
+                <h4>Please Wait</h4>
+                <p>Redirecting you to the payment gateway</p>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -292,6 +292,7 @@ hr {border-color:#aaa;}
 		h1 {margin:0; font-size:20px;}
 	}
 	.customer-detail {
+        .form-control.user-title {width:100%;}
 		.customer-form {}
 		.payment-form {
 			h2 {font-size:21px;}
@@ -328,7 +329,7 @@ hr {border-color:#aaa;}
 	}
 	.order-detail {
 		h2 {background:#dadada; font-size:21px; text-align:center; padding:10px 0; margin:0;}
-		.hotel-detail {padding:10px; background:#ededed;
+		.hotel-detail, .flight-detail {padding:10px; background:#ededed;
 			.hotel-image {margin-bottom:10px;}
 			.hotel-name {color:#3fabe3; @extend .gotham; font-size:18px; margin-top:10px; margin-bottom:0;}
 			.hotel-star {margin-bottom:0; color:#f3bd00; font-size:16px;
@@ -336,14 +337,24 @@ hr {border-color:#aaa;}
 			}
 			.hotel-address {margin-bottom:0; font-style:italic;}
 		}
-		.checkin-detail {padding:10px; background:#ededed; margin-bottom:20px;
+		.checkin-detail {padding:10px; background:#ededed;
 			.row {
 				div:last-child {font-weight:bold;
 					&:before {content:" : "; position:absolute; left:0;}
 				}
 			}
 		}
-		.price-detail {
+        .flight-detail {
+            & + .flight-detail {border-top:1px solid #bbb;}
+            h3 {margin-top:10px; font-size:18px; font-weight:bold;}
+            .airline-logo {height:30px;}
+            .airline-name {text-align:center;}
+            .flight-route {position:relative;
+                .separator {position:absolute; top:40%; left:50%; width:10px; margin-left:-5px; text-align:center;}
+                h4, h5 {margin-top:5px; margin-bottom:5px;}
+            }
+        }
+		.price-detail {margin-top:20px;
 			.content-wrapper {padding:10px; background:#ededed;
 				hr {border-color:#aaa;}
 				.row {
@@ -356,12 +367,23 @@ hr {border-color:#aaa;}
 	}
 }
 
+// modal
+.modal-wrapper {background:rgba(100,100,100,0.5); position:fixed; width:100%; height:100%; top:0; left:0; display:none;
+    .modal-dialog {
+        .modal-header {}
+        .modal-body {}
+    }
+}
+
+
 
 // ----------------------------------------------
 // flight search page
 .flight-search-page {
 
     .flight-loading {display:block; text-align:center;}
+
+    .sticky-wrapper {height:0 !important;}
 
 	// page header
 	.page-header {
@@ -419,7 +441,7 @@ hr {border-color:#aaa;}
 	}
 
     // flight filter
-    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:30%; z-index:9999; display:none;
+    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:281px; z-index:9999; display:none; width:auto !important;
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative; background:#3fabe3; border:1px solid #3fabe3;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center; color:#fff;}
