@@ -284,49 +284,53 @@
                         <h5 class="airline-name"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="airline-logo" /> Garuda Indonesia - GA 1234</h5>
                         <div class="row flight-route">
                             <div class="col-sm-6 text-right flight-origin">
-                                <h5>25 May 2015</h5>
-                                <h5>13:00</h5>
-                                <h5>Soekarno Hatta inlt.</h5>
-                                <h5>Jakarta</h5>
-                                <h5>Indonesia</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToShortTimeString()</h5>
+                                <h5><strong>@Model.Itinerary.FlightTrips.First().OriginAirport</strong></h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
                             </div>
                             <div class="separator">to</div>
                             <div class="col-sm-6 flight-destination">
-                                <h5>25 May 2015</h5>
-                                <h5>13:00</h5>
-                                <h5>Soekarno Hatta inlt.</h5>
-                                <h5>Jakarta</h5>
-                                <h5>Indonesia</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().DepartureTime.ToShortTimeString()</h5>
+                                <h5><strong>@Model.Itinerary.FlightTrips.First().DestinationAirport</strong></h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
                             </div>
                         </div>
                     </section><!-- .flight-detail -->
-                    <section class="flight-detail">
-                        <h3 class="text-center">RETURN FLIGHT</h3>
-                        <h5 class="airline-name"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="airline-logo" /> Garuda Indonesia - GA 1234</h5>
-                        <div class="row flight-route">
-                            <div class="col-sm-6 text-right flight-origin">
-                                <h5>25 May 2015</h5>
-                                <h5>13:00</h5>
-                                <h5>Soekarno Hatta inlt.</h5>
-                                <h5>Jakarta</h5>
-                                <h5>Indonesia</h5>
+                    @if (@Model.Itinerary.TripType == TripType.Return)
+                    {
+                        <section class="flight-detail">
+                            <h3 class="text-center">RETURN FLIGHT</h3>
+                            <h5 class="airline-name"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="airline-logo" /> Garuda Indonesia - GA 1234</h5>
+                            <div class="row flight-route">
+                                <div class="col-sm-6 text-right flight-origin">
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToShortTimeString()</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().OriginAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                </div>
+                                <div class="separator">to</div>
+                                <div class="col-sm-6 flight-destination">
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().DepartureTime.ToShortTimeString()</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().DestinationAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                </div>
                             </div>
-                            <div class="separator">to</div>
-                            <div class="col-sm-6 flight-destination">
-                                <h5>25 May 2015</h5>
-                                <h5>13:00</h5>
-                                <h5>Soekarno Hatta inlt.</h5>
-                                <h5>Jakarta</h5>
-                                <h5>Indonesia</h5>
-                            </div>
-                        </div>
-                    </section><!-- .flight-detail -->
+                        </section>
+                        <!-- .flight-detail -->
+                    }
                     <section class="price-detail">
                         <h2><b>PRICE</b> DETAIL</h2>
                         <div class="content-wrapper">
                             <div class="row">
                                 <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.IdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">Tax</div>
@@ -339,7 +343,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">TOTAL</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.IdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                         </div>
                     </section><!-- .price-detail -->
