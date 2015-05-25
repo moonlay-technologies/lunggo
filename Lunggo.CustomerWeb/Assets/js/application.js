@@ -10,6 +10,8 @@ $(document).ready(function () {
     hotelSearchFormFunctions();
     flightSearchFormFunctions();
     paymentOptionForm();
+    checkoutPageFunctions();
+    modalFunctions();
 
 });
 
@@ -487,46 +489,62 @@ function flightSearchFunctions() {
 
 }
 
+//******************************************
+// Modal Functions
+function modalFunctions() {
+
+    // move modal wrapper
+    $('.modal-wrapper').each(function () {
+        $(this).appendTo('body');
+    });
+    
+}
+
 
 //******************************************
 // Checkout Page functions
-$('.validate-fare').click(function (evt) {
-    evt.preventDefault();
+function checkoutPageFunctions() {
 
-    var hashKey = $(this).attr('data-hashKey');
+    // revalidate flight
+    $('.validate-fare').click(function(evt) {
+        evt.preventDefault();
 
-    if (RevalidateConfig.working == false) {
-        RevalidateConfig.working = true;
+        var hashKey = $(this).attr('data-hashKey');
 
-        loading_overlay('show');
+        // show modal
+        $('#redirectModal').show();
 
-        $.ajax({
-            method: 'GET',
-            url: RevalidateConfig.Url,
-            data: { HashKey: hashKey }
-        }).success(function (returnData) {
-            RevalidateConfig.working = false;
+        // revalidate flight
+        if (RevalidateConfig.working == false) {
+            RevalidateConfig.working = true;
 
-            if (returnData.IsValid == true) {
-                $('#flight-customer-form').submit();
-            } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
-                var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
-                if (userConfirmation) {
-                    loading_overlay('hide');
+            $.ajax({
+                method: 'GET',
+                url: RevalidateConfig.Url,
+                data: { HashKey: hashKey }
+            }).success(function(returnData) {
+                RevalidateConfig.working = false;
+
+                if (returnData.IsValid == true) {
                     $('#flight-customer-form').submit();
+                } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                    var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
+                    if (userConfirmation) {
+                        $('#redirectModal').hide();
+                        $('#flight-customer-form').submit();
+                    }
+                } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                    $('#redirectModal').hide();
+                    alert("Sorry, the flight is no longer valid. Please check another flight.");
                 }
-            } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
-                loading_overlay('hide');
-                alert("Sorry, the flight is no longer valid. Please check another flight.");
-            }
 
-        });
-    } else {
-        console.log('system  busy. Please wait');
-    }
+            });
+        } else {
+            console.log('system  busy. Please wait');
+        }
 
-});
-
+    });
+}
 
 //******************************************
 // Show loading
