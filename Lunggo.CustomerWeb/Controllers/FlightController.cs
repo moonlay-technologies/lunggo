@@ -168,7 +168,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
+                    /*var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
 
                     foreach (var bookingId in bookingIds)
                     {
@@ -181,10 +181,9 @@ namespace Lunggo.CustomerWeb.Controllers
                             var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
                             {
                                 BookingId = bookingId,
-                                TripInfos = 
-                            })
+                            });
                         }
-                    }
+                    }*/
                 }
             }
         }
