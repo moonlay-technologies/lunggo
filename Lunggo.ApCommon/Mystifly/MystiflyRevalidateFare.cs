@@ -4,6 +4,8 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Currency.Constant;
+using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
@@ -68,10 +70,13 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static RevalidateFareResult MapResult(AirRevalidateRS response, RevalidateConditions conditions)
         {
+            var currency = CurrencyService.GetInstance();
+            // TODO Flight Currency Dummy
+            var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
             if (response.PricedItineraries.Any())
-                result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions);
+                result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions, rate);
             return result;
         }
 
