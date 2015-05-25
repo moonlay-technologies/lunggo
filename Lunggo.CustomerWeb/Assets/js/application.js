@@ -222,7 +222,7 @@ function flightSearchFormFunctions() {
                 var cleanData = [];
                 for (var i = 0; i < data.length; i++) {
                     var newData = {
-                        label: data[i].Name + ' ,' + data[i].City + ' ,' + data[i].Country,
+                        label: data[i].Code + ' ,' + data[i].Name + ' ,' + data[i].City + ' ,' + data[i].Country,
                         value: data[i].Code
                     };
                     cleanData.push(newData);
