@@ -169,6 +169,7 @@
     <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
     <Compile Include="Flight\Service\FlightCaching.cs" />
+    <Compile Include="Flight\Service\ModelConversion.cs" />
     <Compile Include="Flight\Service\PriceMargin.cs" />
     <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
