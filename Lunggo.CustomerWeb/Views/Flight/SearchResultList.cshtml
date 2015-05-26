@@ -240,6 +240,18 @@
 
             </div><!-- . search-flight-loading -->
         
+            <div class="search-flight-loading" ng-if="validating">
+
+                <div class="loading-image-wrapper">
+                    <img src="/Assets/images/loading-sample.png" alt="Loading" />
+                    <div class="loading-text">
+                        <h2>Please Wait</h2>
+                        <h4>While we validating your flight of choice</h4>
+                    </div>
+                </div>
+
+            </div><!-- . search-flight-loading -->
+        
             <section class="flight-noflight text-center" ng-if="noFlight">
                 <h1>Sorry, No flight available</h1>
                 <h2>Please refine your flight search</h2>

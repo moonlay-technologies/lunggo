@@ -830,6 +830,9 @@ hr {
   padding: 10px 0;
   font-weight: bold; }
 
+.hotel-checkout-page .flight-validate-loading {
+  display: none; }
+
 .hotel-checkout-page .page-header h1 {
   margin: 0;
   font-size: 20px; }
