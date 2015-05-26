@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Mystifly
                 ExtensionData = null
             };
 
-            var result = new SearchFlightResult();
+            var result = new SearchFlightResult { FlightItineraries = new List<FlightItineraryFare>() };
             var retry = 0;
             var done = false;
             while (!done)
@@ -199,6 +199,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var currency = CurrencyService.GetInstance();
             // TODO Flight Currency Dummy
+            currency.SetSupplierExchangeRate(Supplier.Mystifly, 1, 13000);
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions, rate)).Where(itin => itin != null).ToList();
             return result;

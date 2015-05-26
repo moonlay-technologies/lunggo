@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -72,6 +73,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var currency = CurrencyService.GetInstance();
             // TODO Flight Currency Dummy
+            currency.SetSupplierExchangeRate(Supplier.Mystifly, 1, 13000);
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);
