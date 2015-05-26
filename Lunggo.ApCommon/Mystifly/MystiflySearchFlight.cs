@@ -251,6 +251,15 @@ namespace Lunggo.ApCommon.Mystifly
                     return false;
                 }
             }
+            foreach (var segment in pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments))
+            {
+                var dict = DictionaryService.GetInstance();
+                if (!dict.IsAirlineCodeExists(segment.MarketingAirlineCode) ||
+                    !dict.IsAirlineCodeExists(segment.OperatingAirline.Code))
+                {
+                    return false;
+                }
+            }
             return true;
         }
 

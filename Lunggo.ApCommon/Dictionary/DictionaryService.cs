@@ -59,6 +59,12 @@ namespace Lunggo.ApCommon.Dictionary
             }
         }
 
+        public bool IsAirlineCodeExists(string code)
+        {
+            var valueList = AirlineDict.Select(dict => dict.Value.Code);
+            return valueList.Contains(code);
+        }
+
         public string GetAirlineCode(string name)
         {
             var valueList = AirlineDict.Select(dict => dict.Value);
