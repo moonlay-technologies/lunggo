@@ -267,8 +267,8 @@
                                 <div class="flight-route">
 
                                     <div class="departure">
-                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' }}</h2>
-                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' }}</h3>
+                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC' }}</h2>
+                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC' }}</h3>
                                         <h2>{{flight.FlightTrips[0].OriginAirport}}</h2>
                                         <!-- <h3>Jakarta</h3> -->
                                     </div><!-- .departure -->
@@ -281,8 +281,8 @@
                                     </div><!-- .duration -->
 
                                     <div class="arrival">
-                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' }}</h2>
-                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' }}</h3>
+                                        <h2>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC' }}</h2>
+                                        <h3>{{ getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC' }}</h3>
                                         <h2>{{flight.FlightTrips[0].DestinationAirport}}</h2>
                                         <!-- <h3>Tokyo</h3> -->
                                     </div><!-- .arrival -->
@@ -312,14 +312,14 @@
                                         <div class="route-wrapper">
                                             <div class="departure">
                                                 <h4>{{flight.FlightTrips[0].FlightSegments[0].DepartureAirport}}</h4>
-                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy'}}</h5>
-                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy' : 'UTC'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                             </div>
                                             <div class="to">to</div>
                                             <div class="arrival">
                                                 <h4>{{flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalAirport}}</h4>
-                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy'}}</h5>
-                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy' : 'UTC'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                             </div>
                                         </div>
                                         <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[0].TotalDuration}}</h5>
@@ -341,14 +341,14 @@
                                         <div class="route-wrapper">
                                             <div class="departure">
                                                 <h4>{{flight.FlightTrips[1].FlightSegments[0].DepartureAirport}}</h4>
-                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy'}}</h5>
-                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'HH : mm'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd-MMM-yyyy' : 'UTC'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                             </div>
                                             <div class="to">to</div>
                                             <div class="arrival">
                                                 <h4>{{flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalAirport}}</h4>
-                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy'}}</h5>
-                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy' : 'UTC'}}</h5>
+                                                <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                             </div>
                                         </div>
                                         <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[1].TotalDuration}}</h5>
@@ -393,16 +393,16 @@
                                             <h5>{{trip.DepartureAirportName}}</h5>
                                         </div><!-- .flight-departure-airport -->
                                         <div class="flight-departure-time">
-                                            <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm'}}</h4>
-                                            <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy'}}</h5>
+                                            <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm' : 'UTC'}}</h4>
+                                            <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                         </div><!-- .flight-departure-time -->
                                         <div class="flight-duration">
                                             <h5>Duration<br />{{trip.Duration}}</h5>
                                             <hr />
                                         </div><!-- .flight-departure-duration -->
                                         <div class="flight-arrival-time">
-                                            <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm'}}</h4>
-                                            <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy'}}</h5>
+                                            <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC'}}</h4>
+                                            <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                         </div><!-- .flight-arrival-time -->
                                         <div class="flight-arrival-airport">
                                             <h4>{{trip.ArrivalAirport}}</h4>
@@ -430,16 +430,16 @@
                                                 <h5>{{trip.DepartureAirportName}}</h5>
                                             </div><!-- .flight-departure-airport -->
                                             <div class="flight-departure-time">
-                                                <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm'}}</h4>
-                                                <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy'}}</h5>
+                                                <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm' : 'UTC'}}</h4>
+                                                <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                             </div><!-- .flight-departure-time -->
                                             <div class="flight-duration">
                                                 <h5>Duration<br />{{trip.Duration}}</h5>
                                                 <hr />
                                             </div><!-- .flight-departure-duration -->
                                             <div class="flight-arrival-time">
-                                                <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm'}}</h4>
-                                                <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy'}}</h5>
+                                                <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC'}}</h4>
+                                                <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                             </div><!-- .flight-arrival-time -->
                                             <div class="flight-arrival-airport">
                                                 <h4>{{trip.ArrivalAirport}}</h4>

@@ -27,6 +27,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Checkout(FlightSelectData select)
         {
+            /*
             var service = FlightService.GetInstance();
             var itineraryFare = service.GetItineraryFromCache(select.token);
             var itinerary = service.ConvertToItineraryApi(itineraryFare);
@@ -36,11 +37,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 Itinerary = itinerary,
                 Message = ""
             });
+            */
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
+            /*
             data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
@@ -106,9 +110,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     new FlightTripInfo
                     {
-                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        OriginAirport = data.ItineraryFare.FlightTrips[0].OriginAirport,
+                        DestinationAirport = data.ItineraryFare.FlightTrips[0].DestinationAirport,
+                        DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
                 OverallTripType = TripType.OneWay
@@ -179,6 +183,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 data.Message = "Already Booked. Please try again.";
                 return View(data);
             }
+             */
+
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Thankyou(FlightThankyouData data)

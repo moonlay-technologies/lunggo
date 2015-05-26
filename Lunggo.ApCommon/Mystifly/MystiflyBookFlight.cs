@@ -171,28 +171,42 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static PassengerTitle MapPassengerTitle(PassengerInfoFare passengerInfoFare)
         {
-            if (passengerInfoFare.Type == PassengerType.Adult)
-                switch (passengerInfoFare.Title)
-                {
-                    case Title.Mister:
-                        return PassengerTitle.MR;
-                    case Title.Mistress:
-                        return PassengerTitle.MRS;
-                    case Title.Miss:
-                        return PassengerTitle.MS;
-                    default:
-                        return PassengerTitle.Default;
-                }
-            else
-                switch (passengerInfoFare.Title)
-                {
-                    case Title.Mister:
-                        return PassengerTitle.MSTR;
-                    case Title.Miss:
-                        return PassengerTitle.MISS;
-                    default:
-                        return PassengerTitle.Default;
-                }
+            switch (passengerInfoFare.Type)
+            {
+                case PassengerType.Adult:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                            return PassengerTitle.MR;
+                        case Title.Mistress:
+                            return PassengerTitle.MRS;
+                        case Title.Miss:
+                            return PassengerTitle.MS;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                case PassengerType.Child:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                            return PassengerTitle.MSTR;
+                        case Title.Miss:
+                            return PassengerTitle.MISS;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                case PassengerType.Infant:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                        case Title.Miss:
+                            return PassengerTitle.INF;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                default:
+                    return PassengerTitle.Default;
+            }
         }
 
         private static Passport MapPassport(PassengerInfoFare passengerInfoFare)
