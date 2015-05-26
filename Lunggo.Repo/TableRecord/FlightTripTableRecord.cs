@@ -56,15 +56,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DepartureDate");
 		    }
 		}
-		public TimeSpan? TotalDuration
-		{
-		    get { return _TotalDuration; }
-		    set
-		    {
-		        _TotalDuration = value;
-		        IncrementLog("TotalDuration");
-		    }
-		}
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -126,7 +117,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _OriginAirportCd;
 		private String _DestinationAirportCd;
 		private DateTime? _DepartureDate;
-		private TimeSpan? _TotalDuration;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -169,7 +159,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("OriginAirportCd", false),
 				new ColumnMetadata("DestinationAirportCd", false),
 				new ColumnMetadata("DepartureDate", false),
-				new ColumnMetadata("TotalDuration", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),
