@@ -16,18 +16,92 @@
         var deadline = new Date;
         deadline.setMinutes(deadline.getMinutes() + 20);
 
-        $('.payment-timer').countdown(deadline, function (event) {
+        $('.payment-countdown').countdown(deadline, function (event) {
             $(this).html(event.strftime('%M:%S'));
         });
 
     </script>
 }
 
-<div class="container">
-    <h1 class="payment-timer text-center">
-        
-    </h1>
-</div>
+<div class="thankyou-page flight-receipt">
+    
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                
+                <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+                
+                <div class="payment-timer">
+                    
+                    <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="payment-countdown text-center"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="receipt-wrapper">
+
+                    <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
+
+                    <div class="row">
+                        <div class="col-sm-6 receipt-left">
+
+                            <div class="receipt-number">
+                                <h3>Nomer Pemesanan</h3>
+                                <p>1234567890</p>
+                            </div>
+
+                            <div class="receipt-user">
+                                <h3>Info Penumpang</h3>
+                                <ol>
+                                    <li><h5>Mr. Lorem Ipsum <br/> Jenis Tiket : Dewasa</h5></li>
+                                    <li><h5>Mr. Lorem Ipsum <br /> Jenis Tiket : Dewasa</h5></li>
+                                </ol>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 receipt-right">
+
+                            <div class="receipt-flight">
+                                <h3>Informasi Penerbangan</h3>
+                                <h4>Berangkat</h4>
+                                <h5>Maskapai : Air Asia</h5>
+                                <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
+                                <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                                <h4>Kembali</h4>
+                                <h5>Maskapai : Air Asia</h5>
+                                <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
+                                <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                            </div>
+
+                            <div clas="receipt-payment">
+                                <h3>Informasi Pembayaran</h3>
+                                <h5>Harga total : Rp. 123.456</h5>
+                                <h5>Metode Pembayaran : Veritrans</h5>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div><!-- .receipt-wrapper -->
+                
+                <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
+
+            </div>
+        </div>
+
+    </div>
+
+</div><!-- .thankyou-page -->
 
 @switch (Model.Status)
 {

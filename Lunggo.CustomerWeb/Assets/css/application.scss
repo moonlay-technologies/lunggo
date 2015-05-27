@@ -327,6 +327,7 @@ hr {border-color:#aaa;}
             }
 		}
 		.payment-button {text-align:center;
+            small {margin:15px 0; display:block;}
 			.btn {font-size:18px; font-weight:bold; padding:10px 35px;}
 		}
 	}
@@ -378,6 +379,23 @@ hr {border-color:#aaa;}
     }
 }
 
+
+// ----------------------------------------------
+// thankyou page
+.thankyou-page.flight-receipt {
+    .receipt-wrapper {background:#eee; padding:25px; margin-top:25px;}
+    .receipt-title {margin-top:0;}
+    .receipt-left {border-right:1px solid #ccc;}
+    .receipt-right {}
+
+    .payment-timer {}
+    .payment-countdown {background:#2fb4e6; font-size:32px; padding:15px 0; color:#fff;}
+
+    .receipt-number {}
+    .receipt-user {}
+    .receipt-flight {}
+    .receipt-payment {}
+}
 
 
 // ----------------------------------------------

@@ -876,6 +876,9 @@ hr {
 
 .hotel-checkout-page .customer-detail .payment-button {
   text-align: center; }
+  .hotel-checkout-page .customer-detail .payment-button small {
+    margin: 15px 0;
+    display: block; }
   .hotel-checkout-page .customer-detail .payment-button .btn {
     font-size: 18px;
     font-weight: bold;
@@ -968,6 +971,23 @@ hr {
   top: 0;
   left: 0;
   display: none; }
+
+.thankyou-page.flight-receipt .receipt-wrapper {
+  background: #eee;
+  padding: 25px;
+  margin-top: 25px; }
+
+.thankyou-page.flight-receipt .receipt-title {
+  margin-top: 0; }
+
+.thankyou-page.flight-receipt .receipt-left {
+  border-right: 1px solid #ccc; }
+
+.thankyou-page.flight-receipt .payment-countdown {
+  background: #2fb4e6;
+  font-size: 32px;
+  padding: 15px 0;
+  color: #fff; }
 
 .flight-search-page .flight-loading {
   display: block;
