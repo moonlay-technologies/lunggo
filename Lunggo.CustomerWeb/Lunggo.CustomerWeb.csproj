@@ -683,6 +683,7 @@
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
+    <Content Include="Assets\images\payment-veritrans.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
     <Content Include="Assets\images\_sample\bar-3.png" />
@@ -703,6 +704,7 @@
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
+    <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
