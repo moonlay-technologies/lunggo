@@ -853,6 +853,8 @@ hr {
     background-position: 10px center; }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.active {
     opacity: 1; }
+  .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-veritrans span {
+    background-image: url(../images/payment-veritrans.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-transfer span {
     background-image: url(../images/payment-transfer.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-credit span {
