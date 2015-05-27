@@ -6,7 +6,28 @@
     Layout = "/Views/Shared/_layout_20150506.cshtml";
 }
 
-@Model.RsvNo
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+
+@section PageJavascript {
+    <script>
+
+        var deadline = new Date;
+        deadline.setMinutes(deadline.getMinutes() + 20);
+
+        $('.payment-timer').countdown(deadline, function (event) {
+            $(this).html(event.strftime('%M:%S'));
+        });
+
+    </script>
+}
+
+<div class="container">
+    <h1 class="payment-timer text-center">
+        
+    </h1>
+</div>
 
 @switch (Model.Status)
 {

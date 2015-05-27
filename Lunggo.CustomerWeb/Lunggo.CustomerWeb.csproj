@@ -701,6 +701,7 @@
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
+    <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
