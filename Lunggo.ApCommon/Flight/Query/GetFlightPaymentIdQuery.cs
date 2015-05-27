@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.Database;
-using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetBookingIdAndTripInfoQuery : QueryBase<GetBookingIdAndTripInfoQuery, FlightItineraryFare, FlightItineraryFare, FlightTripInfo>
+    internal class GetFlightPaymentIdQuery : QueryBase<GetFlightPaymentIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -21,8 +21,8 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT BookingId ");
-            clauseBuilder.Append("FROM FlightItinerary ");
+            clauseBuilder.Append("SELECT PaymentId ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 

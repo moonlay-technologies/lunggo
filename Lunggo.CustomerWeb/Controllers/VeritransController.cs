@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -25,6 +27,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         PaymentMethod = paymentMethod,
                         PaymentStatus = paymentStatus
                     });
+
                 }
                 else
                 {
@@ -36,31 +39,11 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            if (response.status_code == "200" && response.transaction_status.ToLower() == "capture")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Accepted
-                });
-            else if (response.status_code == "201" && response.transaction_status.ToLower() == "capture")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.BeingAuthorized
-                });
-            else if (response.status_code == "201" && response.transaction_status.ToLower() == "pending")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Pending
-                    });
-            else if (response.status_code == "202" && response.transaction_status.ToLower() == "deny")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Denied
-                    });
-            else
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Error
-                    });
+            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData
+            {
+                RsvNo = response.order_id,
+                Status = PaymentStatus.Cancelled
+            });
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
@@ -87,7 +70,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "credit_card":
                     return PaymentMethod.CreditCard;
                 case "bank_transfer":
-                    return PaymentMethod.Transfer;
+                    return PaymentMethod.BankTransfer;
+                case "mandiri_clickpay":
+                    return PaymentMethod.MandiriClickPay;
+                case "cimb_clicks":
+                    return PaymentMethod.CimbClicks;
                 default:
                     return PaymentMethod.Undefined;
             }
@@ -112,12 +99,10 @@ namespace Lunggo.CustomerWeb.Controllers
                             return PaymentStatus.Denied;
                         case "authorize":
                         case "capture":
-                            return PaymentStatus.BeingAuthorized;
                         default:
                             return PaymentStatus.Undefined;
                     }
                 case "challenge":
-                    return PaymentStatus.BeingAuthorized;
                 case "deny":
                     return PaymentStatus.Denied;
                 default:

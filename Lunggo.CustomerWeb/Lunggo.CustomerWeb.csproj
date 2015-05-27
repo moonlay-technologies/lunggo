@@ -276,6 +276,7 @@
     <Compile Include="Models\FlightThankyouData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PaymentConfirmationData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Models\testHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2024,6 +2025,7 @@
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
+    <Content Include="Views\Flight\Confirmation.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

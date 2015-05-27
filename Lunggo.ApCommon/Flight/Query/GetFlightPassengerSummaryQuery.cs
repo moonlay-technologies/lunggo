@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query.Model
+namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetFlightPassengerPrimKey : QueryBase<GetFlightPassengerPrimKey, long>
+    internal class GetFlightPassengerSummaryQuery : QueryBase<GetFlightPassengerSummaryQuery, FlightPassengerTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            queryBuilder.Append(CreateWhereClause());
+            if (condition != null)
+                queryBuilder.Append(CreateWhereClause(condition));
             return queryBuilder.ToString();
         }
 
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT PassengerId ");
+            clauseBuilder.Append(@"SELECT TitleCd, FirstName, LastName, PassengerTypeCd ");
             clauseBuilder.Append(@"FROM FlightPassenger ");
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause()
+        private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"FirstName = @FirstName AND ");
-            clauseBuilder.Append(@"LastName = @LastName AND ");
-            clauseBuilder.Append(@"BirthDate = @DateOfBirth AND ");
-            clauseBuilder.Append(@"IdNumber = IdNumber");
+            clauseBuilder.Append(@"WHERE RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
     }

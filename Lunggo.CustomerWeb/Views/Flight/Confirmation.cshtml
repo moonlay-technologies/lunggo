@@ -1,0 +1,13 @@
+﻿@model Lunggo.CustomerWeb.Models.PaymentConfirmationData
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<h2>Confirmation</h2>
+
+@Html.TextBoxFor(model => model.Remitter)
+@Html.TextBoxFor(model => model.Amount)
+@Html.TextBoxFor(model => model.RemitterBank)
+@Html.TextBoxFor(model => model.BeneficiaryBank)
+@Html.TextBoxFor(model => model.Message)
