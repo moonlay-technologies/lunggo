@@ -72,7 +72,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             var service = FlightService.GetInstance();
             var rawItins = service.GetItinerariesFromCache(request.SearchId);
-            var unfilteredItineraries = MapItineraries(rawItins);
+            var unfilteredItineraries = service.ConvertToItinerariesApi(rawItins);
             return unfilteredItineraries;
         }
 

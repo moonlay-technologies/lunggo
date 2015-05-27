@@ -38,6 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvStatusCd");
 		    }
 		}
+		public String InvoiceNo
+		{
+		    get { return _InvoiceNo; }
+		    set
+		    {
+		        _InvoiceNo = value;
+		        IncrementLog("InvoiceNo");
+		    }
+		}
 		public String ContactName
 		{
 		    get { return _ContactName; }
@@ -54,6 +63,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _ContactEmail = value;
 		        IncrementLog("ContactEmail");
+		    }
+		}
+		public String ContactCountryCode
+		{
+		    get { return _ContactCountryCode; }
+		    set
+		    {
+		        _ContactCountryCode = value;
+		        IncrementLog("ContactCountryCode");
 		    }
 		}
 		public String ContactPhone
@@ -99,6 +117,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _InfantCount = value;
 		        IncrementLog("InfantCount");
+		    }
+		}
+		public String PaymentId
+		{
+		    get { return _PaymentId; }
+		    set
+		    {
+		        _PaymentId = value;
+		        IncrementLog("PaymentId");
 		    }
 		}
 		public String PaymentMethodCd
@@ -164,13 +191,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("OverallTripTypeCd");
 		    }
 		}
-		public Decimal? TotalSourcePrice
+		public Decimal? TotalSupplierPrice
 		{
-		    get { return _TotalSourcePrice; }
+		    get { return _TotalSupplierPrice; }
 		    set
 		    {
-		        _TotalSourcePrice = value;
-		        IncrementLog("TotalSourcePrice");
+		        _TotalSupplierPrice = value;
+		        IncrementLog("TotalSupplierPrice");
 		    }
 		}
 		public Decimal? PaymentFeeForCust
@@ -268,13 +295,16 @@ namespace Lunggo.Repository.TableRecord
 		private String _RsvNo;
 		private DateTime? _RsvTime;
 		private String _RsvStatusCd;
+		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
+		private String _ContactCountryCode;
 		private String _ContactPhone;
 		private String _ContactAddress;
 		private int? _AdultCount;
 		private int? _ChildCount;
 		private int? _InfantCount;
+		private String _PaymentId;
 		private String _PaymentMethodCd;
 		private String _PaymentStatusCd;
 		private String _LangCd;
@@ -282,7 +312,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _CancellationTypeCd;
 		private DateTime? _CancellationTime;
 		private String _OverallTripTypeCd;
-		private Decimal? _TotalSourcePrice;
+		private Decimal? _TotalSupplierPrice;
 		private Decimal? _PaymentFeeForCust;
 		private Decimal? _PaymentFeeForUs;
 		private Decimal? _FinalPrice;
@@ -327,13 +357,16 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("RsvTime", false),
 				new ColumnMetadata("RsvStatusCd", false),
+				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
+				new ColumnMetadata("ContactCountryCode", false),
 				new ColumnMetadata("ContactPhone", false),
 				new ColumnMetadata("ContactAddress", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("InfantCount", false),
+				new ColumnMetadata("PaymentId", false),
 				new ColumnMetadata("PaymentMethodCd", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("LangCd", false),
@@ -341,7 +374,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTypeCd", false),
 				new ColumnMetadata("CancellationTime", false),
 				new ColumnMetadata("OverallTripTypeCd", false),
-				new ColumnMetadata("TotalSourcePrice", false),
+				new ColumnMetadata("TotalSupplierPrice", false),
 				new ColumnMetadata("PaymentFeeForCust", false),
 				new ColumnMetadata("PaymentFeeForUs", false),
 				new ColumnMetadata("FinalPrice", false),

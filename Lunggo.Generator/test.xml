@@ -6,5 +6,4 @@
   <table name="FlightSegment" />
   <table name="FlightStop" />
   <table name="FlightPassenger" />
-  <table name="UsdExchangeRate" />
 </tables> 

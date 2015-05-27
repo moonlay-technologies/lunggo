@@ -7,11 +7,13 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Framework.Database;
 using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -26,7 +28,8 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightSelectData select)
         {
             var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryFromCache(select.token);
+            var itineraryFare = service.GetItineraryFromCache(select.token);
+            var itinerary = service.ConvertToItineraryApi(itineraryFare);
             return View(new FlightCheckoutData
             {
                 HashKey = select.token,
@@ -38,7 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
+            data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
             {
@@ -98,14 +101,14 @@ namespace Lunggo.CustomerWeb.Controllers
                     Email = data.ContactData.Email
                 },
                 PassengerInfoFares = passengerInfo,
-                Itinerary = data.Itinerary,
+                Itinerary = data.ItineraryFare,
                 TripInfos = new List<FlightTripInfo>
                 {
                     new FlightTripInfo
                     {
-                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
+                        OriginAirport = data.ItineraryFare.FlightTrips[0].OriginAirport,
+                        DestinationAirport = data.ItineraryFare.FlightTrips[0].DestinationAirport,
+                        DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
                 OverallTripType = TripType.OneWay
@@ -118,7 +121,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var transactionDetails = new TransactionDetails
                     {
                         OrderId = bookResult.ReservationDetails.RsvNo,
-                        Amount = data.Itinerary.IdrPrice
+                        Amount = data.ItineraryFare.IdrPrice
                     };
                     var itemDetails = new List<ItemDetails>
                     {
@@ -127,49 +130,14 @@ namespace Lunggo.CustomerWeb.Controllers
                             Id = "1",
                             Name = "pesawat",
                             Quantity = 1,
-                            Price = data.Itinerary.IdrPrice
+                            Price = data.ItineraryFare.IdrPrice
                         }
                     };
-                    
-                    
+
+
                     string url;
                     PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
                     return Redirect(url);
-                     
-                    /*
-                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                    {
-                        BookingId = bookResult.BookResult.BookingId,
-                    });
-                    if (issueResult.IsSuccess)
-                    {
-                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                        {
-                            BookingId = issueResult.BookingId,
-                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
-                            {
-                                OriginAirport = trip.OriginAirport,
-                                DestinationAirport = trip.DestinationAirport,
-                                DepartureDate = trip.DepartureDate
-                            }).ToList()
-                        });
-                        if (tripDetails.IsSuccess)
-                        {
-                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
-                            return RedirectToAction("Eticket");
-                        }
-                        else
-                        {
-                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
-                            return View(data);
-                        }
-                    }
-                    else
-                    {
-                        data.Message = "Already Booked. Please try again.";
-                        return View(data);
-                    }
-                     */
                 }
                 else
                 {
@@ -193,6 +161,32 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var itin = FlightService.GetInstance().GetItineraryFromCache("111", "a");
             return View(itin);
+        }
+
+        public void PaymentConfirmation(FlightPaymentConfirmationData data)
+        {
+            if (data.PaymentStatus == PaymentStatus.Accepted)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    /*var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
+
+                    foreach (var bookingId in bookingIds)
+                    {
+                        var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                            {
+                                BookingId = bookingId
+                            });
+                        if (issueResult.IsSuccess)
+                        {
+                            var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
+                            {
+                                BookingId = bookingId,
+                            });
+                        }
+                    }*/
+                }
+            }
         }
     }
 }
