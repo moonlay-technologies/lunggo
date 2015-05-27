@@ -989,6 +989,13 @@ hr {
   padding: 15px 0;
   color: #fff; }
 
+.thankyou-page.flight-receipt .ticket-print a {
+  display: block;
+  font-size: 18px;
+  padding: 15px 0;
+  text-align: center;
+  font-weight: bold; }
+
 .flight-search-page .flight-loading {
   display: block;
   text-align: center; }
