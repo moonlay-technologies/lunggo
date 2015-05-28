@@ -30,6 +30,16 @@ body img {max-width:100%;}
 	border-color:#ebb600;
 	color:#59544b;
 }
+.btn-yellow:active {opacity:0.8;background: #ffeaa8; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffeaa8 0%, #f3b400 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffeaa8), color-stop(99%,#f3b400)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffeaa8 0%,#f3b400 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa8', endColorstr='#f3b400',GradientType=0 ); /* IE6-9 */
+	border-color:#ebb600;
+	color:#59544b;}
 .no-radius {border-radius:0; -moz-border-radius:0; -webkit-border-radius:0; -o-border-radius:0;}
 .pagination li a {color:#3fabe3;}
 .pagination li.active a {background:#3fabe3; border-color:#3fabe3;}
@@ -381,9 +391,23 @@ hr {border-color:#aaa;}
 
 
 // ----------------------------------------------
+// confirmation page
+.confirmation-page {
+    .confirmation-form {padding:15px; background:#ededed;}
+    .countdown {text-align:center; padding:15px; background:#2fb4e6; color:#fff;}
+    .order-number {padding:15px; background:#2fb4e6; color:#fff; text-align:center;}
+    .confirmation-right {
+        h3 {text-align:center; background:#dadada; padding:10px 0; margin-bottom:0;}
+        hr {border-color:#aaa;}
+        .content-wrapper {padding:10px;background:#ededed;}
+    }
+}
+
+
+// ----------------------------------------------
 // thankyou page
 .thankyou-page.flight-receipt {
-    .receipt-wrapper {background:#eee; padding:25px; margin-top:25px;}
+    .receipt-wrapper {background:#ededed; padding:25px; margin-top:25px;}
     .receipt-title {margin-top:0;}
     .receipt-left {border-right:1px solid #ccc;}
     .receipt-right {}
