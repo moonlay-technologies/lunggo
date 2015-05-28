@@ -1,13 +1,133 @@
 ﻿@model Lunggo.CustomerWeb.Models.PaymentConfirmationData
 
 @{
+    Layout = "/Views/shared/_layout_20150506.cshtml";
     ViewBag.Title = "Confirmation";
 }
 
-<h2>Confirmation</h2>
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
 
-@Html.TextBoxFor(model => model.Remitter)
-@Html.TextBoxFor(model => model.Amount)
-@Html.TextBoxFor(model => model.RemitterBank)
-@Html.TextBoxFor(model => model.BeneficiaryBank)
-@Html.TextBoxFor(model => model.Message)
+@section PageJavascript {
+    <script>
+
+        var deadline = new Date;
+        deadline.setMinutes(deadline.getMinutes() + 20);
+
+        $('.payment-countdown').countdown(deadline, function (event) {
+            $(this).html(event.strftime('%M:%S'));
+        });
+
+    </script>
+}
+
+<div class="confirmation-page">
+    
+    <div class="container">
+        <h1>Konfirmasi Pembayaran</h1>
+        
+        <div class="row">
+            <div class="col-sm-8 confirmation-left">
+                
+                <div class="alert alert-warning">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
+                </div>
+
+                <form class="confirmation-form">
+                    
+                    <h2>Konfirmasikan Pembayaran Anda</h2>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Nama Pengirim</label>
+                                @Html.TextBoxFor(model => model.Remitter, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Bank Pengirim</label>
+                                @Html.TextBoxFor(model => model.RemitterBank, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Jumlah Pembayaran</label>
+                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Bank Tujuan</label>
+                                @Html.TextBoxFor(model => model.BeneficiaryBank, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label">Keterangan Tambahan</label>
+                            @Html.TextAreaFor(model => model.Message, new {@class = "form-control"})
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button class="btn btn-lg btn-yellow"><b>Konfirmasikan Pembayaran</b></button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="col-sm-4 confirmation-right">
+                
+                <div class="countdown">
+                    <p>Sisa waktu untuk melakukan pembayaran</p>
+                    <h2 class="payment-countdown"></h2>
+                </div><!-- .countdown -->
+                
+                <h4 class="order-number">Nomor Pesanan: 1234567890</h4>
+                
+                <section class="price-detail">
+                    <h3><b>PRICE</b> DETAIL</h3>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-sm-6">Tiket</div>
+                            <div class="col-sm-6"><b>IDR 123.456</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Tax</div>
+                            <div class="col-sm-6"><b>INCLUDED</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Travorama Fee</div>
+                            <div class="col-sm-6"><b>FREE</b></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-6">TOTAL</div>
+                            <div class="col-sm-6"><b>IDR 123.456</b></div>
+                        </div>
+                    </div>
+                </section><!-- .price-detail -->
+
+                <section class="order-detail">
+                    <h3><b>FLIGHT</b> DETAIL</h3>
+                    <div class="content-wrapper">
+                        <h4><b>Berangkat</b></h4>
+                        <h5>Maskapai : Air Asia</h5>
+                        <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
+                        <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                        <h4><b>Kembali</b></h4>
+                        <h5>Maskapai : Air Asia</h5>
+                        <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
+                        <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                    </div>
+                </section><!-- .order-detail -->
+
+            </div>
+        </div>
+
+    </div>
+
+</div><!-- .confirmation-page -->
+
