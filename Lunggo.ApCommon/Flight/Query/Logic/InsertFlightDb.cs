@@ -38,6 +38,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                     PaymentMediumCd = "VERI",
                     PaymentMethodCd = "xxx",
                     PaymentStatusCd = "xxx",
+                    PaymentTime = DateTime.Now,
                     GrossProfit = 999,
                     InsertBy = "xxx",
                     InsertDate = DateTime.Now,
@@ -170,7 +171,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var segmentRecords = GetFlightSegment.GetInstance().Execute(conn, new { detailsRecord.BookingId }).ToList();
+                var segmentRecords = GetFlightSegmentQuery.GetInstance().Execute(conn, new { detailsRecord.BookingId }).ToList();
                 var segmentPrimKeys = segmentRecords.Select(segment => segment.SegmentId.GetValueOrDefault()).ToList();
                 foreach (var segment in detailsRecord.Segments)
                 {
@@ -191,7 +192,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                 }
                 foreach (var passenger in detailsRecord.Passengers)
                 {
-                    var passengerPrimKey = GetFlightPassengerPrimKey.GetInstance().Execute(conn, new
+                    var passengerPrimKey = GetFlightPassengerPrimKeyQuery.GetInstance().Execute(conn, new
                     {
                         passenger.FirstName,
                         passenger.LastName,

@@ -146,6 +146,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentMethodCd");
 		    }
 		}
+		public DateTime? PaymentTime
+		{
+		    get { return _PaymentTime; }
+		    set
+		    {
+		        _PaymentTime = value;
+		        IncrementLog("PaymentTime");
+		    }
+		}
 		public String PaymentStatusCd
 		{
 		    get { return _PaymentStatusCd; }
@@ -325,6 +334,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _PaymentId;
 		private String _PaymentMediumCd;
 		private String _PaymentMethodCd;
+		private DateTime? _PaymentTime;
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
 		private String _LangCd;
@@ -389,6 +399,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentId", false),
 				new ColumnMetadata("PaymentMediumCd", false),
 				new ColumnMetadata("PaymentMethodCd", false),
+				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("PaymentTargetAccount", false),
 				new ColumnMetadata("LangCd", false),

@@ -9,7 +9,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetFlightSegment : QueryBase<GetFlightSegment, FlightSegmentTableRecord>
+    internal class GetFlightSegmentQuery : QueryBase<GetFlightSegmentQuery, FlightSegmentTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

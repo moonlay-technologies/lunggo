@@ -21,12 +21,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
                 if (notif.order_id.First() == 'F')
                 {
-                    return RedirectToAction("PaymentConfirmation", "FlightController", new FlightPaymentConfirmationData
-                    {
-                        RsvNo = notif.order_id,
-                        PaymentMethod = paymentMethod,
-                        PaymentStatus = paymentStatus
-                    });
+                    return RedirectToAction("PaymentConfirmation", "FlightController");
 
                 }
                 else
@@ -58,7 +53,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
                     RsvNo = response.order_id,
-                    Status = PaymentStatus.Error
+                    Status = PaymentStatus.Cancelled
                     });
         }
 
@@ -89,7 +84,6 @@ namespace Lunggo.CustomerWeb.Controllers
                     switch (notif.transaction_status.ToLower())
                     {
                         case "settlement":
-                            return PaymentStatus.Accepted;
                         case "pending":
                             return PaymentStatus.Pending;
                         case "cancel":

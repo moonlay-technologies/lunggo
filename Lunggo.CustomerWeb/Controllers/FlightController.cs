@@ -173,7 +173,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public void PaymentConfirmation(FlightPaymentConfirmationData data)
         {
-            if (data.PaymentStatus == PaymentStatus.Accepted)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
