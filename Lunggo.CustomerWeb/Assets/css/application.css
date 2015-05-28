@@ -1003,6 +1003,9 @@ hr {
   background: #2fb4e6;
   color: #fff; }
 
+.confirmation-page .payment-countdown {
+  font-size: 50px; }
+
 .confirmation-page .order-number {
   padding: 15px;
   background: #2fb4e6;
