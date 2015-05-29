@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var dbBookingStatusInfo = statusData.Select(info => new
                     {
                         info.BookingId,
-                        BookingStatus = BookingStatusCd.Mnemonic(info.BookingStatus)
+                        BookingStatusCd = BookingStatusCd.Mnemonic(info.BookingStatus)
                     }).ToArray();
                     query.Execute(conn, dbBookingStatusInfo);
                 }

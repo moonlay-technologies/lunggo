@@ -28,39 +28,39 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSetClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SET BookingStatus = CASE ");
+            clauseBuilder.Append(@"SET BookingStatusCd = CASE ");
             clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'TKTG' THEN ");
+                @"WHEN @BookingStatusCd = 'TKTG' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN (BookingStatus = 'BOOK') ");
+                    @"CASE WHEN (BookingStatusCd = 'BOOK') ");
             clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
+                        @"THEN @BookingStatusCd ");
             clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
-            clauseBuilder.Append(
-                    @"END");
-            clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'TKTD' THEN ");
-            clauseBuilder.Append(
-                    @"CASE WHEN ((BookingStatus = 'BOOK') OR (BookingStatus = 'TKTG')) ");
-            clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
-            clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
+                        @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
                     @"END");
             clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'CANC' THEN ");
+                @"WHEN @BookingStatusCd = 'TKTD' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN (BookingStatus = 'BOOK') ");
+                    @"CASE WHEN ((BookingStatusCd = 'BOOK') OR (BookingStatusCd = 'TKTG')) ");
             clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
+                        @"THEN @BookingStatusCd ");
             clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
+                        @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
                     @"END");
             clauseBuilder.Append(
-                @"ELSE BookingStatus = BookingStatus ");
+                @"WHEN @BookingStatusCd = 'CANC' THEN ");
+            clauseBuilder.Append(
+                    @"CASE WHEN (BookingStatusCd = 'BOOK') ");
+            clauseBuilder.Append(
+                        @"THEN @BookingStatusCd ");
+            clauseBuilder.Append(
+                        @"ELSE BookingStatusCd ");
+            clauseBuilder.Append(
+                    @"END");
+            clauseBuilder.Append(
+                @"ELSE BookingStatusCd = @BookingStatusCd ");
             clauseBuilder.Append(@"END ");
             return clauseBuilder.ToString();
         }

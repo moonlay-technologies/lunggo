@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Database;
@@ -16,17 +19,15 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (notif.status_code == "200")
             {
+                var service = FlightService.GetInstance();
                 var paymentMethod = MapPaymentMethod(notif);
                 var paymentStatus = MapPaymentStatus(notif);
 
                 if (notif.order_id.First() == 'F')
                 {
-                    return RedirectToAction("PaymentConfirmation", "FlightController");
-
-                }
-                else
-                {
-                    return null;
+                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentMethod, paymentStatus);
+                    if (isUpdated && paymentStatus == PaymentStatus.Settled)
+                        return RedirectToAction("Issuance", "Flight", notif.order_id);
                 }
             }
             return null;
@@ -34,32 +35,21 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData
-            {
-                RsvNo = response.order_id,
-                Status = PaymentStatus.Cancelled
-            });
+            return RedirectToAction("Thankyou", "Flight", response.order_id);
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Cancelled
-                    });
+            return RedirectToAction("Thankyou", "Flight", response.order_id);
         }
 
         public ActionResult PaymentError(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Cancelled
-                    });
+            return RedirectToAction("Thankyou", "Flight", response.order_id);
         }
 
-        private PaymentMethod MapPaymentMethod(VeritransNotification notif)
+        private static PaymentMethod MapPaymentMethod(VeritransNotification notif)
         {
-            // TODO flight add this
             switch (notif.payment_type.ToLower())
             {
                 case "credit_card":
@@ -75,28 +65,29 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
-        private PaymentStatus MapPaymentStatus(VeritransNotification notif)
+        private static PaymentStatus MapPaymentStatus(VeritransNotification notif)
         {
-            // TODO flight fix this
-            switch (notif.fraud_status.ToLower())
+            switch (notif.transaction_status.ToLower())
             {
                 case "capture":
-                    switch (notif.transaction_status.ToLower())
+                    switch (notif.fraud_status.ToLower())
                     {
-                        case "settlement":
-                        case "pending":
-                            return PaymentStatus.Pending;
-                        case "cancel":
-                        case "expire":
-                            return PaymentStatus.Cancelled;
+                        case "capture":
+                            return PaymentStatus.Settled;
+                        case "challenge":
                         case "deny":
                             return PaymentStatus.Denied;
-                        case "authorize":
-                        case "capture":
                         default:
-                            return PaymentStatus.Undefined;
+                            return PaymentStatus.Settled;
                     }
-                case "challenge":
+                case "settlement":
+                    return PaymentStatus.Settled;
+                case "pending":
+                    return PaymentStatus.Pending;
+                case "authorize":
+                case "cancel":
+                case "expire":
+                    return PaymentStatus.Cancelled;
                 case "deny":
                     return PaymentStatus.Denied;
                 default:

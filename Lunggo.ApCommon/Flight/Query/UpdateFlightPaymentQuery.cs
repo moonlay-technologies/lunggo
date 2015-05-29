@@ -8,7 +8,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    public class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
+    internal class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -29,39 +29,40 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSetClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SET PaymentStatusCd = CASE ");
+            clauseBuilder.Append(@"SET PaymentMethodCd = @PaymentMethodCd, ");
+            clauseBuilder.Append(@"PaymentStatusCd = CASE ");
             clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'CAP' THEN ");
+                @"WHEN @PaymentStatusCd = 'SET' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN (BookingStatus = 'BOOK') ");
+                    @"CASE WHEN ((PaymentStatusCd = 'CAN') OR (PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'CAP')) ");
             clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
+                        @"THEN @PaymentStatusCd ");
             clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
-            clauseBuilder.Append(
-                    @"END");
-            clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'TKTD' THEN ");
-            clauseBuilder.Append(
-                    @"CASE WHEN ((BookingStatus = 'BOOK') OR (BookingStatus = 'TKTG')) ");
-            clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
-            clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
+                        @"ELSE PaymentStatusCd ");
             clauseBuilder.Append(
                     @"END");
             clauseBuilder.Append(
-                @"WHEN @BookingStatus = 'CANC' THEN ");
+                @"WHEN @PaymentStatusCd = 'PEN' THEN ");
             clauseBuilder.Append(
-                    @"CASE WHEN (BookingStatus = 'BOOK') ");
+                    @"CASE WHEN (PaymentStatusCd = 'CAN') ");
             clauseBuilder.Append(
-                        @"THEN @BookingStatus ");
+                        @"THEN @PaymentStatusCd ");
             clauseBuilder.Append(
-                        @"ELSE BookingStatus ");
+                        @"ELSE PaymentStatusCd ");
             clauseBuilder.Append(
                     @"END");
             clauseBuilder.Append(
-                @"ELSE BookingStatus = BookingStatus ");
+                @"WHEN @PaymentStatusCd = 'CAP' THEN ");
+            clauseBuilder.Append(
+                    @"CASE WHEN ((PaymentStatusCd = 'CAN') OR (PaymentStatusCd = 'PEN')) ");
+            clauseBuilder.Append(
+                        @"THEN @PaymentStatusCd ");
+            clauseBuilder.Append(
+                        @"ELSE PaymentStatusCd ");
+            clauseBuilder.Append(
+                    @"END");
+            clauseBuilder.Append(
+                @"ELSE PaymentStatusCd = @PaymentStatusCd ");
             clauseBuilder.Append(@"END ");
             return clauseBuilder.ToString();
         }

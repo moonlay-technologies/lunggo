@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class GetBookingIdAndTripInfoQuery : QueryBase<GetBookingIdAndTripInfoQuery, FlightItineraryFare, FlightItineraryFare, FlightTripInfo>
+    internal class GetFlightBookingIdQuery : QueryBase<GetFlightBookingIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

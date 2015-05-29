@@ -121,7 +121,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     var transactionDetails = new TransactionDetails
                     {
-                        OrderId = bookResult.ReservationDetails.RsvNo,
+                        OrderId = bookResult.RsvNo,
                         Amount = data.ItineraryFare.IdrPrice
                     };
                     var itemDetails = new List<ItemDetails>
@@ -165,35 +165,12 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult Eticket()
+        public void Issuance(string rsvNo)
         {
-            var itin = FlightService.GetInstance().GetItineraryFromCache("111", "a");
-            return View(itin);
-        }
-
-        public void PaymentConfirmation(FlightPaymentConfirmationData data)
-        {
-            {
-                using (var conn = DbService.GetInstance().GetOpenConnection())
-                {
-                    /*var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
-
-                    foreach (var bookingId in bookingIds)
-                    {
-                        var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                            {
-                                BookingId = bookingId
-                            });
-                        if (issueResult.IsSuccess)
-                        {
-                            var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                            {
-                                BookingId = bookingId,
-                            });
-                        }
-                    }*/
-                }
-            }
+            var service = FlightService.GetInstance();
+            var issueInput = new IssueTicketInput {RsvNo = rsvNo};
+            service.IssueTicket(issueInput);
+            // TODO flight send to e-ticket email queue
         }
     }
 }
