@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Utility
 {
-    internal class FlightHashUtil
+    internal static class FlightHashUtil
     {
         //TODO FLIGHT : Hash
-        internal static string Hash(string plain)
+        internal static string Hash(this string plain)
         {
             var hash = plain;
             return hash;
         }
 
-        internal static string Unhash(string hash)
+        internal static string Unhash(this string hash)
         {
             var plain = hash;
             return plain;

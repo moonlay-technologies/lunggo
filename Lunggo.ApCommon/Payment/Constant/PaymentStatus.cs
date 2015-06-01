@@ -8,7 +8,6 @@ namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentStatus 
     {
-        // TODO flight fix this
         Undefined = 0,
         Cancelled = 1,
         Pending = 2,

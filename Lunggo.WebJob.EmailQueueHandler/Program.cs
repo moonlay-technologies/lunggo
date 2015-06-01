@@ -34,14 +34,16 @@ namespace Lunggo.WebJob.EmailQueueHandler
             new Program().Init();
             var queueService = QueueService.GetInstance();
             var _queue = queueService.GetQueueByReference("emailqueue");
-            _queue.CreateIfNotExists();
+            //_queue.CreateIfNotExists();
+
+            Function.TestSend();
 
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;
 
-            JobHost host = new JobHost(configuration);
-            host.RunAndBlock();
+            //JobHost host = new JobHost(configuration);
+            //host.RunAndBlock();
 
         }
         public void Init()
@@ -50,7 +52,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitQueueService();
             InitMailService();
             InitTableStorageService();
-            InitTraceListener();
+            //InitTraceListener();
         }
 
         private static void InitConfigurationManager()

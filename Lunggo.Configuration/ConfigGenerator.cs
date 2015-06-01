@@ -61,7 +61,7 @@ namespace Lunggo.Configuration
 
             var generator = ConfigGenerator.GetInstance();
             generator.StartConfig(DeploymentEnvironment.Local, projectList);
-            //new MailTemplateGenerator().StartMailGenerator();
+            new MailTemplateGenerator().StartMailGenerator();
             Console.WriteLine("####################Config Generation is Finished");
         }
 

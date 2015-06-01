@@ -112,7 +112,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
-                OverallTripType = TripType.OneWay
+                OverallTripType = data.Itinerary.TripType
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
             if (bookResult.IsSuccess)
@@ -170,7 +170,6 @@ namespace Lunggo.CustomerWeb.Controllers
             var service = FlightService.GetInstance();
             var issueInput = new IssueTicketInput {RsvNo = rsvNo};
             service.IssueTicket(issueInput);
-            // TODO flight send to e-ticket email queue
         }
     }
 }

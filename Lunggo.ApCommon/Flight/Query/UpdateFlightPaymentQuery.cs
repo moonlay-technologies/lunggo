@@ -29,7 +29,11 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSetClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SET PaymentMethodCd = @PaymentMethodCd, ");
+            clauseBuilder.Append(@"SET PaymentId = @PaymentId, ");
+            clauseBuilder.Append(@"PaymentMediumCd = @PaymentMediumCd, ");
+            clauseBuilder.Append(@"PaymentMethodCd = @PaymentMethodCd, ");
+            clauseBuilder.Append(@"PaymentTime = @PaymentTime, ");
+            clauseBuilder.Append(@"PaymentTargetAccount = @PaymentTargetAccount, ");
             clauseBuilder.Append(@"PaymentStatusCd = CASE ");
             clauseBuilder.Append(
                 @"WHEN @PaymentStatusCd = 'SET' THEN ");

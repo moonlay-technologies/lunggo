@@ -1,11 +1,13 @@
 ﻿using Lunggo.Framework.Core;
 using Lunggo.Framework.SharedModel;
-using Mandrill;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mandrill;
+using Mandrill.Models;
+using Mandrill.Requests.Messages;
 
 namespace Lunggo.Framework.Mail
 {
@@ -36,7 +38,8 @@ namespace Lunggo.Framework.Mail
             try
             {
                 EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, partitionKey);
-                var returnvalue = apiOfMandrill.SendMessage(emailMessage, this._mandrillTemplate, null);
+                var emailMessageRequest = new SendMessageRequest(emailMessage);
+                var returnvalue = apiOfMandrill.SendMessage(emailMessageRequest);
             }
             catch (Exception ex)
             {
@@ -47,14 +50,14 @@ namespace Lunggo.Framework.Mail
         private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
         {
             EmailMessage emailMessage = new EmailMessage();
-            emailMessage.preserve_recipients = this.enablingOtherEmailAddressVisibilityForRecipient;
-            emailMessage.subject = mailModel.Subject;
-            emailMessage.from_email = mailModel.From_Mail;
-            emailMessage.from_name = mailModel.From_Name;
-            emailMessage.to = GenerateMessageAddressTo(mailModel);
-            emailMessage.html = this.mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey);
+            emailMessage.PreserveRecipients = this.enablingOtherEmailAddressVisibilityForRecipient;
+            emailMessage.Subject = mailModel.Subject;
+            emailMessage.FromEmail = mailModel.From_Mail;
+            emailMessage.FromName = mailModel.From_Name;
+            emailMessage.To = GenerateMessageAddressTo(mailModel);
+            emailMessage.Html = this.mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey);
             if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count>0)
-                emailMessage.attachments = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
+                emailMessage.Attachments = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
             return emailMessage;
         }
         private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
@@ -90,7 +93,8 @@ namespace Lunggo.Framework.Mail
             }
             return addresses;
         }
-        private IEnumerable<email_attachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
+        
+        private IEnumerable<EmailAttachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
         {
             if (files == null || files.Count < 1)
             {
@@ -99,11 +103,11 @@ namespace Lunggo.Framework.Mail
             foreach (FileInfo file in files)
             {
                 var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
-                email_attachment attachmentToSend = new email_attachment
+                EmailAttachment attachmentToSend = new EmailAttachment
                 {
-                    name = file.FileName,
-                    type = file.ContentType,
-                    content = base64OfAttachmentFile
+                    Name = file.FileName,
+                    Type  = file.ContentType,
+                    Content = base64OfAttachmentFile
                 };
                 yield return attachmentToSend;
             }

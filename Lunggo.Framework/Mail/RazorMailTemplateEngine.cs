@@ -43,6 +43,7 @@ namespace Lunggo.Framework.Mail
                              where tabel.PartitionKey == partitionKey && tabel.RowKey == this._defaultRowKey
                              select tabel).FirstOrDefault();
                 string mailTemplate = (query as MailTemplateModel).Template;
+                
                 return mailTemplate;
             }
             catch (Exception ex)

@@ -47,7 +47,6 @@ namespace Lunggo.ApCommon.Flight.Service
                         }
                     },
                     ContactData = input.ContactData,
-                    PaymentData = input.PaymentData,
                     Passengers = input.PassengerInfoFares
                 };
                 string rsvNo;

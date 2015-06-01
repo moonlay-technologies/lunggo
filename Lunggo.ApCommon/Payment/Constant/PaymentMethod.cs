@@ -8,7 +8,6 @@ namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentMethod
     {
-        // TODO flight add this
         Undefined = 0,
         CreditCard = 1,
         BankTransfer = 2,

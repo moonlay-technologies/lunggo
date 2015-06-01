@@ -198,7 +198,6 @@ namespace Lunggo.ApCommon.Mystifly
         private static List<FlightItineraryFare> MapFlightItineraryFares(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
             var currency = CurrencyService.GetInstance();
-            // TODO Flight Currency Dummy
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions, rate)).Where(itin => itin != null).ToList();
             return result;

@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Mystifly
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "MystiflyWebfare:" + bookingId;
-            var cacheObject = FlightCacheUtil.ConvertToCacheObject(bookInfo);
+            var cacheObject = bookInfo.ToCacheObject();
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromHours(2));
 
             return bookingId;

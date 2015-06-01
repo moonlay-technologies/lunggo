@@ -4,6 +4,9 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
+using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -21,6 +24,19 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.IsSuccess = true;
                     output.BookingStatus = BookingStatus.Ticketing;
                     output.BookingId = orderResult.BookingId;
+
+                    var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
+                    var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
+                    UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
+                    {
+                        BookingId = bookingId,
+                        BookingStatusCd = bookingStatusCd
+                    });
+
+                    if (orderResult.IsInstantIssuance)
+                    {
+                        // TODO flight push eticket queue
+                    }
                 }
                 else
                 {
