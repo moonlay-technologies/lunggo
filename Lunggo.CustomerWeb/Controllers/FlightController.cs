@@ -172,5 +172,10 @@ namespace Lunggo.CustomerWeb.Controllers
             service.IssueTicket(issueInput);
             // TODO flight send to e-ticket email queue
         }
+
+        public ActionResult Eticket()
+        {
+            return View();
+        }
     }
 }

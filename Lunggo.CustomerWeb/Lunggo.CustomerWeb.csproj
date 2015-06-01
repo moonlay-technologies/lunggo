@@ -322,6 +322,12 @@
       <DependentUpon>application.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\eticket.css">
+      <DependentUpon>eticket.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\eticket.min.css">
+      <DependentUpon>eticket.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -621,6 +627,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
@@ -790,6 +797,7 @@
     <Content Include="Assets\css\_header.scss" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
+    <Content Include="Assets\css\eticket.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
