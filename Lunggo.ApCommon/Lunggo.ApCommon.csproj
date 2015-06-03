@@ -181,6 +181,8 @@
     <Compile Include="Flight\Model\Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
+    <Compile Include="Flight\Query\GetFlightLocalCurrencyQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetFlightBookingIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentStatusQuery.cs" />

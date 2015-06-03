@@ -27,7 +27,9 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                         tripSummary.FlightSegments =
                             segmentRecords.Select(service.ConvertToSegmentApi).ToList();
                         return tripSummary;
-                    }).ToList()
+                    }).ToList(),
+                    TotalFare = GetFlightTotalFareQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single(),
+                    Currency = GetFlightLocalCurrencyQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single()
                 };
             }
         }

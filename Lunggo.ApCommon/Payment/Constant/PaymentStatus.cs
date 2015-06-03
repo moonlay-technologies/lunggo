@@ -11,9 +11,8 @@ namespace Lunggo.ApCommon.Payment.Constant
         Undefined = 0,
         Cancelled = 1,
         Pending = 2,
-        Captured = 3,
-        Settled = 4,
-        Denied = 5
+        Settled = 3,
+        Denied = 4
     }
 
     public class PaymentStatusCd
@@ -24,8 +23,6 @@ namespace Lunggo.ApCommon.Payment.Constant
             {
                 case PaymentStatus.Settled:
                     return "SET";
-                case PaymentStatus.Captured:
-                    return "CAP";
                 case PaymentStatus.Cancelled:
                     return "CAN";
                 case PaymentStatus.Pending:
@@ -42,8 +39,6 @@ namespace Lunggo.ApCommon.Payment.Constant
             {
                 case "SET":
                     return PaymentStatus.Settled;
-                case "CAP":
-                    return PaymentStatus.Captured;
                 case "CAN":
                     return PaymentStatus.Cancelled;
                 case "PEN":

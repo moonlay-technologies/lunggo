@@ -22,6 +22,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public decimal TotalFare { get; set; }
+        public string Currency { get; set; }
     }
 
     public class FlightItineraryFare : FlightItineraryBase
