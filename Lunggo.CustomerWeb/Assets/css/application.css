@@ -1042,6 +1042,10 @@ hr {
   padding: 15px 0;
   color: #fff; }
 
+.thankyou-page.flight-receipt .receipt-flight {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; }
+
 .thankyou-page.flight-receipt .ticket-print a {
   display: block;
   font-size: 18px;
