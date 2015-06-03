@@ -41,118 +41,145 @@
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 
-                <div class="no-reservation">
-                    <h1 class="text-center">Belum Ada Reservasi</h1>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p>Belum ada reservasi. Silahkan buat reservasi Anda.</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="ticket-print">
-                                <a href="/" class="btn btn-yellow">Buat Reservasi</a>
+                @switch (Model.PaymentInfo.Status)
+                {
+                    case PaymentStatus.Undefined:
+                    case PaymentStatus.Cancelled:
+                        
+                        <div class="no-reservation">
+                            <h1 class="text-center">Belum Ada Reservasi</h1>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>Belum ada reservasi. Silahkan buat reservasi Anda.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="ticket-print">
+                                        <a href="/" class="btn btn-yellow">Buat Reservasi</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
                 
-                <div class="transaction-denied">
-                    <h1 class="text-center">Transaksi Ditolak</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
-                </div>
+                        break;
+                        
+                    case PaymentStatus.Denied:
+
+                        <div class="transaction-denied">
+                            <h1 class="text-center">Transaksi Ditolak</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
+                        </div>
 
 
-                <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+                        <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+                
+                        break;
+                        
+                    case PaymentStatus.Pending:
 
-                <div class="payment-timer">
+                        <div class="payment-timer">
                     
-                    <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+                            <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="payment-countdown text-center"></div>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="payment-countdown text-center"></div>
+                                </div>
+                            </div>
 
-                </div><!-- .payment-timer -->
+                        </div>
+                        <!-- .payment-timer -->
                 
-                <div class="ticket-wrapper">
-                    <h2 class="text-center ticket-title">Cetak e-Ticket Anda</h2>
-                    <div class="row">
-                        <div class="col-sm-6 ticket-left">
-                            <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mencetak eTicket Anda.</p>
-                        </div>
-                        <div class="col-sm-6 ticket-right">
-                            <div class="ticket-print">
-                                <a href="#" class="btn btn-yellow">Cetak e-Ticket</a>
+                        break;
+                        
+                    case PaymentStatus.Settled:
+
+                        <div class="ticket-wrapper">
+                            <h2 class="text-center ticket-title">Cetak e-Ticket Anda</h2>
+                            <div class="row">
+                                <div class="col-sm-6 ticket-left">
+                                    <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mencetak eTicket Anda.</p>
+                                </div>
+                                <div class="col-sm-6 ticket-right">
+                                    <div class="ticket-print">
+                                        <a href="#" class="btn btn-yellow">Cetak e-Ticket</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- .ticket-wrapper -->
+                        <!-- .ticket-wrapper -->
+
+                        break;
+
+                }
 
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="receipt-wrapper">
+        @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+        {
 
-                    <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="receipt-wrapper">
 
-                    <div class="row">
-                        <div class="col-sm-4 receipt-summary">
+                        <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
 
-                            <div class="receipt-number">
-                                <h3>Nomer Pemesanan</h3>
-                                <p>@Model.RsvNo</p>
+                        <div class="row">
+                            <div class="col-sm-4 receipt-summary">
+
+                                <div class="receipt-number">
+                                    <h3>Nomer Pemesanan</h3>
+                                    <p>@Model.RsvNo</p>
+                                </div>
+
+                                <div class="receipt-user">
+                                    <h3>Info Penumpang</h3>
+                                    <ol>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
+                                        }
+                                    </ol>
+                                </div>
+
                             </div>
+                            <div class="col-sm-4 receipt-flight">
 
-                            <div class="receipt-user">
-                                <h3>Info Penumpang</h3>
-                                <ol>
-                                    @foreach (var passenger in Model.Passengers)
-                                    {
-                                        <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
-                                    }
-                                </ol>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-4 receipt-flight">
-
-                            <h3>Informasi Penerbangan</h3>
-                            <h4><b>Berangkat</b></h4>
-                            @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
-                            {
-                                <h5>Maskapai : @segment.AirlineName</h5>
-                                <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
-                                <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
-                            }
-                            @if (Model.Itinerary.FlightTrips.Count > 0)
-                            {
-                                foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                <h3>Informasi Penerbangan</h3>
+                                <h4><b>Berangkat</b></h4>
+                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
                                 {
                                     <h5>Maskapai : @segment.AirlineName</h5>
                                     <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
                                     <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
                                 }
-                            }
+                                @if (Model.Itinerary.FlightTrips.Count > 0)
+                                {
+                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                    {
+                                        <h5>Maskapai : @segment.AirlineName</h5>
+                                        <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                        <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                    }
+                                }
 
+                            </div>
+                            <div class="col-sm-4 receipt-payment">
+                                <h3>Informasi Pembayaran</h3>
+                                <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
+                                <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
+                            </div>
                         </div>
-                        <div class="col-sm-4 receipt-payment">
-                            <h3>Informasi Pembayaran</h3>
-                            <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
-                            <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
-                        </div>
-                    </div>
 
-                </div><!-- .receipt-wrapper -->
+                    </div><!-- .receipt-wrapper -->
 
-                <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
+                    <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
+                </div>
             </div>
-        </div>
+        }
 
     </div>
 
