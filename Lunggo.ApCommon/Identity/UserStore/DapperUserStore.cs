@@ -166,10 +166,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var query = GetUserByIdQuery.GetInstance();
-                    var record = query.Execute(connection, new {Id = userId}).SingleOrDefault();
-                    var user = ToUser(record);
-                    return user;
+                    return new TUser();
                 }
 
             });

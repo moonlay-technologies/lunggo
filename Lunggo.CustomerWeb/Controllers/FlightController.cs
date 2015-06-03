@@ -171,5 +171,10 @@ namespace Lunggo.CustomerWeb.Controllers
             var issueInput = new IssueTicketInput {RsvNo = rsvNo};
             service.IssueTicket(issueInput);
         }
+
+        public ActionResult Eticket()
+        {
+            return View();
+        }
     }
 }
