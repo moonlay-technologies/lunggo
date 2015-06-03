@@ -15,8 +15,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            if (condition != null)
-                queryBuilder.Append(CreateWhereClause(condition));
+            queryBuilder.Append(CreateWhereClause(condition));
             return queryBuilder.ToString();
         }
 

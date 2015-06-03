@@ -9,10 +9,11 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class PaymentInfo
     {
-        public string PaymentId { get; set; }
+        public string Id { get; set; }
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
         public PaymentStatus Status { get; set; }
+        public DateTime? Time { get; set; }
         public string TargetAccount { get; set; }
     }
 }

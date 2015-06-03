@@ -15,8 +15,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            if (condition != null)
-                queryBuilder.Append(CreateWhereClause(condition));
+            queryBuilder.Append(CreateWhereClause(condition));
             return queryBuilder.ToString();
         }
 
@@ -24,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"SELECT t.TripId, t.OriginAirportCd, t.DestinationAirportCd ");
-            clauseBuilder.Append(@"FROM FlightTrip AS t");
+            clauseBuilder.Append(@"FROM FlightTrip AS t ");
             clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
             return clauseBuilder.ToString();
         }

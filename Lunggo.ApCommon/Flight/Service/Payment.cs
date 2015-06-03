@@ -4,25 +4,30 @@ using System.Linq;
 using System.Text;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public bool UpdateFlightPayment(string rsvNo, PaymentMethod method, PaymentStatus status)
+        public bool UpdateFlightPayment(string rsvNo, PaymentInfo info)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var prevStatusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
                 var prevStatus = PaymentStatusCd.Mnemonic(prevStatusCd);
-                if (status != prevStatus)
+                if (info.Status != prevStatus)
                 {
                     UpdateFlightPaymentQuery.GetInstance().Execute(conn, new
                     {
                         RsvNo = rsvNo,
-                        PaymentMethodCd = PaymentMethodCd.Mnemonic(method),
-                        PaymentStatusCd = PaymentStatusCd.Mnemonic(status)
+                        PaymentMediumCd = PaymentMediumCd.Mnemonic(info.Medium),
+                        PaymentMethodCd = PaymentMethodCd.Mnemonic(info.Method),
+                        PaymentStatusCd = PaymentStatusCd.Mnemonic(info.Status),
+                        PaymentTime = info.Time,
+                        PaymentId = info.Id,
+                        PaymentTargetAccount = info.TargetAccount
                     });
                     return true;
                 }

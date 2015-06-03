@@ -7,6 +7,7 @@ using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
@@ -20,13 +21,26 @@ namespace Lunggo.CustomerWeb.Controllers
             if (notif.status_code == "200")
             {
                 var service = FlightService.GetInstance();
-                var paymentMethod = MapPaymentMethod(notif);
-                var paymentStatus = MapPaymentStatus(notif);
+                DateTime? time;
+                if (notif.transaction_time != null)
+                    time = DateTime.Parse(notif.transaction_time);
+                else
+                    time = null;
+
+                var paymentInfo = new PaymentInfo
+                {
+                    Medium = PaymentMedium.Veritrans,
+                    Method = MapPaymentMethod(notif),
+                    Status = MapPaymentStatus(notif),
+                    Time = time,
+                    Id = notif.approval_code,
+                    TargetAccount = notif.permata_va_number
+                };
 
                 if (notif.order_id.First() == 'F')
                 {
-                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentMethod, paymentStatus);
-                    if (isUpdated && paymentStatus == PaymentStatus.Settled)
+                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
+                    if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
                         return RedirectToAction("Issuance", "Flight", notif.order_id);
                 }
             }
@@ -35,17 +49,17 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", response.order_id);
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", response.order_id);
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         public ActionResult PaymentError(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", response.order_id);
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         private static PaymentMethod MapPaymentMethod(VeritransNotification notif)
@@ -104,6 +118,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public string transaction_time { get; set; }
         public string transaction_status { get; set; }
         public string fraud_status { get; set; }
+        public string approval_code { get; set; }
         public string bank { get; set; }
         public string permata_va_number { get; set; }
     }

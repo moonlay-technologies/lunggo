@@ -112,7 +112,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
-                OverallTripType = data.Itinerary.TripType
+                OverallTripType = data.ItineraryFare.TripType
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
             if (bookResult.IsSuccess)

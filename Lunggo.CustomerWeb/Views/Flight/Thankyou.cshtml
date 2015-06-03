@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Payment.Constant
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.ApCommon.Flight.Model.FlightSummary
 
 @{
@@ -74,14 +75,16 @@
 
                             <div class="receipt-number">
                                 <h3>Nomer Pemesanan</h3>
-                                <p>1234567890</p>
+                                <p>@Model.RsvNo</p>
                             </div>
 
                             <div class="receipt-user">
                                 <h3>Info Penumpang</h3>
                                 <ol>
-                                    <li><h5>Mr. Lorem Ipsum <br/> Jenis Tiket : Dewasa</h5></li>
-                                    <li><h5>Mr. Lorem Ipsum <br /> Jenis Tiket : Dewasa</h5></li>
+                                    @foreach (var passenger in Model.Passengers)
+                                    {
+                                        <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br/> Jenis Tiket : @passenger.Type</h5></li>
+                                    }
                                 </ol>
                             </div>
 
@@ -91,19 +94,27 @@
                             <div class="receipt-flight">
                                 <h3>Informasi Penerbangan</h3>
                                 <h4><b>Berangkat</b></h4>
-                                <h5>Maskapai : Air Asia</h5>
-                                <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
-                                <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
-                                <h4><b>Kembali</b></h4>
-                                <h5>Maskapai : Air Asia</h5>
-                                <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
-                                <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
+                                {
+                                    <h5>Maskapai : @segment.AirlineName</h5>
+                                    <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                    <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                }
+                                @if (Model.Itinerary.FlightTrips.Count > 0)
+                                {
+                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                    {
+                                        <h5>Maskapai : @segment.AirlineName</h5>
+                                        <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                        <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                    }
+                                }
                             </div>
 
                             <div class="receipt-payment">
                                 <h3>Informasi Pembayaran</h3>
-                                <h5>Harga total : Rp. 123.456</h5>
-                                <h5>Metode Pembayaran : Veritrans</h5>
+                                <h5>Harga total : @Model.Itinerary.TotalFare.ToString("Rp ##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
+                                <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
                             </div>
 
 
@@ -166,7 +177,7 @@
 
         break;
 
-    case PaymentStatus.Accepted:
+    case PaymentStatus.Settled:
 
         <!-- thankyou page -->
     <div class="checkout-page thankyou-page">
@@ -208,7 +219,7 @@
 
         break;
 
-    case PaymentStatus.Error:
+    case PaymentStatus.Undefined:
 
         <!-- thankyou page -->
     <div class="checkout-page thankyou-page">

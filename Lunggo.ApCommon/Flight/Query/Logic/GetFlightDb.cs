@@ -31,7 +31,5 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                 };
             }
         }
-
-        internal static List<FlightItineraryDetails> 
     }
 }
