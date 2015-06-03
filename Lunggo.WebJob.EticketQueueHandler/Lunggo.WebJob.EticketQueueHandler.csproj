@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E153402A-4959-4D50-BA94-A5BE8F386930}</ProjectGuid>
+    <ProjectGuid>{54AEE92A-2EF9-4184-9395-6F5A9883E50D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lunggo.WebJob.EticketQueueHandler</RootNamespace>
@@ -77,17 +77,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\application.properties" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
-      <Project>{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}</Project>
-      <Name>Lunggo.ApCommon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{E0624FFE-A4C2-44F5-9F9F-8C71F3B32AED}</Project>
       <Name>Lunggo.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Config\i18n_message.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

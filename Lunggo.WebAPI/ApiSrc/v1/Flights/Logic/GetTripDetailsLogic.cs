@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             if (IsValid(request))
             {
                 var getDetailsServiceRequest = PreprocessServiceRequest(request);
-                var getDetailsServiceResponse = FlightService.GetInstance().GetDetails(getDetailsServiceRequest);
+                var getDetailsServiceResponse = FlightService.GetInstance().GetAndUpdateNewDetails(getDetailsServiceRequest);
                 var apiResponse = AssembleApiResponse(getDetailsServiceResponse, request);
                 return apiResponse;
             }
@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static GetDetailsInput PreprocessServiceRequest(FlightDetailsApiRequest request)
         {
-            return new GetDetailsInput { BookingId = request.BookingId };
+            return new GetDetailsInput { RsvNo = request.RsvNo };
         }
 
         private static FlightDetailsApiResponse AssembleApiResponse(GetDetailsOutput getDetailsServiceResponse, FlightDetailsApiRequest request)
@@ -47,10 +47,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightDetailsApiResponse
                 {
-                    BookingId = getDetailsServiceResponse.FlightDetails.BookingId,
-                    FlightSegmentCount = getDetailsServiceResponse.FlightDetails.FlightSegmentCount,
-                    TripDetails = getDetailsServiceResponse.FlightDetails.FlightItineraryDetails,
-                    BookingNotes = getDetailsServiceResponse.FlightDetails.BookingNotes,
+                    BookingId = getDetailsServiceResponse.BookingId,
+                    FlightSegmentCount = getDetailsServiceResponse.FlightSegmentCount,
+                    TripDetails = getDetailsServiceResponse.FlightItineraryDetails,
+                    BookingNotes = getDetailsServiceResponse.BookingNotes,
                     OriginalRequest = request
                 };
             }
@@ -70,7 +70,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static bool IsValid(FlightDetailsApiRequest request)
         {
             return
-                request.BookingId != null;
+                request.RsvNo != null;
         }
     }
 }

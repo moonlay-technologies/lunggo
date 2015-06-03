@@ -4,17 +4,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 
 namespace Lunggo.WebJob.EticketQueueHandler
 {
     public class Functions
     {
-        // This function will get triggered/executed when a new message is written 
-        // on an Azure Queue called queue.
-        public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
+
+        public static void ProcessQueueMessage([QueueTrigger("eticketQueue")] string message)
         {
-            log.WriteLine(message);
+            using (var dbService = DbService.GetInstance().GetOpenConnection())
+            {
+                if (message.First() == 'F')
+                {
+
+                }
+            }
         }
     }
 }

@@ -81,8 +81,6 @@ namespace Lunggo.ApCommon.Mystifly
             };
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
-            result.PSCFare =
-                decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.Tax.Amount);
             result.Currency = response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.CurrencyCode;
             MapDetailsPTCFareBreakdowns(response, result);
             return result;
