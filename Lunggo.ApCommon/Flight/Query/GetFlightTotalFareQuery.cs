@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT SUM(LocalPrice) ");
+            clauseBuilder.Append("SELECT LocalPrice ");
             clauseBuilder.Append("FROM FlightItinerary ");
             return clauseBuilder.ToString();
         }
