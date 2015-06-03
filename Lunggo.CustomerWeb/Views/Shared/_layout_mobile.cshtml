@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Assets/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/Assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Assets/css/mobile-app.min.css">
+
+</head>
+<body ng-app="travorama" class="page home-page">
+    
+    <header class="site-header">
+        <a href="#" class="site-menu"></a>
+        <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+        <a href="#" class="user-menu"></a>
+    </header><!-- .site-header -->
+    
+    <section class="site-menu-content">
+        <h3 class="section-title">MAIN MENU</h3>
+        <div class="menu">
+            <a href="#"> <span class="fa fa-home"></span> <span>HOME</span> </a>
+            <a href="#"> <span class="fa fa-building"></span> <span>HOTEL</span> </a>
+            <a href="#"> <span class="fa fa-plane"></span> <span>FLIGHT</span> </a>
+            <a href="#"> <span class="fa fa-tag"></span> <span>PROMOTIONS</span> </a>
+            <a href="#" class="no-border"> <span class="fa fa-question-circle"></span> <span>FAQs</span> </a>
+            <a href="#" class="no-border"> <span class="fa fa-user"></span> <span>LOGIN / REGISTER</span> </a>
+        </div>
+    </section><!-- .site-menu -->
+    
+    <section class="user-menu-content">
+        <h3 class="section-title">MY ACCOUNT</h3>
+        <div class="menu">
+            <a href="#"> <span class="fa fa-sign-in"></span> <span>LOGIN</span> </a>
+            <a href="#"> <span class="fa fa-pencil-square-o"></span> <span>REGISTER</span> </a>
+        </div>
+    </section><!-- .user-menu -->
+
+    <section class="site-content">
+        @RenderBody()
+    </section><!-- .site-content -->
+    
+    <footer class="site-footer">
+        <section class="footer-adv">
+            <div class="container text-center">
+                <h4>Get <strong>Travorama</strong> App!</h4>
+                <p>Available on App Store and Google Play</p>
+                <a href="#"><img src="/Assets/images/googlePlay.png" alt="Google Play"/></a>
+                <a href="#"><img src="/Assets/images/appStore.png" alt="App Store"/></a>
+            </div>
+        </section>
+        <nav class="footer-nav">
+            <div class="container">
+                <ul class="nav">
+                    <li><a>About Us</a></li>
+                    <li><a>Contact Us</a></li>
+                    <li><a>Offer</a></li>
+                    <li><a>Promotion</a></li>
+                    <li><a>Subscribe</a></li>
+                </ul>
+            </div>
+        </nav>
+        <section class="footer-copyright">
+            <nav>
+                <ul class="nav">
+                    <li><a href="#"><img src="/Assets/images/instagram-icon.png" alt="Instagram"/></a></li>
+                    <li><a href="#"><img src="/Assets/images/facebook-icon.png" alt="Facebook" /></a></li>
+                    <li><a href="#"><img src="/Assets/images/pinterest-icon.png" alt="Pinterest" /></a></li>
+                    <li><a href="#"><img src="/Assets/images/youtube-icon.png" alt="Youtube" /></a></li>
+                </ul>
+            </nav>
+            <small>Copyright &copy; 2015 - Travelmadezy. All rights reserved.</small>
+        </section>
+    </footer><!-- .site-footer -->
+    
+    <!-- ****************************** -->
+    <!-- javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    
+    @if (IsSectionDefined("AdditionalPageJavascript"))
+    {
+        @RenderSection("AdditionalPageJavascript");
+    }
+
+    <script src="/Config/JsConfig.js"></script>
+    <script src="/Assets/js/mobile-app.js"></script>
+    <script src="/Assets/js/angularApp.js"></script>
+
+    @if (IsSectionDefined("PageJavascript"))
+    {
+        @RenderSection("PageJavascript");
+    }
+
+
+</body>
+</html>
