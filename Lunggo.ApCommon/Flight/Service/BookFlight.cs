@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
@@ -26,7 +27,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 ContactData = input.ContactData,
                 PassengerInfoFares = input.PassengerInfoFares
             };
-            var response = BookFlightInternal(bookInfo);
+            //var response = BookFlightInternal(bookInfo);
+            var response = new BookFlightResult
+            {
+                IsSuccess = true,
+                Status = new BookingStatusInfo
+                {
+                    BookingId = FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture),
+                    BookingStatus = BookingStatus.Booked
+                }
+            };
             output.BookResult = new BookResult();
             if (response.IsSuccess)
             {
