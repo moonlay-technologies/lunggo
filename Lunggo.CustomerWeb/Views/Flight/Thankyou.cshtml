@@ -3,21 +3,9 @@
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightSummary
 
-
 // BUAT halaman thankyou ketika "denied", i.e., pembayaran gagal.
-
 // BUAT halaman thankyou ketika belom ada reservasi
-
 // BUAT halaman thankyou ketika payment cancelled, e.g., deadline timeout
-
-
-
-
-
-
-
-
-
 
 @{
     ViewBag.Title = "FlightCheckoutThankyou";
@@ -53,9 +41,28 @@
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 
-                <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+                <div class="no-reservation">
+                    <h1 class="text-center">Belum Ada Reservasi</h1>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Belum ada reservasi. Silahkan buat reservasi Anda.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="ticket-print">
+                                <a href="/" class="btn btn-yellow">Buat Reservasi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                <!-- if payment indirect start-->
+                <div class="transaction-denied">
+                    <h1 class="text-center">Transaksi Ditolak</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
+                </div>
+
+
+                <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+
                 <div class="payment-timer">
                     
                     <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
@@ -69,10 +76,8 @@
                         </div>
                     </div>
 
-                </div>
-                <!-- end payment indirect-->
+                </div><!-- .payment-timer -->
                 
-                <!-- if payment completed start -->
                 <div class="ticket-wrapper">
                     <h2 class="text-center ticket-title">Cetak e-Ticket Anda</h2>
                     <div class="row">
@@ -85,15 +90,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- end payment completed -->
+                </div><!-- .ticket-wrapper -->
 
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="receipt-wrapper">
 
                     <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
 
                     <div class="row">
-                        <div class="col-sm-6 receipt-left">
+                        <div class="col-sm-4 receipt-summary">
 
                             <div class="receipt-number">
                                 <h3>Nomer Pemesanan</h3>
@@ -105,48 +114,43 @@
                                 <ol>
                                     @foreach (var passenger in Model.Passengers)
                                     {
-                                        <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br/> Jenis Tiket : @passenger.Type</h5></li>
+                                        <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
                                     }
                                 </ol>
                             </div>
 
                         </div>
-                        <div class="col-sm-6 receipt-right">
+                        <div class="col-sm-4 receipt-flight">
 
-                            <div class="receipt-flight">
-                                <h3>Informasi Penerbangan</h3>
-                                <h4><b>Berangkat</b></h4>
-                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
+                            <h3>Informasi Penerbangan</h3>
+                            <h4><b>Berangkat</b></h4>
+                            @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
+                            {
+                                <h5>Maskapai : @segment.AirlineName</h5>
+                                <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                            }
+                            @if (Model.Itinerary.FlightTrips.Count > 0)
+                            {
+                                foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
                                 {
                                     <h5>Maskapai : @segment.AirlineName</h5>
                                     <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
                                     <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
                                 }
-                                @if (Model.Itinerary.FlightTrips.Count > 0)
-                                {
-                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
-                                    {
-                                        <h5>Maskapai : @segment.AirlineName</h5>
-                                        <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
-                                        <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
-                                    }
-                                }
-                            </div>
+                            }
 
-                            <div class="receipt-payment">
-                                <h3>Informasi Pembayaran</h3>
-                                <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
-                                <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
-                            </div>
-
-
+                        </div>
+                        <div class="col-sm-4 receipt-payment">
+                            <h3>Informasi Pembayaran</h3>
+                            <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
+                            <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
                         </div>
                     </div>
 
                 </div><!-- .receipt-wrapper -->
-                
-                <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
 
+                <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
             </div>
         </div>
 
