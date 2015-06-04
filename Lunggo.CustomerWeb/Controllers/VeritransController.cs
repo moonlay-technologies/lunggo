@@ -26,7 +26,7 @@ namespace Lunggo.CustomerWeb.Controllers
             using (var rqStream = new StreamReader(Request.InputStream))
                 notifJson = rqStream.ReadToEnd();
             var notif = JsonConvert.DeserializeObject<VeritransNotification>(notifJson);
-            if (notif.status_code == "200")
+            if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {
                 var service = FlightService.GetInstance();
                 DateTime? time;

@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -19,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var prevStatus = PaymentStatusCd.Mnemonic(prevStatusCd);
                 if (info.Status != prevStatus)
                 {
-                    var queryParam = new
+                    var queryParam = new FlightReservationTableRecord
                     {
                         RsvNo = rsvNo,
                         PaymentMediumCd = PaymentMediumCd.Mnemonic(info.Medium),

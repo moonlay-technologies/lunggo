@@ -8,7 +8,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    internal class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
+    public class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -45,40 +45,36 @@ namespace Lunggo.ApCommon.Flight.Query
                 clauseBuilder.Append(@"PaymentTargetAccount = @PaymentTargetAccount, ");
             if (condition.PaymentStatusCd != null)
             {
-                clauseBuilder.Append(@"PaymentStatusCd = CASE ");
                 clauseBuilder.Append(
-                    @"WHEN @PaymentStatusCd = 'SET' THEN ");
+                    @"PaymentStatusCd = CASE ");
                 clauseBuilder.Append(
-                    @"CASE WHEN ((PaymentStatusCd = 'CAN') OR (PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'CAP')) ");
+                        @"WHEN @PaymentStatusCd = 'CAN' THEN ");
                 clauseBuilder.Append(
-                    @"THEN @PaymentStatusCd ");
+                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'SET') OR (PaymentStatusCd = 'DEN') OR (PaymentStatusCd IS NULL)) ");
                 clauseBuilder.Append(
-                    @"ELSE PaymentStatusCd ");
+                                @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"END ");
+                                @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"WHEN @PaymentStatusCd = 'PEN' THEN ");
+                            @"END ");                
                 clauseBuilder.Append(
-                    @"CASE WHEN (PaymentStatusCd = 'CAN') ");
+                        @"WHEN ((@PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"THEN @PaymentStatusCd ");
+                        @"WHEN ((@PaymentStatusCd = 'DEN') OR (PaymentStatusCd IS NULL)) THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"ELSE PaymentStatusCd ");
+                        @"WHEN @PaymentStatusCd = 'SET' THEN ");
                 clauseBuilder.Append(
-                    @"END ");
+                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) ");
                 clauseBuilder.Append(
-                    @"WHEN @PaymentStatusCd = 'CAP' THEN ");
+                                @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"CASE WHEN ((PaymentStatusCd = 'CAN') OR (PaymentStatusCd = 'PEN')) ");
+                                @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"THEN @PaymentStatusCd ");
+                            @"END ");
                 clauseBuilder.Append(
-                    @"ELSE PaymentStatusCd ");
+                        @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
-                    @"END ");
-                clauseBuilder.Append(
-                    @"ELSE PaymentStatusCd = @PaymentStatusCd ");
-                clauseBuilder.Append(@"END, ");
+                    @"END, ");
             }
             clauseBuilder.Remove(clauseBuilder.Length - 2, 2);
             clauseBuilder.Append(" ");

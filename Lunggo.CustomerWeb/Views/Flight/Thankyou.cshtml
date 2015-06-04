@@ -3,10 +3,6 @@
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightSummary
 
-// BUAT halaman thankyou ketika "denied", i.e., pembayaran gagal.
-// BUAT halaman thankyou ketika belom ada reservasi
-// BUAT halaman thankyou ketika payment cancelled, e.g., deadline timeout
-
 @{
     ViewBag.Title = "FlightCheckoutThankyou";
     Layout = "/Views/Shared/_layout_20150506.cshtml";
@@ -23,7 +19,7 @@
 @section PageJavascript {
     <script>
 
-        var startTime = @Model.PaymentInfo.Time;
+        var startTime = new Date('@Model.PaymentInfo.Time.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ")');
         var timeOut = @timeout;
         startTime = startTime.setMinutes(startTime.getMinutes() + timeOut);
 

@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT PaymentMethodCd, PaymentStatusCd, PaymentTargetAccount ");
+            clauseBuilder.Append("SELECT PaymentId, PaymentMediumCd, PaymentMethodCd, PaymentStatusCd, PaymentTime, PaymentTargetAccount ");
             clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }

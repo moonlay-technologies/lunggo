@@ -285,6 +285,7 @@
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\PaymentExpiry.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />

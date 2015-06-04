@@ -86,8 +86,11 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             return new PaymentInfo
             {
+                Id = record.PaymentId,
+                Medium = PaymentMediumCd.Mnemonic(record.PaymentMediumCd),
                 Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
                 Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
+                Time = record.PaymentTime,
                 TargetAccount = record.PaymentTargetAccount
             };
         }

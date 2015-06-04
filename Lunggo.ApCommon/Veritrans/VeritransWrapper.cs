@@ -92,11 +92,17 @@ namespace Lunggo.ApCommon.Veritrans
 
         private static void ProcessRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
         {
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new Request
             {
                 PaymentType = "vtweb",
                 TransactionDetail = transactionDetail,
                 ItemDetail = itemDetails,
+                PaymentExpiry = new PaymentExpiry
+                {
+                    Duration = timeout,
+                    Unit = "minute"
+                },
                 VtWeb = new VtWeb
                 {
                     CreditCard3DSecure = true,
