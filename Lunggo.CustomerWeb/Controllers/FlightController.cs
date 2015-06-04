@@ -165,13 +165,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public void Issuance(string rsvNo)
-        {
-            var service = FlightService.GetInstance();
-            var issueInput = new IssueTicketInput {RsvNo = rsvNo};
-            service.IssueTicket(issueInput);
-        }
-
         public ActionResult Eticket()
         {
             return View();

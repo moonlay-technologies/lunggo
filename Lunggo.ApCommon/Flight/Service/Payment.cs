@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var prevStatus = PaymentStatusCd.Mnemonic(prevStatusCd);
                 if (info.Status != prevStatus)
                 {
-                    UpdateFlightPaymentQuery.GetInstance().Execute(conn, new
+                    var queryParam = new
                     {
                         RsvNo = rsvNo,
                         PaymentMediumCd = PaymentMediumCd.Mnemonic(info.Medium),
@@ -28,7 +28,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         PaymentTime = info.Time,
                         PaymentId = info.Id,
                         PaymentTargetAccount = info.TargetAccount
-                    });
+                    };
+                    UpdateFlightPaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                     return true;
                 }
                 else

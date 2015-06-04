@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
@@ -11,13 +13,19 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
+using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class VeritransController : Controller
     {
-        public ActionResult PaymentNotification(VeritransNotification notif)
+        [HttpPost]
+        public ActionResult PaymentNotification()
         {
+            string notifJson;
+            using (var rqStream = new StreamReader(Request.InputStream))
+                notifJson = rqStream.ReadToEnd();
+            var notif = JsonConvert.DeserializeObject<VeritransNotification>(notifJson);
             if (notif.status_code == "200")
             {
                 var service = FlightService.GetInstance();
@@ -41,7 +49,10 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
                     if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
-                        return RedirectToAction("Issuance", "Flight", notif.order_id);
+                    {
+                        var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
+                        service.IssueTicket(issueInput);
+                    }
                 }
             }
             return null;

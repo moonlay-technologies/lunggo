@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 IsSuccess = true,
                 Status = new BookingStatusInfo
                 {
-                    BookingId = FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture),
+                    BookingId = "MYSTPUB" + FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture),
                     BookingStatus = BookingStatus.Booked
                 }
             };
