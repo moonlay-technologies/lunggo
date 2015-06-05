@@ -31,22 +31,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
     {
         static void Main()
         {
-            new Program().Init();
-            var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("emailqueue");
-            //_queue.CreateIfNotExists();
-
-            Function.TestSend();
+            Init();
 
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;
 
-            //JobHost host = new JobHost(configuration);
-            //host.RunAndBlock();
+            JobHost host = new JobHost(configuration);
+            host.RunAndBlock();
 
         }
-        public void Init()
+        public static void Init()
         {
             InitConfigurationManager();
             InitQueueService();
@@ -58,39 +53,13 @@ namespace Lunggo.WebJob.EmailQueueHandler
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            var configDirectoryPath = "Config/";
-            try
-            {
-                configManager.Init(configDirectoryPath);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            configManager.Init("Config/");
         }
 
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            try
-            {
-                queueClient.init(connectionString);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("gagal init queueClient");
-            }
             var queue = QueueService.GetInstance();
-
-            try
-            {
-                queue.Init(queueClient);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("gagal init queue");
-            }
+            queue.Init();
         }
 
         private static void InitMailService()
@@ -101,7 +70,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             string mailApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apikey");
 
             IMailTemplateEngine mailTemplate = new RazorMailTemplateEngine();
-            mailTemplate.init(defaultMailTable, defaultRowKey);
+            mailTemplate.Init(defaultMailTable, defaultRowKey);
             MandrillMailClient mandrillClient = new MandrillMailClient();
             
             

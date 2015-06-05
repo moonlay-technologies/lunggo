@@ -9,7 +9,7 @@ namespace Lunggo.Framework.Queue
 {
     public interface IQueueClient
     {
-        void init(string connString);
+        void Init();
         CloudQueue GetQueueByReference(string reference);
         bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message);
     }

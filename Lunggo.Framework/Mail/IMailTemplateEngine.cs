@@ -8,7 +8,7 @@ namespace Lunggo.Framework.Mail
 {
     public interface IMailTemplateEngine
     {
-        void init(string defaultMailTable, string defaultRowKey);
+        void Init(string mailTableName, string mailRowKey);
         string GetEmailTemplate<T>(T objectParam, string partitionKey);
     }
 }

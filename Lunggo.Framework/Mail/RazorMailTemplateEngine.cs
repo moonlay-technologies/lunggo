@@ -15,7 +15,7 @@ namespace Lunggo.Framework.Mail
     {
         private string _defaultMailTable;
         private string _defaultRowKey;
-        public void init(string mailTableName, string mailRowKey)
+        public void Init(string mailTableName, string mailRowKey)
         {
             _defaultMailTable = mailTableName;
             _defaultRowKey = mailRowKey;

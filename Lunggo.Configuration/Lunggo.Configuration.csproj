@@ -118,16 +118,6 @@
     <None Include="Config\WebJob.EmailQueueHandler\azurequeue.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\azurequeue.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EticketQueueHandler\azurestorage.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EticketQueueHandler\db.properties" />
-    <None Include="Config\WebJob.EticketQueueHandler\mandrill.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azurequeue.properties">
       <SubType>Designer</SubType>
     </None>

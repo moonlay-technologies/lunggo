@@ -62,7 +62,7 @@ namespace Lunggo.WebJob.TicketQueueHandler
             IQueueClient queueClient = new AzureQueueClient();
             try
             {
-                queueClient.init(connectionString);
+                queueClient.Init(connectionString);
             }
             catch (Exception ex)
             {
