@@ -88,11 +88,8 @@ namespace Lunggo.CustomerWeb
         }
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            queueClient.Init(connectionString);
             var queue = QueueService.GetInstance();
-            queue.Init(queueClient);
+            queue.Init();
         }
         private static void InitLogger()
         {

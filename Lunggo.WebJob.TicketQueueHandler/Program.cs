@@ -58,26 +58,8 @@ namespace Lunggo.WebJob.TicketQueueHandler
 
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            try
-            {
-                queueClient.Init(connectionString);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("gagal init queueClient");
-            }
             var queue = QueueService.GetInstance();
-
-            try
-            {
-                queue.Init(queueClient);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("gagal init queue");
-            }
+            queue.Init();
         }
         private static void InitTicketService()
         {
