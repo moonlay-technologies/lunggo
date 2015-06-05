@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Config;
 using Microsoft.Data.OData;
 
 namespace Lunggo.Framework.Database
@@ -27,11 +28,11 @@ namespace Lunggo.Framework.Database
             return Instance;
         }
 
-        public void Init(String connectionString)
+        public void Init()
         {
             if (!_isInitialized)
             {
-                _connectionString = connectionString;
+                _connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
                 _isInitialized = true;
             }
             else

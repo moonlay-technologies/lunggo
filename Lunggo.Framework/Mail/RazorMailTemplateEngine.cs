@@ -11,46 +11,30 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Mail
 {
-    public class RazorMailTemplateEngine : IMailTemplateEngine
+    internal class RazorMailTemplateEngine : MailTemplateEngine
     {
-        private string _defaultMailTable;
-        private string _defaultRowKey;
-        public void Init(string mailTableName, string mailRowKey)
+        private string _mailTable;
+        private string _rowKey;
+        internal override void Init(string mailTableName, string mailRowKey)
         {
-            _defaultMailTable = mailTableName;
-            _defaultRowKey = mailRowKey;
+            _mailTable = mailTableName;
+            _rowKey = mailRowKey;
         }
-        public string GetEmailTemplate<T>(T objectParam , string partitionKey)
+        internal override string GetEmailTemplate<T>(T objectParam , string partitionKey)
         {
-            try 
-            {
-                string template = GetEmailTemplateByPartitionKey(partitionKey);
-                string result = Razor.Parse(template, objectParam, partitionKey);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
+            var template = GetEmailTemplateByPartitionKey(partitionKey);
+            var result = Razor.Parse(template, objectParam, partitionKey);
+            return result;
         }
         private string GetEmailTemplateByPartitionKey(string partitionKey)
         {
-            try
-            {
-                CloudTable table = TableStorageService.GetInstance().GetTableByReference(this._defaultMailTable);
-                var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                             where tabel.PartitionKey == partitionKey && tabel.RowKey == this._defaultRowKey
-                             select tabel).FirstOrDefault();
-                string mailTemplate = (query as MailTemplateModel).Template;
-                
-                return mailTemplate;
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error("Error occured when get mail template from table", ex);
-                throw;
-            }
+            var table = TableStorageService.GetInstance().GetTableByReference(this._mailTable);
+            var query = (from tabel in table.CreateQuery<MailTemplateModel>()
+                         where tabel.PartitionKey == partitionKey && tabel.RowKey == this._rowKey
+                         select tabel).FirstOrDefault();
+            var mailTemplate = (query != null) ? query.Template : null;
+
+            return mailTemplate;
         }
     }
 }

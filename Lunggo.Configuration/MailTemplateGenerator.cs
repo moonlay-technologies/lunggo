@@ -55,9 +55,7 @@ namespace Lunggo.Configuration.MailTemplate
         void InsertTemplateToTable(KeyValuePair<string, string> FileNameAndTemplate)
         {
             var emp = new MailTemplateModel() { Template = FileNameAndTemplate.Value, PartitionKey = FileNameAndTemplate.Key, RowKey = this.DefaultRowKey };
-            ITableStorageClient tableStorageClient =  new AzureTableStorageClient();
-            tableStorageClient.init("DefaultEndpointsProtocol=https;AccountName=lunggostoragedev;AccountKey=lFA73VFWzxbPnk3hCJ17KVv4TSrfwA4zjfzM8PGno95xygdUomFq+AaNsKBGLn1wfaLmQCayb7Yt5x7z8/6fOg==");
-            TableStorageService.GetInstance().Init(tableStorageClient);
+            TableStorageService.GetInstance().Init();
             TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, this.DefaultTableName);
         }
     }

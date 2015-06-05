@@ -13,13 +13,13 @@ using Mandrill.Requests.Messages;
 namespace Lunggo.Framework.Mail
 {
     public partial class MailService {
-        private class MandrillMailClient : IMailClient
+        private class MandrillMailClient : MailClient
         {
             private static readonly MandrillMailClient ClientInstance = new MandrillMailClient();
             private bool _isInitialized;
             private MandrillApi _apiOfMandrill;
             private bool _exposeRecipients;
-            private IMailTemplateEngine _mailTemplateEngine;
+            private MailTemplateEngine _mailTemplateEngine;
 
             private enum RecipientType
             {
@@ -38,7 +38,7 @@ namespace Lunggo.Framework.Mail
                 return ClientInstance;
             }
 
-            public void Init()
+            internal override void Init()
             {
                 if (!_isInitialized)
                 {
@@ -58,7 +58,7 @@ namespace Lunggo.Framework.Mail
                 }
             }
 
-            public void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
+            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
             {
                 try
                 {
@@ -79,8 +79,8 @@ namespace Lunggo.Framework.Mail
                 {
                     PreserveRecipients = !_exposeRecipients,
                     Subject = mailModel.Subject,
-                    FromEmail = mailModel.From_Mail,
-                    FromName = mailModel.From_Name,
+                    FromEmail = mailModel.FromMail,
+                    FromName = mailModel.FromName,
                     To = GenerateMessageAddressTo(mailModel),
                     Html = _mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey)
                 };
@@ -94,10 +94,10 @@ namespace Lunggo.Framework.Mail
                 var addresses = new List<EmailAddress>();
                 if (mailModel.RecipientList != null)
                     addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.To));
-                if (mailModel.CCList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.CCList, RecipientType.Cc));
-                if (mailModel.BCCList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.BCCList, RecipientType.Bcc));
+                if (mailModel.CcList != null)
+                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.Cc));
+                if (mailModel.BccList != null)
+                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.Bcc));
                 return addresses;
 
             }

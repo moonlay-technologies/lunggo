@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.Core;
+﻿using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
@@ -9,69 +10,63 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.TableStorage
 {
-    public class AzureTableStorageClient : ITableStorageClient
-    {
-        CloudTableClient _cloudTableClient;
-        public void init(string connString)
+    public partial class TableStorageService {
+        private class AzureTableStorageClient : TableStorageClient
         {
-            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(connString);
-            this._cloudTableClient = cloudStorageAccount.CreateCloudTableClient();
+            private static readonly AzureTableStorageClient ClientInstance = new AzureTableStorageClient();
+            private bool _isInitialized;
+            private CloudTableClient _cloudTableClient;
 
-        }
-
-        public CloudTable GetTableByReference(string reference)
-        {
-            try
+            private AzureTableStorageClient()
             {
-                CloudTable table = _cloudTableClient.GetTableReference(reference);
+                
+            }
+
+            internal static AzureTableStorageClient GetClientInstance()
+            {
+                return ClientInstance;
+            }
+
+            internal override void Init()
+            {
+                if (!_isInitialized)
+                {
+                    var connString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+                    var cloudStorageAccount = CloudStorageAccount.Parse(connString);
+                    _cloudTableClient = cloudStorageAccount.CreateCloudTableClient();
+                    _isInitialized = true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("AzureTableStorageClient is already initialized");
+                }
+            }
+
+            internal override CloudTable GetTableByReference(string reference)
+            {
+                var table = _cloudTableClient.GetTableReference(reference);
                 return table;
             }
-            catch(Exception ex)
+
+            private CloudTable GetTableByReferenceAndCreateIfNotExist(string reference)
             {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
-        }
-        private CloudTable GetTableByReferenceAndCreateIfNotExist(string reference)
-        {
-            try
-            {
-                CloudTable table = _cloudTableClient.GetTableReference(reference);
+                var table = _cloudTableClient.GetTableReference(reference);
                 table.CreateIfNotExists();
                 return table;
             }
-            catch (Exception ex)
+
+            internal override void InsertEntityToTableStorage<T>(T objectParam, string nameReference)
             {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
-        }
-        public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
-        {
-            try
-            {
-                CloudTable table = GetTableByReferenceAndCreateIfNotExist(nameReference);
-                TableOperation insertOp = TableOperation.Insert(objectParam);
+                var table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                var insertOp = TableOperation.Insert(objectParam);
                 table.Execute(insertOp);
             }
-            catch (Exception ex)
+
+            internal override void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference)
             {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
-        }
-        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
-        {
-            try
-            {
-                CloudTable table = GetTableByReferenceAndCreateIfNotExist(nameReference);
-                TableOperation insertOp = TableOperation.InsertOrReplace(objectParam);
+                var table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                var insertOp = TableOperation.InsertOrReplace(objectParam);
                 table.Execute(insertOp);
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
             }
         }
     }

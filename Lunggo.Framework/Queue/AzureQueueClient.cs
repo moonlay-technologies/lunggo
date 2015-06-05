@@ -12,7 +12,7 @@ namespace Lunggo.Framework.Queue
 {
     public partial class QueueService
     {
-        private class AzureQueueClient : IQueueClient
+        private class AzureQueueClient : QueueClient
         {
             private static readonly AzureQueueClient ClientInstance = new AzureQueueClient();
             private bool _isInitialized;
@@ -28,7 +28,7 @@ namespace Lunggo.Framework.Queue
                 return ClientInstance;
             }
 
-            public void Init()
+            internal override void Init()
             {
                 if (!_isInitialized)
                 {
@@ -44,13 +44,13 @@ namespace Lunggo.Framework.Queue
             }
 
 
-            public CloudQueue GetQueueByReference(string reference)
+            internal override CloudQueue GetQueueByReference(string reference)
             {
                 var queue = _cloudQueueClient.GetQueueReference(reference);
                 return queue;
             }
 
-            public bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
+            internal override bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
             {
                 var queue = GetQueueByReference(reference);
                 queue.CreateIfNotExists();

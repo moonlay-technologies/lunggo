@@ -27,8 +27,8 @@ namespace Lunggo.WebJob.EmailQueueHandler
             MailService.GetInstance().SendEmail(new {Name = "yey", Address = "ow"}, new MailModel
             {
                 Subject = "makan nih email",
-                From_Mail = "dari@saya.lho",
-                From_Name = "saya siapa",
+                FromMail = "dari@saya.lho",
+                FromName = "saya siapa",
                 RecipientList = new []{"developer@travelmadezy.com"}
             }, "TestHtml");
         }

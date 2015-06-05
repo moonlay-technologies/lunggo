@@ -83,8 +83,7 @@ namespace Lunggo.CustomerWeb
         private static void InitDatabaseService()
         {
             var database = DbService.GetInstance();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            database.Init(connectionString);
+            database.Init();
         }
         private static void InitQueueService()
         {
