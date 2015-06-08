@@ -54,14 +54,12 @@ namespace Lunggo.WebJob.EmailQueueHandler
             mailService.Init();
         }
 
-        private static void InitMailTemplate()
-        {
-        }
         public static void InitTableStorageService()
         {
             var tableStorageService = TableStorageService.GetInstance();
             tableStorageService.Init();
         }
+
         private static void InitTraceListener()
         {
             Trace.Listeners.Clear();

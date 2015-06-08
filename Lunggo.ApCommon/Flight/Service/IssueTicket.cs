@@ -35,6 +35,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
                     if (orderResult.IsInstantIssuance)
                     {
+                        var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
+                        GetAndUpdateNewDetails(detailsInput);
                         // TODO flight push eticket queue
                     }
                 }
