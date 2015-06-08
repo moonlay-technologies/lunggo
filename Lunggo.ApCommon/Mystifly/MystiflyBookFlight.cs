@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = Client.BookFlight(request);
                     done = true;
-                    if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
+                    if (response.Success && !response.Errors.Any() && response.Status.ToLower() == "confirmed")
                     {
                         result = MapResult(response, fareType);
                         result.IsSuccess = true;

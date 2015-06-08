@@ -170,13 +170,13 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static Title MapDetailsPassengerTitle(CustomerInfo customerInfo)
         {
-            switch (customerInfo.Customer.PaxName.PassengerTitle)
+            switch (customerInfo.Customer.PaxName.PassengerTitle.ToLower())
             {
-                case "Mr":
+                case "mr":
                     return Title.Mister;
-                case "Mrs":
+                case "mrs":
                     return Title.Mistress;
-                case "Miss":
+                case "miss":
                     return Title.Miss;
                 default:
                     return Title.Mister;

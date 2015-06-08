@@ -278,17 +278,17 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static TripType MapTripType(string type)
         {
-            switch (type)
+            switch (type.ToLower())
             {
-                case "OneWay":
+                case "oneway":
                     return TripType.OneWay;
-                case "Return":
+                case "return":
                     return TripType.Return;
-                case "OpenJaw":
+                case "openjaw":
                     return TripType.OpenJaw;
-                case "Circle":
+                case "circle":
                     return TripType.Circle;
-                case "Other":
+                case "other":
                     return TripType.Other;
                 default:
                     return TripType.OpenJaw;
@@ -317,15 +317,15 @@ namespace Lunggo.ApCommon.Mystifly
         {
             foreach (var field in pricedItinerary.RequiredFieldsToBook)
             {
-                switch (field)
+                switch (field.ToLower())
                 {
-                    case "Passport":
+                    case "passport":
                         flightItineraryFare.RequirePassport = true;
                         break;
-                    case "DOB":
+                    case "dob":
                         flightItineraryFare.RequireBirthDate = true;
                         break;
-                    case "SameCheck-InForAllPassengers":
+                    case "samecheck-inforallpassengers":
                         flightItineraryFare.RequireSameCheckIn = true;
                         break;
                 }

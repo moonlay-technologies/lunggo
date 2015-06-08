@@ -42,6 +42,20 @@ namespace Lunggo.Framework.TableStorage
                 }
             }
 
+            internal void Init(string connString)
+            {
+                if (!_isInitialized)
+                {
+                    var cloudStorageAccount = CloudStorageAccount.Parse(connString);
+                    _cloudTableClient = cloudStorageAccount.CreateCloudTableClient();
+                    _isInitialized = true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("AzureTableStorageClient is already initialized");
+                }
+            }
+
             internal override CloudTable GetTableByReference(string reference)
             {
                 var table = _cloudTableClient.GetTableReference(reference);

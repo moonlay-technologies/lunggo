@@ -30,6 +30,20 @@ namespace Lunggo.Framework.TableStorage
                 throw new InvalidOperationException("TableStorageService is already initialized");
             }
         }
+
+        public void Init(string connString)
+        {
+            if (!_isInitialized)
+            {
+                Client.Init(connString);
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("TableStorageService is already initialized");
+            }
+        }
+
         public static TableStorageService GetInstance()
         {
             return Instance;

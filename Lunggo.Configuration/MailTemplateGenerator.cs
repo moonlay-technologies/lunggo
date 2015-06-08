@@ -20,6 +20,7 @@ namespace Lunggo.Configuration.MailTemplate
         {
             try
             {
+                TableStorageService.GetInstance().Init("DefaultEndpointsProtocol=https;AccountName=lunggostoragedv1;AccountKey=b4+GLz5z4ySRlzaXucbvShtxSXXmkJlQid5rR6HgxCUeKIF47oUGzsBxGPwrKZrOkzpUyIOcJsS3wO8k8rY9nQ==");
                 string[] AllFilesInPath = GetAllTemplateFiles();
                 ReadHTMLAndWriteTableFromAllFiles(AllFilesInPath);
             }
@@ -55,7 +56,6 @@ namespace Lunggo.Configuration.MailTemplate
         void InsertTemplateToTable(KeyValuePair<string, string> FileNameAndTemplate)
         {
             var emp = new MailTemplateModel() { Template = FileNameAndTemplate.Value, PartitionKey = FileNameAndTemplate.Key, RowKey = this.DefaultRowKey };
-            TableStorageService.GetInstance().Init();
             TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, this.DefaultTableName);
         }
     }
