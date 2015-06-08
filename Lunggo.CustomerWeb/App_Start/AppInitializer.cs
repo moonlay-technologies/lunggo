@@ -83,16 +83,12 @@ namespace Lunggo.CustomerWeb
         private static void InitDatabaseService()
         {
             var database = DbService.GetInstance();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            database.Init(connectionString);
+            database.Init();
         }
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            queueClient.init(connectionString);
             var queue = QueueService.GetInstance();
-            queue.Init(queueClient);
+            queue.Init();
         }
         private static void InitLogger()
         {

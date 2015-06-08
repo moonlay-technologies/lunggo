@@ -261,7 +261,6 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -276,6 +275,7 @@
     <Compile Include="Models\FlightThankyouData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PaymentConfirmationData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Models\testHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -322,6 +322,12 @@
       <DependentUpon>application.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\eticket.css">
+      <DependentUpon>eticket.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\eticket.min.css">
+      <DependentUpon>eticket.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\css\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -621,6 +627,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
@@ -683,6 +690,7 @@
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
+    <Content Include="Assets\images\payment-veritrans.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
     <Content Include="Assets\images\_sample\bar-3.png" />
@@ -703,6 +711,7 @@
     <Content Include="Assets\js\angular_app.js" />
     <Content Include="Assets\js\application.js" />
     <Content Include="Assets\js\jquery-ui.min.js" />
+    <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.pickmeup.min.js" />
@@ -789,7 +798,7 @@
     <Content Include="Assets\css\_header.scss" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
-    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
+    <Content Include="Assets\css\eticket.scss" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2025,6 +2034,7 @@
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
+    <Content Include="Views\Flight\Confirmation.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

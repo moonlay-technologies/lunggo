@@ -72,8 +72,6 @@ namespace Lunggo.ApCommon.Mystifly
         private static RevalidateFareResult MapResult(AirRevalidateRS response, RevalidateConditions conditions)
         {
             var currency = CurrencyService.GetInstance();
-            // TODO Flight Currency Dummy
-            currency.SetSupplierExchangeRate(Supplier.Mystifly, 1, 13000);
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = new RevalidateFareResult();
             CheckFareValidity(response, result);

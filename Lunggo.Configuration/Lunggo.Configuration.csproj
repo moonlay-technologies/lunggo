@@ -109,6 +109,18 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\CustomerWeb\azurequeue.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebAPI\azurequeue.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EmailQueueHandler\azurequeue.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\azurequeue.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azurestorage.properties">
       <SubType>Designer</SubType>
     </None>

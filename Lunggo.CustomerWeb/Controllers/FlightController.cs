@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Query.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment;
@@ -115,7 +116,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
-                OverallTripType = TripType.OneWay
+                OverallTripType = data.ItineraryFare.TripType
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
             if (bookResult.IsSuccess)
@@ -124,7 +125,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     var transactionDetails = new TransactionDetails
                     {
-                        OrderId = bookResult.ReservationDetails.RsvNo,
+                        OrderId = bookResult.RsvNo,
                         Amount = data.ItineraryFare.IdrPrice
                     };
                     var itemDetails = new List<ItemDetails>
@@ -188,15 +189,43 @@ namespace Lunggo.CustomerWeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Thankyou(FlightThankyouData data)
+        public ActionResult Thankyou(string rsvNo)
         {
-            return View(data);
+            var service = FlightService.GetInstance();
+            var summary = service.GetFlightSummary(rsvNo);
+            return View(summary);
         }
 
-        public ActionResult Eticket()
+        public ActionResult Confirmation()
         {
-            var itin = FlightService.GetInstance().GetItineraryFromCache("111", "a");
-            return View(itin);
+            return View();
+        }
+
+        public void PaymentConfirmation(FlightPaymentConfirmationData data)
+        {
+            if (data.PaymentStatus == PaymentStatus.Accepted)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
+
+                    foreach (var bookingId in bookingIds)
+                    {
+                        var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
+                            {
+                                BookingId = bookingId
+                            });
+                        if (issueResult.IsSuccess)
+                        {
+                            var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
+                            {
+                                BookingId = bookingId,
+                                TripInfos = 
+                            })
+                        }
+                    }
+                }
+            }
         }
     }
 }

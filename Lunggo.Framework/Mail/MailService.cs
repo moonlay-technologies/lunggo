@@ -6,27 +6,38 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.Mail
 {
-    public class MailService
+    public partial class MailService
     {
-        IMailClient _mailClient;
         private static readonly MailService Instance = new MailService();
-
+        private bool _isInitialized;
+        private static readonly MandrillMailClient Client = MandrillMailClient.GetClientInstance();
 
         private MailService()
         {
             
         }
-        public void Init(IMailClient client)
+
+        public void Init()
         {
-            _mailClient = client;
+            if (!_isInitialized)
+            {
+                Client.Init();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("MailService is already initialized");
+            }
         }
+
         public static MailService GetInstance()
         {
             return Instance;
         }
+
         public void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
         {
-            _mailClient.sendEmail(objectParam, mailModel, partitionKey);
+            Client.SendEmail(objectParam, mailModel, partitionKey);
         }
     }
 }

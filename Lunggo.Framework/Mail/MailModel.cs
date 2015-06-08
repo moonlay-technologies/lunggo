@@ -10,21 +10,21 @@ namespace Lunggo.Framework.Mail
     public class MailModel
     {
         public string[] RecipientList { get; set; }
-        public string[] CCList { get; set; }
-        public string[] BCCList { get; set; }
+        public string[] CcList { get; set; }
+        public string[] BccList { get; set; }
         public List<FileInfo> ListFileInfo { get; set; }
         public string Subject { get; set; }
-        private string _from_Mail = "System@Lunggo.com";
-        public string From_Mail
+        private string _fromMail = "System@Lunggo.com";
+        public string FromMail
         {
-            get { return _from_Mail; }
-            set { _from_Mail = value; }
+            get { return _fromMail; }
+            set { _fromMail = value; }
         }
-        private string _from_Name = "Lunggo System";
-        public string From_Name
+        private string _fromName = "Lunggo System";
+        public string FromName
         {
-            get { return _from_Name; }
-            set { _from_Name = value; }
+            get { return _fromName; }
+            set { _fromName = value; }
         }
         
     }

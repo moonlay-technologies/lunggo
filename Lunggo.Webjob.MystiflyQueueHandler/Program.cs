@@ -22,6 +22,13 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             List<string> ticketedBookingIds;
             List<string> scheduleChangedBookingIds;
             flightService.GetAndUpdateBookingStatus(out ticketedBookingIds, out scheduleChangedBookingIds);
+            PushEticketQueue(ticketedBookingIds);
+        }
+
+        private static void PushEticketQueue(List<string> ticketedBookingIds)
+        {
+            // TODO flight push eticket queue
+            throw new NotImplementedException();
         }
 
         private static void Init()

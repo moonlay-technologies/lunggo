@@ -1,161 +1,183 @@
-﻿@using Lunggo.ApCommon.Payment.Constant
-@model Lunggo.CustomerWeb.Models.FlightThankyouData
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightSummary
 
 @{
     ViewBag.Title = "FlightCheckoutThankyou";
     Layout = "/Views/Shared/_layout_20150506.cshtml";
 }
 
-@Model.RsvNo
-
-@switch (Model.Status)
-{
-
-    case PaymentStatus.Cancelled:
-
-        <!-- thankyou page -->
-        <div class="checkout-page thankyou-page">
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="text-center">Transaksi Dibatalkan</h1>
-                        <h2 class="text-center">Carilah lagi dan segeralah bertransaksilah dengan kami</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                        <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    case PaymentStatus.Pending:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Menunggu Pembayaran</h1>
-                    <h2 class="text-center">Mohon selesaikan transaksi Anda sebelum terlambat</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    case PaymentStatus.BeingAuthorized:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Menunggu Autentikasi</h1>
-                    <h2 class="text-center">Alat pembayaran Anda sedang diperiksa</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    case PaymentStatus.Accepted:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Pembayaran Diterima</h1>
-                    <h2 class="text-center">Hatur Nuhun</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    case PaymentStatus.Denied:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Alat Pembayaran Anda Ditolak</h1>
-                    <h2 class="text-center">Silakan lunaskan tagihan kartu kredit Anda</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    case PaymentStatus.Error:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Alamakjang</h1>
-                    <h2 class="text-center">Ada apa ini?</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
-
-    default:
-
-        <!-- thankyou page -->
-    <div class="checkout-page thankyou-page">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="text-center">Ente Nyasar?</h1>
-                    <h2 class="text-center">404 404 404 404 404 404 404 404 404</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ullamcorper rhoncus eros eget condimentum. Fusce finibus enim eu libero auctor vestibulum. Vivamus eget nisl quis risus varius finibus. Phasellus quis elit semper, iaculis velit vitae, bibendum tellus. Nulla ultricies, metus in ultricies pulvinar, nulla metus viverra ipsum, in cursus nisl turpis id lacus. Sed at risus augue. Etiam eu metus non lacus luctus volutpat. In nec ante ipsum. Pellentesque id vestibulum massa. Quisque condimentum vestibulum ipsum ut porttitor. Vivamus nec tellus et elit tincidunt tristique sit amet quis mauris. Aliquam eleifend lacus sed mauris commodo, eu vestibulum erat varius. Aenean ut sapien efficitur, viverra urna sit amet, faucibus leo. Aenean scelerisque purus turpis. Integer sit amet erat lectus. In rutrum urna non maximus porta.</p>
-                    <p>In maximus eget orci vitae commodo. In vel fermentum felis, eu viverra massa. Donec eu lacus ligula. Vivamus sollicitudin nunc quis diam posuere, id lobortis lectus bibendum. Integer purus tortor, porta eget pellentesque sit amet, ullamcorper et lacus. Donec scelerisque porttitor eros, at ullamcorper lacus ullamcorper nec. Morbi ultrices ipsum vel sem tristique, in pretium odio vulputate. Phasellus eget mattis diam. In semper quam ac felis tincidunt, at molestie dui pretium. Aliquam consectetur velit sapien, a consectetur mi volutpat eu. Nulla aliquam nulla eu purus mollis, accumsan rhoncus urna pharetra. Cras malesuada nec risus id pharetra. Maecenas feugiat, quam at imperdiet dictum, lectus ante ultricies dui, nec luctus arcu urna eget lorem. Mauris ut cursus nibh. Vivamus vitae tortor vitae odio facilisis condimentum. Mauris a orci elit.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-        <!-- .checkout-page.thankyou-page -->
-
-        break;
+@{
+    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
 }
 
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+
+@section PageJavascript {
+    <script>
+
+        var startTime = new Date('@Model.PaymentInfo.Time.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ")');
+        var timeOut = @timeout;
+        startTime = startTime.setMinutes(startTime.getMinutes() + timeOut);
+
+        $('.payment-countdown').countdown(startTime, function (event) {
+            $(this).html(event.strftime('%M:%S'));
+        });
+
+    </script>
+}
+
+<div class="thankyou-page flight-receipt">
+    
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                
+                @switch (Model.PaymentInfo.Status)
+                {
+                    case PaymentStatus.Undefined:
+                    case PaymentStatus.Cancelled:
+                        
+                        <div class="no-reservation">
+                            <h1 class="text-center">Belum Ada Reservasi</h1>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>Belum ada reservasi. Silahkan buat reservasi Anda.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="ticket-print">
+                                        <a href="/" class="btn btn-yellow">Buat Reservasi</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        break;
+                        
+                    case PaymentStatus.Denied:
+
+                        <div class="transaction-denied">
+                            <h1 class="text-center">Transaksi Ditolak</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
+                        </div>
+
+
+                        <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+                
+                        break;
+                        
+                    case PaymentStatus.Pending:
+
+                        <div class="payment-timer">
+                    
+                            <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
+                                    <p>Nomor Virtual Account : @Model.PaymentInfo.TargetAccount</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="payment-countdown text-center"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- .payment-timer -->
+                
+                        break;
+                        
+                    case PaymentStatus.Settled:
+
+                        <div class="ticket-wrapper">
+                            <h2 class="text-center ticket-title">Cetak e-Ticket Anda</h2>
+                            <div class="row">
+                                <div class="col-sm-6 ticket-left">
+                                    <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mencetak eTicket Anda.</p>
+                                </div>
+                                <div class="col-sm-6 ticket-right">
+                                    <div class="ticket-print">
+                                        <a href="#" class="btn btn-yellow">Cetak e-Ticket</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .ticket-wrapper -->
+
+                        break;
+
+                }
+
+            </div>
+        </div>
+        
+        @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+        {
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="receipt-wrapper">
+
+                        <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
+
+                        <div class="row">
+                            <div class="col-sm-4 receipt-summary">
+
+                                <div class="receipt-number">
+                                    <h3>Nomer Pemesanan</h3>
+                                    <p>@Model.RsvNo</p>
+                                </div>
+
+                                <div class="receipt-user">
+                                    <h3>Info Penumpang</h3>
+                                    <ol>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
+                                        }
+                                    </ol>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4 receipt-flight">
+
+                                <h3>Informasi Penerbangan</h3>
+                                <h4><b>Berangkat</b></h4>
+                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
+                                {
+                                    <h5>Maskapai : @segment.AirlineName</h5>
+                                    <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                    <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                }
+                                @if (Model.Itinerary.FlightTrips.Count > 0)
+                                {
+                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                    {
+                                        <h5>Maskapai : @segment.AirlineName</h5>
+                                        <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                        <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                    }
+                                }
+
+                            </div>
+                            <div class="col-sm-4 receipt-payment">
+                                <h3>Informasi Pembayaran</h3>
+                                <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
+                                <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
+                            </div>
+                        </div>
+
+                    </div><!-- .receipt-wrapper -->
+
+                    <small>Travorama selalu mementingkan keamangan transaksi Anda. Semua transaksi melalui Traveloka.com dijamin 100% aman.</small>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div><!-- .thankyou-page -->

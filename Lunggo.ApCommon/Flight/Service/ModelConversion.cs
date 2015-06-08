@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -36,6 +40,58 @@ namespace Lunggo.ApCommon.Flight.Service
                 TripType = itinerary.TripType,
                 TotalFare = itinerary.IdrPrice,
                 FlightTrips = MapTrips(itinerary.FlightTrips),
+            };
+        }
+
+        internal FlightTripApi ConvertToTripApi(FlightTripTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightTripApi
+            {
+                OriginAirport = summaryRecord.OriginAirportCd,
+                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
+                DestinationAirport = summaryRecord.DestinationAirportCd,
+                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd)
+            };
+        }
+
+        internal FlightSegmentApi ConvertToSegmentApi(FlightSegmentTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightSegmentApi
+            {
+                DepartureAirport = summaryRecord.DepartureAirportCd,
+                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                ArrivalAirport = summaryRecord.ArrivalAirportCd,
+                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                AirlineCode = summaryRecord.AirlineCd,
+                FlightNumber = summaryRecord.FlightNumber
+            };
+        }
+
+        internal PassengerInfoFare ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
+        {
+            return new PassengerInfoFare
+            {
+                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
+                FirstName = summaryRecord.FirstName,
+                LastName = summaryRecord.LastName,
+                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
+            };
+        }
+
+        internal PaymentInfo ConvertFlightPaymentInfo(FlightReservationTableRecord record)
+        {
+            return new PaymentInfo
+            {
+                Id = record.PaymentId,
+                Medium = PaymentMediumCd.Mnemonic(record.PaymentMediumCd),
+                Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
+                Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
+                Time = record.PaymentTime,
+                TargetAccount = record.PaymentTargetAccount
             };
         }
 

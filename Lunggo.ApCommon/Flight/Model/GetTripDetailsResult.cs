@@ -15,7 +15,6 @@ namespace Lunggo.ApCommon.Flight.Model
         internal decimal AdultTotalFare { get; set; }
         internal decimal ChildTotalFare { get; set; }
         internal decimal InfantTotalFare { get; set; }
-        internal decimal PSCFare { get; set; }
         internal string Currency { get; set; }
         internal List<string> BookingNotes { get; set; }
 

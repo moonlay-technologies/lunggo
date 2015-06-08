@@ -3,49 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Framework.Queue
 {
-    public class AzureQueueClient : IQueueClient
+    public partial class QueueService
     {
-        CloudQueueClient _cloudQueueClient;
-        public void init(string connString)
+        private class AzureQueueClient : QueueClient
         {
-            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(connString);
-            this._cloudQueueClient = cloudStorageAccount.CreateCloudQueueClient();
-        }
-        public AzureQueueClient()
-        {
-            
-        }
-        public CloudQueue GetQueueByReference(string reference)
-        {
-            try
+            private static readonly AzureQueueClient ClientInstance = new AzureQueueClient();
+            private bool _isInitialized;
+            private CloudQueueClient _cloudQueueClient;
+
+            private AzureQueueClient()
             {
-                CloudQueue queue = _cloudQueueClient.GetQueueReference(reference);
+
+            }
+
+            internal static AzureQueueClient GetClientInstance()
+            {
+                return ClientInstance;
+            }
+
+            internal override void Init()
+            {
+                if (!_isInitialized)
+                {
+                    var connString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+                    var cloudStorageAccount = CloudStorageAccount.Parse(connString);
+                    _cloudQueueClient = cloudStorageAccount.CreateCloudQueueClient();
+                    _isInitialized = true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("AzureQueueClient is already initialized");
+                }
+            }
+
+
+            internal override CloudQueue GetQueueByReference(string reference)
+            {
+                var queue = _cloudQueueClient.GetQueueReference(reference);
                 return queue;
             }
-            catch (Exception ex)
+
+            internal override bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
             {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
-        }
-        public bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
-        {
-            try
-            {
-                CloudQueue queue = GetQueueByReference(reference);
+                var queue = GetQueueByReference(reference);
+                queue.CreateIfNotExists();
                 queue.AddMessage(message);
                 return true;
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
             }
         }
     }

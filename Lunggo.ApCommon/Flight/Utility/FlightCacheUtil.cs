@@ -10,16 +10,16 @@ using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Utility
 {
-    internal class FlightCacheUtil
+    internal static class FlightCacheUtil
     {
-        internal static RedisValue ConvertToCacheObject<T>(T input)
+        internal static RedisValue ToCacheObject<T>(this T input)
         {
-            var serializedInput = Serialize(input);
+            var serializedInput = input.Serialize();
             var compressedInput = CompressionUtil.Compress(serializedInput);
             return compressedInput;
         }
 
-        internal static T DeconvertFromCacheObject<T>(RedisValue cacheObject)
+        internal static T DeconvertTo<T>(this RedisValue cacheObject)
         {
             if (cacheObject.IsNullOrEmpty)
             {
@@ -29,16 +29,16 @@ namespace Lunggo.ApCommon.Flight.Utility
             {
                 byte[] compressedJson = cacheObject;
                 var json = CompressionUtil.Decompress(compressedJson);
-                return Deserialize<T>(json);
+                return json.Deserialize<T>();
             }
         }
 
-        internal static string Serialize<T>(T input)
+        internal static string Serialize<T>(this T input)
         {
             return JsonConvert.SerializeObject(input);
         }
 
-        internal static T Deserialize<T>(string jsonInput)
+        internal static T Deserialize<T>(this string jsonInput)
         {
             return JsonConvert.DeserializeObject<T>(jsonInput);
         }

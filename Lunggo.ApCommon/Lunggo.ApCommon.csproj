@@ -58,6 +58,25 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -75,6 +94,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -130,6 +153,7 @@
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
+    <Compile Include="Flight\Model\FlightSummary.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />
@@ -157,13 +181,26 @@
     <Compile Include="Flight\Model\Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
-    <Compile Include="Flight\Query\GetFlightBookingIdAndTripInfoQuery.cs" />
-    <Compile Include="Flight\Query\GetFlightSegment.cs" />
+    <Compile Include="Flight\Query\GetFlightLocalCurrencyQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightTotalFareQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightBookingIdQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightPaymentIdQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightPaymentStatusQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightPaymentInfoQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightPassengerSummaryQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightReservationSummaryQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightSegmentQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightSegmentSummaryQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightTripSummaryQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightTripInfoQuery.cs" />
+    <Compile Include="Flight\Query\Logic\GetFlightDb.cs" />
+    <Compile Include="Flight\Query\UpdateFlightPaymentQuery.cs" />
+    <Compile Include="Flight\Service\GetFlightSummary.cs" />
+    <Compile Include="Flight\Query\Logic\InsertFlightDb.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Query\GetFlightBookingStatusQuery.cs" />
-    <Compile Include="Flight\Query\InsertFlightDb.cs" />
     <Compile Include="Flight\Query\Model\FlightDetailsRecord.cs" />
-    <Compile Include="Flight\Query\Model\GetFlightPassengerPrimKey.cs" />
+    <Compile Include="Flight\Query\GetFlightPassengerPrimKeyQuery.cs" />
     <Compile Include="Flight\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Service\BookFlight.cs" />
@@ -171,6 +208,7 @@
     <Compile Include="Flight\Service\CancelBooking.cs" />
     <Compile Include="Flight\Service\FlightCaching.cs" />
     <Compile Include="Flight\Service\ModelConversion.cs" />
+    <Compile Include="Flight\Service\Payment.cs" />
     <Compile Include="Flight\Service\PriceMargin.cs" />
     <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
@@ -241,11 +279,14 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\PaymentExpiry.cs" />
+    <Compile Include="Payment\Model\PaymentInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />

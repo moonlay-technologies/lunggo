@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Mystifly
 
             if (!cacheObject.IsNullOrEmpty)
             {
-                var bookInfo = FlightCacheUtil.DeconvertFromCacheObject<FlightBookingInfo>(cacheObject);
+                var bookInfo = cacheObject.DeconvertTo<FlightBookingInfo>();
                 return bookInfo;
             }
             else
@@ -155,7 +155,8 @@ namespace Lunggo.ApCommon.Mystifly
         {
             return new OrderTicketResult
             {
-                BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType)
+                BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                IsInstantIssuance = false
             };
         }
 

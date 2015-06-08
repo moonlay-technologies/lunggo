@@ -2,7 +2,6 @@
 {
     public class IssueTicketInput
     {
-        public string BookingId { get; set; }
-        public ReservationDetails ReservationDetails { get; set; }
+        public string RsvNo { get; set; }
     }
 }

@@ -22,6 +22,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
 {
     public class Function
     {
+        public static void TestSend()
+        {
+            MailService.GetInstance().SendEmail(new {Name = "yey", Address = "ow"}, new MailModel
+            {
+                Subject = "makan nih email",
+                FromMail = "dari@saya.lho",
+                FromName = "saya siapa",
+                RecipientList = new []{"developer@travelmadezy.com"}
+            }, "TestHtml");
+        }
+
         public static void EmailQueueHandler([QueueTrigger("emailqueue")] MailDetailForQueue mailDetailInQueue)
         {
             switch (mailDetailInQueue.MailTemplate)
