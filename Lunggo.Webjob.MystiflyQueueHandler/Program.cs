@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
@@ -22,12 +23,18 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             List<string> ticketedBookingIds;
             List<string> scheduleChangedBookingIds;
             flightService.GetAndUpdateBookingStatus(out ticketedBookingIds, out scheduleChangedBookingIds);
-            PushEticketQueue(ticketedBookingIds);
+            ProcessTicketed(ticketedBookingIds);
         }
 
-        private static void PushEticketQueue(List<string> ticketedBookingIds)
+        private static void ProcessTicketed(IEnumerable<string> ticketedBookingIds)
         {
             // TODO flight push eticket queue
+            var flightService = FlightService.GetInstance();
+            foreach (var ticketedBookingId in ticketedBookingIds)
+            {
+                var detailsInput = new GetDetailsInput {BookingId = ticketedBookingId};
+                flightService.GetAndUpdateNewDetails(detailsInput);
+            }
             throw new NotImplementedException();
         }
 

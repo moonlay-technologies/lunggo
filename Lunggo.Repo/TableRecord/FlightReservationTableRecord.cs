@@ -74,15 +74,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ContactCountryCode");
 		    }
 		}
-		public String ContactCountryCode
-		{
-		    get { return _ContactCountryCode; }
-		    set
-		    {
-		        _ContactCountryCode = value;
-		        IncrementLog("ContactCountryCode");
-		    }
-		}
 		public String ContactPhone
 		{
 		    get { return _ContactPhone; }

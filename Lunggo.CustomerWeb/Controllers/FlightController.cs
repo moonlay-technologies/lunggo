@@ -28,7 +28,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Checkout(FlightSelectData select)
         {
-            /*
             var service = FlightService.GetInstance();
             var itineraryFare = service.GetItineraryFromCache(select.token);
             var itinerary = service.ConvertToItineraryApi(itineraryFare);
@@ -38,14 +37,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 Itinerary = itinerary,
                 Message = ""
             });
-            */
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            /*
             data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = new List<PassengerInfoFare>();
             if (data.AdultPassengerData != null)
@@ -139,39 +135,10 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                     };
 
-                    var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                    {
-                        BookingId = bookResult.BookResult.BookingId,
-                    });
-                    if (issueResult.IsSuccess)
-                    {
-                        var tripDetails = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                        {
-                            BookingId = issueResult.BookingId,
-                            TripInfos = data.Itinerary.FlightTrips.Select(trip => new FlightTripInfo
-                            {
-                                OriginAirport = trip.OriginAirport,
-                                DestinationAirport = trip.DestinationAirport,
-                                DepartureDate = trip.DepartureDate
-                            }).ToList()
-                        });
-                        if (tripDetails.IsSuccess)
-                        {
-                            FlightService.GetInstance().SaveItineraryToCache(tripDetails.FlightDetails.FlightItineraryDetails, "111");
-                            return RedirectToAction("Eticket");
-                        }
-                        else
-                        {
-                            data.Message = "Technical Error : Get Trip Details Failed. Please try again.";
-                            return View(data);
-                        }
-                    }
-                    else
-                    {
-                        data.Message = "Already Booked. Please try again.";
-                        return View(data);
-                    }
 
+                    string url;
+                    PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
+                    return Redirect(url);
                 }
                 else
                 {
@@ -184,9 +151,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 data.Message = "Already Booked. Please try again.";
                 return View(data);
             }
-             */
-
-            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Thankyou(string rsvNo)
@@ -201,31 +165,9 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public void PaymentConfirmation(FlightPaymentConfirmationData data)
+        public ActionResult Eticket()
         {
-            if (data.PaymentStatus == PaymentStatus.Accepted)
-            {
-                using (var conn = DbService.GetInstance().GetOpenConnection())
-                {
-                    var bookingIds = GetBookingIdAndTripInfoQuery.GetInstance().Execute(conn, data.RsvNo).ToList();
-
-                    foreach (var bookingId in bookingIds)
-                    {
-                        var issueResult = FlightService.GetInstance().IssueTicket(new IssueTicketInput
-                            {
-                                BookingId = bookingId
-                            });
-                        if (issueResult.IsSuccess)
-                        {
-                            var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
-                            {
-                                BookingId = bookingId,
-                                TripInfos = 
-                            })
-                        }
-                    }
-                }
-            }
+            return View();
         }
     }
 }

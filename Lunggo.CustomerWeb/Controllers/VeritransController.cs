@@ -50,8 +50,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
                     if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
                     {
-                        var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
-                        service.IssueTicket(issueInput);
+                        //var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
+                        //service.IssueTicket(issueInput);
                     }
                 }
             }

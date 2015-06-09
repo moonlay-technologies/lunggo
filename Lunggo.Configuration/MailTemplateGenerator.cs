@@ -1,62 +1,59 @@
-﻿using Lunggo.Framework.Mail;
-using Lunggo.Framework.TableStorage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lunggo.Framework.Mail;
+using Lunggo.Framework.TableStorage;
 
-namespace Lunggo.Configuration.MailTemplate
+namespace Lunggo.Configuration
 {
     public class MailTemplateGenerator
     {
-        string DefaultRowKey = "default";
-        string DefaultTableName = "mailTemplate";
-        string fileExtension = "*.html";
-        static string parentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        static string parentMailGeneratorPath = parentPath+@"\MailTemplate\TemplateFiles";
-        public void StartMailGenerator()
+        private const string DefaultRowKey = "default";
+        private const string DefaultTableName = "mailTemplate";
+        private const string FileExtension = "*.html";
+        static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        static readonly string ParentMailGeneratorPath = ParentPath+@"\MailTemplate\TemplateFiles";
+        public static void StartMailGenerator(string azureStorageConnString)
         {
             try
             {
-                TableStorageService.GetInstance().Init("DefaultEndpointsProtocol=https;AccountName=lunggostoragedv1;AccountKey=b4+GLz5z4ySRlzaXucbvShtxSXXmkJlQid5rR6HgxCUeKIF47oUGzsBxGPwrKZrOkzpUyIOcJsS3wO8k8rY9nQ==");
-                string[] AllFilesInPath = GetAllTemplateFiles();
-                ReadHTMLAndWriteTableFromAllFiles(AllFilesInPath);
+                TableStorageService.GetInstance().Init(azureStorageConnString);
+                var allFilesInPath = GetAllTemplateFiles();
+                ReadHtmlAndWriteTableFromAllFiles(allFilesInPath);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        string[] GetAllTemplateFiles()
+        static IEnumerable<string> GetAllTemplateFiles()
         {
-            string[] AllFilesInPath = System.IO.Directory.GetFiles(parentMailGeneratorPath, this.fileExtension);
-            return AllFilesInPath;
+            string[] allFilesInPath = System.IO.Directory.GetFiles(ParentMailGeneratorPath, FileExtension);
+            return allFilesInPath;
         }
         
-        void ReadHTMLAndWriteTableFromAllFiles(string[] AllFilesInPath)
+        static void ReadHtmlAndWriteTableFromAllFiles(IEnumerable<string> allFilesInPath)
         {
-            foreach (string aFilePath in AllFilesInPath)
+            foreach (string aFilePath in allFilesInPath)
             {
-                ReadHTMLAndWriteTableFromFile(aFilePath);
+                ReadHtmlAndWriteTableFromFile(aFilePath);
             }
         }
-        void ReadHTMLAndWriteTableFromFile(string aFilePath)
+        static void ReadHtmlAndWriteTableFromFile(string aFilePath)
         {
-            KeyValuePair<string, string> FileNameAndTemplate = getFileNameAndTemplate(aFilePath);
-            InsertTemplateToTable(FileNameAndTemplate);
+            KeyValuePair<string, string> fileNameAndTemplate = GetFileNameAndTemplate(aFilePath);
+            InsertTemplateToTable(fileNameAndTemplate);
         }
-        KeyValuePair<string, string> getFileNameAndTemplate(string aFilePath)
+        static KeyValuePair<string, string> GetFileNameAndTemplate(string aFilePath)
         {
-            string Template = System.IO.File.ReadAllText(aFilePath);
-            string FileName = Path.GetFileNameWithoutExtension(aFilePath);
-            return new KeyValuePair<string, string>(FileName,Template);
+            string template = System.IO.File.ReadAllText(aFilePath);
+            string fileName = Path.GetFileNameWithoutExtension(aFilePath);
+            return new KeyValuePair<string, string>(fileName,template);
         }
-        void InsertTemplateToTable(KeyValuePair<string, string> FileNameAndTemplate)
+        static void InsertTemplateToTable(KeyValuePair<string, string> fileNameAndTemplate)
         {
-            var emp = new MailTemplateModel() { Template = FileNameAndTemplate.Value, PartitionKey = FileNameAndTemplate.Key, RowKey = this.DefaultRowKey };
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, this.DefaultTableName);
+            var emp = new MailTemplateModel() { Template = fileNameAndTemplate.Value, PartitionKey = fileNameAndTemplate.Key, RowKey = DefaultRowKey };
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, DefaultTableName);
         }
     }
 }

@@ -104,13 +104,5 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         {
             return FlightLogic.CancelBooking(request);
         }
-
-        [HttpGet]
-        [LunggoCorsPolicy]
-        [Route("api/v1/flights/details")]
-        public FlightDetailsApiResponse GetFlightTripDetails(HttpRequestMessage httpRequest, [FromUri] FlightDetailsApiRequest request)
-        {
-            return FlightLogic.GetTripDetails(request);
-        }
     }
 }

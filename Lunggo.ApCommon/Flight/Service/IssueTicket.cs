@@ -16,9 +16,10 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var bookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
+                if (input.BookingId == null)
+                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
                 var output = new IssueTicketOutput();
-                var orderResult = OrderTicketInternal(bookingId);
+                var orderResult = OrderTicketInternal(input.BookingId);
                 if (orderResult.IsSuccess)
                 {
                     output.IsSuccess = true;
@@ -29,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
-                        BookingId = bookingId,
+                        BookingId = input.BookingId,
                         BookingStatusCd = bookingStatusCd
                     });
 

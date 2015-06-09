@@ -14,13 +14,14 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var bookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, input.RsvNo).Single();
+                if (input.BookingId == null)
+                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, input.RsvNo).Single();
                 var tripInfos = GetFlightTripInfoQuery.GetInstance().Execute(conn, input.RsvNo).ToList();
 
                 var output = new GetDetailsOutput();
                 var request = new TripDetailsConditions
                 {
-                    BookingId = bookingId,
+                    BookingId = input.BookingId,
                     TripInfos = tripInfos
                 };
                 var details = GetTripDetailsInternal(request);
