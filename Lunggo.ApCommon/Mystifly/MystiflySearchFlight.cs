@@ -72,8 +72,9 @@ namespace Lunggo.ApCommon.Mystifly
                                     break;
                                 }
                             }
-                            MapError(response, result);
                         }
+                        if (done)
+                            MapError(response, result);
                     }
                     result.IsSuccess = false;
                 }
@@ -211,7 +212,7 @@ namespace Lunggo.ApCommon.Mystifly
                 var flightItineraryFare = new FlightItineraryFare();
                 flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
                 flightItineraryFare.SupplierPrice =
-                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
+                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
                 flightItineraryFare.SupplierCurrency = "USD";
                 flightItineraryFare.SupplierRate = rate;
                 flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
@@ -442,23 +443,27 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERIFS002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("Invalid account information!"))
+                            result.ErrorMessages.Add("Invalid account information!");
                         goto case "TechnicalError";
                     case "ERSER027":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Daily maximum search limit reached!");
+                        if (!result.ErrorMessages.Contains("Daily maximum search limit reached!"))
+                            result.ErrorMessages.Add("Daily maximum search limit reached!");
                         goto case "TechnicalError";
                     case "ERGEN002":
                     case "ERGEN018":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":

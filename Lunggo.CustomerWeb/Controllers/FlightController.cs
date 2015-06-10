@@ -129,7 +129,14 @@ namespace Lunggo.CustomerWeb.Controllers
                         new ItemDetails
                         {
                             Id = "1",
-                            Name = "pesawat",
+                            Name = 
+                                data.ItineraryFare.TripType + " " +
+                                data.ItineraryFare.FlightTrips[0].OriginAirport + "-" +
+                                data.ItineraryFare.FlightTrips[0].DestinationAirport + " " +
+                                data.ItineraryFare.FlightTrips[0].DepartureDate.ToString("d MMM yy") +
+                                (data.ItineraryFare.TripType == TripType.Return
+                                ? "-" + data.ItineraryFare.FlightTrips[1].DepartureDate.ToString("d MMM yy")
+                                : ""),
                             Quantity = 1,
                             Price = data.ItineraryFare.IdrPrice
                         }
@@ -165,9 +172,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult Eticket()
+        public ActionResult Eticket(string rsvNo)
         {
-            return View();
+            var service = FlightService.GetInstance();
+            var summary = service.GetDetails(rsvNo);
+            return View(summary);
         }
     }
 }

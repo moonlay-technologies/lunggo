@@ -1,4 +1,7 @@
-﻿@{
+﻿@using System.Globalization
+@model Lunggo.ApCommon.Flight.Model.FlightItineraryDetails
+
+@{
     Layout = null;
 }
 
@@ -47,37 +50,43 @@
             <div class="container">
                 <section class="departure-flight flight-section">
                     <h2 class="section-title">Penerbangan Pergi</h2>
-                    <div class="flight-detail">
-                        <div class="row">
-                            <div class="col-xs-3 booking-code">
-                                <img src="/Assets/images/airlines/GA.png" />
-                                <h4>Kode booking :</h4>
-                                <h3>GA12382</h3>
-                                <h5>Dioperasikan oleh Garuda</h5>
-                            </div>
-                            <div class="col-xs-9">
-                                <h3 class="flight-number">Garuda - GA1234</h3>
-                                <div class="row">
-                                    <div class="col-xs-6 flight-origin">
-                                        <h3>Dari :</h3>
-                                        <h4>Sabtu, 15 Juni 2015</h4>
-                                        <h4>15:00</h4>
-                                        <h4>Terminal 3</h4>
-                                        <h4>(CGK) Soekarno Hatta Intl</h4>
-                                        <h4>Jakarta</h4>
-                                    </div>
-                                    <div class="col-xs-6 flight-destination">
-                                        <h3>Tujuan:</h3>
-                                        <h4>Sabtu, 15 Juni 2015</h4>
-                                        <h4>15:00</h4>
-                                        <h4>Terminal 3</h4>
-                                        <h4>(CGK) Soekarno Hatta Intl</h4>
-                                        <h4>Jakarta</h4>
+                    @foreach (var segment in Model.FlightTrips[0].FlightSegments)
+                    {
+                        <div class="flight-detail">
+                            <div class="row">
+                                <div class="col-xs-3 booking-code">
+                                    <img src=@segment.AirlineLogoUrl />
+                                    <h4>Kode booking :</h4>
+                                    <h3>@segment.Pnr</h3>
+                                    @if (segment.AirlineCode != segment.OperatingAirlineCode)
+                                    {
+                                        <h5>Dioperasikan oleh @segment.OperatingAirlineName</h5>
+                                    }
+                                </div>
+                                <div class="col-xs-9">
+                                    <h3 class="flight-number">@segment.AirlineName - @segment.AirlineCode@segment.FlightNumber</h3>
+                                    <div class="row">
+                                        <div class="col-xs-6 flight-origin">
+                                            <h3>Dari :</h3>
+                                            <h4>@segment.DepartureTime.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                            <h4>@segment.DepartureTime.ToString("hh:mm")</h4>
+                                            <h4>Terminal @segment.DepartureTerminal</h4>
+                                            <h4>(@segment.DepartureAirport) @segment.DepartureAirportName</h4>
+                                            <h4>@segment.DepartureCity</h4>
+                                        </div>
+                                        <div class="col-xs-6 flight-destination">
+                                            <h3>Tujuan:</h3>
+                                            <h4>@segment.ArrivalTime.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                            <h4>@segment.ArrivalTime.ToString("hh:mm")</h4>
+                                            <h4>Terminal @segment.ArrivalTerminal</h4>
+                                            <h4>(@segment.ArrivalAirport) @segment.ArrivalAirportName</h4>
+                                            <h4>@segment.ArrivalCity</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div class="flight-note">
                         <h3>catatan:</h3>
                         <ul>
@@ -87,48 +96,57 @@
                         </ul>
                     </div>
                 </section>
-                <section class="departure-flight flight-section">
-                    <h2 class="section-title">Penerbangan Kembali</h2>
-                    <div class="flight-detail">
-                        <div class="row">
-                            <div class="col-xs-3 booking-code">
-                                <img src="/Assets/images/airlines/GA.png" />
-                                <h4>Kode booking :</h4>
-                                <h3>GA12382</h3>
-                                <h5>Dioperasikan oleh Garuda</h5>
-                            </div>
-                            <div class="col-xs-9">
-                                <h3 class="flight-number">Garuda - GA1234</h3>
+                @if (Model.Itinerary.FlightTrips.Count > 1)
+                {
+                    <section class="departure-flight flight-section">
+                        <h2 class="section-title">Penerbangan Kembali</h2>
+                        @foreach (var segment in Model.FlightTrips[0].FlightSegments)
+                        {
+                            <div class="flight-detail">
                                 <div class="row">
-                                    <div class="col-xs-6 flight-origin">
-                                        <h3>Dari :</h3>
-                                        <h4>Sabtu, 15 Juni 2015</h4>
-                                        <h4>15:00</h4>
-                                        <h4>Terminal 3</h4>
-                                        <h4>(CGK) Soekarno Hatta Intl</h4>
-                                        <h4>Jakarta</h4>
+                                    <div class="col-xs-3 booking-code">
+                                        <img src=@segment.AirlineLogoUrl />
+                                        <h4>Kode booking :</h4>
+                                        <h3>@segment.Pnr</h3>
+                                        @if (segment.AirlineCode != segment.OperatingAirlineCode)
+                                        {
+                                            <h5>Dioperasikan oleh @segment.OperatingAirlineName</h5>
+                                        }
                                     </div>
-                                    <div class="col-xs-6 flight-destination">
-                                        <h3>Tujuan:</h3>
-                                        <h4>Sabtu, 15 Juni 2015</h4>
-                                        <h4>15:00</h4>
-                                        <h4>Terminal 3</h4>
-                                        <h4>(CGK) Soekarno Hatta Intl</h4>
-                                        <h4>Jakarta</h4>
+                                    <div class="col-xs-9">
+                                        <h3 class="flight-number">@segment.AirlineName - @segment.AirlineCode@segment.FlightNumber</h3>
+                                        <div class="row">
+                                            <div class="col-xs-6 flight-origin">
+                                                <h3>Dari :</h3>
+                                                <h4>@segment.DepartureTime.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                                <h4>@segment.DepartureTime.ToString("hh:mm")</h4>
+                                                <h4>Terminal @segment.DepartureTerminal</h4>
+                                                <h4>(@segment.DepartureAirport) @segment.DepartureAirportName</h4>
+                                                <h4>@segment.DepartureCity</h4>
+                                            </div>
+                                            <div class="col-xs-6 flight-destination">
+                                                <h3>Tujuan:</h3>
+                                                <h4>@segment.ArrivalTime.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                                <h4>@segment.ArrivalTime.ToString("hh:mm")</h4>
+                                                <h4>Terminal @segment.ArrivalTerminal</h4>
+                                                <h4>(@segment.ArrivalAirport) @segment.ArrivalAirportName</h4>
+                                                <h4>@segment.ArrivalCity</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        }
+                        <div class="flight-note">
+                            <h3>catatan:</h3>
+                            <ul>
+                                <li><p>Semua waktu tertera adalah waktu bandara setempat</p></li>
+                                <li><p>Mohon lakukan check-in minimal 2 jam sebelum keberangkatan</p></li>
+                                <li><p>Penerbangan antar negara memerlukan passport</p></li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="flight-note">
-                        <h3>catatan:</h3>
-                        <ul>
-                            <li><p>Semua waktu tertera adalah waktu bandara setempat</p></li>
-                            <li><p>Mohon lakukan check-in minimal 2 jam sebelum keberangkatan</p></li>
-                            <li><p>Penerbangan antar negara memerlukan passport</p></li>
-                        </ul>
-                    </div>
-                </section>
+                    </section>
+                }
                 <section class="passenger-detail">
                     <h2 class="section-title">Detail Penumpang</h2>
                     <table class="table table-hover table-striped">
@@ -141,27 +159,17 @@
                                 <th class="passenger-luggage">Bagasi Terdaftar</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td class="passenger-no">1</td>
-                            <td class="passenger-title">Mr</td>
-                            <td class="passenger-name">Indera Ajiwaskito</td>
-                            <td class="passenger-ticket">Dewasa</td>
-                            <td class="passenger-luggage">0 Kg</td>
-                        </tr>
-                        <tr>
-                            <td class="passenger-no">2</td>
-                            <td class="passenger-title">Mr</td>
-                            <td class="passenger-name">Indera Ajiwaskito</td>
-                            <td class="passenger-ticket">Dewasa</td>
-                            <td class="passenger-luggage">0 Kg</td>
-                        </tr>
-                        <tr>
-                            <td class="passenger-no">3</td>
-                            <td class="passenger-title">Mr</td>
-                            <td class="passenger-name">Indera Ajiwaskito</td>
-                            <td class="passenger-ticket">Dewasa</td>
-                            <td class="passenger-luggage">0 Kg</td>
-                        </tr>
+                        @for (var i = 0; i < Model.PassengerInfo.Count; i++)
+                        {
+                            var passenger = Model.PassengerInfo[i];
+                            <tr>
+                                <td class="passenger-no">@(i+1)</td>
+                                <td class="passenger-title">@passenger.Title.ToString()</td>
+                                <td class="passenger-name">@passenger.FirstName @passenger.LastName</td>
+                                <td class="passenger-ticket">@passenger.Type.ToString()</td>
+                                <td class="passenger-luggage">0 Kg</td>
+                            </tr>
+                        }
                     </table>
                 </section><!-- .passenger-detail -->
             </div>

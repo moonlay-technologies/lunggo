@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Framework.Config;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -59,8 +60,9 @@ namespace Lunggo.ApCommon.Mystifly
                                     break;
                                 }
                             }
-                            MapError(response, result);
                         }
+                        if (done)
+                            MapError(response, result);
                     }
                     result.IsSuccess = false;
                 }
@@ -117,19 +119,30 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
         {
+            var dict = DictionaryService.GetInstance();
+            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
+            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             return new FlightSegmentDetails
             {
                 Reference = item.ItemRPH,
                 DepartureAirport = item.DepartureAirportLocationCode,
-                ArrivalAirport = item.ArrivalAirportLocationCode,
-                DepartureTime = item.DepartureDateTime,
-                ArrivalTime = item.ArrivalDateTime,
+                DepartureAirportName = dict.GetAirportName(item.DepartureAirportLocationCode),
+                DepartureCity = dict.GetAirportCity(item.DepartureAirportLocationCode),
                 DepartureTerminal = item.DepartureTerminal,
+                DepartureTime = item.DepartureDateTime,
+                ArrivalAirport = item.ArrivalAirportLocationCode,
+                ArrivalAirportName = dict.GetAirportName(item.ArrivalAirportLocationCode),
+                ArrivalCity = dict.GetAirportCity(item.ArrivalAirportLocationCode),
+                ArrivalTime = item.ArrivalDateTime,
                 ArrivalTerminal = item.ArrivalTerminal,
                 Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
                 AirlineCode = item.MarketingAirlineCode,
+                AirlineName = dict.GetAirlineName(item.MarketingAirlineCode),
+                AirlineLogoUrl = airlineLogoPath + item.MarketingAirlineCode + airlineLogoExtension,
                 FlightNumber = item.FlightNumber,
                 OperatingAirlineCode = item.OperatingAirlineCode,
+                OperatingAirlineName = dict.GetAirlineName(item.OperatingAirlineCode),
+                OperatingAirlineLogoUrl = airlineLogoPath + item.OperatingAirlineCode + airlineLogoExtension,
                 AircraftCode = item.AirEquipmentType,
                 Rbd = item.ResBookDesigCode,
                 StopQuantity = item.StopQuantity,
@@ -236,17 +249,20 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERTDT002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("Invalid account information!"))
+                            result.ErrorMessages.Add("Invalid account information!");
                         goto case "TechnicalError";
                     case "ERGEN006":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":

@@ -48,6 +48,11 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        public FlightItineraryDetails GetDetails(string rsvNo)
+        {
+            return GetFlightDb.Details(rsvNo);
+        }
+
         private static GetDetailsOutput MapDetails(GetTripDetailsResult details)
         {
             return new GetDetailsOutput

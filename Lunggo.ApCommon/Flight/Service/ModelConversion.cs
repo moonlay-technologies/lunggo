@@ -51,7 +51,22 @@ namespace Lunggo.ApCommon.Flight.Service
                 OriginAirport = summaryRecord.OriginAirportCd,
                 OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
                 DestinationAirport = summaryRecord.DestinationAirportCd,
-                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd)
+                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
+            };
+        }
+
+        internal FlightTripDetails ConvertToTripDetails(FlightTripTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightTripDetails
+            {
+                OriginAirport = summaryRecord.OriginAirportCd,
+                OriginAirportName = dict.GetAirportName(summaryRecord.OriginAirportCd),
+                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
+                DestinationAirport = summaryRecord.DestinationAirportCd,
+                DestinationAirportName = dict.GetAirportName(summaryRecord.DestinationAirportCd),
+                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
+                DepartureDate = summaryRecord.DepartureDate.GetValueOrDefault(),
             };
         }
 
@@ -71,9 +86,51 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
+        internal FlightSegmentDetails ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
+            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
+            return new FlightSegmentDetails
+            {
+                DepartureAirport = summaryRecord.DepartureAirportCd,
+                DepartureAirportName = dict.GetAirportName(summaryRecord.DepartureAirportCd),
+                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
+                DepartureTerminal = summaryRecord.DepartureTerminal,
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                ArrivalAirport = summaryRecord.ArrivalAirportCd,
+                ArrivalAirportName = dict.GetAirportName(summaryRecord.ArrivalAirportCd),
+                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
+                ArrivalTerminal = summaryRecord.ArrivalTerminal,
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                AirlineCode = summaryRecord.AirlineCd,
+                AirlineName = dict.GetAirlineName(summaryRecord.AirlineCd),
+                AirlineLogoUrl = airlineLogoPath + summaryRecord.AirlineCd + airlineLogoExtension,
+                OperatingAirlineCode = summaryRecord.OperatingAirlineCd,
+                OperatingAirlineName = dict.GetAirlineName(summaryRecord.OperatingAirlineCd),
+                OperatingAirlineLogoUrl = airlineLogoPath + summaryRecord.OperatingAirlineCd + airlineLogoExtension,
+                AircraftCode = summaryRecord.AircraftCd,
+                FlightNumber = summaryRecord.FlightNumber,
+                Baggage = summaryRecord.Baggage,
+                Duration = summaryRecord.Duration.GetValueOrDefault(),
+                Pnr = summaryRecord.Pnr
+            };
+        }
+
         internal PassengerInfoFare ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
         {
             return new PassengerInfoFare
+            {
+                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
+                FirstName = summaryRecord.FirstName,
+                LastName = summaryRecord.LastName,
+                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
+            };
+        }
+
+        internal PassengerInfoDetails ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
+        {
+            return new PassengerInfoDetails
             {
                 Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
                 FirstName = summaryRecord.FirstName,

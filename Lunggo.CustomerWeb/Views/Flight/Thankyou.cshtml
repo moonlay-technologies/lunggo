@@ -153,7 +153,7 @@
                                     <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
                                     <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
                                 }
-                                @if (Model.Itinerary.FlightTrips.Count > 0)
+                                @if (Model.Itinerary.FlightTrips.Count > 1)
                                 {
                                     foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
                                     {

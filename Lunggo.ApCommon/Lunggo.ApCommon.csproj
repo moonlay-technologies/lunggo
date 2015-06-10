@@ -188,7 +188,6 @@
     <Compile Include="Flight\Query\GetFlightPaymentStatusQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentInfoQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPassengerSummaryQuery.cs" />
-    <Compile Include="Flight\Query\GetFlightReservationSummaryQuery.cs" />
     <Compile Include="Flight\Query\GetFlightSegmentQuery.cs" />
     <Compile Include="Flight\Query\GetFlightSegmentSummaryQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTripSummaryQuery.cs" />

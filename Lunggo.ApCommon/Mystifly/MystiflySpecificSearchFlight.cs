@@ -68,9 +68,10 @@ namespace Lunggo.ApCommon.Mystifly
                                     break;
                                 }
                             }
-                            MapError(response, result);
                             result.IsSuccess = false;
                         }
+                        if (done)
+                            MapError(response, result);
                     }
                 }
 

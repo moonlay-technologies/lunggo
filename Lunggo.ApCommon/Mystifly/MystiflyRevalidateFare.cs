@@ -60,8 +60,9 @@ namespace Lunggo.ApCommon.Mystifly
                                         break;
                                     }
                                 }
-                                MapError(response, result);
                             }
+                            if (done)
+                                MapError(response, result);
                         }
                         result.IsSuccess = false;
                     }
@@ -100,17 +101,20 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERREV002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("Invalid account information!"))
+                            result.ErrorMessages.Add("Invalid account information!");
                         goto case "TechnicalError";
                     case "ERGEN004":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData" :

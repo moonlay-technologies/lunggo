@@ -15,12 +15,4 @@ namespace Lunggo.ApCommon.Flight.Model
         public FlightItineraryApi Itinerary { get; set; }
         public PaymentInfo PaymentInfo { get; set; }
     }
-
-    public class FlightSummaryDetails
-    {
-        public string RsvNo { get; set; }
-        public List<PassengerInfoDetails> Passengers { get; set; }
-        public FlightItineraryDetails Itinerary { get; set; }
-        public PaymentInfo PaymentInfo { get; set; }
-    }
 }

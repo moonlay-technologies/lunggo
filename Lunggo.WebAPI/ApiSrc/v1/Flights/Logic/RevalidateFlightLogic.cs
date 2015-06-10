@@ -15,6 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static FlightRevalidateApiResponse RevalidateFlight(FlightRevalidateApiRequest request)
         {
+            // TODO Flight Impotent-ed
             var service = FlightService.GetInstance();
                 if (request.HashKey == null)
                     request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
