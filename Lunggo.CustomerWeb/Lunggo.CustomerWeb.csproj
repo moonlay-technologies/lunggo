@@ -644,6 +644,7 @@
     <Content Include="Assets\images\home-info-1.png" />
     <Content Include="Assets\images\home-info-2.png" />
     <Content Include="Assets\images\home-info-3.png" />
+    <Content Include="Assets\images\home-page-bg.jpg" />
     <Content Include="Assets\images\hotel-1.jpg" />
     <Content Include="Assets\images\hotel-2.jpg" />
     <Content Include="Assets\images\hotel-3.jpg" />
@@ -667,8 +668,10 @@
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
+    <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
+    <Content Include="Assets\images\search-hotel-bg.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
