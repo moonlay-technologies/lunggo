@@ -110,6 +110,60 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("SupplierExchangeRate");
 		    }
 		}
+		public Decimal? OriginalIdrPrice
+		{
+		    get { return _OriginalIdrPrice; }
+		    set
+		    {
+		        _OriginalIdrPrice = value;
+		        IncrementLog("OriginalIdrPrice");
+		    }
+		}
+		public long? MarginId
+		{
+		    get { return _MarginId; }
+		    set
+		    {
+		        _MarginId = value;
+		        IncrementLog("MarginId");
+		    }
+		}
+		public Decimal? MarginCoefficient
+		{
+		    get { return _MarginCoefficient; }
+		    set
+		    {
+		        _MarginCoefficient = value;
+		        IncrementLog("MarginCoefficient");
+		    }
+		}
+		public Decimal? MarginConstant
+		{
+		    get { return _MarginConstant; }
+		    set
+		    {
+		        _MarginConstant = value;
+		        IncrementLog("MarginConstant");
+		    }
+		}
+		public Decimal? MarginNominal
+		{
+		    get { return _MarginNominal; }
+		    set
+		    {
+		        _MarginNominal = value;
+		        IncrementLog("MarginNominal");
+		    }
+		}
+		public Decimal? FinalIdrPrice
+		{
+		    get { return _FinalIdrPrice; }
+		    set
+		    {
+		        _FinalIdrPrice = value;
+		        IncrementLog("FinalIdrPrice");
+		    }
+		}
 		public Decimal? LocalPrice
 		{
 		    get { return _LocalPrice; }
@@ -135,15 +189,6 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _LocalExchangeRate = value;
 		        IncrementLog("LocalExchangeRate");
-		    }
-		}
-		public Decimal? IdrPrice
-		{
-		    get { return _IdrPrice; }
-		    set
-		    {
-		        _IdrPrice = value;
-		        IncrementLog("IdrPrice");
 		    }
 		}
 		public String InsertBy
@@ -213,10 +258,15 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
 		private Decimal? _SupplierExchangeRate;
+		private Decimal? _OriginalIdrPrice;
+		private long? _MarginId;
+		private Decimal? _MarginCoefficient;
+		private Decimal? _MarginConstant;
+		private Decimal? _MarginNominal;
+		private Decimal? _FinalIdrPrice;
 		private Decimal? _LocalPrice;
 		private String _LocalCurrencyCd;
 		private Decimal? _LocalExchangeRate;
-		private Decimal? _IdrPrice;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -265,10 +315,15 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),
 				new ColumnMetadata("SupplierExchangeRate", false),
+				new ColumnMetadata("OriginalIdrPrice", false),
+				new ColumnMetadata("MarginId", false),
+				new ColumnMetadata("MarginCoefficient", false),
+				new ColumnMetadata("MarginConstant", false),
+				new ColumnMetadata("MarginNominal", false),
+				new ColumnMetadata("FinalIdrPrice", false),
 				new ColumnMetadata("LocalPrice", false),
 				new ColumnMetadata("LocalCurrencyCd", false),
 				new ColumnMetadata("LocalExchangeRate", false),
-				new ColumnMetadata("IdrPrice", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

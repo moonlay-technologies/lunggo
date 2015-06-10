@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigManager.cs" />
+    <Compile Include="Converter\ConverterService.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
     <Compile Include="Core\CustomTraceListener\TableTraceListener.cs" />
     <Compile Include="Constant\SystemConstant.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Payment\PaymentProcessor.cs" />
     <Compile Include="Payment\PaymentResult.cs" />
     <Compile Include="I18nMessage\MessageManager.cs" />
+    <Compile Include="PdfConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\AzureQueueClient.cs" />
     <Compile Include="Queue\AzureQueueExtension.cs" />
@@ -278,6 +280,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 RequireSameCheckIn = itinerary.RequireSameCheckIn,
                 CanHold = itinerary.CanHold,
                 TripType = itinerary.TripType,
-                TotalFare = itinerary.IdrPrice,
+                TotalFare = itinerary.LocalPrice,
                 FlightTrips = MapTrips(itinerary.FlightTrips),
             };
         }

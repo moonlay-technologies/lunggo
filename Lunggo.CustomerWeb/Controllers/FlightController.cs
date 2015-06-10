@@ -122,7 +122,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var transactionDetails = new TransactionDetails
                     {
                         OrderId = bookResult.RsvNo,
-                        Amount = data.ItineraryFare.IdrPrice
+                        Amount = data.ItineraryFare.LocalPrice
                     };
                     var itemDetails = new List<ItemDetails>
                     {
@@ -138,7 +138,7 @@ namespace Lunggo.CustomerWeb.Controllers
                                 ? "-" + data.ItineraryFare.FlightTrips[1].DepartureDate.ToString("d MMM yy")
                                 : ""),
                             Quantity = 1,
-                            Price = data.ItineraryFare.IdrPrice
+                            Price = data.ItineraryFare.LocalPrice
                         }
                     };
 

@@ -111,7 +111,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                             HashKey = request.HashKey,
                             IsValid = false,
                             IsOtherFareAvailable = true,
-                            NewFare = revalidateServiceResponse.Itinerary.IdrPrice,
+                            NewFare = revalidateServiceResponse.Itinerary.LocalPrice,
                             OriginalRequest = request
                         };
                     }

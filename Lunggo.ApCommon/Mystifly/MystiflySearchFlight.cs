@@ -211,14 +211,22 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var flightItineraryFare = new FlightItineraryFare();
                 flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
-                flightItineraryFare.SupplierPrice =
-                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
                 flightItineraryFare.SupplierCurrency = "USD";
                 flightItineraryFare.SupplierRate = rate;
-                flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
+                flightItineraryFare.SupplierPrice =
+                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
+                flightItineraryFare.OriginalIdrPrice = flightItineraryFare.SupplierPrice * flightItineraryFare.SupplierRate;
+                flightItineraryFare.MarginId = 999;
+                flightItineraryFare.MarginCoefficient = 0.07M;
+                flightItineraryFare.MarginConstant = 0;
+                flightItineraryFare.MarginNominal = flightItineraryFare.OriginalIdrPrice*
+                                                    flightItineraryFare.MarginCoefficient +
+                                                    flightItineraryFare.MarginConstant;
+                flightItineraryFare.FinalIdrPrice = flightItineraryFare.OriginalIdrPrice +
+                                                    flightItineraryFare.MarginNominal;
                 flightItineraryFare.LocalCurrency = "IDR";
                 flightItineraryFare.LocalRate = 1;
-                flightItineraryFare.IdrPrice = flightItineraryFare.LocalPrice;
+                flightItineraryFare.LocalPrice = flightItineraryFare.FinalIdrPrice * flightItineraryFare.LocalRate;
                 if (pricedItinerary.RequiredFieldsToBook != null)
                     MapRequiredFields(pricedItinerary, flightItineraryFare);
                 flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);

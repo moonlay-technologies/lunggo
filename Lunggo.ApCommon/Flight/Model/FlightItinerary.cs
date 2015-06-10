@@ -41,10 +41,16 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }
         public decimal SupplierRate { get; set; }
+        public decimal OriginalIdrPrice { get; set; }
+        public long MarginId { get; set; }
+        public decimal MarginCoefficient { get; set; }
+        public decimal MarginConstant { get; set; }
+        public decimal MarginNominal { get; set; }
+        public decimal FinalIdrPrice { get; set; }
         public decimal LocalPrice { get; set; }
         public string LocalCurrency { get; set; }
         public decimal LocalRate { get; set; }
-        public decimal IdrPrice { get; set; }
+        public int Type { get; set; }
         public FlightSupplier Supplier { get; set; }
     }
 
