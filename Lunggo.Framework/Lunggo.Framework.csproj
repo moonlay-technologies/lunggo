@@ -186,7 +186,7 @@
     <Compile Include="BlobStorage\BlobStorageService.cs" />
     <Compile Include="BlobStorage\BlobWriteDTO.cs" />
     <Compile Include="BlobStorage\FileBlobModel.cs" />
-    <Compile Include="BlobStorage\IBlobStorageClient.cs" />
+    <Compile Include="BlobStorage\BlobStorageClient.cs" />
     <Compile Include="Exceptions\FileAlreadyExistException.cs" />
     <Compile Include="HtmlTemplate\HtmlTemplateClient.cs" />
     <Compile Include="Mail\MailClient.cs" />

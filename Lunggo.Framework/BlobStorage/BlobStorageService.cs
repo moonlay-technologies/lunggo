@@ -1,19 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lunggo.Framework.BlobStorage
 {
     public class BlobStorageService
     {
-
-        IBlobStorageClient _blobStorageClient;
         private static readonly BlobStorageService Instance = new BlobStorageService();
+        private bool _isInitialized;
+        private static readonly AzureBlobStorageClient Client = AzureBlobStorageClient.GetClientInstance();
+
         private BlobStorageService()
         {
             
         }
-        public void Init(IBlobStorageClient client)
+        public void Init()
         {
-            _blobStorageClient = client;
+            if (!_isInitialized)
+            {
+                Client.Init();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("BlobStorageService is already initialized");
+            }
         }
         public static BlobStorageService GetInstance()
         {
@@ -21,23 +31,23 @@ namespace Lunggo.Framework.BlobStorage
         }
         public string WriteFileToBlob(BlobWriteDto fileDto)
         {
-            return _blobStorageClient.WriteFileToBlob(fileDto);
+            return Client.WriteFileToBlob(fileDto);
         }
         public void RenameBlobs(string previousFileUriName, string newFileUriName)
         {
-            _blobStorageClient.RenameBlobs(previousFileUriName, newFileUriName);
+            Client.RenameBlobs(previousFileUriName, newFileUriName);
         }
         public void DeleteBlob(string fileUriName)
         {
-            _blobStorageClient.DeleteBlob(fileUriName);
+            Client.DeleteBlob(fileUriName);
         }
         public byte[] GetByteArrayByFileUriName(string fileUriName)
         {
-            return _blobStorageClient.GetByteArrayByFileUriName(fileUriName);
+            return Client.GetByteArrayByFileUriName(fileUriName);
         }
         public List<string> GetDirectoryList(string directoryName)
         {
-            return _blobStorageClient.GetDirectoryList(directoryName);
+            return Client.GetDirectoryList(directoryName);
         }
         
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Exceptions;
 using Lunggo.Framework.Util;
@@ -10,21 +11,39 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Lunggo.Framework.BlobStorage
 {
-    public class AzureBlobStorageClient : IBlobStorageClient
+    internal class AzureBlobStorageClient : BlobStorageClient
     {
+        private static readonly AzureBlobStorageClient ClientInstance = new AzureBlobStorageClient();
+        private bool _isInitialized;
         private const string DefaultContainerName = "temp";
         CloudBlobClient _blobStorageClient;
-        public AzureBlobStorageClient()
+
+        private AzureBlobStorageClient()
         {
             
         }
-        public void Init(string connString)
-        {
-            CloudStorageAccount blobStorageAccount = CloudStorageAccount.Parse(connString);
-            this._blobStorageClient = blobStorageAccount.CreateCloudBlobClient();
 
+        internal static AzureBlobStorageClient GetClientInstance()
+        {
+            return ClientInstance;
         }
-        public string WriteFileToBlob(BlobWriteDto fileDto)
+
+        internal override void Init()
+        {
+            if (!_isInitialized)
+            {
+                var connString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+                var blobStorageAccount = CloudStorageAccount.Parse(connString);
+                _blobStorageClient = blobStorageAccount.CreateCloudBlobClient();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("AzureBlobStorageClient is already initialized");
+            }
+        }
+
+        internal override string WriteFileToBlob(BlobWriteDto fileDto)
         {
             try
             {
@@ -96,7 +115,7 @@ namespace Lunggo.Framework.BlobStorage
             if (wantedContainer.CreateIfNotExists())
             {
                 var permissions = wantedContainer.GetPermissions();
-                permissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                permissions.internalAccess = BlobContainerinternalAccessType.Container;
                 wantedContainer.SetPermissions(permissions);
             }
         }
@@ -190,7 +209,7 @@ namespace Lunggo.Framework.BlobStorage
                 return null;
         }
 
-        public void RenameBlobs(string previousFileUriName, string newFileUriName)
+        internal void RenameBlobs(string previousFileUriName, string newFileUriName)
         {
             try
             {
@@ -213,7 +232,7 @@ namespace Lunggo.Framework.BlobStorage
             }
         }
 
-        public void CopyBlob(string previousFileUriName, string newFileUriName)
+        internal override void CopyBlob(string previousFileUriName, string newFileUriName)
         {
             try
             {
@@ -235,7 +254,7 @@ namespace Lunggo.Framework.BlobStorage
             }
         }
 
-        public void DeleteBlob(string fileUriName)
+        internal override void DeleteBlob(string fileUriName)
         {
             try
             {
@@ -249,19 +268,19 @@ namespace Lunggo.Framework.BlobStorage
             }
         }
 
-        public Image GetImageFromBlobByFileUriName(string fileUriName)
+        internal override Image GetImageFromBlobByFileUriName(string fileUriName)
         {
             Image returnImage = Image.FromStream(GetStreamFromBlobByFileUriName(fileUriName));
             return returnImage;
         }
-        public MemoryStream GetStreamFromBlobByFileUriName(string fileUriName)
+        internal MemoryStream GetStreamFromBlobByFileUriName(string fileUriName)
         {
             var blobToGet = GetBlobFromStorage(fileUriName);
             var memoryStream = new MemoryStream();
             blobToGet.DownloadToStream(memoryStream);
             return memoryStream;
         }
-        public byte[] GetByteArrayByFileUriName(string fileUriName)
+        internal override byte[] GetByteArrayByFileUriName(string fileUriName)
         {
             CloudBlockBlob blobToGet = GetBlobFromStorage(fileUriName);
             Stream streamOfBlob = new MemoryStream();
@@ -269,7 +288,7 @@ namespace Lunggo.Framework.BlobStorage
             byte[] byteArrayOfBlob = new StreamUtil().StreamToByteArray(streamOfBlob);
             return byteArrayOfBlob;
         }
-        public CloudBlockBlob GetBlobFromStorage(string fileUriName)
+        internal CloudBlockBlob GetBlobFromStorage(string fileUriName)
         {
             try
             {
@@ -301,13 +320,13 @@ namespace Lunggo.Framework.BlobStorage
             return FileURIName.Contains(this._blobStorageClient.BaseUri.ToString());
         }
 
-        public IEnumerable<IListBlobItem> GetAllBlobsByContainer(string containerName)
+        internal IEnumerable<IListBlobItem> GetAllBlobsByContainer(string containerName)
         {
             CloudBlobContainer container = this._blobStorageClient.GetContainerReference(containerName);
             var listBlobs = container.ListBlobs();
             return listBlobs;
         }
-        public List<string> GetDirectoryList(string directoryName)
+        internal override List<string> GetDirectoryList(string directoryName)
         {
             try
             {
@@ -347,8 +366,8 @@ namespace Lunggo.Framework.BlobStorage
 
         private class BlobModel
         {
-            public string BlobName { get; set; }
-            public string BlobContainer { get; set; }
+            internal string BlobName { get; set; }
+            internal string BlobContainer { get; set; }
         }
     }
 }

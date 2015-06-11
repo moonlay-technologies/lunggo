@@ -66,10 +66,9 @@ namespace Lunggo.Framework.Mail
             {
                 try
                 {
-                    EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, type);
+                    var emailMessage = GenerateMessage(objectParam, mailModel, type);
                     var emailMessageRequest = new SendMessageRequest(emailMessage);
-                    var x = _apiOfMandrill.SendMessage(emailMessageRequest);
-                    while (x != null) ;
+                    _apiOfMandrill.SendMessage(emailMessageRequest);
                 }
                 catch (Exception ex)
                 {
