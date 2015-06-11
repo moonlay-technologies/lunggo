@@ -34,6 +34,9 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.22\lib\net45\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="evohtmltopdf">
+      <HintPath>..\packages\evopdf.5.19\lib\net40\evohtmltopdf.dll</HintPath>
+    </Reference>
     <Reference Include="Flurl">
       <HintPath>..\packages\Flurl.1.0.7\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Flurl.dll</HintPath>
     </Reference>
@@ -140,7 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigManager.cs" />
-    <Compile Include="Converter\ConverterService.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
     <Compile Include="Core\CustomTraceListener\TableTraceListener.cs" />
     <Compile Include="Constant\SystemConstant.cs" />
@@ -161,6 +163,8 @@
     <Compile Include="Error\Error.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
+    <Compile Include="HtmlTemplate\HtmlTemplateType.cs" />
+    <Compile Include="HtmlTemplate\HtmlTemplateService.cs" />
     <Compile Include="Http\Http.cs" />
     <Compile Include="Http\HttpAuthenticationConstant.cs" />
     <Compile Include="Http\HttpEnum.cs" />
@@ -185,12 +189,12 @@
     <Compile Include="Blob\FileBlobModel.cs" />
     <Compile Include="Blob\IBlobStorageClient.cs" />
     <Compile Include="Exceptions\FileAlreadyExistException.cs" />
-    <Compile Include="Mail\MailTemplateEngine.cs" />
+    <Compile Include="HtmlTemplate\HtmlTemplateClient.cs" />
     <Compile Include="Mail\MailClient.cs" />
     <Compile Include="Mail\MailModel.cs" />
     <Compile Include="Mail\MailService.cs" />
     <Compile Include="Mail\MailTemplateModel.cs" />
-    <Compile Include="Mail\RazorMailTemplateEngine.cs" />
+    <Compile Include="HtmlTemplate\RazorHtmlTemplateClient.cs" />
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />

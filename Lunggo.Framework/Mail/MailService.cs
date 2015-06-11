@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.HtmlTemplate;
 
 namespace Lunggo.Framework.Mail
 {
@@ -35,9 +36,9 @@ namespace Lunggo.Framework.Mail
             return Instance;
         }
 
-        public void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
+        public void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
         {
-            Client.SendEmail(objectParam, mailModel, partitionKey);
+            Client.SendEmail(objectParam, mailModel, type);
         }
     }
 }

@@ -6,14 +6,14 @@ using Lunggo.Framework.TableStorage;
 
 namespace Lunggo.Configuration
 {
-    public class MailTemplateGenerator
+    public class HtmlTemplateGenerator
     {
         private const string DefaultRowKey = "default";
-        private const string DefaultTableName = "mailTemplate";
+        private const string DefaultTableName = "htmlTemplate";
         private const string FileExtension = "*.html";
         static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        static readonly string ParentMailGeneratorPath = ParentPath+@"\MailTemplate\TemplateFiles";
-        public static void StartMailGenerator(string azureStorageConnString)
+        static readonly string ParentMailGeneratorPath = ParentPath+@"\HtmlTemplate";
+        public static void StartHtmlGenerator(string azureStorageConnString)
         {
             try
             {

@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
-    <Compile Include="MailTemplateGenerator.cs" />
+    <Compile Include="HtmlTemplateGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +115,13 @@
     <None Include="Config\WebAPI\azurequeue.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EticketQueueHandler\azurequeue.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\azurequeue.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EticketQueueHandler\db.properties" />
     <None Include="Config\WebJob.MystiflyQueueHandler\azurequeue.properties">
       <SubType>Designer</SubType>
     </None>
@@ -242,8 +246,7 @@
     <Content Include="Template\JsConfig.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MailTemplate\TemplateFiles\HTMLPage1.html" />
-    <Content Include="MailTemplate\TemplateFiles\TestHtml.html" />
+    <Content Include="HtmlTemplate\FlightEticket.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

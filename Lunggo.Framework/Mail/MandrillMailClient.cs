@@ -1,5 +1,6 @@
 ﻿using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.SharedModel;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,12 @@ namespace Lunggo.Framework.Mail
             private bool _isInitialized;
             private MandrillApi _apiOfMandrill;
             private bool _exposeRecipients;
-            private MailTemplateEngine _mailTemplateEngine;
 
             private enum RecipientType
             {
-                To,
-                Cc,
-                Bcc
+                to,
+                cc,
+                bcc
             }
 
             private MandrillMailClient()
@@ -42,13 +42,17 @@ namespace Lunggo.Framework.Mail
             {
                 if (!_isInitialized)
                 {
+                    try
+                    {
+                        var templateService = HtmlTemplateService.GetInstance();
+                        templateService.Init();
+                    }
+                    catch
+                    {
+                        
+                    }
                     var mandrillApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
                     _apiOfMandrill = new MandrillApi(mandrillApiKey);
-                    var razorMailTemplateEngine = new RazorMailTemplateEngine();
-                    var mailTable = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailTableName");
-                    var rowKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailRowName");
-                    razorMailTemplateEngine.Init(mailTable, rowKey);
-                    _mailTemplateEngine = razorMailTemplateEngine;
                     _exposeRecipients = bool.Parse(ConfigManager.GetInstance().GetConfigValue("mandrill", "exposeRecipients"));
                     _isInitialized = true;
                 }
@@ -58,13 +62,13 @@ namespace Lunggo.Framework.Mail
                 }
             }
 
-            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
+            internal override void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
             {
                 try
                 {
-                    EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, partitionKey);
+                    EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, type);
                     var emailMessageRequest = new SendMessageRequest(emailMessage);
-                    var returnvalue = _apiOfMandrill.SendMessage(emailMessageRequest);
+                    _apiOfMandrill.SendMessage(emailMessageRequest);
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +77,7 @@ namespace Lunggo.Framework.Mail
                 }
             }
 
-            private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
+            private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
             {
                 var emailMessage = new EmailMessage
                 {
@@ -82,7 +86,7 @@ namespace Lunggo.Framework.Mail
                     FromEmail = mailModel.FromMail,
                     FromName = mailModel.FromName,
                     To = GenerateMessageAddressTo(mailModel),
-                    Html = _mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey)
+                    Html = HtmlTemplateService.GetInstance().GenerateTemplate(objectParam, type)
                 };
                 if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
                     emailMessage.Attachments = ConvertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
@@ -93,11 +97,11 @@ namespace Lunggo.Framework.Mail
             {
                 var addresses = new List<EmailAddress>();
                 if (mailModel.RecipientList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.To));
+                    addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.to));
                 if (mailModel.CcList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.Cc));
+                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.cc));
                 if (mailModel.BccList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.Bcc));
+                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.bcc));
                 return addresses;
 
             }
@@ -113,7 +117,7 @@ namespace Lunggo.Framework.Mail
                 {
                     yield break;
                 }
-                foreach (FileInfo file in files)
+                foreach (var file in files)
                 {
                     var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
                     var attachmentToSend = new EmailAttachment

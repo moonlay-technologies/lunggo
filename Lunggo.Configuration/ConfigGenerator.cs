@@ -49,7 +49,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebAPI" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.EticketQueueHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -61,7 +61,7 @@ namespace Lunggo.Configuration
 
             var generator = ConfigGenerator.GetInstance();
             generator.StartConfig(DeploymentEnvironment.Development1, projectList);
-            MailTemplateGenerator.StartMailGenerator(_azureStorageConnString);
+            HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
 

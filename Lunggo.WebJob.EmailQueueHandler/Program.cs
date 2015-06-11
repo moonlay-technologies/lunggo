@@ -19,6 +19,8 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             Init();
 
+            Function.TestSend();
+
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;

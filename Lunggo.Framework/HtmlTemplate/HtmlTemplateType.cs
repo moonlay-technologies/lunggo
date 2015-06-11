@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lunggo.WebJob.EmailQueueHandler
+namespace Lunggo.Framework.HtmlTemplate
 {
-    class EticketMailHandler
+    public enum HtmlTemplateType
     {
-
+        FlightEticket
     }
 }
