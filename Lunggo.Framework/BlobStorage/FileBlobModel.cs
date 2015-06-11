@@ -1,0 +1,12 @@
+﻿using Lunggo.Framework.SharedModel;
+
+namespace Lunggo.Framework.BlobStorage
+{
+    public class FileBlobModel
+    {
+        public string FilePath { get; set; }
+        public FileInfo FileInfo { get; set; }
+
+    }
+    
+}

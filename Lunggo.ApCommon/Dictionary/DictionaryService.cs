@@ -24,13 +24,13 @@ namespace Lunggo.ApCommon.Dictionary
         public Dictionary<string, FlightItineraryFare> ItineraryDict;
         public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
-        private static readonly string RootPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-        private readonly static string AirlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
-        private readonly static string AirlineFilePath = Path.Combine(RootPath, AirlineFileName);
-        private readonly static string AirportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-        private readonly static string AirportFilePath = Path.Combine(RootPath, AirportFileName);
-        private readonly static string HotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
-        private readonly static string HotelLocationFilePath = Path.Combine(RootPath, HotelLocationFileName);
+        private static string _rootPath;
+        private static string _airlineFileName;
+        private static string _airlineFilePath;
+        private static string _airportFileName;
+        private static string _airportFilePath;
+        private static string _hotelLocationFileName;
+        private static string _hotelLocationFilePath;
 
         private DictionaryService()
         {
@@ -46,9 +46,16 @@ namespace Lunggo.ApCommon.Dictionary
         {
             if (!_isInitialized)
             {
-                AirlineDict = PopulateAirlineDict(AirlineFilePath);
-                AirportDict = PopulateAirportDict(AirportFilePath);
-                HotelLocationDict = PopulateHotelLocationDict(HotelLocationFilePath);
+                _rootPath = HttpContext.Current != null ? HttpContext.Current.Server.MapPath(@"~/Config/") : @"Config\";
+                _airlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
+                _airlineFilePath = Path.Combine(_rootPath, _airlineFileName);
+                _airportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
+                _airportFilePath = Path.Combine(_rootPath, _airportFileName);
+                _hotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
+                _hotelLocationFilePath = Path.Combine(_rootPath, _hotelLocationFileName);
+                AirlineDict = PopulateAirlineDict(_airlineFilePath);
+                AirportDict = PopulateAirportDict(_airportFilePath);
+                HotelLocationDict = PopulateHotelLocationDict(_hotelLocationFilePath);
                 ItineraryDict = new Dictionary<string, FlightItineraryFare>();
                 DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;

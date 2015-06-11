@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using log4net;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Core.CustomTraceListener;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
@@ -20,19 +22,21 @@ namespace Lunggo.WebJob.EticketQueueHandler
         {
             Init();
 
-            Functions.ProcessQueueMessage("aaa");
+            Functions.ProcessQueueMessage("F2ABC25T");
 
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;
 
             JobHost host = new JobHost(configuration);
-            host.RunAndBlock();
+            //host.RunAndBlock();
 
         }
         public static void Init()
         {
             InitConfigurationManager();
+            InitDatabaseService();
+            InitDictionaryService();
             InitQueueService();
             InitHtmlTemplateService();
             InitMailService();
@@ -44,6 +48,18 @@ namespace Lunggo.WebJob.EticketQueueHandler
         {
             var configManager = ConfigManager.GetInstance();
             configManager.Init("Config/");
+        }
+
+        private static void InitDatabaseService()
+        {
+            var db = DbService.GetInstance();
+            db.Init();
+        }
+
+        private static void InitDictionaryService()
+        {
+            var dict = DictionaryService.GetInstance();
+            dict.Init();
         }
 
         private static void InitQueueService()

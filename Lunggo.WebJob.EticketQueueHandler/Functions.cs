@@ -29,7 +29,7 @@ namespace Lunggo.WebJob.EticketQueueHandler
                     var converter = new EvoPdf.HtmlToPdfConverter();
                     var summary = flightService.GetDetails(message);
                     var template = templateService.GenerateTemplate(summary, HtmlTemplateType.FlightEticket);
-                    var fileContent = converter.ConvertHtml(template, "");
+                    var fileContent = converter.ConvertHtml(template, null);
                     var mailTemplate = new MailDetailForQueue
                     {
                         FromMail = "saya@lagi.lho",
