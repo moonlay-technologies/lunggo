@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-//using Lunggo.Framework.Mail;
-//using Lunggo.Framework.SharedModel;
-//using Lunggo.Framework.TicketSupport;
-//using Lunggo.Framework.TicketSupport.ZendeskClass;
-//using Microsoft.Azure.WebJobs;
-//using Microsoft.WindowsAzure.Storage.Queue;
-//using Newtonsoft.Json.Linq;
-//using ZendeskApi_v2.Models.Constants;
-//using Lunggo.Framework.Queue;
-//using Lunggo.Framework.Util;
 using System.Text;
 using log4net;
 using Lunggo.ApCommon.Flight.Model;
@@ -31,12 +22,20 @@ namespace Lunggo.WebJob.EmailQueueHandler
     {
         public static void EmailQueueHandler([QueueTrigger("eticketemailqueue")] string rsvNo)
         {
+            var sw = new Stopwatch();
             Console.WriteLine("Processing Eticket Email for RsvNo " + rsvNo + "...");
+
+            Console.WriteLine("Getting Required Files and Data from Storage...");
+            sw.Start();
             var blobService = BlobStorageService.GetInstance();
             var file = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Eticket);
             var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.FlightSummary);
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<FlightReservation>(summaryJson);
+            sw.Stop();
+            sw.Reset();
+            Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed + "s)");
+
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
@@ -54,8 +53,17 @@ namespace Lunggo.WebJob.EmailQueueHandler
                     }
                 }
             };
-            Console.WriteLine("Sending Eticket Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Sending Eticket Email...");
             mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightEticketEmail);
+
+            Console.WriteLine("Deleting Data in Storage...");
+            sw.Start();
+            blobService.DeleteBlob(rsvNo, BlobContainer.Eticket);
+            blobService.DeleteBlob(rsvNo, BlobContainer.FlightSummary);
+            sw.Stop();
+            sw.Reset();
+            Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed + "s)");
+
             Console.WriteLine("Done Processing Eticket Email for RsvNo " + rsvNo);
         }
     }

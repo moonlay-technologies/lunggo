@@ -26,12 +26,11 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.BookingStatus = BookingStatus.Ticketing;
                     output.BookingId = orderResult.BookingId;
 
-                    //var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
-                    var bookingStatus = BookingStatus.Ticketed;
+                    var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
                     var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
-                        BookingId = input.BookingId,
+                        input.BookingId,
                         BookingStatusCd = bookingStatusCd
                     });
 

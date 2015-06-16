@@ -24,7 +24,9 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             var flightService = FlightService.GetInstance();
             List<string> ticketedRsvNos;
             List<string> scheduleChangedRsvNos;
+            Console.WriteLine("Retrieving Queue from Mystifly...");
             flightService.GetAndUpdateBookingStatus(out ticketedRsvNos, out scheduleChangedRsvNos);
+            Console.WriteLine("Done Retrieving Queue from Mystifly...");
             ProcessTicketed(ticketedRsvNos);
         }
 
@@ -33,6 +35,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             var flightService = FlightService.GetInstance();
             foreach (var ticketedRsvNo in ticketedRsvNos)
             {
+                Console.WriteLine("Processing Flight Reservation " + ticketedRsvNo + "...");
                 var detailsInput = new GetDetailsInput {BookingId = ticketedRsvNo};
                 flightService.GetAndUpdateNewDetails(detailsInput);
                 var queueService = QueueService.GetInstance();
