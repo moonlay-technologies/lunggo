@@ -33,8 +33,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     var detailsRecord = new FlightDetailsRecord
                     {
                         BookingId = details.BookingId,
-                        Segments = details.FlightItineraryDetails.FlightTrips.SelectMany(trip => trip.FlightSegments).ToList(),
-                        Passengers = details.FlightItineraryDetails.PassengerInfo
+                        Segments = details.FlightItineraries.FlightTrips.SelectMany(trip => trip.FlightSegments).ToList(),
+                        Passengers = details.Passengers
                     };
                     InsertFlightDb.Details(detailsRecord);
                 }
@@ -48,9 +48,9 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public FlightItineraryDetails GetDetails(string rsvNo)
+        public FlightReservation GetDetails(string rsvNo)
         {
-            return GetFlightDb.Details(rsvNo);
+            return GetFlightDb.Reservation(rsvNo);
         }
 
         private static GetDetailsOutput MapDetails(GetTripDetailsResult details)
@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 BookingId = details.BookingId,
                 BookingNotes = details.BookingNotes,
                 FlightSegmentCount = details.FlightSegmentCount,
-                FlightItineraryDetails = details.FlightItineraryDetails,
+                FlightItineraryDetails = details.FlightItineraries,
                 TotalFare = details.TotalFare,
                 AdultTotalFare = details.AdultTotalFare,
                 ChildTotalFare = details.ChildTotalFare,

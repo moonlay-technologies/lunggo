@@ -31,7 +31,7 @@ namespace Lunggo.Framework.TableStorage
             {
                 if (!_isInitialized)
                 {
-                    var connString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+                    var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
                     Init(connString);
                 }
                 else

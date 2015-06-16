@@ -31,132 +31,132 @@ namespace Lunggo.Framework.Database
             return await SqlMapper.QueryAsync<TQueryRecord>(conn, GetQuery(condition), param);
         }
     }
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition=null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond, TThird, TFourth, TFifth, TSixth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond, TThird, TFourth, TFifth, TSixth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
 
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond, TThird, TFourth, TFifth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond, TThird, TFourth, TFifth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TFifth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TFifth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TFifth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TFifth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond, TThird, TFourth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond, TThird, TFourth> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TQueryRecord>(conn, GetQuery(), map, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TResult>(conn, GetQuery(), map, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TFourth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TFourth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TFourth, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TFourth, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond, TThird> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond, TThird> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TThird, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TResult>map, string splitOn = "Id")
         {
             var x = GetQuery(condition);
-            return SqlMapper.Query<TFirst, TSecond, TThird, TQueryRecord>(conn, x, map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TThird, TResult>(conn, x, map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TThird, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TThird, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TThird, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
-    public abstract class QueryBase<TQuery, TQueryRecord, TFirst, TSecond> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
+    public abstract class QueryBase<TQuery, TResult, TFirst, TSecond> : SingletonBase<TQuery> where TQuery : SingletonBase<TQuery>
     {
         protected abstract String GetQuery(dynamic condition = null);
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public IEnumerable<TQueryRecord> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TQueryRecord>map, string splitOn = "Id")
+        public IEnumerable<TResult> ExecuteMultiMap(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TResult>map, string splitOn = "Id")
         {
-            return SqlMapper.Query<TFirst, TSecond, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return SqlMapper.Query<TFirst, TSecond, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
 
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, Func<TFirst, TSecond, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TQueryRecord>(conn, GetQuery(), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TResult>(conn, GetQuery(), map, param, splitOn: splitOn);
         }
-        public async Task<IEnumerable<TQueryRecord>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TQueryRecord>map, string splitOn = "Id")
+        public async Task<IEnumerable<TResult>> ExecuteMultiMapAsync(IDbConnection conn, dynamic param, dynamic condition, Func<TFirst, TSecond, TResult>map, string splitOn = "Id")
         {
-            return await SqlMapper.QueryAsync<TFirst, TSecond, TQueryRecord>(conn, GetQuery(condition), map, param, splitOn: splitOn);
+            return await SqlMapper.QueryAsync<TFirst, TSecond, TResult>(conn, GetQuery(condition), map, param, splitOn: splitOn);
         }
     }
     

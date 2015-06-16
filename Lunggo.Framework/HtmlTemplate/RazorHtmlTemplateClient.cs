@@ -4,6 +4,8 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.TableStorage;
 using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 
 namespace Lunggo.Framework.HtmlTemplate
 {
@@ -39,6 +41,7 @@ namespace Lunggo.Framework.HtmlTemplate
                 }
                 _mailTable = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailTableName");
                 _rowKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailRowName");
+                
                 _isInitialized = true;
             }
             else
@@ -50,7 +53,14 @@ namespace Lunggo.Framework.HtmlTemplate
         internal override string GenerateTemplate<T>(T objectParam , HtmlTemplateType type)
         {
             var template = GetTemplateByPartitionKey(type.ToString());
-            var result = Razor.Parse(template, objectParam, type.ToString());
+            var razorConfig = new TemplateServiceConfiguration
+            {
+                DisableTempFileLocking = true,
+                CachingProvider = new DefaultCachingProvider(t => { })
+            };
+            var razorService = RazorEngineService.Create(razorConfig);
+            razorService.AddTemplate(type.ToString(), template);
+            var result = razorService.RunCompile(type.ToString(), model: objectParam);
             return result;
         }
 

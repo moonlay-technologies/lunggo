@@ -2033,6 +2033,8 @@
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Flight\Confirmation.cshtml" />
+    <Content Include="Views\Flight\View.cshtml" />
+    <Content Include="Views\Flight\View1.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

@@ -76,11 +76,11 @@ namespace Lunggo.ApCommon.Mystifly
             result.BookingId = response.TravelItinerary.UniqueID;
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
-            result.FlightItineraryDetails = new FlightItineraryDetails
+            result.FlightItineraries = new FlightItineraryDetails
             {
                 FlightTrips = MapDetailsFlightTrips(response, conditions),
-                PassengerInfo = MapDetailsPassengerInfo(response),
             };
+            result.Passengers = MapDetailsPassengerInfo(response);
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
             result.Currency = response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.CurrencyCode;

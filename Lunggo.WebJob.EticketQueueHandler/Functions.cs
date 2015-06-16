@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.WebJob.EticketQueueHandler
@@ -18,39 +24,80 @@ namespace Lunggo.WebJob.EticketQueueHandler
     public class Functions
     {
 
-        public static void ProcessQueueMessage([QueueTrigger("eticketQueue")] string message)
+        public static void ProcessQueueMessage([QueueTrigger("eticketqueue")] string rsvNo)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            Console.WriteLine("Processing Eticket for RsvNo " + rsvNo + "...");
+            if (rsvNo.First() == 'F')
             {
-                if (message.First() == 'F')
+                var sw = new Stopwatch();
+                var flightService = FlightService.GetInstance();
+                var templateService = HtmlTemplateService.GetInstance();
+                var converter = new EvoPdf.HtmlToPdfConverter();
+                var reservation = flightService.GetDetails(rsvNo);
+
+                Console.WriteLine("Parsing Eticket Template...");
+                sw.Start();
+                var eticketTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightEticket);
+                sw.Stop();
+                sw.Reset();
+                Console.WriteLine("Done Parsing Eticket Template. (" + sw.Elapsed + "s)");
+
+                Console.WriteLine("Generating Eticket File...");
+                sw.Start();
+                var fileContent = converter.ConvertHtml(eticketTemplate, null);
+                sw.Stop();
+                sw.Reset();
+                Console.WriteLine("Done Generating Eticket File. (" + sw.Elapsed + "s)");
+
+                var blobService = BlobStorageService.GetInstance();
+
+                Console.WriteLine("Saving Eticket File...");
+                sw.Start();
+                blobService.WriteFileToBlob(new BlobWriteDto
                 {
-                    var flightService = FlightService.GetInstance();
-                    var templateService = HtmlTemplateService.GetInstance();
-                    var converter = new EvoPdf.HtmlToPdfConverter();
-                    var summary = flightService.GetDetails(message);
-                    var template = templateService.GenerateTemplate(summary, HtmlTemplateType.FlightEticket);
-                    var fileContent = converter.ConvertHtml(template, null);
-                    var mailTemplate = new MailDetailForQueue
+                    FileBlobModel = new FileBlobModel
                     {
-                        FromMail = "saya@lagi.lho",
-                        FromName = "Saya",
-                        Subject = "Masih Ingat Saya, Kan?",
-                        RecipientList = new[] {"developer@travelmadezy.com"},
-                        ListFileInfo = new List<FileInfo>
+                        FileInfo = new FileInfo
                         {
-                            new FileInfo
-                            {
-                                ContentType = "pdf",
-                                FileName = "dari saya.pdf",
-                                FileData = fileContent
-                            }
+                            FileName = rsvNo,
+                            ContentType = "PDF",
+                            FileData = fileContent
                         },
-                        MailTemplate = HtmlTemplateType.FlightEticket
-                    };
-                    var mailService = MailService.GetInstance();
-                    mailService.SendEmail(summary, mailTemplate, HtmlTemplateType.FlightEticket);
-                    // TODO Flight : get Html, Convert into PDF, Push Queue for Email
-                }
+                        Container = BlobContainer.Eticket
+                    },
+                    SaveMethod = SaveMethod.Force
+                });
+                sw.Stop();
+                sw.Reset();
+                Console.WriteLine("Done Saving Eticket File. (" + sw.Elapsed + "s)");
+
+                Console.WriteLine("Saving Flight Reservation Data...");
+                sw.Start();
+                var reservationJson = JsonConvert.SerializeObject(reservation);
+                var reservationContent = Encoding.UTF8.GetBytes(reservationJson);
+                blobService.WriteFileToBlob(new BlobWriteDto
+                {
+                    FileBlobModel = new FileBlobModel
+                    {
+                        FileInfo = new FileInfo
+                        {
+                            FileName = rsvNo,
+                            ContentType = "JSON",
+                            FileData = reservationContent
+                        },
+                        Container = BlobContainer.Flightreservation
+                    },
+                    SaveMethod = SaveMethod.Force
+                });
+                sw.Stop();
+                sw.Reset();
+                Console.WriteLine("Done Saving Flight Reservation Data. (" + sw.Elapsed + "s)");
+
+                Console.WriteLine("Pushing Eticket Email Queue...");
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference(QueueService.Queue.EticketEmail);
+                queue.AddMessage(new CloudQueueMessage(rsvNo));
+                Console.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
             }
         }
     }

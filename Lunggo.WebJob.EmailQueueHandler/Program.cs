@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using log4net;
+using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Core.CustomTraceListener;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.TableStorage;
@@ -19,11 +24,11 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             Init();
 
-            Function.TestSend();
-
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;
+            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
 
             JobHost host = new JobHost(configuration);
             host.RunAndBlock();
@@ -33,15 +38,34 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             InitConfigurationManager();
             InitQueueService();
+            InitHtmlTemplateService();
             InitMailService();
-            InitTableStorageService();
+            InitBlobStorageService();
             //InitTraceListener();
         }
 
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            configManager.Init("Config/");
+            configManager.Init(@"Config\");
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
+        }
+
+        private static void InitDatabaseService()
+        {
+            var db = DbService.GetInstance();
+            db.Init();
+        }
+
+        private static void InitDictionaryService()
+        {
+            var dict = DictionaryService.GetInstance();
+            dict.Init();
         }
 
         private static void InitQueueService()
@@ -51,9 +75,21 @@ namespace Lunggo.WebJob.EmailQueueHandler
         }
 
         private static void InitMailService()
-        {   
+        {
             var mailService = MailService.GetInstance();
             mailService.Init();
+        }
+
+        public static void InitHtmlTemplateService()
+        {
+            var htmlTemplateService = HtmlTemplateService.GetInstance();
+            htmlTemplateService.Init();
+        }
+
+        public static void InitBlobStorageService()
+        {
+            var blobStorageService = BlobStorageService.GetInstance();
+            blobStorageService.Init();
         }
 
         public static void InitTableStorageService()

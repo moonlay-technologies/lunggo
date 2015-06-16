@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage.Queue;
+using RestSharp.Extensions;
 
 namespace Lunggo.Framework.Queue
 {
@@ -14,10 +18,17 @@ namespace Lunggo.Framework.Queue
         private bool _isInitialized;
         private static readonly AzureQueueClient Client = AzureQueueClient.GetClientInstance();
 
+        public enum Queue
+        {
+            Eticket,
+            EticketEmail
+        }
+
         private QueueService()
         {
             
         }
+
         public void Init()
         {
             if (!_isInitialized)
@@ -30,17 +41,15 @@ namespace Lunggo.Framework.Queue
                 throw new InvalidOperationException("QueueService is already initialized");
             }
         }
+
         public static QueueService GetInstance()
         {
             return Instance;
         }
-        public CloudQueue GetQueueByReference(string reference)
+
+        public CloudQueue GetQueueByReference(Queue reference)
         {
             return Client.GetQueueByReference(reference);
-        }
-        public bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
-        {
-            return Client.CreateIfNotExistsQueueAndAddMessage(reference, message);
         }
     }
 }

@@ -154,6 +154,7 @@
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
+    <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightSummary.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
@@ -183,6 +184,8 @@
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
     <Compile Include="Flight\Query\GetFlightLocalCurrencyQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightReservationQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightRsvNoQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetFlightBookingIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentIdQuery.cs" />

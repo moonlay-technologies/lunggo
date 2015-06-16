@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public void GetAndUpdateBookingStatus(out List<string> ticketedBookingIds, out List<string> scheduleChangedBookingIds)
+        public void GetAndUpdateBookingStatus(out List<string> ticketedRsvNos, out List<string> scheduleChangedRsvNos)
         {
             var statusData = GetBookingStatusInternal();
             if (statusData.Any())
@@ -27,8 +27,13 @@ namespace Lunggo.ApCommon.Flight.Service
                     query.Execute(conn, dbBookingStatusInfo);
                 }
             }
-            ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
-            scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
+            var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
+            var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ticketedRsvNos = GetFlightRsvNoQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList();
+                scheduleChangedRsvNos = GetFlightRsvNoQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList();
+            }
         }
     }
 }

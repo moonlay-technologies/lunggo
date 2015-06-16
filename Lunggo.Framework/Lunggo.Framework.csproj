@@ -141,6 +141,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlobStorage\BlobContainer.cs" />
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
     <Compile Include="Core\CustomTraceListener\TableTraceListener.cs" />
@@ -162,8 +163,8 @@
     <Compile Include="Error\Error.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
-    <Compile Include="HtmlTemplate\HtmlTemplateType.cs" />
     <Compile Include="HtmlTemplate\HtmlTemplateService.cs" />
+    <Compile Include="HtmlTemplate\HtmlTemplateType.cs" />
     <Compile Include="Http\Http.cs" />
     <Compile Include="Http\HttpAuthenticationConstant.cs" />
     <Compile Include="Http\HttpEnum.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lunggo.Framework.BlobStorage
 {
-    public class BlobStorageService
+    public partial class BlobStorageService
     {
         private static readonly BlobStorageService Instance = new BlobStorageService();
         private bool _isInitialized;
@@ -33,17 +33,21 @@ namespace Lunggo.Framework.BlobStorage
         {
             return Client.WriteFileToBlob(fileDto);
         }
-        public void RenameBlobs(string previousFileUriName, string newFileUriName)
+        public void RenameBlobs(string previousFileUriName, string newFileUriName, BlobContainer container)
         {
-            Client.RenameBlobs(previousFileUriName, newFileUriName);
+            Client.RenameBlobs(previousFileUriName, newFileUriName, container);
         }
-        public void DeleteBlob(string fileUriName)
+        public void DeleteBlob(string fileUriName, BlobContainer container)
         {
-            Client.DeleteBlob(fileUriName);
+            Client.DeleteBlob(fileUriName, container);
         }
-        public byte[] GetByteArrayByFileUriName(string fileUriName)
+        public byte[] GetByteArrayByFileUriName(string fileUriName, BlobContainer container)
         {
-            return Client.GetByteArrayByFileUriName(fileUriName);
+            return Client.GetByteArrayByFileUriName(fileUriName, container);
+        }
+        public byte[] GetByteArrayByFileInContainer(string fileName, BlobContainer container)
+        {
+            return Client.GetByteArrayByFileInContainer(fileName, container);
         }
         public List<string> GetDirectoryList(string directoryName)
         {

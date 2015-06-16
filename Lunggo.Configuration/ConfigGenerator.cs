@@ -60,7 +60,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Development2, projectList);
+            generator.StartConfig(DeploymentEnvironment.Local, projectList);
             HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -116,7 +116,7 @@ namespace Lunggo.Configuration
                 if (IsCellsNotNull(variableName, resultValue))
                 {
                     dictionaryConfig.Add(variableName, resultValue);
-                    if (variableName == "@@.*.azurestorage.connectionString@@")
+                    if (variableName == "@@.*.azureStorage.connectionString@@")
                         _azureStorageConnString = resultValue;
                 }
             }

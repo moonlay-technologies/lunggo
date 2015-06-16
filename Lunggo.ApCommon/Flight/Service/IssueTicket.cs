@@ -26,7 +26,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.BookingStatus = BookingStatus.Ticketing;
                     output.BookingId = orderResult.BookingId;
 
-                    var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
+                    //var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
+                    var bookingStatus = BookingStatus.Ticketed;
                     var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
@@ -38,7 +39,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
                         GetAndUpdateNewDetails(detailsInput);
-                        // TODO flight push eticket queue
+                        var queueService = QueueService.GetInstance();
+                        var queue = queueService.GetQueueByReference(QueueService.Queue.Eticket);
+                        queue.AddMessage(new CloudQueueMessage(input.RsvNo));
                     }
                 }
                 else

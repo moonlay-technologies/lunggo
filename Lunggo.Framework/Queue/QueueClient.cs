@@ -10,7 +10,8 @@ namespace Lunggo.Framework.Queue
     internal abstract class QueueClient
     {
         internal abstract void Init();
-        internal abstract CloudQueue GetQueueByReference(string reference);
-        internal abstract bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message);
+        internal abstract CloudQueue GetQueueByReference(QueueService.Queue reference);
+        internal abstract bool CreateIfNotExists(QueueService.Queue reference);
+        protected abstract string GetQueueReferenceName(QueueService.Queue reference);
     }
 }

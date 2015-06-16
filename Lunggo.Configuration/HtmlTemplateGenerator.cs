@@ -15,16 +15,9 @@ namespace Lunggo.Configuration
         static readonly string ParentMailGeneratorPath = ParentPath+@"\HtmlTemplate";
         public static void StartHtmlGenerator(string azureStorageConnString)
         {
-            try
-            {
-                TableStorageService.GetInstance().Init(azureStorageConnString);
-                var allFilesInPath = GetAllTemplateFiles();
-                ReadHtmlAndWriteTableFromAllFiles(allFilesInPath);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            TableStorageService.GetInstance().Init(azureStorageConnString);
+            var allFilesInPath = GetAllTemplateFiles();
+            ReadHtmlAndWriteTableFromAllFiles(allFilesInPath);
         }
         static IEnumerable<string> GetAllTemplateFiles()
         {

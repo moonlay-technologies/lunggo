@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                     RsvTime = DateTime.Now,
                     ContactName = bookingRecord.ContactData.Name,
                     ContactEmail = bookingRecord.ContactData.Email,
-                    ContactCountryCode = bookingRecord.ContactData.CountryCode,
+                    ContactCountryCd = bookingRecord.ContactData.CountryCode,
                     ContactPhone = bookingRecord.ContactData.Phone,
                     LangCd = "xxx",
                     MemberCd = "xxx",
