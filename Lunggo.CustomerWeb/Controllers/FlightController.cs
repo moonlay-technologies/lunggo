@@ -182,8 +182,8 @@ namespace Lunggo.CustomerWeb.Controllers
                             var detailsResult = FlightService.GetInstance().GetDetails(new GetDetailsInput
                             {
                                 BookingId = bookingId,
-                                TripInfos = 
-                            })
+                                TripInfos =
+                            });
                         }
                     }
                 }

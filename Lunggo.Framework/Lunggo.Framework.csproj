@@ -130,8 +130,15 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Wurfl">
+      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.dll</HintPath>
+    </Reference>
+    <Reference Include="Wurfl.Aspnet.Extensions">
+      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserDetection\BrowserDetectionService.cs" />
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
     <Compile Include="Core\CustomTraceListener\TableTraceListener.cs" />
@@ -152,6 +159,7 @@
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Error\Error.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
+    <Compile Include="Filter\DeviceDetectionFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
     <Compile Include="Http\Http.cs" />
     <Compile Include="Http\HttpAuthenticationConstant.cs" />
@@ -268,7 +276,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

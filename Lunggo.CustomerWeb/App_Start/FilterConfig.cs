@@ -9,6 +9,7 @@ namespace Lunggo.CustomerWeb
         {
             filters.Add(CreateGlobalErrorHandler());
             filters.Add(new LanguageFilterAttribute());
+            filters.Add(new DeviceDetectionFilterAttribute());
         }
 
         private static HandleErrorAttribute CreateGlobalErrorHandler()
@@ -19,5 +20,6 @@ namespace Lunggo.CustomerWeb
                 View = "GlobalError"
             };
         }
+
     }
 }

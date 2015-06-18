@@ -52,8 +52,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebAPI", "Lunggo.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.MystiflyQueueHandler", "Lunggo.Webjob.MystiflyQueueHandler\Lunggo.WebJob.MystiflyQueueHandler.csproj", "{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlajarWebjob", "BlajarWebjob\BlajarWebjob.csproj", "{5156A2F9-2E25-47D1-83B7-9039A1393581}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -226,16 +224,6 @@ Global
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|ARM.ActiveCfg = Release|Any CPU
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|x64.ActiveCfg = Release|Any CPU
 		{CF2D74B6-E99C-4C39-92F7-E36855C06BD5}.Release|x86.ActiveCfg = Release|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Release|ARM.ActiveCfg = Release|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Release|x64.ActiveCfg = Release|Any CPU
-		{5156A2F9-2E25-47D1-83B7-9039A1393581}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -221,6 +221,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="Wurfl, Version=1.6.0.1, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.dll</HintPath>
+    </Reference>
+    <Reference Include="Wurfl.Aspnet.Extensions">
+      <HintPath>..\packages\WURFL_Official_API.1.6.0.1\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -788,6 +795,7 @@
     <Content Include="Assets\css\_header.scss" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
+    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -2036,7 +2044,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">

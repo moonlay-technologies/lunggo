@@ -11,6 +11,7 @@ namespace Lunggo.Framework.Constant
     {
         //Start of HttpContext Items Key
         public static readonly String HttpContextLangCode = "--LunggoSystem.LangCode--";
+        public static readonly String HttpContextDevice = "--LunggoSystem.Device--";
         //End of HttpContext Items Key
 
         public static readonly String LangCodeUrlVariable = "langCode";
