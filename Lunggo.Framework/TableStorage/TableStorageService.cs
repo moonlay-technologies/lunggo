@@ -7,56 +7,59 @@ using System.Threading.Tasks;
 
 namespace Lunggo.Framework.TableStorage
 {
-    public class TableStorageService
+    public partial class TableStorageService
     {
-        ITableStorageClient _tableStorageClient;
         private static readonly TableStorageService Instance = new TableStorageService();
-
+        private bool _isInitialized;
+        private static readonly AzureTableStorageClient Client = AzureTableStorageClient.GetClientInstance();
 
         private TableStorageService()
         {
             
         }
-        public void Init(ITableStorageClient client)
+
+        public void Init()
         {
-            _tableStorageClient = client;
+            if (!_isInitialized)
+            {
+                Client.Init();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("TableStorageService is already initialized");
+            }
         }
+
+        public void Init(string connString)
+        {
+            if (!_isInitialized)
+            {
+                Client.Init(connString);
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("TableStorageService is already initialized");
+            }
+        }
+
         public static TableStorageService GetInstance()
         {
             return Instance;
         }
+
         public CloudTable GetTableByReference(string reference)
         {
-            try
-            {
-                return _tableStorageClient.GetTableByReference(reference);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return Client.GetTableByReference(reference);
         }
         public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
-            try
-            {
-                _tableStorageClient.InsertEntityToTableStorage(objectParam, nameReference);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            Client.InsertEntityToTableStorage(objectParam, nameReference);
         }
         public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
         {
-            try
-            {
-                _tableStorageClient.InsertOrReplaceEntityToTableStorage(objectParam, nameReference);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            Client.InsertOrReplaceEntityToTableStorage(objectParam, nameReference);
         }
     }
 }

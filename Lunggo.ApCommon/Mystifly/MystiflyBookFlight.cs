@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Mystifly
                 {
                     var response = Client.BookFlight(request);
                     done = true;
-                    if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
+                    if (response.Success && !response.Errors.Any() && response.Status.ToLower() == "confirmed")
                     {
                         result = MapResult(response, fareType);
                         result.IsSuccess = true;
@@ -72,8 +72,9 @@ namespace Lunggo.ApCommon.Mystifly
                                         break;
                                     }
                                 }
-                                MapError(response, result);
                             }
+                            if (done)
+                                MapError(response, result);
                         }
                         result.IsSuccess = false;
                     }
@@ -104,7 +105,7 @@ namespace Lunggo.ApCommon.Mystifly
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "MystiflyWebfare:" + bookingId;
-            var cacheObject = FlightCacheUtil.ConvertToCacheObject(bookInfo);
+            var cacheObject = bookInfo.ToCacheObject();
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromHours(2));
 
             return bookingId;
@@ -171,28 +172,42 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static PassengerTitle MapPassengerTitle(PassengerInfoFare passengerInfoFare)
         {
-            if (passengerInfoFare.Type == PassengerType.Adult)
-                switch (passengerInfoFare.Title)
-                {
-                    case Title.Mister:
-                        return PassengerTitle.MR;
-                    case Title.Mistress:
-                        return PassengerTitle.MRS;
-                    case Title.Miss:
-                        return PassengerTitle.MS;
-                    default:
-                        return PassengerTitle.Default;
-                }
-            else
-                switch (passengerInfoFare.Title)
-                {
-                    case Title.Mister:
-                        return PassengerTitle.MSTR;
-                    case Title.Miss:
-                        return PassengerTitle.MISS;
-                    default:
-                        return PassengerTitle.Default;
-                }
+            switch (passengerInfoFare.Type)
+            {
+                case PassengerType.Adult:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                            return PassengerTitle.MR;
+                        case Title.Mistress:
+                            return PassengerTitle.MRS;
+                        case Title.Miss:
+                            return PassengerTitle.MS;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                case PassengerType.Child:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                            return PassengerTitle.MSTR;
+                        case Title.Miss:
+                            return PassengerTitle.MISS;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                case PassengerType.Infant:
+                    switch (passengerInfoFare.Title)
+                    {
+                        case Title.Mister:
+                        case Title.Miss:
+                            return PassengerTitle.INF;
+                        default:
+                            return PassengerTitle.Default;
+                    }
+                default:
+                    return PassengerTitle.Default;
+            }
         }
 
         private static Passport MapPassport(PassengerInfoFare passengerInfoFare)
@@ -345,28 +360,33 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERBUK002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("Invalid account information!"))
+                            result.ErrorMessages.Add("Invalid account information!");
                         goto case "TechnicalError";
                     case "ERBUK078":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Insufficient balance!");
+                        if (!result.ErrorMessages.Contains("Insufficient balance!"))
+                            result.ErrorMessages.Add("Insufficient balance!");
                         goto case "TechnicalError";
                     case "ERBUK081":
                     case "ERBUK085":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Host not responding!");
+                        if (!result.ErrorMessages.Contains("Host not responding!"))
+                            result.ErrorMessages.Add("Host not responding!");
                         goto case "TechnicalError";
                     case "ERGEN003":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":

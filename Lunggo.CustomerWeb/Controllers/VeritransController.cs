@@ -1,34 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
+using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class VeritransController : Controller
     {
-        public ActionResult PaymentNotification(VeritransNotification notif)
+        [HttpPost]
+        public ActionResult PaymentNotification()
         {
-            if (notif.status_code == "200")
+            string notifJson;
+            using (var rqStream = new StreamReader(Request.InputStream))
+                notifJson = rqStream.ReadToEnd();
+            var notif = JsonConvert.DeserializeObject<VeritransNotification>(notifJson);
+            if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {
-                var paymentMethod = MapPaymentMethod(notif);
-                var paymentStatus = MapPaymentStatus(notif);
+                var service = FlightService.GetInstance();
+                DateTime? time;
+                if (notif.transaction_time != null)
+                    time = DateTime.Parse(notif.transaction_time);
+                else
+                    time = null;
+
+                var paymentInfo = new PaymentInfo
+                {
+                    Medium = PaymentMedium.Veritrans,
+                    Method = MapPaymentMethod(notif),
+                    Status = MapPaymentStatus(notif),
+                    Time = time,
+                    Id = notif.approval_code,
+                    TargetAccount = notif.permata_va_number
+                };
 
                 if (notif.order_id.First() == 'F')
                 {
-                    return RedirectToAction("PaymentConfirmation", "FlightController", new FlightPaymentConfirmationData
+                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
+                    if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
                     {
-                        RsvNo = notif.order_id,
-                        PaymentMethod = paymentMethod,
-                        PaymentStatus = paymentStatus
-                    });
-                }
-                else
-                {
-                    return null;
+                        //var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
+                        //service.IssueTicket(issueInput);
+                    }
                 }
             }
             return null;
@@ -36,88 +60,59 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            if (response.status_code == "200" && response.transaction_status.ToLower() == "capture")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Accepted
-                });
-            else if (response.status_code == "201" && response.transaction_status.ToLower() == "capture")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.BeingAuthorized
-                });
-            else if (response.status_code == "201" && response.transaction_status.ToLower() == "pending")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Pending
-                    });
-            else if (response.status_code == "202" && response.transaction_status.ToLower() == "deny")
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Denied
-                    });
-            else
-                return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Error
-                    });
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Cancelled
-                    });
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         public ActionResult PaymentError(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new FlightThankyouData {
-                    RsvNo = response.order_id,
-                    Status = PaymentStatus.Error
-                    });
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
-        private PaymentMethod MapPaymentMethod(VeritransNotification notif)
+        private static PaymentMethod MapPaymentMethod(VeritransNotification notif)
         {
-            // TODO flight add this
             switch (notif.payment_type.ToLower())
             {
                 case "credit_card":
                     return PaymentMethod.CreditCard;
                 case "bank_transfer":
-                    return PaymentMethod.Transfer;
+                    return PaymentMethod.BankTransfer;
+                case "mandiri_clickpay":
+                    return PaymentMethod.MandiriClickPay;
+                case "cimb_clicks":
+                    return PaymentMethod.CimbClicks;
                 default:
                     return PaymentMethod.Undefined;
             }
         }
 
-        private PaymentStatus MapPaymentStatus(VeritransNotification notif)
+        private static PaymentStatus MapPaymentStatus(VeritransNotification notif)
         {
-            // TODO flight fix this
-            switch (notif.fraud_status.ToLower())
+            switch (notif.transaction_status.ToLower())
             {
                 case "capture":
-                    switch (notif.transaction_status.ToLower())
+                    switch (notif.fraud_status.ToLower())
                     {
-                        case "settlement":
-                            return PaymentStatus.Accepted;
-                        case "pending":
-                            return PaymentStatus.Pending;
-                        case "cancel":
-                        case "expire":
-                            return PaymentStatus.Cancelled;
+                        case "capture":
+                            return PaymentStatus.Settled;
+                        case "challenge":
                         case "deny":
                             return PaymentStatus.Denied;
-                        case "authorize":
-                        case "capture":
-                            return PaymentStatus.BeingAuthorized;
                         default:
-                            return PaymentStatus.Undefined;
+                            return PaymentStatus.Settled;
                     }
-                case "challenge":
-                    return PaymentStatus.BeingAuthorized;
+                case "settlement":
+                    return PaymentStatus.Settled;
+                case "pending":
+                    return PaymentStatus.Pending;
+                case "authorize":
+                case "cancel":
+                case "expire":
+                    return PaymentStatus.Cancelled;
                 case "deny":
                     return PaymentStatus.Denied;
                 default:
@@ -134,6 +129,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public string transaction_time { get; set; }
         public string transaction_status { get; set; }
         public string fraud_status { get; set; }
+        public string approval_code { get; set; }
         public string bank { get; set; }
         public string permata_va_number { get; set; }
     }

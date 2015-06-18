@@ -14,6 +14,7 @@ namespace Lunggo.ApCommon.Flight.Model
     public class PassengerInfoDetails : PassengerInfoBase
     {
         public List<Eticket> ETicket { get; set; }
+        public string Baggage { get; set; }
     }
 
     public class Eticket

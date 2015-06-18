@@ -3,30 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.HtmlTemplate;
 
 namespace Lunggo.Framework.Mail
 {
-    public class MailService
+    public partial class MailService
     {
-        IMailClient _mailClient;
         private static readonly MailService Instance = new MailService();
-
+        private bool _isInitialized;
+        private static readonly MandrillMailClient Client = MandrillMailClient.GetClientInstance();
 
         private MailService()
         {
             
         }
-        public void Init(IMailClient client)
+
+        public void Init()
         {
-            _mailClient = client;
+            if (!_isInitialized)
+            {
+                Client.Init();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("MailService is already initialized");
+            }
         }
+
         public static MailService GetInstance()
         {
             return Instance;
         }
-        public void SendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
+
+        public void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
         {
-            _mailClient.sendEmail(objectParam, mailModel, partitionKey);
+            Client.SendEmail(objectParam, mailModel, type);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Mystifly
                 ExtensionData = null
             };
 
-            var result = new SearchFlightResult();
+            var result = new SearchFlightResult { FlightItineraries = new List<FlightItineraryFare>() };
             var retry = 0;
             var done = false;
             while (!done)
@@ -72,8 +72,9 @@ namespace Lunggo.ApCommon.Mystifly
                                     break;
                                 }
                             }
-                            MapError(response, result);
                         }
+                        if (done)
+                            MapError(response, result);
                     }
                     result.IsSuccess = false;
                 }
@@ -198,7 +199,6 @@ namespace Lunggo.ApCommon.Mystifly
         private static List<FlightItineraryFare> MapFlightItineraryFares(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
             var currency = CurrencyService.GetInstance();
-            // TODO Flight Currency Dummy
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = response.PricedItineraries.Select(itin => MapFlightItineraryFare(itin, conditions, rate)).Where(itin => itin != null).ToList();
             return result;
@@ -211,14 +211,22 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var flightItineraryFare = new FlightItineraryFare();
                 flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
-                flightItineraryFare.SupplierPrice =
-                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.EquivFare.Amount);
                 flightItineraryFare.SupplierCurrency = "USD";
                 flightItineraryFare.SupplierRate = rate;
-                flightItineraryFare.LocalPrice = flightItineraryFare.SupplierPrice*rate;
+                flightItineraryFare.SupplierPrice =
+                    decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
+                flightItineraryFare.OriginalIdrPrice = flightItineraryFare.SupplierPrice * flightItineraryFare.SupplierRate;
+                flightItineraryFare.MarginId = 999;
+                flightItineraryFare.MarginCoefficient = 0.07M;
+                flightItineraryFare.MarginConstant = 0;
+                flightItineraryFare.MarginNominal = flightItineraryFare.OriginalIdrPrice*
+                                                    flightItineraryFare.MarginCoefficient +
+                                                    flightItineraryFare.MarginConstant;
+                flightItineraryFare.FinalIdrPrice = flightItineraryFare.OriginalIdrPrice +
+                                                    flightItineraryFare.MarginNominal;
                 flightItineraryFare.LocalCurrency = "IDR";
                 flightItineraryFare.LocalRate = 1;
-                flightItineraryFare.IdrPrice = flightItineraryFare.LocalPrice;
+                flightItineraryFare.LocalPrice = flightItineraryFare.FinalIdrPrice * flightItineraryFare.LocalRate;
                 if (pricedItinerary.RequiredFieldsToBook != null)
                     MapRequiredFields(pricedItinerary, flightItineraryFare);
                 flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
@@ -250,6 +258,15 @@ namespace Lunggo.ApCommon.Mystifly
                     return false;
                 }
             }
+            foreach (var segment in pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments))
+            {
+                var dict = DictionaryService.GetInstance();
+                if (!dict.IsAirlineCodeExists(segment.MarketingAirlineCode) ||
+                    !dict.IsAirlineCodeExists(segment.OperatingAirline.Code))
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -270,17 +287,17 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static TripType MapTripType(string type)
         {
-            switch (type)
+            switch (type.ToLower())
             {
-                case "OneWay":
+                case "oneway":
                     return TripType.OneWay;
-                case "Return":
+                case "return":
                     return TripType.Return;
-                case "OpenJaw":
+                case "openjaw":
                     return TripType.OpenJaw;
-                case "Circle":
+                case "circle":
                     return TripType.Circle;
-                case "Other":
+                case "other":
                     return TripType.Other;
                 default:
                     return TripType.OpenJaw;
@@ -309,15 +326,15 @@ namespace Lunggo.ApCommon.Mystifly
         {
             foreach (var field in pricedItinerary.RequiredFieldsToBook)
             {
-                switch (field)
+                switch (field.ToLower())
                 {
-                    case "Passport":
+                    case "passport":
                         flightItineraryFare.RequirePassport = true;
                         break;
-                    case "DOB":
+                    case "dob":
                         flightItineraryFare.RequireBirthDate = true;
                         break;
-                    case "SameCheck-InForAllPassengers":
+                    case "samecheck-inforallpassengers":
                         flightItineraryFare.RequireSameCheckIn = true;
                         break;
                 }
@@ -434,23 +451,27 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERIFS002":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Invalid account information!");
+                        if (!result.ErrorMessages.Contains("Invalid account information!"))
+                            result.ErrorMessages.Add("Invalid account information!");
                         goto case "TechnicalError";
                     case "ERSER027":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Daily maximum search limit reached!");
+                        if (!result.ErrorMessages.Contains("Daily maximum search limit reached!"))
+                            result.ErrorMessages.Add("Daily maximum search limit reached!");
                         goto case "TechnicalError";
                     case "ERGEN002":
                     case "ERGEN018":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Unexpected error on the other end!");
+                        if (!result.ErrorMessages.Contains("Unexpected error on the other end!"))
+                            result.ErrorMessages.Add("Unexpected error on the other end!");
                         goto case "TechnicalError";
                     case "ERMAI001":
                         if (result.ErrorMessages == null)
                             result.ErrorMessages = new List<string>();
-                        result.ErrorMessages.Add("Mystifly is under maintenance!");
+                        if (!result.ErrorMessages.Contains("Mystifly is under maintenance!"))
+                            result.ErrorMessages.Add("Mystifly is under maintenance!");
                         goto case "TechnicalError";
 
                     case "InvalidInputData":

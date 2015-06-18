@@ -154,7 +154,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\FlightReservationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -396,11 +395,6 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Test\InputData.cshtml" />
-    <Content Include="Views\Test\List.cshtml" />
-    <Content Include="Views\Test\PartialItinerary.cshtml" />
-    <Content Include="Views\Test\PartialSegment.cshtml" />
-    <Content Include="Views\Test\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

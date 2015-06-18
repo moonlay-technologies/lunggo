@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using Antlr3.ST;
-using Lunggo.Configuration.MailTemplate;
 using Microsoft.Data.OData;
 using Microsoft.Office.Interop.Excel;
 
@@ -45,11 +44,12 @@ namespace Lunggo.Configuration
         
         private static readonly ConfigGenerator Instance = new ConfigGenerator(); 
         private String _currentExecutionDir;
-        private Dictionary<String, String> _configDictionary; 
+        private Dictionary<String, String> _configDictionary;
+        private static string _azureStorageConnString;
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "Driver", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.TicketQueueHandler", "WebAPI" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.EticketQueueHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -60,8 +60,8 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
-            //new MailTemplateGenerator().StartMailGenerator();
+            generator.StartConfig(DeploymentEnvironment.Development1, projectList);
+            HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
 
@@ -91,6 +91,7 @@ namespace Lunggo.Configuration
         private void SetConfigDictionary(Range excelFile, DeploymentEnvironment environment)
         {
             _configDictionary = ReadAllRowOfExcel(excelFile, environment);
+            excelFile.Application.ActiveWorkbook.Close();
         }
 
         private Range GetExcelFile()
@@ -113,7 +114,11 @@ namespace Lunggo.Configuration
                 string variableName = xlRange.Cells[row, ExcelColumnGeneratedNameIndex].Text;
                 string resultValue = xlRange.Cells[row, columnValueIndex].Text;
                 if (IsCellsNotNull(variableName, resultValue))
+                {
                     dictionaryConfig.Add(variableName, resultValue);
+                    if (variableName == "@@.*.azurestorage.connectionString@@")
+                        _azureStorageConnString = resultValue;
+                }
             }
             return dictionaryConfig;
         }

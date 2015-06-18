@@ -257,16 +257,12 @@ namespace Lunggo.Driver
         private static void InitDatabaseService()
         {
             var database = DbService.GetInstance();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            database.Init(connectionString);
+            database.Init();
         }
         private static void InitQueueService()
         {
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            IQueueClient queueClient = new AzureQueueClient();
-            queueClient.init(connectionString);
             var queue = QueueService.GetInstance();
-            queue.Init(queueClient);
+            queue.Init();
         }
         private static void InitTicketService()
         {
@@ -335,8 +331,8 @@ namespace Lunggo.Driver
 
 
             MailDetailForQueue testEmail = new MailDetailForQueue();
-            testEmail.From_Name = "Bayu";
-            testEmail.From_Mail = "bayualvian@hotmail.com";
+            testEmail.FromName = "Bayu";
+            testEmail.FromMail = "bayualvian@hotmail.com";
             testEmail.RecipientList = new string[] { "Bayualvian@hotmail.com" };
             testEmail.Subject = "testing";
             testEmail.MailTemplate = MailTemplateEnum.TestHtmlWithAttachment;

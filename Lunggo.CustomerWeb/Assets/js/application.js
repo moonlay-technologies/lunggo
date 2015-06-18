@@ -222,7 +222,7 @@ function flightSearchFormFunctions() {
                 var cleanData = [];
                 for (var i = 0; i < data.length; i++) {
                     var newData = {
-                        label: data[i].Name + ' ,' + data[i].City + ' ,' + data[i].Country,
+                        label: data[i].Code + ', ' + data[i].Name + ', ' + data[i].City + ', ' + data[i].Country,
                         value: data[i].Code
                     };
                     cleanData.push(newData);
@@ -512,7 +512,7 @@ function checkoutPageFunctions() {
         var hashKey = $(this).attr('data-hashKey');
 
         // show modal
-        $('#redirectModal').show();
+        $('.flight-validate-loading').show();
 
         // revalidate flight
         if (RevalidateConfig.working == false) {
@@ -530,11 +530,11 @@ function checkoutPageFunctions() {
                 } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                     var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                     if (userConfirmation) {
-                        $('#redirectModal').hide();
+                        $('.flight-validate-loading').hide();
                         $('#flight-customer-form').submit();
                     }
                 } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
-                    $('#redirectModal').hide();
+                    $('.flight-validate-loading').hide();
                     alert("Sorry, the flight is no longer valid. Please check another flight.");
                 }
 

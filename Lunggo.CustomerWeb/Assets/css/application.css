@@ -270,6 +270,27 @@ body img {
   border-color: #ebb600;
   color: #59544b; }
 
+.btn-yellow:active {
+  opacity: 0.8;
+  background: #ffeaa8;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #ffeaa8 0%, #f3b400 99%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffeaa8), color-stop(99%, #f3b400));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffeaa8 0%, #f3b400 99%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffeaa8 0%, #f3b400 99%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffeaa8 0%, #f3b400 99%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #ffeaa8 0%, #f3b400 99%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa8', endColorstr='#f3b400',GradientType=0 );
+  /* IE6-9 */
+  border-color: #ebb600;
+  color: #59544b; }
+
 .no-radius {
   border-radius: 0;
   -moz-border-radius: 0;
@@ -809,6 +830,9 @@ hr {
   padding: 10px 0;
   font-weight: bold; }
 
+.hotel-checkout-page .flight-validate-loading {
+  display: none; }
+
 .hotel-checkout-page .page-header h1 {
   margin: 0;
   font-size: 20px; }
@@ -853,6 +877,8 @@ hr {
     background-position: 10px center; }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.active {
     opacity: 1; }
+  .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-veritrans span {
+    background-image: url(../images/payment-veritrans.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-transfer span {
     background-image: url(../images/payment-transfer.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-credit span {
@@ -874,6 +900,9 @@ hr {
 
 .hotel-checkout-page .customer-detail .payment-button {
   text-align: center; }
+  .hotel-checkout-page .customer-detail .payment-button small {
+    margin: 15px 0;
+    display: block; }
   .hotel-checkout-page .customer-detail .payment-button .btn {
     font-size: 18px;
     font-weight: bold;
@@ -966,6 +995,66 @@ hr {
   top: 0;
   left: 0;
   display: none; }
+
+.confirmation-page .confirmation-form {
+  padding: 15px;
+  background: #ededed; }
+
+.confirmation-page .countdown {
+  text-align: center;
+  padding: 15px;
+  background: #2fb4e6;
+  color: #fff; }
+
+.confirmation-page .payment-countdown {
+  font-size: 50px; }
+
+.confirmation-page .order-number {
+  padding: 15px;
+  background: #2fb4e6;
+  color: #fff;
+  text-align: center; }
+
+.confirmation-page .confirmation-right h3 {
+  text-align: center;
+  background: #dadada;
+  padding: 10px 0;
+  margin-bottom: 0; }
+
+.confirmation-page .confirmation-right hr {
+  border-color: #aaa; }
+
+.confirmation-page .confirmation-right .content-wrapper {
+  padding: 10px;
+  background: #ededed; }
+
+.thankyou-page.flight-receipt .receipt-wrapper {
+  background: #ededed;
+  padding: 25px;
+  margin-top: 25px; }
+
+.thankyou-page.flight-receipt .receipt-title {
+  margin-top: 0; }
+
+.thankyou-page.flight-receipt .receipt-left {
+  border-right: 1px solid #ccc; }
+
+.thankyou-page.flight-receipt .payment-countdown {
+  background: #2fb4e6;
+  font-size: 32px;
+  padding: 15px 0;
+  color: #fff; }
+
+.thankyou-page.flight-receipt .receipt-flight {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; }
+
+.thankyou-page.flight-receipt .ticket-print a {
+  display: block;
+  font-size: 18px;
+  padding: 15px 0;
+  text-align: center;
+  font-weight: bold; }
 
 .flight-search-page .flight-loading {
   display: block;
@@ -1778,6 +1867,78 @@ hr {
       display: block;
       width: 100%;
       clear: both; }
+
+.search-flight-loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(54, 179, 227, 0.85);
+  z-index: 9999; }
+  .search-flight-loading .loading-image-wrapper {
+    position: absolute;
+    width: 709px;
+    height: 709px;
+    left: 50%;
+    top: 50%;
+    margin-left: -355px;
+    margin-top: -355px; }
+  .search-flight-loading .loading-image-wrapper .loading-text {
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 30%;
+    text-align: center;
+    color: #fff;
+    padding: 70px 40px 0; }
+  .search-flight-loading .loading-image-wrapper img {
+    animation: animationFrames linear 20s;
+    animation-iteration-count: infinite;
+    transform-origin: 50% 50%;
+    -webkit-animation: animationFrames linear 20s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-transform-origin: 50% 50%;
+    -moz-animation: animationFrames linear 20s;
+    -moz-animation-iteration-count: infinite;
+    -moz-transform-origin: 50% 50%;
+    -o-animation: animationFrames linear 20s;
+    -o-animation-iteration-count: infinite;
+    -o-transform-origin: 50% 50%;
+    -ms-animation: animationFrames linear 20s;
+    -ms-animation-iteration-count: infinite;
+    -ms-transform-origin: 50% 50%; }
+
+@keyframes animationFrames {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@-moz-keyframes animationFrames {
+  0% {
+    -moz-transform: rotate(0deg); }
+  100% {
+    -moz-transform: rotate(360deg); } }
+
+@-webkit-keyframes animationFrames {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@-o-keyframes animationFrames {
+  0% {
+    -o-transform: rotate(0deg); }
+  100% {
+    -o-transform: rotate(360deg); } }
+
+@-ms-keyframes animationFrames {
+  .search-flight-loading 0% {
+    -ms-transform: rotate(0deg); }
+  .search-flight-loading 100% {
+    -ms-transform: rotate(360deg); } }
 
 .tab-pane#history .history-wrapper .history-list {
   padding: 0;

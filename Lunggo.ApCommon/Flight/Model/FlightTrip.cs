@@ -27,6 +27,10 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightTripDetails : FlightTripBase
     {
         public List<FlightSegmentDetails> FlightSegments { get; set; }
+        public string OriginCity { get; set; }
+        public string OriginAirportName { get; set; }
+        public string DestinationCity { get; set; }
+        public string DestinationAirportName { get; set; }
     }
 
     public class FlightTripInfo : FlightTripBase

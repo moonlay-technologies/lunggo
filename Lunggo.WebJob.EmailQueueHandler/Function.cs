@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 //using Lunggo.Framework.Mail;
 //using Lunggo.Framework.SharedModel;
@@ -17,64 +18,36 @@ using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.Util;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json.Linq;
+using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.WebJob.EmailQueueHandler
 {
     public class Function
     {
+        public static void TestSend()
+        {
+            var evo = new EvoPdf.HtmlToPdfConverter();
+            MailService.GetInstance().SendEmail(new {Name = "yey", Address = "ow"}, new MailModel
+            {
+                Subject = "makan nih email",
+                FromMail = "dari@saya.lho",
+                FromName = "saya siapa",
+                RecipientList = new []{"developer@travelmadezy.com"},
+                ListFileInfo = new List<FileInfo>
+                {
+                    new FileInfo
+                    {
+                        ContentType = "pdf",
+                        FileName = "apaini.pdf",
+                        FileData = evo.ConvertUrl("http://www.google.com/")
+                    }
+                }
+            }, "TestHtml");
+        }
+
         public static void EmailQueueHandler([QueueTrigger("emailqueue")] MailDetailForQueue mailDetailInQueue)
         {
-            switch (mailDetailInQueue.MailTemplate)
-            {
-                case MailTemplateEnum.SuccessBooking:
-                    SuccessBooking(mailDetailInQueue);
-                    break;
-                case MailTemplateEnum.ApalagiGitu:
-                    break;
-                case MailTemplateEnum.TestHtml:
-                    TestHtml(mailDetailInQueue);
-                    break;
-                case MailTemplateEnum.TestHtmlWithAttachment:
-                    TestHtmlWithAttachment(mailDetailInQueue);
-                    break;
-            }
-        }
-        public static void SuccessBooking(MailDetailForQueue mailDetail)
-        {
-            try
-            {
-                string emailTemplateName = "SuccessBooking";
-                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
-            }
-            catch (Exception)
-            {
-                LunggoLogger.Info("message");
-                throw;
-            }
-        }
-        public static void TestHtml(MailDetailForQueue mailDetail)
-        {
-            try
-            {
-                string emailTemplateName = "TestHtml";
-                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public static void TestHtmlWithAttachment(MailDetailForQueue mailDetail)
-        {
-            try
-            {
-                string emailTemplateName = "TestHtml";
-                MailService.GetInstance().SendEmail((mailDetail.MailObjectDetail as JObject).ToObject<BookingDetail>(), mailDetail, emailTemplateName);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+
         }
     }
 }

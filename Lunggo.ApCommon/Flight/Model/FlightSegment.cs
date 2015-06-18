@@ -29,7 +29,15 @@ namespace Lunggo.ApCommon.Flight.Model
         public int Reference { get; set; }
         public string Pnr { get; set; }
         public string DepartureTerminal { get; set; }
+        public string DepartureCity { get; set; }
+        public string DepartureAirportName { get; set; }
         public string ArrivalTerminal { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalAirportName { get; set; }
+        public string AirlineName { get; set; }
+        public string AirlineLogoUrl { get; set; }
+        public string OperatingAirlineName { get; set; }
+        public string OperatingAirlineLogoUrl { get; set; }
         public string Baggage { get; set; }
     }
 

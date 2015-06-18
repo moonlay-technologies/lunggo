@@ -65,6 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ContactEmail");
 		    }
 		}
+		public String ContactCountryCode
+		{
+		    get { return _ContactCountryCode; }
+		    set
+		    {
+		        _ContactCountryCode = value;
+		        IncrementLog("ContactCountryCode");
+		    }
+		}
 		public String ContactPhone
 		{
 		    get { return _ContactPhone; }
@@ -110,6 +119,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("InfantCount");
 		    }
 		}
+		public String PaymentId
+		{
+		    get { return _PaymentId; }
+		    set
+		    {
+		        _PaymentId = value;
+		        IncrementLog("PaymentId");
+		    }
+		}
+		public String PaymentMediumCd
+		{
+		    get { return _PaymentMediumCd; }
+		    set
+		    {
+		        _PaymentMediumCd = value;
+		        IncrementLog("PaymentMediumCd");
+		    }
+		}
 		public String PaymentMethodCd
 		{
 		    get { return _PaymentMethodCd; }
@@ -119,6 +146,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentMethodCd");
 		    }
 		}
+		public DateTime? PaymentTime
+		{
+		    get { return _PaymentTime; }
+		    set
+		    {
+		        _PaymentTime = value;
+		        IncrementLog("PaymentTime");
+		    }
+		}
 		public String PaymentStatusCd
 		{
 		    get { return _PaymentStatusCd; }
@@ -126,6 +162,15 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _PaymentStatusCd = value;
 		        IncrementLog("PaymentStatusCd");
+		    }
+		}
+		public String PaymentTargetAccount
+		{
+		    get { return _PaymentTargetAccount; }
+		    set
+		    {
+		        _PaymentTargetAccount = value;
+		        IncrementLog("PaymentTargetAccount");
 		    }
 		}
 		public String LangCd
@@ -173,13 +218,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("OverallTripTypeCd");
 		    }
 		}
-		public Decimal? TotalSourcePrice
+		public Decimal? TotalSupplierPrice
 		{
-		    get { return _TotalSourcePrice; }
+		    get { return _TotalSupplierPrice; }
 		    set
 		    {
-		        _TotalSourcePrice = value;
-		        IncrementLog("TotalSourcePrice");
+		        _TotalSupplierPrice = value;
+		        IncrementLog("TotalSupplierPrice");
 		    }
 		}
 		public Decimal? PaymentFeeForCust
@@ -280,19 +325,24 @@ namespace Lunggo.Repository.TableRecord
 		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
+		private String _ContactCountryCode;
 		private String _ContactPhone;
 		private String _ContactAddress;
 		private int? _AdultCount;
 		private int? _ChildCount;
 		private int? _InfantCount;
+		private String _PaymentId;
+		private String _PaymentMediumCd;
 		private String _PaymentMethodCd;
+		private DateTime? _PaymentTime;
 		private String _PaymentStatusCd;
+		private String _PaymentTargetAccount;
 		private String _LangCd;
 		private String _MemberCd;
 		private String _CancellationTypeCd;
 		private DateTime? _CancellationTime;
 		private String _OverallTripTypeCd;
-		private Decimal? _TotalSourcePrice;
+		private Decimal? _TotalSupplierPrice;
 		private Decimal? _PaymentFeeForCust;
 		private Decimal? _PaymentFeeForUs;
 		private Decimal? _FinalPrice;
@@ -340,19 +390,24 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
+				new ColumnMetadata("ContactCountryCode", false),
 				new ColumnMetadata("ContactPhone", false),
 				new ColumnMetadata("ContactAddress", false),
 				new ColumnMetadata("AdultCount", false),
 				new ColumnMetadata("ChildCount", false),
 				new ColumnMetadata("InfantCount", false),
+				new ColumnMetadata("PaymentId", false),
+				new ColumnMetadata("PaymentMediumCd", false),
 				new ColumnMetadata("PaymentMethodCd", false),
+				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("PaymentStatusCd", false),
+				new ColumnMetadata("PaymentTargetAccount", false),
 				new ColumnMetadata("LangCd", false),
 				new ColumnMetadata("MemberCd", false),
 				new ColumnMetadata("CancellationTypeCd", false),
 				new ColumnMetadata("CancellationTime", false),
 				new ColumnMetadata("OverallTripTypeCd", false),
-				new ColumnMetadata("TotalSourcePrice", false),
+				new ColumnMetadata("TotalSupplierPrice", false),
 				new ColumnMetadata("PaymentFeeForCust", false),
 				new ColumnMetadata("PaymentFeeForUs", false),
 				new ColumnMetadata("FinalPrice", false),

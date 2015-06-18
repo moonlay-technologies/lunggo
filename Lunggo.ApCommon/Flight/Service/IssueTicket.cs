@@ -1,6 +1,12 @@
-﻿using Lunggo.ApCommon.Flight.Constant;
+﻿using System.Linq;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Query;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
+using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -8,21 +14,41 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public IssueTicketOutput IssueTicket(IssueTicketInput input)
         {
-            var output = new IssueTicketOutput();
-            var orderResult = OrderTicketInternal(input.BookingId);
-            if (orderResult.IsSuccess)
+            using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                output.IsSuccess = true;
-                output.BookingStatus = BookingStatus.Ticketing;
-                output.BookingId = orderResult.BookingId;
+                if (input.BookingId == null)
+                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
+                var output = new IssueTicketOutput();
+                var orderResult = OrderTicketInternal(input.BookingId);
+                if (orderResult.IsSuccess)
+                {
+                    output.IsSuccess = true;
+                    output.BookingStatus = BookingStatus.Ticketing;
+                    output.BookingId = orderResult.BookingId;
+
+                    var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
+                    var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
+                    UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
+                    {
+                        BookingId = input.BookingId,
+                        BookingStatusCd = bookingStatusCd
+                    });
+
+                    if (orderResult.IsInstantIssuance)
+                    {
+                        var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
+                        GetAndUpdateNewDetails(detailsInput);
+                        // TODO flight push eticket queue
+                    }
+                }
+                else
+                {
+                    output.IsSuccess = false;
+                    output.Errors = orderResult.Errors;
+                    output.ErrorMessages = orderResult.ErrorMessages;
+                }
+                return output;
             }
-            else
-            {
-                output.IsSuccess = false;
-                output.Errors = orderResult.Errors;
-                output.ErrorMessages = orderResult.ErrorMessages;
-            }
-            return output;
         }
     }
 }

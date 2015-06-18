@@ -219,6 +219,7 @@
             // generate flight filter
             $scope.FlightSearchParams = {};
             $scope.loaded = false;
+            $scope.validating = false;
             $scope.FlightSearchFilter = {};
             $scope.FlightSearchFilter.Airlines = [];
             $scope.FlightSearchFilter.Prices = [];
@@ -412,7 +413,7 @@
             $scope.revalidate = function (indexNo) {
                 var searchId = $scope.FlightSearchParams.SearchId;
 
-                loading_overlay('show');
+                $scope.validating = true;
 
                 console.log('validating :');
 
@@ -437,13 +438,13 @@
                             flightList.list[indexNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
-                                loading_overlay('hide');
+                                $scope.validating = false;
                                 window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
                             } else {
-                                loading_overlay('hide');
+                                $scope.validating = false;
                             }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
-                            loading_overlay('hide');
+                            $scope.validating = false;
                             alert("Sorry, the flight is no longer valid. Please check another flight.");
                             flightList.list[indexNo].hidden = true;
                         }

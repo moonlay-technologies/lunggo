@@ -1,113 +1,135 @@
-﻿using Lunggo.Framework.Core;
+﻿using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
+using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.SharedModel;
-using Mandrill;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mandrill;
+using Mandrill.Models;
+using Mandrill.Requests.Messages;
 
 namespace Lunggo.Framework.Mail
 {
-    public class MandrillMailClient : IMailClient
-    {
-        MandrillApi apiOfMandrill;
-        string _mandrillTemplate;
-        bool enablingOtherEmailAddressVisibilityForRecipient = true;
-        IMailTemplateEngine mailTemplateEngine;
-        enum RecipientTypeEnum
+    public partial class MailService {
+        private class MandrillMailClient : MailClient
         {
-            to,
-            cc,
-            bcc
-        }
-        public void init(string mandrillAPIKey)
-        {
-            init(mandrillAPIKey, "MyTemplate", new RazorMailTemplateEngine());
-        }
-        public void init(string mandrillAPIKey, string mandrillTemplate, IMailTemplateEngine _mailTemplateEngine)
-        {
-            this.apiOfMandrill = new MandrillApi(mandrillAPIKey, true);
-            _mandrillTemplate = mandrillTemplate;
-            mailTemplateEngine = _mailTemplateEngine;
-        }
-        public void sendEmail<T>(T objectParam, MailModel mailModel, string partitionKey)
-        {
-            try
-            {
-                EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, partitionKey);
-                var returnvalue = apiOfMandrill.SendMessage(emailMessage, this._mandrillTemplate, null);
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
-        }
-        private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string partitionKey)
-        {
-            EmailMessage emailMessage = new EmailMessage();
-            emailMessage.preserve_recipients = this.enablingOtherEmailAddressVisibilityForRecipient;
-            emailMessage.subject = mailModel.Subject;
-            emailMessage.from_email = mailModel.From_Mail;
-            emailMessage.from_name = mailModel.From_Name;
-            emailMessage.to = GenerateMessageAddressTo(mailModel);
-            emailMessage.html = this.mailTemplateEngine.GetEmailTemplate(objectParam, partitionKey);
-            if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count>0)
-                emailMessage.attachments = convertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
-            return emailMessage;
-        }
-        private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
-        {
-            List<EmailAddress> addresses = new List<EmailAddress>();
-            if (mailModel.RecipientList!=null)
-                addresses.AddRange(GenerateAddressToByListString(mailModel.RecipientList));
-            if (mailModel.CCList != null)
-                addresses.AddRange(GenerateAddressCCByListString(mailModel.CCList));
-            if (mailModel.BCCList != null)
-                addresses.AddRange(GenerateAddressBCCByListString(mailModel.BCCList));
-            return addresses;
+            private static readonly MandrillMailClient ClientInstance = new MandrillMailClient();
+            private bool _isInitialized;
+            private MandrillApi _apiOfMandrill;
+            private bool _exposeRecipients;
 
-        }
-        private List<EmailAddress> GenerateAddressToByListString(string[] RecipientList)
-        {
-            return GenerateRecipientTypeByListString(RecipientList, RecipientTypeEnum.to.ToString());
-        }
-        private List<EmailAddress> GenerateAddressCCByListString(string[] CCList)
-        {
-            return GenerateRecipientTypeByListString(CCList, RecipientTypeEnum.cc.ToString());
-        }
-        private List<EmailAddress> GenerateAddressBCCByListString(string[] BCCList)
-        {
-            return GenerateRecipientTypeByListString(BCCList, RecipientTypeEnum.bcc.ToString());
-        }
-        private List<EmailAddress> GenerateRecipientTypeByListString(string[] listAddress, string sendingType)
-        {
-            List<EmailAddress> addresses = new List<EmailAddress>();
-            foreach (string address in listAddress)
+            private enum RecipientType
             {
-                addresses.Add( new EmailAddress(address, address, sendingType));
+                to,
+                cc,
+                bcc
             }
-            return addresses;
-        }
-        private IEnumerable<email_attachment> convertFileInfoToAttachmentFiles(List<FileInfo> files)
-        {
-            if (files == null || files.Count < 1)
+
+            private MandrillMailClient()
             {
-                yield break;
+                
             }
-            foreach (FileInfo file in files)
+
+            internal static MandrillMailClient GetClientInstance()
             {
-                var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
-                email_attachment attachmentToSend = new email_attachment
+                return ClientInstance;
+            }
+
+            internal override void Init()
+            {
+                if (!_isInitialized)
                 {
-                    name = file.FileName,
-                    type = file.ContentType,
-                    content = base64OfAttachmentFile
-                };
-                yield return attachmentToSend;
+                    try
+                    {
+                        var templateService = HtmlTemplateService.GetInstance();
+                        templateService.Init();
+                    }
+                    catch
+                    {
+                        
+                    }
+                    var mandrillApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+                    _apiOfMandrill = new MandrillApi(mandrillApiKey);
+                    _exposeRecipients = bool.Parse(ConfigManager.GetInstance().GetConfigValue("mandrill", "exposeRecipients"));
+                    _isInitialized = true;
+                }
+                else
+                {
+                    throw new InvalidOperationException("MandrillMailClient is already initialized");
+                }
             }
 
+            internal override void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
+            {
+                try
+                {
+                    EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, type);
+                    var emailMessageRequest = new SendMessageRequest(emailMessage);
+                    _apiOfMandrill.SendMessage(emailMessageRequest);
+                }
+                catch (Exception ex)
+                {
+                    LunggoLogger.Error(ex.Message, ex);
+                    throw;
+                }
+            }
+
+            private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
+            {
+                var emailMessage = new EmailMessage
+                {
+                    PreserveRecipients = !_exposeRecipients,
+                    Subject = mailModel.Subject,
+                    FromEmail = mailModel.FromMail,
+                    FromName = mailModel.FromName,
+                    To = GenerateMessageAddressTo(mailModel),
+                    Html = HtmlTemplateService.GetInstance().GenerateTemplate(objectParam, type)
+                };
+                if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
+                    emailMessage.Attachments = ConvertFileInfoToAttachmentFiles(mailModel.ListFileInfo);
+                return emailMessage;
+            }
+
+            private IEnumerable<EmailAddress> GenerateMessageAddressTo(MailModel mailModel)
+            {
+                var addresses = new List<EmailAddress>();
+                if (mailModel.RecipientList != null)
+                    addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.to));
+                if (mailModel.CcList != null)
+                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.cc));
+                if (mailModel.BccList != null)
+                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.bcc));
+                return addresses;
+
+            }
+
+            private static IEnumerable<EmailAddress> GenerateRecipients(IEnumerable<string> listAddress, RecipientType sendingType)
+            {
+                return listAddress.Select(address => new EmailAddress(address, address, sendingType.ToString()));
+            }
+
+            private static IEnumerable<EmailAttachment> ConvertFileInfoToAttachmentFiles(List<FileInfo> files)
+            {
+                if (files == null || files.Count < 1)
+                {
+                    yield break;
+                }
+                foreach (var file in files)
+                {
+                    var base64OfAttachmentFile = Convert.ToBase64String(file.FileData, 0, file.FileData.Length);
+                    var attachmentToSend = new EmailAttachment
+                    {
+                        Name = file.FileName,
+                        Type = file.ContentType,
+                        Content = base64OfAttachmentFile
+                    };
+                    yield return attachmentToSend;
+                }
+
+            }
         }
 
     }

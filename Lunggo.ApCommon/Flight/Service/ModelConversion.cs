@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -34,8 +38,117 @@ namespace Lunggo.ApCommon.Flight.Service
                 RequireSameCheckIn = itinerary.RequireSameCheckIn,
                 CanHold = itinerary.CanHold,
                 TripType = itinerary.TripType,
-                TotalFare = itinerary.IdrPrice,
+                TotalFare = itinerary.LocalPrice,
                 FlightTrips = MapTrips(itinerary.FlightTrips),
+            };
+        }
+
+        internal FlightTripApi ConvertToTripApi(FlightTripTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightTripApi
+            {
+                OriginAirport = summaryRecord.OriginAirportCd,
+                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
+                DestinationAirport = summaryRecord.DestinationAirportCd,
+                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
+            };
+        }
+
+        internal FlightTripDetails ConvertToTripDetails(FlightTripTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightTripDetails
+            {
+                OriginAirport = summaryRecord.OriginAirportCd,
+                OriginAirportName = dict.GetAirportName(summaryRecord.OriginAirportCd),
+                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
+                DestinationAirport = summaryRecord.DestinationAirportCd,
+                DestinationAirportName = dict.GetAirportName(summaryRecord.DestinationAirportCd),
+                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
+                DepartureDate = summaryRecord.DepartureDate.GetValueOrDefault(),
+            };
+        }
+
+        internal FlightSegmentApi ConvertToSegmentApi(FlightSegmentTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            return new FlightSegmentApi
+            {
+                DepartureAirport = summaryRecord.DepartureAirportCd,
+                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                ArrivalAirport = summaryRecord.ArrivalAirportCd,
+                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                AirlineCode = summaryRecord.AirlineCd,
+                FlightNumber = summaryRecord.FlightNumber
+            };
+        }
+
+        internal FlightSegmentDetails ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
+        {
+            var dict = DictionaryService.GetInstance();
+            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
+            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
+            return new FlightSegmentDetails
+            {
+                DepartureAirport = summaryRecord.DepartureAirportCd,
+                DepartureAirportName = dict.GetAirportName(summaryRecord.DepartureAirportCd),
+                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
+                DepartureTerminal = summaryRecord.DepartureTerminal,
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                ArrivalAirport = summaryRecord.ArrivalAirportCd,
+                ArrivalAirportName = dict.GetAirportName(summaryRecord.ArrivalAirportCd),
+                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
+                ArrivalTerminal = summaryRecord.ArrivalTerminal,
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                AirlineCode = summaryRecord.AirlineCd,
+                AirlineName = dict.GetAirlineName(summaryRecord.AirlineCd),
+                AirlineLogoUrl = airlineLogoPath + summaryRecord.AirlineCd + airlineLogoExtension,
+                OperatingAirlineCode = summaryRecord.OperatingAirlineCd,
+                OperatingAirlineName = dict.GetAirlineName(summaryRecord.OperatingAirlineCd),
+                OperatingAirlineLogoUrl = airlineLogoPath + summaryRecord.OperatingAirlineCd + airlineLogoExtension,
+                AircraftCode = summaryRecord.AircraftCd,
+                FlightNumber = summaryRecord.FlightNumber,
+                Baggage = summaryRecord.Baggage,
+                Duration = summaryRecord.Duration.GetValueOrDefault(),
+                Pnr = summaryRecord.Pnr
+            };
+        }
+
+        internal PassengerInfoFare ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
+        {
+            return new PassengerInfoFare
+            {
+                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
+                FirstName = summaryRecord.FirstName,
+                LastName = summaryRecord.LastName,
+                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
+            };
+        }
+
+        internal PassengerInfoDetails ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
+        {
+            return new PassengerInfoDetails
+            {
+                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
+                FirstName = summaryRecord.FirstName,
+                LastName = summaryRecord.LastName,
+                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
+            };
+        }
+
+        internal PaymentInfo ConvertFlightPaymentInfo(FlightReservationTableRecord record)
+        {
+            return new PaymentInfo
+            {
+                Id = record.PaymentId,
+                Medium = PaymentMediumCd.Mnemonic(record.PaymentMediumCd),
+                Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
+                Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
+                Time = record.PaymentTime,
+                TargetAccount = record.PaymentTargetAccount
             };
         }
 

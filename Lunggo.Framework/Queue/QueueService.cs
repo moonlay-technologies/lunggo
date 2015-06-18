@@ -8,47 +8,39 @@ using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Framework.Queue
 {
-    public class QueueService
+    public partial class QueueService
     {
-        IQueueClient _cloudQueueClient;
-        private static QueueService instance = new QueueService();
-
+        private static readonly QueueService Instance = new QueueService();
+        private bool _isInitialized;
+        private static readonly AzureQueueClient Client = AzureQueueClient.GetClientInstance();
 
         private QueueService()
         {
             
         }
-        public void Init(IQueueClient client)
+        public void Init()
         {
-            _cloudQueueClient = client;
+            if (!_isInitialized)
+            {
+                Client.Init();
+                _isInitialized = true;
+            }
+            else
+            {
+                throw new InvalidOperationException("QueueService is already initialized");
+            }
         }
         public static QueueService GetInstance()
         {
-            return instance;
+            return Instance;
         }
         public CloudQueue GetQueueByReference(string reference)
         {
-            try
-            {
-                return _cloudQueueClient.GetQueueByReference(reference);
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
+            return Client.GetQueueByReference(reference);
         }
         public bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
         {
-            try
-            {
-                return _cloudQueueClient.CreateIfNotExistsQueueAndAddMessage(reference, message);
-            }
-            catch (Exception ex)
-            {
-                LunggoLogger.Error(ex.Message, ex);
-                throw;
-            }
+            return Client.CreateIfNotExistsQueueAndAddMessage(reference, message);
         }
     }
 }

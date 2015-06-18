@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Flight.Query.Logic;
 using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
@@ -25,7 +27,16 @@ namespace Lunggo.ApCommon.Flight.Service
                 ContactData = input.ContactData,
                 PassengerInfoFares = input.PassengerInfoFares
             };
-            var response = BookFlightInternal(bookInfo);
+            //var response = BookFlightInternal(bookInfo);
+            var response = new BookFlightResult
+            {
+                IsSuccess = true,
+                Status = new BookingStatusInfo
+                {
+                    BookingId = "MYSTPUB" + FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture),
+                    BookingStatus = BookingStatus.Booked
+                }
+            };
             output.BookResult = new BookResult();
             if (response.IsSuccess)
             {
@@ -46,15 +57,11 @@ namespace Lunggo.ApCommon.Flight.Service
                         }
                     },
                     ContactData = input.ContactData,
-                    PaymentData = input.PaymentData,
                     Passengers = input.PassengerInfoFares
                 };
                 string rsvNo;
                 InsertFlightDb.Booking(bookingRecord, out rsvNo);
-                output.ReservationDetails = new ReservationDetails
-                {
-                    RsvNo = rsvNo
-                };
+                output.RsvNo = rsvNo;
             }
             else
             {

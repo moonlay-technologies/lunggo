@@ -66,18 +66,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             var apiResponse = new FlightSearchApiResponse
             {
                 OriginalRequest = request,
+                SearchId = searchServiceResponse.SearchId,
+                FlightList = FlightService.GetInstance().ConvertToItinerariesApi(searchServiceResponse.Itineraries),
+                TotalFlightCount = searchServiceResponse.Itineraries.Count
             };
-            if (searchServiceResponse.Itineraries == null)
-            {
-                apiResponse.FlightList = null;
-                apiResponse.TotalFlightCount = 0;
-            }
-            else
-            {
-                apiResponse.SearchId = searchServiceResponse.SearchId;
-                apiResponse.FlightList = FlightService.GetInstance().ConvertToItinerariesApi(searchServiceResponse.Itineraries);
-                apiResponse.TotalFlightCount = searchServiceResponse.Itineraries.Count;
-            }
             return apiResponse;
         }
 
