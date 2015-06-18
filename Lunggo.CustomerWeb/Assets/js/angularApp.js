@@ -216,8 +216,54 @@
 
             $scope.noFlight = false;
 
+            // flight sorting
+            $scope.sort = {
+                label: '',
+                value: ''
+            }
+            $scope.reverse = true;
+            $scope.order = function(sort) {
+                $scope.reverse = ($scope.sort.label === sort) ? !$scope.reverse : false;
+                $scope.sort.label = sort;
+                switch(sort)
+                {
+                    case 'airline':
+                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
+                        break;
+                    case 'departure':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        break;
+                    case 'duration':
+                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
+                        break;
+                    case 'arrival':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        break;
+                    case 'price':
+                        $scope.sort.value = 'TotalFare';
+                        break;
+                    // return flight
+                    case 'departAirline':
+                        break;
+                    case 'departDeparture':
+                        break;
+                    case 'departDuration':
+                        break;
+                    case 'departArrival':
+                        break;
+                    case 'returnAirline':
+                        break;
+                    case 'returnDeparture':
+                        break;
+                    case 'returnDuration':
+                        break;
+                    case 'returnArrival':
+                        break;
+                }
+            }
+
             // generate flight filter
-            $scope.FlightSearchParams = {};
+            $scope.FlightSearchParams = FlightSearchConfig.params;
             $scope.loaded = false;
             $scope.validating = false;
             $scope.FlightSearchFilter = {};
@@ -327,7 +373,6 @@
 
                     flightList.list = data.FlightList;
                     $scope.FlightSearchParams.SearchId = data.SearchId;
-
                     if (flightList.list.length == 0) {
                         $scope.noFlight = true;
                     }
