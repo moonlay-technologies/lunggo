@@ -556,6 +556,7 @@
                                         <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
                                             <div class="flight-airline">
                                                 <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                                <h5>{{trip.AirlineName}}</h5>
                                                 <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
                                             </div><!-- .flight-airline-->
                                             <div class="flight-route">
@@ -593,6 +594,7 @@
                                             <li class="route" ng-repeat="trip in flight.FlightTrips[1].FlightSegments">
                                                 <div class="flight-airline">
                                                     <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                                    <h5>{{trip.AirlineName}}</h5>
                                                     <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
                                                 </div><!-- .flight-airline-->
                                                 <div class="flight-route">
