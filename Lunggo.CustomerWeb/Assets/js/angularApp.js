@@ -216,6 +216,7 @@
 
             $scope.noFlight = false;
 
+            // ********************
             // flight sorting
             $scope.sort = {
                 label: '',
@@ -302,10 +303,36 @@
                 }
             };
 
+            // ********************
             // filtering
             $scope.priceFilter = function (flight) {
                 if (flight.TotalFare >= $scope.FlightSearchFilter.PriceFilter.currentMin && flight.TotalFare <= $scope.FlightSearchFilter.PriceFilter.currentMax) {
                     return flight;
+                }
+            }
+            
+            $scope.getHour = function (datetime) {
+                datetime = datetime.substr(11,2);
+                return parseInt(datetime);
+            }
+
+            $scope.timeFilter = function (flight) {
+                if ($scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) >= $scope.FlightSearchFilter.OnwardDepart.CurrentMin
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) <= $scope.FlightSearchFilter.OnwardDepart.CurrentMax
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.OnwardArrival.CurrentMin
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.OnwardArrival.CurrentMax) {
+                    if (FlightSearchConfig.params.TripType == 'Return') {
+
+                        if ($scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) >= $scope.FlightSearchFilter.ReturnDepart.CurrentMin
+                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) <= $scope.FlightSearchFilter.ReturnDepart.CurrentMax
+                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.ReturnArrival.CurrentMin
+                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.ReturnArrival.CurrentMax) {
+                            return flight;
+                        }
+
+                    } else {
+                        return flight;
+                    }
                 }
             }
 
@@ -348,6 +375,7 @@
                 }
             }
 
+            // ********************
             // add class on click
             $scope.selectedItem = -1;
             $scope.clickedItem = function ($index) {
@@ -364,6 +392,7 @@
                 return new Date(dateTime);
             }
 
+            // ********************
             // get  flight list
             $scope.getFlightList = function () {
 
@@ -453,6 +482,78 @@
                         }
                     });
 
+                    // generate onward flight time slider
+                    $('.onward-depart-slider').slider({
+                        range: true,
+                        min: 0, max: 24, step: 1, values: [0,24],
+                        create: function(event, ui) {
+                            $('.onward-depart-slider-min').val(0);
+                            $('.onward-depart-slider-min').trigger('input');
+                            $('.onward-depart-slider-max').val(24);
+                            $('.onward-depart-slider-max').trigger('input');
+                        },
+                        slide: function(event, ui) {
+                            $('.onward-depart-slider-min').val(ui.values[0]);
+                            $('.onward-depart-slider-min').trigger('input');
+                            $('.onward-depart-slider-max').val(ui.values[1]);
+                            $('.onward-depart-slider-max').trigger('input');
+                        }
+                    });
+                    $('.onward-arrival-slider').slider({
+                        range: true,
+                        min: 0, max: 24, step: 1, values: [0, 24],
+                        create: function (event, ui) {
+                            $('.onward-arrival-slider-min').val(0);
+                            $('.onward-arrival-slider-min').trigger('input');
+                            $('.onward-arrival-slider-max').val(24);
+                            $('.onward-arrival-slider-max').trigger('input');
+                        },
+                        slide: function (event, ui) {
+                            $('.onward-arrival-slider-min').val(ui.values[0]);
+                            $('.onward-arrival-slider-min').trigger('input');
+                            $('.onward-arrival-slider-max').val(ui.values[1]);
+                            $('.onward-arrival-slider-max').trigger('input');
+                        }
+                    });
+                    $('.return-depart-slider').slider({
+                        range: true,
+                        min: 0, max: 24, step: 1, values: [0, 24],
+                        create: function (event, ui) {
+                            $('.return-depart-slider-min').val(0);
+                            $('.return-depart-slider-min').trigger('input');
+                            $('.return-depart-slider-max').val(24);
+                            $('.return-depart-slider-max').trigger('input');
+                        },
+                        slide: function (event, ui) {
+                            $('.return-depart-slider-min').val(ui.values[0]);
+                            $('.return-depart-slider-min').trigger('input');
+                            $('.return-depart-slider-max').val(ui.values[1]);
+                            $('.return-depart-slider-max').trigger('input');
+                        }
+                    });
+                    $('.return-arrival-slider').slider({
+                        range: true,
+                        min: 0, max: 24, step: 1, values: [0, 24],
+                        create: function (event, ui) {
+                            $('.return-arrival-slider-min').val(0);
+                            $('.return-arrival-slider-min').trigger('input');
+                            $('.return-arrival-slider-max').val(24);
+                            $('.return-arrival-slider-max').trigger('input');
+                        },
+                        slide: function (event, ui) {
+                            $('.return-arrival-slider-min').val(ui.values[0]);
+                            $('.return-arrival-slider-min').trigger('input');
+                            $('.return-arrival-slider-max').val(ui.values[1]);
+                            $('.return-arrival-slider-max').trigger('input');
+                        }
+                    });
+
+
+                    // generate return flight time slider
+                    if (FlightSearchConfig.params.TripType != 'OneWay') {
+                        console.log('return flight');
+                    }
+
                 }).error(function () {
 
                     $scope.noFlight = true;
@@ -464,6 +565,7 @@
 
             }
 
+            // ********************
             // revalidate flight itinerary
             $scope.revalidate = function (indexNo) {
                 var searchId = $scope.FlightSearchParams.SearchId;
@@ -505,7 +607,7 @@
                         }
 
                     }).error(function (data) {
-                        console.log(data)
+                        console.log(data);
                     });
                 } else {
                     console.log('Sistem busy, please wait');
@@ -513,6 +615,7 @@
 
             }
 
+            // ********************
             // get flight rules
             $scope.getRules = function (sequenceNo) {
                 var searchId = $scope.FlightSearchParams.SearchId;

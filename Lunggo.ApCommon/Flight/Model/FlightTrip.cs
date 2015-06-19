@@ -58,5 +58,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public string Airport { get; set; }
         public DateTime ArrivalTime { get; set; }
         public DateTime DepartureTime { get; set; }
+        public TimeSpan Duration { get; set; }
     }
 }

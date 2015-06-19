@@ -103,6 +103,9 @@
                     <div class="filter-trigger">
                         <img src="http://placehold.it/50" alt="Alternate Text" />
                     </div><!-- .filter-trigger -->
+                    <div class="filter-trigger">
+                        <img src="http://placehold.it/50" alt="Alternate Text" />
+                    </div><!-- .filter-trigger -->
                 </div><!-- .filter-trigger-wrapper -->
             
                 <div class="filter-close">
@@ -127,7 +130,7 @@
                                 <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> more than 1 stop
                             </label>
                         </div>
-                    </div><!-- .filter-filter -->
+                    </div><!-- .stop-filter -->
                     <div class="flight-filter price-filter">
                         <h5>Price</h5>
                         <div class="filter-content">
@@ -146,7 +149,7 @@
                             <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
 
                         </div>
-                    </div><!-- .filter-filter -->
+                    </div><!-- .price-filter -->
                     <div class="flight-filter airline-filter">
                         <h5>Airline</h5>
                         <div class="filter-content">
@@ -156,7 +159,51 @@
                                 <span>{{airline.Name}}</span>
                             </label>
                         </div>
-                    </div><!-- .filter-filter -->
+                    </div><!-- .airline-filter -->
+                    <div class="flight-filter onward-time">
+                        <h5>Onward Flight</h5>
+                        <div class="filter-content">
+                            <small>Take-off from ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
+                            <div class="onward-depart-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.OnwardDepart.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
+                            <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
+                            <hr/>
+                            <small>Landing at ({{FlightSearchParams.TripInfos[0].DestinationAirport}})</small>
+                            <div class="onward-arrival-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.OnwardArrival.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="onward-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMin" />
+                            <input class="onward-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMax" />
+                        </div>
+                    </div><!-- .onward-time -->
+                    <div class="flight-filter return-time" ng-if="'@tripType' == 'return'">
+                        <h5>Return Flight</h5>
+                        <div class="filter-content">
+                            <small>Take-off from ({{FlightSearchParams.TripInfos[1].OriginAirport}})</small>
+                            <div class="return-depart-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.ReturnDepart.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.ReturnDepart.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="return-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMin" />
+                            <input class="return-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMax" />
+                            <hr />
+                            <small>Landing at ({{FlightSearchParams.TripInfos[1].DestinationAirport}})</small>
+                            <div class="return-arrival-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.ReturnArrival.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.ReturnArrival.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="return-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMin" />
+                            <input class="return-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMax" />
+                        </div>
+                    </div><!-- .return-time -->
                 </div><!-- .flight-filter-content -->
 
             </div><!-- .page-aside -->
@@ -420,7 +467,7 @@
                         </div><!-- .flight-sort.return-flight -->
 
                         <!-- Loop start here -->
-                        <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules , 'hidden' : flight.hidden == true }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter | orderBy:sort.value:reverse">
+                        <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules , 'hidden' : flight.hidden == true }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter | filter:timeFilter |orderBy:sort.value:reverse">
 
                             <div class="flight-main">
                                 <!-- start here if Single Flight Type -->

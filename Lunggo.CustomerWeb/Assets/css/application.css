@@ -1145,6 +1145,8 @@ hr {
         display: block; }
     .flight-search-page .flight-result.page-container.active .page-wrapper {
       width: 805px; }
+    .flight-search-page .flight-result.page-container.active .flight-sort {
+      font-size: 12px; }
   .flight-search-page .page-header .site-nav {
     display: inline; }
     .flight-search-page .page-header .site-nav a {
@@ -1239,8 +1241,6 @@ hr {
       content: '\25b2'; }
     .flight-search-page .flight-sort .sortorder.reverse:after {
       content: '\25bc'; }
-    .flight-search-page .flight-sort .sort-airline {
-      background: red; }
     .flight-search-page .flight-sort .sort-depart-airline {
       width: 13%;
       padding-left: 10px; }

@@ -479,6 +479,7 @@ hr {border-color:#aaa;}
                 .flight-filter-wrapper {display:block;}
             }
             .page-wrapper {width:805px;}
+            .flight-sort {font-size:12px;}
         }
     }
 
@@ -556,9 +557,7 @@ hr {border-color:#aaa;}
         .sort-price {width:25%; padding-left:10px;}
         .sortorder:after {content: '\25b2';}
         .sortorder.reverse:after {content: '\25bc';}
-
-        .sort-airline {background:red;}        
-
+        // if return flight
         .sort-depart-airline {width:13%; padding-left:10px;}
         .sort-depart-departure {width:9%; text-align:center;}
         .sort-depart-duration {width:8%; text-align:center;}
