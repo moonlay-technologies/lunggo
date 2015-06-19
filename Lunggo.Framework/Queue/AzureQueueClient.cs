@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
+using RestSharp.Extensions;
 
 namespace Lunggo.Framework.Queue
 {
@@ -32,30 +35,33 @@ namespace Lunggo.Framework.Queue
             {
                 if (!_isInitialized)
                 {
-                    var connString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+                    var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
                     var cloudStorageAccount = CloudStorageAccount.Parse(connString);
                     _cloudQueueClient = cloudStorageAccount.CreateCloudQueueClient();
+                    foreach (var reference in Enum.GetValues(typeof(Queue)).Cast<Queue>())
+                        CreateIfNotExists(reference);
                     _isInitialized = true;
-                }
-                else
-                {
-                    throw new InvalidOperationException("AzureQueueClient is already initialized");
                 }
             }
 
 
-            internal override CloudQueue GetQueueByReference(string reference)
+            internal override CloudQueue GetQueueByReference(Queue reference)
             {
-                var queue = _cloudQueueClient.GetQueueReference(reference);
+                var referenceName = GetQueueReferenceName(reference);
+                var queue = _cloudQueueClient.GetQueueReference(referenceName);
                 return queue;
             }
 
-            internal override bool CreateIfNotExistsQueueAndAddMessage(string reference, CloudQueueMessage message)
+            internal override bool CreateIfNotExists(Queue reference)
             {
                 var queue = GetQueueByReference(reference);
                 queue.CreateIfNotExists();
-                queue.AddMessage(message);
                 return true;
+            }
+
+            protected override string GetQueueReferenceName(Queue reference)
+            {
+                return reference.ToString().ToLower();
             }
         }
     }

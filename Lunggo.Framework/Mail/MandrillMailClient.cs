@@ -19,13 +19,13 @@ namespace Lunggo.Framework.Mail
             private static readonly MandrillMailClient ClientInstance = new MandrillMailClient();
             private bool _isInitialized;
             private MandrillApi _apiOfMandrill;
-            private bool _exposeRecipients;
+            private const bool ExposeRecipients = false;
 
             private enum RecipientType
             {
-                to,
-                cc,
-                bcc
+                To,
+                Cc,
+                Bcc
             }
 
             private MandrillMailClient()
@@ -42,18 +42,9 @@ namespace Lunggo.Framework.Mail
             {
                 if (!_isInitialized)
                 {
-                    try
-                    {
-                        var templateService = HtmlTemplateService.GetInstance();
-                        templateService.Init();
-                    }
-                    catch
-                    {
-                        
-                    }
+                    HtmlTemplateService.GetInstance().Init();
                     var mandrillApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
                     _apiOfMandrill = new MandrillApi(mandrillApiKey);
-                    _exposeRecipients = bool.Parse(ConfigManager.GetInstance().GetConfigValue("mandrill", "exposeRecipients"));
                     _isInitialized = true;
                 }
                 else
@@ -66,7 +57,7 @@ namespace Lunggo.Framework.Mail
             {
                 try
                 {
-                    EmailMessage emailMessage = GenerateMessage(objectParam, mailModel, type);
+                    var emailMessage = GenerateMessage(objectParam, mailModel, type);
                     var emailMessageRequest = new SendMessageRequest(emailMessage);
                     _apiOfMandrill.SendMessage(emailMessageRequest);
                 }
@@ -81,7 +72,7 @@ namespace Lunggo.Framework.Mail
             {
                 var emailMessage = new EmailMessage
                 {
-                    PreserveRecipients = !_exposeRecipients,
+                    PreserveRecipients = !ExposeRecipients,
                     Subject = mailModel.Subject,
                     FromEmail = mailModel.FromMail,
                     FromName = mailModel.FromName,
@@ -97,18 +88,18 @@ namespace Lunggo.Framework.Mail
             {
                 var addresses = new List<EmailAddress>();
                 if (mailModel.RecipientList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.to));
+                    addresses.AddRange(GenerateRecipients(mailModel.RecipientList, RecipientType.To));
                 if (mailModel.CcList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.cc));
+                    addresses.AddRange(GenerateRecipients(mailModel.CcList, RecipientType.Cc));
                 if (mailModel.BccList != null)
-                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.bcc));
+                    addresses.AddRange(GenerateRecipients(mailModel.BccList, RecipientType.Bcc));
                 return addresses;
 
             }
 
             private static IEnumerable<EmailAddress> GenerateRecipients(IEnumerable<string> listAddress, RecipientType sendingType)
             {
-                return listAddress.Select(address => new EmailAddress(address, address, sendingType.ToString()));
+                return listAddress.Select(address => new EmailAddress(address, address, sendingType.ToString().ToLower()));
             }
 
             private static IEnumerable<EmailAttachment> ConvertFileInfoToAttachmentFiles(List<FileInfo> files)

@@ -4,6 +4,8 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.TableStorage;
 using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 
 namespace Lunggo.Framework.HtmlTemplate
 {
@@ -11,8 +13,9 @@ namespace Lunggo.Framework.HtmlTemplate
     {
         private static readonly RazorHtmlTemplateClient ClientInstance = new RazorHtmlTemplateClient();
         private bool _isInitialized;
-        private string _mailTable;
-        private string _rowKey;
+
+        private const string MailTable = @"htmlTemplate";
+        private const string RowKey = @"default";
 
         private RazorHtmlTemplateClient()
         {
@@ -28,37 +31,30 @@ namespace Lunggo.Framework.HtmlTemplate
         {
             if (!_isInitialized)
             {
-                try
-                {
-                    var tableStorageService = TableStorageService.GetInstance();
-                    tableStorageService.Init();
-                }
-                catch
-                {
-                    
-                }
-                _mailTable = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailTableName");
-                _rowKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailRowName");
+                TableStorageService.GetInstance().Init();
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("RazorTemplateClient is already initialized");
             }
         }
 
         internal override string GenerateTemplate<T>(T objectParam , HtmlTemplateType type)
         {
             var template = GetTemplateByPartitionKey(type.ToString());
-            var result = Razor.Parse(template, objectParam, type.ToString());
+            var razorConfig = new TemplateServiceConfiguration
+            {
+                DisableTempFileLocking = true,
+                CachingProvider = new DefaultCachingProvider(t => { })
+            };
+            var razorService = RazorEngineService.Create(razorConfig);
+            razorService.AddTemplate(type.ToString(), template);
+            var result = razorService.RunCompile(type.ToString(), model: objectParam);
             return result;
         }
 
         private string GetTemplateByPartitionKey(string partitionKey)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference(this._mailTable);
+            var table = TableStorageService.GetInstance().GetTableByReference(MailTable);
             var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                         where tabel.PartitionKey == partitionKey && tabel.RowKey == _rowKey
+                         where tabel.PartitionKey == partitionKey && tabel.RowKey == RowKey
                          select tabel).FirstOrDefault();
             var mailTemplate = (query != null) ? query.Template : null;
 

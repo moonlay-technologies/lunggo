@@ -65,13 +65,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ContactEmail");
 		    }
 		}
-		public String ContactCountryCode
+		public String ContactCountryCd
 		{
-		    get { return _ContactCountryCode; }
+		    get { return _ContactCountryCd; }
 		    set
 		    {
-		        _ContactCountryCode = value;
-		        IncrementLog("ContactCountryCode");
+		        _ContactCountryCd = value;
+		        IncrementLog("ContactCountryCd");
 		    }
 		}
 		public String ContactPhone
@@ -325,7 +325,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
-		private String _ContactCountryCode;
+		private String _ContactCountryCd;
 		private String _ContactPhone;
 		private String _ContactAddress;
 		private int? _AdultCount;
@@ -390,7 +390,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
-				new ColumnMetadata("ContactCountryCode", false),
+				new ColumnMetadata("ContactCountryCd", false),
 				new ColumnMetadata("ContactPhone", false),
 				new ColumnMetadata("ContactAddress", false),
 				new ColumnMetadata("AdultCount", false),

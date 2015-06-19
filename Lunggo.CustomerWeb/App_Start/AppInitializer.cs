@@ -71,7 +71,7 @@ namespace Lunggo.CustomerWeb
         {
             var generator = UniqueIdGenerator.GetInstance();
             var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)

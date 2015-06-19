@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 using log4net;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Core.CustomTraceListener;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.TableStorage;
 using Microsoft.Azure.WebJobs;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.WebJob.EticketQueueHandler
@@ -19,12 +26,11 @@ namespace Lunggo.WebJob.EticketQueueHandler
         static void Main()
         {
             Init();
-
-            Functions.ProcessQueueMessage("aaa");
-
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;
+            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
 
             JobHost host = new JobHost(configuration);
             host.RunAndBlock();
@@ -33,17 +39,38 @@ namespace Lunggo.WebJob.EticketQueueHandler
         public static void Init()
         {
             InitConfigurationManager();
+            InitFlightService();
+            InitDatabaseService();
+            InitDictionaryService();
             InitQueueService();
             InitHtmlTemplateService();
             InitMailService();
-            
+            InitBlobStorageService();
             //InitTraceListener();
         }
 
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            configManager.Init("Config/");
+            configManager.Init(@"Config\");
+        }
+
+        private static void InitFlightService()
+        {
+            var flight = FlightService.GetInstance();
+            flight.Init();
+        }
+
+        private static void InitDatabaseService()
+        {
+            var db = DbService.GetInstance();
+            db.Init();
+        }
+
+        private static void InitDictionaryService()
+        {
+            var dict = DictionaryService.GetInstance();
+            dict.Init();
         }
 
         private static void InitQueueService()
@@ -62,6 +89,12 @@ namespace Lunggo.WebJob.EticketQueueHandler
         {
             var htmlTemplateService = HtmlTemplateService.GetInstance();
             htmlTemplateService.Init();
+        }
+
+        public static void InitBlobStorageService()
+        {
+            var blobStorageService = BlobStorageService.GetInstance();
+            blobStorageService.Init();
         }
 
         private static void InitTraceListener()

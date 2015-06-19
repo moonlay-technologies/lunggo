@@ -8,6 +8,7 @@ namespace Lunggo.Framework.HtmlTemplate
 {
     public enum HtmlTemplateType
     {
-        FlightEticket
+        FlightEticket,
+        FlightEticketEmail
     }
 }

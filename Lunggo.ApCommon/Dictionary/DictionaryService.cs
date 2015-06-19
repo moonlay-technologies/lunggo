@@ -18,19 +18,25 @@ namespace Lunggo.ApCommon.Dictionary
     {
         private static readonly DictionaryService Instance = new DictionaryService();
         private bool _isInitialized;
+        private string _rootUrl;
+        private string _airlineLogoPath;
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
         public Dictionary<long, HotelLocationDict> HotelLocationDict;
         public Dictionary<string, FlightItineraryFare> ItineraryDict;
         public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
-        private static readonly string RootPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-        private readonly static string AirlineFileName = ConfigManager.GetInstance().GetConfigValue("general", "airlineFileName");
-        private readonly static string AirlineFilePath = Path.Combine(RootPath, AirlineFileName);
-        private readonly static string AirportFileName = ConfigManager.GetInstance().GetConfigValue("general", "airportFileName");
-        private readonly static string AirportFilePath = Path.Combine(RootPath, AirportFileName);
-        private readonly static string HotelLocationFileName = ConfigManager.GetInstance().GetConfigValue("general", "hotelLocationFileName");
-        private readonly static string HotelLocationFilePath = Path.Combine(RootPath, HotelLocationFileName);
+        private const string AirlineFileName = @"Airline.csv";
+        private const string AirportFileName = @"Airport.csv";
+        private const string HotelLocationFileName = @"HotelLocation.csv";
+        private const string AirlineLogoFileExtension = @".png";
+
+        private const string AirlineLogoSubPath = @"/Assets/Images/Airlines/";
+        private static string _configPath;
+        private static string _airlineFilePath;
+        private static string _airportFilePath;
+        private static string _hotelLocationFilePath;
+        
 
         private DictionaryService()
         {
@@ -46,16 +52,20 @@ namespace Lunggo.ApCommon.Dictionary
         {
             if (!_isInitialized)
             {
-                AirlineDict = PopulateAirlineDict(AirlineFilePath);
-                AirportDict = PopulateAirportDict(AirportFilePath);
-                HotelLocationDict = PopulateHotelLocationDict(HotelLocationFilePath);
+                _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                _configPath = HttpContext.Current != null
+                    ? HttpContext.Current.Server.MapPath(@"~/Config/")
+                    : @"Config\";
+                _airlineFilePath = Path.Combine(_configPath, AirlineFileName);
+                _airportFilePath = Path.Combine(_configPath, AirportFileName);
+                _hotelLocationFilePath = Path.Combine(_configPath, HotelLocationFileName);
+                AirlineDict = PopulateAirlineDict(_airlineFilePath);
+                AirportDict = PopulateAirportDict(_airportFilePath);
+                HotelLocationDict = PopulateHotelLocationDict(_hotelLocationFilePath);
+                _airlineLogoPath = _rootUrl + AirlineLogoSubPath;
                 ItineraryDict = new Dictionary<string, FlightItineraryFare>();
                 DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("DictionaryService is already initialized");
             }
         }
 
@@ -77,6 +87,11 @@ namespace Lunggo.ApCommon.Dictionary
             var valueList = AirlineDict.Select(dict => dict.Value);
             var searchedValue = valueList.Single(value => value.Code == code);
             return searchedValue.Name;
+        }
+
+        public string GetAirlineLogoUrl(string code)
+        {
+            return _airlineLogoPath + code + AirlineLogoFileExtension;
         }
 
         public bool IsAirportCodeExists(string code)

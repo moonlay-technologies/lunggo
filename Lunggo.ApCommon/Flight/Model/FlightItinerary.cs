@@ -57,8 +57,6 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightItineraryDetails : FlightItineraryBase
     {
         public List<FlightTripDetails> FlightTrips { get; set; }
-        public List<PassengerInfoDetails> PassengerInfo { get; set; }
-        public TripType TripType { get; set; }
     }
 
 

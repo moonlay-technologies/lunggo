@@ -9,9 +9,10 @@ using System.Web;
 using System.Web.ModelBinding;
 using Lunggo.Flight.Crawler;
 using Lunggo.Flight.Model;
-using Lunggo.Framework.Blob;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
@@ -292,7 +293,7 @@ namespace Lunggo.Driver
         public void testAddQueue()
         {
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("apibookingfailed");
+            var _queue = queueService.GetQueueByReference(QueueService.Queue.Eticket); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
 
             for (int i = 0; i < 10; i++)
@@ -335,13 +336,13 @@ namespace Lunggo.Driver
             testEmail.FromMail = "bayualvian@hotmail.com";
             testEmail.RecipientList = new string[] { "Bayualvian@hotmail.com" };
             testEmail.Subject = "testing";
-            testEmail.MailTemplate = MailTemplateEnum.TestHtmlWithAttachment;
+            testEmail.MailTemplate = HtmlTemplateType.FlightEticket; // TODO Flight placeholder, change it
             testEmail.MailObjectDetail = TestClass;
             testEmail.ListFileInfo = files;
 
             CloudQueueMessage TestCloudQueue = testEmail.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("emailqueue");
+            var _queue = queueService.GetQueueByReference(QueueService.Queue.EticketEmail); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
         }
@@ -368,7 +369,7 @@ namespace Lunggo.Driver
 
             CloudQueueMessage TestCloudQueue = TestQueue.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference("ticketqueue");
+            var _queue = queueService.GetQueueByReference(QueueService.Queue.Eticket); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
             //CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);

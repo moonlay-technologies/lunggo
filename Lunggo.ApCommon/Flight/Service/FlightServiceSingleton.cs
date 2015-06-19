@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Currency.Constant;
+using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
@@ -14,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         private static readonly FlightService Instance = new FlightService();
-        private static MystiflyWrapper _mystiflyWrapper;
+        private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
@@ -31,30 +33,26 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (!_isInitialized)
             {
-                _mystiflyWrapper = MystiflyWrapper.GetInstance();
-                _mystiflyWrapper.Init();
+                MystiflyWrapper.Init();
+                CurrencyService.GetInstance().Init();
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("FlightService is already initialized");
             }
         }
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             //_sriwijayaWrapper.SearchFlight(conditions);
-            return _mystiflyWrapper.SearchFlight(conditions);
+            return MystiflyWrapper.SearchFlight(conditions);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
         {
-            return _mystiflyWrapper.SpecificSearchFlight(conditions);
+            return MystiflyWrapper.SpecificSearchFlight(conditions);
         }
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            return _mystiflyWrapper.RevalidateFare(conditions);
+            return MystiflyWrapper.RevalidateFare(conditions);
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
@@ -63,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
-                    return _mystiflyWrapper.BookFlight(bookInfo);
+                    return MystiflyWrapper.BookFlight(bookInfo);
                 default:
                     return null;
             }
@@ -76,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Service
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
-                    return _mystiflyWrapper.OrderTicket(bookingId);
+                    return MystiflyWrapper.OrderTicket(bookingId);
                 default:
                     return null;
             }
@@ -84,22 +82,22 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
-            return _mystiflyWrapper.GetTripDetails(conditions);
+            return MystiflyWrapper.GetTripDetails(conditions);
         }
 
         private List<BookingStatusInfo> GetBookingStatusInternal()
         {
-            return _mystiflyWrapper.GetBookingStatus();
+            return MystiflyWrapper.GetBookingStatus();
         }
 
         private CancelBookingResult CancelBookingInternal(string bookingId)
         {
-            return _mystiflyWrapper.CancelBooking(bookingId);
+            return MystiflyWrapper.CancelBooking(bookingId);
         }
 
         private GetRulesResult GetRulesInternal(string fareId)
         {
-            return _mystiflyWrapper.GetRules(fareId);
+            return MystiflyWrapper.GetRules(fareId);
         }
     }
 }

@@ -8,8 +8,10 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Webjob.MystiflyQueueHandler
 {
@@ -20,28 +22,37 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             Init();
 
             var flightService = FlightService.GetInstance();
-            List<string> ticketedBookingIds;
-            List<string> scheduleChangedBookingIds;
-            flightService.GetAndUpdateBookingStatus(out ticketedBookingIds, out scheduleChangedBookingIds);
-            ProcessTicketed(ticketedBookingIds);
+            List<string> ticketedRsvNos;
+            List<string> scheduleChangedRsvNos;
+            Console.WriteLine("Retrieving Queue from Mystifly...");
+            flightService.GetAndUpdateBookingStatus(out ticketedRsvNos, out scheduleChangedRsvNos);
+            Console.WriteLine("Done Retrieving Queue from Mystifly...");
+            if (ticketedRsvNos.Any())
+                ProcessTicketed(ticketedRsvNos);
+            else
+                Console.WriteLine("No Ticketed Queue");
         }
 
-        private static void ProcessTicketed(IEnumerable<string> ticketedBookingIds)
+        private static void ProcessTicketed(IEnumerable<string> ticketedRsvNos)
         {
-            // TODO flight push eticket queue
             var flightService = FlightService.GetInstance();
-            foreach (var ticketedBookingId in ticketedBookingIds)
+            foreach (var ticketedRsvNo in ticketedRsvNos)
             {
-                var detailsInput = new GetDetailsInput {BookingId = ticketedBookingId};
+                Console.WriteLine("Processing Flight Reservation " + ticketedRsvNo + "...");
+                var detailsInput = new GetDetailsInput {BookingId = ticketedRsvNo};
                 flightService.GetAndUpdateNewDetails(detailsInput);
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference(QueueService.Queue.Eticket);
+                queue.AddMessage(new CloudQueueMessage(ticketedRsvNo));
             }
-            throw new NotImplementedException();
         }
 
         private static void Init()
         {
             InitConfigurationManager();
+            InitDatabaseService();
             InitFlightService();
+            InitQueueService();
         }
 
         private static void InitConfigurationManager()
@@ -50,10 +61,22 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             configManager.Init(@"Config\");
         }
 
+        private static void InitDatabaseService()
+        {
+            var db = DbService.GetInstance();
+            db.Init();
+        }
+
         private static void InitFlightService()
         {
             var flight = FlightService.GetInstance();
             flight.Init();
+        }
+
+        private static void InitQueueService()
+        {
+            var queue = QueueService.GetInstance();
+            queue.Init();
         }
     }
 }

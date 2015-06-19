@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
   "webJobName": "MystiflyQueueHandler",
-  "startTime": "2015-05-15T00:00:00+07:00",
+  "startTime": "2015-06-17T11:00:00+07:00",
   "endTime": null,
   "jobRecurrenceFrequency": "Minute",
   "interval": 30,

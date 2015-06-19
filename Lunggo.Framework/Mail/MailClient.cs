@@ -8,7 +8,7 @@ using Lunggo.Framework.HtmlTemplate;
 namespace Lunggo.Framework.Mail
 {
     internal abstract class MailClient
-    {        
+    {
         internal abstract void Init();
         internal abstract void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type);
     }

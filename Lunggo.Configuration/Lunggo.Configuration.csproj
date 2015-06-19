@@ -63,9 +63,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,7 +87,7 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
-    <None Include="Config\BackendWeb\azurestorage.properties">
+    <None Include="Config\BackendWeb\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\db.properties" />
@@ -109,23 +108,32 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
-    <None Include="Config\CustomerWeb\azurequeue.properties">
+    <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebAPI\azurequeue.properties">
+    <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\azurequeue.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EmailQueueHandler\azurequeue.properties">
+    <None Include="Config\WebJob.EticketQueueHandler\Airline.csv" />
+    <None Include="Config\WebJob.EticketQueueHandler\Airport.csv" />
+    <None Include="Config\WebJob.EticketQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EticketQueueHandler\db.properties" />
-    <None Include="Config\WebJob.MystiflyQueueHandler\azurequeue.properties">
+    <None Include="Config\WebJob.EticketQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.MystiflyQueueHandler\azurestorage.properties">
+    <None Include="Config\WebJob.EticketQueueHandler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EticketQueueHandler\HotelLocation.csv" />
+    <None Include="Config\WebJob.EticketQueueHandler\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EticketQueueHandler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\db.properties" />
@@ -177,7 +185,7 @@
     <None Include="Config\WebAPI\hotel.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebAPI\azurestorage.properties">
+    <None Include="Config\WebAPI\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebAPI\db.properties" />
@@ -202,11 +210,8 @@
     <None Include="Config\Driver\azurestorage.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Driver\blob.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\Driver\db.properties" />
-    <None Include="Config\CustomerWeb\azurestorage.properties">
+    <None Include="Config\CustomerWeb\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Driver\freshdesk.properties" />
@@ -218,11 +223,11 @@
     <None Include="Config\WebJob.EmailQueueHandler\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.TicketQueueHandler\azurestorage.properties">
+    <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
-    <None Include="Config\WebJob.EmailQueueHandler\azurestorage.properties">
+    <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
@@ -243,10 +248,11 @@
     <Content Include="Config\Common\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="HtmlTemplate\FlightEticketEmail" />
     <Content Include="Template\JsConfig.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="HtmlTemplate\FlightEticket.html" />
+    <None Include="HtmlTemplate\FlightEticket" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

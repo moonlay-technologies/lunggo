@@ -27,16 +27,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 ContactData = input.ContactData,
                 PassengerInfoFares = input.PassengerInfoFares
             };
-            //var response = BookFlightInternal(bookInfo);
-            var response = new BookFlightResult
-            {
-                IsSuccess = true,
-                Status = new BookingStatusInfo
-                {
-                    BookingId = "MYSTPUB" + FlightBookingIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture),
-                    BookingStatus = BookingStatus.Booked
-                }
-            };
+            var response = BookFlightInternal(bookInfo);
             output.BookResult = new BookResult();
             if (response.IsSuccess)
             {

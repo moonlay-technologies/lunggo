@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT AirlineCd, FlightNumber, DepartureAirportCd, ArrivalAirportCd, DepartureTime, ArrivalTime, DepartureTerminal, ArrivalTerminal ");
+            clauseBuilder.Append(@"SELECT AirlineCd, FlightNumber, OperatingAirlineCd, DepartureAirportCd, ArrivalAirportCd, DepartureTime, ArrivalTime, DepartureTerminal, ArrivalTerminal ");
             clauseBuilder.Append(@"FROM FlightSegment ");
             return clauseBuilder.ToString();
         }
