@@ -244,20 +244,28 @@
                         break;
                     // return flight
                     case 'departAirline':
+                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
                         break;
                     case 'departDeparture':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
                         break;
                     case 'departDuration':
+                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
                         break;
                     case 'departArrival':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
                         break;
                     case 'returnAirline':
+                        $scope.sort.value = 'FlightTrips[1].Airlines[0].Name';
                         break;
                     case 'returnDeparture':
+                        $scope.sort.value = 'FlightTrips[1].FlightSegments[0].DepartureTime';
                         break;
                     case 'returnDuration':
+                        $scope.sort.value = 'FlightTrips[1].TotalDuration';
                         break;
                     case 'returnArrival':
+                        $scope.sort.value = 'FlightTrips[1].FlightSegments[(FlightTrips[1].FlightSegments.length-1)].ArrivalTime';
                         break;
                 }
             }

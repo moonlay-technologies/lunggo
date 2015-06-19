@@ -882,6 +882,8 @@ hr {
     background-position: 10px center; }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.active {
     opacity: 1; }
+  .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-veritrans span {
+    background-image: url(../images/payment-veritrans.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-transfer span {
     background-image: url(../images/payment-transfer.png); }
   .hotel-checkout-page .customer-detail .payment-form .payment-option label.payment-credit span {
@@ -903,6 +905,9 @@ hr {
 
 .hotel-checkout-page .customer-detail .payment-button {
   text-align: center; }
+  .hotel-checkout-page .customer-detail .payment-button small {
+    margin: 15px 0;
+    display: block; }
   .hotel-checkout-page .customer-detail .payment-button .btn {
     font-size: 18px;
     font-weight: bold;
@@ -996,6 +1001,66 @@ hr {
   top: 0;
   left: 0;
   display: none; }
+
+.confirmation-page .confirmation-form {
+  padding: 15px;
+  background: #ededed; }
+
+.confirmation-page .countdown {
+  text-align: center;
+  padding: 15px;
+  background: #2fb4e6;
+  color: #fff; }
+
+.confirmation-page .payment-countdown {
+  font-size: 50px; }
+
+.confirmation-page .order-number {
+  padding: 15px;
+  background: #2fb4e6;
+  color: #fff;
+  text-align: center; }
+
+.confirmation-page .confirmation-right h3 {
+  text-align: center;
+  background: #dadada;
+  padding: 10px 0;
+  margin-bottom: 0; }
+
+.confirmation-page .confirmation-right hr {
+  border-color: #aaa; }
+
+.confirmation-page .confirmation-right .content-wrapper {
+  padding: 10px;
+  background: #ededed; }
+
+.thankyou-page.flight-receipt .receipt-wrapper {
+  background: #ededed;
+  padding: 25px;
+  margin-top: 25px; }
+
+.thankyou-page.flight-receipt .receipt-title {
+  margin-top: 0; }
+
+.thankyou-page.flight-receipt .receipt-left {
+  border-right: 1px solid #ccc; }
+
+.thankyou-page.flight-receipt .payment-countdown {
+  background: #2fb4e6;
+  font-size: 32px;
+  padding: 15px 0;
+  color: #fff; }
+
+.thankyou-page.flight-receipt .receipt-flight {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc; }
+
+.thankyou-page.flight-receipt .ticket-print a {
+  display: block;
+  font-size: 18px;
+  padding: 15px 0;
+  text-align: center;
+  font-weight: bold; }
 
 .flight-search-page {
   /* disabled for development only
@@ -1174,6 +1239,32 @@ hr {
       content: '\25b2'; }
     .flight-search-page .flight-sort .sortorder.reverse:after {
       content: '\25bc'; }
+    .flight-search-page .flight-sort .sort-airline {
+      background: red; }
+    .flight-search-page .flight-sort .sort-depart-airline {
+      width: 13%;
+      padding-left: 10px; }
+    .flight-search-page .flight-sort .sort-depart-departure {
+      width: 9%;
+      text-align: center; }
+    .flight-search-page .flight-sort .sort-depart-duration {
+      width: 8%;
+      text-align: center; }
+    .flight-search-page .flight-sort .sort-depart-arrival {
+      width: 7%;
+      text-align: center; }
+    .flight-search-page .flight-sort .sort-return-airline {
+      width: 11%;
+      padding-left: 5px; }
+    .flight-search-page .flight-sort .sort-return-departure {
+      width: 9%;
+      text-align: center; }
+    .flight-search-page .flight-sort .sort-return-duration {
+      width: 8%;
+      text-align: center; }
+    .flight-search-page .flight-sort .sort-return-arrival {
+      width: 9%;
+      text-align: center; }
   .flight-search-page .flight-search-filter {
     position: absolute;
     left: 50%;
