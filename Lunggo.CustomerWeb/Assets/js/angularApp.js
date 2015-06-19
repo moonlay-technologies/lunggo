@@ -226,6 +226,7 @@
                 $scope.reverse = ($scope.sort.label === sort) ? !$scope.reverse : false;
                 $scope.sort.label = sort;
                 $scope.selectedItem = -1;
+                $scope.selectedRules = -1;
                 switch(sort)
                 {
                     case 'airline':
