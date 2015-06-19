@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using log4net;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
@@ -11,6 +12,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.TableStorage;
 using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -24,7 +26,6 @@ namespace Lunggo.WebJob.EticketQueueHandler
         static void Main()
         {
             Init();
-
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
             configuration.Queues.MaxDequeueCount = 10;

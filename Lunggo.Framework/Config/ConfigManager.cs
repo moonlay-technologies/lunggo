@@ -31,10 +31,6 @@ namespace Lunggo.Framework.Config
                 _configDictionary = LoadConfigFileToDictionary(Path.Combine(directoryPath,ConfigFileName));
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("Config Manager is already initialized");
-            }
         }
         
         public string GetConfigValue(string fileName, string keyName)

@@ -27,7 +27,10 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             Console.WriteLine("Retrieving Queue from Mystifly...");
             flightService.GetAndUpdateBookingStatus(out ticketedRsvNos, out scheduleChangedRsvNos);
             Console.WriteLine("Done Retrieving Queue from Mystifly...");
-            ProcessTicketed(ticketedRsvNos);
+            if (ticketedRsvNos.Any())
+                ProcessTicketed(ticketedRsvNos);
+            else
+                Console.WriteLine("No Ticketed Queue");
         }
 
         private static void ProcessTicketed(IEnumerable<string> ticketedRsvNos)
@@ -47,6 +50,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         private static void Init()
         {
             InitConfigurationManager();
+            InitDatabaseService();
             InitFlightService();
             InitQueueService();
         }
@@ -55,6 +59,12 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         {
             var configManager = ConfigManager.GetInstance();
             configManager.Init(@"Config\");
+        }
+
+        private static void InitDatabaseService()
+        {
+            var db = DbService.GetInstance();
+            db.Init();
         }
 
         private static void InitFlightService()

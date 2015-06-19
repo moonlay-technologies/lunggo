@@ -20,10 +20,6 @@ namespace Lunggo.Framework.BlobStorage
                 Client.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("BlobStorageService is already initialized");
-            }
         }
         public static BlobStorageService GetInstance()
         {

@@ -87,9 +87,6 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
-    <None Include="Config\BackendWeb\azureBlob.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\BackendWeb\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
@@ -111,18 +108,6 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
-    <None Include="Config\CustomerWeb\azureQueue.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\CustomerWeb\azureBlob.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebAPI\azureQueue.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EmailQueueHandler\azureBlob.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
@@ -131,15 +116,6 @@
     </None>
     <None Include="Config\WebJob.EticketQueueHandler\Airline.csv" />
     <None Include="Config\WebJob.EticketQueueHandler\Airport.csv" />
-    <None Include="Config\WebJob.EticketQueueHandler\azureBlob.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EticketQueueHandler\azureQueue.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.EmailQueueHandler\azureQueue.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebJob.EticketQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
@@ -155,9 +131,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EticketQueueHandler\mystifly.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.MystiflyQueueHandler\azureQueue.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties">
@@ -235,9 +208,6 @@
     </None>
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azurestorage.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Driver\blob.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Driver\db.properties" />

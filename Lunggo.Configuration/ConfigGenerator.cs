@@ -311,13 +311,13 @@ namespace Lunggo.Configuration
         private void WriteJsConfigFile()
         {
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
-            var hotelPath = _configDictionary["@@.*.api.hotelPath@@"];
-            var roomPath = _configDictionary["@@.*.api.roomPath@@"];
-            var flightPath = _configDictionary["@@.*.api.flightPath@@"];
-            var flightRevalidatePath = _configDictionary["@@.*.api.flightRevalidatePath@@"];
-            var flightRulesPath = _configDictionary["@@.*.api.flightRulesPath@@"];
-            var autocompleteHotelLocationPath = _configDictionary["@@.*.api.autocompleteHotelLocationPath@@"];
-            var autocompleteAirportPath = _configDictionary["@@.*.api.autocompleteAirportPath@@"];
+            const string hotelPath = @"/api/v1/hotels";
+            const string roomPath = @"/api/v1/rooms";
+            const string flightPath = @"/api/v1/flights";
+            const string flightRevalidatePath = @"/api/v1/flights/revalidate";
+            const string flightRulesPath = @"/api/v1/flights/rules";
+            const string autocompleteHotelLocationPath = @"/api/v1/autocomplete/hotellocation/";
+            const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
             fileTemplate.Reset();

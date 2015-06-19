@@ -85,7 +85,7 @@ namespace Lunggo.WebJob.EticketQueueHandler
                             ContentType = "JSON",
                             FileData = reservationContent
                         },
-                        Container = BlobContainer.Flightreservation
+                        Container = BlobContainer.Reservation
                     },
                     SaveMethod = SaveMethod.Force
                 });

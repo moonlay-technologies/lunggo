@@ -25,10 +25,6 @@ namespace Lunggo.Framework.TableStorage
                 Client.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("TableStorageService is already initialized");
-            }
         }
 
         public void Init(string connString)
@@ -37,10 +33,6 @@ namespace Lunggo.Framework.TableStorage
             {
                 Client.Init(connString);
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("TableStorageService is already initialized");
             }
         }
 

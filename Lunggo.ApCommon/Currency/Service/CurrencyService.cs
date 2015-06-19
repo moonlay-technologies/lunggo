@@ -1,6 +1,7 @@
 ﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -10,15 +11,24 @@ namespace Lunggo.ApCommon.Currency.Service
     public class CurrencyService
     {
         private static readonly CurrencyService Instance = new CurrencyService();
+        private bool _isInitialized;
 
         private CurrencyService()
         {
-            
+
         }
 
         public static CurrencyService GetInstance()
         {
             return Instance;
+        }
+
+        public void Init()
+        {
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+            }
         }
 
         public void UpdateSupplierExchangeRate(Supplier supplier, decimal addedDeposit, decimal newRate)
@@ -28,7 +38,7 @@ namespace Lunggo.ApCommon.Currency.Service
             var currentBalance = currentDeposit.Balance;
             var currentRate = currentDeposit.ExchangeRate;
             var newBalance = currentBalance + addedDeposit;
-            var averageRate = ((currentBalance*currentRate) + (addedDeposit*newRate))/newBalance;
+            var averageRate = ((currentBalance * currentRate) + (addedDeposit * newRate)) / newBalance;
             var deposit = new Deposit
             {
                 Balance = newBalance,
@@ -55,12 +65,12 @@ namespace Lunggo.ApCommon.Currency.Service
             return deposit.ExchangeRate;
         }
 
-        public static void SetCurrencyExchangeRate(string currency, decimal rate)
+        public void SetCurrencyExchangeRate(string currency, decimal rate)
         {
             SetCurrencyRateInCache(currency, rate);
         }
 
-        public static decimal GetCurrencyExchangeRate(string currency)
+        public decimal GetCurrencyExchangeRate(string currency)
         {
             return GetCurrencyRateInCache(currency);
         }
@@ -97,9 +107,9 @@ namespace Lunggo.ApCommon.Currency.Service
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = currency + "Rate";
-            var rate = (decimal) redisDb.StringGet(redisKey);
+            var rate = (decimal)redisDb.StringGet(redisKey);
             return rate;
-        }        
+        }
 
         private static string GetSupplierName(Supplier supplier)
         {

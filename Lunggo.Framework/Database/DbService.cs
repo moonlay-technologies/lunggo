@@ -35,10 +35,6 @@ namespace Lunggo.Framework.Database
                 _connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("DbService is already initialized");
-            }
         }
 
         public IDbConnection GetOpenConnection()

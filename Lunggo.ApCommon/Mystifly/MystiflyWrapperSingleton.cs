@@ -35,10 +35,6 @@ namespace Lunggo.ApCommon.Mystifly
                 Client.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("MystiflyWrapper is already initialized");
-            }
         }
     }
 }

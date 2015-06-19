@@ -13,8 +13,9 @@ namespace Lunggo.Framework.HtmlTemplate
     {
         private static readonly RazorHtmlTemplateClient ClientInstance = new RazorHtmlTemplateClient();
         private bool _isInitialized;
-        private string _mailTable;
-        private string _rowKey;
+
+        private const string MailTable = @"htmlTemplate";
+        private const string RowKey = @"default";
 
         private RazorHtmlTemplateClient()
         {
@@ -30,23 +31,8 @@ namespace Lunggo.Framework.HtmlTemplate
         {
             if (!_isInitialized)
             {
-                try
-                {
-                    var tableStorageService = TableStorageService.GetInstance();
-                    tableStorageService.Init();
-                }
-                catch
-                {
-                    
-                }
-                _mailTable = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailTableName");
-                _rowKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "mailRowName");
-                
+                TableStorageService.GetInstance().Init();
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("RazorTemplateClient is already initialized");
             }
         }
 
@@ -66,9 +52,9 @@ namespace Lunggo.Framework.HtmlTemplate
 
         private string GetTemplateByPartitionKey(string partitionKey)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference(this._mailTable);
+            var table = TableStorageService.GetInstance().GetTableByReference(MailTable);
             var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                         where tabel.PartitionKey == partitionKey && tabel.RowKey == _rowKey
+                         where tabel.PartitionKey == partitionKey && tabel.RowKey == RowKey
                          select tabel).FirstOrDefault();
             var mailTemplate = (query != null) ? query.Template : null;
 

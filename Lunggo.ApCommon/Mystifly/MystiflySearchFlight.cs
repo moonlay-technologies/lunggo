@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Mystifly
                 if ((response.Success && !response.Errors.Any()) ||
                     (response.Errors.Count() == 1 && response.Errors.Single().Code == "ERSER021"))
                 {
-                    result = MapResult(response, conditions);
+                    result = MapResult(response, conditions);   
                     result.IsSuccess = true;
                     result.Errors = null;
                 }

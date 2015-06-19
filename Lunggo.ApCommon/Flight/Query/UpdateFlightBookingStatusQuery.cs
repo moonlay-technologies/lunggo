@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                         @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
-                    @"END");
+                    @"END ");
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'TKTD' THEN ");
             clauseBuilder.Append(
@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                         @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
-                    @"END");
+                    @"END ");
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'CANC' THEN ");
             clauseBuilder.Append(
@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                         @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
-                    @"END");
+                    @"END ");
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'CHGD' THEN ");
             clauseBuilder.Append(
@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Flight.Query
             clauseBuilder.Append(
                         @"ELSE BookingStatusCd ");
             clauseBuilder.Append(
-                    @"END");
+                    @"END ");
             clauseBuilder.Append(
                 @"ELSE BookingStatusCd ");
             clauseBuilder.Append(@"END ");

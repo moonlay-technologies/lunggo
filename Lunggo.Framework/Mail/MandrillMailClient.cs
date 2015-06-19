@@ -19,7 +19,7 @@ namespace Lunggo.Framework.Mail
             private static readonly MandrillMailClient ClientInstance = new MandrillMailClient();
             private bool _isInitialized;
             private MandrillApi _apiOfMandrill;
-            private bool _exposeRecipients;
+            private const bool ExposeRecipients = false;
 
             private enum RecipientType
             {
@@ -42,18 +42,9 @@ namespace Lunggo.Framework.Mail
             {
                 if (!_isInitialized)
                 {
-                    try
-                    {
-                        var templateService = HtmlTemplateService.GetInstance();
-                        templateService.Init();
-                    }
-                    catch
-                    {
-                        
-                    }
+                    HtmlTemplateService.GetInstance().Init();
                     var mandrillApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
                     _apiOfMandrill = new MandrillApi(mandrillApiKey);
-                    _exposeRecipients = bool.Parse(ConfigManager.GetInstance().GetConfigValue("mandrill", "exposeRecipients"));
                     _isInitialized = true;
                 }
                 else
@@ -81,7 +72,7 @@ namespace Lunggo.Framework.Mail
             {
                 var emailMessage = new EmailMessage
                 {
-                    PreserveRecipients = !_exposeRecipients,
+                    PreserveRecipients = !ExposeRecipients,
                     Subject = mailModel.Subject,
                     FromEmail = mailModel.FromMail,
                     FromName = mailModel.FromName,

@@ -34,10 +34,6 @@ namespace Lunggo.Framework.TableStorage
                     var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
                     Init(connString);
                 }
-                else
-                {
-                    throw new InvalidOperationException("AzureTableStorageClient is already initialized");
-                }
             }
 
             internal override void Init(string connString)
@@ -47,10 +43,6 @@ namespace Lunggo.Framework.TableStorage
                     var cloudStorageAccount = CloudStorageAccount.Parse(connString);
                     _cloudTableClient = cloudStorageAccount.CreateCloudTableClient();
                     _isInitialized = true;
-                }
-                else
-                {
-                    throw new InvalidOperationException("AzureTableStorageClient is already initialized");
                 }
             }
 

@@ -25,10 +25,6 @@ namespace Lunggo.Framework.Mail
                 Client.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("MailService is already initialized");
-            }
         }
 
         public static MailService GetInstance()

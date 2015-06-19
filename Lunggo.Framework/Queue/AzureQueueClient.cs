@@ -42,10 +42,6 @@ namespace Lunggo.Framework.Queue
                         CreateIfNotExists(reference);
                     _isInitialized = true;
                 }
-                else
-                {
-                    throw new InvalidOperationException("AzureQueueClient is already initialized");
-                }
             }
 
 
@@ -65,8 +61,7 @@ namespace Lunggo.Framework.Queue
 
             protected override string GetQueueReferenceName(Queue reference)
             {
-                var referenceName = reference.ToString().ToCamelCase(CultureInfo.InvariantCulture);
-                return ConfigManager.GetInstance().GetConfigValue("azureQueue", referenceName);
+                return reference.ToString().ToLower();
             }
         }
     }

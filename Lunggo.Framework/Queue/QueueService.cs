@@ -36,10 +36,6 @@ namespace Lunggo.Framework.Queue
                 Client.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("QueueService is already initialized");
-            }
         }
 
         public static QueueService GetInstance()

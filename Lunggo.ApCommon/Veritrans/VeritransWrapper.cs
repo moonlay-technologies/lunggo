@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
@@ -25,11 +26,14 @@ namespace Lunggo.ApCommon.Veritrans
 
         private static string _endPoint;
         private static string _serverKey;
-        private static string _password;
-        private static string _rootRedirectUrl;
-        private static string _finishRedirectUrl;
-        private static string _unfinishRedirectUrl;
+        private static string _rootUrl;
+        private static string _finishedRedirectUrl;
+        private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
+
+        private static readonly string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
+        private static readonly string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
+        private static readonly string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
 
         private VeritransWrapper()
         {
@@ -45,36 +49,28 @@ namespace Lunggo.ApCommon.Veritrans
         {
             if (!_isInitialized)
             {
-                // TODO flight replace password override
                 _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
-                _password = "";
-                //_password = ConfigManager.GetInstance().GetConfigValue("veritrans", "password");
-                _rootRedirectUrl = ConfigManager.GetInstance().GetConfigValue("veritrans", "rootRedirectUrl");
-                _finishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "finishRedirectUrl");
-                _unfinishRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "unfinishRedirectUrl");
-                _errorRedirectUrl = _rootRedirectUrl + ConfigManager.GetInstance().GetConfigValue("veritrans", "errorRedirectUrl");
+                _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                _finishedRedirectUrl = _rootUrl + FinishRedirectPath;
+                _unfinishedRedirectUrl = _rootUrl + UnfinishRedirectPath;
+                _errorRedirectUrl = _rootUrl + ErrorRedirectPath;
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("VeritransWrapper is already initialized");
             }
         }
 
         internal string GetPaymentUrl(TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
         {
-            var authorizationKey = ProcessAuthorizationKey(_serverKey, _password);
+            var authorizationKey = ProcessAuthorizationKey(_serverKey);
             var request = CreateRequest(authorizationKey, transactionDetail, itemDetails);
             var response = SubmitRequest(request);
             var url = GetUrlFromResponse(response);
             return url;
         }
 
-        private static string ProcessAuthorizationKey(string serverKey, string password)
+        private static string ProcessAuthorizationKey(string serverKey)
         {
-            var rawAuthorizationKey = serverKey + ":" + password;
-            var plainAuthorizationKey = Encoding.UTF8.GetBytes(rawAuthorizationKey);
+            var plainAuthorizationKey = Encoding.UTF8.GetBytes(serverKey);
             var hashedAuthorizationKey = Convert.ToBase64String(plainAuthorizationKey);
             return hashedAuthorizationKey;
         }
@@ -106,8 +102,8 @@ namespace Lunggo.ApCommon.Veritrans
                 VtWeb = new VtWeb
                 {
                     CreditCard3DSecure = true,
-                    FinishRedirectUrl = _finishRedirectUrl,
-                    UnfinishRedirectUrl = _unfinishRedirectUrl,
+                    FinishRedirectUrl = _finishedRedirectUrl,
+                    UnfinishRedirectUrl = _unfinishedRedirectUrl,
                     ErrorRedirectUrl = _errorRedirectUrl
                 }
             };

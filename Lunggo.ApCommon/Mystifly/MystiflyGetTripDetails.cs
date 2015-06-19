@@ -120,8 +120,6 @@ namespace Lunggo.ApCommon.Mystifly
         private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
         {
             var dict = DictionaryService.GetInstance();
-            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
-            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             return new FlightSegmentDetails
             {
                 Reference = item.ItemRPH,
@@ -138,11 +136,11 @@ namespace Lunggo.ApCommon.Mystifly
                 Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
                 AirlineCode = item.MarketingAirlineCode,
                 AirlineName = dict.GetAirlineName(item.MarketingAirlineCode),
-                AirlineLogoUrl = airlineLogoPath + item.MarketingAirlineCode + airlineLogoExtension,
+                AirlineLogoUrl = dict.GetAirlineLogoUrl(item.MarketingAirlineCode),
                 FlightNumber = item.FlightNumber,
                 OperatingAirlineCode = item.OperatingAirlineCode,
                 OperatingAirlineName = dict.GetAirlineName(item.OperatingAirlineCode),
-                OperatingAirlineLogoUrl = airlineLogoPath + item.OperatingAirlineCode + airlineLogoExtension,
+                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(item.OperatingAirlineCode),
                 AircraftCode = item.AirEquipmentType,
                 Rbd = item.ResBookDesigCode,
                 StopQuantity = item.StopQuantity,

@@ -33,10 +33,6 @@ namespace Lunggo.ApCommon.Payment
                 VeritransWrapper.Init();
                 _isInitialized = true;
             }
-            else
-            {
-                throw new InvalidOperationException("PaymentService is already initialized");
-            }
         }
 
         public void ProcessViaThirdPartyWeb(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, out string url)

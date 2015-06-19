@@ -42,10 +42,6 @@ namespace Lunggo.Framework.BlobStorage
                         DeclareContainerAndCreateIfNotExist(reference.ToString().ToLower());
                     _isInitialized = true;
                 }
-                else
-                {
-                    throw new InvalidOperationException("AzureBlobStorageClient is already initialized");
-                }
             }
 
             internal override string WriteFileToBlob(BlobWriteDto fileDto)

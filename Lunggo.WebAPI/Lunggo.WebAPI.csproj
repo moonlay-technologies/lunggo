@@ -190,6 +190,7 @@
     <Content Include="Config\Airline.csv" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

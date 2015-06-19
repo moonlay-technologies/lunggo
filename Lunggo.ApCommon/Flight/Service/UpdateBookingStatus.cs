@@ -31,8 +31,12 @@ namespace Lunggo.ApCommon.Flight.Service
             var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                ticketedRsvNos = GetFlightRsvNoQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList();
-                scheduleChangedRsvNos = GetFlightRsvNoQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList();
+                ticketedRsvNos = ticketedBookingIds.Any()
+                    ? GetFlightRsvNoQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList()
+                    : new List<string>();
+                scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
+                    ? GetFlightRsvNoQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList()
+                    : new List<string>();
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
             var file = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Eticket);
-            var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.FlightSummary);
+            var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Reservation);
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<FlightReservation>(summaryJson);
             sw.Stop();
@@ -59,7 +59,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             Console.WriteLine("Deleting Data in Storage...");
             sw.Start();
             blobService.DeleteBlob(rsvNo, BlobContainer.Eticket);
-            blobService.DeleteBlob(rsvNo, BlobContainer.FlightSummary);
+            blobService.DeleteBlob(rsvNo, BlobContainer.Reservation);
             sw.Stop();
             sw.Reset();
             Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed + "s)");

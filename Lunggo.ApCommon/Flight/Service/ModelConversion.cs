@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
+using Fizzler;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Dictionary;
@@ -10,6 +12,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Repository.TableRecord;
+using Newtonsoft.Json.Serialization;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -17,30 +20,44 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public List<FlightItineraryApi> ConvertToItinerariesApi(IEnumerable<FlightItineraryFare> itineraries)
         {
-            var list = itineraries.Select(ConvertToItineraryApi).ToList();
-            for (var i = 0; i < list.Count; i++)
+            if (itineraries != null)
             {
-                list[i].SequenceNo = i;
+                var list = itineraries.Select(ConvertToItineraryApi).ToList();
+                for (var i = 0; i < list.Count; i++)
+                {
+                    list[i].SequenceNo = i;
+                }
+                var orderedList = list.OrderBy(itin => itin.SequenceNo);
+                return orderedList.ToList();
             }
-            var orderedList = list.OrderBy(itin => itin.SequenceNo);
-            return orderedList.ToList();
+            else
+            {
+                return new List<FlightItineraryApi>();
+            }
         }
 
         public FlightItineraryApi ConvertToItineraryApi(FlightItineraryFare itinerary)
         {
-            return new FlightItineraryApi
+            if (itinerary != null)
             {
-                AdultCount = itinerary.AdultCount,
-                ChildCount = itinerary.ChildCount,
-                InfantCount = itinerary.InfantCount,
-                RequireBirthDate = itinerary.RequireBirthDate,
-                RequirePassport = itinerary.RequirePassport,
-                RequireSameCheckIn = itinerary.RequireSameCheckIn,
-                CanHold = itinerary.CanHold,
-                TripType = itinerary.TripType,
-                TotalFare = itinerary.LocalPrice,
-                FlightTrips = MapTrips(itinerary.FlightTrips),
-            };
+                return new FlightItineraryApi
+                {
+                    AdultCount = itinerary.AdultCount,
+                    ChildCount = itinerary.ChildCount,
+                    InfantCount = itinerary.InfantCount,
+                    RequireBirthDate = itinerary.RequireBirthDate,
+                    RequirePassport = itinerary.RequirePassport,
+                    RequireSameCheckIn = itinerary.RequireSameCheckIn,
+                    CanHold = itinerary.CanHold,
+                    TripType = itinerary.TripType,
+                    TotalFare = itinerary.LocalPrice,
+                    FlightTrips = MapTrips(itinerary.FlightTrips),
+                };
+            }
+            else
+            {
+                return new FlightItineraryApi();
+            }
         }
 
         internal FlightTripApi ConvertToTripApi(FlightTripTableRecord summaryRecord)
@@ -89,8 +106,6 @@ namespace Lunggo.ApCommon.Flight.Service
         internal FlightSegmentDetails ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
-            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             return new FlightSegmentDetails
             {
                 DepartureAirport = summaryRecord.DepartureAirportCd,
@@ -105,10 +120,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
                 AirlineCode = summaryRecord.AirlineCd,
                 AirlineName = dict.GetAirlineName(summaryRecord.AirlineCd),
-                AirlineLogoUrl = airlineLogoPath + summaryRecord.AirlineCd + airlineLogoExtension,
+                AirlineLogoUrl = dict.GetAirlineLogoUrl(summaryRecord.AirlineCd),
                 OperatingAirlineCode = summaryRecord.OperatingAirlineCd,
                 OperatingAirlineName = dict.GetAirlineName(summaryRecord.OperatingAirlineCd),
-                OperatingAirlineLogoUrl = airlineLogoPath + summaryRecord.OperatingAirlineCd + airlineLogoExtension,
+                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(summaryRecord.OperatingAirlineCd),
                 AircraftCode = summaryRecord.AircraftCd,
                 FlightNumber = summaryRecord.FlightNumber,
                 Baggage = summaryRecord.Baggage,
@@ -175,8 +190,6 @@ namespace Lunggo.ApCommon.Flight.Service
         private static List<FlightSegmentApi> MapSegments(IEnumerable<FlightSegmentFare> segments)
         {
             var dict = DictionaryService.GetInstance();
-            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
-            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             return segments.Select(segment => new FlightSegmentApi
             {
                 DepartureAirport = segment.DepartureAirport,
@@ -190,11 +203,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
                 AirlineName = dict.GetAirlineName(segment.AirlineCode),
-                AirlineLogoUrl = airlineLogoPath + segment.AirlineCode + airlineLogoExtension,
+                AirlineLogoUrl = dict.GetAirlineLogoUrl(segment.AirlineCode),
                 FlightNumber = segment.FlightNumber,
                 OperatingAirlineCode = segment.OperatingAirlineCode,
                 OperatingAirlineName = dict.GetAirlineName(segment.OperatingAirlineCode),
-                OperatingAirlineLogoUrl = airlineLogoPath + segment.OperatingAirlineCode + airlineLogoExtension,
+                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segment.OperatingAirlineCode),
                 AircraftCode = segment.AircraftCode,
                 CabinClass = segment.CabinClass,
                 StopQuantity = segment.StopQuantity,
@@ -221,15 +234,13 @@ namespace Lunggo.ApCommon.Flight.Service
         private static List<Airline> GetAirlineList(FlightTripFare trip)
         {
             var dict = DictionaryService.GetInstance();
-            var airlineLogoPath = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoRootUrl");
-            var airlineLogoExtension = ConfigManager.GetInstance().GetConfigValue("general", "airlineLogoExtension");
             var segments = trip.FlightSegments;
             var airlineCodes = segments.Select(segment => segment.AirlineCode);
             var airlines = airlineCodes.Distinct().Select(code => new Airline
             {
                 Code = code,
                 Name = dict.GetAirlineName(code),
-                LogoUrl = airlineLogoPath + code + airlineLogoExtension
+                LogoUrl = dict.GetAirlineLogoUrl(code)
             });
             return airlines.ToList();
         }
