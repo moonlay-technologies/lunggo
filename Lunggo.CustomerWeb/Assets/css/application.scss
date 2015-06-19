@@ -9,6 +9,10 @@
 @import '_header.scss';
 @import '_footer.scss';
 
+@mixin gotham(){
+    font-family:'gotham', arial, sans-serif;
+}
+
 html {height:100%;}
 
 body {@extend .din; color:#555; background:#f9f9f9; min-height:100%;}
@@ -151,7 +155,7 @@ hr {border-color:#aaa;}
                     img {width:100%;}
 				}
 				.hotel-sum {padding:20px;
-					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @extend .gotham; height:38px;}
+					.hotel-name {font-size:18px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:5px; @include gotham(); height:38px;}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:5px;}
 					.hotel-address {margin-bottom:0; font-style:italic; margin-top:0; height:30px;}
 				}
@@ -180,7 +184,7 @@ hr {border-color:#aaa;}
                     img {width:100%;}
 				}
 				.hotel-sum {padding:20px; float:left; width:35%; padding-bottom:0;
-					.hotel-name {font-size:18px; height:40px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @extend .gotham;}
+					.hotel-name {font-size:18px; height:40px; color:#3fabe3; font-weight:bold; margin-top:0; margin-bottom:10px; @include gotham();}
 					.hotel-star {color:#f3bd00; margin-top:0; margin-bottom:10px;}
 					.hotel-address {margin-bottom:10px; font-style:italic; margin-top:0;}
 					.hotel-feedback {color:#888;
@@ -206,7 +210,7 @@ hr {border-color:#aaa;}
 // hotel detail page
 .hotel-detail-page {
 	header {padding:20px 0 0;
-		h1 {color:#3fabe3; font-size:21px; margin-top:10px; @extend .gotham;}
+		h1 {color:#3fabe3; font-size:21px; margin-top:10px; @include gotham();}
 		.star {color:#f3bd00; margin-left:15px;
 			.fa {margin-right:5px; font-size:18px;}
 		}
@@ -278,7 +282,7 @@ hr {border-color:#aaa;}
 			.review {margin-bottom:15px; padding:20px; border:1px solid #ddd; @include border-radius(5px);
 				header {padding:0  0 20px; color:#3fabe3;}
 				.review-left {border-right:1px solid #ddd; padding-right:25px;
-					.review-title {margin-top:0; @extend .gotham; font-size:18px;}
+					.review-title {margin-top:0; @include gotham(); font-size:18px;}
 				}
 				.review-right {
 					summary {padding-left:15px;
@@ -293,7 +297,7 @@ hr {border-color:#aaa;}
 	}
 	.suggestion {
 		.hotel {
-			h2 {background:#ffc600; color:#555; margin:0; font-size:18px; text-align:center; padding:10px 0; font-weight:bold; @extend .gotham;}
+			h2 {background:#ffc600; color:#555; margin:0; font-size:18px; text-align:center; padding:10px 0; font-weight:bold; @include gotham();}
 		}
 	}
 }
@@ -349,7 +353,7 @@ hr {border-color:#aaa;}
 		h2 {background:#dadada; font-size:21px; text-align:center; padding:10px 0; margin:0;}
 		.hotel-detail, .flight-detail {padding:10px; background:#ededed;
 			.hotel-image {margin-bottom:10px;}
-			.hotel-name {color:#3fabe3; @extend .gotham; font-size:18px; margin-top:10px; margin-bottom:0;}
+			.hotel-name {color:#3fabe3; @include gotham(); font-size:18px; margin-top:10px; margin-bottom:0;}
 			.hotel-star {margin-bottom:0; color:#f3bd00; font-size:16px;
 				.fa {margin-right:3px;}
 			}
@@ -444,6 +448,40 @@ hr {border-color:#aaa;}
 
     .sticky-wrapper {height:0 !important;}
 
+    // page wrapper
+    .flight-result.page-container {max-width:1100px;
+        .page-aside {float:left; width:50px; position:relative; padding-top:20px;
+            .filter-trigger-wrapper {
+                .filter-trigger {cursor:pointer; border:1px solid #bbb;}
+                .filter-trigger+.filter-trigger {border-top:0;}
+            }
+            .filter-close {position:absolute; width:30px; height:50px; margin-left:-30px; top:75px; cursor:pointer; background:red;}
+            .flight-filter-wrapper {display:none; border:1px solid #ddd; background:#fff;
+                h4 {padding:0 10px; color:#3fabe3; @include gotham();}
+                h5 {@include gotham();}
+                .flight-filter {position:relative; padding:10px; border-top:1px solid #ddd;
+                    .filter-content {}
+                    &.airline-filter {
+                        .filter-content {max-height:250px; overflow:auto;
+                            label {
+                                img {height:20px;}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .page-wrapper {float:left; margin-left:15px; width:1005px;}
+        // if active
+        &.active {
+            .page-aside {width:250px;
+                .filter-trigger-wrapper {display:none;}
+                .flight-filter-wrapper {display:block;}
+            }
+            .page-wrapper {width:805px;}
+        }
+    }
+
 	// page header
 	.page-header {
 		.site-nav {display:inline;
@@ -454,8 +492,11 @@ hr {border-color:#aaa;}
 				&.active {background:#3fabe3; color:#fff;}
 			}
 		}
+        .flight-data {background:#ddd; padding:10px; position:relative;
+            a {position:absolute; right:15px; top:15px;}
+        }
 	}
-    .flight-search-form {margin-bottom:20px; margin-top:-10px; display:none;
+    .flight-search-form {margin-bottom:20px; margin-top:-30px; display:none;
         form {padding:15px; background:#ddd;
             .flight-type-wrapper {}
             .airport-wrapper {margin-bottom:10px;}
@@ -474,7 +515,8 @@ hr {border-color:#aaa;}
             .submit-button {font-weight:bold; width:11%;}
         }
     }
-	.flight-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
+	/* disabled for development only
+    .flight-filter {position:fixed; top:0; left:-200px; width:200px; height:100%; padding:20px; background:#fff; z-index:9; box-shadow:0 8px 15px -5px #d5d5d5; -moz-box-shadow:0 8px 15px -5px #d5d5d5; -webkit-box-shadow:0 8px 15px -5px #d5d5d5; -o-box-shadow:0 8px 15px -5px #d5d5d5; border-right:1px solid #ddd;
 		.filter-button {position:absolute; z-index:1; top:40%; right:-50px; border:5px solid #fff; border-left:0; width:50px; height:150px; -webkit-border-top-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-topright: 5px; -moz-border-radius-bottomright: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;box-shadow:0 0 5px #d0d0d0;
 			.arrow {display:block; cursor:pointer; background:#2196c3; color:#fff; padding:5px; text-align:center;}
 			.text {display:block; cursor:pointer; position:absolute; top:140px; text-align:center; vertical-align:middle; width:110px; height:45px; background:#2fb4e6; color:#fff; padding:13px 10px;  -webkit-transform:rotate(-90deg); -moz-transform:rotate(-90deg); -o-transform:rotate(-90deg); transform-origin: top left 0; -webkit-transform-origin: top left 0; -o-transform-origin: top left 0; -moz-transform-origin: top left 0;}
@@ -498,9 +540,35 @@ hr {border-color:#aaa;}
 			a {display:block;}
 		}
 	}
+	*/
+
+    // flight sort
+    .flight-sort {border-top:1px solid #ddd; padding:10px 0;
+        &:before ,&:after {content:""; display:block; width:100%; clear:both;}
+        &>div {float:left;
+            a {font-weight:bold;}
+        }
+        // if single flight
+        .sort-airline {width:18%; padding-left:15px;}
+        .sort-departure {width:18%; text-align:right;}
+        .sort-duration {width:18%; text-align:center;}
+        .sort-arrival {width:20%;}
+        .sort-price {width:25%; padding-left:10px;}
+        .sortorder:after {content: '\25b2';}
+        .sortorder.reverse:after {content: '\25bc';}
+        // if return flight
+        .sort-depart-airline {width:10%:}
+        .sort-depart-departure {width:10%; text-align:right;}
+        .sort-depart-duration {width:10%; text-align:center;}
+        .sort-depart-arrival {width:10%;}
+        .sort-return-airline {width:10%;}
+        .sort-return-departure {width:10%; text-align:right;}
+        .sort-return-duration {width:10%; text-align:center;}
+        .sort-return-arrival {width:10%;}
+    }
 
     // flight filter
-    .flight-search-filter {position:absolute; left:50%; margin-left:-530px; top:281px; z-index:9999; display:none; width:auto !important;
+    .flight-search-filter {position:absolute; left:50%; margin-left:-535px; top:145px; z-index:9999; display:none; width:auto !important;
         .filter {background:#777; margin-bottom:5px; width:50px; position:relative; background:#3fabe3; border:1px solid #3fabe3;
             &:before, &:after {content:""; clear:both; display:block; width:100%;}
             a.toggle {text-align:center; cursor:pointer; text-align:center; color:#fff;}
@@ -576,7 +644,7 @@ hr {border-color:#aaa;}
 				&:after {content:""; clear:both; display:block; width:100%;}
 				.flight-left {float:left; width:73%; border-right:1px solid #ddd;
 					.flight-header {border-bottom:1px solid #ddd;
-						.flight-airline {@extend .gotham; color:#3fabe3; display:inline-block; padding-left:10px; width:72%;
+						.flight-airline {@include gotham(); color:#3fabe3; display:inline-block; padding-left:10px; width:72%;
 							img {height:25px; margin-right:5px;}
 						}
 						.flight-number {display:inline-block; font-weight:bold; border-left:1px solid #ddd; height:100%; padding:10px;}
@@ -683,7 +751,7 @@ hr {border-color:#aaa;}
 						.detail {border-bottom:1px solid #ddd;
 							&:after {content:""; clear:both; width:100%; display:block;}
 							&>div {float:left;}
-							.airline {@extend .gotham; color:#3fabe3; display:inline-block; width:50%; padding-left:10px;
+							.airline {@include gotham(); color:#3fabe3; display:inline-block; width:50%; padding-left:10px;
 								img {height:20px; width:auto; margin-right:5px;}
 							}
 							.flight-number {width:15%; font-weight:bold; border-left:1px solid #ddd; padding:10px; text-align:center;}
@@ -825,13 +893,13 @@ hr {border-color:#aaa;}
 		h3 {margin-top:10px; margin-bottom:30px;}
 		.login-form {
 			input[type="text"] {padding:20px; font-size:18px;}
-			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @extend .gotham;}
+			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @include gotham();}
 			.form-add {
 				font-size:16px;
 				a {color:#4c4c4c;}
 			}
 		}
-		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @extend .gotham; position:relative;
+		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @include gotham(); position:relative;
 			.or-right, .or-left {display:block; width:45%; border-bottom:2px solid #fff; position:absolute; box-shadow:2px 2px 5px #444; top:40%;}
 			.or-left {left:0;}
 			.or-right {right:0;}
@@ -843,7 +911,7 @@ hr {border-color:#aaa;}
 	.benefit {
 		h3 {margin-bottom:10px;}
 		hr {margin-bottom:30px;}
-		h4 {color:#2fb4e6; @extend .gotham;}
+		h4 {color:#2fb4e6; @include gotham();}
 	}
 
 }
@@ -857,13 +925,13 @@ hr {border-color:#aaa;}
 		h3 {margin-top:10px; margin-bottom:30px;}
 		.login-form {
 			input[type="text"] {padding:20px; font-size:18px;}
-			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @extend .gotham;}
+			button.btn.btn-yellow {width:100%; padding:8px 20px; font-size:18px; @include gotham();}
 			.form-add {
 				font-size:16px;
 				a {color:#4c4c4c;}
 			}
 		}
-		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @extend .gotham; position:relative;
+		.or {color:#fff; text-shadow:2px 2px 5px #444; font-size:21px; @include gotham(); position:relative;
 			.or-right, .or-left {display:block; width:45%; border-bottom:2px solid #fff; position:absolute; box-shadow:2px 2px 5px #444; top:40%;}
 			.or-left {left:0;}
 			.or-right {right:0;}
@@ -875,7 +943,7 @@ hr {border-color:#aaa;}
 	.benefit {
 		h3 {margin-bottom:10px;}
 		hr {margin-bottom:30px;}
-		h4 {color:#2fb4e6; @extend .gotham;}
+		h4 {color:#2fb4e6; @include gotham();}
 	}
 
 }
