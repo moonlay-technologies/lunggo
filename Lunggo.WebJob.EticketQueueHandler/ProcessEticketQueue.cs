@@ -21,10 +21,10 @@ using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.WebJob.EticketQueueHandler
 {
-    public class Functions
+    public class ProcessEticketQueue
     {
 
-        public static void ProcessQueueMessage([QueueTrigger("eticketqueue")] string rsvNo)
+        public static void ProcessQueue([QueueTrigger("eticketqueue")] string rsvNo)
         {
             Console.WriteLine("Processing Eticket for RsvNo " + rsvNo + "...");
             if (rsvNo.First() == 'F')

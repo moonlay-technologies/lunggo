@@ -18,9 +18,9 @@ using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.WebJob.EmailQueueHandler
 {
-    public class Functions
+    public class ProcessEmailQueue
     {
-        public static void EmailQueueHandler([QueueTrigger("eticketemailqueue")] string rsvNo)
+        public static void EticketEmail([QueueTrigger("eticketemailqueue")] string rsvNo)
         {
             var sw = new Stopwatch();
             Console.WriteLine("Processing Eticket Email for RsvNo " + rsvNo + "...");
