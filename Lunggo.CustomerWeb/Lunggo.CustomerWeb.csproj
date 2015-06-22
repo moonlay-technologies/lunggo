@@ -256,6 +256,7 @@
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
@@ -342,6 +343,12 @@
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
+    <Content Include="Assets\css\mobile-app.css">
+      <DependentUpon>mobile-app.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\mobile-app.min.css">
+      <DependentUpon>mobile-app.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
@@ -619,6 +626,7 @@
     <Content Include="Assets\images\airline\garuda.png" />
     <Content Include="Assets\images\airline\lionair.png" />
     <Content Include="Assets\images\airline\sriwijaya.png" />
+    <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit\check.png" />
@@ -629,17 +637,20 @@
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
+    <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
     <Content Include="Assets\images\flight-toggle-down.png" />
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
+    <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
     <Content Include="Assets\images\home-info-1.png" />
     <Content Include="Assets\images\home-info-2.png" />
     <Content Include="Assets\images\home-info-3.png" />
+    <Content Include="Assets\images\home-page-bg.jpg" />
     <Content Include="Assets\images\hotel-1.jpg" />
     <Content Include="Assets\images\hotel-2.jpg" />
     <Content Include="Assets\images\hotel-3.jpg" />
@@ -648,6 +659,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\infant-icon.png" />
+    <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
@@ -655,14 +667,19 @@
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
+    <Content Include="Assets\images\menu-icon-white.png" />
+    <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-credit.png" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
+    <Content Include="Assets\images\pinterest-icon.png" />
+    <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
+    <Content Include="Assets\images\search-hotel-bg.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
@@ -674,6 +691,7 @@
     <Content Include="Assets\images\tag-purple.png" />
     <Content Include="Assets\images\tag-red.png" />
     <Content Include="Assets\images\terms-icon.png" />
+    <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -687,9 +705,12 @@
     <Content Include="Assets\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\images\user-icon-white.png" />
+    <Content Include="Assets\images\user-icon.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\payment-veritrans.png" />
+    <Content Include="Assets\images\youtube-icon.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
     <Content Include="Assets\images\_sample\bar-3.png" />
@@ -717,6 +738,8 @@
     <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
+    <Content Include="Assets\js\mobile-app.js" />
+    <Content Include="Assets\js\plax.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
@@ -798,6 +821,8 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Assets\css\eticket.scss" />
+    <Content Include="Assets\css\mobile-app.scss" />
+    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -2035,6 +2060,8 @@
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Flight\Confirmation.cshtml" />
+    <Content Include="Views\Shared\_layout_mobile.cshtml" />
+    <Content Include="Views\MobileTemplate\HomePage.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

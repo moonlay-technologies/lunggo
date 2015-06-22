@@ -1,0 +1,200 @@
+﻿@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/* FONT FACE */
+@font-face {
+    font-family: 'din';
+    src: url('../fonts/DINB-webfont.eot');
+    src: url('../fonts/DINB-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DINB-webfont.woff2') format('woff2'),
+         url('../fonts/DINB-webfont.woff') format('woff'),
+         url('../fonts/DINB-webfont.ttf') format('truetype'),
+         url('../fonts/DINB-webfont.svg#din-boldregular') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'din';
+    src: url('../fonts/DINR-webfont.eot');
+    src: url('../fonts/DINR-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/DINR-webfont.woff2') format('woff2'),
+         url('../fonts/DINR-webfont.woff') format('woff'),
+         url('../fonts/DINR-webfont.ttf') format('truetype'),
+         url('../fonts/DINR-webfont.svg#din-regularregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.din {font-family:'din', helvetica, arial, sans-serif;}
+
+$main-blue:#2eb4e7;
+
+
+html {}
+body {font-family:'din',sans-serif; padding-top:70px;}
+
+.page {}
+
+.btn-yellow {background: #ffeaa8; background: -moz-linear-gradient(top,  #ffeaa8 0%, #f3b400 99%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffeaa8), color-stop(99%,#f3b400)); background: -webkit-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: -o-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: -ms-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: linear-gradient(to bottom,  #ffeaa8 0%,#f3b400 99%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa8', endColorstr='#f3b400',GradientType=0 ); border-color:#ebb600; color:#59544b;}
+
+h1 {font-size:30px;}
+
+/*-----------------------------*/
+/* site footer */
+.site-header {background:#fff; text-align:center; padding:10px 0; height:70px; position:fixed; width:100%; top:0; left:0; z-index:9999;
+    .site-menu {background-image:url(../images/menu-icon.png); background-position:center center; background-repeat:no-repeat; width:50px; height:100%; display:inline-block; position:absolute; left:0; top:0;
+        &.active {background-color:#444; background-image:url(../images/menu-icon-white.png);}
+    }
+    .user-menu {background-image:url(../images/user-icon.png); background-position:center center; background-repeat:no-repeat; width:50px; height:100%; display:inline-block; position:absolute; right:0; top:0;
+        &.active {background-color:#444; background-image:url(../images/user-icon-white.png);}
+    }
+}
+
+/*-----------------------------*/
+/* site footer */
+.site-content {}
+
+/*-----------------------------*/
+/* site menu */
+.site-menu-content {position:fixed; top:70px; left:0; background:#737373; z-index:9999; display:none; width:100%;
+    .section-title {text-align:center; color:#fff; margin:0; background:#444; padding:10px 0; margin-bottom:20px;}
+    .menu {padding-bottom:10px;
+        &:before, &:after {content:""; clear:both; display:block; width:100%;}
+        a {color:#fff; display:block; float:left; width:48%; margin-left:1%; margin-right:1%; text-align:center; padding:10px 0; margin-bottom:10px; border-bottom:1px solid #fff; position:relative;
+            .fa {font-size:50px; display:block; margin-bottom:5px;}
+            span {display:block;}
+        }
+        a:active {text-decoration:none;}
+        a:nth-child(2n):before {content:"";  position:absolute; height:100%; left:-4px; top:-5px; border-left:1px solid #fff;}
+        .no-border {border-bottom:0;}
+    }
+}
+
+/*-----------------------------*/
+/* user menu */
+.user-menu-content {position:fixed; top:70px; left:0; background:#737373; z-index:9999; display:none; width:100%;
+    .section-title {text-align:center; color:#fff; margin:0; background:#444; padding:10px 0; margin-bottom:20px;}
+    .menu {padding-bottom:10px;
+        &:before, &:after {content:""; clear:both; display:block; width:100%;}
+        a {color:#fff; display:block; float:left; width:48%; margin-left:1%; margin-right:1%; text-align:center; padding:10px 0; margin-bottom:10px; position:relative;
+            .fa {font-size:50px; display:block;}
+            span {display:block;}
+        }
+        a:active {text-decoration:none;}
+        a+a {border-left:1px solid #fff;}
+        .no-border {border-bottom:0;}
+    }
+    .menu.logged-in {
+        a {width:31%;}
+    }
+}
+
+/*-----------------------------*/
+/* site footer */
+.site-footer {background:#fff;
+    .footer-adv {padding:20px 0; color:#000;
+        h4 {margin-bottom:0;}
+        img {margin-bottom:15px;}
+    }
+    .footer-nav {background:#303030;
+        li {border-bottom:1px solid #575757;}
+        li:last-child {border-bottom:0;}
+        a {color:#fff;}
+    }
+    .footer-copyright {background:#111; color:#fff; text-align:center; padding:20px 0;
+        ul {padding:0 0 20px;
+            li {display:inline;
+                a {display:inline;}
+            }
+        }
+    }
+}
+
+/*-----------------------------*/
+/* home page */
+.home-page {background:url(../images/home-page-bg.jpg) top center repeat-x #2fb4e6; color:#fff;
+    .section-search {padding-bottom:20px; padding-top:20px;
+        a {background-position:center center; color:inherit; background-repeat:no-repeat; background-size:contain; background-position:top center; display:block; width:100%; padding-top:165px; text-align:center;}
+        .search-flight {background-image:url(../images/search-flight-bg.png);}
+        .search-hotel {background-image:url(../images/search-hotel-bg.png);}
+    }
+    .home-search {display:none;
+        &.active {display:block;}
+        .home-search-header {
+            &:before, &:after {content:""; display:block; width:100%; clear:both;}
+            button {display:block; float:left; width:50%; background:$main-blue; border:none; font-size:16px; padding:15px 0;
+                &.active {background:none;}
+            }
+        }
+        .home-search-content {padding-top:20px; padding-bottom:20px;
+            h1 {text-align:center;}
+            .fa {font-size:24px; color:#ffdd01; position:absolute; text-align:center; margin-left:-5px; padding-top:3px;}
+            span.form-control {@include border-radius(2px); font-size:16px;}
+            .btn-yellow {font-weight:bold; padding:15px; width:100%;}
+            &>section {display:none;
+                &.active {display:block;}
+            }
+        }
+        //---
+        #search-hotel {}
+        #search-flight {
+            .flight-passenger img {height:20px; margin-right:15px;}
+        }
+    }
+}
+
+
+/*-----------------------------*/
+/* form set */
+.form-set {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:9999; background:#fff; overflow:auto;
+    .form {display:none;
+        &.active {display:block;}
+        .form-header {padding-top:10px; padding-bottom:10px; background:#2fb4e6; position:fixed; width:100%; left:0; top:0; height:55px;
+            span {font-size:24px;}
+            .fa {font-size:24px; text-align:right;}
+        }
+        .form-content {padding-top:55px; color:#000;
+            ul.autocomplete-result {padding:0; margin:0; list-style:none;
+                li {color:#000; padding:10px; border-bottom:1px solid #aaa;}
+            }
+        }
+        // room count
+        &.hotel-room {
+            .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
+            & .form-content>div {border-bottom:1px solid #ddd; padding:10px 0; text-align:center;
+                span {padding:10px 0; display:inline-block;}
+            }
+        }
+        // flight passenger
+        &.flight-passenger {
+            .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
+            & .form-content>div {border-bottom:1px solid #ddd; padding:10px 0; text-align:center;
+                span {background-position:left center; padding:10px 0; padding-left:30px; background-repeat:no-repeat; display:inline-block;}
+            }
+            .adult-passenger {
+                span {background-image:url(../images/adult-icon.png); background-position:5px center !important;}
+            }
+            .child-passenger {
+                span {background-image:url(../images/child-icon.png);}
+            }
+            .infant-passenger {
+                span {background-image:url(../images/infant-icon.png); background-position:8px center !important;}
+            }
+        }
+        // jqueryui datepicker
+        .ui-datepicker-inline {width:100%; border:none; padding:0;
+            .ui-widget-header {background:none; border:none; border-bottom:1px solid #ccc;}
+            .ui-datepicker-calendar {border-collapse:collapse; border-spacing:0;}
+            .ui-datepicker-prev, .ui-datepicker-next {}
+            td a, td span {height:50px;}
+            .ui-state-default {background:#ddd;}
+            .ui-state-active {background:$main-blue;}
+        }
+    }
+
+}
+
