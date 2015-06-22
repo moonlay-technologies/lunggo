@@ -17,6 +17,7 @@ using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Schema;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.WebJob.EticketQueueHandler
@@ -24,34 +25,43 @@ namespace Lunggo.WebJob.EticketQueueHandler
     public class ProcessEticketQueue
     {
 
-        public static void ProcessQueue([QueueTrigger("eticketqueue")] string rsvNo)
+        public static void ProcessQueue([QueueTrigger("eticket")] string rsvNo)
         {
             Console.WriteLine("Processing Eticket for RsvNo " + rsvNo + "...");
             if (rsvNo.First() == 'F')
             {
                 var sw = new Stopwatch();
+                var swTotal = new Stopwatch();
                 var flightService = FlightService.GetInstance();
                 var templateService = HtmlTemplateService.GetInstance();
-                var converter = new EvoPdf.HtmlToPdfConverter();
-                var reservation = flightService.GetDetails(rsvNo);
+                var converter = new SelectPdf.HtmlToPdf();
+                var baseUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
 
-                Console.WriteLine("Parsing Eticket Template...");
+                Console.WriteLine("Getting Reservation Details for RsvNo " + rsvNo + "...");
+                swTotal.Start();
+                sw.Start();
+                var reservation = flightService.GetDetails(rsvNo);
+                sw.Stop();
+                Console.WriteLine("Done Getting Reservation Details for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+                sw.Reset();
+
+                Console.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
                 sw.Start();
                 var eticketTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightEticket);
                 sw.Stop();
+                Console.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
-                Console.WriteLine("Done Parsing Eticket Template. (" + sw.Elapsed + "s)");
 
-                Console.WriteLine("Generating Eticket File...");
+                Console.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var fileContent = converter.ConvertHtml(eticketTemplate, null);
+                var fileContent = converter.ConvertHtmlString(eticketTemplate, baseUrl).Save();
                 sw.Stop();
+                Console.WriteLine("Done Generating Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
-                Console.WriteLine("Done Generating Eticket File. (" + sw.Elapsed + "s)");
 
                 var blobService = BlobStorageService.GetInstance();
 
-                Console.WriteLine("Saving Eticket File...");
+                Console.WriteLine("Saving Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
                 blobService.WriteFileToBlob(new BlobWriteDto
                 {
@@ -68,10 +78,10 @@ namespace Lunggo.WebJob.EticketQueueHandler
                     SaveMethod = SaveMethod.Force
                 });
                 sw.Stop();
+                Console.WriteLine("Done Saving Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
-                Console.WriteLine("Done Saving Eticket File. (" + sw.Elapsed + "s)");
 
-                Console.WriteLine("Saving Flight Reservation Data...");
+                Console.WriteLine("Saving Flight Reservation Data for RsvNo " + rsvNo + "...");
                 sw.Start();
                 var reservationJson = JsonConvert.SerializeObject(reservation);
                 var reservationContent = Encoding.UTF8.GetBytes(reservationJson);
@@ -90,14 +100,15 @@ namespace Lunggo.WebJob.EticketQueueHandler
                     SaveMethod = SaveMethod.Force
                 });
                 sw.Stop();
+                Console.WriteLine("Done Saving Flight Reservation Data for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
-                Console.WriteLine("Done Saving Flight Reservation Data. (" + sw.Elapsed + "s)");
 
-                Console.WriteLine("Pushing Eticket Email Queue...");
+                Console.WriteLine("Pushing Eticket Email Queue for RsvNo " + rsvNo + "...");
                 var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference(QueueService.Queue.EticketEmail);
+                var queue = queueService.GetQueueByReference(Queue.EticketEmail);
                 queue.AddMessage(new CloudQueueMessage(rsvNo));
-                Console.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
+                swTotal.Stop();
+                Console.WriteLine("Done Processing Eticket for RsvNo " + rsvNo + ". (" + swTotal.Elapsed.TotalSeconds + "s Total)");
             }
         }
     }

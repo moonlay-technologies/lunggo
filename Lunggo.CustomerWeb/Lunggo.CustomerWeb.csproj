@@ -652,6 +652,7 @@
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\no-image.png" />

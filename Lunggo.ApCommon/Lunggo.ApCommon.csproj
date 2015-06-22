@@ -307,7 +307,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
-    <Compile Include="Trie\TrieIndex.cs" />
+    <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GetAllUserQuery.cs" />

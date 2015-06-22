@@ -18,8 +18,6 @@ namespace Lunggo.ApCommon.Dictionary
     {
         private static readonly DictionaryService Instance = new DictionaryService();
         private bool _isInitialized;
-        private string _rootUrl;
-        private string _airlineLogoPath;
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
         public Dictionary<long, HotelLocationDict> HotelLocationDict;
@@ -31,7 +29,7 @@ namespace Lunggo.ApCommon.Dictionary
         private const string HotelLocationFileName = @"HotelLocation.csv";
         private const string AirlineLogoFileExtension = @".png";
 
-        private const string AirlineLogoSubPath = @"/Assets/Images/Airlines/";
+        private const string AirlineLogoPath = @"/Assets/Images/Airlines/";
         private static string _configPath;
         private static string _airlineFilePath;
         private static string _airportFilePath;
@@ -52,7 +50,6 @@ namespace Lunggo.ApCommon.Dictionary
         {
             if (!_isInitialized)
             {
-                _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 _configPath = HttpContext.Current != null
                     ? HttpContext.Current.Server.MapPath(@"~/Config/")
                     : @"Config\";
@@ -62,7 +59,6 @@ namespace Lunggo.ApCommon.Dictionary
                 AirlineDict = PopulateAirlineDict(_airlineFilePath);
                 AirportDict = PopulateAirportDict(_airportFilePath);
                 HotelLocationDict = PopulateHotelLocationDict(_hotelLocationFilePath);
-                _airlineLogoPath = _rootUrl + AirlineLogoSubPath;
                 ItineraryDict = new Dictionary<string, FlightItineraryFare>();
                 DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
@@ -91,7 +87,7 @@ namespace Lunggo.ApCommon.Dictionary
 
         public string GetAirlineLogoUrl(string code)
         {
-            return _airlineLogoPath + code + AirlineLogoFileExtension;
+            return AirlineLogoPath + code + AirlineLogoFileExtension;
         }
 
         public bool IsAirportCodeExists(string code)

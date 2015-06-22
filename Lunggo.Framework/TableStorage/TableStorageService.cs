@@ -41,17 +41,17 @@ namespace Lunggo.Framework.TableStorage
             return Instance;
         }
 
-        public CloudTable GetTableByReference(string reference)
+        public CloudTable GetTableByReference(TableStorage reference)
         {
             return Client.GetTableByReference(reference);
         }
-        public void InsertEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
+        public void InsertEntityToTableStorage<T>(T objectParam, TableStorage reference) where T : ITableEntity, new()
         {
-            Client.InsertEntityToTableStorage(objectParam, nameReference);
+            Client.InsertEntityToTableStorage(objectParam, reference);
         }
-        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference) where T : ITableEntity, new()
+        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, TableStorage reference) where T : ITableEntity, new()
         {
-            Client.InsertOrReplaceEntityToTableStorage(objectParam, nameReference);
+            Client.InsertOrReplaceEntityToTableStorage(objectParam, reference);
         }
     }
 }

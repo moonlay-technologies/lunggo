@@ -9,6 +9,7 @@ using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.Util;
 using Microsoft.Azure.WebJobs;
@@ -20,7 +21,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
 {
     public class ProcessEmailQueue
     {
-        public static void EticketEmail([QueueTrigger("eticketemailqueue")] string rsvNo)
+        public static void EticketEmail([QueueTrigger("eticketemail")] string rsvNo)
         {
             var sw = new Stopwatch();
             Console.WriteLine("Processing Eticket Email for RsvNo " + rsvNo + "...");
@@ -63,7 +64,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             sw.Stop();
             sw.Reset();
             Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed + "s)");
-
+            
             Console.WriteLine("Done Processing Eticket Email for RsvNo " + rsvNo);
         }
     }

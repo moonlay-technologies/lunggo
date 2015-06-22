@@ -59,10 +59,6 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     _isInitialized = true;
                 }
-                else
-                {
-                    throw new InvalidOperationException("MystiflyClientHandler is already initialized");
-                }
             }
 
             internal void CreateSession()

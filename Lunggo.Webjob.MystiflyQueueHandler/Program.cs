@@ -42,7 +42,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
                 var detailsInput = new GetDetailsInput {BookingId = ticketedRsvNo};
                 flightService.GetAndUpdateNewDetails(detailsInput);
                 var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference(QueueService.Queue.Eticket);
+                var queue = queueService.GetQueueByReference(Queue.Eticket);
                 queue.AddMessage(new CloudQueueMessage(ticketedRsvNo));
             }
         }

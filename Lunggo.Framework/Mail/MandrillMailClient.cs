@@ -47,10 +47,6 @@ namespace Lunggo.Framework.Mail
                     _apiOfMandrill = new MandrillApi(mandrillApiKey);
                     _isInitialized = true;
                 }
-                else
-                {
-                    throw new InvalidOperationException("MandrillMailClient is already initialized");
-                }
             }
 
             internal override void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)

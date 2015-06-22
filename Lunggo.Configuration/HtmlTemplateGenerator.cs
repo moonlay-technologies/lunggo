@@ -9,10 +9,9 @@ namespace Lunggo.Configuration
     public class HtmlTemplateGenerator
     {
         private const string DefaultRowKey = "default";
-        private const string DefaultTableName = "htmlTemplate";
-        private const string FileExtension = "*.html";
+        private const string FileExtension = "*.cshtml";
         static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        static readonly string ParentMailGeneratorPath = ParentPath+@"\HtmlTemplate";
+        static readonly string ParentTemplateGeneratorPath = ParentPath+@"\HtmlTemplate";
         public static void StartHtmlGenerator(string azureStorageConnString)
         {
             TableStorageService.GetInstance().Init(azureStorageConnString);
@@ -21,7 +20,7 @@ namespace Lunggo.Configuration
         }
         static IEnumerable<string> GetAllTemplateFiles()
         {
-            string[] allFilesInPath = System.IO.Directory.GetFiles(ParentMailGeneratorPath, FileExtension);
+            string[] allFilesInPath = System.IO.Directory.GetFiles(ParentTemplateGeneratorPath, FileExtension);
             return allFilesInPath;
         }
         
@@ -46,7 +45,7 @@ namespace Lunggo.Configuration
         static void InsertTemplateToTable(KeyValuePair<string, string> fileNameAndTemplate)
         {
             var emp = new MailTemplateModel() { Template = fileNameAndTemplate.Value, PartitionKey = fileNameAndTemplate.Key, RowKey = DefaultRowKey };
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, DefaultTableName);
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, TableStorage.HtmlTemplate);
         }
     }
 }

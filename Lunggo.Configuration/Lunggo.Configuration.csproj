@@ -248,11 +248,11 @@
     <Content Include="Config\Common\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="HtmlTemplate\FlightEticketEmail" />
+    <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
     <Content Include="Template\JsConfig.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="HtmlTemplate\FlightEticket" />
+    <None Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

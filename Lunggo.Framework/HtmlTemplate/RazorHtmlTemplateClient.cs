@@ -14,7 +14,6 @@ namespace Lunggo.Framework.HtmlTemplate
         private static readonly RazorHtmlTemplateClient ClientInstance = new RazorHtmlTemplateClient();
         private bool _isInitialized;
 
-        private const string MailTable = @"htmlTemplate";
         private const string RowKey = @"default";
 
         private RazorHtmlTemplateClient()
@@ -52,7 +51,7 @@ namespace Lunggo.Framework.HtmlTemplate
 
         private string GetTemplateByPartitionKey(string partitionKey)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference(MailTable);
+            var table = TableStorageService.GetInstance().GetTableByReference(TableStorage.TableStorage.HtmlTemplate);
             var query = (from tabel in table.CreateQuery<MailTemplateModel>()
                          where tabel.PartitionKey == partitionKey && tabel.RowKey == RowKey
                          select tabel).FirstOrDefault();

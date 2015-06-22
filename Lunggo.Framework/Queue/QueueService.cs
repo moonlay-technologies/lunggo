@@ -18,12 +18,6 @@ namespace Lunggo.Framework.Queue
         private bool _isInitialized;
         private static readonly AzureQueueClient Client = AzureQueueClient.GetClientInstance();
 
-        public enum Queue
-        {
-            Eticket,
-            EticketEmail
-        }
-
         private QueueService()
         {
             

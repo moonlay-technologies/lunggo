@@ -293,7 +293,7 @@ namespace Lunggo.Driver
         public void testAddQueue()
         {
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(QueueService.Queue.Eticket); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference(Queue.Eticket); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
 
             for (int i = 0; i < 10; i++)
@@ -342,7 +342,7 @@ namespace Lunggo.Driver
 
             CloudQueueMessage TestCloudQueue = testEmail.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(QueueService.Queue.EticketEmail); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference(Queue.EticketEmail); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
         }
@@ -369,7 +369,7 @@ namespace Lunggo.Driver
 
             CloudQueueMessage TestCloudQueue = TestQueue.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(QueueService.Queue.Eticket); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference(Queue.Eticket); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
             //CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);

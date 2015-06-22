@@ -55,8 +55,7 @@ namespace Lunggo.Framework.Queue
             internal override bool CreateIfNotExists(Queue reference)
             {
                 var queue = GetQueueByReference(reference);
-                queue.CreateIfNotExists();
-                return true;
+                return queue.CreateIfNotExists();
             }
 
             protected override string GetQueueReferenceName(Queue reference)

@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="evohtmltopdf">
-      <HintPath>..\packages\evopdf.5.19\lib\net40\evohtmltopdf.dll</HintPath>
-    </Reference>
     <Reference Include="Flurl">
       <HintPath>..\packages\Flurl.1.0.7\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Flurl.dll</HintPath>
     </Reference>

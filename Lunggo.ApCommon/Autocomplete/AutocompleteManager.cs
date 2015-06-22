@@ -31,12 +31,8 @@ namespace Lunggo.ApCommon.Autocomplete
             if (!_isInitialized)
             {
                 DictionaryService.GetInstance().Init();
-                TrieIndex.GetInstance().Init();
+                TrieIndexService.GetInstance().Init();
                 _isInitialized = true;
-            }
-            else
-            {
-                throw new InvalidOperationException("Autocomplete Manager is already initialized");
             }
         }
 
@@ -52,7 +48,7 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<AirportDict> GetAirportAutocomplete(string prefix)
         {
             var airportDict = DictionaryService.GetInstance().AirportDict;
-            var airportIndex = TrieIndex.GetInstance().AirportIndex;
+            var airportIndex = TrieIndexService.GetInstance().AirportIndex;
             var splittedString = prefix.Split(' ');
             var airportIds = new List<long>();
             airportIds.AddRange(airportIndex.GetAllSuggestionIds(splittedString[0]));
@@ -70,7 +66,7 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<AirlineDict> GetAirlineAutocomplete(string prefix)
         {
             var airlineDict = DictionaryService.GetInstance().AirlineDict;
-            var airlineIndex = TrieIndex.GetInstance().AirlineIndex;
+            var airlineIndex = TrieIndexService.GetInstance().AirlineIndex;
             var airlineAutocomplete = airlineIndex.GetAllSuggestionIds(prefix).Select(id => airlineDict[id]);
             return airlineAutocomplete;
         }
@@ -78,7 +74,7 @@ namespace Lunggo.ApCommon.Autocomplete
         public IEnumerable<HotelLocationApi> GetHotelLocationAutocomplete(string prefix)
         {
             var hotelLocationDict = DictionaryService.GetInstance().HotelLocationDict;
-            var hotelLocationIndex = TrieIndex.GetInstance().HotelLocationIndex;
+            var hotelLocationIndex = TrieIndexService.GetInstance().HotelLocationIndex;
             var splittedString = prefix.Split(' ');
             var hotelLocationIds = new List<long>();
             hotelLocationIds.AddRange(hotelLocationIndex.GetAllSuggestionIds(splittedString[0]));

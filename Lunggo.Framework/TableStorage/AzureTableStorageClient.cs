@@ -42,33 +42,40 @@ namespace Lunggo.Framework.TableStorage
                 {
                     var cloudStorageAccount = CloudStorageAccount.Parse(connString);
                     _cloudTableClient = cloudStorageAccount.CreateCloudTableClient();
+                    foreach (var tableStorage in Enum.GetValues(typeof (TableStorage)).Cast<TableStorage>())
+                        CreateIfNotExist(tableStorage);
                     _isInitialized = true;
                 }
             }
 
-            internal override CloudTable GetTableByReference(string reference)
+            internal override CloudTable GetTableByReference(TableStorage reference)
             {
-                var table = _cloudTableClient.GetTableReference(reference);
+                var referenceName = GetTableReferenceName(reference);
+                var table = _cloudTableClient.GetTableReference(referenceName);
                 return table;
             }
 
-            private CloudTable GetTableByReferenceAndCreateIfNotExist(string reference)
+            protected override bool CreateIfNotExist(TableStorage reference)
             {
-                var table = _cloudTableClient.GetTableReference(reference);
-                table.CreateIfNotExists();
-                return table;
+                var table = GetTableByReference(reference);
+                return table.CreateIfNotExists();
             }
 
-            internal override void InsertEntityToTableStorage<T>(T objectParam, string nameReference)
+            protected override string GetTableReferenceName(TableStorage reference)
             {
-                var table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                return reference.ToString().ToLower();
+            }
+
+            internal override void InsertEntityToTableStorage<T>(T objectParam, TableStorage reference)
+            {
+                var table = GetTableByReference(reference);
                 var insertOp = TableOperation.Insert(objectParam);
                 table.Execute(insertOp);
             }
 
-            internal override void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string nameReference)
+            internal override void InsertOrReplaceEntityToTableStorage<T>(T objectParam, TableStorage reference)
             {
-                var table = GetTableByReferenceAndCreateIfNotExist(nameReference);
+                var table = GetTableByReference(reference);
                 var insertOp = TableOperation.InsertOrReplace(objectParam);
                 table.Execute(insertOp);
             }
