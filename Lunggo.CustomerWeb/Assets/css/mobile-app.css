@@ -278,9 +278,30 @@ h1 {
         display: none; }
         .home-page .home-search .home-search-content > section.active {
           display: block; }
-    .home-page .home-search #search-flight .flight-passenger img {
-      height: 20px;
-      margin-right: 15px; }
+    .home-page .home-search #search-flight .flighttype-select {
+      display: inline;
+      float: right;
+      background: #fff; }
+      .home-page .home-search #search-flight .flighttype-select label {
+        background: #fff;
+        padding: 5px;
+        margin-bottom: 0;
+        color: #000;
+        width: 50px;
+        text-align: center;
+        display: inline-block; }
+        .home-page .home-search #search-flight .flighttype-select label input[type="radio"] {
+          display: none; }
+        .home-page .home-search #search-flight .flighttype-select label.active {
+          background: #0c7499;
+          color: #fff; }
+    .home-page .home-search #search-flight .flight-passenger {
+      text-align: center; }
+      .home-page .home-search #search-flight .flight-passenger img {
+        height: 20px;
+        margin-right: 15px; }
+    .home-page .home-search #search-flight .flight-oneway {
+      background: #ccc; }
 
 /*-----------------------------*/
 /* form set */
@@ -331,6 +352,12 @@ h1 {
       -moz-border-radius: 50px;
       -ms-border-radius: 50px;
       border-radius: 50px; }
+    .form-set .form.hotel-room .btn.close-formset {
+      width: 100%;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      -ms-border-radius: 0;
+      border-radius: 0; }
     .form-set .form.hotel-room .form-content > div {
       border-bottom: 1px solid #ddd;
       padding: 10px 0;
@@ -347,6 +374,12 @@ h1 {
       -moz-border-radius: 50px;
       -ms-border-radius: 50px;
       border-radius: 50px; }
+    .form-set .form.flight-passenger .btn.close-formset {
+      width: 100%;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      -ms-border-radius: 0;
+      border-radius: 0; }
     .form-set .form.flight-passenger .form-content > div {
       border-bottom: 1px solid #ddd;
       padding: 10px 0;

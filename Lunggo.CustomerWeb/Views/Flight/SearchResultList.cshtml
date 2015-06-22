@@ -161,7 +161,8 @@
                         </div>
                     </div><!-- .airline-filter -->
                     <div class="flight-filter onward-time">
-                        <h5>Onward Flight</h5>
+                        <h5 ng-if="'@tripType' == 'return'">Onward Flight</h5>
+                        <h5 ng-if="'@tripType' != 'return'">Flight Time</h5>
                         <div class="filter-content">
                             <small>Take-off from ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
                             <div class="onward-depart-slider"></div>
