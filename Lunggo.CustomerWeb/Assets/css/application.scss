@@ -479,6 +479,7 @@ hr {border-color:#aaa;}
                 .flight-filter-wrapper {display:block;}
             }
             .page-wrapper {width:805px;}
+            .flight-sort {font-size:12px;}
         }
     }
 
@@ -557,14 +558,14 @@ hr {border-color:#aaa;}
         .sortorder:after {content: '\25b2';}
         .sortorder.reverse:after {content: '\25bc';}
         // if return flight
-        .sort-depart-airline {width:10%:}
-        .sort-depart-departure {width:10%; text-align:right;}
-        .sort-depart-duration {width:10%; text-align:center;}
-        .sort-depart-arrival {width:10%;}
-        .sort-return-airline {width:10%;}
-        .sort-return-departure {width:10%; text-align:right;}
-        .sort-return-duration {width:10%; text-align:center;}
-        .sort-return-arrival {width:10%;}
+        .sort-depart-airline {width:13%; padding-left:10px;}
+        .sort-depart-departure {width:9%; text-align:center;}
+        .sort-depart-duration {width:8%; text-align:center;}
+        .sort-depart-arrival {width:7%; text-align:center;}
+        .sort-return-airline {width:11%; padding-left:5px;}
+        .sort-return-departure {width:9%; text-align:center;}
+        .sort-return-duration {width:8%; text-align:center;}
+        .sort-return-arrival {width:9%; text-align:center;}
     }
 
     // flight filter

@@ -259,6 +259,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         Airport = stop.Airport,
                         ArrivalTime = stop.ArrivalTime,
                         DepartureTime = stop.DepartureTime,
+                        Duration = stop.DepartureTime - stop.ArrivalTime
                     }));
                 }
                 if (i != 0)
@@ -268,7 +269,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         IsStop = false,
                         Airport = segments[i].DepartureAirport,
                         ArrivalTime = segments[i - 1].ArrivalTime,
-                        DepartureTime = segments[i].DepartureTime
+                        DepartureTime = segments[i].DepartureTime,
+                        Duration = segments[i].DepartureTime - segments[i - 1].ArrivalTime
                     });
                 }
             }
