@@ -28,7 +28,8 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSetClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SET BookingStatusCd = CASE ");
+            clauseBuilder.Append(@"SET BookingId = @NewBookingId, ");
+            clauseBuilder.Append(@"BookingStatusCd = CASE ");
             clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'TKTG' THEN ");
             clauseBuilder.Append(

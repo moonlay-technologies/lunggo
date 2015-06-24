@@ -183,6 +183,7 @@
     <Compile Include="Flight\Model\Logic\RevalidateFlightOutput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightInput.cs" />
     <Compile Include="Flight\Model\Logic\SearchFlightOutput.cs" />
+    <Compile Include="Flight\Query\GetFlightItineraryIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightLocalCurrencyQuery.cs" />
     <Compile Include="Flight\Query\GetFlightReservationQuery.cs" />
     <Compile Include="Flight\Query\GetFlightRsvNoQuery.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Flight\Query\GetFlightPaymentStatusQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentInfoQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPassengerSummaryQuery.cs" />
-    <Compile Include="Flight\Query\GetFlightSegmentQuery.cs" />
+    <Compile Include="Flight\Query\DeleteFlightSegmentPerItineraryQuery.cs" />
     <Compile Include="Flight\Query\GetFlightSegmentSummaryQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTripSummaryQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTripInfoQuery.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Flight\Query\Logic\InsertFlightDb.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Query\GetFlightBookingStatusQuery.cs" />
-    <Compile Include="Flight\Query\Model\FlightDetailsRecord.cs" />
     <Compile Include="Flight\Query\GetFlightPassengerPrimKeyQuery.cs" />
     <Compile Include="Flight\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateFlightDetailsQuery.cs" />
@@ -224,6 +224,12 @@
     <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
     <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Flight\Utility\FlightIdUtil.cs" />
+    <Compile Include="Model\BookingFormViewModel.cs" />
+    <Compile Include="Model\HotelDetailViewModel.cs" />
+    <Compile Include="Model\I18nText.cs" />
+    <Compile Include="Model\Price.cs" />
+    <Compile Include="Model\SearchBase.cs" />
+    <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Mystifly\MystiflyClientHandler.cs" />
     <Compile Include="Flight\Service\FlightServiceSingleton.cs" />
@@ -267,12 +273,6 @@
     <Compile Include="Identity\User\CustomUser.cs" />
     <Compile Include="Identity\User\IdentityUserBase.cs" />
     <Compile Include="Identity\User\UserBase.cs" />
-    <Compile Include="Model\BookingFormViewModel.cs" />
-    <Compile Include="Model\HotelDetailViewModel.cs" />
-    <Compile Include="Model\I18nText.cs" />
-    <Compile Include="Model\Price.cs" />
-    <Compile Include="Model\SearchBase.cs" />
-    <Compile Include="Model\SearchViewModel.cs" />
     <Compile Include="Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Mystifly\MystiflyGetBookingStatus.cs" />
     <Compile Include="Mystifly\MystiflyGetRules.cs" />
@@ -561,7 +561,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Identity\Model\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

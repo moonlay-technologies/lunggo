@@ -2,6 +2,7 @@
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
@@ -92,34 +93,33 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                         };
                         FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
-                        var orderedSegments = trip.FlightSegments.OrderBy(segment => segment.DepartureTime).ToList();
-                        var i = 0;
-                        do
+                        var segments = trip.FlightSegments;
+                        foreach (var segment in segments)
                         {
                             var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
                             var segmentRecord = new FlightSegmentTableRecord
                             {
                                 SegmentId = segmentId,
                                 TripId = tripId,
-                                DepartureAirportCd = orderedSegments[i].DepartureAirport,
-                                DepartureTime = orderedSegments[i].DepartureTime,
-                                ArrivalAirportCd = orderedSegments[i].ArrivalAirport,
-                                ArrivalTime = orderedSegments[i].ArrivalTime,
-                                AirlineCd = orderedSegments[i].AirlineCode,
-                                OperatingAirlineCd = orderedSegments[i].OperatingAirlineCode,
-                                FlightNumber = orderedSegments[i].FlightNumber,
-                                AircraftCd = orderedSegments[i].AircraftCode,
-                                Duration = orderedSegments[i].Duration,
-                                StopQuantity = orderedSegments[i].StopQuantity,
+                                DepartureAirportCd = segment.DepartureAirport,
+                                DepartureTime = segment.DepartureTime,
+                                ArrivalAirportCd = segment.ArrivalAirport,
+                                ArrivalTime = segment.ArrivalTime,
+                                AirlineCd = segment.AirlineCode,
+                                OperatingAirlineCd = segment.OperatingAirlineCode,
+                                FlightNumber = segment.FlightNumber,
+                                AircraftCd = segment.AircraftCode,
+                                Duration = segment.Duration,
+                                StopQuantity = segment.StopQuantity,
                                 InsertBy = "xxx",
                                 InsertDate = DateTime.Now,
                                 InsertPgId = "xxx"
                             };
                             FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
 
-                            if (orderedSegments[i].StopQuantity > 0)
+                            if (segment.StopQuantity > 0)
                             {
-                                foreach (var stop in orderedSegments[i].FlightStops)
+                                foreach (var stop in segment.FlightStops)
                                 {
                                     var stopId = FlightStopIdSequence.GetInstance().GetNext();
                                     var stopRecord = new FlightStopTableRecord
@@ -137,9 +137,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                                     FlightStopTableRepo.GetInstance().Insert(conn, stopRecord);
                                 }
                             }
-
-                            i++;
-                        } while (i < orderedSegments.Count && orderedSegments[i - 1].ArrivalAirport != trip.DestinationAirport);
+                        }
                     }
 
                     foreach (var passenger in bookingRecord.Passengers)
@@ -168,61 +166,53 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
             }
         }
 
-        internal static void Details(FlightDetailsRecord detailsRecord)
+        internal static void Details(GetTripDetailsResult details)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var segmentRecords = GetFlightSegmentQuery.GetInstance().Execute(conn, new { detailsRecord.BookingId }).ToList();
-                var segmentPrimKeys = segmentRecords.Select(segment => segment.SegmentId.GetValueOrDefault()).ToList();
-                foreach (var segment in detailsRecord.Segments)
+                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, details).Single();
+
+                foreach (var trip in details.FlightItineraries.FlightTrips)
                 {
-                    var record = new FlightDetailsSegmentRecord
+                    var tripId = FlightTripIdSequence.GetInstance().GetNext();
+                    var tripRecord = new FlightTripTableRecord
                     {
-                        BookingId = detailsRecord.BookingId,
-                        BookingStatus = BookingStatus.Ticketed,
-                        FlightSegmentPrimKeys = segmentPrimKeys,
-                        Pnr = segment.Pnr,
-                        DepartureTerminal = segment.DepartureTerminal,
-                        ArrivalTerminal = segment.ArrivalTerminal,
-                        Baggage = segment.Baggage,
-                        DepartureAirport = segment.DepartureAirport,
-                        ArrivalAirport = segment.ArrivalAirport,
-                        DepartureTime = segment.DepartureTime
+                        TripId = tripId,
+                        ItineraryId = itineraryId,
+                        OriginAirportCd = trip.OriginAirport,
+                        DestinationAirportCd = trip.DestinationAirport,
+                        DepartureDate = trip.DepartureDate,
+                        InsertBy = "xxx",
+                        InsertDate = DateTime.Now,
+                        InsertPgId = "xxx"
                     };
-                    UpdateFlightDetailsQuery.GetInstance().Execute(conn, record);
-                }
-                foreach (var passenger in detailsRecord.Passengers)
-                {
-                    var passengerPrimKey = GetFlightPassengerPrimKeyQuery.GetInstance().Execute(conn, new
+                    FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
+
+                    var segments = trip.FlightSegments;
+                    foreach (var segment in segments)
                     {
-                        passenger.FirstName,
-                        passenger.LastName,
-                        passenger.DateOfBirth,
-                        passenger.IdNumber
-                    }).Single();
-                    foreach (var eticket in passenger.ETicket)
-                    {
-                        var eticketId = FlightEticketIdSequence.GetInstance().GetNext();
-                        var referencedSegment =
-                            detailsRecord.Segments.Single(segment => segment.Reference == eticket.Reference);
-                        var referencedRecord = segmentRecords.Single(segment =>
-                            segment.DepartureAirportCd == referencedSegment.DepartureAirport &&
-                            segment.ArrivalAirportCd == referencedSegment.ArrivalAirport &&
-                            segment.DepartureTime == referencedSegment.DepartureTime);
-                        var record = new FlightEticketTableRecord
+                        var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
+                        var segmentRecord = new FlightSegmentTableRecord
                         {
-                            EticketId = eticketId,
-                            SegmentId = referencedRecord.SegmentId,
-                            PassengerId = passengerPrimKey,
-                            EticketNo = eticket.Number,
+                            SegmentId = segmentId,
+                            TripId = tripId,
+                            DepartureAirportCd = segment.DepartureAirport,
+                            DepartureTime = segment.DepartureTime,
+                            ArrivalAirportCd = segment.ArrivalAirport,
+                            ArrivalTime = segment.ArrivalTime,
+                            AirlineCd = segment.AirlineCode,
+                            OperatingAirlineCd = segment.OperatingAirlineCode,
+                            FlightNumber = segment.FlightNumber,
+                            AircraftCd = segment.AircraftCode,
+                            Duration = segment.Duration,
+                            StopQuantity = segment.StopQuantity,
                             InsertBy = "xxx",
                             InsertDate = DateTime.Now,
                             InsertPgId = "xxx"
                         };
-                        FlightEticketTableRepo.GetInstance().Insert(conn, record);
+                        FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
                     }
                 }
-                
             }
         }
     }

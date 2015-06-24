@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using System.Web.UI;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Query.Logic;
 using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -15,8 +17,8 @@ namespace Lunggo.ApCommon.Flight.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 if (input.BookingId == null)
-                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, input.RsvNo).Single();
-                var tripInfos = GetFlightTripInfoQuery.GetInstance().Execute(conn, input.RsvNo).ToList();
+                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
+                var tripInfos = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { input.BookingId }).ToList();
 
                 var output = new GetDetailsOutput();
                 var request = new TripDetailsConditions
@@ -29,14 +31,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     output = MapDetails(details);
                     output.IsSuccess = true;
-                    
-                    var detailsRecord = new FlightDetailsRecord
-                    {
-                        BookingId = details.BookingId,
-                        Segments = details.FlightItineraries.FlightTrips.SelectMany(trip => trip.FlightSegments).ToList(),
-                        Passengers = details.Passengers
-                    };
-                    InsertFlightDb.Details(detailsRecord);
+
+                    DeleteFlightTripPerItineraryQuery.GetInstance().Execute(conn, details);
+                    InsertFlightDb.Details(details);
                 }
                 else
                 {

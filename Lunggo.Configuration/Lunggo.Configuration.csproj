@@ -114,23 +114,23 @@
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\Airline.csv" />
-    <None Include="Config\WebJob.EticketQueueHandler\Airport.csv" />
-    <None Include="Config\WebJob.EticketQueueHandler\azureStorage.properties">
+    <None Include="Config\Worker.EticketHandler\Airline.csv" />
+    <None Include="Config\Worker.EticketHandler\Airport.csv" />
+    <None Include="Config\Worker.EticketHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\db.properties" />
-    <None Include="Config\WebJob.EticketQueueHandler\flight.properties">
+    <None Include="Config\Worker.EticketHandler\db.properties" />
+    <None Include="Config\Worker.EticketHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\general.properties">
+    <None Include="Config\Worker.EticketHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\HotelLocation.csv" />
-    <None Include="Config\WebJob.EticketQueueHandler\mandrill.properties">
+    <None Include="Config\Worker.EticketHandler\HotelLocation.csv" />
+    <None Include="Config\Worker.EticketHandler\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.EticketQueueHandler\mystifly.properties">
+    <None Include="Config\Worker.EticketHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties">
@@ -231,6 +231,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
+    <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />
     <None Include="packages.config" />

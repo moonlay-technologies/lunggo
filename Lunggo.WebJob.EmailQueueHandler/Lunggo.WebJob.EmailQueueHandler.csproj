@@ -96,7 +96,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProcessEmailQueue.cs" />
+    <Compile Include="ChangedEticketEmail.cs" />
+    <Compile Include="EticketEmail.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

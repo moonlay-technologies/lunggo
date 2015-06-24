@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class FlightTripInfo : FlightTripBase
     {
-        
+        public long TripId { get; set; }
     }
 
     public class FlightTripBase

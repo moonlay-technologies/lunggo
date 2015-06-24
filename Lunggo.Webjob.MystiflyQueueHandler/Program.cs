@@ -31,6 +31,10 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
                 ProcessTicketed(ticketedRsvNos);
             else
                 Console.WriteLine("No Ticketed Queue");
+            if (scheduleChangedRsvNos.Any())
+                ProcessScheduleChanged(scheduleChangedRsvNos);
+            else
+                Console.WriteLine("No Schedule Changed Queue");
         }
 
         private static void ProcessTicketed(IEnumerable<string> ticketedRsvNos)
@@ -38,12 +42,26 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             var flightService = FlightService.GetInstance();
             foreach (var ticketedRsvNo in ticketedRsvNos)
             {
-                Console.WriteLine("Processing Flight Reservation " + ticketedRsvNo + "...");
-                var detailsInput = new GetDetailsInput {BookingId = ticketedRsvNo};
+                Console.WriteLine("Processing Ticketed " + ticketedRsvNo + "...");
+                var detailsInput = new GetDetailsInput {RsvNo = ticketedRsvNo};
                 flightService.GetAndUpdateNewDetails(detailsInput);
                 var queueService = QueueService.GetInstance();
                 var queue = queueService.GetQueueByReference(Queue.Eticket);
                 queue.AddMessage(new CloudQueueMessage(ticketedRsvNo));
+            }
+        }
+
+        private static void ProcessScheduleChanged(IEnumerable<string> scheduleChangedRsvNos)
+        {
+            var flightService = FlightService.GetInstance();
+            foreach (var scheduleChangedRsvNo in scheduleChangedRsvNos)
+            {
+                Console.WriteLine("Processing Schedule Changed " + scheduleChangedRsvNo + "...");
+                var detailsInput = new GetDetailsInput { RsvNo = scheduleChangedRsvNo };
+                flightService.GetAndUpdateNewDetails(detailsInput);
+                var queueService = QueueService.GetInstance();
+                var queue = queueService.GetQueueByReference(Queue.ChangedEticket);
+                queue.AddMessage(new CloudQueueMessage(scheduleChangedRsvNo));
             }
         }
 

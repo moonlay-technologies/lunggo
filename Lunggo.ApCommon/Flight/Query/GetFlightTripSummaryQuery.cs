@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            queryBuilder.Append(CreateWhereClause(condition));
+            queryBuilder.Append(CreateWhereClause());
             return queryBuilder.ToString();
         }
 
@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Query
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause(dynamic condition)
+        private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"WHERE i.RsvNo = @RsvNo");

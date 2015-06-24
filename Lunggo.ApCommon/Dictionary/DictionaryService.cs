@@ -73,16 +73,30 @@ namespace Lunggo.ApCommon.Dictionary
 
         public string GetAirlineCode(string name)
         {
-            var valueList = AirlineDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Name == name);
-            return searchedValue.Code;
+            try
+            {
+                var valueList = AirlineDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Name == name);
+                return searchedValue.Code;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirlineName(string code)
         {
-            var valueList = AirlineDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.Name;
+            try
+            {
+                var valueList = AirlineDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.Name;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirlineLogoUrl(string code)
@@ -98,44 +112,86 @@ namespace Lunggo.ApCommon.Dictionary
 
         public string GetAirportCode(string name)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Name == name);
-            return searchedValue.Code;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Name == name);
+                return searchedValue.Code;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirportName(string code)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.Name;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.Name;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirportCityCode(string code)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.CityCode;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.CityCode;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirportCity(string code)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.City;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.City;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirportCountryCode(string code)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.CountryCode;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.CountryCode;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string GetAirportCountry(string code)
         {
-            var valueList = AirportDict.Select(dict => dict.Value);
-            var searchedValue = valueList.Single(value => value.Code == code);
-            return searchedValue.Country;
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.Country;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         private static Dictionary<long, AirlineDict> PopulateAirlineDict(String airlineFilePath)

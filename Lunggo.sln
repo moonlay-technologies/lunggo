@@ -56,6 +56,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EmailQueueHan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.EticketQueueHandler", "Lunggo.WebJob.EticketQueueHandler\Lunggo.WebJob.EticketQueueHandler.csproj", "{54AEE92A-2EF9-4184-9395-6F5A9883E50D}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.Worker", "Lunggo.Worker\Lunggo.Worker.ccproj", "{A1168B1D-A5FC-4811-B5F7-376661D31DA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Worker.EticketHandler", "Lunggo.Worker.EticketHandler\Lunggo.Worker.EticketHandler.csproj", "{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -248,6 +252,26 @@ Global
 		{54AEE92A-2EF9-4184-9395-6F5A9883E50D}.Release|ARM.ActiveCfg = Release|Any CPU
 		{54AEE92A-2EF9-4184-9395-6F5A9883E50D}.Release|x64.ActiveCfg = Release|Any CPU
 		{54AEE92A-2EF9-4184-9395-6F5A9883E50D}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1168B1D-A5FC-4811-B5F7-376661D31DA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
