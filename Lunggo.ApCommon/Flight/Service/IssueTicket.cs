@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
                         input.BookingId,
+                        NewBookingId = orderResult.BookingId,
                         BookingStatusCd = bookingStatusCd
                     });
 

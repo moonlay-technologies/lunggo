@@ -3,6 +3,8 @@
     public enum Queue
     {
         Eticket,
-        EticketEmail
+        EticketEmail,
+        ChangedEticket,
+        ChangedEticketEmail
     }
 }

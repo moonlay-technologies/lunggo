@@ -261,7 +261,7 @@
                         <div class="row flight-route">
                             <div class="col-sm-6 text-right flight-origin">
                                 <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToShortTimeString()</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
                                 <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
                                 <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
                                 <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
@@ -269,7 +269,7 @@
                             <div class="separator">to</div>
                             <div class="col-sm-6 text-left flight-destination">
                                 <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToShortTimeString()</h5>
+                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
                                 <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
                                 <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
                                 <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
@@ -284,7 +284,7 @@
                             <div class="row flight-route">
                                 <div class="col-sm-6 text-right flight-origin">
                                     <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToShortTimeString()</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
                                     <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
                                     <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
                                     <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
@@ -292,7 +292,7 @@
                                 <div class="separator">to</div>
                                 <div class="col-sm-6 text-left flight-destination">
                                     <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToShortTimeString()</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
                                     <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
                                     <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
                                     <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>

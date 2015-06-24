@@ -210,6 +210,9 @@ namespace Lunggo.ApCommon.Mystifly
             if (ItineraryValid(pricedItinerary))
             {
                 var flightItineraryFare = new FlightItineraryFare();
+                flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
+                if (flightItineraryFare.FlightTrips == null)
+                    return null;
                 flightItineraryFare.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
                 flightItineraryFare.SupplierCurrency = "USD";
                 flightItineraryFare.SupplierRate = rate;
@@ -229,7 +232,6 @@ namespace Lunggo.ApCommon.Mystifly
                 flightItineraryFare.LocalPrice = flightItineraryFare.FinalIdrPrice * flightItineraryFare.LocalRate;
                 if (pricedItinerary.RequiredFieldsToBook != null)
                     MapRequiredFields(pricedItinerary, flightItineraryFare);
-                flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
                 flightItineraryFare.Supplier = FlightSupplier.Mystifly;
                 flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
                 flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
@@ -343,27 +345,40 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static List<FlightTripFare> MapFlightFareTrips(PricedItinerary pricedItinerary, ConditionsBase conditions)
         {
+            var dict = DictionaryService.GetInstance();
             var flightTrips = new List<FlightTripFare>();
             var segments = pricedItinerary.OriginDestinationOptions.SelectMany(opt => opt.FlightSegments).ToArray();
-            var totalTransitDuration = new TimeSpan();
             var i = 0;
             foreach (var tripInfo in conditions.TripInfos)
             {
-                var fareTrip = new FlightTripFare
+                try
                 {
-                    OriginAirport = tripInfo.OriginAirport,
-                    DestinationAirport = tripInfo.DestinationAirport,
-                    DepartureDate = tripInfo.DepartureDate,
-                    FlightSegments = new List<FlightSegmentFare>()
-                };
-                do
+                    if (segments[i].DepartureAirportLocationCode != tripInfo.OriginAirport &&
+                            dict.GetAirportCityCode(segments[i].DepartureAirportLocationCode) !=
+                                 tripInfo.OriginAirport)
+                    {
+                        return null;
+                    }
+                    var fareTrip = new FlightTripFare
+                    {
+                        OriginAirport = tripInfo.OriginAirport,
+                        DestinationAirport = tripInfo.DestinationAirport,
+                        DepartureDate = tripInfo.DepartureDate,
+                        FlightSegments = new List<FlightSegmentFare>()
+                    };
+                    do
+                    {
+                        fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
+                        i++;
+                    } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
+                             dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
+                                tripInfo.DestinationAirport);
+                    flightTrips.Add(fareTrip);
+                }
+                catch (IndexOutOfRangeException)
                 {
-                    fareTrip.FlightSegments.Add(MapFlightFareSegment(segments[i]));
-                    i++;
-                } while (i < segments.Count() && 
-                    segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
-                    DictionaryService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) != tripInfo.DestinationAirport);
-                flightTrips.Add(fareTrip);
+                    return null;
+                }
             }
             return flightTrips;
         }

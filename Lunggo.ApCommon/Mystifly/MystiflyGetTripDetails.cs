@@ -70,10 +70,11 @@ namespace Lunggo.ApCommon.Mystifly
             return result;
         }
 
-        private static GetTripDetailsResult MapResult(AirTripDetailsRS response, ConditionsBase conditions)
+        private static GetTripDetailsResult MapResult(AirTripDetailsRS response, TripDetailsConditions conditions)
         {
+            var fareType = FlightIdUtil.GetFareType(conditions.BookingId);
             var result = new GetTripDetailsResult();
-            result.BookingId = response.TravelItinerary.UniqueID;
+            result.BookingId = FlightIdUtil.ConstructIntegratedId(response.TravelItinerary.UniqueID, FlightSupplier.Mystifly, fareType);
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
             result.FlightItineraries = new FlightItineraryDetails
@@ -90,31 +91,51 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static List<FlightTripDetails> MapDetailsFlightTrips(AirTripDetailsRS response, ConditionsBase conditions)
         {
-            var flightTrips = new List<FlightTripDetails>();
-            var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
-            var totalTransitDuration = new TimeSpan();
-            var i = 0;
-            foreach (var tripInfo in conditions.TripInfos)
+            try
             {
-                var fareTrip = new FlightTripDetails
+                var flightTrips = new List<FlightTripDetails>();
+                var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
+                var dict = DictionaryService.GetInstance();
+                var i = 0;
+                foreach (var tripInfo in conditions.TripInfos)
                 {
-                    OriginAirport = tripInfo.OriginAirport,
-                    DestinationAirport = tripInfo.DestinationAirport,
-                    DepartureDate = tripInfo.DepartureDate,
-                    FlightSegments = new List<FlightSegmentDetails>(),
-                };
-                do
-                {
-                    fareTrip.FlightSegments.Add(MapFlightSegmentDetails(segments[i]));
-                    if (i > 0)
-                        totalTransitDuration = totalTransitDuration.Add(segments[i].DepartureDateTime - segments[i - 0].ArrivalDateTime);
-                    i++;
-                } while (i < segments.Count() && 
-                    segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
-                    DictionaryService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) != tripInfo.DestinationAirport);
-                flightTrips.Add(fareTrip);
+                    var flightTrip = new FlightTripDetails
+                    {
+                        OriginAirport = tripInfo.OriginAirport,
+                        DestinationAirport = tripInfo.DestinationAirport,
+                        DepartureDate = tripInfo.DepartureDate,
+                        FlightSegments = new List<FlightSegmentDetails>(),
+                    };
+                    do
+                    {
+                        flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segments[i]));
+                        i++;
+                    } while (i < segments.Count() &&
+                             segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
+                             dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
+                             tripInfo.DestinationAirport);
+                    flightTrips.Add(flightTrip);
+                }
+                return flightTrips;
             }
-            return flightTrips;
+            catch (IndexOutOfRangeException)
+            {
+                var flightTrips = new List<FlightTripDetails>();
+                var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
+                foreach (var segment in segments)
+                {
+                    var flightTrip = new FlightTripDetails
+                    {
+                        OriginAirport = segment.DepartureAirportLocationCode,
+                        DestinationAirport = segment.ArrivalAirportLocationCode,
+                        DepartureDate = segment.DepartureDateTime.Date,
+                        FlightSegments = new List<FlightSegmentDetails>(),
+                    };
+                    flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segment));
+                    flightTrips.Add(flightTrip);
+                }
+                return flightTrips;
+            }
         }
 
         private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
