@@ -11,6 +11,8 @@
     width:100%;
 }
 
+$default-border :1px solid #ddd;
+
 /* FONT FACE */
 @font-face {
     font-family: 'din';
@@ -39,13 +41,13 @@
 
 $main-blue:#2eb4e7;
 
-
 html {}
 body {font-family:'din',sans-serif; padding-top:70px;}
 
 .page {background:#fff; color:#000;}
 
 .btn-yellow {background: #ffeaa8; background: -moz-linear-gradient(top,  #ffeaa8 0%, #f3b400 99%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffeaa8), color-stop(99%,#f3b400)); background: -webkit-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: -o-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: -ms-linear-gradient(top,  #ffeaa8 0%,#f3b400 99%); background: linear-gradient(to bottom,  #ffeaa8 0%,#f3b400 99%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeaa8', endColorstr='#f3b400',GradientType=0 ); border-color:#ebb600; color:#59544b;}
+.btn-blue {background: #2fb4e6; color: #fff; font-weight: bold; background: #80ddff; background: -moz-linear-gradient(top, #80ddff 0%, #2eb5e5 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #80ddff), color-stop(100%, #2eb5e5)); background: -webkit-linear-gradient(top, #80ddff 0%, #2eb5e5 100%); background: -o-linear-gradient(top, #80ddff 0%, #2eb5e5 100%); background: -ms-linear-gradient(top, #80ddff 0%, #2eb5e5 100%); background: linear-gradient(to bottom, #80ddff 0%, #2eb5e5 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ddff', endColorstr='#2eb5e5',GradientType=0 );}
 
 h1 {font-size:30px;}
 
@@ -204,7 +206,7 @@ h1 {font-size:30px;}
             // hotel search sort
             .hotel-sort-wrapper {background:#616161; color:fff; display:none;
                 a {display:block; color:#fff; padding:15px 0; margin:0 15px; text-align:center;}
-                a + a {border-top:1px solid #ddd;}
+                a + a {border-top:$default-border;}
             }
         }
     }
@@ -233,7 +235,7 @@ h1 {font-size:30px;}
 
 /*-----------------------------*/
 /* hotel detail page */
-.hotel-detail-page {border-bottom:1px solid #ddd;
+.hotel-detail-page {border-bottom:$default-border;
     .hotel-name {font-size:18px; color:#3daae3; font-weight:bold; padding:10px; margin:0;
         .hotel-star {font-size:14px;}
     }
@@ -251,7 +253,7 @@ h1 {font-size:30px;}
                 }
             }
         }
-        .room+.room {border-top:1px solid #ddd;}
+        .room+.room {border-top:$default-border;}
     }
     .hotel-facilities {}
     .hotel-description {}
@@ -259,6 +261,73 @@ h1 {font-size:30px;}
     .section-title {background:#dbdbdb; text-align:center; padding:10px 0; font-size:16px; margin:0;}
     .section-content {padding:10px;}
 }
+
+/*-----------------------------*/
+/* flight search page */
+.flight-search-page {border-bottom:$default-border;
+    // hotel search param
+    .flight-search-param {background:#2eb4e7; color:#fff;
+        .param {float:left; background:#2eb4e7; width:75%; padding:10px;}
+        .change-hotel-param {background:#0e84b2; color:#fff; font-weight:bold; display:block; float:right; width:25%; text-align:center; padding:10px 0;}
+        .hotel-search-form-wrapper {padding:10px; clear:both; display:none;
+            .hotel-search-form {
+                .form-group {display:block; height:auto; overflow:hidden;}
+                input[type="submit"] {width:100%; font-weight:bold;}
+            }
+        }
+    }
+    // hotel search filter and sort
+    .flight-search-filter {
+        .flight-search-trigger {background:#878787;
+            &:after, &:before {@include clearfix;}
+            a {color:#fff; font-weight:bold; text-align:center; display:block; float:left; width:50%; padding:10px 0;}
+            .flight-filter-trigger {}
+            .flight-sort-trigger {background:#616161;}
+        }
+    }
+    // flight search result
+    .flight-search-result {
+        // return flight
+        .flight.return-flight {padding:10px; color:#333;
+            .flight-container {margin-bottom:20px;
+                &>div {display:block; width:50%; float:left; font-size:12px;
+                    &>h5 {font-size:16px;}
+                    .flight-name {
+                        img {height:30px;}
+                    }
+                }
+                &:before, &:after {@include clearfix;}
+                .flight-onward {}
+                .flight-return {text-align:right; border-left:$default-border;}
+            }
+            .flight-action {clear:both;
+                h5 {margin-bottom:5px;}
+                h4 {font-weight:bold; margin:0;}
+                .flight-book {float:right;}
+            }
+        }
+        // single flight
+        .flight.single-flight {padding:10px; color:#333;
+            &:before, &:after {@include clearfix;}
+            .flight-name {font-size:16px;
+                img {height:35px;}
+            }
+            .flight-detail {display:block; width:60%; float:left; font-size:12px;
+                .flight-airport {margin-bottom:5px; margin-top:0;}
+                .flight-time {}
+                .flight-duration {margin-bottom:5px;}
+                .flight-detail {}
+            }
+            .flight-action {display:block; width:40%; float:left; text-align:right;
+                h5 {margin-bottom:5px;}
+                .flight-price {font-weight:bold; margin-top:5px; color:#333;}
+                .flight-book {padding-top:10px; padding:3px 5px;}
+            }
+        }
+        .flight + .flight {border-top:$default-border;}
+    }
+}
+
 
 /*-----------------------------*/
 /* form set */
@@ -278,7 +347,7 @@ h1 {font-size:30px;}
         &.hotel-room {
             .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
             .btn.close-formset {width:100%; @include border-radius(0);}
-            & .form-content>div {border-bottom:1px solid #ddd; padding:10px 0; text-align:center;
+            & .form-content>div {border-bottom:$default-border; padding:10px 0; text-align:center;
                 span {padding:10px 0; display:inline-block;}
             }
         }
@@ -286,7 +355,7 @@ h1 {font-size:30px;}
         &.flight-passenger {
             .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
             .btn.close-formset {width:100%; @include border-radius(0);}
-            & .form-content>div {border-bottom:1px solid #ddd; padding:10px 0; text-align:center;
+            & .form-content>div {border-bottom:$default-border; padding:10px 0; text-align:center;
                 span {background-position:left center; padding:10px 0; padding-left:30px; background-repeat:no-repeat; display:inline-block;}
             }
             .adult-passenger {
