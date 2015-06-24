@@ -36,6 +36,7 @@ namespace Lunggo.Worker.EticketHandler
                 var sw = new Stopwatch();
                 var flightService = FlightService.GetInstance();
                 var templateService = HtmlTemplateService.GetInstance();
+                var blobService = BlobStorageService.GetInstance();
                 var converter = new NReco.PdfGenerator.HtmlToPdfConverter();
                 var reservation = flightService.GetDetails(rsvNo);
 
@@ -48,12 +49,10 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var fileContent = converter.GeneratePdf(eticketTemplate);
+                var eticketFile = converter.GeneratePdf(eticketTemplate);
                 sw.Stop();
                 Trace.WriteLine("Done Generating Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
-
-                var blobService = BlobStorageService.GetInstance();
 
                 Trace.WriteLine("Saving Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
@@ -65,7 +64,7 @@ namespace Lunggo.Worker.EticketHandler
                         {
                             FileName = rsvNo,
                             ContentType = "PDF",
-                            FileData = fileContent
+                            FileData = eticketFile
                         },
                         Container = BlobContainer.Eticket
                     },
@@ -73,6 +72,40 @@ namespace Lunggo.Worker.EticketHandler
                 });
                 sw.Stop();
                 Trace.WriteLine("Done Saving Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+                sw.Reset();
+
+                Trace.WriteLine("Parsing Invoice for RsvNo " + rsvNo + "...");
+                sw.Start();
+                var invoiceTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightInvoice);
+                sw.Stop();
+                Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+                sw.Reset();
+
+                Trace.WriteLine("Generating Invoice File for RsvNo " + rsvNo + "...");
+                sw.Start();
+                var invoiceFile = converter.GeneratePdf(invoiceTemplate);
+                sw.Stop();
+                Trace.WriteLine("Done Generating Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+                sw.Reset();
+
+                Trace.WriteLine("Saving Invoice File for RsvNo " + rsvNo + "...");
+                sw.Start();
+                blobService.WriteFileToBlob(new BlobWriteDto
+                {
+                    FileBlobModel = new FileBlobModel
+                    {
+                        FileInfo = new FileInfo
+                        {
+                            FileName = rsvNo,
+                            ContentType = "PDF",
+                            FileData = invoiceFile
+                        },
+                        Container = BlobContainer.Invoice
+                    },
+                    SaveMethod = SaveMethod.Force
+                });
+                sw.Stop();
+                Trace.WriteLine("Done Saving Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
 
                 Trace.WriteLine("Saving Flight Reservation Data for RsvNo " + rsvNo + "...");

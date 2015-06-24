@@ -55,7 +55,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
                 }
             };
             Console.WriteLine("Sending Eticket Email...");
-            mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightEticketEmail);
+            mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightChangedEticketEmail);
 
             Console.WriteLine("Deleting Data in Storage...");
             sw.Start();
