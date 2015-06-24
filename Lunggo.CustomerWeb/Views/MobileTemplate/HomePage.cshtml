@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/_layout_mobile.cshtml";
-    ViewBag.Title = "Hotel Detail";
+    ViewBag.Title = "Home Page";
 }
 
 @section PageJavascript {
@@ -33,7 +33,7 @@
         </header>
         <section class="home-search-content container">
             <section class="active" id="search-hotel">
-                <form class="search-hotel-form form-horizontal">
+                <form class="search-hotel-form form-horizontal" action="/">
                     <h1><b>HOTEL</b> BOOKING</h1>
                     <div class="form-group">
                         <span class="fa fa-map-marker col-xs-2"></span>
@@ -67,13 +67,13 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-10 col-xs-offset-1">
-                            <button class="btn btn-yellow">SEARCH</button>
+                            <input type="submit" class="btn btn-yellow" value="SEARCH">
                         </div>
                     </div>
                 </form>
             </section><!-- .search-hotel -->
             <section class="" id="search-flight">
-                <form class="search-flight-form form-horizontal">
+                <form class="search-flight-form form-horizontal" action="/id/flight/SearchResultList">
                     <h1><b>FLIGHT</b> BOOKING</h1>
                     <div class="form-group">
                         <span class="fa fa-plane col-xs-2"></span>
@@ -96,23 +96,35 @@
                     <div class="form-group">
                         <div class="col-xs-10 col-xs-offset-1">
                             <span>Roundtrip ?</span> 
+                            
+                            <div class="flighttype-select">
+                                <label for="flighttype-return" class="active">
+                                    <input type="radio" name="flightType" value="RoundTrip" id="flighttype-return" checked /> <span>Yes</span>
+                                </label>
+                                <label for="flighttype-oneway">
+                                    <input type="radio" name="flightType" value="OneWay" id="flighttype-oneway" /> <span>No</span>
+                                </label>
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="fa fa-calendar col-xs-2"></span>
                         <div class="col-xs-10 col-xs-offset-1">
                             <span class="form-control flight-return-date" data-trigger="show-formset" data-target=".flight-departure-date" >Return Date</span>
+                            <span class="form-control flight-oneway hidden">One Way Flight</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="fa fa-user col-xs-2"></span>
                         <div class="col-xs-10 col-xs-offset-1">
-                            <span class="form-control flight-passenger" data-trigger="show-formset" data-target=".flight-passenger" ><span class="flight-passenger-adult">0</span> <img src="/Assets/images/adult-icon.png" alt="Adult" /> <span class="flight-passenger-child">0</span> <img src="/Assets/images/child-icon.png" alt="Child" /> <span class="flight-passenger-infant">0</span> <img src="/Assets/images/infant-icon.png" alt="Infant" /></span>
+                            <span class="form-control flight-passenger" data-trigger="show-formset" data-target=".flight-passenger" ><span class="flight-passenger-adult">1</span> <img src="/Assets/images/adult-icon.png" alt="Adult" /> <span class="flight-passenger-child">0</span> <img src="/Assets/images/child-icon.png" alt="Child" /> <span class="flight-passenger-infant">0</span> <img src="/Assets/images/infant-icon.png" alt="Infant" /></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-10 col-xs-offset-1">
-                            <button class="btn btn-yellow">SEARCH</button>
+                            <input type="text" name="info" value="" class="flight-info hidden" />
+                            <input type="submit" class="btn btn-yellow" value="SEARCH">
                         </div>
                     </div>
                 </form>
@@ -189,6 +201,7 @@
                         </div>
                     </div>
                 </div>
+                <span class="btn btn-lg text-center close-formset">UPDATE</span>
             </div>
         </div><!-- .hotel-room -->
         <!-- group set for hotel end -->
@@ -266,7 +279,7 @@
                                 <div class="btn decrease" data-target="adult">-</div>
                             </div>
                             <div class="col-xs-8">
-                                <span>0 Adult</span>
+                                <span>1 Adult</span>
                             </div>
                             <div class="col-xs-2">
                                 <div class="btn increase" data-target="adult">+</div>
@@ -304,6 +317,7 @@
                         </div>
                     </div>
                 </div>
+                <span class="btn btn-lg text-center close-formset">UPDATE</span>
             </div>
         </div><!-- .flight-passenger -->
         <!-- group set for flight end -->

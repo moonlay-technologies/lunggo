@@ -2062,6 +2062,8 @@
     <Content Include="Views\Flight\Confirmation.cshtml" />
     <Content Include="Views\Shared\_layout_mobile.cshtml" />
     <Content Include="Views\MobileTemplate\HomePage.cshtml" />
+    <Content Include="Views\MobileTemplate\HotelSearchPage.cshtml" />
+    <Content Include="Views\MobileTemplate\HotelDetailPage.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>
