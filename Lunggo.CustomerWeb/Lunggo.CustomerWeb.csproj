@@ -644,6 +644,7 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\googlePlay.png" />
+    <Content Include="Assets\images\grey-bg.png" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
@@ -2065,6 +2066,9 @@
     <Content Include="Views\MobileTemplate\HotelSearchPage.cshtml" />
     <Content Include="Views\MobileTemplate\HotelDetailPage.cshtml" />
     <Content Include="Views\MobileTemplate\FlightSearchPage.cshtml" />
+    <Content Include="Views\MobileTemplate\LoginPage.cshtml" />
+    <Content Include="Views\MobileTemplate\RegisterPage.cshtml" />
+    <Content Include="Views\MobileTemplate\UserAccountPage.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

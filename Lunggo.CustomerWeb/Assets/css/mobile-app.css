@@ -50,6 +50,22 @@ body {
   background: linear-gradient(to bottom, #80ddff 0%, #2eb5e5 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80ddff', endColorstr='#2eb5e5',GradientType=0 ); }
 
+.btn-facebook {
+  background: #3b5998;
+  color: #fff; }
+  .btn-facebook .fa {
+    position: relative !important;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle; }
+
+.btn-block-lg {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 15px 0; }
+
 h1 {
   font-size: 30px; }
 
@@ -97,6 +113,9 @@ h1 {
 
 /*-----------------------------*/
 /* site footer */
+.site-content {
+  color: #333; }
+
 /*-----------------------------*/
 /* site menu */
 .site-menu-content {
@@ -586,8 +605,10 @@ h1 {
         font-size: 12px; }
         .flight-search-page .flight-search-result .flight.return-flight .flight-container > div > h5 {
           font-size: 16px; }
-        .flight-search-page .flight-search-result .flight.return-flight .flight-container > div .flight-name img {
-          height: 30px; }
+        .flight-search-page .flight-search-result .flight.return-flight .flight-container > div .flight-name {
+          font-size: 14px; }
+          .flight-search-page .flight-search-result .flight.return-flight .flight-container > div .flight-name img {
+            height: 30px; }
       .flight-search-page .flight-search-result .flight.return-flight .flight-container:before, .flight-search-page .flight-search-result .flight.return-flight .flight-container:after {
         content: "";
         clear: both;
@@ -643,6 +664,72 @@ h1 {
         padding: 3px 5px; }
   .flight-search-page .flight-search-result .flight + .flight {
     border-top: 1px solid #ddd; }
+
+/*-----------------------------*/
+/* register and login page */
+.auth-page {
+  border-bottom: 1px solid #ddd;
+  background: url(../images/grey-bg.png) top center repeat-x;
+  padding: 30px 0; }
+  .auth-page .page-title {
+    margin-top: 0;
+    margin-bottom: 5px; }
+  .auth-page .page-subtitle {
+    margin-top: 0; }
+  .auth-page form .form-group {
+    margin-bottom: 15px; }
+  .auth-page form .fa {
+    position: absolute;
+    font-size: 24px;
+    text-align: center;
+    margin-left: -5px; }
+  .auth-page form .or-border {
+    margin-bottom: 0;
+    position: relative; }
+    .auth-page form .or-border:before {
+      content: "";
+      display: block;
+      width: 40%;
+      border-top: 1px solid #333;
+      position: absolute;
+      top: 50%;
+      left: 0; }
+    .auth-page form .or-border:after {
+      content: "";
+      display: block;
+      width: 40%;
+      border-top: 1px solid #333;
+      position: absolute;
+      top: 50%;
+      right: 0; }
+
+/*-----------------------------*/
+/* user account page */
+.user-account-page .section-title {
+  background: #2eb4e7;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  font-size: 16px;
+  padding: 5px 0;
+  font-weight: bold; }
+
+.user-account-page .page-nav a {
+  display: block;
+  width: 33.3333%;
+  float: left;
+  background: #666;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  padding-left: 30px;
+  position: relative; }
+  .user-account-page .page-nav a.active {
+    background: #878787; }
+  .user-account-page .page-nav a .fa {
+    position: absolute;
+    left: 10px;
+    top: 15px; }
 
 /*-----------------------------*/
 /* form set */
