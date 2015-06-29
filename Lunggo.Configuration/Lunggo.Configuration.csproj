@@ -87,6 +87,7 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
+    <None Include="Config\BackendWeb\azureStorage.properties" />
     <None Include="Config\BackendWeb\db.properties" />
     <None Include="Config\BackendWeb\domain.properties" />
     <None Include="Config\BackendWeb\freshdesk.properties" />
@@ -105,14 +106,21 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\CustomerWeb\azureStorage.properties" />
+    <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\azureStorage.properties" />
+    <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
     <None Include="Config\Worker.EticketHandler\Airline.csv" />
     <None Include="Config\Worker.EticketHandler\Airport.csv" />
+    <None Include="Config\Worker.EticketHandler\azureStorage.properties" />
     <None Include="Config\Worker.EticketHandler\db.properties" />
     <None Include="Config\Worker.EticketHandler\flight.properties">
       <SubType>Designer</SubType>
