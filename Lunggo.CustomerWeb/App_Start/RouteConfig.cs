@@ -14,6 +14,8 @@ namespace Lunggo.CustomerWeb
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "toppage",
                 url: "",
@@ -73,6 +75,12 @@ namespace Lunggo.CustomerWeb
             ).DataTokens = new RouteValueDictionary(new { area = "UW100" });
                 
             //TODO End of Todo
+
+            routes.MapRoute(
+                name: "Account",
+                url: "{langCode}/{action}",
+                defaults: new { controller = "Account" }
+            );
 
             routes.MapRoute(
                 name: "Default",

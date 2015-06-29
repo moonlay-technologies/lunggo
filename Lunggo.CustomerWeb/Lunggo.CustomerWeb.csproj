@@ -1986,8 +1986,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -2064,6 +2062,9 @@
     <Content Include="Views\MobileTemplate\HomePage.cshtml" />
     <Content Include="Views\MobileTemplate\HotelSearchPage.cshtml" />
     <Content Include="Views\MobileTemplate\HotelDetailPage.cshtml" />
+    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

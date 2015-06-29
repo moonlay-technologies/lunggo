@@ -11,6 +11,7 @@ namespace Lunggo.Framework.HtmlTemplate
         FlightEticket,
         FlightEticketEmail,
         FlightChangedEticketEmail,
-        FlightInvoice
+        FlightInvoice,
+        UserConfirmationEmail
     }
 }

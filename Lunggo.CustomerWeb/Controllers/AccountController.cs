@@ -1,4 +1,5 @@
 ﻿using Lunggo.ApCommon.Identity.User;
+using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Core;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -151,15 +152,23 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CustomUser() { UserName = model.Email, Email = model.Email };
+                var user = new CustomUser()
+                {
+                    UserName = model.Email, 
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    await UserManager.SendEmailAsync(user.Id, null, callbackUrl);
+                    var currentUser = await UserManager.FindByEmailAsync(model.Email);
+                    await UserManager.AddToRoleAsync(currentUser.Id, "Admin");
+                    return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }
@@ -184,6 +193,7 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+        [Route("{langCode}/ForgotPassword")]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -387,7 +397,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return Redirect("/");
         }
 
         //
@@ -424,7 +434,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return Redirect("/");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

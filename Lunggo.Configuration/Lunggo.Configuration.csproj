@@ -233,6 +233,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />
     <None Include="packages.config" />

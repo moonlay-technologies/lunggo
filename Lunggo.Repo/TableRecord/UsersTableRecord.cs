@@ -7,8 +7,7 @@ namespace Lunggo.Repository.TableRecord
 {
     public class UsersTableRecord : Lunggo.Framework.Database.TableRecord
     {
-
-        private static List<ColumnMetadata> _recordMetadata;
+		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
@@ -120,6 +119,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserName");
 		    }
 		}
+		public String FirstName
+		{
+		    get { return _FirstName; }
+		    set
+		    {
+		        _FirstName = value;
+		        IncrementLog("FirstName");
+		    }
+		}
+		public String LastName
+		{
+		    get { return _LastName; }
+		    set
+		    {
+		        _LastName = value;
+		        IncrementLog("LastName");
+		    }
+		}
 
 		
 		private String _Id;
@@ -134,6 +151,8 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _LockoutEnabled;
 		private int? _AccessFailedCount;
 		private String _UserName;
+		private String _FirstName;
+		private String _LastName;
 
 
 		public static UsersTableRecord CreateNewInstance()
@@ -177,6 +196,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("LockoutEnabled", false),
 				new ColumnMetadata("AccessFailedCount", false),
 				new ColumnMetadata("UserName", false),
+				new ColumnMetadata("FirstName", false),
+				new ColumnMetadata("LastName", false),
 
             };
         }
@@ -186,7 +207,7 @@ namespace Lunggo.Repository.TableRecord
             _primaryKeys = _recordMetadata.Where(p => p.IsPrimaryKey).ToList();
         }
 
-        public override List<ColumnMetadata> GetMetadata()
+		public override List<ColumnMetadata> GetMetadata()
         {
             return _recordMetadata;
         }
@@ -200,5 +221,8 @@ namespace Lunggo.Repository.TableRecord
         {
             return _primaryKeys;
         }
+
+
+
     }
 }

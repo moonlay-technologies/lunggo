@@ -105,7 +105,9 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 PhoneNumberConfirmed = user.PhoneNumberConfirmed,
                 SecurityStamp = user.SecurityStamp,
                 TwoFactorEnabled = user.TwoFactorEnabled,
-                UserName = user.UserName
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
             return record;
         }
@@ -166,7 +168,10 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    return new TUser();
+                    var query = GetUserByIdQuery.GetInstance();
+                    var record = query.Execute(connection, new { Id = userId }).SingleOrDefault();
+                    var user = ToUser(record);
+                    return user;
                 }
 
             });
@@ -181,6 +186,8 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 Email = record.Email,
                 AccessFailedCount = record.AccessFailedCount,
                 UserName = record.UserName,
+                FirstName = record.FirstName,
+                LastName = record.LastName,
                 EmailConfirmed = record.EmailConfirmed,
                 Id = record.Id,
                 LockoutEnabled = record.LockoutEnabled,

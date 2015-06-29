@@ -9,7 +9,21 @@
                     <li><a href="#"><span class="fa fa-plane"></span> Flight</a></li>
                     <li><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
                     <li><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
-                    <li class="pull-right site-login"><a href="#">Login</a> | <a href="#">Register</a></li>
+                    <li class="pull-right site-login">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("Login", "Account", new {returnUrl = Request.RawUrl})">Login</a>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()">@User.Identity.Name (Log off)</a>
+                            }
+                        }
+                        | <a href="@Url.Action("Register", "Account")">Register</a>
+                    </li>
                 </ul>
             </div>
 

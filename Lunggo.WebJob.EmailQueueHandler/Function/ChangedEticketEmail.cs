@@ -1,36 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
-using log4net;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Core;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
-using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
-using Lunggo.Framework.Util;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
-namespace Lunggo.WebJob.EmailQueueHandler
+namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void EticketEmail([QueueTrigger("eticketemail")] string rsvNo)
+        public static void ChangedEticketEmail([QueueTrigger("changedeticketemail")] string rsvNo)
         {
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Eticket Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Changed Eticket Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Eticket);
-            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Invoice);
+            var file = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Eticket);
             var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Reservation);
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<FlightReservation>(summaryJson);
@@ -42,7 +34,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             var mailModel = new MailModel
             {
                 RecipientList = new[] {summary.ContactData.Email},
-                Subject = "[Travorama.com] Eticket Spesial untuk Anda",
+                Subject = "[Travorama.com] Jadwal Penerbangan Anda Berubah!!!",
                 FromMail = "jangan-reply-ke-sini@travorama.com",
                 FromName = "Travorama.com",
                 ListFileInfo = new List<FileInfo>
@@ -50,30 +42,23 @@ namespace Lunggo.WebJob.EmailQueueHandler
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "Eticket Anda - No. Reservasi " + summary.RsvNo + ".pdf",
-                        FileData = eticketFile
-                    },
-                    new FileInfo
-                    {
-                        ContentType = "PDF",
-                        FileName = "Invoice Anda - No. Reservasi " + summary.RsvNo + ".pdf",
-                        FileData = invoiceFile
+                        FileName = "Eticket Baru Anda - No. Reservasi " + summary.RsvNo + ".pdf",
+                        FileData = file
                     }
                 }
             };
             Console.WriteLine("Sending Eticket Email...");
-            mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightEticketEmail);
+            mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightChangedEticketEmail);
 
             Console.WriteLine("Deleting Data in Storage...");
             sw.Start();
             blobService.DeleteBlob(rsvNo, BlobContainer.Eticket);
-            blobService.DeleteBlob(rsvNo, BlobContainer.Invoice);
             blobService.DeleteBlob(rsvNo, BlobContainer.Reservation);
             sw.Stop();
             Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
             
-            Console.WriteLine("Done Processing Eticket Email for RsvNo " + rsvNo);
+            Console.WriteLine("Done Processing Changed Eticket Email for RsvNo " + rsvNo);
         }
     }
 }

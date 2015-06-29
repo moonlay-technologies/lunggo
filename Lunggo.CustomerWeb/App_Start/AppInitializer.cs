@@ -26,7 +26,7 @@ namespace Lunggo.CustomerWeb
             InitUniqueIdGenerator();
             InitRedisService();
             InitDatabaseService();
-            //InitQueueService();
+            InitQueueService();
             //InitLogger();
             InitDictionaryService();
             InitFlightService();

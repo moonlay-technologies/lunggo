@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Identity.RoleStore;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
+using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -13,6 +14,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Models
 {
@@ -89,7 +92,10 @@ namespace Lunggo.CustomerWeb.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference(Queue.UserConfirmationEmail);
+            var messageJson = JsonConvert.SerializeObject(message);
+            queue.AddMessage(new CloudQueueMessage(messageJson));
             return Task.FromResult(0);
         }
     }
