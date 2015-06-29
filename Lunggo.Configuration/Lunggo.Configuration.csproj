@@ -87,9 +87,6 @@
     <None Include="App.config" />
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
-    <None Include="Config\BackendWeb\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\BackendWeb\db.properties" />
     <None Include="Config\BackendWeb\domain.properties" />
     <None Include="Config\BackendWeb\freshdesk.properties" />
@@ -116,9 +113,6 @@
     </None>
     <None Include="Config\Worker.EticketHandler\Airline.csv" />
     <None Include="Config\Worker.EticketHandler\Airport.csv" />
-    <None Include="Config\Worker.EticketHandler\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\Worker.EticketHandler\db.properties" />
     <None Include="Config\Worker.EticketHandler\flight.properties">
       <SubType>Designer</SubType>
@@ -131,9 +125,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\Worker.EticketHandler\mystifly.properties">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\db.properties" />
@@ -185,9 +176,6 @@
     <None Include="Config\WebAPI\hotel.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebAPI\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebAPI\db.properties" />
     <None Include="Config\WebAPI\freshdesk.properties" />
     <None Include="Config\WebAPI\general.properties">
@@ -207,13 +195,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CustomerWeb\zendesk.properties" />
-    <None Include="Config\Driver\azurestorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\Driver\db.properties" />
-    <None Include="Config\CustomerWeb\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\Driver\freshdesk.properties" />
     <None Include="Config\Driver\general.properties">
       <SubType>Designer</SubType>
@@ -223,13 +205,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
-    <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
