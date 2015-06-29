@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
+using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
@@ -13,6 +14,8 @@ using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
+using WURFL;
+using WURFL.Config;
 
 
 namespace Lunggo.CustomerWeb
@@ -31,6 +34,7 @@ namespace Lunggo.CustomerWeb
             InitDictionaryService();
             InitFlightService();
             PaymentService.GetInstance().Init();
+            InitBrowserDetectionService();
         }
 
         private static void InitRedisService()
@@ -107,6 +111,13 @@ namespace Lunggo.CustomerWeb
         {
             var flight = FlightService.GetInstance();
             flight.Init();
+        }
+
+        private static void InitBrowserDetectionService()
+        {
+            var wurflDataFile = HttpContext.Current.Server.MapPath("~/App_Data/wurfl-latest.zip");
+            var service = BrowserDetectionService.GetInstance();
+            service.Init(wurflDataFile);
         }
     }
 }

@@ -175,7 +175,7 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult Eticket(string rsvNo)
-        {
+                            {
             var service = FlightService.GetInstance();
             var summary = service.GetDetails(rsvNo);
             return View(summary);
