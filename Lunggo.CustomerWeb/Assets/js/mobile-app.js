@@ -3,11 +3,48 @@
 $(document).ready(function() {
     siteHeaderFunctions();
     searchFormFunctions();
+    toggleElement();
 });
 
 var GeneralLib = {
     monthName : ["January","February","March","April","May","June","July","August","September","October","November","December"]
 };
+
+//------------------------------
+// General function
+
+// toggleElement on click
+function toggleElement() {
+    
+    $(document).ready(function() {
+        $('[data-function="toggle"]').each(function () {
+            $(this).attr('data-active','false');
+        });
+    });
+
+    // toggle element on click
+    $('[data-function="toggle"]').click(function (evt) {
+        evt.preventDefault();
+        if ($(this).attr('data-active') == 'false') {
+            // hide all current active element
+            $( $('[data-function="toggle"][data-active="true"]').attr('data-target') ).hide();
+            $('[data-function="toggle"][data-active="true"]').attr('data-active', 'false');
+            // show clicked element
+            $(this).attr('data-active', 'true');
+            $($(this).attr('data-target')).show();
+        } else {
+            $(this).attr('data-active', 'false');
+            $( $(this).attr('data-target') ).hide();
+        }
+    });
+
+}// toggleElement()
+
+// image slider
+function imageSlider() {
+    $('.image-slider');
+}
+
 
 //------------------------------
 // site header functions
@@ -82,7 +119,7 @@ function homePageFunctions() {
         showSearchForm( $(this).attr('data-target') );
     });
 
-}
+}// homePageFunction()
 
 //------------------------------
 // search form functions
@@ -504,9 +541,14 @@ function searchFormFunctions() {
 
             }
 
-
         }// flightValidation()
 
     }// flightFormFunctions()
 
-}
+}// searchFormFunction()
+
+//------------------------------
+// Hotel search page function
+function hotelSearchPageFunctions() {
+}// hotelSearchPageFunctions()
+

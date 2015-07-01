@@ -7,22 +7,129 @@
     
     <section class="flight-search-param">
         <div class="param">
-            <span><b>Jakarta</b>, 1 room, <b>12 Maret 2015</b></span>
+            <span><b>Jakarta</b> to <b>Bali</b>, <b>12 Maret 2015</b>, Single Flight</span>
         </div>
-        <a href="#" class="change-hotel-param">CHANGE</a>
+        <a href="#" class="change-hotel-param" data-function="toggle" data-target=".flight-search-form-wrapper">CHANGE</a>
         <!-- .flight-search form start -->
         <section class="flight-search-form-wrapper">
-            
+            <form class="search-flight-form form-horizontal" action="/id/flight/SearchResultList">
+                <h1><b>FLIGHT</b> SEARCH</h1>
+                <div class="form-group">
+                    <span class="fa fa-plane col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span class="form-control flight-origin" data-trigger="show-formset" data-target=".flight-origin">Start Here</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="fa fa-plane col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span class="form-control flight-destination" data-trigger="show-formset" data-target=".flight-destination">Destination</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="fa fa-calendar col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span class="form-control flight-departure-date" data-trigger="show-formset" data-target=".flight-departure-date">Departure Date</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span>Roundtrip ?</span>
+
+                        <div class="flighttype-select">
+                            <label for="flighttype-return" class="active">
+                                <input type="radio" name="flightType" value="RoundTrip" id="flighttype-return" checked /> <span>Yes</span>
+                            </label>
+                            <label for="flighttype-oneway">
+                                <input type="radio" name="flightType" value="OneWay" id="flighttype-oneway" /> <span>No</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="fa fa-calendar col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span class="form-control flight-return-date" data-trigger="show-formset" data-target=".flight-departure-date">Return Date</span>
+                        <span class="form-control flight-oneway hidden">One Way Flight</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="fa fa-user col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <span class="form-control flight-passenger" data-trigger="show-formset" data-target=".flight-passenger"><span class="flight-passenger-adult">1</span> <img src="/Assets/images/adult-icon.png" alt="Adult" /> <span class="flight-passenger-child">0</span> <img src="/Assets/images/child-icon.png" alt="Child" /> <span class="flight-passenger-infant">0</span> <img src="/Assets/images/infant-icon.png" alt="Infant" /></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <input type="text" name="info" value="" class="flight-info hidden" />
+                        <input type="submit" class="btn btn-yellow" value="SEARCH">
+                    </div>
+                </div>
+            </form>
         </section><!-- .flight-search-form-wrapper -->
     </section><!-- .flight-serach-param -->
     
     <section class="flight-search-filter">
         <div class="flight-search-trigger">
-            <a class="flight-filter-trigger">FILTER</a>
-            <a class="flight-sort-trigger">SORT</a>
+            <a class="flight-filter-trigger" data-function="toggle" data-target=".flight-filter-wrapper">FILTER</a>
+            <a class="flight-sort-trigger" data-function="toggle" data-target=".flight-sort-wrapper">SORT</a>
         </div><!-- .flight-search-filter-trigger -->
+        <div class="flight-search-content">
+            <div class="flight-filter-wrapper">
+                <div class="filter-group filter-transit">
+                    <h4 class="filter-title">Filter by Transit:</h4>
+                    <div class="filter-content">
+                        <label>
+                            <input type="checkbox" value="" /> <span>Direct Flight</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="" /> <span>1 Stop</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="" /> <span>more than 1 stop</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-group filter-price">
+                    <h4 class="filter-title">Filter by Price:</h4>
+                    <div class="filter-content">
+                        -- insert price slider here --
+                    </div>
+                </div>
+                <div class="filter-group filter-airline">
+                    <h4 class="filter-title">Filter by Airline:</h4>
+                    <div class="filter-content">
+                        -- insert airline filter here --
+                    </div>
+                </div>
+                <div class="filter-group filter-onward">
+                    <h4 class="filter-title">Filter by onward flight time:</h4>
+                    <div class="filter-content">
+                        -- insert onward flight slider here --
+                    </div>
+                </div>
+                <div class="filter-group filter-return">
+                    <h4 class="filter-title">Filter by return flight time:</h4>
+                    <div class="filter-content">
+                        -- insert return flight slider here --
+                    </div>
+                </div>
+            </div><!-- .flight-filter-wrapper -->
+            <div class="flight-sort-wrapper">
+                <a href="#">by Price - Lowest to Highest</a>
+                <a href="#">by Price - Highest to Lowest</a>
+                <a href="#">by Duration - Shortest to Longest</a>
+                <a href="#">by Duration - Longest to Shortest</a>
+                <a href="#">by Departure - Earliest to Latest</a>
+                <a href="#">by Departure - Latest to Earliest</a>
+                <a href="#">by Arrival - Earliest to Latest</a>
+                <a href="#">by Arrival - Latest to Earliest</a>
+            </div><!-- .flight-sort-wrapper -->
+        </div><!-- .flight-search-content -->
     </section><!-- .flight-search-filter -->
     
+
     <section class="flight-search-result">
     
         @for (var i = 1; i <= 10; i++)
