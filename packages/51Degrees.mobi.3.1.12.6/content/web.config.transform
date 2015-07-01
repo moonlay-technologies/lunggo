@@ -1,0 +1,9 @@
+<configuration>
+  <system.webServer>
+    <modules>
+      <!-- IIS 7.X - Registers 51Degrees Detector Module. Without this call to 51Degrees.core.js won't work.-->
+      <remove name="Detector"/>
+      <add name="Detector" type="FiftyOne.Foundation.Mobile.Detection.DetectorModule, FiftyOne.Foundation"/>
+    </modules>
+  </system.webServer>
+</configuration>

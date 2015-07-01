@@ -345,10 +345,27 @@ namespace Lunggo.CustomerWeb.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 case SignInStatus.Failure:
                 default:
-                    // If the user does not have an account, then prompt the user to create an account
+                    var user = new CustomUser
+                    {
+                        UserName = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:email").Value,
+                        Email = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:email").Value,
+                        FirstName = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:first_name").Value,
+                        LastName = loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:last_name").Value,
+                        EmailConfirmed = bool.Parse(loginInfo.ExternalIdentity.Claims.First(claim => claim.Type == "urn:facebook:verified").Value),
+                    };
+                    var createResult = await UserManager.CreateAsync(user);
+                    if (createResult.Succeeded)
+                    {
+                        createResult = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (createResult.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                    }
+                    AddErrors(createResult);
                     ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return RedirectToAction("Login");
             }
         }
 

@@ -19,10 +19,8 @@ using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class FlightController : Controller
     {
-        [AllowAnonymous]
         public ActionResult SearchResultList(FlightSearchData search)
         {
             return View(search);

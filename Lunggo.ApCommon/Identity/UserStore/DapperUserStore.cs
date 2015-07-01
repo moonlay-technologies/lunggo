@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Query;
 using Lunggo.ApCommon.Sequence;
@@ -639,7 +641,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
             {
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
-                    var query = GetUserRolesByRoleIdAndUserId.GetInstance();
+                    var query = GetUserRolesByRoleIdAndUserIdQuery.GetInstance();
                     recordAny = query.Execute(connection, new {RoleId = role.Id, UserId = user.Id}).SingleOrDefault();
                     if (recordAny == null)
                         any = false;

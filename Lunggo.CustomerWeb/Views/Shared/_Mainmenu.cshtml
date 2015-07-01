@@ -1,4 +1,7 @@
-﻿<nav class="main-menu">
+﻿@using Lunggo.ApCommon.Identity.User
+@using Microsoft.AspNet.Identity
+@using RazorEngine.Compilation.ImpromptuInterface.Optimization
+<nav class="main-menu">
     <div class="container">
         <div class="row">
 
@@ -9,21 +12,25 @@
                     <li><a href="#"><span class="fa fa-plane"></span> Flight</a></li>
                     <li><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
                     <li><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
-                    <li class="pull-right site-login">
-                        @if (!User.Identity.IsAuthenticated)
-                        {
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="pull-right site-login">
                             <a href="@Url.Action("Login", "Account", new {returnUrl = Request.RawUrl})">Login</a>
-                        }
-                        else
+                            | <a href="@Url.Action("Register", "Account")">Register</a>
+                        </li>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                         {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <a href="javascript:document.getElementById('logoutForm').submit()">@User.Identity.Name (Log off)</a>
-                            }
+                            @Html.AntiForgeryToken()
+                            <li class="pull-right site-login">
+                                Hi, @User.Identity.GetFirstName() (<a href="javascript:document.getElementById('logoutForm').submit()">Log Off</a>)
+                            </li>
                         }
-                        | <a href="@Url.Action("Register", "Account")">Register</a>
-                    </li>
+                    }
+
                 </ul>
             </div>
 

@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Identity.Role;
 using Lunggo.ApCommon.Query;
 using Lunggo.ApCommon.Sequence;
