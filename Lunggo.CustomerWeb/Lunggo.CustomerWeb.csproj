@@ -2069,6 +2069,9 @@
     <Content Include="Views\MobileTemplate\LoginPage.cshtml" />
     <Content Include="Views\MobileTemplate\RegisterPage.cshtml" />
     <Content Include="Views\MobileTemplate\UserAccountPage.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout1.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout2.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout3.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>

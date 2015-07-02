@@ -18,8 +18,10 @@
             var mySwiper = new Swiper('.swiper-container', {
                 // Optional parameters
                 direction: 'horizontal',
-                loop: false
-            })
+                loop: false,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+            });
         });
     </script>
 }
@@ -36,6 +38,8 @@
                 <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
                 <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
             </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </section><!-- .hotel-image -->
     <section class="hotel-room">

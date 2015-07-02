@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    ViewBag.Title = "Home Page";
+}
+
+<section class="page group-checkout group-flight-checkout customer-detail-page">
+    <section class="checkout-progress">
+        <div class="checkout-step">
+            <div>Customer Detail</div>
+            <div>Passenger Detail</div>
+            <div>Review</div>
+            <div>Payment</div>
+            <div>Ticket</div>
+        </div>
+        <div class="checkout-bar">
+            <div class="checkout-current-progress"></div>
+            <div class="bar-1 active"></div>
+            <div class="bar-2"></div>
+            <div class="bar-3"></div>
+            <div class="bar-4"></div>
+            <div class="bar-5"></div>
+        </div>
+    </section><!-- .checkout-progress -->
+    <section class="custumer-detail">
+        <h1 class="section-title">CUSTOMER DETAIL</h1>
+        <div class="section-content container">
+            <form class="form form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-12">Name (Buyer):</label>
+                    <div class="col-xs-12">
+                        <input type="text" name="customerName" value="" class="form-control" placeholder="Enter your full name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">Phone number:</label>
+                    <div class="col-xs-12">
+                        <input type="number" name="customerName" value="" class="form-control" placeholder="ex: 08212345678" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">Phone number:</label>
+                    <div class="col-xs-12">
+                        <input type="email" name="customerName" value="" class="form-control" placeholder="ex: your_mail@domain.com" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="submit" class="btn btn-yellow btn-block-lg" value="CONTINUE" />
+                    </div>
+                </div>
+            </form>
+        </div><!-- .section-content -->
+    </section><!-- .customer-detail -->
+</section><!-- .checkout-page -->
