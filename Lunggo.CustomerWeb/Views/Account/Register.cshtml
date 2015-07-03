@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout_account.cshtml";
     ViewBag.Title = "Hotel Detail";
+    var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
+    var facebookProvider = loginProviders.First();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -90,9 +92,13 @@
                             </div>
                         </div>
                     </div>
-                    <section class="facebook-login text-center">
-                        <a href="#"><span class="fa fa-facebook"></span> Sign Up with Facebook</a>
-                    </section>
+                    @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <section class="facebook-login text-center">
+                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> Sign Up with Facebook</button>
+                        </section>
+                    }
                 </section>
             </div>
 

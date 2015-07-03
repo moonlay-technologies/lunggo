@@ -1,6 +1,5 @@
 ﻿using Lunggo.Framework.Database;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model;
-using Lunggo.Hotel.ViewModels;
 using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Query

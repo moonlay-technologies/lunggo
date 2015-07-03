@@ -107,6 +107,7 @@
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
+    <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
     <None Include="Config\WebAPI\azureStorage.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />

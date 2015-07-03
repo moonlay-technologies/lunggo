@@ -1,5 +1,5 @@
-﻿using Lunggo.CustomerWeb.Areas.UW100.Models;
-using Lunggo.Hotel.ViewModels;
+﻿using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.CustomerWeb.Areas.UW100.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2019,7 +2019,7 @@ hr {
       right: 0; }
   .user-page-login .user-login .facebook-login {
     margin: 30px 0; }
-    .user-page-login .user-login .facebook-login a {
+    .user-page-login .user-login .facebook-login button {
       background: #3b5998;
       color: #fff;
       padding: 10px 20px;

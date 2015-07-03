@@ -15,7 +15,6 @@ using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.Flight.Dictionary;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 

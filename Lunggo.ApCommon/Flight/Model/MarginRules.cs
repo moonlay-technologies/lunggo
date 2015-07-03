@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.Flight.Dictionary;
 
 namespace Lunggo.ApCommon.Flight.Model
 {

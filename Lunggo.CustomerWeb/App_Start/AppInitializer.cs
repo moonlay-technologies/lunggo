@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Web;
+using System.Web.WebPages;
 using log4net;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
@@ -33,9 +34,10 @@ namespace Lunggo.CustomerWeb
             //InitLogger();
             InitDictionaryService();
             InitFlightService();
-            PaymentService.GetInstance().Init();
+            InitPaymentService();
             InitBrowserDetectionService();
-        }
+            InitDisplayModes();
+        }        
 
         private static void InitRedisService()
         {
@@ -113,11 +115,30 @@ namespace Lunggo.CustomerWeb
             flight.Init();
         }
 
+        private static void InitPaymentService()
+        {
+            var payment = PaymentService.GetInstance();
+            payment.Init();
+        }
+
         private static void InitBrowserDetectionService()
         {
             var wurflDataFile = HttpContext.Current.Server.MapPath("~/App_Data/wurfl-latest.zip");
             var service = BrowserDetectionService.GetInstance();
             service.Init(wurflDataFile);
+        }
+
+        private static void InitDisplayModes()
+        {
+            var configManager = ConfigManager.GetInstance();
+            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            DisplayModeProvider.Instance.Modes.Clear();
+            DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
+            {
+                ContextCondition = context =>
+                                context.Request.Url.Host == mobileUrl
+            });
+            DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
         }
     }
 }

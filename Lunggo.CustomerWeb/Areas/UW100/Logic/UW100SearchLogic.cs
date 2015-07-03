@@ -2,7 +2,6 @@
 using Lunggo.ApCommon.Query;
 using Lunggo.CustomerWeb.Areas.UW100.Models;
 using Lunggo.Framework.Database;
-using Lunggo.Hotel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
