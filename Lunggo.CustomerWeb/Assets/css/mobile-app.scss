@@ -11,7 +11,7 @@
     width:100%;
 }
 
-$default-border :1px solid #ddd;
+$border-default :1px solid #ddd;
 
 /* FONT FACE */
 @font-face {
@@ -39,7 +39,7 @@ $default-border :1px solid #ddd;
 }
 .din {font-family:'din', helvetica, arial, sans-serif;}
 
-$main-blue:#2eb4e7;
+$color-main-blue:#2eb4e7;
 
 html {}
 body {font-family:'din',sans-serif; padding-top:70px;}
@@ -110,7 +110,7 @@ h1 {font-size:30px;}
 /*-----------------------------*/
 /* site footer */
 .site-footer {background:#fff;
-    .footer-adv {padding:20px 0; color:#000; border-top:$default-border;
+    .footer-adv {padding:20px 0; color:#000; border-top:$border-default;
         h4 {margin-bottom:0;}
         img {margin-bottom:15px;}
     }
@@ -140,7 +140,7 @@ h1 {font-size:30px;}
         &.active {display:block;}
         .home-search-header {
             &:before, &:after {@include clearfix;}
-            button {display:block; float:left; width:50%; background:$main-blue; border:none; font-size:16px; padding:15px 0;
+            button {display:block; float:left; width:50%; background:$color-main-blue; border:none; font-size:16px; padding:15px 0;
                 &.active {background:none;}
             }
         }
@@ -219,7 +219,7 @@ h1 {font-size:30px;}
             // hotel search sort
             .hotel-sort-wrapper {background:#616161; color:#fff; display:none;
                 a {display:block; color:#fff; padding:15px 0; margin:0 15px; text-align:center;}
-                a + a {border-top:$default-border;}
+                a + a {border-top:$border-default;}
             }
         }
     }
@@ -266,7 +266,7 @@ h1 {font-size:30px;}
                 }
             }
         }
-        .room+.room {border-top:$default-border;}
+        .room+.room {border-top:$border-default;}
     }
     .hotel-facilities {}
     .hotel-description {}
@@ -323,7 +323,7 @@ h1 {font-size:30px;}
             // flight sort
             .flight-sort-wrapper {background:#616161; color:#fff; display:none;
                 a {display:block; color:#fff; padding:15px 0; margin:0 15px; text-align:center;}
-                a + a {border-top:$default-border;}
+                a + a {border-top:$border-default;}
             }
         }
     }
@@ -340,7 +340,7 @@ h1 {font-size:30px;}
                 }
                 &:before, &:after {@include clearfix;}
                 .flight-onward {}
-                .flight-return {text-align:right; border-left:$default-border;}
+                .flight-return {text-align:right; border-left:$border-default;}
             }
             .flight-action {clear:both;
                 h5 {margin-bottom:5px;}
@@ -366,14 +366,14 @@ h1 {font-size:30px;}
                 .flight-book {padding-top:10px; padding:3px 5px;}
             }
         }
-        .flight + .flight {border-top:$default-border;}
+        .flight + .flight {border-top:$border-default;}
     }
 }
 
 
 /*-----------------------------*/
 /* register and login page */
-.auth-page {border-bottom:$default-border; background:url(../images/grey-bg.png) top center repeat-x; padding:30px 0;
+.auth-page {border-bottom:$border-default; background:url(../images/grey-bg.png) top center repeat-x; padding:30px 0;
     .page-title {margin-top:0; margin-bottom:5px;}
     .page-subtitle {margin-top:0;}
     form {
@@ -389,7 +389,7 @@ h1 {font-size:30px;}
 /*-----------------------------*/
 /* user account page */
 .user-account-page {
-    .section-title {background:$main-blue; color:#fff; text-align:center; margin:0; font-size:16px; padding:5px 0; font-weight:bold;}
+    .section-title {background:$color-main-blue; color:#fff; text-align:center; margin:0; font-size:16px; padding:5px 0; font-weight:bold;}
     .page-nav {
         a {display:block; width:33.3333%; float:left; background:#666; color:#fff; font-weight:bold; padding:10px; padding-left:30px; position:relative;
             &.active {background:#878787;}
@@ -454,10 +454,32 @@ h1 {font-size:30px;}
                 td {width:50%; padding:5px 10px;}
                 td+td {text-align:right;}
                 tfoot {
-                    td {background:$main-blue; color:#fff;}
+                    td {background:$color-main-blue; color:#fff;}
                 }
             }
         }
+    }
+    // payment page
+    &.payment-page {padding-bottom:0;
+        .section-title {margin-bottom:0;}
+        .payment {border-top:$border-default; border-bottom:$border-default; padding:10px 0;
+            &+.payment {border-top:0; border-bottom:$border-default;}
+            .payment-name {
+                h2 {margin:0; font-size:14px;}
+            }
+            .payment-button {text-align:right;
+                a {font-weight:bold;}
+            }
+        }
+    }
+    // ticket page
+    &.ticket-page {padding-bottom:0;
+        .section-content {padding:0 15px;}
+        .ticket-detail {margin-bottom:15px;}
+        .order-number {border-bottom:1px solid #ccc;}
+        .passenger-detail {border-bottom:1px solid #ccc;}
+        .flight-detail {border-bottom:1px solid #ccc;}
+        .payment-detail {}
     }
 }
 
@@ -478,17 +500,17 @@ h1 {font-size:30px;}
         }
         // room count
         &.hotel-room {
-            .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
+            .btn {background:$color-main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
             .btn.close-formset {width:100%; @include border-radius(0);}
-            & .form-content>div {border-bottom:$default-border; padding:10px 0; text-align:center;
+            & .form-content>div {border-bottom:$border-default; padding:10px 0; text-align:center;
                 span {padding:10px 0; display:inline-block;}
             }
         }
         // flight passenger
         &.flight-passenger {
-            .btn {background:$main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
+            .btn {background:$color-main-blue; color:#fff; font-size:24px; padding:0 10px; @include border-radius(50px);}
             .btn.close-formset {width:100%; @include border-radius(0);}
-            & .form-content>div {border-bottom:$default-border; padding:10px 0; text-align:center;
+            & .form-content>div {border-bottom:$border-default; padding:10px 0; text-align:center;
                 span {background-position:left center; padding:10px 0; padding-left:30px; background-repeat:no-repeat; display:inline-block;}
             }
             .adult-passenger {
@@ -508,7 +530,7 @@ h1 {font-size:30px;}
             .ui-datepicker-prev, .ui-datepicker-next {}
             td a, td span {height:50px;}
             .ui-state-default {background:#ddd;}
-            .ui-state-active {background:$main-blue;}
+            .ui-state-active {background:$color-main-blue;}
         }
     }
 

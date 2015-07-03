@@ -954,6 +954,36 @@ h1 {
       .group-flight-checkout.review-page .flight-price table tfoot td {
         background: #2eb4e7;
         color: #fff; }
+  .group-flight-checkout.payment-page {
+    padding-bottom: 0; }
+    .group-flight-checkout.payment-page .section-title {
+      margin-bottom: 0; }
+    .group-flight-checkout.payment-page .payment {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0; }
+      .group-flight-checkout.payment-page .payment + .payment {
+        border-top: 0;
+        border-bottom: 1px solid #ddd; }
+      .group-flight-checkout.payment-page .payment .payment-name h2 {
+        margin: 0;
+        font-size: 14px; }
+      .group-flight-checkout.payment-page .payment .payment-button {
+        text-align: right; }
+        .group-flight-checkout.payment-page .payment .payment-button a {
+          font-weight: bold; }
+  .group-flight-checkout.ticket-page {
+    padding-bottom: 0; }
+    .group-flight-checkout.ticket-page .section-content {
+      padding: 0 15px; }
+    .group-flight-checkout.ticket-page .ticket-detail {
+      margin-bottom: 15px; }
+    .group-flight-checkout.ticket-page .order-number {
+      border-bottom: 1px solid #ccc; }
+    .group-flight-checkout.ticket-page .passenger-detail {
+      border-bottom: 1px solid #ccc; }
+    .group-flight-checkout.ticket-page .flight-detail {
+      border-bottom: 1px solid #ccc; }
 
 /*-----------------------------*/
 /* form set */
