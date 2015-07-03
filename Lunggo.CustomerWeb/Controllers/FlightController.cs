@@ -13,6 +13,7 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Filter;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Database;
 using RestSharp.Serializers;
@@ -21,6 +22,7 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
+        [DeviceDetectionFilter]
         public ActionResult SearchResultList(FlightSearchData search)
         {
             return View(search);

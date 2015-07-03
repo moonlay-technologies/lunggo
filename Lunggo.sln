@@ -58,8 +58,6 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Lunggo.Worker", "Lunggo.Wor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Worker.EticketHandler", "Lunggo.Worker.EticketHandler\Lunggo.Worker.EticketHandler.csproj", "{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.csproj", "{B82ADED9-857A-4983-A6D5-79D5BAE28F60}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -262,16 +260,6 @@ Global
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|ARM.ActiveCfg = Release|Any CPU
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x64.ActiveCfg = Release|Any CPU
 		{AA59568E-B29D-4390-9D0E-8CE850F7DCCE}.Release|x86.ActiveCfg = Release|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Release|x64.ActiveCfg = Release|Any CPU
-		{B82ADED9-857A-4983-A6D5-79D5BAE28F60}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

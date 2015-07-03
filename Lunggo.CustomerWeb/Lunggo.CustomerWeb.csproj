@@ -54,9 +54,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FiftyOne.Foundation">
-      <HintPath>..\packages\51Degrees.mobi.3.1.12.6\lib\NET40\FiftyOne.Foundation.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -276,10 +273,6 @@
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -839,14 +832,12 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\css\mobile-app.scss" />
-    <Content Include="51Degrees.config" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Mobile\Default.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
@@ -2087,6 +2078,9 @@
     <Content Include="Views\MobileTemplate\LoginPage.cshtml" />
     <Content Include="Views\MobileTemplate\RegisterPage.cshtml" />
     <Content Include="Views\MobileTemplate\UserAccountPage.cshtml" />
+    <Content Include="Views\Search\FlightSearchPage.cshtml" />
+    <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
+    <Content Include="Views\UW000TopPage\Index.mobile.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

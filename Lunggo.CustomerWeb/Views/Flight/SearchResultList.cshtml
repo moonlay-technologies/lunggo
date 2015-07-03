@@ -55,7 +55,8 @@
             destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.DestinationAirport));
         }
 
-        data = new FlightSearchData.Complete
+        data = new FlightSearchD
+        ata.Complete
         {
             AdultCount = int.Parse(infoPart.Substring(0, 1)),
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
