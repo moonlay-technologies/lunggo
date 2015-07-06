@@ -829,8 +829,14 @@ h1 {
   padding: 5px 0;
   font-weight: bold; }
 
-.user-account-page .page-nav a {
+.user-account-page .page-nav:before, .user-account-page .page-nav:after {
+  content: "";
+  clear: both;
   display: block;
+  width: 100%; }
+
+.user-account-page .page-nav a {
+  display: table-cell;
   width: 33.3333%;
   float: left;
   background: #666;
@@ -838,13 +844,92 @@ h1 {
   font-weight: bold;
   padding: 10px;
   padding-left: 30px;
-  position: relative; }
+  position: relative;
+  line-height: 100%;
+  height: 50px; }
+  .user-account-page .page-nav a + a {
+    border-left: 1px solid #444; }
   .user-account-page .page-nav a.active {
     background: #878787; }
   .user-account-page .page-nav a .fa {
     position: absolute;
     left: 10px;
     top: 15px; }
+
+.user-account-page .page-content {
+  padding: 10px 0; }
+  .user-account-page .page-content .tab {
+    display: none; }
+    .user-account-page .page-content .tab.active {
+      display: block; }
+
+.user-account-page .order-wrapper .order {
+  padding: 10px 15px; }
+  .user-account-page .order-wrapper .order.pending {
+    background: #f9eedc; }
+  .user-account-page .order-wrapper .order.canceled {
+    background: #ffefef; }
+  .user-account-page .order-wrapper .order + .order {
+    border-top: 1px solid #ddd; }
+  .user-account-page .order-wrapper .order.flight .fa-building {
+    display: none; }
+  .user-account-page .order-wrapper .order.flight .order-subtitle {
+    font-weight: bold;
+    font-style: normal; }
+  .user-account-page .order-wrapper .order.hotel .fa-plane {
+    display: none; }
+  .user-account-page .order-wrapper .order .order-header .fa {
+    color: #2eb4e7;
+    font-size: 32px; }
+  .user-account-page .order-wrapper .order .order-header:before, .user-account-page .order-wrapper .order .order-header:after {
+    content: "";
+    clear: both;
+    display: block;
+    width: 100%; }
+  .user-account-page .order-wrapper .order .order-header .order-type {
+    float: left;
+    width: 10%; }
+  .user-account-page .order-wrapper .order .order-header .order-main {
+    float: left;
+    width: 90%; }
+  .user-account-page .order-wrapper .order .order-title {
+    color: #2eb4e7;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 0; }
+  .user-account-page .order-wrapper .order .order-subtitle {
+    color: #666;
+    font-style: italic;
+    line-height: 100%; }
+  .user-account-page .order-wrapper .order .order-content {
+    margin-top: 10px; }
+    .user-account-page .order-wrapper .order .order-content:before, .user-account-page .order-wrapper .order .order-content:after {
+      content: "";
+      clear: both;
+      display: block;
+      width: 100%; }
+    .user-account-page .order-wrapper .order .order-content > div {
+      display: block;
+      float: left; }
+    .user-account-page .order-wrapper .order .order-content .order-detail {
+      width: 70%; }
+      .user-account-page .order-wrapper .order .order-content .order-detail table {
+        width: 100%; }
+        .user-account-page .order-wrapper .order .order-content .order-detail table td {
+          width: 50%; }
+        .user-account-page .order-wrapper .order .order-content .order-detail table td:first-child {
+          font-weight: bold; }
+    .user-account-page .order-wrapper .order .order-content .order-action {
+      width: 30%; }
+      .user-account-page .order-wrapper .order .order-content .order-action a {
+        display: block;
+        text-align: center;
+        padding: 5px;
+        margin-bottom: 15px;
+        color: #fff;
+        font-weight: bold; }
+      .user-account-page .order-wrapper .order .order-content .order-action .refund {
+        background: #ccc; }
 
 /*-----------------------------*/
 /* checkout page */

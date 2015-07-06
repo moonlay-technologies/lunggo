@@ -4,6 +4,7 @@ $(document).ready(function() {
     siteHeaderFunctions();
     searchFormFunctions();
     toggleElement();
+    tabFunction();
 });
 
 var GeneralLib = {
@@ -12,6 +13,19 @@ var GeneralLib = {
 
 //------------------------------
 // General function
+
+// tab function
+function tabFunction() {
+
+    $('[data-function="tab"]').click(function (evt) {
+        $('[data-function="tab"].active').removeClass('active');
+        $(this).addClass('active');
+        evt.preventDefault();
+        $('.tab.active').removeClass('active');
+        $('.tab'+$(this).attr('data-target')).addClass('active');
+    });
+
+}
 
 // toggleElement on click
 function toggleElement() {
