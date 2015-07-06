@@ -708,41 +708,52 @@ h1 {
 
 .flight-search-page .flight-search-result .flight.return-flight {
   padding: 10px;
-  color: #333; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-container {
-    margin-bottom: 20px; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-container > div {
-      display: block;
-      width: 50%;
-      float: left;
-      font-size: 12px; }
-      .flight-search-page .flight-search-result .flight.return-flight .flight-container > div > h5 {
-        font-size: 16px; }
-      .flight-search-page .flight-search-result .flight.return-flight .flight-container > div .flight-name {
-        font-size: 14px; }
-        .flight-search-page .flight-search-result .flight.return-flight .flight-container > div .flight-name img {
-          height: 30px; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-container:before, .flight-search-page .flight-search-result .flight.return-flight .flight-container:after {
-      content: "";
-      clear: both;
-      display: block;
-      width: 100%; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-container .flight-return {
-      text-align: right;
-      border-left: 1px solid #ddd; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-action {
-    clear: both; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-action h5 {
-      margin-bottom: 5px; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-action h4 {
-      font-weight: bold;
-      margin: 0; }
-    .flight-search-page .flight-search-result .flight.return-flight .flight-action .flight-book {
-      float: right; }
+  color: #333;
+  position: relative;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px; }
+  .flight-search-page .flight-search-result .flight.return-flight:before, .flight-search-page .flight-search-result .flight.return-flight:after {
+    content: "";
+    clear: both;
+    display: block;
+    width: 100%; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-header .flight-airline img {
+    height: 30px;
+    margin-right: 15px; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-header .flight-price {
+    font-weight: bold;
+    font-size: 16px; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content:before, .flight-search-page .flight-search-result .flight.return-flight .flight-content:after {
+    content: "";
+    clear: both;
+    display: block;
+    width: 100%; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content > div {
+    float: left;
+    display: block; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-origin {
+    width: 35%; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-destination {
+    width: 35%; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-duration {
+    text-align: right;
+    width: 30%; }
+  .flight-search-page .flight-search-result .flight.return-flight .flight-content .time {
+    font-weight: bold;
+    display: block; }
 
 .flight-search-page .flight-search-result .flight.single-flight {
   padding: 10px;
-  color: #333; }
+  color: #333;
+  border-top: 1px solid #ddd; }
   .flight-search-page .flight-search-result .flight.single-flight:before, .flight-search-page .flight-search-result .flight.single-flight:after {
     content: "";
     clear: both;
@@ -776,9 +787,6 @@ h1 {
     .flight-search-page .flight-search-result .flight.single-flight .flight-action .flight-book {
       padding-top: 10px;
       padding: 3px 5px; }
-
-.flight-search-page .flight-search-result .flight + .flight {
-  border-top: 1px solid #ddd; }
 
 /*-----------------------------*/
 /* register and login page */
@@ -857,7 +865,7 @@ h1 {
     top: 15px; }
 
 .user-account-page .page-content {
-  padding: 10px 0; }
+  padding-top: 10px; }
   .user-account-page .page-content .tab {
     display: none; }
     .user-account-page .page-content .tab.active {

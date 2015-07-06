@@ -330,26 +330,29 @@ h1 {font-size:30px;}
     // flight search result
     .flight-search-result {
         // return flight
-        .flight.return-flight {padding:10px; color:#333;
-            .flight-container {margin-bottom:20px;
-                &>div {display:block; width:50%; float:left; font-size:12px;
-                    &>h5 {font-size:16px;}
-                    .flight-name {font-size:14px;
-                        img {height:30px;}
-                    }
+        .flight.return-flight {padding:10px; color:#333; position:relative; border-top:$border-default; border-bottom:$border-default; margin-bottom:15px;
+            &:before,&:after {@include clearfix;}
+            .flight-link {position:absolute; width:100%; height:100%; top:0; left:0; z-index:99;}
+            .flight-header {
+                .flight-airline {
+                    img {height:30px; margin-right:15px;}
                 }
-                &:before, &:after {@include clearfix;}
-                .flight-onward {}
-                .flight-return {text-align:right; border-left:$border-default;}
+                .flight-price {font-weight:bold; font-size:16px;}
             }
-            .flight-action {clear:both;
-                h5 {margin-bottom:5px;}
-                h4 {font-weight:bold; margin:0;}
-                .flight-book {float:right;}
+            .flight-content {
+                &:before,&:after {@include clearfix;}
+                &>div {float:left; display:block;}
+                .flight-origin {width:35%;}
+                .flight-destination {width:35%;}
+                .flight-duration {text-align:right; width:30%;}
+                // ---
+                .time {font-weight:bold; display:block;}
+                .airport {}
+                .transit {}
             }
         }
         // single flight
-        .flight.single-flight {padding:10px; color:#333;
+        .flight.single-flight {padding:10px; color:#333; border-top:$border-default;
             &:before, &:after {@include clearfix;}
             .flight-name {font-size:16px;
                 img {height:35px;}
@@ -366,7 +369,6 @@ h1 {font-size:30px;}
                 .flight-book {padding-top:10px; padding:3px 5px;}
             }
         }
-        .flight + .flight {border-top:$border-default;}
     }
 }
 
@@ -398,7 +400,7 @@ h1 {font-size:30px;}
             .fa {position:absolute; left:10px; top:15px;}
         }
     }
-    .page-content {padding:10px 0;
+    .page-content {padding-top:10px;
         .tab {display:none;
             &.active {display:block;}
         }
