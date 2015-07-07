@@ -706,87 +706,100 @@ h1 {
   .flight-search-page .flight-search-filter .flight-search-content .flight-sort-wrapper a + a {
     border-top: 1px solid #ddd; }
 
-.flight-search-page .flight-search-result .flight.return-flight {
+.flight-search-page .flight-search-result .flight {
   padding: 10px;
   color: #333;
   position: relative;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px; }
-  .flight-search-page .flight-search-result .flight.return-flight:before, .flight-search-page .flight-search-result .flight.return-flight:after {
+  .flight-search-page .flight-search-result .flight:before, .flight-search-page .flight-search-result .flight:after {
     content: "";
     clear: both;
     display: block;
     width: 100%; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-link {
+  .flight-search-page .flight-search-result .flight .flight-link {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: 99; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-header .flight-airline img {
+  .flight-search-page .flight-search-result .flight .flight-header .flight-airline img {
     height: 30px;
-    margin-right: 15px; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-header .flight-price {
+    margin-right: 5px; }
+  .flight-search-page .flight-search-result .flight .flight-header .flight-price {
     font-weight: bold;
-    font-size: 16px; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content:before, .flight-search-page .flight-search-result .flight.return-flight .flight-content:after {
+    font-size: 16px;
+    color: #2eb4e7; }
+  .flight-search-page .flight-search-result .flight .flight-content:before, .flight-search-page .flight-search-result .flight .flight-content:after {
     content: "";
     clear: both;
     display: block;
     width: 100%; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content > div {
+  .flight-search-page .flight-search-result .flight .flight-content > div {
     float: left;
     display: block; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-origin {
+  .flight-search-page .flight-search-result .flight .flight-content .flight-origin {
     width: 35%; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-destination {
+  .flight-search-page .flight-search-result .flight .flight-content .flight-destination {
     width: 35%; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content .flight-duration {
+  .flight-search-page .flight-search-result .flight .flight-content .flight-duration {
     text-align: right;
     width: 30%; }
-  .flight-search-page .flight-search-result .flight.return-flight .flight-content .time {
+  .flight-search-page .flight-search-result .flight .flight-content .time {
     font-weight: bold;
     display: block; }
 
-.flight-search-page .flight-search-result .flight.single-flight {
-  padding: 10px;
-  color: #333;
-  border-top: 1px solid #ddd; }
-  .flight-search-page .flight-search-result .flight.single-flight:before, .flight-search-page .flight-search-result .flight.single-flight:after {
-    content: "";
-    clear: both;
-    display: block;
-    width: 100%; }
-  .flight-search-page .flight-search-result .flight.single-flight .flight-name {
-    font-size: 16px; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-name img {
-      height: 35px; }
-  .flight-search-page .flight-search-result .flight.single-flight .flight-detail {
-    display: block;
-    width: 60%;
-    float: left;
-    font-size: 12px; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-detail .flight-airport {
-      margin-bottom: 5px;
-      margin-top: 0; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-detail .flight-duration {
-      margin-bottom: 5px; }
-  .flight-search-page .flight-search-result .flight.single-flight .flight-action {
-    display: block;
-    width: 40%;
-    float: left;
-    text-align: right; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-action h5 {
-      margin-bottom: 5px; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-action .flight-price {
-      font-weight: bold;
-      margin-top: 5px;
-      color: #333; }
-    .flight-search-page .flight-search-result .flight.single-flight .flight-action .flight-book {
-      padding-top: 10px;
-      padding: 3px 5px; }
+.flight-detail {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  left: 0;
+  top: 100%;
+  z-index: 9999;
+  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+  -o-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s; }
+  .flight-detail.active {
+    top: 0%; }
+  .flight-detail .flight-detail-header {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    background: #2eb4e7;
+    color: #fff;
+    font-size: 16px;
+    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px; }
+    .flight-detail .flight-detail-header h3 {
+      margin: 0;
+      padding: 10px; }
+    .flight-detail .flight-detail-header .flight-detail-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px; }
+  .flight-detail .flight-detail-content {
+    padding-top: 50px; }
+  .flight-detail .flight-detail-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: #ddd; }
+    .flight-detail .flight-detail-footer .footer-left {
+      padding: 10px;
+      text-align: right; }
+      .flight-detail .flight-detail-footer .footer-left .footer-price {
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold; }
+    .flight-detail .flight-detail-footer .footer-right {
+      padding: 10px; }
 
 /*-----------------------------*/
 /* register and login page */
@@ -1190,7 +1203,8 @@ h1 {
       .form-set .form .ui-datepicker-inline .ui-state-default {
         background: #ddd; }
       .form-set .form .ui-datepicker-inline .ui-state-active {
-        background: #2eb4e7; }
+        background: #2eb4e7;
+        border: #2eb4e7; }
 
 .swiper-container {
   width: 100%;

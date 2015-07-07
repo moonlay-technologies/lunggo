@@ -3,7 +3,13 @@
     ViewBag.Title = "Hotel Search Page";
 }
 
-<section class="page flight-search-page">
+@section PageJavascript{
+    <script>
+        flightDetail();
+    </script>
+}
+
+<section class="page flight-search-page" ng-controller="flightController">
     
     <section class="flight-search-param">
         <div class="param">
@@ -131,77 +137,88 @@
     
 
     <section class="flight-search-result">
-    
-        @for (var i = 1; i <= 10; i++)
-        {
-            
-            <div class="flight return-flight">
+        
+        <div class="loading-wrapper" ng-if="!loaded">
+            <h1 class="text-center">Fetching Flight</h1>
+        </div>
+
+        <div class="flight-wrapper" ng-if="loaded">
+            <div class="flight" ng-repeat="flight in flightSearchResult.FlightList">
                 <div class="flight-header">
-                    <span class="flight-airline"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" /> GARUDA INDONESIA</span>
-                    <span class="flight-price pull-right">IDR 999.999.999</span>
+                    <span class="flight-airline"><img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" /> {{flight.FlightTrips[0].Airlines[0].Name}}</span>
+                    <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>
                 </div><!-- .flight-header -->
                 <div class="flight-content">
                     <div class="flight-origin">
-                        <span class="time">15 Jul 2015</span>
-                        <span class="airport">Jakarta</span>
+                        <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                        <span class="airport">{{flight.FlightTrips[0].OriginCity}}</span>
                     </div>
                     <div class="flight-destination">
-                        <span class="time">15 Jul 2015</span>
-                        <span class="airport">Jakarta</span>
+                        <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                        <span class="airport">{{flight.FlightTrips[0].DestinationCity}}</span>
                     </div>
                     <div class="flight-duration">
-                        <span class="time">1h 30m</span>
-                        <span class="transit">Direct Flight</span>
+                        <span class="time">{{flight.FlightTrips[0].TotalDuration}}</span>
+                        <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
+                        <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop</span>
                     </div>
                 </div><!-- .flight-content -->
-                <div class="flight-header">
-                    <span class="flight-airline"><img src="/Assets/images/airlines/GA.png" alt="Alternate Text" /> GARUDA INDONESIA</span>
-                </div><!-- .flight-header -->
-                <div class="flight-content">
-                    <div class="flight-origin">
-                        <span class="time">15 Jul 2015</span>
-                        <span class="airport">Jakarta</span>
-                    </div>
-                    <div class="flight-destination">
-                        <span class="time">15 Jul 2015</span>
-                        <span class="airport">Jakarta</span>
-                    </div>
-                    <div class="flight-duration">
-                        <span class="time">1h 30m</span>
-                        <span class="transit">Direct Flight</span>
-                    </div>
-                </div><!-- .flight-content -->
+                <div class="flight-return" ng-if="flightSearchParams.TripType == 'return'">
+                    <div class="flight-header">
+                        <span class="flight-airline"><img ng-src="{{flight.FlightTrips[1].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[1].Airlines[0].Name}}" /> {{flight.FlightTrips[1].Airlines[0].Name}}</span>
+                    </div><!-- .flight-header -->
+                    <div class="flight-content">
+                        <div class="flight-origin">
+                            <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                            <span class="airport">{{flight.FlightTrips[1].OriginCity}}</span>
+                        </div>
+                        <div class="flight-destination">
+                            <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                            <span class="airport">{{flight.FlightTrips[1].DestinationCity}}</span>
+                        </div>
+                        <div class="flight-duration">
+                            <span class="time">{{flight.FlightTrips[1].TotalDuration}}</span>
+                            <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
+                            <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} stop</span>
+                        </div>
+                    </div><!-- .flight-content -->
+                </div>
+                <a class="flight-link" ng-click="getFlightDetail(flight.FlightIndex)"></a>
             </div><!-- .flight.return-flight -->
-            
-            <div class="flight single-flight hidden">
-                <div class="flight-name"><span>Garuda Indonesia</span> <img src="/Assets/images/airlines/ga.png" alt="Garuda Indonesia" /> </div>
-                <div class="flight-detail">
-                    <div class="flight-airport">
-                        <span class="flight-origin">CGK</span> - 
-                        <span class="flight-destination">SIN</span>
-                    </div>
-                    <div class="flight-time">
-                        <span class="flight-departure">12:00</span> - 
-                        <span class="flight-arrival">24:00</span>
-                        <span>(+1 day)</span>
-                    </div>
-                    <div class="flight-duration">
-                        1 Day 23 Hour 50 Minute <br/>(2 Transits)
-                    </div>
-                    <div class="flight-detail">
-                        <a href="#"><img src="/Assets/images/paperplane-icon.png" alt="Flight Detail" />Flight Detail</a>
-                    </div>
-                </div><!-- .flight-detail -->
-                <div class="flight-action">
-                    <h5>Total Price :</h5>
-                    <h4 class="flight-price">IDR 100.000.000</h4>
-                    <input type="submit" class="btn btn-blue flight-book" name="" value="Book now" />
-                </div><!-- .flight-action -->
-            </div><!-- .flight.single-flight -->
-        }
+        </div>
 
     </section><!-- .flight-search-result -->
 
 </section><!-- .flight-search-page -->
 
 
+<div class="flight-detail" ng-class="{'active': flightDetailActive == true}">
+    <header class="flight-detail-header">
+        <h3>Flight Detail</h3>
+        <span class="flight-detail-close fa fa-times"></span>
+    </header><!-- .flight-detail-header -->
+    <section class="flight-detail-content">
+
+        <div class="loading">
+            <h1 class="text-center">Loading...</h1>
+        </div><!-- .validating -->
+
+        <div class="details">
+
+        </div><!-- .details -->
+
+    </section><!-- .flight-detail-content -->
+    <footer class="flight-detail-footer container">
+        <div class="row">
+            <div class="col-xs-6 footer-left">
+                <span>Total Fare</span>
+                <h3 class="footer-price">{{flightSearchResult.FlightList[flightDetailCurrent].TotalFare | number:0}}</h3>
+                <span>Fee and tax included</span>
+            </div>
+            <div class="col-xs-6 footer-right">
+                <a href="#" class="btn btn-yellow btn-block-lg" ng-click="flightDetailActive = false">BOOK FLIGHT</a>
+            </div>
+        </div>
+    </footer><!-- .flight-detail-footer -->
+
+</div><!-- .flight-detail -->

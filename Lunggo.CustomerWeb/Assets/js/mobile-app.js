@@ -446,12 +446,10 @@ function searchFormFunctions() {
         }// flightReturnDate()
         // flight passenger
         function flightPassenger() {
-            FlightSearchConfig = {
-                adult: 1,
-                child: 0,
-                infant: 0,
-                flightType: 'RoundTrip'
-            };
+            FlightSearchConfig.adult = 1;
+            FlightSearchConfig.child = 0;
+            FlightSearchConfig.infant = 0;
+            FlightSearchConfig.flightType = 'RoundTrip';
 
             $('div.btn.increase').click(function() {
                 var dataTarget = $(this).attr('data-target');
@@ -566,3 +564,31 @@ function searchFormFunctions() {
 function hotelSearchPageFunctions() {
 }// hotelSearchPageFunctions()
 
+
+//------------------------------
+// flight search page functions
+
+// flight detail
+function flightDetail() {
+    // hide flight detail on click         
+    $('.flight-detail-close').click(function() {
+        hideFlightDetail();
+    });
+    // show flight detail on click
+    $('.flight-search-result .flight-link').click(function() {
+        showFlightDetail();
+    });
+
+    function showFlightDetail() {
+        $('.flight-detail').stop().animate({
+            top: 0
+    });
+    }
+    
+    function hideFlightDetail() {
+        $('.flight-detail').stop().animate({
+            top: '100%'
+        });
+    }
+
+}// flightDetail()
