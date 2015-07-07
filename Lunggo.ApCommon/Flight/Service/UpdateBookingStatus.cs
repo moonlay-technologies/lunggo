@@ -32,10 +32,10 @@ namespace Lunggo.ApCommon.Flight.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 ticketedRsvNos = ticketedBookingIds.Any()
-                    ? GetFlightRsvNoQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList()
+                    ? GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList()
                     : new List<string>();
                 scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
-                    ? GetFlightRsvNoQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList()
+                    ? GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList()
                     : new List<string>();
             }
         }

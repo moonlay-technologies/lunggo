@@ -65,6 +65,22 @@ namespace Lunggo.Framework.BrowserDetection
             }
         }
 
+        public bool IsRequestFromSmartphone(String userAgent)
+        {
+            var device = GetDevice(userAgent);
+            if (device != null)
+            {
+                var isSmartPhone = false;
+                var capability = device.GetCapability("is_smartphone");
+                Boolean.TryParse(capability, out isSmartPhone);
+                return isSmartPhone;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private IDevice GetDevice()
         {
             var device = HttpContext.Current.Items[SystemConstant.HttpContextDevice] as IDevice;

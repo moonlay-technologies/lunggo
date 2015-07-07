@@ -572,6 +572,10 @@
 
                 $scope.validating = true;
 
+                console.log(indexNo);
+                indexNo = parseInt(indexNo);
+                console.log(indexNo);
+
                 console.log('validating :');
 
                 if (RevalidateConfig.working == false) {

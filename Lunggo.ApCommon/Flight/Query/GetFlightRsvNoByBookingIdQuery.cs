@@ -7,7 +7,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Query
 {
-    class GetFlightRsvNoQuery : QueryBase<GetFlightRsvNoQuery, string>
+    class GetFlightRsvNoByBookingIdQuery : QueryBase<GetFlightRsvNoByBookingIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {

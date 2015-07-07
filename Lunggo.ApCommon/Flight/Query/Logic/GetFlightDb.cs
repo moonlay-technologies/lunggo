@@ -40,11 +40,22 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
             }
         }
 
+        internal static IEnumerable<FlightReservation> Reservations(string contactEmail)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new {ContactEmail = contactEmail});
+                foreach (var rsvNo in rsvNos)
+                {
+                    yield return Reservation(rsvNo);
+                }
+            }
+        }
+
         internal static FlightReservation Reservation(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var service = FlightService.GetInstance();
                 FlightReservation reservation = null;
                 var itineraryLookup = new Dictionary<long, FlightItineraryDetails>();
                 var tripLookup = new Dictionary<long, FlightTripDetails>();

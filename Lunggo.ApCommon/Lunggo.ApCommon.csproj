@@ -186,7 +186,8 @@
     <Compile Include="Flight\Query\GetFlightItineraryIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightLocalCurrencyQuery.cs" />
     <Compile Include="Flight\Query\GetFlightReservationQuery.cs" />
-    <Compile Include="Flight\Query\GetFlightRsvNoQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightRsvNosByContactEmailQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightRsvNoByBookingIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetFlightBookingIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentIdQuery.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Flight\Query\GetFlightTripInfoQuery.cs" />
     <Compile Include="Flight\Query\Logic\GetFlightDb.cs" />
     <Compile Include="Flight\Query\UpdateFlightPaymentQuery.cs" />
+    <Compile Include="Flight\Service\GetReservations.cs" />
     <Compile Include="Flight\Service\GetFlightSummary.cs" />
     <Compile Include="Flight\Query\Logic\InsertFlightDb.cs" />
     <Compile Include="Flight\Query\Model\FlightBookingRecord.cs" />
