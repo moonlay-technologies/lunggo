@@ -34,7 +34,9 @@ namespace Lunggo.Configuration
         private const int ExcelRowDefaultStart = 2;
         private const int ExcelSheetNumber = 1;
         private const string FormatDate = "yyyyMMdd-HHmmss";
-        const string JsConfigTemplatePath = (@"Template\JsConfig.txt");
+        private const string JsConfigTemplatePath = (@"Template\JsConfig.js");
+        private const string WebConfigDebugTemplatePath = (@"Template\Web.Debug.config");
+        private const string WebConfigReleaseTemplatePath = (@"Template\Web.Release.config");
         
         private static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private static readonly string WorkspacePath = Directory.GetParent(ParentPath).FullName;
@@ -286,29 +288,11 @@ namespace Lunggo.Configuration
         public void GenerateFiles(String[] projectList)
         {
             GenerateJsConfigFile();
+            GenerateWebConfigDebugFile();
+            GenerateWebConfigReleaseFile();
         }
 
         private void GenerateJsConfigFile()
-        {
-            WriteJsConfigFile();
-        }
-
-        private static String ReadFileToEnd(String fileName)
-        {
-            using (var templateFile = new StreamReader(fileName))
-            {
-                try
-                {
-                    return templateFile.ReadToEnd();
-                }
-                finally
-                {
-                    templateFile.Close();
-                }
-            }
-        }
-
-        private void WriteJsConfigFile()
         {
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
             const string hotelPath = @"/api/v1/hotels";
@@ -331,8 +315,49 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
 
             var fileContent = fileTemplate.ToString();
-            string[] projectList = {"CustomerWeb"};
+            string[] projectList = { "CustomerWeb" };
             SaveFile("JsConfig.js", fileContent, projectList);
+        }
+
+        private void GenerateWebConfigDebugFile()
+        {
+            var mystiflyApiEndPoint = _configDictionary["@@.*.mystifly.apiEndPoint@@"];
+
+            var fileTemplate = new StringTemplate(ReadFileToEnd(WebConfigDebugTemplatePath));
+            fileTemplate.Reset();
+            fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
+
+            var fileContent = fileTemplate.ToString();
+            string[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI" };
+            SaveRootFile("Web.Debug.config", fileContent, projectList);
+        }
+
+        private void GenerateWebConfigReleaseFile()
+        {
+            var mystiflyApiEndPoint = _configDictionary["@@.*.mystifly.apiEndPoint@@"];
+
+            var fileTemplate = new StringTemplate(ReadFileToEnd(WebConfigReleaseTemplatePath));
+            fileTemplate.Reset();
+            fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
+
+            var fileContent = fileTemplate.ToString();
+            string[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI" };
+            SaveRootFile("Web.Release.config", fileContent, projectList);
+        }
+
+        private static String ReadFileToEnd(String fileName)
+        {
+            using (var templateFile = new StreamReader(fileName))
+            {
+                try
+                {
+                    return templateFile.ReadToEnd();
+                }
+                finally
+                {
+                    templateFile.Close();
+                }
+            }
         }
 
         private void SaveFile(string fileName, string fileContent, IEnumerable<string> projectNames)
@@ -340,6 +365,15 @@ namespace Lunggo.Configuration
             foreach (var projectName in projectNames)
             {
                 File.WriteAllText(Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", fileName),
+                    fileContent);
+            }
+        }
+
+        private void SaveRootFile(string fileName, string fileContent, IEnumerable<string> projectNames)
+        {
+            foreach (var projectName in projectNames)
+            {
+                File.WriteAllText(Path.Combine(WorkspacePath, RootProject + "." + projectName, fileName),
                     fileContent);
             }
         }

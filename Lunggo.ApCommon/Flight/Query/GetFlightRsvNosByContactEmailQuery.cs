@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT RsvNo ");
-            clauseBuilder.Append("FROM FlightItinerary ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 

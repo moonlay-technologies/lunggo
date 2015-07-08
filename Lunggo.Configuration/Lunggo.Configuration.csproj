@@ -222,6 +222,12 @@
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />
     <None Include="packages.config" />
+    <Content Include="Template\Web.Debug.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Web.Release.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -235,7 +241,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="HtmlTemplate\FlightInvoice.cshtml" />
-    <Content Include="Template\JsConfig.txt">
+    <Content Include="Template\JsConfig.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="HtmlTemplate\FlightEticket.cshtml" />

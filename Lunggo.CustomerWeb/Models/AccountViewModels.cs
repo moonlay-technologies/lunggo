@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Identity.User;
 
 namespace Lunggo.CustomerWeb.Models
 {
@@ -115,5 +118,11 @@ namespace Lunggo.CustomerWeb.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class AccountViewModel
+    {
+        public List<FlightReservation> FlightReservations { get; set; }
+        public CustomUser User { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Identity.User;
+﻿using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Core;
 using Microsoft.AspNet.Identity;
@@ -427,7 +428,11 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Account()
         {
-            return View();
+            var model = new AccountViewModel();
+            var flightService = FlightService.GetInstance();
+            model.User = User.Identity.GetCustomUser();
+            model.FlightReservations = flightService.GetReservations(model.User.Email);
+            return View(model);
         }
 
         #region Helpers
