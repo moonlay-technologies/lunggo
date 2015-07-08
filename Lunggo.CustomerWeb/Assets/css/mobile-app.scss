@@ -369,6 +369,7 @@ h1 {font-size:30px;}
     .flight-detail-content {padding-top:50px; padding-bottom:75px; height:100%; overflow:auto;
         .details {
             .trip-list {padding:0 15px;
+                .trip-general {display:block; padding-top:15px; font-style:italic; text-align:center;}
                 &.return {border-top:$border-default; padding-top:15px;}
                 h3 {margin:0;}
                 .trip {padding:10px 0;

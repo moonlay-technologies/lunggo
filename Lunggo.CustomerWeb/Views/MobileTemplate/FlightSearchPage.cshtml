@@ -202,6 +202,7 @@
             
                 <div class="trip-list onward">
                     <h3 class="text-center">Onward Flight</h3>
+                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[0].OriginAirport}} to {{flightCurrentDetail.FlightTrips[0].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[0].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}} ({{flightCurrentDetail.FlightTrips[0].TotalDuration}})</span>
                     <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[0].FlightSegments">
                         <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
                         <div class="trip-wrapper">
@@ -233,6 +234,7 @@
                 </div>    
                 <div class="trip-list return" ng-if="flightSearchParams.TripType == 'Return'">
                     <h3 class="text-center">Return Flight</h3>
+                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[1].OriginAirport}} to {{flightCurrentDetail.FlightTrips[1].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[1].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}} ({{flightCurrentDetail.FlightTrips[1].TotalDuration}})</span>
                     <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[1].FlightSegments">
                         <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
                         <div class="trip-wrapper">

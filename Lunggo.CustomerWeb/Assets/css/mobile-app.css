@@ -791,6 +791,11 @@ h1 {
     overflow: auto; }
     .flight-detail .flight-detail-content .details .trip-list {
       padding: 0 15px; }
+      .flight-detail .flight-detail-content .details .trip-list .trip-general {
+        display: block;
+        padding-top: 15px;
+        font-style: italic;
+        text-align: center; }
       .flight-detail .flight-detail-content .details .trip-list.return {
         border-top: 1px solid #ddd;
         padding-top: 15px; }
