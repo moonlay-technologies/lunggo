@@ -360,15 +360,37 @@ h1 {font-size:30px;}
     }
 }
 // flight detail
-.flight-detail {position:fixed; width:100%; height:100%; background:#fff; left:0; top:100%; z-index:9999; @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s);
+.flight-detail {position:fixed; width:100%; height:100%; background:#fff; left:0; top:0; z-index:9999; @include transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s);
     &.active {top:0%;}
     .flight-detail-header {width:100%; border-bottom:$border-default; background:$color-main-blue; color:#fff; font-size:16px; position:relative; position:absolute; top:0; left:0; height:50px;
         h3 {margin:0; padding:10px;}
         .flight-detail-close {position:absolute; top:10px; right:10px; font-size:24px;}
     }
-    .flight-detail-content {padding-top:50px;
-        .loading {}
-        .details {}
+    .flight-detail-content {padding-top:50px; padding-bottom:75px; height:100%; overflow:auto;
+        .details {
+            .trip-list {padding:0 15px;
+                &.return {border-top:$border-default; padding-top:15px;}
+                h3 {margin:0;}
+                .trip {padding:10px 0;
+                    &+.trip {border-top:$border-default;}
+                    .airline-name {margin:0;
+                        img {height:30px;}
+                    }
+                    .trip-wrapper {
+                        &:before,&:after {@include clearfix;}
+                        &>div {display:block; float:left; width:33.33334%;}
+                        & span {display:block; line-height:120%;}
+                        .trip-origin {}
+                        .trip-destination {}
+                        .trip-duration {text-align:right;}
+                        .time {font-weight:bold; font-size:18px;} .date {} .airport {} .city {font-style:italic;}
+                    }
+                    .trip-operator {font-size:12px; margin-top:10px; font-style:italic;
+                        img {height:30px;}
+                    }
+                }
+            }
+        }
     }
     .flight-detail-footer {position:absolute; width:100%; bottom:0; background:#ddd;
         .footer-left {padding:10px; text-align:right;

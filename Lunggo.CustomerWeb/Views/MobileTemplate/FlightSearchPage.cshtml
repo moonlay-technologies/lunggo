@@ -10,7 +10,6 @@
 }
 
 <section class="page flight-search-page" ng-controller="flightController">
-    
     <section class="flight-search-param">
         <div class="param">
             <span><b>Jakarta</b> to <b>Bali</b>, <b>12 Maret 2015</b>, Single Flight</span>
@@ -163,7 +162,7 @@
                         <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop</span>
                     </div>
                 </div><!-- .flight-content -->
-                <div class="flight-return" ng-if="flightSearchParams.TripType == 'return'">
+                <div class="flight-return" ng-if="flightSearchParams.TripType == 'Return'">
                     <div class="flight-header">
                         <span class="flight-airline"><img ng-src="{{flight.FlightTrips[1].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[1].Airlines[0].Name}}" /> {{flight.FlightTrips[1].Airlines[0].Name}}</span>
                     </div><!-- .flight-header -->
@@ -178,47 +177,111 @@
                         </div>
                         <div class="flight-duration">
                             <span class="time">{{flight.FlightTrips[1].TotalDuration}}</span>
-                            <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                            <span class="transit" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} stop</span>
+                            <span class="transit" ng-if="flight.FlightTrips[1].TotalTransit == 0">Direct Flight</span>
+                            <span class="transit" ng-if="flight.FlightTrips[1].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} stop</span>
                         </div>
                     </div><!-- .flight-content -->
                 </div>
-                <a class="flight-link" ng-click="getFlightDetail(flight.FlightIndex)"></a>
+                <a class="flight-link" ng-click="getCtrlScope().flightDetailActive = true; getCtrlScope().flightCurrent = flight.FlightIndex; getCtrlScope().updateActiveFlight()"></a>
             </div><!-- .flight.return-flight -->
         </div>
 
     </section><!-- .flight-search-result -->
+    
+    <!-- .flight-detail -->
+    <div class="flight-detail" ng-if="flightDetailActive">
+        <header class="flight-detail-header">
+            <h3>Flight Detail</h3>
+            <span class="flight-detail-close fa fa-times" ng-click="getCtrlScope().flightDetailActive = false"></span>
+        </header><!-- .flight-detail-header -->
+        <section class="flight-detail-content">
+
+            <div class="details">
+            
+                <h1 class="text-center">Flight Detail</h1>
+            
+                <div class="trip-list onward">
+                    <h3 class="text-center">Onward Flight</h3>
+                    <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[0].FlightSegments">
+                        <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
+                        <div class="trip-wrapper">
+                            <div class="trip-origin">
+                                <span>Departure</span>
+                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm'}}</span>
+                                <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                                <span class="airport">{{trip.DepartureAirport}}</span>
+                                <span class="city">{{trip.DepartureCity}}</span>
+                            </div>
+                            <div class="trip-destination">
+                                <span>Arrival</span>
+                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm'}}</span>
+                                <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                                <span class="airport">{{trip.ArrivalAirport}}</span>
+                                <span class="city">{{trip.ArrivalCity}}</span>
+                            </div>
+                            <div class="trip-duration">
+                                <span>Duration</span>
+                                <span class="time">{{trip.Duration}}</span>
+                                <span>{{trip.CabinClass}}</span>
+                            </div>
+                        </div>
+                        <!-- if flight operator is different-->
+                        <div class="trip-operator" ng-if=" trip.OperatingAirlineCode != trip.AirlineCode ">
+                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}"/> {{trip.OperatingAirlineName}} </span>
+                        </div><!-- .flight-operator -->
+                    </div>
+                </div>    
+                <div class="trip-list return" ng-if="flightSearchParams.TripType == 'Return'">
+                    <h3 class="text-center">Return Flight</h3>
+                    <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[1].FlightSegments">
+                        <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
+                        <div class="trip-wrapper">
+                            <div class="trip-origin">
+                                <span>Departure</span>
+                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm'}}</span>
+                                <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                                <span class="airport">{{trip.DepartureAirport}}</span>
+                                <span class="city">{{trip.DepartureCity}}</span>
+                            </div>
+                            <div class="trip-destination">
+                                <span>Arrival</span>
+                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm'}}</span>
+                                <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
+                                <span class="airport">{{trip.ArrivalAirport}}</span>
+                                <span class="city">{{trip.ArrivalCity}}</span>
+                            </div>
+                            <div class="trip-duration">
+                                <span>Duration</span>
+                                <span class="time">{{trip.Duration}}</span>
+                                <span>{{trip.CabinClass}}</span>
+                            </div>
+                        </div>
+                        <!-- if flight operator is different-->
+                        <div class="trip-operator" ng-if=" trip.OperatingAirlineCode != trip.AirlineCode ">
+                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}" /> {{trip.OperatingAirlineName}} </span>
+                        </div><!-- .flight-operator -->
+                    </div>
+                </div>    
+
+            </div><!-- .details -->
+
+        </section><!-- .flight-detail-content -->
+        <footer class="flight-detail-footer container">
+            <div class="row">
+                <div class="col-xs-6 footer-left">
+                    <span>Total Fare</span>
+                    <h3 class="footer-price">IDR {{flightCurrentDetail.TotalFare | number:0}}</h3>
+                    <span>Fee and tax included</span>
+                </div>
+                <div class="col-xs-6 footer-right">
+                    <a href="#" class="btn btn-yellow btn-block-lg">BOOK FLIGHT</a>
+                </div>
+            </div>
+        </footer><!-- .flight-detail-footer -->
+
+    </div><!-- .flight-detail -->
 
 </section><!-- .flight-search-page -->
 
 
-<div class="flight-detail" ng-class="{'active': flightDetailActive == true}">
-    <header class="flight-detail-header">
-        <h3>Flight Detail</h3>
-        <span class="flight-detail-close fa fa-times"></span>
-    </header><!-- .flight-detail-header -->
-    <section class="flight-detail-content">
 
-        <div class="loading">
-            <h1 class="text-center">Loading...</h1>
-        </div><!-- .validating -->
-
-        <div class="details">
-
-        </div><!-- .details -->
-
-    </section><!-- .flight-detail-content -->
-    <footer class="flight-detail-footer container">
-        <div class="row">
-            <div class="col-xs-6 footer-left">
-                <span>Total Fare</span>
-                <h3 class="footer-price">{{flightSearchResult.FlightList[flightDetailCurrent].TotalFare | number:0}}</h3>
-                <span>Fee and tax included</span>
-            </div>
-            <div class="col-xs-6 footer-right">
-                <a href="#" class="btn btn-yellow btn-block-lg" ng-click="flightDetailActive = false">BOOK FLIGHT</a>
-            </div>
-        </div>
-    </footer><!-- .flight-detail-footer -->
-
-</div><!-- .flight-detail -->

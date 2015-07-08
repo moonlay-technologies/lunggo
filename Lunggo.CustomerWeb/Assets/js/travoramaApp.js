@@ -61,31 +61,47 @@
             // ********************
             // general variables
 
-            $scope.dummyParams = { "TripType": "OneWay", "TripInfos": [{ "TripId": 0, "OriginAirport": "CGK", "DestinationAirport": "DPS", "DepartureDate": "2015-10-25T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
+            $scope.dummyParams = { "TripType": "Return", "TripInfos": [{ "OriginAirport": "CGK", "DestinationAirport": "HND", "DepartureDate": "2015-10-25T00:00:00" }, { "OriginAirport": "HND", "DestinationAirport": "CGK", "DepartureDate": "2015-10-28T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
 
             $scope.flightSearchParams = $scope.dummyParams;
             $scope.flightSearchResult = {};
             $scope.loaded = false;
             $scope.busy = false;
             $scope.flightDetailActive = false;
-            $scope.flightDetailCurrent = -1;
+            $scope.flightCurrent = -1;
+            $scope.flightCurrentDetail = {};
+
+            $scope.getCtrlScope = function() {
+                return $scope
+            }
+
+            // ********************
+            // return cabin class name
+            $scope.cabinClassName = function(cabin) {
+                switch (cabin) {
+                    case 'y':
+                        return 'Economy';
+                        break;
+                    case 'c':
+                        return 'Business';
+                        break;
+                    case 'f':
+                        return 'First Class';
+                        break;
+                }
+            }
+
+            // ********************
+            // update current active flight
+            $scope.updateActiveFlight = function() {
+                $scope.flightCurrentDetail = $scope.flightSearchResult.FlightList[$scope.flightCurrent];
+                console.log( $scope.flightCurrentDetail );
+            }
 
             // ********************
             // get date time
             $scope.getDateTime = function (dateTime) {
                 return new Date(dateTime);
-            }
-
-            // ********************
-            // current active flight
-            $scope.getFlightDetail = function(flightIndex) {
-                console.log( $scope.flightDetailActive );
-                $scope.flightDetailActive = true;
-                $scope.flightDetailCurrent = flightIndex;
-                console.log($scope.flightDetailActive);
-                console.log('getting detail for : ' + flightIndex);
-                console.log( $scope.flightDetailCurrent );
-
             }
 
 
