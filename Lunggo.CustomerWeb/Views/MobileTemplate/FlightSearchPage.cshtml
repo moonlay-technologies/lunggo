@@ -105,7 +105,13 @@
                 <div class="filter-group filter-airline">
                     <h4 class="filter-title">by Airline:</h4>
                     <div class="filter-content">
-                        -- insert airline filter here --
+                        <div>
+                            <label class="airline" ng-repeat="airline in flightSearchFilter.airlineList">
+                                <input type="checkbox" name="name" value="" />
+                                <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
+                                <span>{{airline.Name}}</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="filter-group filter-onward">
