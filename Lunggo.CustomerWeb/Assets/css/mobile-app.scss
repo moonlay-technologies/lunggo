@@ -284,9 +284,9 @@ h1 {font-size:30px;}
 
 /*-----------------------------*/
 /* flight search page */
-.flight-search-page {
+.flight-search-page {padding-top:80px;
     // flight search param
-    .flight-search-param {background:#2eb4e7; color:#fff;
+    .flight-search-param {background:#2eb4e7; color:#fff; position:fixed; width:100%; z-index:101; top:70px;
         &:after {@include clearfix;}
         .param {float:left; background:#2eb4e7; width:75%; padding:10px; font-size:12px;}
         .change-hotel-param {background:#0e84b2; color:#fff; font-weight:bold; display:block; float:right; width:25%; text-align:center; padding:10px 0;}
@@ -308,7 +308,7 @@ h1 {font-size:30px;}
         }
     }
     // flight search filter and sort
-    .flight-search-filter {
+    .flight-search-filter {position:fixed; width:100%; top:110px; z-index:100;
         .flight-search-trigger {background:#878787;
             &:after, &:before {@include clearfix;}
             a {color:#fff; font-weight:bold; text-align:center; display:block; float:left; width:50%; padding:10px 0;}
