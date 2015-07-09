@@ -710,6 +710,8 @@ h1 {
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label {
           text-align: center;
           width: 32%; }
+          .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label input {
+            display: none; }
           .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label img {
             display: block;
             width: 70%;
