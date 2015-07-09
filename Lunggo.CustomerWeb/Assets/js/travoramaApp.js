@@ -146,6 +146,9 @@
                         $scope.loaded = true;
                         $scope.busy = false;
 
+                        // show filter and sorting option
+                        $('.flight-search-param, .flight-search-filter').show();
+
                     }).error(function () {
 
                         $scope.noFlight = true;

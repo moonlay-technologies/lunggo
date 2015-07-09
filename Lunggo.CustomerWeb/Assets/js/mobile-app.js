@@ -569,26 +569,21 @@ function hotelSearchPageFunctions() {
 // flight search page functions
 
 // flight detail
-function flightDetail() {
-    // hide flight detail on click         
-    $('.flight-detail-close').click(function() {
-        hideFlightDetail();
-    });
-    // show flight detail on click
-    $('.flight-search-result .flight-link').click(function() {
-        showFlightDetail();
+function flightFilter() {
+
+    $('.flight-filter-trigger, .flight-sort-trigger, .change-hotel-param').click(function () {
+
+        var windowHeight = $(window).height();
+
+        $('.flight-filter-wrapper, .flight-sort-wrapper').height( windowHeight - 150 );
+        $('.flight-search-form-wrapper').height( windowHeight - 70 );
+
+        if ($(this).attr('data-active') == 'false') {
+            $('body').addClass('modal-active');
+        } else {
+            $('body').removeClass('modal-active');
+        }
+
     });
 
-    function showFlightDetail() {
-        $('.flight-detail').stop().animate({
-            top: 0
-    });
-    }
-    
-    function hideFlightDetail() {
-        $('.flight-detail').stop().animate({
-            top: '100%'
-        });
-    }
-
-}// flightDetail()
+}// flightFilter()
