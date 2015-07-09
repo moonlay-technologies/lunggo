@@ -95,7 +95,11 @@
             // update current active flight
             $scope.updateActiveFlight = function() {
                 $scope.flightCurrentDetail = $scope.flightSearchResult.FlightList[$scope.flightCurrent];
-                console.log( $scope.flightCurrentDetail );
+                console.log($scope.flightCurrentDetail);
+                $('body').addClass('modal-active');
+            }
+            $scope.hideDetailActive = function () {
+                $('body').removeClass('modal-active');
             }
 
             // ********************
