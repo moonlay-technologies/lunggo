@@ -86,7 +86,8 @@ h1 {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 9999; }
+  z-index: 9999;
+  border-bottom: 1px solid #ddd; }
   .site-header .site-menu {
     background-image: url(../images/menu-icon.png);
     background-position: center center;

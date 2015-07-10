@@ -70,10 +70,18 @@
             $scope.flightDetailActive = false;
             $scope.flightCurrent = -1;
             $scope.flightCurrentDetail = {};
-            $scope.flightSearchFilter = {};
-            $scope.flightSearchFilter.airlines = [];
-            $scope.flightSearchFilter.prices = [];
-            $scope.flightSearchFilter.airlineList = [];
+                // flight filtering variables
+                $scope.flightSearchFilter = {};
+                $scope.flightSearchFilter.airlines = [];
+                $scope.flightSearchFilter.airlineList = [];
+                $scope.flightSearchFilter.prices = [];
+                // price filter
+                $scope.flightSearchFilter.priceFilter = [-1,-1];
+                // flight time
+                $scope.flightSearchFilter.onwardDeparture = [0,24];
+                $scope.flightSearchFilter.onwardArrival = [0,-24];
+                $scope.flightSearchFilter.returnDeparture = [0, 24];
+                $scope.flightSearchFilter.returnArrival = [0, 24];
 
             $scope.getCtrlScope = function() {
                 return $scope
@@ -170,7 +178,7 @@
                         $scope.flightSearchFilter.airlines = {};
 
                         // *****
-                        // sort price
+                        // sort flight prices
                         function sortNumber(a, b) {
                             return a - b;
                         }

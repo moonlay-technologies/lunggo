@@ -99,7 +99,18 @@
                 <div class="filter-group filter-price">
                     <h4 class="filter-title">by Price:</h4>
                     <div class="filter-content">
-                        -- insert price slider here --
+                        <div class="price-slider"></div>
+                        <div class="slider-text">
+                            <br />
+                            <span>Min Price</span>
+                            <span class="pull-right">Max Price</span>
+                        </div>
+                        <div class="slider-text">
+                            <span>IDR {{flightSearchFilter.prices[0] | number:0}}</span>
+                            <span class="pull-right">IDR {{flightSearchFilter.prices[ flightSearchFilter.prices.length-1 ] | number:0}}</span>
+                        </div>
+                        <input class="price-slider-min hidden" type="text" ng-model="flightSearchFilter.priceFilter[0]" />
+                        <input class="price-slider-max hidden" type="text" ng-model="flightSearchFilter.priceFilter[1]" />
                     </div>
                 </div>
                 <div class="filter-group filter-airline">
@@ -117,13 +128,47 @@
                 <div class="filter-group filter-onward">
                     <h4 class="filter-title">by Onward flight time:</h4>
                     <div class="filter-content">
-                        -- insert onward flight slider here --
+                        <h5>Departure time</h5>
+                        <div class="onward-departure-slider"></div>
+                        <div class="slider-text">
+                            <br />
+                            <span>00:00</span>
+                            <span class="pull-right">24:00</span>
+                        </div>
+                        <input class="onward-departure-slider-min hidden" type="text" ng-model="flightSearchFilter.onwardDeparture[0]" />
+                        <input class="onward-departure-slider-max hidden" type="text" ng-model="flightSearchFilter.onwardDeparture[1]" />
+                        <h5>Arrival time</h5>
+                        <div class="onward-arrival-slider"></div>
+                        <div class="slider-text">
+                            <br />
+                            <span>00:00</span>
+                            <span class="pull-right">24:00</span>
+                        </div>
+                        <input class="onward-arrival-slider-min hidden" type="text" ng-model="flightSearchFilter.onwardArrival[0]" />
+                        <input class="onward-arrival-slider-max hidden" type="text" ng-model="flightSearchFilter.onwardArrival[1]" />
                     </div>
                 </div>
-                <div class="filter-group filter-return">
+                <div class="filter-group filter-return" ng-if="flightSearchParams.TripType == 'Return'">
                     <h4 class="filter-title">by Return flight time:</h4>
                     <div class="filter-content">
-                        -- insert return flight slider here --
+                        <h5>Departure time</h5>
+                        <div class="return-departure-slider"></div>
+                        <div class="slider-text">
+                            <br />
+                            <span>00:00</span>
+                            <span class="pull-right">24:00</span>
+                        </div>
+                        <input class="return-departure-slider-min hidden" type="text" ng-model="flightSearchFilter.returnDeparture[0]" />
+                        <input class="return-departure-slider-max hidden" type="text" ng-model="flightSearchFilter.returnDeparture[1]" />
+                        <h5>Arrival time</h5>
+                        <div class="return-arrival-slider"></div>
+                        <div class="slider-text">
+                            <br />
+                            <span>00:00</span>
+                            <span class="pull-right">24:00</span>
+                        </div>
+                        <input class="return-arrival-slider-min hidden" type="text" ng-model="flightSearchFilter.returnArrival[0]" />
+                        <input class="return-arrival-slider-max hidden" type="text" ng-model="flightSearchFilter.returnArrival[1]" />
                     </div>
                 </div>
             </div><!-- .flight-filter-wrapper -->
