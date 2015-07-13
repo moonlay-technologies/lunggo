@@ -84,15 +84,28 @@
             <div class="flight-filter-wrapper">
                 <div class="filter-group filter-transit">
                     <h4 class="filter-title">Filter by Transit:</h4>
+                    <h3 ng-if="flightSearchParams.TripType == 'Return'">Onward Flight</h3>
                     <div class="filter-content">
-                        <label>
-                            <input type="checkbox" value="" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
+                        <label ng-class="{active:flightSearchFilter.stop.onward[0]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[0]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
                         </label>
-                        <label>
-                            <input type="checkbox" value="" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
+                        <label ng-class="{active:flightSearchFilter.stop.onward[1]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[1]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
                         </label>
-                        <label>
-                            <input type="checkbox" value="" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
+                        <label ng-class="{active:flightSearchFilter.stop.onward[2]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[2]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
+                        </label>
+                    </div>
+                    <h3 ng-if="flightSearchParams.TripType == 'Return'">Return Flight</h3>
+                    <div class="filter-content" ng-if="flightSearchParams.TripType == 'Return'">
+                        <label ng-class="{active:flightSearchFilter.stop.return[0]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[0]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
+                        </label>
+                        <label ng-class="{active:flightSearchFilter.stop.return[1]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[1]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
+                        </label>
+                        <label ng-class="{active:flightSearchFilter.stop.return[2]}">
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[2]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
                         </label>
                     </div>
                 </div>
@@ -100,6 +113,10 @@
                     <h4 class="filter-title">by Price:</h4>
                     <div class="filter-content">
                         <div class="price-slider"></div>
+                        <div class="price-slider-value hidden">
+                            <input type="text" value="" class="price-filter-min" ng-model="flightSearchFilter.priceFilter[0]"/>
+                            <input type="text" value="" class="price-filter-max" ng-model="flightSearchFilter.priceFilter[1]" />
+                        </div>
                         <div class="slider-text">
                             <br />
                             <span>Min Price</span>
@@ -109,8 +126,6 @@
                             <span>IDR {{flightSearchFilter.prices[0] | number:0}}</span>
                             <span class="pull-right">IDR {{flightSearchFilter.prices[ flightSearchFilter.prices.length-1 ] | number:0}}</span>
                         </div>
-                        <input class="price-slider-min hidden" type="text" ng-model="flightSearchFilter.priceFilter[0]" />
-                        <input class="price-slider-max hidden" type="text" ng-model="flightSearchFilter.priceFilter[1]" />
                     </div>
                 </div>
                 <div class="filter-group filter-airline">
@@ -118,7 +133,7 @@
                     <div class="filter-content">
                         <div>
                             <label class="airline" ng-repeat="airline in flightSearchFilter.airlineList">
-                                <input type="checkbox" name="name" value="" />
+                                <input type="checkbox" name="name" />
                                 <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
                                 <span>{{airline.Name}}</span>
                             </label>
@@ -130,22 +145,26 @@
                     <div class="filter-content">
                         <h5>Departure time</h5>
                         <div class="onward-departure-slider"></div>
+                        <div class="onward-departure-value hidden">
+                            <input type="text" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
+                            <input type="text" class="onward-departure-max" ng-model="flightSearchFilter.onwardDeparture[1]" />
+                        </div>
                         <div class="slider-text">
                             <br />
-                            <span>00:00</span>
-                            <span class="pull-right">24:00</span>
+                            <span><span class="onward-departure-min-display">00</span>:00</span>
+                            <span class="pull-right"><span class="onward-departure-max-display">00</span>:00</span>
                         </div>
-                        <input class="onward-departure-slider-min hidden" type="text" ng-model="flightSearchFilter.onwardDeparture[0]" />
-                        <input class="onward-departure-slider-max hidden" type="text" ng-model="flightSearchFilter.onwardDeparture[1]" />
                         <h5>Arrival time</h5>
                         <div class="onward-arrival-slider"></div>
+                        <div class="onward-arrival-value hidden">
+                            <input class="onward-arrival-min" type="text" ng-model="flightSearchFilter.onwardArrival[0]" />
+                            <input class="onward-arrival-max" type="text" ng-model="flightSearchFilter.onwardArrival[1]" />
+                        </div>
                         <div class="slider-text">
                             <br />
-                            <span>00:00</span>
-                            <span class="pull-right">24:00</span>
+                            <span><span class="onward-arrival-min-display">00</span>:00</span>
+                            <span class="pull-right"><span class="onward-arrival-max-display">00</span>:00</span>
                         </div>
-                        <input class="onward-arrival-slider-min hidden" type="text" ng-model="flightSearchFilter.onwardArrival[0]" />
-                        <input class="onward-arrival-slider-max hidden" type="text" ng-model="flightSearchFilter.onwardArrival[1]" />
                     </div>
                 </div>
                 <div class="filter-group filter-return" ng-if="flightSearchParams.TripType == 'Return'">
@@ -153,22 +172,26 @@
                     <div class="filter-content">
                         <h5>Departure time</h5>
                         <div class="return-departure-slider"></div>
+                        <div class="return-departure-value hidden">
+                            <input class="return-departure-min" type="text" ng-model="flightSearchFilter.returnDeparture[0]" />
+                            <input class="return-departure-max" type="text" ng-model="flightSearchFilter.returnDeparture[1]" />
+                        </div>
                         <div class="slider-text">
                             <br />
-                            <span>00:00</span>
-                            <span class="pull-right">24:00</span>
+                            <span><span class="return-departure-min-display">00</span>:00</span>
+                            <span class="pull-right"><span class="return-departure-max-display">00</span>:00</span>
                         </div>
-                        <input class="return-departure-slider-min hidden" type="text" ng-model="flightSearchFilter.returnDeparture[0]" />
-                        <input class="return-departure-slider-max hidden" type="text" ng-model="flightSearchFilter.returnDeparture[1]" />
                         <h5>Arrival time</h5>
                         <div class="return-arrival-slider"></div>
+                        <div class="return-arrival-value hidden">
+                            <input class="return-arrival-min" type="text" ng-model="flightSearchFilter.returnArrival[0]" />
+                            <input class="return-arrival-max" type="text" ng-model="flightSearchFilter.returnArrival[1]" />
+                        </div>
                         <div class="slider-text">
                             <br />
-                            <span>00:00</span>
-                            <span class="pull-right">24:00</span>
+                            <span><span class="return-arrival-min-display">00</span>:00</span>
+                            <span class="pull-right"><span class="return-arrival-max-display">00</span>:00</span>
                         </div>
-                        <input class="return-arrival-slider-min hidden" type="text" ng-model="flightSearchFilter.returnArrival[0]" />
-                        <input class="return-arrival-slider-max hidden" type="text" ng-model="flightSearchFilter.returnArrival[1]" />
                     </div>
                 </div>
             </div><!-- .flight-filter-wrapper -->
@@ -189,11 +212,13 @@
     <section class="flight-search-result">
         
         <div class="loading-wrapper" ng-if="!loaded">
-            <h1 class="text-center">Fetching Flight</h1>
+            <h1 class="text-center">Getting Flight</h1>
         </div>
-
         <div class="flight-wrapper" ng-if="loaded">
-            <div class="flight" ng-repeat="flight in flightSearchResult.FlightList">
+            <div class="no-flight container" ng-show="filteredFlight.length < 1">
+                <h2  class="text-center">No flight result found. Please refine your search filter.</h2>
+            </div>
+            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilter | filter:airlineFilter | filter:timeFilter)">
                 <div class="flight-header">
                     <span class="flight-airline"><img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" /> {{flight.FlightTrips[0].Airlines[0].Name}}</span>
                     <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>

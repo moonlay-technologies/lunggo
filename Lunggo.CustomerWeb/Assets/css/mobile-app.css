@@ -711,7 +711,8 @@ h1 {
         padding-top: 15px; }
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label {
           text-align: center;
-          width: 32%; }
+          width: 32%;
+          opacity: 0.5; }
           .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label input {
             display: none; }
           .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label img {
@@ -721,6 +722,8 @@ h1 {
             margin-right: auto; }
           .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label span {
             display: block; }
+        .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label.active {
+          opacity: 1; }
       .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline label {
         display: block; }
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline label img {
