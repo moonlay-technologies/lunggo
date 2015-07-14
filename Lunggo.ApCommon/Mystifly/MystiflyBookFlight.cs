@@ -212,14 +212,21 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static Passport MapPassport(PassengerInfoFare passengerInfoFare)
         {
-            var passport = new Passport
+            if (passengerInfoFare.PassportNumber != null)
             {
-                PassportNumber = passengerInfoFare.IdNumber,
-                ExpiryDate = passengerInfoFare.PassportExpiryDate.GetValueOrDefault(),
-                Country = passengerInfoFare.PassportCountry,
-                ExtensionData = null
-            };
-            return passport;
+                var passport = new Passport
+                {
+                    PassportNumber = passengerInfoFare.PassportNumber,
+                    ExpiryDate = passengerInfoFare.PassportExpiryDate.GetValueOrDefault(),
+                    Country = passengerInfoFare.PassportCountry,
+                    ExtensionData = null
+                };
+                return passport;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static TravelerInfo MapTravelerInfo(ContactData contactData, List<AirTraveler> airTravelers)

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.ModelBinding;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -16,6 +18,7 @@ using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Redis;
 using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -56,7 +59,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.IdNumber,
+                    PassportNumber = passenger.PassportNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
@@ -72,7 +75,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.IdNumber,
+                    PassportNumber = passenger.PassportNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
@@ -88,7 +91,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FirstName = passenger.FirstName,
                     LastName = passenger.LastName,
                     DateOfBirth = passenger.BirthDate,
-                    IdNumber = passenger.IdNumber,
+                    PassportNumber = passenger.PassportNumber,
                     PassportCountry = passenger.Country,
                     PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
                 }).ToList();
@@ -160,6 +163,54 @@ namespace Lunggo.CustomerWeb.Controllers
                 data.Message = "Already Booked. Please try again.";
                 return View(data);
             }
+        }
+
+        public ActionResult Checkout1(FlightSelectData select)
+        {
+            var service = FlightService.GetInstance();
+            var itineraryFare = service.GetItineraryFromCache(select.token);
+            var itinerary = service.ConvertToItineraryApi(itineraryFare);
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var data = new FlightCheckoutData
+            {
+                HashKey = select.token,
+                Itinerary = itinerary,
+                Message = ""
+            };
+            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data));
+            return View(data);
+        }
+
+        [HttpPost]
+        public ActionResult Checkout2(FlightCheckoutData data)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var data2json = redis.StringGet("cekot");
+            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
+            TryUpdateModel(data2);
+            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data2));
+            return View(data2);
+        }
+
+        [HttpPost]
+        public ActionResult Checkout3(FlightCheckoutData data)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var data2json = redis.StringGet("cekot");
+            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
+            TryUpdateModel(data2);
+            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data2));
+            return View(data2);
+        }
+
+        [HttpPost]
+        public ActionResult Checkout4(FlightCheckoutData data)
+        {
+            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
+            var data2json = redis.StringGet("cekot");
+            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
+            TryUpdateModel(data2);
+            return View(data);
         }
 
         public ActionResult Thankyou(string rsvNo)

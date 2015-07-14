@@ -13,8 +13,8 @@ using Lunggo.Framework.Queue;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
-using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.Database;
+using Microsoft.WindowsAzure.Storage;
 using WURFL;
 using WURFL.Config;
 

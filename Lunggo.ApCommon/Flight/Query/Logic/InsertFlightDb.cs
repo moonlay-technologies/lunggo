@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
@@ -154,7 +155,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                             LastName = passenger.LastName,
                             BirthDate = passenger.DateOfBirth,
                             CountryCd = passenger.PassportCountry,
-                            IdNumber = passenger.IdNumber,
+                            IdNumber = passenger.PassportNumber,
                             PassportExpiryDate = passenger.PassportExpiryDate,
                             InsertBy = "xxx",
                             InsertDate = DateTime.Now,
@@ -214,6 +215,12 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                     }
                 }
             }
+        }
+
+        internal static void PriceMarginRules(List<MarginRule> rules, List<MarginRule> deleteRules)
+        {
+            throw new Exception();
+            //ExecuteQuery();
         }
     }
 }

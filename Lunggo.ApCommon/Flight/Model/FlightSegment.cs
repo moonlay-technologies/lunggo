@@ -9,7 +9,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public string DepartureAirportName { get; set; }
         public string ArrivalCity { get; set; }
         public string ArrivalAirportName { get; set; }
-        public string CabinClass { get; set; }
         public string AirlineName { get; set; }
         public string AirlineLogoUrl { get; set; }
         public string OperatingAirlineName { get; set; }
@@ -19,7 +18,6 @@ namespace Lunggo.ApCommon.Flight.Model
     }
     public class FlightSegmentFare : FlightSegmentBase
     {
-        public string CabinClass { get; set; }
         public int RemainingSeats { get; set; }
         public List<FlightStop> FlightStops { get; set; }
     }

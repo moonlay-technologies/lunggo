@@ -159,5 +159,11 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                 return reservation;
             }
         }
+
+        internal static List<MarginRule> PriceMarginRules()
+        {
+            throw new Exception();
+            //return ExecuteQuery();
+        }
     }
 }

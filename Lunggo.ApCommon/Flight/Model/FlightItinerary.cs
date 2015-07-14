@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
+        public CabinClass CabinClass { get; set; }
         public decimal TotalFare { get; set; }
         public string Currency { get; set; }
     }
@@ -38,6 +39,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public FareType FareType { get; set; }
+        public CabinClass CabinClass { get; set; }
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }
         public decimal SupplierRate { get; set; }

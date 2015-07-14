@@ -11,10 +11,12 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using CabinClass = Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinClass;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
@@ -208,6 +210,7 @@ namespace Lunggo.ApCommon.Mystifly
 
             if (ItineraryValid(pricedItinerary))
             {
+                var flightService = FlightService.GetInstance();
                 var flightItineraryFare = new FlightItineraryFare();
                 flightItineraryFare.FlightTrips = MapFlightFareTrips(pricedItinerary, conditions);
                 if (flightItineraryFare.FlightTrips == null)
@@ -218,14 +221,7 @@ namespace Lunggo.ApCommon.Mystifly
                 flightItineraryFare.SupplierPrice =
                     decimal.Parse(pricedItinerary.AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount);
                 flightItineraryFare.OriginalIdrPrice = flightItineraryFare.SupplierPrice * flightItineraryFare.SupplierRate;
-                flightItineraryFare.MarginId = 999;
-                flightItineraryFare.MarginCoefficient = 0.07M;
-                flightItineraryFare.MarginConstant = 0;
-                flightItineraryFare.MarginNominal = flightItineraryFare.OriginalIdrPrice*
-                                                    flightItineraryFare.MarginCoefficient +
-                                                    flightItineraryFare.MarginConstant;
-                flightItineraryFare.FinalIdrPrice = flightItineraryFare.OriginalIdrPrice +
-                                                    flightItineraryFare.MarginNominal;
+                flightService.AddPriceMargin(flightItineraryFare);
                 flightItineraryFare.LocalCurrency = "IDR";
                 flightItineraryFare.LocalRate = 1;
                 flightItineraryFare.LocalPrice = flightItineraryFare.FinalIdrPrice * flightItineraryFare.LocalRate;
@@ -233,6 +229,8 @@ namespace Lunggo.ApCommon.Mystifly
                     MapRequiredFields(pricedItinerary, flightItineraryFare);
                 flightItineraryFare.Supplier = FlightSupplier.Mystifly;
                 flightItineraryFare.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
+                flightItineraryFare.CabinClass =
+                    MapCabinClass(pricedItinerary.OriginDestinationOptions[0].FlightSegments[0].CabinClassCode);
                 flightItineraryFare.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
                 MapPassengerCount(pricedItinerary, flightItineraryFare);
                 flightItineraryFare.FareId =
@@ -283,6 +281,21 @@ namespace Lunggo.ApCommon.Mystifly
                     return Flight.Constant.FareType.Consolidated;
                 default:
                     return Flight.Constant.FareType.Undefined;
+            }
+        }
+
+        private static Flight.Constant.CabinClass MapCabinClass(string cabinClass)
+        {
+            switch (cabinClass)
+            {
+                case "Y":
+                    return Flight.Constant.CabinClass.Economy;
+                case "C":
+                    return Flight.Constant.CabinClass.Business;
+                case "F":
+                    return Flight.Constant.CabinClass.First;
+                default:
+                    return Flight.Constant.CabinClass.Undefined;
             }
         }
 
@@ -409,7 +422,6 @@ namespace Lunggo.ApCommon.Mystifly
                 FlightNumber = flightSegment.FlightNumber,
                 OperatingAirlineCode = flightSegment.OperatingAirline.Code,
                 AircraftCode = flightSegment.OperatingAirline.Equipment,
-                CabinClass = flightSegment.CabinClassCode,
                 Rbd = flightSegment.ResBookDesigCode,
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,

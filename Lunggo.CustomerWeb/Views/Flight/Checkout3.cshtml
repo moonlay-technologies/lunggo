@@ -1,0 +1,250 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
+@model Lunggo.CustomerWeb.Models.FlightCheckoutData
+
+@{
+    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    ViewBag.Title = "Home Page";
+}
+@{
+    var titleList = new List<Object>
+        {
+            new {Value = Title.Mister, Text = "Mr"},
+            new {Value = Title.Mistress, Text = "Mrs"},
+            new {Value = Title.Miss, Text = "Ms"}
+        };
+
+    var childTitleList = new List<Object>
+        {
+            new {Value = Title.Mister, Text = "Mr"},
+            new {Value = Title.Miss, Text = "Ms"}
+        };
+
+    var adultCount = 0;
+    var childCount = 0;
+    var infantCount = 0;
+    var needPassport = false;
+    var hashKey = "";
+
+    try
+    {
+        adultCount = Model.Itinerary.AdultCount;
+        childCount = Model.Itinerary.ChildCount;
+        infantCount = Model.Itinerary.InfantCount;
+        needPassport = Model.Itinerary.RequirePassport;
+        hashKey = Model.HashKey;
+    }
+    catch
+    {
+
+    }
+}
+
+<section class="page group-checkout group-flight-checkout review-page">
+    <section class="checkout-progress">
+        <div class="checkout-step">
+            <div>Customer Detail</div>
+            <div>Passenger Detail</div>
+            <div>Review</div>
+            <div>Payment</div>
+            <div>Ticket</div>
+        </div>
+        <div class="checkout-bar">
+            <div class="checkout-current-progress step-3"></div>
+            <div class="bar-1 active"></div>
+            <div class="bar-2 active"></div>
+            <div class="bar-3 active"></div>
+            <div class="bar-4"></div>
+            <div class="bar-5"></div>
+        </div>
+    </section><!-- .checkout-progress -->
+    <section class="review-detail">
+
+        <p class="container">Please review your order before make a payment</p>
+
+        <section class="flight-detail">
+            <h2 class="section-title">Flight Detail</h2>
+            <div class="section-content container">
+
+                <section class="flight-detail">
+                    <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                    <h5 class="airline-name">
+                        <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                    </h5>
+                    <div class="row flight-route">
+                        <div class="col-sm-6 text-right flight-origin">
+                            <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                            <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
+                        </div>
+                        <div class="separator">to</div>
+                        <div class="col-sm-6 text-left flight-destination">
+                            <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                            <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
+                            <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
+                        </div>
+                    </div>
+                </section><!-- .flight-detail -->
+                @if (@Model.Itinerary.TripType == TripType.Return)
+                {
+                    <section class="flight-detail">
+                        <h3 class="text-center">RETURN FLIGHT</h3>
+                        <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                        <div class="row flight-route">
+                            <div class="col-sm-6 text-right flight-origin">
+                                <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                            </div>
+                            <div class="separator">to</div>
+                            <div class="col-sm-6 text-left flight-destination">
+                                <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
+                                <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                            </div>
+                        </div>
+                    </section>
+                        <!-- .flight-detail -->
+                }
+
+            </div>
+        </section><!-- .flight-details -->
+
+        <section class="flight-passenger">
+            <h2 class="section-title">Passenger Detail</h2>
+            <div class="section-content container">
+                <ol>
+                    @foreach (var adultPassenger in Model.AdultPassengerData)
+                    {
+                        <li>
+                            <p>@adultPassenger.Title @adultPassenger.FirstName @adultPassenger.LastName</p>
+                            <table>
+                                <tr>
+                                    <td>Birth Day</td>
+                                    <td>@adultPassenger.BirthDate.ToString("dd MMM yyyy")</td>
+                                </tr>
+                                @if (needPassport)
+                                {
+                                    <tr>
+                                        <td>Passport No</td>
+                                        <td>@adultPassenger.PassportNumber</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Passport Expiry Date</td>
+                                        <td>@adultPassenger.PassportExpiryDate.GetValueOrDefault().ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Passport Country</td>
+                                        <td>@adultPassenger.Country</td>
+                                    </tr>
+                                }
+                            </table>
+                        </li>
+                    }
+                    @if (childCount > 0)
+                    {
+                        foreach (var childPassenger in Model.ChildPassengerData)
+                         {
+                             <li>
+                                 <p>@childPassenger.Title @childPassenger.FirstName @childPassenger.LastName</p>
+                                 <table>
+                                     <tr>
+                                         <td>Birth Day</td>
+                                         <td>@childPassenger.BirthDate.ToString("dd MMM yyyy")</td>
+                                     </tr>
+                                     @if (needPassport)
+                                     {
+                                         <tr>
+                                             <td>Passport No</td>
+                                             <td>@childPassenger.PassportNumber</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Passport Expiry Date</td>
+                                             <td>@childPassenger.PassportExpiryDate.GetValueOrDefault().ToString("dd MMM yyyy")</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Passport Country</td>
+                                             <td>@childPassenger.Country</td>
+                                         </tr>
+                                     }
+                                 </table>
+                             </li>
+                         }
+                    }
+                    @if (infantCount > 0)
+                    {
+                        foreach (var infantPassenger in Model.InfantPassengerData)
+                         {
+                             <li>
+                                 <p>@infantPassenger.Title @infantPassenger.FirstName @infantPassenger.LastName</p>
+                                 <table>
+                                     <tr>
+                                         <td>Birth Day</td>
+                                         <td>@infantPassenger.BirthDate.ToString("dd MMM yyyy")</td>
+                                     </tr>
+                                     @if (needPassport)
+                                     {
+                                         <tr>
+                                             <td>Passport No</td>
+                                             <td>@infantPassenger.PassportNumber</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Passport Expiry Date</td>
+                                             <td>@infantPassenger.PassportExpiryDate.GetValueOrDefault().ToString("dd MMM yyyy")</td>
+                                         </tr>
+                                         <tr>
+                                             <td>Passport Country</td>
+                                             <td>@infantPassenger.Country</td>
+                                         </tr>
+                                     }
+                                 </table>
+                             </li>
+                         }
+                    }
+                </ol>
+            </div>
+        </section><!-- .flight-passenger -->
+
+        <section class="flight-price">
+            <h2 class="section-title">Price Detail</h2>
+            <div class="section-content container">
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Total Fare</td>
+                            <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                        <tr>
+                            <td>Tax and Service</td>
+                            <td>Included</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total Price</td>
+                            <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </section><!-- .flight-price -->
+        @using (Html.BeginForm("Checkout4", "Flight", FormMethod.Post, new { @class = "form form-horizontal" }))
+        {
+            <section class="container">
+                <button class="btn btn-yellow btn-block-lg">CONTINUE TO PAYMENT</button>
+            </section>
+        }
+
+
+    </section><!-- .customer-detail -->
+</section><!-- .checkout-page -->

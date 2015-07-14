@@ -76,22 +76,22 @@
                                             <label for="">Phone Number :</label>
                                             <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="" class="control-label">Email :</label>
                                         <input type="text" class="form-control" name="ContactData.Email" placeholder="ex : nama@email.com">
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
-                            @for (var i = 1; i <= Model.Itinerary.AdultCount; i++)
+                            @for (var i = 1; i <= adultCount; i++)
                             {
                                 <h5 class="control-label"><b>Passenger Adult @i</b></h5>
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"), new{@class = "form-control user-title"})
+                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
@@ -106,19 +106,12 @@
                                     <label for="" class="control-label">Birth Date :</label>
                                     <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
                                 </div>
-                                <div class="form-group">
-                                    @if (needPassport)
-                                    {
-                                        <label for="" class="control-label">Passport Number :</label>
-                                    }
-                                    else
-                                    {
-                                        <label for="" class="control-label">ID Number :</label>
-                                    }
-                                    <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].IdNumber" placeholder="">
-                                </div>
                                 if (needPassport)
                                 {
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Passport Number :</label>
+                                        <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].IdNumber" placeholder="">
+                                    </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Expiry Date:</label>
                                         <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
@@ -127,9 +120,9 @@
                                 <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
                             }
 
-                            @if (Model.Itinerary.ChildCount > 0)
+                            @if (childCount > 0)
                             {
-                                for (var i = 1; i <= Model.Itinerary.ChildCount; i++)
+                                for (var i = 1; i <= childCount; i++)
                                 {
                                     <h5 class="control-label"><b>Passenger Child @i</b></h5>
                                     <div class="form-inline">
@@ -150,19 +143,12 @@
                                         <label for="" class="control-label">Birth Date :</label>
                                         <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
                                     </div>
-                                    <div class="form-group">
-                                        @if (needPassport)
-                                        {
-                                            <label for="" class="control-label">Passport Number :</label>
-                                        }
-                                        else
-                                        {
-                                            <label for="" class="control-label">ID Number :</label>
-                                        }
-                                        <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].IdNumber" placeholder="">
-                                    </div>
                                     if (needPassport)
                                     {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Passport Number :</label>
+                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].IdNumber" placeholder="">
+                                        </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">Passport Expiry Date:</label>
                                             <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
@@ -172,9 +158,9 @@
                                 }
                             }
 
-                            @if (Model.Itinerary.InfantCount > 0)
+                            @if (infantCount > 0)
                             {
-                                for (var i = 1; i <= Model.Itinerary.InfantCount; i++)
+                                for (var i = 1; i <= infantCount; i++)
                                 {
                                     <h5 class="control-label"><b>Passenger Infant @i</b></h5>
                                     <div class="form-inline">
@@ -195,19 +181,12 @@
                                         <label for="" class="control-label">Birth Date :</label>
                                         <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
                                     </div>
-                                    <div class="form-group">
-                                        @if (needPassport)
-                                        {
-                                            <label for="" class="control-label">Passport Number :</label>
-                                        }
-                                        else
-                                        {
-                                            <label for="" class="control-label">ID Number :</label>
-                                        }
-                                        <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].IdNumber" placeholder="">
-                                    </div>
                                     if (needPassport)
                                     {
+                                        <div class="form-group">
+                                            <label for="" class="control-label">Passport Number :</label>
+                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].IdNumber" placeholder="">
+                                        </div>
                                         <div class="form-group">
                                             <label for="" class="control-label">Passport Expiry Date:</label>
                                             <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
@@ -257,7 +236,9 @@
                     <h2><b>ORDER</b> DETAILS</h2>
                     <section class="flight-detail">
                         <h3 class="text-center">DEPARTURE FLIGHT</h3>
-                        <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                        <h5 class="airline-name">
+                            <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                        </h5>
                         <div class="row flight-route">
                             <div class="col-sm-6 text-right flight-origin">
                                 <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
@@ -329,7 +310,7 @@
         </div>
     </div>
 
-    
+
     <!-- loading screen -->
     <div class="search-flight-loading flight-validate-loading">
 

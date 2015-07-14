@@ -50,6 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequireSameCheckIn = itinerary.RequireSameCheckIn,
                     CanHold = itinerary.CanHold,
                     TripType = itinerary.TripType,
+                    CabinClass = itinerary.CabinClass,
                     TotalFare = itinerary.LocalPrice,
                     FlightTrips = MapTrips(itinerary.FlightTrips),
                 };
@@ -209,7 +210,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 OperatingAirlineName = dict.GetAirlineName(segment.OperatingAirlineCode),
                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segment.OperatingAirlineCode),
                 AircraftCode = segment.AircraftCode,
-                CabinClass = segment.CabinClass,
                 StopQuantity = segment.StopQuantity,
                 FlightStops = segment.FlightStops,
                 Rbd = segment.Rbd,

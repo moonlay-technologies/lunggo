@@ -183,9 +183,10 @@ namespace Lunggo.ApCommon.Mystifly
                     FirstName = customerInfo.Customer.PaxName.PassengerFirstName,
                     LastName = customerInfo.Customer.PaxName.PassengerLastName,
                     Type = MapDetailsPassengerType(customerInfo),
-                    IdNumber = customerInfo.Customer.PassportNumber,
                     ETicket = eTicket
                 };
+                if (customerInfo.Customer.PassportNumber != null)
+                    passengerInfo.PassportNumber = customerInfo.Customer.PassportNumber;
                 passengerInfoDetails.Add(passengerInfo);
             }
             return passengerInfoDetails;

@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 MystiflyWrapper.Init();
                 CurrencyService.GetInstance().Init();
+                InitPriceMargin();
                 _isInitialized = true;
             }
         }
