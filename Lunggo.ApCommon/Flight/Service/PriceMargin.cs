@@ -15,19 +15,16 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        private static List<MarginRule> _marginRules = new List<MarginRule>();
-        private static List<MarginRule> _deletedMarginRules = new List<MarginRule>();
+        private static readonly List<MarginRule> MarginRules = new List<MarginRule>();
+        private static readonly List<MarginRule> DeletedMarginRules = new List<MarginRule>();
+        private const decimal RoundingOrder = 100M;
 
         internal void InitPriceMargin()
         {
-            _marginRules.Add(new MarginRule
+            MarginRules.Add(new MarginRule
             {
-                ConstraintCount = 1,
-                Coefficient = 1000000M,
-                Constant = 0
-            });
-            _marginRules.Add(new MarginRule
-            {
+                Name = "Default",
+                Description = "This is the default margin rules",
                 ConstraintCount = 0,
                 Coefficient = 0.07M,
                 Constant = 0
@@ -44,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             foreach (var updatedRule in updatedRules)
             {
-                var existingRule = _marginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
+                var existingRule = MarginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
                 existingRule.Priority = updatedRule.Priority;
             }
         }
@@ -69,36 +66,37 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static void DeleteObsoleteRule(MarginRule updatedRule)
         {
-            var obsoleteRule = _marginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
-            _marginRules.Remove(obsoleteRule);
-            _deletedMarginRules.Add(obsoleteRule);
+            var obsoleteRule = MarginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
+            MarginRules.Remove(obsoleteRule);
+            DeletedMarginRules.Add(obsoleteRule);
         }
 
         private static List<MarginRule> RetrieveConflict(MarginRule newRule)
         {
-            return _marginRules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
+            return MarginRules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
         }
 
         private static bool CheckForConflict(MarginRule newRule)
         {
-            return _marginRules.Any(rule => rule.ConstraintCount == newRule.ConstraintCount);
+            return MarginRules.Any(rule => rule.ConstraintCount == newRule.ConstraintCount);
         }
 
         public void PullRemotePriceMarginRules()
         {
-            _marginRules = GetFlightDb.PriceMarginRules();
+            MarginRules.Clear();
+            MarginRules.AddRange(GetFlightDb.PriceMarginRules());
         }
 
         public void SyncPriceMarginRules()
         {
-            InsertFlightDb.PriceMarginRules(_marginRules, _deletedMarginRules);
+            InsertFlightDb.PriceMarginRules(MarginRules, DeletedMarginRules);
         }
 
         private static void ApplyMarginRule(FlightItineraryFare fare, MarginRule rule)
         {
             fare.MarginId = rule.RuleId;
             var modifiedFare = fare.OriginalIdrPrice*(1M + rule.Coefficient) + rule.Constant;
-            var roundingAmount = 100M - (modifiedFare%100M);
+            var roundingAmount = RoundingOrder - (modifiedFare%RoundingOrder);
             var finalFare = modifiedFare + roundingAmount;
             fare.MarginCoefficient = rule.Coefficient;
             fare.MarginConstant = rule.Constant + roundingAmount;
@@ -109,9 +107,9 @@ namespace Lunggo.ApCommon.Flight.Service
         private static MarginRule GetFirstMatchingRule(FlightItineraryFare fare)
         {
             var rule = new MarginRule();
-            for (var i = 0; i < _marginRules.Count; i++)
+            for (var i = 0; i < MarginRules.Count; i++)
             {
-                rule = _marginRules[i];
+                rule = MarginRules[i];
                 if (!BookingDateMatches(rule)) continue;
                 if (!FareTypeMatches(rule, fare)) continue;
                 if (!CabinClassMatches(rule, fare)) continue;

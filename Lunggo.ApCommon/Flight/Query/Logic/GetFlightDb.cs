@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 
@@ -27,14 +28,14 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                         FlightTrips = tripRecords.Select(tripRecord =>
                         {
                             var segmentRecords = GetFlightSegmentSummaryQuery.GetInstance()
-                                .Execute(conn, new {tripRecord.TripId});
+                                .Execute(conn, new { tripRecord.TripId });
                             var tripSummary = service.ConvertToTripApi(tripRecord);
                             tripSummary.FlightSegments =
                                 segmentRecords.Select(service.ConvertToSegmentApi).ToList();
                             return tripSummary;
                         }).ToList(),
-                        TotalFare = GetFlightTotalFareQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).Sum(),
-                        Currency = GetFlightLocalCurrencyQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).Single()
+                        TotalFare = GetFlightTotalFareQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Sum(),
+                        Currency = GetFlightLocalCurrencyQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single()
                     }
                     : null;
             }
@@ -44,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new {ContactEmail = contactEmail});
+                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail });
                 foreach (var rsvNo in rsvNos)
                 {
                     yield return Reservation(rsvNo);
@@ -62,7 +63,7 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
                 var segmentLookup = new Dictionary<long, FlightSegmentDetails>();
                 var passengerLookup = new Dictionary<long, PassengerInfoDetails>();
                 var dict = DictionaryService.GetInstance();
-                reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
+                reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
                     (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
                     {
                         if (reservation == null)
@@ -162,8 +163,45 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
 
         internal static List<MarginRule> PriceMarginRules()
         {
-            throw new Exception();
-            //return ExecuteQuery();
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activeRuleRecords = GetFlightActivePriceMarginRuleQuery.GetInstance().Execute(conn, null);
+                var activeRules = activeRuleRecords.Select(record => new MarginRule
+                {
+                    RuleId = record.RuleId.GetValueOrDefault(),
+                    Name = record.Name,
+                    Description = record.Description,
+                    BookingDateSpans = record.BookingDateSpans.Deserialize<List<DateSpanRule>>(),
+                    BookingDays = record.BookingDays.Deserialize<List<DayOfWeek>>(),
+                    BookingDates = record.BookingDates.Deserialize<List<DateTime>>(),
+                    FareTypes = record.FareTypes.Deserialize<List<FareType>>(),
+                    CabinClasses = record.CabinClasses.Deserialize<List<CabinClass>>(),
+                    TripTypes = record.TripTypes.Deserialize<List<TripType>>(),
+                    DepartureDateSpans = record.DepartureDateSpans.Deserialize<List<DateSpanRule>>(),
+                    DepartureDays = record.DepartureDays.Deserialize<List<DayOfWeek>>(),
+                    DepartureDates = record.DepartureDates.Deserialize<List<DateTime>>(),
+                    DepartureTimeSpans = record.DepartureTimeSpans.Deserialize<List<TimeSpanRule>>(),
+                    ReturnDateSpans = record.ReturnDateSpans.Deserialize<List<DateSpanRule>>(),
+                    ReturnDays = record.ReturnDays.Deserialize<List<DayOfWeek>>(),
+                    ReturnDates = record.ReturnDates.Deserialize<List<DateTime>>(),
+                    ReturnTimeSpans = record.ReturnTimeSpans.Deserialize<List<TimeSpanRule>>(),
+                    MaxPassengers = record.MaxPassengers.GetValueOrDefault(),
+                    MinPassengers = record.MinPassengers.GetValueOrDefault(),
+                    Airlines = record.Airlines.Deserialize<List<string>>(),
+                    AirlinesIsExclusion = record.AirlinesIsExclusion.GetValueOrDefault(),
+                    AirportPairs = record.AirportPairs.Deserialize<List<AirportPairRule>>(),
+                    AirportPairsIsExclusion = record.AirportPairsIsExclusion.GetValueOrDefault(),
+                    CityPairs = record.CityPairs.Deserialize<List<AirportPairRule>>(),
+                    CityPairsIsExclusion = record.CityPairsIsExclusion.GetValueOrDefault(),
+                    CountryPairs = record.CountryPairs.Deserialize<List<AirportPairRule>>(),
+                    CountryPairsIsExclusion = record.CountryPairsIsExclusion.GetValueOrDefault(),
+                    Coefficient = record.Coefficient.GetValueOrDefault(),
+                    Constant = record.ConstraintCount.GetValueOrDefault(),
+                    ConstraintCount = record.ConstraintCount.GetValueOrDefault(),
+                    Priority = record.Priority.GetValueOrDefault(),
+                });
+                return activeRules.ToList();
+            }
         }
     }
 }

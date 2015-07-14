@@ -44,6 +44,7 @@
     <Compile Include="TableRecord\FlightEticketTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryTableRecord.cs" />
     <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
+    <Compile Include="TableRecord\FlightPriceMarginRuleTableRecord.cs" />
     <Compile Include="TableRecord\FlightReservationTableRecord.cs" />
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="TableRepository\FlightEticketRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRepository.cs" />
     <Compile Include="TableRepository\FlightPassengerRepository.cs" />
+    <Compile Include="TableRepository\FlightPriceMarginRuleRepository.cs" />
     <Compile Include="TableRepository\FlightReservationRepository.cs" />
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />
     <Compile Include="TableRepository\FlightStopRepository.cs" />

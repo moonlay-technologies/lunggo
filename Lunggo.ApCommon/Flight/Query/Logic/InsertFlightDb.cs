@@ -217,10 +217,78 @@ namespace Lunggo.ApCommon.Flight.Query.Logic
             }
         }
 
-        internal static void PriceMarginRules(List<MarginRule> rules, List<MarginRule> deleteRules)
+        internal static void PriceMarginRules(List<MarginRule> rules, List<MarginRule> deletedRules)
         {
-            throw new Exception();
-            //ExecuteQuery();
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var allRules = FlightPriceMarginRuleTableRepo.GetInstance().FindAll(conn).ToList();
+                var activeRules = allRules.Where(rule => rule.IsActive.GetValueOrDefault()).ToList();
+                var inactiveRules = allRules.Where(rule => !rule.IsActive.GetValueOrDefault()).ToList();
+                foreach (var rule in rules)
+                {
+                    if (activeRules.Any(activeRule => activeRule.RuleId == rule.RuleId))
+                    {
+                        FlightPriceMarginRuleTableRepo.GetInstance().Update(conn, new FlightPriceMarginRuleTableRecord
+                        {
+                            RuleId = rule.RuleId,
+                            Priority = rule.Priority
+                        });
+                    }
+                    else
+                    {
+                        var ruleRecord = new FlightPriceMarginRuleTableRecord
+                        {
+                            RuleId = rule.RuleId,
+                            Name = rule.Name,
+                            Description = rule.Description,
+                            BookingDateSpans = rule.BookingDateSpans.Serialize(),
+                            BookingDays = rule.BookingDays.Serialize(),
+                            BookingDates = rule.BookingDates.Serialize(),
+                            FareTypes = rule.FareTypes.Serialize(),
+                            CabinClasses = rule.CabinClasses.Serialize(),
+                            TripTypes = rule.TripTypes.Serialize(),
+                            DepartureDateSpans = rule.DepartureDateSpans.Serialize(),
+                            DepartureDays = rule.DepartureDays.Serialize(),
+                            DepartureDates = rule.DepartureDates.Serialize(),
+                            DepartureTimeSpans = rule.DepartureTimeSpans.Serialize(),
+                            ReturnDateSpans = rule.ReturnDateSpans.Serialize(),
+                            ReturnDays = rule.ReturnDays.Serialize(),
+                            ReturnDates = rule.ReturnDates.Serialize(),
+                            ReturnTimeSpans = rule.ReturnTimeSpans.Serialize(),
+                            MaxPassengers = rule.MaxPassengers,
+                            MinPassengers = rule.MinPassengers,
+                            Airlines = rule.Airlines.Serialize(),
+                            AirlinesIsExclusion = rule.AirlinesIsExclusion,
+                            AirportPairs = rule.AirportPairs.Serialize(),
+                            AirportPairsIsExclusion = rule.AirportPairsIsExclusion,
+                            CityPairs = rule.CityPairs.Serialize(),
+                            CityPairsIsExclusion = rule.CityPairsIsExclusion,
+                            CountryPairs = rule.CountryPairs.Serialize(),
+                            CountryPairsIsExclusion = rule.CountryPairsIsExclusion,
+                            Coefficient = rule.Coefficient,
+                            Constant = rule.ConstraintCount,
+                            ConstraintCount = rule.ConstraintCount,
+                            Priority = rule.Priority,
+                            IsActive = true,
+                            InsertBy = "xxx",
+                            InsertDate = DateTime.Now,
+                            InsertPgId = "xxx"
+                        };
+                        FlightPriceMarginRuleTableRepo.GetInstance().Insert(conn, ruleRecord);
+                    }
+                }
+                foreach (var deletedRule in deletedRules)
+                {
+                    if (inactiveRules.Any(inactiveRule => inactiveRule.RuleId == deletedRule.RuleId))
+                    {
+                        FlightPriceMarginRuleTableRepo.GetInstance().Update(conn, new FlightPriceMarginRuleTableRecord
+                        {
+                            RuleId = deletedRule.RuleId,
+                            IsActive = false
+                        });
+                    }
+                }
+            }
         }
     }
 }

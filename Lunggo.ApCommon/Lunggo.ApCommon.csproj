@@ -189,6 +189,7 @@
     <Compile Include="Flight\Query\GetFlightReservationQuery.cs" />
     <Compile Include="Flight\Query\GetFlightRsvNosByContactEmailQuery.cs" />
     <Compile Include="Flight\Query\GetFlightRsvNoByBookingIdQuery.cs" />
+    <Compile Include="Flight\Query\GetFlightActivePriceMarginRuleQuery.cs" />
     <Compile Include="Flight\Query\GetFlightTotalFareQuery.cs" />
     <Compile Include="Flight\Query\GetFlightBookingIdQuery.cs" />
     <Compile Include="Flight\Query\GetFlightPaymentIdQuery.cs" />
