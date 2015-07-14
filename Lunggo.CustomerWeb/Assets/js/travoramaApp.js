@@ -143,54 +143,90 @@
             }
 
             // stop filter
-            $scope.stopFilter = function (flight) {
-                // if flight oneway
-                if ($scope.flightSearchParams.TripType == 'OneWay') {
-                    if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == true) {
+            $scope.stopFilterOnward = function (flight) {
+                if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == true) {
+                    return flight;
+                } else {
+                    if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == false) {
+                        if (flight.FlightTrips[0].TotalTransit < 1) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == false) {
+                        if (flight.FlightTrips[0].TotalTransit < 2) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == false) {
+                        if (flight.FlightTrips[0].TotalTransit == 1) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == true) {
+                        if (flight.FlightTrips[0].TotalTransit > 0) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == true) {
+                        if (flight.FlightTrips[0].TotalTransit > 1) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == true) {
+                        if (flight.FlightTrips[0].TotalTransit < 1 || flight.FlightTrips[0].TotalTransit > 1) {
+                            return flight;
+                        }
+                    }
+                    if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == false) {
+                        return null;
+                    }
+                }
+            }
+            // stop filter on return flight
+            $scope.stopFilterReturn = function(flight) {
+                if ($scope.flightSearchParams.TripType == 'Return') {
+                    if ($scope.flightSearchFilter.stop.return[0] == true && $scope.flightSearchFilter.stop.return[1] == true && $scope.flightSearchFilter.stop.return[2] == true) {
                         return flight;
                     } else {
-
-                        if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == false) {
-                            if (flight.FlightTrips[0].TotalTransit < 1) {
+                        if ($scope.flightSearchFilter.stop.return[0] == true && $scope.flightSearchFilter.stop.return[1] == false && $scope.flightSearchFilter.stop.return[2] == false) {
+                            if (flight.FlightTrips[1].TotalTransit < 1) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == false) {
-                            if (flight.FlightTrips[0].TotalTransit < 2 ) {
+                        if ($scope.flightSearchFilter.stop.return[0] == true && $scope.flightSearchFilter.stop.return[1] == true && $scope.flightSearchFilter.stop.return[2] == false) {
+                            if (flight.FlightTrips[1].TotalTransit < 2) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == false) {
-                            if (flight.FlightTrips[0].TotalTransit == 1) {
+                        if ($scope.flightSearchFilter.stop.return[0] == false && $scope.flightSearchFilter.stop.return[1] == true && $scope.flightSearchFilter.stop.return[2] == false) {
+                            if (flight.FlightTrips[1].TotalTransit == 1) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == true && $scope.flightSearchFilter.stop.onward[2] == true) {
-                            if (flight.FlightTrips[0].TotalTransit > 0) {
+                        if ($scope.flightSearchFilter.stop.return[0] == false && $scope.flightSearchFilter.stop.return[1] == true && $scope.flightSearchFilter.stop.return[2] == true) {
+                            if (flight.FlightTrips[1].TotalTransit > 0) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == true) {
-                            if (flight.FlightTrips[0].TotalTransit > 1) {
+                        if ($scope.flightSearchFilter.stop.return[0] == false && $scope.flightSearchFilter.stop.return[1] == false && $scope.flightSearchFilter.stop.return[2] == true) {
+                            if (flight.FlightTrips[1].TotalTransit > 1) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == true && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == true) {
-                            if (flight.FlightTrips[0].TotalTransit < 1 || flight.FlightTrips[0].TotalTransit > 1) {
+                        if ($scope.flightSearchFilter.stop.return[0] == true && $scope.flightSearchFilter.stop.return[1] == false && $scope.flightSearchFilter.stop.return[2] == true) {
+                            if (flight.FlightTrips[1].TotalTransit < 1 || flight.FlightTrips[0].TotalTransit > 1) {
                                 return flight;
                             }
                         }
-                        if ($scope.flightSearchFilter.stop.onward[0] == false && $scope.flightSearchFilter.stop.onward[1] == false && $scope.flightSearchFilter.stop.onward[2] == false) {
-                            return null;
+                        if ($scope.flightSearchFilter.stop.return[0] == false && $scope.flightSearchFilter.stop.return[1] == false && $scope.flightSearchFilter.stop.return[2] == false) {
+                            return flight;
                         }
-
                     }
-                // if flight return
                 } else {
                     return flight;
                 }
             }
-            
+
             // airline filter
             $scope.airlineFilter = function(flight) {
                 return flight;

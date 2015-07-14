@@ -218,7 +218,7 @@
             <div class="no-flight container" ng-show="filteredFlight.length < 1">
                 <h2  class="text-center">No flight result found. Please refine your search filter.</h2>
             </div>
-            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilter | filter:airlineFilter | filter:timeFilter)">
+            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilter)">
                 <div class="flight-header">
                     <span class="flight-airline"><img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" /> {{flight.FlightTrips[0].Airlines[0].Name}}</span>
                     <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>
