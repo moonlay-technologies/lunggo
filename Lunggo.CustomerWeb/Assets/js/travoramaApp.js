@@ -235,8 +235,28 @@
             }
 
             // time filter
-            $scope.timeFilter = function(flight) {
-                return flight;
+            $scope.timeFilterOnward = function (flight) {
+                if ($scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) >= $scope.flightSearchFilter.onwardDeparture[0]
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) <= $scope.flightSearchFilter.onwardDeparture[1]
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[flight.FlightTrips[0].FlightSegments.length - 1].ArrivalTime) >= $scope.flightSearchFilter.onwardArrival[0]
+                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[flight.FlightTrips[0].FlightSegments.length - 1].ArrivalTime) <= $scope.flightSearchFilter.onwardArrival[1]
+                    )
+                {
+                    return flight;
+                }
+            }
+            $scope.timeFilterReturn = function (flight) {
+                if ($scope.flightSearchParams.TripType == 'Return') {
+                    if ($scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) >= $scope.flightSearchFilter.returnDeparture[0]
+                        && $scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) <= $scope.flightSearchFilter.returnDeparture[1]
+                        && $scope.getHour(flight.FlightTrips[1].FlightSegments[flight.FlightTrips[1].FlightSegments.length - 1].ArrivalTime) >= $scope.flightSearchFilter.returnArrival[0]
+                        && $scope.getHour(flight.FlightTrips[1].FlightSegments[flight.FlightTrips[1].FlightSegments.length - 1].ArrivalTime) <= $scope.flightSearchFilter.returnArrival[1]
+                        ) {
+                            return flight;
+                        }
+                } else {
+                    return flight;
+                }
             }
             $scope.getHour = function (datetime) {
                 datetime = datetime.substr(11, 2);
@@ -336,7 +356,6 @@
                                 $('.price-filter-max').trigger('input');
                             },
                             slide: function (event, ui) {
-                                console.log(ui.values);
                                 $scope.flightSearchFilter.priceFilterDisplay[0] = ui.values[0];
                                 $scope.flightSearchFilter.priceFilterDisplay[1] = ui.values[1];
                             },

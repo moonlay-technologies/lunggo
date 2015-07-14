@@ -146,8 +146,8 @@
                         <h5>Departure time</h5>
                         <div class="onward-departure-slider"></div>
                         <div class="onward-departure-value hidden">
-                            <input type="text" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
-                            <input type="text" class="onward-departure-max" ng-model="flightSearchFilter.onwardDeparture[1]" />
+                            <input type="number" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
+                            <input type="number" class="onward-departure-max" ng-model="flightSearchFilter.onwardDeparture[1]" />
                         </div>
                         <div class="slider-text">
                             <br />
@@ -157,8 +157,8 @@
                         <h5>Arrival time</h5>
                         <div class="onward-arrival-slider"></div>
                         <div class="onward-arrival-value hidden">
-                            <input class="onward-arrival-min" type="text" ng-model="flightSearchFilter.onwardArrival[0]" />
-                            <input class="onward-arrival-max" type="text" ng-model="flightSearchFilter.onwardArrival[1]" />
+                            <input class="onward-arrival-min" type="number" ng-model="flightSearchFilter.onwardArrival[0]" />
+                            <input class="onward-arrival-max" type="number" ng-model="flightSearchFilter.onwardArrival[1]" />
                         </div>
                         <div class="slider-text">
                             <br />
@@ -173,8 +173,8 @@
                         <h5>Departure time</h5>
                         <div class="return-departure-slider"></div>
                         <div class="return-departure-value hidden">
-                            <input class="return-departure-min" type="text" ng-model="flightSearchFilter.returnDeparture[0]" />
-                            <input class="return-departure-max" type="text" ng-model="flightSearchFilter.returnDeparture[1]" />
+                            <input class="return-departure-min" type="number" ng-model="flightSearchFilter.returnDeparture[0]" />
+                            <input class="return-departure-max" type="number" ng-model="flightSearchFilter.returnDeparture[1]" />
                         </div>
                         <div class="slider-text">
                             <br />
@@ -184,8 +184,8 @@
                         <h5>Arrival time</h5>
                         <div class="return-arrival-slider"></div>
                         <div class="return-arrival-value hidden">
-                            <input class="return-arrival-min" type="text" ng-model="flightSearchFilter.returnArrival[0]" />
-                            <input class="return-arrival-max" type="text" ng-model="flightSearchFilter.returnArrival[1]" />
+                            <input class="return-arrival-min" type="number" ng-model="flightSearchFilter.returnArrival[0]" />
+                            <input class="return-arrival-max" type="number" ng-model="flightSearchFilter.returnArrival[1]" />
                         </div>
                         <div class="slider-text">
                             <br />
@@ -218,7 +218,7 @@
             <div class="no-flight container" ng-show="filteredFlight.length < 1">
                 <h2  class="text-center">No flight result found. Please refine your search filter.</h2>
             </div>
-            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilter)">
+            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilterOnward | filter:timeFilterReturn )">
                 <div class="flight-header">
                     <span class="flight-airline"><img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" /> {{flight.FlightTrips[0].Airlines[0].Name}}</span>
                     <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>
@@ -284,14 +284,14 @@
                         <div class="trip-wrapper">
                             <div class="trip-origin">
                                 <span>Departure</span>
-                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm'}}</span>
+                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm' : 'UTC'}}</span>
                                 <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                                 <span class="airport">{{trip.DepartureAirport}}</span>
                                 <span class="city">{{trip.DepartureCity}}</span>
                             </div>
                             <div class="trip-destination">
                                 <span>Arrival</span>
-                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm'}}</span>
+                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm' : 'UTC'}}</span>
                                 <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                                 <span class="airport">{{trip.ArrivalAirport}}</span>
                                 <span class="city">{{trip.ArrivalCity}}</span>
@@ -316,14 +316,14 @@
                         <div class="trip-wrapper">
                             <div class="trip-origin">
                                 <span>Departure</span>
-                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm'}}</span>
+                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm' : 'UTC'}}</span>
                                 <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                                 <span class="airport">{{trip.DepartureAirport}}</span>
                                 <span class="city">{{trip.DepartureCity}}</span>
                             </div>
                             <div class="trip-destination">
                                 <span>Arrival</span>
-                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm'}}</span>
+                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm' : 'UTC'}}</span>
                                 <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                                 <span class="airport">{{trip.ArrivalAirport}}</span>
                                 <span class="city">{{trip.ArrivalCity}}</span>
