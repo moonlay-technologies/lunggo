@@ -64,7 +64,7 @@
             $scope.dummyParamsReturn = { "TripType": "Return", "TripInfos": [{ "OriginAirport": "CGK", "DestinationAirport": "HND", "DepartureDate": "2015-10-25T00:00:00" }, { "OriginAirport": "HND", "DestinationAirport": "CGK", "DepartureDate": "2015-10-28T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
             $scope.dummyParamsOneway = { "TripType": "OneWay", "TripInfos": [{ "OriginAirport": "CGK", "DestinationAirport": "HND", "DepartureDate": "2015-10-25T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
 
-            $scope.flightSearchParams = $scope.dummyParamsReturn;
+            $scope.flightSearchParams = $scope.dummyParamsOneway;
             $scope.flightSearchResult = {};
             $scope.loaded = false;
             $scope.busy = false;
@@ -139,7 +139,9 @@
             // Filtering functions
             // price filter
             $scope.priceFilter = function(flight) {
-                return flight;
+                if ( flight.TotalFare >= $scope.flightSearchFilter.priceFilter[0] && flight.TotalFare <= $scope.flightSearchFilter.priceFilter[1] ) {
+                    return flight;
+                }
             }
 
             // stop filter
@@ -321,6 +323,30 @@
 
                         // *****
                         // filter function that using slider
+                        $('.price-slider').slider({
+                            range: true,
+                            min: $scope.flightSearchFilter.priceFilter[0],
+                            max: $scope.flightSearchFilter.priceFilter[1],
+                            step: 100000,
+                            values: [$scope.flightSearchFilter.priceFilter[0], $scope.flightSearchFilter.priceFilter[1]],
+                            create: function (event, ui) {
+                                $('.price-filter-min').val($scope.flightSearchFilter.priceFilter[0]);
+                                $('.price-filter-min').trigger('input');
+                                $('.price-filter-max').val($scope.flightSearchFilter.priceFilter[1]);
+                                $('.price-filter-max').trigger('input');
+                            },
+                            slide: function (event, ui) {
+                                console.log(ui.values);
+                                $scope.flightSearchFilter.priceFilterDisplay[0] = ui.values[0];
+                                $scope.flightSearchFilter.priceFilterDisplay[1] = ui.values[1];
+                            },
+                            stop: function (event, ui) {
+                                $('.price-filter-min').val(ui.values[0]);
+                                $('.price-filter-min').trigger('input');
+                                $('.price-filter-max').val(ui.values[1]);
+                                $('.price-filter-max').trigger('input');
+                            }
+                        });
                         $('.onward-departure-slider').slider({
                             range: true,
                             min: 0, max: 24, step: 1, values: [0, 24],
@@ -437,13 +463,6 @@
             $scope.sortFlight = function() {
                 
             }// sortFlight()
-
-            // ********************
-            // get flight detail
-            $scope.getFlightDetail = function(flightNo) {
-                console.log('getting flight detail for : '+ flightNo);
-
-            }// getFlightdetail()
 
             // ********************
             // validate flight
