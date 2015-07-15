@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Assets/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/Assets/css/font-awesome.min.css">
+    @if (IsSectionDefined("AdditionalPageCss"))
+    {
+        @RenderSection("AdditionalPageCss");
+    }
     <link rel="stylesheet" href="/Assets/css/mobile-app.min.css">
 
 </head>
@@ -83,6 +87,7 @@
     <!-- javascripts -->
     <script src="/Assets/js/jquery.min.js"></script>
     <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
 
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
@@ -94,7 +99,7 @@
 
     <script src="/Config/JsConfig.js"></script>
     <script src="/Assets/js/mobile-app.js"></script>
-    <script src="/Assets/js/angularApp.js"></script>
+    <script src="/Assets/js/travoramaApp.js"></script>
 
     @if (IsSectionDefined("PageJavascript"))
     {

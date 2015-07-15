@@ -3,11 +3,44 @@
     ViewBag.Title = "Hotel Detail Page";
 }
 
+@section AdditionalPageCss {
+    <link rel="stylesheet" href="/Assets/vendor/swiper/swiper.min.css">
+}
+
+@section AdditionalPageJavascript {
+    <script src="/Assets/vendor/swiper/swiper.jquery.min.js"></script>
+}
+
+@section PageJavascript {
+    <script>
+        $(document).ready(function () {
+            //initialize swiper when document ready  
+            var mySwiper = new Swiper('.swiper-container', {
+                // Optional parameters
+                direction: 'horizontal',
+                loop: false,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+            });
+        });
+    </script>
+}
+
 <section class="page hotel-detail-page">
     
     <h1 class="hotel-name">AMARIS HOTEL <span class="hotel-star"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </span> </h1>
     <section class="hotel-image">
-        <img src="http://placehold.it/250" alt="Alternate Text" />
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
+                <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
+                <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
+                <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
+                <div class="swiper-slide"><img src="http://placehold.it/250" alt="Alternate Text" /></div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
     </section><!-- .hotel-image -->
     <section class="hotel-room">
         <h3 class="section-title"><b>ROOM</b> PACKAGE</h3>    

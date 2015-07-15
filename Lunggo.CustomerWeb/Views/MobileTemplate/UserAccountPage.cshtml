@@ -7,15 +7,220 @@
     
     <h1 class="section-title">USER ACCOUNT</h1>
     
-    <nav class="page-nav">
-        <a href="#" class="change-profile"><span class="fa fa-users"></span>CHANGE PROFILE</a>
-        <a href="#" class="active order-history"><span class="fa fa-pencil-square-o"></span>MY ORDER</a>
-        <a href="#" class="change-password"><span class="fa fa-unlock-alt"></span>CHANGE PASSWORD</a>
+    <nav class="page-nav tab-control-group">
+        <a href="#" class="update-profile" data-function="tab" data-target="#update-profile"><span class="fa fa-users"></span>UPDATE PROFILE</a>
+        <a href="#" class="order-history" data-function="tab" data-target="#order-history"><span class="fa fa-pencil-square-o"></span>ORDER HISTORY</a>
+        <a href="#" class="active change-password" data-function="tab" data-target="#change-password"><span class="fa fa-unlock-alt"></span>CHANGE PASSWORD</a>
     </nav>
     
     <div class="page-content">
         
-        Lorem ipsum dolor sit amet
+        
+        <div class="tab" id="update-profile">
+            <form class="form form-horizontal container">
+                <div class="form-group">
+                    <label class="control-label col-xs-12">First Name</label>
+                    <div class="col-xs-12">
+                        <input type="text" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12">Last Name</label>
+                    <div class="col-xs-12">
+                        <input type="text" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12">Phone</label>
+                    <div class="col-xs-12">
+                        <input type="text" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12">Address</label>
+                    <div class="col-xs-12">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="submit" value="UPDATE" class="btn btn-yellow btn-block-lg" />
+                    </div>
+                </div>
+            </form>
+        </div><!-- #change-profile -->
+        
+        <div class="tab" id="order-history">
+            <div class="order-wrapper">
+                <div class="order hotel">
+                    <div class="order-header">
+                        <div class="order-type">
+                            <span class="fa fa-plane"></span>
+                            <span class="fa fa-building"></span>
+                        </div>
+                        <div class="order-main">
+                            <div class="order-title">AMARIS HOTEL</div>
+                            <div class="order-subtitle">Jalan karet Belakang Gang Tiong No.42, Jakarta, Indonesia</div>
+                        </div>
+                    </div>
+                    <div class="order-content">
+                        <div class="order-detail">
+                            <table>
+                                <tr>
+                                    <td>Order Id</td>
+                                    <td>: 123456789</td>
+                                </tr>
+                                <tr>
+                                    <td>Order Date</td>
+                                    <td>: 15 Mar 2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>: DONE</td>
+                                </tr>
+                                <tr>
+                                    <td>Checkin</td>
+                                    <td>: 15 Feb 2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Checkout</td>
+                                    <td>: 16 Feb 2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Room</td>
+                                    <td>: 2 Room</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="order-action">
+                            <a href="#" class="detail btn btn-blue">DETAIL</a>
+                            <a href="#" class="refund btn">REFUND</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="order flight pending">
+                    <div class="order-header">
+                        <div class="order-type">
+                            <span class="fa fa-plane"></span>
+                            <span class="fa fa-building"></span>
+                        </div>
+                        <div class="order-main">
+                            <div class="order-title">Jakarta - Singapore</div>
+                            <div class="order-subtitle">ONE WAY</div>
+                        </div>
+                    </div>
+                    <div class="order-content">
+                        <div class="order-detail">
+                            <table>
+                                <tr>
+                                    <td>Order Id</td>
+                                    <td>: 123456789</td>
+                                </tr>
+                                <tr>
+                                    <td>Order Date</td>
+                                    <td>: 15 Mar 2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>: PENDING</td>
+                                </tr>
+                                <tr>
+                                    <td>Origin</td>
+                                    <td>: CGK</td>
+                                </tr>
+                                <tr>
+                                    <td>Destination</td>
+                                    <td>: SIN</td>
+                                </tr>
+                                <tr>
+                                    <td>Passenger</td>
+                                    <td>: 4 Ticket</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="order-action">
+                            <a href="#" class="detail btn btn-blue">DETAIL</a>
+                            <a href="#" class="refund btn">REFUND</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="order flight canceled">
+                    <div class="order-header">
+                        <div class="order-type">
+                            <span class="fa fa-plane"></span>
+                            <span class="fa fa-building"></span>
+                        </div>
+                        <div class="order-main">
+                            <div class="order-title">Jakarta - Singapore</div>
+                            <div class="order-subtitle">ONE WAY</div>
+                        </div>
+                    </div>
+                    <div class="order-content">
+                        <div class="order-detail">
+                            <table>
+                                <tr>
+                                    <td>Order Id</td>
+                                    <td>: 123456789</td>
+                                </tr>
+                                <tr>
+                                    <td>Order Date</td>
+                                    <td>: 15 Mar 2015</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>: CANCELED</td>
+                                </tr>
+                                <tr>
+                                    <td>Origin</td>
+                                    <td>: CGK</td>
+                                </tr>
+                                <tr>
+                                    <td>Destination</td>
+                                    <td>: SIN</td>
+                                </tr>
+                                <tr>
+                                    <td>Passenger</td>
+                                    <td>: 4 Ticket</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="order-action">
+                            <a href="#" class="detail btn btn-blue">DETAIL</a>
+                            <a href="#" class="refund btn">REFUND</a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .order-wrapper -->
+        </div><!-- #order-history -->
+        
+        <div class="tab active" id="change-password">
+            <form class="form form-horizontal container">
+                <div class="form-group">
+                    <label class="control-label col-xs-12">Current Password</label>
+                    <div class="col-xs-12">
+                        <input type="password" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12">New Password</label>
+                    <div class="col-xs-12">
+                        <input type="password" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12">Confirm New Password</label>
+                    <div class="col-xs-12">
+                        <input type="password" name="name" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="submit" value="UPDATE" class="btn btn-yellow btn-block-lg" />
+                    </div>
+                </div>
+            </form>
+        </div><!-- #change-password -->
+
 
     </div>
 

@@ -734,10 +734,9 @@
     <Content Include="Assets\js\jquery.countdown.min.js" />
     <Content Include="Assets\js\jquery.cycle2.min.js" />
     <Content Include="Assets\js\jquery.min.js" />
-    <Content Include="Assets\js\jquery.pickmeup.min.js" />
-    <Content Include="Assets\js\jquery.pickmeup.twitter-bootstrap.min.js" />
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
+    <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Assets\js\mobile-app.js" />
     <Content Include="Assets\js\plax.js" />
     <Content Include="Assets\script\angularApp.js" />
@@ -754,6 +753,8 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
+    <Content Include="Assets\vendor\swiper\swiper.min.css" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\i18n_message.xml">
       <SubType>Designer</SubType>
@@ -2073,6 +2074,12 @@
     <Content Include="Views\Account\Login.mobile.cshtml" />
     <Content Include="Views\Account\Register.mobile.cshtml" />
     <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout1.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout2.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout3.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

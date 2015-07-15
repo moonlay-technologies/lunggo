@@ -3,33 +3,46 @@
     ViewBag.Title = "Hotel Search Page";
 }
 
+@section PageJavascript {
+    <script>
+        $(document).ready(function() {
+            hotelSearchPageFunctions();
+        });
+    </script>
+}
+
 <section class="page hotel-search-page">
     
     <section class="hotel-search-param">
         <div class="param">
             <span><b>Jakarta</b>, 1 room, <b>12 Maret 2015</b></span>
         </div>
-        <a href="#" class="change-hotel-param">CHANGE</a>
+        <a href="#" class="change-hotel-param" data-function="toggle" data-target=".hotel-search-form-wrapper">CHANGE</a>
         <!-- .hotel-search form start -->
-        <section class="hotel-search-form-wrapper">
-            <form class="hotel-search-form">
+        <section class="hotel-search-form-wrapper container">
+            <form class="search-hotel-form form-horizontal" action="/">
+                <h1><b>HOTEL</b> SEARCH</h1>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <span class="fa fa-map-marker col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
                         <span class="form-control hotel-locationid" data-trigger="show-formset" data-target=".hotel-locationid">Enter your destination</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <span class="fa fa-calendar col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
                         <span class="form-control hotel-checkin-date" data-trigger="show-formset" data-target=".hotel-checkin-date">Checkin date</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <span class="fa fa-calendar col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
                         <span class="form-control hotel-checkout-date" data-trigger="show-formset" data-target=".hotel-checkin-date">Checkout date</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <span class="fa fa-bed col-xs-2"></span>
+                    <div class="col-xs-10 col-xs-offset-1">
                         <span class="form-control hotel-room" data-trigger="show-formset" data-target=".hotel-room">1 Room</span>
                     </div>
                 </div>
@@ -40,7 +53,7 @@
                     <input type="text" name="RoomCount" value="" />
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12">
+                    <div class="col-xs-10 col-xs-offset-1">
                         <input type="submit" class="btn btn-yellow" value="SEARCH">
                     </div>
                 </div>
@@ -50,33 +63,38 @@
     
     <section class="hotel-search-filter">
         <div class="hotel-search-trigger">
-            <a class="hotel-filter-trigger">FILTER</a>
-            <a class="hotel-sort-trigger">SORT</a>
+            <a class="hotel-filter-trigger" data-function="toggle" data-target=".hotel-filter-wrapper">FILTER</a>
+            <a class="hotel-sort-trigger" data-function="toggle" data-target=".hotel-sort-wrapper">SORT</a>
         </div><!-- .hotel-search-filter-trigger -->
         <div class="hotel-search-filter-content">
             <div class="hotel-filter-wrapper">
                 <div class="filter-group filter-price">
                     <h4 class="filter-title">Filter by price :</h4>
                     <div class="filter-content">
-                        <div class="price-slider"></div>
+                        -- insert price slider here --
                     </div>
                 </div>
                 <div class="filter-group filter-star">
                     <h4 class="filter-title">By hotel rate :</h4>
                     <div class="filter-content">
                         <label for="hotelStar1">
+                            <p><span class="fa fa-star"></span><span class="fa fa-star-o"></span><br /><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span></p>
                             <input id="hotelStar1" type="checkbox" name="hotelStar1" value="true" /><span>1 Star</span>
                         </label>
                         <label for="hotelStar2">
+                            <p><span class="fa fa-star"></span><span class="fa fa-star"></span><br /><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span></p>
                             <input id="hotelStar2" type="checkbox" name="hotelStar2" value="true" /><span>2 Star</span>
                         </label>
                         <label for="hotelStar3">
+                            <p><span class="fa fa-star"></span><span class="fa fa-star"></span><br /><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span></p>
                             <input id="hotelStar3" type="checkbox" name="hotelStar3" value="true" /><span>3 Star</span>
                         </label>
                         <label for="hotelStar4">
+                            <p><span class="fa fa-star"></span><span class="fa fa-star"></span><br /><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span></p>
                             <input id="hotelStar4" type="checkbox" name="hotelStar4" value="true" /><span>4 Star</span>
                         </label>
                         <label for="hotelStar5">
+                            <p><span class="fa fa-star"></span><span class="fa fa-star"></span><br /><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></p>
                             <input id="hotelStar5" type="checkbox" name="hotelStar5" value="true" /><span>5 Star</span>
                         </label>
                     </div>

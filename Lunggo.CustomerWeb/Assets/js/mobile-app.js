@@ -3,11 +3,62 @@
 $(document).ready(function() {
     siteHeaderFunctions();
     searchFormFunctions();
+    toggleElement();
+    tabFunction();
 });
 
 var GeneralLib = {
     monthName : ["January","February","March","April","May","June","July","August","September","October","November","December"]
 };
+
+//------------------------------
+// General function
+
+// tab function
+function tabFunction() {
+
+    $('[data-function="tab"]').click(function (evt) {
+        $('[data-function="tab"].active').removeClass('active');
+        $(this).addClass('active');
+        evt.preventDefault();
+        $('.tab.active').removeClass('active');
+        $('.tab'+$(this).attr('data-target')).addClass('active');
+    });
+
+}
+
+// toggleElement on click
+function toggleElement() {
+    
+    $(document).ready(function() {
+        $('[data-function="toggle"]').each(function () {
+            $(this).attr('data-active','false');
+        });
+    });
+
+    // toggle element on click
+    $('[data-function="toggle"]').click(function (evt) {
+        evt.preventDefault();
+        if ($(this).attr('data-active') == 'false') {
+            // hide all current active element
+            $( $('[data-function="toggle"][data-active="true"]').attr('data-target') ).hide();
+            $('[data-function="toggle"][data-active="true"]').attr('data-active', 'false');
+            // show clicked element
+            $(this).attr('data-active', 'true');
+            $($(this).attr('data-target')).show();
+        } else {
+            $(this).attr('data-active', 'false');
+            $( $(this).attr('data-target') ).hide();
+        }
+    });
+
+}// toggleElement()
+
+// image slider
+function imageSlider() {
+    $('.image-slider');
+}
+
 
 //------------------------------
 // site header functions
@@ -82,7 +133,7 @@ function homePageFunctions() {
         showSearchForm( $(this).attr('data-target') );
     });
 
-}
+}// homePageFunction()
 
 //------------------------------
 // search form functions
@@ -395,12 +446,10 @@ function searchFormFunctions() {
         }// flightReturnDate()
         // flight passenger
         function flightPassenger() {
-            FlightSearchConfig = {
-                adult: 1,
-                child: 0,
-                infant: 0,
-                flightType: 'RoundTrip'
-            };
+            FlightSearchConfig.adult = 1;
+            FlightSearchConfig.child = 0;
+            FlightSearchConfig.infant = 0;
+            FlightSearchConfig.flightType = 'RoundTrip';
 
             $('div.btn.increase').click(function() {
                 var dataTarget = $(this).attr('data-target');
@@ -504,9 +553,37 @@ function searchFormFunctions() {
 
             }
 
-
         }// flightValidation()
 
     }// flightFormFunctions()
 
-}
+}// searchFormFunction()
+
+//------------------------------
+// Hotel search page function
+function hotelSearchPageFunctions() {
+}// hotelSearchPageFunctions()
+
+
+//------------------------------
+// flight search page functions
+
+// flight detail
+function flightFilter() {
+
+    $('.flight-filter-trigger, .flight-sort-trigger, .change-hotel-param').click(function () {
+
+        var windowHeight = $(window).height();
+
+        $('.flight-filter-wrapper, .flight-sort-wrapper').height( windowHeight - 150 );
+        $('.flight-search-form-wrapper').height( windowHeight - 70 );
+
+        if ($(this).attr('data-active') == 'false') {
+            $('body').addClass('modal-active');
+        } else {
+            $('body').removeClass('modal-active');
+        }
+
+    });
+
+}// flightFilter()
