@@ -1129,57 +1129,102 @@ h1 {
 
 .group-flight-checkout {
   padding-bottom: 15px; }
-  .group-flight-checkout.passenger-detail-page .passenger-detail .passenger {
+  .group-flight-checkout .checkout-page {
+    display: none; }
+  .group-flight-checkout .checkout-page.step-1 {
+    display: block; }
+  .group-flight-checkout .btn-back {
+    background: #ddd;
+    margin-top: 15px;
+    display: block;
+    width: 100%; }
+  .group-flight-checkout .passenger-detail .passenger {
     padding: 15px;
     border: 1px solid #ccc;
     margin-bottom: 15px; }
-    .group-flight-checkout.passenger-detail-page .passenger-detail .passenger .passenger-detail-title {
+    .group-flight-checkout .passenger-detail .passenger .passenger-detail-title {
       margin-top: 0;
       font-size: 16px; }
-  .group-flight-checkout.review-page .flight-passenger p {
+  .group-flight-checkout .flight-detail {
+    position: relative;
+    z-index: 1; }
+    .group-flight-checkout .flight-detail.return {
+      border-top: 1px solid #ddd; }
+    .group-flight-checkout .flight-detail h3 {
+      margin: 0; }
+    .group-flight-checkout .flight-detail .trip {
+      padding: 10px 0; }
+      .group-flight-checkout .flight-detail .trip + .trip {
+        border-top: 1px solid #ddd; }
+      .group-flight-checkout .flight-detail .trip .airline-name {
+        margin: 0; }
+        .group-flight-checkout .flight-detail .trip .airline-name img {
+          height: 30px; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper:before, .group-flight-checkout .flight-detail .trip .trip-wrapper:after {
+        content: "";
+        clear: both;
+        display: block;
+        width: 100%; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper > div {
+        display: block;
+        float: left;
+        width: 33.33334%; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper span {
+        display: block;
+        line-height: 120%; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper .trip-duration {
+        text-align: right; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper .time {
+        font-weight: bold;
+        font-size: 18px; }
+      .group-flight-checkout .flight-detail .trip .trip-wrapper .city {
+        font-style: italic; }
+      .group-flight-checkout .flight-detail .trip .trip-operator {
+        font-size: 12px;
+        margin-top: 10px;
+        font-style: italic; }
+        .group-flight-checkout .flight-detail .trip .trip-operator img {
+          height: 30px; }
+  .group-flight-checkout .flight-passenger p {
     font-weight: bold;
     margin-bottom: 0; }
-  .group-flight-checkout.review-page .flight-passenger ol {
+  .group-flight-checkout .flight-passenger ol {
     margin: 0;
     padding: 0 10px; }
-    .group-flight-checkout.review-page .flight-passenger ol li {
+    .group-flight-checkout .flight-passenger ol li {
       margin-bottom: 10px; }
-      .group-flight-checkout.review-page .flight-passenger ol li table {
+      .group-flight-checkout .flight-passenger ol li table {
         width: 100%; }
-        .group-flight-checkout.review-page .flight-passenger ol li table td {
+        .group-flight-checkout .flight-passenger ol li table td {
           width: 50%; }
-        .group-flight-checkout.review-page .flight-passenger ol li table td + td {
+        .group-flight-checkout .flight-passenger ol li table td + td {
           text-align: right; }
-  .group-flight-checkout.review-page .flight-price {
+  .group-flight-checkout .flight-price {
     margin-bottom: 15px; }
-    .group-flight-checkout.review-page .flight-price table {
+    .group-flight-checkout .flight-price table {
       width: 100%; }
-      .group-flight-checkout.review-page .flight-price table td {
+      .group-flight-checkout .flight-price table td {
         width: 50%;
         padding: 5px 10px; }
-      .group-flight-checkout.review-page .flight-price table td + td {
+      .group-flight-checkout .flight-price table td + td {
         text-align: right; }
-      .group-flight-checkout.review-page .flight-price table tfoot td {
+      .group-flight-checkout .flight-price table tfoot td {
         background: #2eb4e7;
         color: #fff; }
-  .group-flight-checkout.payment-page {
-    padding-bottom: 0; }
-    .group-flight-checkout.payment-page .section-title {
-      margin-bottom: 0; }
-    .group-flight-checkout.payment-page .payment {
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0; }
-      .group-flight-checkout.payment-page .payment + .payment {
-        border-top: 0;
-        border-bottom: 1px solid #ddd; }
-      .group-flight-checkout.payment-page .payment .payment-name h2 {
-        margin: 0;
-        font-size: 14px; }
-      .group-flight-checkout.payment-page .payment .payment-button {
-        text-align: right; }
-        .group-flight-checkout.payment-page .payment .payment-button a {
-          font-weight: bold; }
+  .group-flight-checkout .payment {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0; }
+    .group-flight-checkout .payment + .payment {
+      border-top: 0;
+      border-bottom: 1px solid #ddd; }
+    .group-flight-checkout .payment .payment-name h2 {
+      margin: 0;
+      font-size: 14px; }
+    .group-flight-checkout .payment .payment-button {
+      text-align: right; }
+      .group-flight-checkout .payment .payment-button a {
+        font-weight: bold; }
   .group-flight-checkout.ticket-page {
     padding-bottom: 0; }
     .group-flight-checkout.ticket-page .section-content {

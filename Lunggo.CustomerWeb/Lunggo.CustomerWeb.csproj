@@ -2075,6 +2075,7 @@
     <Content Include="Views\MobileTemplate\FlightCheckout3.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
+    <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
   </ItemGroup>
   <ItemGroup>
