@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System;   `   
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly List<MarginRule> DeletedMarginRules = new List<MarginRule>();
         private const decimal RoundingOrder = 100M;
 
-        internal void InitPriceMargin()
+        internal void InitPriceMarginRules()
         {
             MarginRules.Add(new MarginRule
             {
@@ -37,48 +37,40 @@ namespace Lunggo.ApCommon.Flight.Service
             ApplyMarginRule(fare, rule);
         }
 
-        public void UpdateResolvedPriceMarginRulesConflict(List<MarginRule> updatedRules)
+        public MarginRule GetPriceMarginRule(long ruleId)
         {
-            foreach (var updatedRule in updatedRules)
-            {
-                var existingRule = MarginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
-                existingRule.Priority = updatedRule.Priority;
-            }
+            return MarginRules.Single(rule => rule.RuleId == ruleId);
+        }
+
+        public List<MarginRule> GetAllPriceMarginRules()
+        {
+            return MarginRules;
         }
 
         public List<MarginRule> InsertPriceMarginRuleAndRetrieveConflict(MarginRule newRule)
         {
             AssignRuleId(newRule);
+            InsertMarginRule(newRule);
             var isConflicting = CheckForConflict(newRule);
             return isConflicting ? RetrieveConflict(newRule) : null;
         }
 
-        private static void AssignRuleId(MarginRule newRule)
+        public void DeletePriceMarginRule(long ruleId)
         {
-            newRule.RuleId = FlightPriceMarginRuleIdSequence.GetInstance().GetNext();
-        }
-
-        public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
-        {
-            DeleteObsoleteRule(updatedRule);
-            return InsertPriceMarginRuleAndRetrieveConflict(updatedRule);
-        }
-
-        private static void DeleteObsoleteRule(MarginRule updatedRule)
-        {
-            var obsoleteRule = MarginRules.Single(rule => rule.RuleId == updatedRule.RuleId);
+            var obsoleteRule = MarginRules.Single(rule => rule.RuleId == ruleId);
             MarginRules.Remove(obsoleteRule);
             DeletedMarginRules.Add(obsoleteRule);
         }
 
-        private static List<MarginRule> RetrieveConflict(MarginRule newRule)
+        public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
         {
-            return MarginRules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
+            DeletePriceMarginRule(updatedRule.RuleId);
+            return InsertPriceMarginRuleAndRetrieveConflict(updatedRule);
         }
 
-        private static bool CheckForConflict(MarginRule newRule)
+        public void UpdateResolvedPriceMarginRulesConflict(List<MarginRule> updatedRules)
         {
-            return MarginRules.Any(rule => rule.ConstraintCount == newRule.ConstraintCount);
+            UpdateConflictingPriceMarginRules(updatedRules);
         }
 
         public void PullRemotePriceMarginRules()
@@ -87,9 +79,42 @@ namespace Lunggo.ApCommon.Flight.Service
             MarginRules.AddRange(GetFlightDb.PriceMarginRules());
         }
 
-        public void SyncPriceMarginRules()
+        public void PushRemotePriceMarginRules()
         {
             InsertFlightDb.PriceMarginRules(MarginRules, DeletedMarginRules);
+        }
+
+        #region HelperMethods
+
+        private static void AssignRuleId(MarginRule newRule)
+        {
+            newRule.RuleId = FlightPriceMarginRuleIdSequence.GetInstance().GetNext();
+        }
+
+        private static void UpdateConflictingPriceMarginRules(List<MarginRule> updatedRules)
+        {
+            var constraintCount = updatedRules.First().ConstraintCount;
+            var updatedRulesCount = updatedRules.Count();
+            var orderedUpdatedRules = updatedRules.OrderBy(rule => rule.Priority);
+            var targetIndex = MarginRules.FindIndex(rule => rule.ConstraintCount == constraintCount);
+            MarginRules.RemoveRange(targetIndex, updatedRulesCount);
+            MarginRules.InsertRange(targetIndex, orderedUpdatedRules);
+        }
+
+        private static List<MarginRule> RetrieveConflict(MarginRule newRule)
+        {
+            return MarginRules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
+        }
+
+        private static void InsertMarginRule(MarginRule newRule)
+        {
+            var index = MarginRules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
+            MarginRules.Insert(index + 1, newRule);
+        }
+
+        private static bool CheckForConflict(MarginRule newRule)
+        {
+            return MarginRules.Count(rule => rule.ConstraintCount == newRule.ConstraintCount) > 1;
         }
 
         private static void ApplyMarginRule(FlightItineraryFare fare, MarginRule rule)
@@ -286,6 +311,9 @@ namespace Lunggo.ApCommon.Flight.Service
             else
                 return true;
         }
+
+        #endregion
+
     }
 }
 

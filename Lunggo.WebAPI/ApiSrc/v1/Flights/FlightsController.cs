@@ -104,5 +104,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         {
             return FlightLogic.CancelBooking(request);
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("api/v1/flights/sync")]
+        public void SyncPriceMarginRules(HttpRequestMessage httpRequest)
+        {
+            var flightService = FlightService.GetInstance();
+            flightService.PullRemotePriceMarginRules();
+        }
     }
 }
