@@ -112,7 +112,9 @@
                 <div class="filter-group filter-price">
                     <h4 class="filter-title">by Price:</h4>
                     <div class="filter-content">
-                        <div class="price-slider"></div>
+                        <div class="slider-wrapper">
+                            <div class="price-slider"></div>
+                        </div>
                         <div class="price-slider-value hidden">
                             <input type="text" value="" class="price-filter-min" ng-model="flightSearchFilter.priceFilter[0]"/>
                             <input type="text" value="" class="price-filter-max" ng-model="flightSearchFilter.priceFilter[1]" />
@@ -144,7 +146,9 @@
                     <h4 class="filter-title">by Onward flight time:</h4>
                     <div class="filter-content">
                         <h5>Departure time</h5>
-                        <div class="onward-departure-slider"></div>
+                        <div class="slider-wrapper">
+                            <div class="onward-departure-slider"></div>    
+                        </div>
                         <div class="onward-departure-value hidden">
                             <input type="number" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
                             <input type="number" class="onward-departure-max" ng-model="flightSearchFilter.onwardDeparture[1]" />
@@ -155,7 +159,9 @@
                             <span class="pull-right"><span class="onward-departure-max-display">00</span>:00</span>
                         </div>
                         <h5>Arrival time</h5>
-                        <div class="onward-arrival-slider"></div>
+                        <div class="slider-wrapper">
+                            <div class="onward-arrival-slider"></div>
+                        </div>
                         <div class="onward-arrival-value hidden">
                             <input class="onward-arrival-min" type="number" ng-model="flightSearchFilter.onwardArrival[0]" />
                             <input class="onward-arrival-max" type="number" ng-model="flightSearchFilter.onwardArrival[1]" />
@@ -171,7 +177,9 @@
                     <h4 class="filter-title">by Return flight time:</h4>
                     <div class="filter-content">
                         <h5>Departure time</h5>
-                        <div class="return-departure-slider"></div>
+                        <div class="slider-wrapper">
+                            <div class="return-departure-slider"></div>
+                        </div>
                         <div class="return-departure-value hidden">
                             <input class="return-departure-min" type="number" ng-model="flightSearchFilter.returnDeparture[0]" />
                             <input class="return-departure-max" type="number" ng-model="flightSearchFilter.returnDeparture[1]" />
@@ -182,7 +190,9 @@
                             <span class="pull-right"><span class="return-departure-max-display">00</span>:00</span>
                         </div>
                         <h5>Arrival time</h5>
-                        <div class="return-arrival-slider"></div>
+                        <div class="slider-wrapper">
+                            <div class="return-arrival-slider"></div>
+                        </div>
                         <div class="return-arrival-value hidden">
                             <input class="return-arrival-min" type="number" ng-model="flightSearchFilter.returnArrival[0]" />
                             <input class="return-arrival-max" type="number" ng-model="flightSearchFilter.returnArrival[1]" />

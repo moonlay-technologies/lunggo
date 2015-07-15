@@ -706,6 +706,8 @@ h1 {
         width: 100%;
         display: block;
         font-weight: bold; }
+      .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group .slider-wrapper {
+        padding: 0 15px; }
       .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content {
         text-align: center;
         padding-top: 15px; }
@@ -724,6 +726,8 @@ h1 {
             display: block; }
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-transit .filter-content label.active {
           opacity: 1; }
+      .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-price .filter-title {
+        margin-bottom: 15px; }
       .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline label {
         display: block; }
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline label img {
