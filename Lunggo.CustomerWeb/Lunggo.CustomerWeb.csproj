@@ -738,6 +738,7 @@
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
+    <Content Include="Assets\js\spin.min.js" />
     <Content Include="Assets\js\mobile-app.js" />
     <Content Include="Assets\js\plax.js" />
     <Content Include="Assets\script\angularApp.js" />
