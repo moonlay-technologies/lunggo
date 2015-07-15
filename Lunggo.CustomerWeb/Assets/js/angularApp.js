@@ -435,14 +435,6 @@
                         flightList.list[i].FareRules = '';
                     }
 
-                    // set prices min and max value for filtering
-                    function sortNumber(a, b) {
-                        return a - b;
-                    }
-                    $scope.FlightSearchFilter.Prices.sort(sortNumber);
-                    $scope.FlightSearchFilter.PriceFilter.min = Math.floor($scope.FlightSearchFilter.Prices[0]);
-                    $scope.FlightSearchFilter.PriceFilter.max = Math.round($scope.FlightSearchFilter.Prices[ $scope.FlightSearchFilter.Prices.length-1 ]);
-
                     var dupes = {};
                     $.each($scope.FlightSearchFilter.AirlinesList, function (i, el) {
                         if (!dupes[el.Code]) {
@@ -451,6 +443,14 @@
                         }
                     });
                     $scope.FlightSearchFilter.AirlinesList = {};
+
+                    // set prices min and max value for filtering
+                    function sortNumber(a, b) {
+                        return a - b;
+                    }
+                    $scope.FlightSearchFilter.Prices.sort(sortNumber);
+                    $scope.FlightSearchFilter.PriceFilter.min = Math.floor($scope.FlightSearchFilter.Prices[0]);
+                    $scope.FlightSearchFilter.PriceFilter.max = Math.round($scope.FlightSearchFilter.Prices[$scope.FlightSearchFilter.Prices.length - 1]);
 
                     // *****
                     console.log('LOADED');

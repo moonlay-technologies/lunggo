@@ -79,7 +79,8 @@
                 // flight filtering variables
                 $scope.flightSearchFilter = {};
                 $scope.flightSearchFilter.airlines = [];
-                $scope.flightSearchFilter.airlineList = [];
+                $scope.flightSearchFilter.airlinesList = [];
+                $scope.flightSearchFilter.airlinesFilter = [];
                 $scope.flightSearchFilter.prices = [];
                 // stop filter
                 $scope.flightSearchFilter.stop = {};
@@ -229,9 +230,29 @@
                 }
             }
 
+            // generate airline filter
+            $scope.checkAirline = function () {
+                console.log($scope.flightSearchFilter);
+                $scope.flightSearchFilter.airlinesFilter = [];
+                for (var i = 0; i < $scope.flightSearchFilter.airlines.length; i++) {
+                    if ($scope.flightSearchFilter.airlines[i].checked == true) {
+                        $scope.flightSearchFilter.airlinesFilter.push($scope.flightSearchFilter.airlines[i].Code);
+                    }
+                }
+            }
+
             // airline filter
             $scope.airlineFilter = function(flight) {
-                return flight;
+                if ($scope.flightSearchFilter.airlinesFilter.length > 0) {
+                    for (var i in flight.AirlinesTag) {
+                        if ($scope.flightSearchFilter.airlinesFilter.indexOf(flight.AirlinesTag[i]) != -1) {
+                            return flight;
+                        }
+                    }
+                    return false;
+                } else {
+                    return flight;
+                }
             }
 
             // time filter
@@ -297,12 +318,12 @@
                             $scope.flightSearchResult.FlightList[i].AirlinesTag = []; // make airline tag
                             $scope.flightSearchFilter.prices.push($scope.flightSearchResult.FlightList[i].TotalFare); // push price
                             for (var x = 0 ; x < $scope.flightSearchResult.FlightList[i].FlightTrips[0].Airlines.length; x++) {
-                                $scope.flightSearchFilter.airlines.push($scope.flightSearchResult.FlightList[i].FlightTrips[0].Airlines[x]);
+                                $scope.flightSearchFilter.airlinesList.push($scope.flightSearchResult.FlightList[i].FlightTrips[0].Airlines[x]);
                                 $scope.flightSearchResult.FlightList[i].AirlinesTag.push($scope.flightSearchResult.FlightList[i].FlightTrips[0].Airlines[x].Code);
                             }
                             if ($scope.flightSearchResult.FlightList[i].TripType == 2) {
                                 for (var x = 0 ; x < $scope.flightSearchResult.FlightList[i].FlightTrips[1].Airlines.length; x++) {
-                                    $scope.flightSearchFilter.airlines.push($scope.flightSearchResult.FlightList[i].FlightTrips[1].Airlines[x]);
+                                    $scope.flightSearchFilter.airlinesList.push($scope.flightSearchResult.FlightList[i].FlightTrips[1].Airlines[x]);
                                     $scope.flightSearchResult.FlightList[i].AirlinesTag.push($scope.flightSearchResult.FlightList[i].FlightTrips[1].Airlines[x].Code);
                                 }
                             }
@@ -310,13 +331,13 @@
                             $scope.flightSearchResult.FlightList.FareRules = '';
                         }
                         var dupes = {};
-                        $.each($scope.flightSearchFilter.airlines, function (i, el) {
+                        $.each($scope.flightSearchFilter.airlinesList, function (i, el) {
                             if (!dupes[el.Code]) {
                                 dupes[el.Code] = true;
-                                $scope.flightSearchFilter.airlineList.push(el);
+                                $scope.flightSearchFilter.airlines.push(el);
                             }
                         });
-                        $scope.flightSearchFilter.airlines = {};
+                        $scope.flightSearchFilter.airlinesList = {};
 
                         // *****
                         // sort flight prices
