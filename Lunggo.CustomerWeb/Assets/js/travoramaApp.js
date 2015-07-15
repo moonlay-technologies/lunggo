@@ -284,6 +284,59 @@
                 return parseInt(datetime);
             }
 
+            // ********************
+            // revalidate flight itinerary
+            $scope.revalidate = function (resultNo) {
+                var searchId = $scope.flightSearchParams.SearchId;
+
+                $scope.validating = true;
+                loadingOverlay(true);
+                console.log('validating :');
+
+                if (RevalidateConfig.working == false) {
+                    RevalidateConfig.working = true;
+
+                    $http.get(RevalidateConfig.Url, {
+                        params: {
+                            SearchId: searchId,
+                            ItinIndex: resultNo
+                        }
+                    }).success(function (returnData) {
+                        RevalidateConfig.working = false;
+
+                        console.log(returnData);
+
+                        RevalidateConfig.value = returnData;
+
+                        if (returnData.IsValid == true) {
+                            window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                            $scope.flightSearchResult.FlightList[resultNo].TotalFare = returnData.NewFare;
+                            var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
+                            if (userConfirmation) {
+                                $scope.validating = false;
+                                loadingOverlay(false);
+                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            } else {
+                                $scope.validating = false;
+                                loadingOverlay(false);
+                            }
+                        } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                            $scope.validating = false;
+                            loadingOverlay(false);
+                            alert("Sorry, the flight is no longer valid. Please check another flight.");
+                            $scope.flightDetailActive = false;
+                            $scope.flightSearchResult.FlightList[resultNo].hidden = true;
+                        }
+
+                    }).error(function (data) {
+                        console.log(data);
+                    });
+                } else {
+                    console.log('Sistem busy, please wait');
+                }
+
+            }
 
             // ********************
             // get flight list

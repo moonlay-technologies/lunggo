@@ -228,7 +228,7 @@
             <div class="no-flight container" ng-show="filteredFlight.length < 1">
                 <h2  class="text-center">No flight result found. Please refine your search filter.</h2>
             </div>
-            <div class="flight" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilterOnward | filter:timeFilterReturn )">
+            <div class="flight" ng-class="{'hidden' : flight.hidden == true}" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilterOnward | filter:timeFilterReturn )">
                 <div class="flight-header">
                     <span class="flight-airline"><img ng-src="{{flight.FlightTrips[0].Airlines[0].LogoUrl}}" alt="{{flight.FlightTrips[0].Airlines[0].Name}}" /> {{flight.FlightTrips[0].Airlines[0].Name}}</span>
                     <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>
@@ -362,7 +362,7 @@
                     <span>Fee and tax included</span>
                 </div>
                 <div class="col-xs-6 footer-right">
-                    <a href="#" class="btn btn-yellow btn-block-lg">BOOK FLIGHT</a>
+                    <a ng-click="revalidate(flightCurrentDetail.SequenceNo)" class="btn btn-yellow btn-block-lg">BOOK FLIGHT</a>
                 </div>
             </div>
         </footer><!-- .flight-detail-footer -->
