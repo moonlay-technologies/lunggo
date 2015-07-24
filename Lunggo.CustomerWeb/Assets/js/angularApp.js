@@ -460,7 +460,7 @@
                     FlightSearchConfig.loaded = true;
 
                     // show filter
-                    $('.flight-search-page .flight-search-filter').show();
+                    $('.flight-search-page .flight-search-filter, .flight-search-page .flight-result .page-aside').show();
                     
                     // generate price slider
                     $('.price-slider').slider({

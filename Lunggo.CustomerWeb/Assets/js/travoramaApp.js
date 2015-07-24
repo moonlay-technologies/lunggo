@@ -357,6 +357,7 @@
                         loadingOverlay(false);
                         $scope.flightSearchResult = data;
                         FlightSearchConfig.SearchId = data.SearchId;
+                        $scope.flightSearchParams.SearchId = data.SearchId;
                         // if no flight
                         if (data.TotalFlightCount == 0) {
                             $scope.noFlight = true;
