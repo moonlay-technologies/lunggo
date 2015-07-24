@@ -347,14 +347,14 @@
                     console.log('Fetching flight list with param :');
                     console.log($scope.flightSearchParams);
                     $scope.busy = true;
-
+                    loadingOverlay(true);
                     // AJAX
                     $http.get(FlightSearchConfig.Url, {
                         params: {
                             request: $scope.flightSearchParams
                         }
                     }).success(function (data) {
-
+                        loadingOverlay(false);
                         $scope.flightSearchResult = data;
                         FlightSearchConfig.SearchId = data.SearchId;
                         // if no flight
@@ -535,7 +535,7 @@
                         $scope.noFlight = true;
                         $scope.loaded = true;
                         $scope.busy = false;
-
+                        loadingOverlay(false);
                         console.log('REQUEST ERROR');
                     });
 

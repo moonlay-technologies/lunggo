@@ -639,6 +639,7 @@
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\enjoy.png" />
     <Content Include="Assets\images\facebook-icon.png" />
+    <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\filter-airline.png" />
     <Content Include="Assets\images\filter-onward.png" />
     <Content Include="Assets\images\filter-price.png" />
@@ -754,6 +755,7 @@
     <Content Include="Assets\js\spin.min.js" />
     <Content Include="Assets\js\mobile-app.js" />
     <Content Include="Assets\js\plax.js" />
+    <Content Include="Assets\js\travoramaApp.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
