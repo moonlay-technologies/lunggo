@@ -1,7 +1,11 @@
 .site-header {background:url(../images/header-bg-2.jpg) center top no-repeat #005892; padding:20px 0 40px; position:relative;}
 
-.main-menu {color:#fff; text-transform:uppercase; text-align:center;
+.main-menu {color:#fff; text-transform:uppercase; text-align:left;
 	img {}
+    .site-logo {margin-right:15px;}
+    .language-select {margin-left:20px;
+        img {width:30px;}
+    }
 	li+li {margin-right:10px; margin-top:25px; font-weight:bold;}
 	li+li a {font-size:18px;}
 	li+li.active a {color:#f3bd00;}
@@ -12,7 +16,7 @@
 
 .ui-autocomplete {max-height:200px; overflow:auto;}
 
-.site-header-search-form {padding:30px 50px; background:rgba(100,100,100,0.8); margin-top:20px; margin-bottom:20px; min-height:280px;
+.site-header-search-form {padding:30px 50px; background:rgba(100,100,100,0.8); margin-top:20px; margin-bottom:70px; min-height:280px;
     &:before, &:after {clear:both; display:block; width:100%; content:"";}
 
     .form-switch {width:20%; float:left;

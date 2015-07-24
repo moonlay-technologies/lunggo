@@ -219,10 +219,10 @@
             // ********************
             // flight sorting
             $scope.sort = {
-                label: '',
-                value: ''
+                label: 'price',
+                value: 'TotalFare'
             }
-            $scope.reverse = true;
+            $scope.reverse = false;
             $scope.order = function(sort) {
                 $scope.reverse = ($scope.sort.label === sort) ? !$scope.reverse : false;
                 $scope.sort.label = sort;
