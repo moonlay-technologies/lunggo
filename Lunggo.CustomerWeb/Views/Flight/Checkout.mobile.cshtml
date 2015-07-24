@@ -64,18 +64,10 @@
 
         }
 
-        // development only
-        $(document).ready(function () {
-            gotoPage(1);
-        });
-
     </script>
 }
 
-@using (Html.BeginForm("Checkout2", "Flight", FormMethod.Post, new { @class = "form form-horizontal" }))
-{
-    @Html.AntiForgeryToken()
-    <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
+<form action="" class="form" id="flight-customer-form" method="post">
     <section class="page group-checkout group-flight-checkout customer-detail-page">
         <section class="checkout-progress">
             <div class="checkout-step">
@@ -97,29 +89,31 @@
         <section class="customer-detail step-1 checkout-page">
             <h1 class="section-title">CUSTOMER DETAIL</h1>
             <div class="section-content container">
-                <div class="form-group">
-                    <label class="col-xs-12">Name (Buyer):</label>
-                    <div class="col-xs-12">
-                        <input type="text" name="ContactData.Name" value="" class="form-control" placeholder="Enter your full name" />
+                <form class="form form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-12">Name (Buyer):</label>
+                        <div class="col-xs-12">
+                            <input type="text" name="ContactData.Name" value="" class="form-control" placeholder="Enter your full name" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-12">Phone number:</label>
-                    <div class="col-xs-12">
-                        <input type="number" name="ContactData.Phone" value="" class="form-control" placeholder="ex: 08212345678" />
+                    <div class="form-group">
+                        <label class="col-xs-12">Phone number:</label>
+                        <div class="col-xs-12">
+                            <input type="number" name="ContactData.Phone" value="" class="form-control" placeholder="ex: 08212345678" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-12">Email address:</label>
-                    <div class="col-xs-12">
-                        <input type="email" name="ContactData.Email" value="" class="form-control" placeholder="ex: your_mail@domain.com" />
+                    <div class="form-group">
+                        <label class="col-xs-12">Email address:</label>
+                        <div class="col-xs-12">
+                            <input type="email" name="ContactData.Email" value="" class="form-control" placeholder="ex: your_mail@domain.com" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <button class="btn btn-yellow btn-block-lg" onclick=" gotoPage(2) ">NEXT</button>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(2)">CONTINUE</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div><!-- .section-content -->
         </section><!-- .checkout-page.step-1 -->
         <section class="passenger-detail step-2 checkout-page">
@@ -273,7 +267,7 @@
                             }
                             <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
                         </div>
-                    <!-- .passenger -->
+                        <!-- .passenger -->
                     }
                     @if (childCount > 0)
                     {
@@ -423,7 +417,7 @@
                                 }
                                 <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value="ID">
                             </div>
-                    <!-- .passenger -->
+                            <!-- .passenger -->
                         }
                     }
                     @if (infantCount > 0)
@@ -574,14 +568,14 @@
                                 }
                                 <input type="hidden" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="" value="ID">
                             </div>
-                    <!-- .passenger -->
+                            <!-- .passenger -->
                         }
                     }
                     <!-- continue -->
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <button class="btn btn-yellow btn-block-lg" onclick=" gotoPage(3) ">NEXT</button>
-                            <button class="btn btn-back" onclick=" gotoPage(1) ">BACK</button>
+                            <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(3)">REVIEW ORDER</button>
+                            <button class="btn btn-back" onclick="gotoPage(1)">BACK</button>
                         </div>
                     </div>
                 </form>
@@ -592,60 +586,53 @@
             <p class="container">Please review your order before make a payment</p>
 
             <section class="flight-detail">
-                <h2 class="section-title">Flight Detail</h2>
-                <div class="section-content container">
-
-                    <section class="flight-detail">
-                        <h3 class="text-center">DEPARTURE FLIGHT</h3>
-                        <h5 class="airline-name">
-                            <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
-                        </h5>
-                        <div class="row flight-route">
-                            <div class="col-sm-6 text-right flight-origin">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
-                            </div>
-                            <div class="separator">to</div>
-                            <div class="col-sm-6 text-left flight-destination">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
-                            </div>
-                        </div>
-                    </section><!-- .flight-detail -->
-                    @if (@Model.Itinerary.TripType == TripType.Return)
-                    {
-                        <section class="flight-detail">
-                            <h3 class="text-center">RETURN FLIGHT</h3>
-                            <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
-                            <div class="row flight-route">
-                                <div class="col-sm-6 text-right flight-origin">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
-                                </div>
-                                <div class="separator">to</div>
-                                <div class="col-sm-6 text-left flight-destination">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
-                                </div>
-                            </div>
-                        </section>
-                        <!-- .flight-detail -->
-                    }
-
+                <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                <h5 class="airline-name">
+                    <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                </h5>
+                <div class="row flight-route">
+                    <div class="col-sm-6 text-right flight-origin">
+                        <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                        <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
+                    </div>
+                    <div class="separator">to</div>
+                    <div class="col-sm-6 text-left flight-destination">
+                        <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                        <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
+                        <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
+                    </div>
                 </div>
-            </section><!-- .flight-details -->
+            </section><!-- .flight-detail -->
+            @if (@Model.Itinerary.TripType == TripType.Return)
+            {
+                <section class="flight-detail">
+                    <h3 class="text-center">RETURN FLIGHT</h3>
+                    <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                    <div class="row flight-route">
+                        <div class="col-sm-6 text-right flight-origin">
+                            <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                            <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                        </div>
+                        <div class="separator">to</div>
+                        <div class="col-sm-6 text-left flight-destination">
+                            <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                            <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
+                            <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                        </div>
+                    </div>
+                </section>
+                <!-- .flight-detail -->
+            }
 
             <section class="flight-passenger">
                 <h2 class="section-title">Passenger Detail</h2>
@@ -769,8 +756,8 @@
             </section><!-- .flight-price -->
 
             <section class="container">
-                <button class="btn btn-yellow btn-block-lg" onclick=" gotoPage(4) ">NEXT</button>
-                <button class="btn btn-back" onclick=" gotoPage(2) ">BACK</button>
+                <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(4)">CHOOSE PAYMENT METHOD</button>
+                <button class="btn btn-back" onclick="gotoPage(2)">BACK</button>
             </section>
 
         </section><!-- .checkout-page.step-3 -->
@@ -786,7 +773,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button type="submit" value="submit" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -796,7 +783,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button type="submit" value="submit" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -806,7 +793,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button type="submit" value="submit" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -816,7 +803,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button type="submit" value="submit" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -826,17 +813,16 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button type="submit" value="submit" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
             </div><!-- .section-content -->
 
             <div class="container">
-                <button class="btn btn-back" onclick=" gotoPage(3) ">BACK</button>
+                <button class="btn btn-back" onclick="gotoPage(3)">BACK</button>
             </div>
 
         </section><!-- .checkout-page.step-4 -->
-    </section>
-    <!-- .checkout-page -->
-}
+    </section><!-- .checkout-page -->
+</form>
