@@ -94,28 +94,18 @@
             <div class="page-aside">
             
                 <div class="filter-trigger-wrapper">
-                    <div class="filter-trigger">
-                        <img src="http://placehold.it/50" alt="Alternate Text" />
-                    </div><!-- .filter-trigger -->
-                    <div class="filter-trigger">
-                        <img src="http://placehold.it/50" alt="Alternate Text" />
-                    </div><!-- .filter-trigger -->
-                    <div class="filter-trigger">
-                        <img src="http://placehold.it/50" alt="Alternate Text" />
-                    </div><!-- .filter-trigger -->
-                    <div class="filter-trigger">
-                        <img src="http://placehold.it/50" alt="Alternate Text" />
-                    </div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-transit"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-price"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-airline"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-onward"></div><!-- .filter-trigger -->
                 </div><!-- .filter-trigger-wrapper -->
             
-                <div class="filter-close">
-                    <<
-                </div>
+                <div class="filter-close"></div>
 
                 <div class="flight-filter-wrapper">
                     <h4>Flight Filter</h4>
                     <div class="flight-filter stop-filter">
-                        <h5>Stop</h5>
+                        <h5><span><img src="/Assets/images/filter-transit.png" alt="Filter by Transit" /></span>Stop</h5>
                         <div class="filter-content">
                             <p>Show flight with :</p>
                             <label for="flight-stop-0">
@@ -132,7 +122,7 @@
                         </div>
                     </div><!-- .stop-filter -->
                     <div class="flight-filter price-filter">
-                        <h5>Price</h5>
+                        <h5><span><img src="/Assets/images/filter-price.png" alt="Filter by Price" /></span>Price</h5>
                         <div class="filter-content">
 
                             <div class="price-slider"></div>
@@ -151,7 +141,7 @@
                         </div>
                     </div><!-- .price-filter -->
                     <div class="flight-filter airline-filter">
-                        <h5>Airline</h5>
+                        <h5><span><img src="/Assets/images/filter-airline.png" alt="Filter by Airline" /></span>Airline</h5>
                         <div class="filter-content">
                             <label ng-repeat="airline in FlightSearchFilter.Airlines">
                                 <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
@@ -161,8 +151,8 @@
                         </div>
                     </div><!-- .airline-filter -->
                     <div class="flight-filter onward-time">
-                        <h5 ng-if="'@tripType' == 'return'">Onward Flight</h5>
-                        <h5 ng-if="'@tripType' != 'return'">Flight Time</h5>
+                        <h5 ng-if="'@tripType' == 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Onward Flight" /></span>Onward Flight</h5>
+                        <h5 ng-if="'@tripType' != 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Flight Time" /></span>Flight Time</h5>
                         <div class="filter-content">
                             <small>Take-off from ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
                             <div class="onward-depart-slider"></div>
@@ -184,7 +174,7 @@
                         </div>
                     </div><!-- .onward-time -->
                     <div class="flight-filter return-time" ng-if="'@tripType' == 'return'">
-                        <h5>Return Flight</h5>
+                        <h5><span><img src="/Assets/images/filter-return.png" alt="Filter by Return Flight" /></span>Return Flight</h5>
                         <div class="filter-content">
                             <small>Take-off from ({{FlightSearchParams.TripInfos[1].OriginAirport}})</small>
                             <div class="return-depart-slider"></div>
@@ -287,7 +277,7 @@
             
                 <div class="flight-filter-mobile">
                 
-                        
+                    Lorem ipsum dolor sit amet
 
                 </div><!-- .flight-filter for mobile -->
 

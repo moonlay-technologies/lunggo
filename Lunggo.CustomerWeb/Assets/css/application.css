@@ -1172,7 +1172,20 @@ hr {
     padding-top: 20px; }
     .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger {
       cursor: pointer;
-      border: 1px solid #bbb; }
+      border: 1px solid #bbb;
+      width: 50px;
+      height: 50px;
+      background-position: center center;
+      background-color: #fff;
+      background-repeat: no-repeat; }
+      .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger.filter-transit {
+        background-image: url(/Assets/images/filter-transit.png); }
+      .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger.filter-price {
+        background-image: url(/Assets/images/filter-price.png); }
+      .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger.filter-airline {
+        background-image: url(/Assets/images/filter-airline.png); }
+      .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger.filter-onward {
+        background-image: url(/Assets/images/filter-onward.png); }
     .flight-search-page .flight-result.page-container .page-aside .filter-trigger-wrapper .filter-trigger + .filter-trigger {
       border-top: 0; }
     .flight-search-page .flight-result.page-container .page-aside .filter-close {
@@ -1182,7 +1195,9 @@ hr {
       margin-left: -30px;
       top: 75px;
       cursor: pointer;
-      background: red; }
+      background: #2fb4e6 url(/Assets/images/filter-trigger.png) center center no-repeat; }
+      .flight-search-page .flight-result.page-container .page-aside .filter-close.active {
+        background-image: url(/Assets/images/filter-trigger-active.png); }
     .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper {
       display: none;
       border: 1px solid #ddd;
@@ -1197,6 +1212,9 @@ hr {
         position: relative;
         padding: 10px;
         border-top: 1px solid #ddd; }
+        .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter h5 span {
+          display: inline-block;
+          margin-right: 10px; }
         .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter.airline-filter .filter-content {
           max-height: 250px;
           overflow: auto; }

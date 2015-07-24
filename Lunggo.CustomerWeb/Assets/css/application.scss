@@ -481,14 +481,24 @@ hr {border-color:#aaa;}
     .flight-result.page-container {max-width:1100px;
         .page-aside {float:left; width:50px; position:relative; padding-top:20px;
             .filter-trigger-wrapper {
-                .filter-trigger {cursor:pointer; border:1px solid #bbb;}
+                .filter-trigger {cursor:pointer; border:1px solid #bbb; width:50px; height:50px; background-position:center center; background-color:#fff; background-repeat:no-repeat;
+                    &.filter-transit {background-image:url(/Assets/images/filter-transit.png);}
+                    &.filter-price {background-image:url(/Assets/images/filter-price.png);}
+                    &.filter-airline {background-image:url(/Assets/images/filter-airline.png);}
+                    &.filter-onward {background-image:url(/Assets/images/filter-onward.png);}
+                }
                 .filter-trigger+.filter-trigger {border-top:0;}
             }
-            .filter-close {position:absolute; width:30px; height:50px; margin-left:-30px; top:75px; cursor:pointer; background:red;}
+            .filter-close {position:absolute; width:30px; height:50px; margin-left:-30px; top:75px; cursor:pointer; background:#2fb4e6 url(/Assets/images/filter-trigger.png) center center no-repeat;
+                &.active {background-image:url(/Assets/images/filter-trigger-active.png);}
+            }
             .flight-filter-wrapper {display:none; border:1px solid #ddd; background:#fff;
                 h4 {padding:0 10px; color:#3fabe3; @include gotham();}
                 h5 {@include gotham();}
                 .flight-filter {position:relative; padding:10px; border-top:1px solid #ddd;
+                    h5 {
+                        span {display:inline-block; margin-right:10px;}
+                    }
                     .filter-content {}
                     &.airline-filter {
                         .filter-content {max-height:250px; overflow:auto;
