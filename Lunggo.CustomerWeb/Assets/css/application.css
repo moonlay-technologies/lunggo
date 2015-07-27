@@ -434,6 +434,9 @@ hr {
       border: none;
       margin: 0; }
 
+.ui-datepicker {
+  z-index: 3 !important; }
+
 .home-page .site-header {
   /*padding-bottom:80px;*/ }
 
