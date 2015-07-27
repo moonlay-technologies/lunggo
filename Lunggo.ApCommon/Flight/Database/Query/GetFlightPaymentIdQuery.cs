@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Model;
+﻿using System.Text;
 using Lunggo.Framework.Database;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightTripInfoQuery : QueryBase<GetFlightTripInfoQuery, FlightTripInfo>
+    internal class GetFlightPaymentIdQuery : QueryBase<GetFlightPaymentIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -21,16 +16,15 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate ");
-            clauseBuilder.Append(@"FROM FlightTrip AS t ");
-            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
+            clauseBuilder.Append("SELECT PaymentId ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE i.BookingId = @BookingId");
+            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
     }

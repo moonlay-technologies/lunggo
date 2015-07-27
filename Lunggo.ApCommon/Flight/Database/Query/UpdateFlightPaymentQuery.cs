@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
     public class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
     {

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
     internal class GetFlightReservationQuery : QueryBase<GetFlightReservationQuery, FlightReservation, FlightReservationTableRecord, FlightItineraryTableRecord, FlightTripTableRecord, FlightSegmentTableRecord, FlightPassengerTableRecord>
     {

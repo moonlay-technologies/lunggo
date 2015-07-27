@@ -2,10 +2,8 @@
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Payment.Data;
 
-namespace Lunggo.ApCommon.Flight.Query.Model
+namespace Lunggo.ApCommon.Flight.Database.Model
 {
     internal class FlightBookingRecord
     {

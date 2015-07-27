@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.WebPages.Scope;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 
-namespace Lunggo.ApCommon.Flight.Query.Logic
+namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {

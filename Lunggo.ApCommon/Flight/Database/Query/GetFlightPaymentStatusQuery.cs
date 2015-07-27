@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Lunggo.Framework.Database;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightPassengerPrimKeyQuery : QueryBase<GetFlightPassengerPrimKeyQuery, long>
+    internal class GetFlightPaymentStatusQuery : QueryBase<GetFlightPaymentStatusQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -16,19 +16,15 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT PassengerId ");
-            clauseBuilder.Append(@"FROM FlightPassenger ");
+            clauseBuilder.Append("SELECT PaymentStatusCd ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"FirstName = @FirstName AND ");
-            clauseBuilder.Append(@"LastName = @LastName AND ");
-            clauseBuilder.Append(@"BirthDate = @DateOfBirth AND ");
-            clauseBuilder.Append(@"IdNumber = IdNumber");
+            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
     }

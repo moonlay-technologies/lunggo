@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.Framework.Database;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
     class GetFlightRsvNoByBookingIdQuery : QueryBase<GetFlightRsvNoByBookingIdQuery, string>
     {

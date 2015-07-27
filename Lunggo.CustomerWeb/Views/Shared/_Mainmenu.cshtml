@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.User
+@using Lunggo.Framework.Http
 @using Microsoft.AspNet.Identity
 @using RazorEngine.Compilation.ImpromptuInterface.Optimization
 <nav class="main-menu">
@@ -15,7 +16,17 @@
                     <li class="pull-right language-select">
                         <img src="/Assets/images/flag-indonesia.png" alt="Bahasa Indonesia" />
                     </li>
-                    <li class="pull-right site-login"><a href="#">Login</a> | <a href="#">Register</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.BeginForm("LogOff", "Account", FormMethod.Post) { 
+                            @Html.AntiForgeryToken()
+                            <li class="pull-right site-login">Hi, @User.Identity.GetFirstName() <button type="submit" href="@Url.Action("LogOff", "Account")">(Logoff)</button></li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="pull-right site-login"><a href="@Url.Action("Login", "Account")">Login</a> | <a href="@Url.Action("Register", "Account")">Register</a></li>
+                    }
                 </ul>
             </div>
 

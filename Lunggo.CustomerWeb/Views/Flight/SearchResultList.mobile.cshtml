@@ -79,7 +79,7 @@
     </script>
 }
 
-<section class="page flight-search-page" ng-controller="flightController">
+<section class="page flight-search-page" ng-controller="flightController" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
     <section class="flight-search-param">
         <div class="param">
             <b>(@data.TripInfos[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.TripInfos[0].DestinationAirport) @destinationCityNames[0]</b> <br />
@@ -148,7 +148,7 @@
             </form>
         </section><!-- .flight-search-form-wrapper -->
     </section><!-- .flight-serach-param -->
-    
+
     <section class="flight-search-filter">
         <div class="flight-search-trigger">
             <a class="flight-filter-trigger" data-function="toggle" data-target=".flight-filter-wrapper">FILTER</a>
@@ -161,13 +161,13 @@
                     <h3 ng-if="flightSearchParams.TripType == 'Return'">Onward Flight</h3>
                     <div class="filter-content">
                         <label ng-class="{active:flightSearchFilter.stop.onward[0]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[0]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[0]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
                         </label>
                         <label ng-class="{active:flightSearchFilter.stop.onward[1]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[1]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[1]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
                         </label>
                         <label ng-class="{active:flightSearchFilter.stop.onward[2]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[2]"/> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
+                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[2]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
                         </label>
                     </div>
                     <h3 ng-if="flightSearchParams.TripType == 'Return'">Return Flight</h3>
@@ -190,7 +190,7 @@
                             <div class="price-slider"></div>
                         </div>
                         <div class="price-slider-value hidden">
-                            <input type="text" value="" class="price-filter-min" ng-model="flightSearchFilter.priceFilter[0]"/>
+                            <input type="text" value="" class="price-filter-min" ng-model="flightSearchFilter.priceFilter[0]" />
                             <input type="text" value="" class="price-filter-max" ng-model="flightSearchFilter.priceFilter[1]" />
                         </div>
                         <div class="slider-text">
@@ -221,7 +221,7 @@
                     <div class="filter-content">
                         <h5>Departure time</h5>
                         <div class="slider-wrapper">
-                            <div class="onward-departure-slider"></div>    
+                            <div class="onward-departure-slider"></div>
                         </div>
                         <div class="onward-departure-value hidden">
                             <input type="number" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
@@ -291,16 +291,16 @@
             </div><!-- .flight-sort-wrapper -->
         </div><!-- .flight-search-content -->
     </section><!-- .flight-search-filter -->
-    
+
 
     <section class="flight-search-result">
-        
+
         <div class="loading-wrapper" ng-if="!loaded">
             <h1 class="text-center">Getting Flight</h1>
         </div>
         <div class="flight-wrapper" ng-if="loaded">
             <div class="no-flight container" ng-show="filteredFlight.length < 1">
-                <h2  class="text-center">No flight result found. Please refine your search filter.</h2>
+                <h2 class="text-center">No flight result found. Please refine your search filter.</h2>
             </div>
             <div class="flight" ng-class="{'hidden' : flight.hidden == true}" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilterOnward | filter:timeFilterReturn )">
                 <div class="flight-header">
@@ -347,7 +347,6 @@
         </div>
 
     </section><!-- .flight-search-result -->
-    
     <!-- .flight-detail -->
     <div class="flight-detail" ng-if="flightDetailActive">
         <header class="flight-detail-header">
@@ -357,12 +356,12 @@
         <section class="flight-detail-content">
 
             <div class="details">
-            
+
                 <h1 class="text-center">Flight Detail</h1>
-            
+
                 <div class="trip-list onward">
                     <h3 class="text-center">Onward Flight</h3>
-                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[0].OriginAirport}} to {{flightCurrentDetail.FlightTrips[0].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[0].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br/>(Duration:{{flightCurrentDetail.FlightTrips[0].TotalDuration}})</span>
+                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[0].OriginAirport}} to {{flightCurrentDetail.FlightTrips[0].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[0].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br />(Duration:{{flightCurrentDetail.FlightTrips[0].TotalDuration}})</span>
                     <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[0].FlightSegments">
                         <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
                         <div class="trip-wrapper">
@@ -388,13 +387,13 @@
                         </div>
                         <!-- if flight operator is different-->
                         <div class="trip-operator" ng-if=" trip.OperatingAirlineCode != trip.AirlineCode ">
-                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}"/> {{trip.OperatingAirlineName}} </span>
+                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}" /> {{trip.OperatingAirlineName}} </span>
                         </div><!-- .flight-operator -->
                     </div>
-                </div>    
+                </div>
                 <div class="trip-list return" ng-if="flightSearchParams.TripType == 'Return'">
                     <h3 class="text-center">Return Flight</h3>
-                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[1].OriginAirport}} to {{flightCurrentDetail.FlightTrips[1].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[1].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br/>(Duration:{{flightCurrentDetail.FlightTrips[1].TotalDuration}})</span>
+                    <span class="trip-general">{{flightCurrentDetail.FlightTrips[1].OriginAirport}} to {{flightCurrentDetail.FlightTrips[1].DestinationAirport}}: {{getDateTime(flightCurrentDetail.FlightTrips[1].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br />(Duration:{{flightCurrentDetail.FlightTrips[1].TotalDuration}})</span>
                     <div class="trip" ng-repeat="trip in flightCurrentDetail.FlightTrips[1].FlightSegments">
                         <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
                         <div class="trip-wrapper">
@@ -423,7 +422,7 @@
                             <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}" /> {{trip.OperatingAirlineName}} </span>
                         </div><!-- .flight-operator -->
                     </div>
-                </div>    
+                </div>
 
             </div><!-- .details -->
 

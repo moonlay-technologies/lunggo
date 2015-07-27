@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.Framework.Database;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightActivePriceMarginRuleQuery : QueryBase<GetFlightActivePriceMarginRuleQuery, FlightPriceMarginRuleTableRecord>
+    internal class GetFlightPaymentInfoQuery : QueryBase<GetFlightPaymentInfoQuery, FlightReservationTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -22,15 +17,15 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT * ");
-            clauseBuilder.Append("FROM FlightPriceMarginRule ");
+            clauseBuilder.Append("SELECT PaymentId, PaymentMediumCd, PaymentMethodCd, PaymentStatusCd, PaymentTime, PaymentTargetAccount ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE IsActive = TRUE");
+            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
     }

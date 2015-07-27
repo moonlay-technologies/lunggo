@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW610.Logic;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW610.Object;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW610.Model;

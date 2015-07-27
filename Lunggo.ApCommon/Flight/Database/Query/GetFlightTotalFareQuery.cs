@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightPaymentStatusQuery : QueryBase<GetFlightPaymentStatusQuery, string>
+    internal class GetFlightTotalFareQuery : QueryBase<GetFlightTotalFareQuery, decimal>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -21,8 +16,8 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT PaymentStatusCd ");
-            clauseBuilder.Append("FROM FlightReservation ");
+            clauseBuilder.Append("SELECT LocalPrice ");
+            clauseBuilder.Append("FROM FlightItinerary ");
             return clauseBuilder.ToString();
         }
 

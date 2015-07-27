@@ -8,7 +8,6 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Flight.Query.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment;

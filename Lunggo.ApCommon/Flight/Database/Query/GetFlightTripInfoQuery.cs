@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Query.Model;
+﻿using System.Text;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Flight.Query
+namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class DeleteFlightTripPerItineraryQuery : NoReturnQueryBase<DeleteFlightTripPerItineraryQuery>
+    internal class GetFlightTripInfoQuery : QueryBase<GetFlightTripInfoQuery, FlightTripInfo>
     {
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append(CreateDeleteClause());
+            queryBuilder.Append(CreateSelectClause());
             queryBuilder.Append(CreateWhereClause());
             return queryBuilder.ToString();
         }
 
-        private static string CreateDeleteClause()
+        private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"DELETE * ");
+            clauseBuilder.Append(@"SELECT t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate ");
             clauseBuilder.Append(@"FROM FlightTrip AS t ");
             clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
             return clauseBuilder.ToString();
@@ -31,8 +26,7 @@ namespace Lunggo.ApCommon.Flight.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"i.BookingId = @BookingId");
+            clauseBuilder.Append(@"WHERE i.BookingId = @BookingId");
             return clauseBuilder.ToString();
         }
     }

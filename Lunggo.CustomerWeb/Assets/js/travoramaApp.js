@@ -61,10 +61,7 @@
             // ********************
             // general variables
 
-            $scope.dummyParamsReturn = { "TripType": "Return", "TripInfos": [{ "OriginAirport": "CGK", "DestinationAirport": "HND", "DepartureDate": "2015-10-25T00:00:00" }, { "OriginAirport": "HND", "DestinationAirport": "CGK", "DepartureDate": "2015-10-28T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
-            $scope.dummyParamsOneway = { "TripType": "OneWay", "TripInfos": [{ "OriginAirport": "CGK", "DestinationAirport": "HND", "DepartureDate": "2015-10-25T00:00:00" }], "AdultCount": "1", "ChildCount": "0", "InfantCount": "0", "CabinClass": "Economy", "Currency": "IDR" };
-
-            $scope.flightSearchParams = $scope.dummyParamsOneway;
+            $scope.flightSearchParams = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
             $scope.flightSearchResult = {};
             $scope.loaded = false;
             $scope.busy = false;
@@ -357,6 +354,7 @@
                         loadingOverlay(false);
                         $scope.flightSearchResult = data;
                         FlightSearchConfig.SearchId = data.SearchId;
+                        $scope.flightSearchParams.SearchId = data.SearchId;
                         // if no flight
                         if (data.TotalFlightCount == 0) {
                             $scope.noFlight = true;

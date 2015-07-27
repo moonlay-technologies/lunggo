@@ -68,6 +68,7 @@
 }
 
 <form action="" class="form" id="flight-customer-form" method="post">
+    <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
     <section class="page group-checkout group-flight-checkout customer-detail-page">
         <section class="checkout-progress">
             <div class="checkout-step">
@@ -97,6 +98,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-xs-12">Country code:</label>
+                        <div class="col-xs-12">
+                            <input type="number" name="ContactData.CountryCode" value="" class="form-control" placeholder="ex: 62" />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-xs-12">Phone number:</label>
                         <div class="col-xs-12">
                             <input type="number" name="ContactData.Phone" value="" class="form-control" placeholder="ex: 08212345678" />
@@ -110,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(2)">CONTINUE</button>
+                            <a class="btn btn-yellow btn-block-lg" onclick="gotoPage(2)">CONTINUE</a>
                         </div>
                     </div>
                 </form>
@@ -574,8 +581,8 @@
                     <!-- continue -->
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(3)">REVIEW ORDER</button>
-                            <button class="btn btn-back" onclick="gotoPage(1)">BACK</button>
+                            <a class="btn btn-yellow btn-block-lg" onclick="gotoPage(3)">REVIEW ORDER</a>
+                            <a class="btn btn-back" onclick="gotoPage(1)">BACK</a>
                         </div>
                     </div>
                 </form>
@@ -633,7 +640,7 @@
                 </section>
                 <!-- .flight-detail -->
             }
-
+        @*
             <section class="flight-passenger">
                 <h2 class="section-title">Passenger Detail</h2>
                 <div class="section-content container">
@@ -728,36 +735,37 @@
                     </ol>
                 </div>
             </section><!-- .flight-passenger -->
+        *@
 
-            <section class="flight-price">
-                <h2 class="section-title">Price Detail</h2>
-                <div class="section-content container">
+    <section class="flight-price">
+        <h2 class="section-title">Price Detail</h2>
+        <div class="section-content container">
 
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Total Fare</td>
-                                <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                            </tr>
-                            <tr>
-                                <td>Tax and Service</td>
-                                <td>Included</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Total Price</td>
-                                <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Total Fare</td>
+                        <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                    <tr>
+                        <td>Tax and Service</td>
+                        <td>Included</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total Price</td>
+                        <td>IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    </tr>
+                </tfoot>
+            </table>
 
-                </div>
-            </section><!-- .flight-price -->
+        </div>
+    </section><!-- .flight-price -->
 
             <section class="container">
-                <button class="btn btn-yellow btn-block-lg" onclick="gotoPage(4)">CHOOSE PAYMENT METHOD</button>
-                <button class="btn btn-back" onclick="gotoPage(2)">BACK</button>
+                <a class="btn btn-yellow btn-block-lg" onclick="gotoPage(4)">CHOOSE PAYMENT METHOD</a>
+                <a class="btn btn-back" onclick="gotoPage(2)">BACK</a>
             </section>
 
         </section><!-- .checkout-page.step-3 -->

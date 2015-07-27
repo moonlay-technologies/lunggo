@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Web.UI;
+using Lunggo.ApCommon.Flight.Database.Logic;
+using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Query;
-using Lunggo.ApCommon.Flight.Query.Logic;
-using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
 

@@ -194,7 +194,6 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
-        [Route("{langCode}/ForgotPassword")]
         public ActionResult ForgotPassword()
         {
             return View();

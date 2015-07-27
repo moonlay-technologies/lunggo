@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Database.Model;
+using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Query.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
-namespace Lunggo.ApCommon.Flight.Query.Logic
+namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class InsertFlightDb
     {
