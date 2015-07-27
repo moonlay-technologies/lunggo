@@ -1,4 +1,7 @@
-﻿@model List<Lunggo.ApCommon.Flight.Model.FlightReservation>
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Dictionary
+@using Lunggo.ApCommon.Flight.Constant
+@model List<Lunggo.ApCommon.Flight.Model.FlightReservation>
 
 @{
     Layout = "/Views/Shared/_Layout_account.cshtml";
@@ -42,173 +45,63 @@
 
             <section class="page-content">
                 <div class="container">
-                   
+
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" ><a href="/Uw600/UW610ChangeProfile?idMember=@Model.ToList()[0].IdMember" aria-controls="profile"><span class="fa fa-users"></span> Profile</a></li>
+                        <li role="presentation"><a href="/id/Uw600/UW610ChangeProfile" aria-controls="profile"><span class="fa fa-users"></span> Profile</a></li>
                         <li role="presentation" class="active"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
                         <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
                     </ul>
 
                     <div class="tab-content">
-                       
+
                         <div role="tabpanel" class="tab-pane active" id="history">
                             <h4><b>HISTORY</b> ORDER</h4>
 
                             <div class="history-wrapper">
                                 <ul class="history-list">
-                                    
-                                    
-                                    @{
-                                        var number = 1;
-                                        var arrayModel = Model.ToList();
-                                        
-                                        foreach (var historyList in Model)
-                                        {
-                                            
-                                            if (historyList.Type == "Hotel")
-                                            {
-
-                                                <li class="history">
-                                                    <div class="history-content-wrapper">
-                                                        <div class="history-number">
-                                                            <span class="number">@number</span>
+                                    @foreach (var rsv in Model)
+                                    {
+                                        <li class="history">
+                                            <div class="history-content-wrapper">
+                                                <div class="history-id">
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Reservation Number</b></div>
+                                                        <div class="col-sm-7">@rsv.RsvNo</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Payment</b></div>
+                                                        <div class="col-sm-7">@rsv.PaymentInfo.Method.ToString()</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Status</b></div>
+                                                        <div class="col-sm-7">@rsv.PaymentInfo.Status.ToString()</div>
+                                                    </div>
+                                                </div>
+                                                <div class="history-detail">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">@rsv.Itinerary.FlightTrips[0].OriginCity (@rsv.Itinerary.FlightTrips[0].OriginAirport) - rsv.Itinerary.FlightTrips[0].DestinationCity (@rsv.Itinerary.FlightTrips[0].DestinationAirport)</div>
+                                                            <div class="col-sm-4 col-sm-offset-2"><b>Depart </b>@rsv.Itinerary.FlightTrips[0].DepartureDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                                         </div>
-                                                        <div class="history-detail">
-                                                            <div class="history-name">
-                                                                <a href="#">@historyList.HotelName</a>
-                                                                <p><i>@historyList.Address</i></p>
-                                                            </div>
-                                                            <div class="history-date">
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>Check in</b></div>
-                                                                    <div class="col-sm-7">@historyList.CheckInDateTime.ToString("dd MMMM yyyy")</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>Check out</b></div>
-                                                                    <div class="col-sm-7">@historyList.CheckOutDateTime.ToString("dd MMMM yyyy")</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="history-id">
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>Order ID</b></div>
-                                                                    <div class="col-sm-7">@historyList.OrderId</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>Status</b></div>
-                                                                    <div class="col-sm-7">@historyList.StatusPayment</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="history-action">
-                                                                <a href="#" class="btn btn-primary">DETAIL</a>
-                                                            </div>
+                                                        <div class="row">
+                                                            @if (rsv.TripType == TripType.OneWay)
+                                                            {
+                                                                <div class="col-sm-6"><b>One-Way Trip</b></div>
+                                                            }
+                                                            else if (rsv.TripType == TripType.Return)
+                                                            {
+                                                                <div class="col-sm-6"><b>Return Trip</b></div>
+                                                                <div class="col-sm-4 col-sm-offset-2"><b>Return </b>@rsv.Itinerary.FlightTrips[1].DepartureDate.ToString("d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                                            }
                                                         </div>
                                                     </div>
-                                                </li>                                    
-                                                <br />number++;
-                                            }
-                                            else
-                                            {
-
-                                                if (historyList.TypeWay == "RET")
-                                                {
-                                                    if (arrayModel[number - 1].OrderId != arrayModel[number - 2].OrderId)
-                                                    {
-                                                        if (historyList.OrderId == arrayModel[number - 1].OrderId)
-                                                        {
-                                                            <li class="history">
-                                                                <div class="history-content-wrapper">
-                                                                    <div class="history-number">
-                                                                        <span class="number">@number</span>
-                                                                    </div>
-                                                                    <div class="history-detail">
-                                                                        <div class="history-name">
-                                                                            <a href="#">@historyList.Airline - @arrayModel[number].Airline</a>
-                                                                            <p><i>Alternating</i></p>
-                                                                        </div>
-                                                                        <div class="history-date">
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>1st Destination</b></div>
-                                                                                <div class="col-sm-7">@historyList.Origin - @historyList.Destination</div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>2nd Destination</b></div>
-                                                                                <div class="col-sm-7">@arrayModel[number].Origin - @arrayModel[number].Destination</div>
-                                                                            </div>
-                                                                                
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>Departure</b></div>
-                                                                                <div class="col-sm-7">@historyList.DepartureTime.ToString("dd MMMM yyyy")</div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>Return</b></div>
-                                                                                <div class="col-sm-7">@arrayModel[number].DepartureTime.ToString("dd MMMM yyyy")</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="history-id">
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>Order ID</b></div>
-                                                                                <div class="col-sm-7">@historyList.OrderId</div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-sm-5"><b>Status</b></div>
-                                                                                <div class="col-sm-7">@historyList.StatusPayment</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="history-action">
-                                                                            <a href="#" class="btn btn-primary">DETAIL</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <br />number++;
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <li class="history">
-                                                        <div class="history-content-wrapper">
-                                                            <div class="history-number">
-                                                                <span class="number">@number</span>
-                                                            </div>
-                                                            <div class="history-detail">
-                                                                <div class="history-name">
-                                                                    <a href="#">@historyList.Airline</a>
-                                                                    <p><i>One Way</i></p>
-                                                                </div>
-                                                                <div class="history-date">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-5"><b>Destination</b></div>
-                                                                        <div class="col-sm-7">@historyList.Origin - @historyList.Destination</div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="row">
-                                                                        <div class="col-sm-5"><b>Date</b></div>
-                                                                        <div class="col-sm-7">@historyList.DepartureTime.ToString("dd MMMM yyyy")</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="history-id">
-                                                                    <div class="row">
-                                                                        <div class="col-sm-5"><b>Order ID</b></div>
-                                                                        <div class="col-sm-7">@historyList.OrderId</div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-5"><b>Status</b></div>
-                                                                        <div class="col-sm-7">@historyList.StatusPayment</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="history-action">
-                                                                    <a href="#" class="btn btn-primary">DETAIL</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <br />number++;
-                                                }
-                                            }
-                                        }
+                                                    <div class="history-action">
+                                                        <a href="#" class="btn btn-primary">DETAIL</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     }
-
                                 </ul>
                             </div>
 

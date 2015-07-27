@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Flight.Database;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;

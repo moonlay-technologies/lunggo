@@ -8,7 +8,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Logic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -23,9 +22,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetFlightDb.Reservation(rsvNo);
         }
 
-        public List<FlightReservation> GetReservations(string contactEmail)
+        public List<FlightReservation> GetOverviewReservations(string contactEmail)
         {
-            return GetFlightDb.Reservations(contactEmail).ToList();
+            return GetFlightDb.OverviewReservations(contactEmail).ToList();
         }
     }
 }

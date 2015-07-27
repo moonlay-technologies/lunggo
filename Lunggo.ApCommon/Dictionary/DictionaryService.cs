@@ -21,8 +21,6 @@ namespace Lunggo.ApCommon.Dictionary
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
         public Dictionary<long, HotelLocationDict> HotelLocationDict;
-        public Dictionary<string, FlightItineraryFare> ItineraryDict;
-        public Dictionary<string, FlightItineraryDetails> DetailsDict;
 
         private const string AirlineFileName = @"Airline.csv";
         private const string AirportFileName = @"Airport.csv";
@@ -59,8 +57,6 @@ namespace Lunggo.ApCommon.Dictionary
                 AirlineDict = PopulateAirlineDict(_airlineFilePath);
                 AirportDict = PopulateAirportDict(_airportFilePath);
                 HotelLocationDict = PopulateHotelLocationDict(_hotelLocationFilePath);
-                ItineraryDict = new Dictionary<string, FlightItineraryFare>();
-                DetailsDict = new Dictionary<string, FlightItineraryDetails>();
                 _isInitialized = true;
             }
         }

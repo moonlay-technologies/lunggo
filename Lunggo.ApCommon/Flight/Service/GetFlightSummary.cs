@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Database.Logic;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;

@@ -9,7 +9,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Flight.Query;
+using Lunggo.ApCommon.Flight.Database;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;

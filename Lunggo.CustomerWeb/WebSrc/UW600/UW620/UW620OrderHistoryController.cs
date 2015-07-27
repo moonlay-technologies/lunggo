@@ -18,7 +18,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
         {
             var flight = FlightService.GetInstance();
             var email = User.Identity.GetEmail();
-            var reservations = flight.GetReservations(email);
+            var reservations = flight.GetOverviewReservations(email);
             return View(reservations);
         }
     }

@@ -7,7 +7,6 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Logic;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Sequence;
 using Microsoft.WindowsAzure.Storage.Queue.Protocol;
 
