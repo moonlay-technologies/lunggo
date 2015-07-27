@@ -641,6 +641,7 @@
     <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\filter-airline.png" />
+    <Content Include="Assets\images\filter-close.png" />
     <Content Include="Assets\images\filter-onward.png" />
     <Content Include="Assets\images\filter-price.png" />
     <Content Include="Assets\images\filter-transit.png" />

@@ -262,6 +262,12 @@ body img {
 .container.wide {
   max-width: 1170px; }
 
+.clearfix {
+  content: "";
+  clear: both;
+  display: block;
+  width: 100%; }
+
 .btn-primary {
   background: #2fb4e6;
   border-color: #2fb4e6; }
@@ -1167,7 +1173,8 @@ hr {
   height: 0 !important; }
 
 .flight-search-page .flight-filter-mobile {
-  float: right; }
+  float: right;
+  display: none; }
   .flight-search-page .flight-filter-mobile:before, .flight-search-page .flight-filter-mobile:after {
     content: "";
     clear: both;
@@ -1201,6 +1208,12 @@ hr {
       background-image: url(/Assets/images/filter-onward.png); }
     .flight-search-page .flight-filter-mobile .filter-trigger span.filter-return {
       background-image: url(/Assets/images/filter-return.png); }
+    .flight-search-page .flight-filter-mobile .filter-trigger span.filter-close {
+      display: none;
+      background-image: url(/Assets/images/filter-close.png); }
+
+.flight-search-page .flight-filter-mobile-content {
+  display: none; }
 
 .flight-search-page .flight-result.page-container {
   max-width: 1100px; }
@@ -2496,7 +2509,8 @@ hr {
   .flight-search-page .page-aside {
     display: none !important; }
   .flight-search-page .page-title {
-    margin-bottom: 40px; }
+    margin-bottom: 40px;
+    float: left; }
   .flight-search-page .flight-search-form form .flight-cabin {
     width: 28%; }
   .flight-search-page .flight-search-form form .flight-departure-date {
@@ -2509,4 +2523,38 @@ hr {
       width: 100%;
       margin-left: 0; }
     .flight-search-page .flight-result.page-container .flight .flight-main .flight-right .price-now {
-      font-size: 24px; } }
+      font-size: 24px; }
+  .flight-search-page .flight-filter-mobile {
+    display: block; }
+  .flight-search-page .flight-filter-mobile-content {
+    margin-bottom: 15px;
+    display: block; }
+    .flight-search-page .flight-filter-mobile-content:before, .flight-search-page .flight-filter-mobile-content:after {
+      content: "";
+      clear: both;
+      display: block;
+      width: 100%; }
+    .flight-search-page .flight-filter-mobile-content .filter-container {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0;
+      min-height: 370px; }
+      .flight-search-page .flight-filter-mobile-content .filter-container .filter {
+        padding: 10px 15px; }
+        .flight-search-page .flight-filter-mobile-content .filter-container .filter .filter-title {
+          margin: 10px 0;
+          font-size: 16px; }
+          .flight-search-page .flight-filter-mobile-content .filter-container .filter .filter-title img {
+            height: 20px;
+            margin-right: 10px; }
+        .flight-search-page .flight-filter-mobile-content .filter-container .filter.airline-filter .filter-content {
+          max-height: 300px;
+          overflow: auto; }
+        .flight-search-page .flight-filter-mobile-content .filter-container .filter.airline-filter label {
+          display: block; }
+          .flight-search-page .flight-filter-mobile-content .filter-container .filter.airline-filter label img {
+            height: 30px; }
+      .flight-search-page .flight-filter-mobile-content .filter-container .filter + .filter {
+        border-top: 1px solid #ddd; }
+    .flight-search-page .flight-filter-mobile-content .filter-container + .filter-container {
+      border-left: none; } }
