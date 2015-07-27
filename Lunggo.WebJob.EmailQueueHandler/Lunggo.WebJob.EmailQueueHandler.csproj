@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Function\ChangedEticketEmail.cs" />
     <Compile Include="Function\EticketEmail.cs" />
+    <Compile Include="Function\ForgotPasswordEmail.cs" />
     <Compile Include="Function\UserConfirmationEmail.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,6 +6,7 @@
         EticketEmail,
         ChangedEticket,
         ChangedEticketEmail,
-        UserConfirmationEmail
+        UserConfirmationEmail,
+        ForgotPasswordEmail
     }
 }

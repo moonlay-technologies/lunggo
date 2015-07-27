@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -166,9 +167,8 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, null, callbackUrl);
+                    await UserManager.SendEmailAsync(user.Id, Queue.UserConfirmationEmail.ToString(), callbackUrl);
                     var currentUser = await UserManager.FindByEmailAsync(model.Email);
-                    await UserManager.AddToRoleAsync(currentUser.Id, "Admin");
                     return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
@@ -212,14 +212,13 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View(model);
                 }
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                ViewBag.Link = callbackUrl;
-                return View("ForgotPasswordConfirmation");
+                await UserManager.SendEmailAsync(user.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
+                return View(model);
             }
 
             // If we got this far, something failed, redisplay form

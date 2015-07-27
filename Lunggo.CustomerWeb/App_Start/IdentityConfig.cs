@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Identity.Role;
+﻿using System.Web.Mvc;
+using Lunggo.ApCommon.Identity.Role;
 using Lunggo.ApCommon.Identity.RoleStore;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
@@ -93,7 +94,8 @@ namespace Lunggo.CustomerWeb.Models
         public Task SendAsync(IdentityMessage message)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference(Queue.UserConfirmationEmail);
+            var emailType = (Queue) Enum.Parse(typeof (Queue), message.Subject);
+            var queue = queueService.GetQueueByReference(emailType);
             var messageJson = JsonConvert.SerializeObject(message);
             queue.AddMessage(new CloudQueueMessage(messageJson));
             return Task.FromResult(0);
