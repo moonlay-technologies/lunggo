@@ -26,5 +26,10 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             return GetFlightDb.OverviewReservations(contactEmail).ToList();
         }
+
+        public List<FlightReservation> SearchReservations(FlightReservationSearch search)
+        {
+            return GetFlightDb.SearchReservations(search).ToList();
+        }
     }
 }

@@ -18,9 +18,9 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @Html.BeginForm("LogOff", "Account", FormMethod.Post) { 
+                        @Html.BeginForm("Logout", "Account", FormMethod.Post) { 
                             @Html.AntiForgeryToken()
-                            <li class="pull-right site-login">Hi, @User.Identity.GetFirstName() <button type="submit" href="@Url.Action("LogOff", "Account")">(Logoff)</button></li>
+                            <li class="pull-right site-login">Hi, @User.Identity.GetFirstName() <button type="submit">(Logout)</button></li>
                         }
                     }
                     else

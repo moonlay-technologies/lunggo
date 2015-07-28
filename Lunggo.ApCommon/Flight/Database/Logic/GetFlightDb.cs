@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 
@@ -51,6 +52,16 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
             }
         }
 
+        internal static IEnumerable<FlightReservation> SearchReservations(FlightReservationSearch search)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos = SearchFlightReservationQuery.GetInstance().Execute(conn, search, search);
+                var reservations = rsvNos.Select(Reservation);
+                return reservations;
+            }
+        }
+
         internal static FlightReservation OverviewReservation(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -69,6 +80,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
                                 ContactData = new ContactData
                                 {
@@ -117,7 +129,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         {
                             segment = new FlightSegmentDetails
                             {
-                                Pnr = segmentRecord.Pnr,
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
                                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
@@ -177,6 +188,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
                                 ContactData = new ContactData
                                 {
@@ -187,7 +199,13 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 },
                                 PaymentInfo = new PaymentInfo
                                 {
-                                    Time = reservationRecord.PaymentTime
+                                    Id = reservationRecord.PaymentId,
+                                    Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
+                                    Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
+                                    Time = reservationRecord.PaymentTime,
+                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
+                                    TargetAccount = reservationRecord.PaymentTargetAccount,
+                                    FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault()
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                 Itinerary = new FlightItineraryDetails(),
@@ -215,6 +233,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
                                 FlightSegments = new List<FlightSegmentDetails>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
@@ -225,7 +244,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         {
                             segment = new FlightSegmentDetails
                             {
-                                Pnr = segmentRecord.Pnr,
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
                                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),

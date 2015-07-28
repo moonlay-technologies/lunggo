@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Lunggo.ApCommon.Identity.User
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -48,11 +50,22 @@
                 <ul class="nav top-menu"></ul>
                 <!--  notification end -->
             </div>
-            <div class="top-menu">
-                <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Logout</a></li>
-                </ul>
-            </div>
+                <div class="top-menu">
+                    <ul class="nav pull-right top-menu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @Html.BeginForm("Logout", "Account", FormMethod.Post)
+                            {
+                                @Html.AntiForgeryToken()
+                                <li><button class="logout" type="submit">Logout</button></li>
+                            }
+                        }
+                        else
+                        {
+                            <li><a class="logout" href="@Url.Action("Login", "Account")">Login</a></li>
+                        }
+                    </ul>
+                </div>
         </header>
         <!--header end-->
         <!-- **********************************************************************************************************************************************************
@@ -65,7 +78,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                    <h5 class="centered">Rama Adhitia</h5>
+                    <h5 class="centered">@if(User.Identity.IsAuthenticated) {@User.Identity.GetFirstName()}</h5>
 
                     <li class="sub-menu" id="menu-dashboard">
                         <a href="/Home/Dashboard">
@@ -75,7 +88,7 @@
                     </li>
 
                     <li class="sub-menu" id="menu-flight">
-                        <a href="/FlightReservation/Search">
+                        <a href="@Url.Action("Search", "Flight")">
                             <i class="fa fa-plane"></i>
                             <span>Flight Booking</span>
                         </a>

@@ -129,7 +129,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 FlightNumber = summaryRecord.FlightNumber,
                 Baggage = summaryRecord.Baggage,
                 Duration = summaryRecord.Duration.GetValueOrDefault(),
-                Pnr = summaryRecord.Pnr
             };
         }
 
@@ -164,7 +163,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
                 Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
                 Time = record.PaymentTime,
-                TargetAccount = record.PaymentTargetAccount
+                TargetAccount = record.PaymentTargetAccount,
+                FinalPrice = record.FinalPrice.GetValueOrDefault()
             };
         }
 

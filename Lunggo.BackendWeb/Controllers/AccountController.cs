@@ -1,21 +1,17 @@
-﻿using Lunggo.ApCommon.Flight.Service;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
-using Lunggo.ApCommon.Identity.UserStore;
-using Lunggo.Framework.Core;
+using Lunggo.BackendWeb.Models;
+using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using System.Globalization;
-using Lunggo.CustomerWeb.Models;
 
-namespace Lunggo.CustomerWeb.Controllers
+namespace Lunggo.BackendWeb.Controllers
 {
     [Authorize]
     public class AccountController : Controller

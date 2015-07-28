@@ -1,0 +1,64 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Web.UI.WebControls
+@using Lunggo.ApCommon.Autocomplete
+@using Microsoft.Ajax.Utilities
+@model IEnumerable<Lunggo.ApCommon.Flight.Model.FlightSegmentDetails>
+
+@{
+    var dict = AutocompleteManager.GetInstance();
+    var prevArrivalTime = new DateTime();
+}
+
+@foreach (var segment in Model)
+{
+    if (segment == Model.First())
+    {
+        <tr>
+            <td>
+                @segment.DepartureCity<br />
+                (@segment.DepartureAirport)
+            </td>
+            <td>
+                @segment.DepartureTime.ToString("d MMM yy")<br />
+                @segment.DepartureTime.ToString("hhmm")
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                @segment.DepartureCity<br />
+                (@segment.DepartureAirport)
+            </td>
+            <td>
+                @prevArrivalTime.ToString("d MMM yy")<br />
+                @prevArrivalTime.ToString("hhmm")<br /><br />
+                @segment.DepartureTime.ToString("d MMM yy")<br />
+                @segment.DepartureTime.ToString("hhmm")
+            </td>
+        </tr>
+    }
+    <tr>
+        <td></td>
+        <td>
+            @segment.AirlineName<br />
+            @segment.AirlineCode@segment.FlightNumber<br />
+            <b>PNR : @segment.Pnr</b>
+        </td>
+    </tr>
+    if (segment == Model.Last())
+    {
+        <tr>
+            <td>
+                @segment.ArrivalCity<br />
+                (@segment.ArrivalAirport)
+            </td>   
+            <td>
+                @segment.ArrivalTime.ToString("d MMM yy")<br />
+                @segment.ArrivalTime.ToString("hhmm")
+            </td>
+        </tr>
+    }
+    prevArrivalTime = segment.ArrivalTime;
+}

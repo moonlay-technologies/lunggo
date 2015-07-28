@@ -9,7 +9,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.BackendWeb.Model;
 using Lunggo.Framework.Http;
 using Lunggo.Repository.TableRecord;
 

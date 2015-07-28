@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightReservation
     {
         public string RsvNo { get; set; }
+        public DateTime RsvTime { get; set; }
         public FlightItineraryDetails Itinerary { get; set; }
         public List<PassengerInfoDetails> Passengers { get; set; }
         public PaymentInfo PaymentInfo { get; set; }

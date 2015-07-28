@@ -1,0 +1,118 @@
+﻿@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Repository.TableRecord
+@using Microsoft.Ajax.Utilities
+@model List<FlightReservation>
+
+@{
+    ViewBag.Title = "Flight Reservation List";
+}
+
+<h3><i class="fa fa-angle-right"></i> Flight Reservation</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Flight Reservation List</h4>
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>Reservation</th>
+                        <th>Contact Name</th>
+                        <th>Reservation Time</th>
+                        <th>Flight</th>
+                        <th>Type</th>
+                        <th>Departure Time</th>
+                        <th>Return Time</th>
+                        <th>Passenger</th>
+                        <th>Total Price</th>
+                        <th>Payment</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rsv in Model)
+                    {
+                        var trip = rsv.Itinerary.FlightTrips.FirstOrDefault();
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Detail", rsv.RsvNo)">@rsv.RsvNo</a>
+                            </td>
+                            <td>
+                                @rsv.ContactData.Name
+                            </td>
+                            <td>
+                                @rsv.RsvTime.ToString("d MMM yyyy")<br />
+                                @rsv.RsvTime.ToString("HH:mm:ss")
+                            </td>
+                            <td>
+                                @trip.OriginAirport - @trip.DestinationAirport
+                            </td>
+                            <td>
+                                @if (@rsv.TripType == TripType.Return)
+                                {
+                                    @Html.Raw("RETURN");
+                                }
+                                else
+                                {
+                                    @Html.Raw("ONE-WAY");
+                                }
+                            </td>
+                            <td>
+                                @trip.DepartureDate.ToString("d MMM yyyy")
+                            </td>
+                            <td>
+                                @if (rsv.TripType == TripType.Return)
+                                {
+                                    @rsv.Itinerary.FlightTrips.Last().DepartureDate.ToString("d MMM yyyy")
+                                }
+                                else
+                                {
+                                    <span class="label label-default">Not Applicable</span><br />
+                                }
+                            </td>
+                            <td>
+                                @if (ViewData["Name"] == null)
+                                {
+                                    @Html.Raw(String.Format("({0} people)", rsv.Passengers.Count));
+                                }
+                                else
+                                {
+                                    var passenger = rsv.Passengers.First(p => (p.FirstName + " " + p.LastName).ToLower().Contains(ViewData["Name"].ToString().ToLower()));
+                                    @passenger.FirstName<wbr/>
+                                    @passenger.LastName<br/>
+                                    if (rsv.Passengers.Count > 1)
+                                    {
+                                        @Html.Raw(String.Format("et. al. ({0} more)", rsv.Passengers.Count - 1));
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @rsv.PaymentInfo.FinalPrice.ToString("Rp0,0")
+                            </td>
+                            <td>
+                                @if (rsv.PaymentInfo.Status == PaymentStatus.Settled)
+                                {
+                                    <span class="label label-success">Complete</span><br />
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Incomplete</span><br />
+                                }
+                                by @rsv.PaymentInfo.Method.ToString()
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("Detail", "Flight", new {rsv.RsvNo})" class="btn btn-xs btn-info"><span class="fa fa-eye"> view</span></a><br />
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->

@@ -1,0 +1,174 @@
+﻿@model Lunggo.BackendWeb.Models.AccountViewModel
+
+@{
+    Layout = "/Views/Shared/_Layout_account.cshtml";
+    ViewBag.Title = "Hotel Detail";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-account">
+
+        <header id="site-header" class="site-header">
+            @{ Html.RenderPartial("_Mainmenu"); }
+        </header>
+
+        <!-- site content start -->
+        <div id="site-content" class="site-content">
+
+
+            <header class="page-header">
+                <div class="container">
+                    <div class="site-nav"> <a href="#">Beranda</a> / <strong>User Account</strong></div>
+                    <hr>
+                    <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+                </div>
+            </header><!-- .page-header -->
+
+            <section class="page-content">
+                <div class="container">
+
+
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="fa fa-users"></span> Profile</a></li>
+                        <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> Order History</a></li>
+                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> Password</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="profile">
+                            <h4><b>USER</b> PROFILE</h4>
+                            
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-1">
+
+
+                                    <form class="user-account-form form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Email</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control" name="User.Email" value="@Model.User.Email" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Nama Depan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="User.FirstName" value="@Model.User.FirstName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Nama Belakang</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="User.LastName" value="@Model.User.LastName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Negara</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" placeholder="Negara" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Telepon</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="User.PhoneNumber" value="@Model.User.PhoneNumber" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-4">
+                                                <button class="btn btn-primary">UPDATE</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                
+                                </div>
+
+                                </div>
+
+                            </div>
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            <h4><b>HISTORY</b> ORDER</h4>
+
+                            <div class="history-wrapper">
+                                <ul class="history-list">
+                                   
+                                    <li class="history">
+                                        <div class="history-content-wrapper">
+                                            <div class="history-number">
+                                                <span class="number">1</span>
+                                            </div>
+                                            <div class="history-detail">
+                                                <div class="history-name">
+                                                    <a href="#">AMARIS HOTEL</a>
+                                                    <p><i>Jalan Karet Pasar Tiong no.62, Pasar Baru, Jakarta Utara, Indonesia</i></p>
+                                                </div>
+                                                <div class="history-date">
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Check in</b></div>
+                                                        <div class="col-sm-7">15 Februari 2015</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Check out</b></div>
+                                                        <div class="col-sm-7">18 Februari 2015</div>
+                                                    </div>
+                                                </div>
+                                                <div class="history-id">
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Order ID</b></div>
+                                                        <div class="col-sm-7">12345678901234</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-5"><b>Status</b></div>
+                                                        <div class="col-sm-7">Pending</div>
+                                                    </div>
+                                                </div>
+                                                <div class="history-action">
+                                                    <a href="#" class="btn btn-primary">DETAIL</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+
+                            <nav class="row text-center">
+                                <ul class="pagination">
+                                    <li><a href="#">&lt;</a></li>
+                                    <li><a href="#" class="active">1</a></li>
+                                    <li class="active"><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&gt;</a></li>
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="password">
+                            <h4><b>GANTI</b> PASSWORD</h4>
+                        </div>
+                    </div>
+
+
+                </div>
+            </section><!-- .page-content -->
+
+
+        </div>
+        <!-- site content end -->

@@ -12,6 +12,8 @@ namespace Lunggo.ApCommon.Helper
         None,
         Airline,
         Airport,
+        City,
+        Country,
         Hotel
     }
 

@@ -1,9 +1,9 @@
-﻿@using Lunggo.ApCommon.Helper
+﻿@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Helper
 @using Lunggo.ApCommon.Model
 @using Lunggo.BackendWeb.Controllers
-@using Lunggo.BackendWeb.Model
 @using RestSharp.Extensions
-@model FlightReservationSearch
+@model Lunggo.ApCommon.Flight.Model.FlightReservationSearch
 
 @{
     ViewBag.Title = "Flight Reservation Search";
@@ -33,7 +33,7 @@
     };
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("List", "Flight", FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     
@@ -51,27 +51,27 @@
         <div class="form-group">
             <label class="control-label col-md-2">Origin Airport</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.OriginAirport, "", @Url.Action("Airport", "api/AutoComplete"), AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
-                @Html.ValidationMessageFor(model => model.OriginAirport, "", new { @class = "text-danger" })
+                @Html.AutocompleteFor(m => m.AirportOrigin, "", @Url.Action("Airport", "api/AutoComplete"), AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.ValidationMessageFor(model => model.AirportOrigin, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Destination Airport</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.DestinationAirport, "", @Url.Action("Airport", "api/AutoComplete"), AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
-                @Html.ValidationMessageFor(model => model.DestinationAirport, "", new { @class = "text-danger" })
+                @Html.AutocompleteFor(m => m.AirportDestination, "", @Url.Action("Airport", "api/AutoComplete"), AutoCompleteType.Airport, new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.ValidationMessageFor(model => model.AirportDestination, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Reservation Date</label>
-            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelection.Specific) Specific Date</label>
+            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelectionType.Specific) Specific Date</label>
             <div class="col-md-3">
                 @Html.EditorFor(model => model.RsvDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RsvDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelection.Range) Date Range</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelectionType.Span) Date Range</label>
             <div class="col-md-3">
                 @Html.EditorFor(model => model.RsvDateStart, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RsvDateStart, "", new { @class = "text-danger" })
@@ -83,76 +83,69 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelection.MonthYear) Specific Month</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.RsvDateSelection, FlightReservationSearch.DateSelectionType.MonthYear) Specific Month</label>c
             <div class="col-md-2">
-                @Html.DropDownListFor(model => model.RsvMonth, new SelectList(monthList, "Value", "Text"))
-                @Html.ValidationMessageFor(model => model.RsvMonth, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.RsvDateMonth, new SelectList(monthList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.RsvDateMonth, "", new { @class = "text-danger" })
             </div>
             <label class="control-label col-md-1">Year</label>
             <div class="col-md-3">
-                @Html.DropDownListFor(model => model.RsvYear, new SelectList(yearList))
-                @Html.ValidationMessageFor(model => model.RsvYear, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.RsvDateYear, new SelectList(yearList))
+                @Html.ValidationMessageFor(model => model.RsvDateYear, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">DepartureTime Airline</label>
+            <label class="control-label col-md-2">Airline</label>
             <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.DepartureTimeAirline, "", @Url.Action("Airline", "api/AutoComplete"), AutoCompleteType.Airline, new Dictionary<string, object> { { "class", "form-control" } })
-                @Html.ValidationMessageFor(model => model.DepartureTimeAirline, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Return Airline</label>
-            <div class="col-md-3">
-                @Html.AutocompleteFor(m => m.ReturnAirline, "", @Url.Action("Airline", "api/AutoComplete"), AutoCompleteType.Airline, new Dictionary<string, object> { { "class", "form-control" } })
-                @Html.ValidationMessageFor(model => model.ReturnAirline, "", new { @class = "text-danger" })
+                @Html.AutocompleteFor(m => m.Airline, "", @Url.Action("Airline", "api/AutoComplete"), AutoCompleteType.Airline, new Dictionary<string, object> { { "class", "form-control" } })
+                @Html.ValidationMessageFor(model => model.Airline, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">DepartureTime Date</label>
-            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.DepartureTimeDateSelection, FlightReservationSearch.DateSelection.Specific) Specific Date</label>
+            <label class="control-label col-md-2">DepartureDate Date</label>
+            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.DepartureDateSelection, FlightReservationSearch.DateSelectionType.Specific) Specific Date</label>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.DepartureTimeDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DepartureTimeDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DepartureDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DepartureDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.DepartureTimeDateSelection, FlightReservationSearch.DateSelection.Range) Date Range</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.DepartureDateSelection, FlightReservationSearch.DateSelectionType.Span) Date Range</label>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.DepartureTimeDateStart, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DepartureTimeDateStart, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DepartureDateStart, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DepartureDateStart, "", new { @class = "text-danger" })
             </div>
             <label class="control-label col-md-1">To</label>
             <div class="col-md-3">
-                @Html.EditorFor(model => model.DepartureTimeDateEnd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DepartureTimeDateEnd, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DepartureDateEnd, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DepartureDateEnd, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.DepartureTimeDateSelection, FlightReservationSearch.DateSelection.MonthYear) Specific Month</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.DepartureDateSelection, FlightReservationSearch.DateSelectionType.MonthYear) Specific Month</label>
             <div class="col-md-2">
-                @Html.DropDownListFor(model => model.DepartureTimeMonth, new SelectList(monthList, "Value", "Text"))
-                @Html.ValidationMessageFor(model => model.DepartureTimeMonth, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.DepartureDateMonth, new SelectList(monthList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.DepartureDateMonth, "", new { @class = "text-danger" })
             </div>
             <label class="control-label col-md-1">Year</label>
             <div class="col-md-3">
-                @Html.DropDownListFor(model => model.DepartureTimeYear, new SelectList(yearList))
-                @Html.ValidationMessageFor(model => model.DepartureTimeYear, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.DepartureDateYear, new SelectList(yearList))
+                @Html.ValidationMessageFor(model => model.DepartureDateYear, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-md-2">Return Date</label>
-            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelection.Specific) Specific Date</label>
+            <label class="control-label col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelectionType.Specific) Specific Date</label>
             <div class="col-md-3">
                 @Html.EditorFor(model => model.ReturnDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReturnDate, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelection.Range) Date Range</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelectionType.Span) Date Range</label>
             <div class="col-md-3">
                 @Html.EditorFor(model => model.ReturnDateStart, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ReturnDateStart, "", new { @class = "text-danger" })
@@ -164,15 +157,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-offset-2 col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelection.MonthYear) Specific Month</label>
+            <label class="control-label col-md-off-2 col-md-2">@Html.RadioButtonFor(model => model.ReturnDateSelection, FlightReservationSearch.DateSelectionType.MonthYear) Specific Month</label>
             <div class="col-md-2">
-                @Html.DropDownListFor(model => model.ReturnMonth, new SelectList(monthList, "Value", "Text"))
-                @Html.ValidationMessageFor(model => model.ReturnMonth, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ReturnDateMonth, new SelectList(monthList, "Value", "Text"))
+                @Html.ValidationMessageFor(model => model.ReturnDateMonth, "", new { @class = "text-danger" })
             </div>
             <label class="control-label col-md-1">Year</label>
             <div class="col-md-3">
-                @Html.DropDownListFor(model => model.ReturnYear, new SelectList(yearList))
-                @Html.ValidationMessageFor(model => model.ReturnYear, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ReturnDateYear, new SelectList(yearList))
+                @Html.ValidationMessageFor(model => model.ReturnDateYear, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -194,7 +187,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-2">
+            <div class="col-md-off-2 col-md-2">
                 <input type="submit" value="Search" class="btn btn-default" />
             </div>
         </div>

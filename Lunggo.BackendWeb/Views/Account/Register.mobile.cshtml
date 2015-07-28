@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    ViewBag.Title = "Register Page";
+    var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
+    var facebookProvider = loginProviders.First();
+}
+
+<section class="page register-page auth-page">
+
+    <h1 class="text-center page-title"><b>SIGN</b> UP</h1>
+    <h5 class="text-center page-subtitle">And start milking benefit</h5>
+
+    <section class="login-form-section container">
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <span class="fa fa-user col-xs-2"></span>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input type="text" name="FirstName" placeholder="Enter your first name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="fa fa-user col-xs-2"></span>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input type="text" name="LastName" placeholder="Enter your last name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="fa fa-envelope-o col-xs-2"></span>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input type="text" name="Email" placeholder="Enter your email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="fa fa-lock col-xs-2"></span>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input type="password" name="Password" placeholder="Enter your password" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input type="submit" name="submit" value="REGISTER" class="btn btn-yellow submit-button btn-block-lg" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <p class="text-center or-border">OR</p>
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <a class="btn-facebook btn btn-block-lg"><span class="fa fa-facebook"></span> Register with Facebook</a>
+                </div>
+            </div>
+        }
+
+    </section>
+
+</section><!-- .login-page -->

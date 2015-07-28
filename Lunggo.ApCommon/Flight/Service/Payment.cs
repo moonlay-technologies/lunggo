@@ -28,7 +28,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         PaymentStatusCd = PaymentStatusCd.Mnemonic(info.Status),
                         PaymentTime = info.Time,
                         PaymentId = info.Id,
-                        PaymentTargetAccount = info.TargetAccount
+                        PaymentTargetAccount = info.TargetAccount,
+                        FinalPrice = info.FinalPrice
                     };
                     UpdateFlightPaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                     return true;

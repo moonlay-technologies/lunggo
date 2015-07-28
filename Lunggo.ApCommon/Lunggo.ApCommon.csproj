@@ -149,6 +149,7 @@
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
+    <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Flight\Model\ContactData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
+    <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightSummary.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />

@@ -1,0 +1,80 @@
+﻿@using Lunggo.ApCommon.Payment.Constant
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
+
+<div class="col-md-4">
+    <div class="showback">
+        <h4>Reservation Detail</h4>
+        <hr />
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>Reservation Number</td>
+                    <td>@Model.RsvNo</td>
+                </tr>
+                <tr>
+                    <td>Reservation Time</td>
+                    <td>@Model.RsvTime.ToString("d MMM yyyy HH:mm:ss")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="showback">
+        <h4>Reservation Detail</h4>
+        <hr />
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>Total Price</td>
+                    <td>@Model.PaymentInfo.FinalPrice.ToString("Rp0,0")</td>
+                </tr>
+                <tr>
+                    <td>Payment Method</td>
+                    <td>@Model.PaymentInfo.Method.ToString()</td>
+                </tr>
+                <tr>
+                    <td>Reservation Status</td>
+                    <td>
+                        @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+                        {
+                            <span class="label label-success">Complete</span><br />
+                        }
+                        else
+                        {
+                            <span class="label label-danger">Incomplete</span><br />
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="showback">
+        <h4>Reservation Detail</h4>
+        <hr />
+        <table class="table table-hover table-no-border">
+            <tbody>
+                <tr>
+                    <td>Contact Name</td>
+                    <td>@Model.ContactData.Name</td>
+                </tr>
+                <tr>
+                    <td>Contact E-mail</td>
+                    <td>@Model.ContactData.Email</td>
+                </tr>
+                <tr>
+                    <td>Contact Phone</td>
+                    <td>@Model.ContactData.Phone</td>
+                </tr>
+                <tr>
+                    <td>Contact Address</td>
+                    <td>@Model.ContactData.Address</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
