@@ -1942,7 +1942,7 @@ hr {
         margin-bottom: 10px; }
       .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-right .btn {
         display: block;
-        width: 70%;
+        width: 90%;
         background: #2fb4e6;
         color: #fff; }
     .flight-search-page .flight-list-return.horizontal .flight .flight-main .flight-toggle {
@@ -2506,6 +2506,8 @@ hr {
     display: none; }
 
 @media screen and (max-width: 1200px) {
+  .flight-search-page .flight-result.page-container .page-wrapper {
+    width: 100% !important; }
   .flight-search-page .page-aside {
     display: none !important; }
   .flight-search-page .page-title {

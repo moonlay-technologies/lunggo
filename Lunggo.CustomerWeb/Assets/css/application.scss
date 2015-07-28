@@ -831,7 +831,7 @@ hr {border-color:#aaa;}
 					.price-was {margin-bottom:0;}
 					.price-now {margin-top:0; font-weight:bold; font-size:32px;}
 					small {display:block; margin-bottom:10px;}
-					.btn {display:block; width:70%; background:#2fb4e6; color:#fff;}
+					.btn {display:block; width:90%; background:#2fb4e6; color:#fff;}
 				}
                 .flight-toggle {position:absolute; background:url(../images/flight-toggle-down.png) center bottom no-repeat; color:#fff; left:45%; width:50px; height:20px; bottom:0; cursor:pointer; text-decoration:none; text-align:center;
 					&.active {background-image:url(../images/flight-toggle-up.png);}
@@ -1086,6 +1086,9 @@ hr {border-color:#aaa;}
 
 // flight search result page
 .flight-search-page {
+
+    .flight-result.page-container .page-wrapper {width:100% !important;}
+
     .page-aside {display:none !important;}
     .page-title {margin-bottom:40px; float:left;}
     .flight-search-form form .flight-cabin {width:28%;}
