@@ -54,19 +54,19 @@
                 <div class="form-group">
                     <label class="col-xs-12">Name (Buyer):</label>
                     <div class="col-xs-12">
-                        <input type="text" name="customerName" value="" class="form-control" placeholder="Enter your full name" />
+                        <input type="text" name="customerName" value="" class="form-control" placeholder="Enter your full name" ng-model="userContact.name" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-12">Phone number:</label>
                     <div class="col-xs-12">
-                        <input type="number" name="customerName" value="" class="form-control" placeholder="ex: 08212345678" />
+                        <input type="number" name="customerName" value="" class="form-control" placeholder="ex: 08212345678" ng-model="userContact.phone" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-12">Phone number:</label>
+                    <label class="col-xs-12">Email address:</label>
                     <div class="col-xs-12">
-                        <input type="email" name="customerName" value="" class="form-control" placeholder="ex: your_mail@domain.com" />
+                        <input type="email" name="customerName" value="" class="form-control" placeholder="ex: your_mail@domain.com" ng-model="userContact.email" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,92 +81,101 @@
         <h1 class="section-title">PASSENGER DETAIL</h1>
         <div class="section-content container">
             <form class="form form-horizontal">
-                <div class="passenger">
-                    <h2 class="passenger-detail-title">Adult Passenger ( > 12 years old)</h2>
-                    <div class="form-group">
-                        <label class="control-label col-xs-12">Title</label>
-                        <div class="col-xs-12">
-                            <select class="form-control">
-                                <option value="mr">Mr</option>
-                                <option value="mrs">Mrs</option>
-                                <option value="ms">Ms</option>
-                            </select>
+                @for (var i = 0; i < 5; i++ )
+                {
+                    <div class="passenger">
+                        <h2 class="passenger-detail-title">Adult Passenger ( &gt; 12 years old)</h2>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12">Title</label>
+                            <div class="col-xs-12">
+                                <select class="form-control" ng-model="flightPassengers[@i].title">
+                                    <option value="mr">Mr</option>
+                                    <option value="mrs">Mrs</option>
+                                    <option value="ms">Ms</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12">Full Name</label>
+                            <div class="col-xs-12">
+                                <input type="text" name="FullName" value="" placeholder="Full Name" class="form-control" ng-model="flightPassengers[@i].name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12">Birthday</label>
+                            <div class="col-xs-3">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.date">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="9">8</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="19">18</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="29">28</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-5">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.month">
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.year">
+                                    <option value="2000">2000</option>
+                                    <option value="2001">2001</option>
+                                    <option value="2002">2002</option>
+                                    <option value="2003">2003</option>
+                                    <option value="2004">2004</option>
+                                    <option value="2005">2005</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12">ID Number</label>
+                            <div class="col-xs-12">
+                                <input type="text" name="name" value="" class="form-control" ng-model="flightPassengers[@i].id" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12">Passport Number</label>
+                            <div class="col-xs-12">
+                                <input type="text" name="name" value="" class="form-control" placeholder="Passport Number" ng-model="flightPassengers[@i].passport" />
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-12">Full Name</label>
-                        <div class="col-xs-12">
-                            <input type="text" name="FulName" value="" placeholder="Full Name" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-12">Birthday</label>
-                        <div class="col-xs-3">
-                            <select class="form-control">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="9">8</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="19">18</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="29">28</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-5">
-                            <select class="form-control">
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-4">
-                            <select class="form-control">
-                                <option value="2000">2000</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-12">ID Number</label>
-                        <div class="col-xs-12">
-                            <input type="text" name="name" value="" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-12">Passport Number</label>
-                        <div class="col-xs-12">
-                            <input type="text" name="name" value="" class="form-control" placeholder="Passport Number" />
-                        </div>
-                    </div>
-                </div><!-- .passenger -->
+                    <!-- .passenger -->
+                }
                 <!-- continue -->
                 <div class="form-group">
                     <div class="col-xs-12">
@@ -242,12 +251,50 @@
 
             </div>
         </section><!-- .flight-details -->
+    
+        <section class="flight-contact">
+            <h2 class="section-title">Contact Detail</h2>
+            <div class="section-content container">
+                <ul>
+                    <li>
+                        <p>{{userContact.name}}</p>
+                        <table>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td>{{userContact.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td>Email Address</td>
+                                <td>{{userContact.email}}</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
         <section class="flight-passenger">
             <h2 class="section-title">Passenger Detail</h2>
             <div class="section-content container">
                 <ol>
-                    <li>
+                    <li ng-repeat="passenger in flightPassengers">
+                        <p>{{passenger.title}} {{passenger.name}}</p>
+                        <table>
+                            <tr>
+                                <td>Birth Day</td>
+                                <td>{{passenger.birthday.date}} {{passenger.birthday.month}} {{passenger.birthday.year}}</td>
+                            </tr>
+                            <tr ng-if="passenger.id">
+                                <td>ID No</td>
+                                <td>{{passenger.id}}</td>
+                            </tr>
+                            <tr ng-if="passenger.passport">
+                                <td>Passport No</td>
+                                <td>{{passenger.passport}}</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li class="hidden">
                         <p>Mr Kang Dadang</p>
                         <table>
                             <tr>

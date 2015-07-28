@@ -1185,6 +1185,14 @@ h1 {
         font-style: italic; }
         .group-flight-checkout .flight-detail .trip .trip-operator img {
           height: 30px; }
+  .group-flight-checkout .flight-contact ul {
+    margin: 0;
+    padding: 0 10px;
+    margin-bottom: 10px; }
+    .group-flight-checkout .flight-contact ul li table td {
+      width: 50%; }
+    .group-flight-checkout .flight-contact ul li table td + td {
+      text-align: right; }
   .group-flight-checkout .flight-passenger p {
     font-weight: bold;
     margin-bottom: 0; }
