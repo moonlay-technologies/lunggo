@@ -12,8 +12,20 @@ $(document).ready(function () {
     paymentOptionForm();
     checkoutPageFunctions();
     modalFunctions();
+    toggleFilterMobile();
 
 });
+
+//******************************************
+// toggle filter mobile
+function toggleFilterMobile() {
+    $('.flight-filter-mobile .filter-trigger').click(function() {
+        console.log('JEMPING');
+        $('.flight-filter-mobile-content').toggleClass('hidden');
+        $('.flight-filter-mobile .filter-trigger .toggle').toggle();
+    });
+}
+
 
 //******************************************
 // payment option form

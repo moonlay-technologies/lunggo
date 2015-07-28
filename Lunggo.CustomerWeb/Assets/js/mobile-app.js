@@ -621,6 +621,9 @@ function hotelSearchPageFunctions() {
 // flight detail
 function flightFilter() {
 
+    $('.flight-search-filter').css('top', (70 + $('.flight-search-param').height()));
+    $('.flight-wrapper').css('padding-top', (40 + $('.flight-search-param').height()));
+
     $('.flight-filter-trigger, .flight-sort-trigger, .change-hotel-param').click(function () {
 
         var windowHeight = $(window).height();

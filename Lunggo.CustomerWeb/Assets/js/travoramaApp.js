@@ -565,6 +565,36 @@
         }
     ]);// flight controller
 
+    // ******************************
+    // checkout controller
+    app.controller('checkoutController', [
+        '$scope', function ($scope) {
+
+            $scope.flightPassengers = [];
+            $scope.passengersValid = false;
+            $scope.passengersNumber = -1;
+            $scope.validTotal = -1;
+
+            // passengers validation
+            $scope.passengersValidation = function() {
+
+                $scope.validTotal = 0;
+
+                for (var i = 0; i < $scope.passengersNumber; i++) {
+                    if ($scope.flightPassengers[i].name) {
+                        $scope.flightPassengers[i].valid = true;
+                        $scope.validTotal++;
+                    } else {
+                        $scope.flightPassengers[i].valid = false;
+                    }
+                }
+
+            }
+
+        }
+    ]);// checkout controller
+
+
 })();
 
 

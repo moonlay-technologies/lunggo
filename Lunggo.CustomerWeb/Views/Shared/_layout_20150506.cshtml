@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Assets/css/jquery-ui.min.css"/>
     <link rel="stylesheet" href="/Assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/Assets/css/application.css">
+    <link rel="stylesheet" href="/Assets/css/application.min.css">
 
 </head>
 <body ng-app="travorama" class="page home-page">
@@ -133,57 +133,64 @@
     </div><!-- .site-content -->
     
     <footer id="site-footer" class="site-footer">
-        <section class="footer-subscribe">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <img src="/Assets/images/email-image.jpg" alt="Subscribe" />
-                    </div>
-                    <div class="col-sm-9">
-                        <h3><b>SUBSCRIBE </b> TO GET UPDATES AND PROMOTIONS FROM US</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                        <form class="form form-horizontal">
-                            <div class="form-group">
-                                <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Name"/></div>
-                                <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Email" /></div>
-                                <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="SUBSCRIBE" /></div>
-                            </div>
-                        </form>
+        @if (ViewBag.ShowSubscribeForm == true)
+        {
+            <section class="footer-subscribe">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="/Assets/images/email-image.jpg" alt="Subscribe" />
+                        </div>
+                        <div class="col-sm-9">
+                            <h3><b>SUBSCRIBE </b> TO GET UPDATES AND PROMOTIONS FROM US</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                            <form class="form form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Name"/></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Email" /></div>
+                                    <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="SUBSCRIBE" /></div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section><!-- .footer-subscribe -->
-        <section class="footer-payment">
-            <div class="container">
-                <h2 class="section-title"><b>PAYMENT METHOD</b> THAT WE USE</h2>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad p ex ea commodo consequat. Ut wisi eniTm ad minim veniam:</p>
-                <img src="/Assets/images/payment-method.jpg" alt="Travorama Payment Method" />
-            </div>
-        </section><!-- .footer-payment -->
-        <section class="footer-menu">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-sm-3">
-                        <img src="/Assets/images/logo.png" alt="Travorama" />
-                    </div>
-                    <div class="col-sm-9">
-                        <h2>CALL CENTER : 1500 650</h2>
-                        <nav>
-                            <ul class="list-inline">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Jobs</a></li>
-                                <li><a href="#">Press</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="#">Terms of Use</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
+            </section>
+            <!-- .footer-subscribe -->
+        }
+        @if (ViewBag.ShowPaymentInfo == true)
+        {
+            <section class="footer-payment">
+                <div class="container">
+                    <h2 class="section-title"><b>PAYMENT METHOD</b> THAT WE USE</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad p ex ea commodo consequat. Ut wisi eniTm ad minim veniam:</p>
+                    <img src="/Assets/images/payment-method.jpg" alt="Travorama Payment Method" />
                 </div>
-            </div>
-        </section><!-- .footer-menu -->
+            </section><!-- .footer-payment -->
+            <section class="footer-menu">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <img src="/Assets/images/logo.png" alt="Travorama" />
+                        </div>
+                        <div class="col-sm-9">
+                            <h2>CALL CENTER : 1500 650</h2>
+                            <nav>
+                                <ul class="list-inline">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Jobs</a></li>
+                                    <li><a href="#">Press</a></li>
+                                    <li><a href="#">Affiliate</a></li>
+                                    <li><a href="#">Terms of Use</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </section><!-- .footer-menu -->
+        }
         <section class="footer-copyright">
             <div class="container">
                 <div class="row">
