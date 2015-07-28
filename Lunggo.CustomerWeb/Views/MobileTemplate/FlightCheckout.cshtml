@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <label class="control-label col-xs-12">Birthday</label>
                             <div class="col-xs-3">
-                                <select class="form-control" ng-model="flightPassengers[@i].birthday.date" ng-init="flightPassengers[@i].birthday.date = '1'" ng-change="passengersValidation()">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.date" ng-change="passengersValidation()">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -135,7 +135,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-5">
-                                <select class="form-control" ng-model="flightPassengers[@i].birthday.month" ng-init="flightPassengers[@i].birthday.month = '1'" ng-change="passengersValidation()">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.month" ng-change="passengersValidation()">
                                     <option value="1">January</option>
                                     <option value="2">February</option>
                                     <option value="3">March</option>
@@ -151,7 +151,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-4">
-                                <select class="form-control" ng-model="flightPassengers[@i].birthday.year" ng-init="flightPassengers[@i].birthday.month = '2000'" ng-change="passengersValidation()">
+                                <select class="form-control" ng-model="flightPassengers[@i].birthday.year" ng-change="passengersValidation()">
                                     <option value="2000">2000</option>
                                     <option value="2001">2001</option>
                                     <option value="2002">2002</option>
@@ -280,7 +280,7 @@
                     <li ng-repeat="passenger in flightPassengers">
                         <p>{{passenger.title}} {{passenger.name}}</p>
                         <table>
-                            <tr>
+                            <tr ng-if="passenger.birthday.date && passenger.birthday.month && passenger.birthday.year">
                                 <td>Birth Day</td>
                                 <td>{{passenger.birthday.date}} {{passenger.birthday.month}} {{passenger.birthday.year}}</td>
                             </tr>

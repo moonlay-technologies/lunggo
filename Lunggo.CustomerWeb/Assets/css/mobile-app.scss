@@ -582,7 +582,7 @@ h1 {font-size:30px;}
     .flight-contact {
         ul {margin:0; padding:0 10px; margin-bottom:10px;
             li {
-                table {
+                table {width:100%;
                     td {width:50%;}
                     td+td {text-align:right;}
                 }

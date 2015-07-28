@@ -590,7 +590,6 @@
                     } else {
                         $scope.flightPassengers[i].valid = false;
                     }
-                    console.log($scope.validTotal);
                 }
 
             }
