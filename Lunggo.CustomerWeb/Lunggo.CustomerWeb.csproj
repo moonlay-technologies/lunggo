@@ -691,6 +691,9 @@
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
+    <Content Include="Assets\images\plane-down.png" />
+    <Content Include="Assets\images\plane-up.png" />
+    <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
@@ -705,6 +708,7 @@
     <Content Include="Assets\images\tag-orange.png" />
     <Content Include="Assets\images\tag-purple.png" />
     <Content Include="Assets\images\tag-red.png" />
+    <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />

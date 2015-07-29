@@ -1137,13 +1137,22 @@ hr {
   padding: 10px;
   background: #ededed; }
 
+.thankyou-page.flight-receipt .receipt-title {
+  margin: 0;
+  padding: 10px 0;
+  background: #e2e2e2; }
+
 .thankyou-page.flight-receipt .receipt-wrapper {
   background: #ededed;
   padding: 25px;
-  margin-top: 25px; }
+  margin-bottom: 10px; }
+  .thankyou-page.flight-receipt .receipt-wrapper h3 {
+    font-weight: bold;
+    margin: 10px 0; }
 
-.thankyou-page.flight-receipt .receipt-title {
-  margin-top: 0; }
+.thankyou-page.flight-receipt .receipt-wrapper + small {
+  display: block;
+  margin-bottom: 10px; }
 
 .thankyou-page.flight-receipt .receipt-left {
   border-right: 1px solid #ccc; }
@@ -1154,9 +1163,73 @@ hr {
   padding: 15px 0;
   color: #fff; }
 
+.thankyou-page.flight-receipt .receipt-user {
+  margin-top: 25px; }
+
 .thankyou-page.flight-receipt .receipt-flight {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc; }
+  border-left: 1px solid #ccc; }
+  .thankyou-page.flight-receipt .receipt-flight .flight h5:first-child {
+    margin-top: 0; }
+
+.thankyou-page.flight-receipt .receipt-payment {
+  border: 3px solid #b2b2b2;
+  margin-top: 25px; }
+  .thankyou-page.flight-receipt .receipt-payment .row div + div {
+    border-left: 1px solid #b2b2b2; }
+  .thankyou-page.flight-receipt .receipt-payment .row h4 {
+    padding: 15px;
+    margin: 0; }
+
+.thankyou-page.flight-receipt .ticket-wrapper h1 {
+  margin-top: 40px;
+  margin-bottom: 30px; }
+
+.thankyou-page.flight-receipt .ticket-wrapper h1 + p {
+  margin-bottom: 20px; }
+
+.thankyou-page.flight-receipt .ticket-wrapper .print-ticket-wrapper {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 25px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 10px #ddd;
+  -moz-box-shadow: 0 2px 10px #ddd;
+  box-shadow: 0 2px 10px #ddd; }
+  .thankyou-page.flight-receipt .ticket-wrapper .print-ticket-wrapper .row {
+    margin-bottom: 15px; }
+    .thankyou-page.flight-receipt .ticket-wrapper .print-ticket-wrapper .row div[class^="col"] + div[class^="col"] {
+      border-left: 1px solid #ddd; }
+  .thankyou-page.flight-receipt .ticket-wrapper .print-ticket-wrapper .print-ticket-button {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-width: 2px;
+    border-bottom-width: 3px; }
+
+.thankyou-page.flight-receipt .payment-countdown-new {
+  font-size: 48px;
+  font-weight: bold;
+  color: #3face4;
+  font-family: 'gotham', arial, sans-serif; }
+  .thankyou-page.flight-receipt .payment-countdown-new img {
+    vertical-align: middle;
+    height: 100%;
+    vertical-align: middle; }
+  .thankyou-page.flight-receipt .payment-countdown-new span {
+    margin-left: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -10px; }
+  .thankyou-page.flight-receipt .payment-countdown-new p {
+    font-size: 12px;
+    margin-top: -15px;
+    padding-left: 35px; }
+    .thankyou-page.flight-receipt .payment-countdown-new p span {
+      margin-left: 45px; }
 
 .thankyou-page.flight-receipt .ticket-print a {
   display: block;
@@ -2237,7 +2310,7 @@ hr {
       right: 0; }
   .user-page-login .user-login .facebook-login {
     margin: 30px 0; }
-    .user-page-login .user-login .facebook-login button {
+    .user-page-login .user-login .facebook-login a {
       background: #3b5998;
       color: #fff;
       padding: 10px 20px;

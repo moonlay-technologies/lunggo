@@ -5,6 +5,12 @@
           border-radius: $radius;
 }
 
+@mixin box-shadow($settings){
+-webkit-box-shadow: $settings;
+   -moz-box-shadow: $settings;
+        box-shadow: $settings;
+}
+
 @import '_font_face.scss';
 @import '_header.scss';
 @import '_footer.scss';
@@ -20,6 +26,7 @@
 }
 
 $border-default :1px solid #ddd;
+$blue-default: #3face4;
 
 html {height:100%;}
 
@@ -456,8 +463,11 @@ hr {border-color:#aaa;}
 // ----------------------------------------------
 // thankyou page
 .thankyou-page.flight-receipt {
-    .receipt-wrapper {background:#ededed; padding:25px; margin-top:25px;}
-    .receipt-title {margin-top:0;}
+    .receipt-title {margin:0; padding:10px 0; background:#e2e2e2;}
+    .receipt-wrapper {background:#ededed; padding:25px; margin-bottom:10px;
+        h3 {font-weight:bold; margin:10px 0;}
+    }
+    .receipt-wrapper + small {display:block; margin-bottom:10px;}
     .receipt-left {border-right:1px solid #ccc;}
     .receipt-right {}
 
@@ -466,13 +476,37 @@ hr {border-color:#aaa;}
 
     .receipt-summary {}
     .receipt-number {}
-    .receipt-user {}
-    .receipt-flight {border-left:1px solid #ccc; border-right:1px solid #ccc;}
-    .receipt-payment {}
+    .receipt-user {margin-top:25px;}
+    .receipt-flight {border-left:1px solid #ccc;
+        .flight {
+            h5:first-child {margin-top:0;}
+        }
+    }
+    
+    .receipt-payment {border:3px solid #b2b2b2; margin-top:25px;
+        .row {
+            div + div {border-left:1px solid #b2b2b2;}
+            h4 {padding:15px; margin:0;}
+        }
+    }
 
-    .ticket-wrapper {}
-    .ticket-left {}
-    .ticket-right {}
+    .ticket-wrapper {
+        h1 {margin-top:40px; margin-bottom:30px;}
+        h1 + p {margin-bottom:20px;}
+        .print-ticket-wrapper {background:#fff; padding:10px; margin-bottom:25px; border:$border-default; @include border-radius(5px); @include box-shadow(0 2px 10px #ddd);
+            .row {margin-bottom:15px;
+                div[class^="col"] + div[class^="col"] {border-left:$border-default;}
+            }
+            .print-ticket-button {font-size:24px; font-weight:bold; padding:15px 25px; border-width:2px; border-bottom-width:3px;}
+        }
+    }
+    .payment-countdown-new {font-size:48px; font-weight:bold; color:$blue-default; font-family:'gotham', arial, sans-serif;
+        img {vertical-align:middle; height:100%; vertical-align:middle;}
+        span {margin-left:25px; display:inline-block; vertical-align:middle; margin-top:-10px;}
+        p {font-size:12px; margin-top:-15px; padding-left:35px;
+            span {margin-left:45px;}
+        }
+    }
     .ticket-print {
         a {display:block; font-size:18px; padding:15px 0; text-align:center; font-weight:bold;}
     }
