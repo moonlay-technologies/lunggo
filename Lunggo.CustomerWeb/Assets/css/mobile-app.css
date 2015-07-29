@@ -1236,7 +1236,12 @@ h1 {
       .group-flight-checkout .payment .payment-button a {
         font-weight: bold; }
   .group-flight-checkout.ticket-page {
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    color: #666; }
+    .group-flight-checkout.ticket-page img {
+      max-width: 100%; }
+    .group-flight-checkout.ticket-page h3 {
+      font-weight: bold; }
     .group-flight-checkout.ticket-page .section-content {
       padding: 0 15px; }
     .group-flight-checkout.ticket-page .ticket-detail {
@@ -1247,6 +1252,29 @@ h1 {
       border-bottom: 1px solid #ccc; }
     .group-flight-checkout.ticket-page .flight-detail {
       border-bottom: 1px solid #ccc; }
+    .group-flight-checkout.ticket-page .receipt-wrapper {
+      padding: 15px; }
+      .group-flight-checkout.ticket-page .receipt-wrapper .receipt-title {
+        background: #e2e2e2;
+        padding: 15px 0;
+        color: #666;
+        margin-bottom: 0; }
+      .group-flight-checkout.ticket-page .receipt-wrapper .receipt-content {
+        background: #ededed; }
+      .group-flight-checkout.ticket-page .receipt-wrapper .flight-detail {
+        width: auto; }
+    .group-flight-checkout.ticket-page .receipt-wrapper + div {
+      margin-bottom: 15px; }
+    .group-flight-checkout.ticket-page .ticket-wrapper {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 20px 10px; }
+    .group-flight-checkout.ticket-page .ticket-print .print-ticket-button {
+      font-size: 28px;
+      margin-bottom: 10px;
+      margin-bottom: 15px; }
+    .group-flight-checkout.ticket-page .ticket-print p {
+      font-size: 12px; }
 
 /*-----------------------------*/
 /* form set */
