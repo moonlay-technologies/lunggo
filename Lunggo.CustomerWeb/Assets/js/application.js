@@ -2,6 +2,7 @@
 // on document ready
 $(document).ready(function () {
 
+    toggleLanguageSelect();
     homePageFunctions();
     toggleFilter();
     hotelSearch();
@@ -15,6 +16,15 @@ $(document).ready(function () {
     toggleFilterMobile();
 
 });
+
+//******************************************
+// toggle language select
+function toggleLanguageSelect() {
+    $('[data-toggle="dropdown"]').click(function() {
+        $(this).siblings('.dropdown-menu').toggle();
+    });
+}
+
 
 //******************************************
 // toggle filter mobile

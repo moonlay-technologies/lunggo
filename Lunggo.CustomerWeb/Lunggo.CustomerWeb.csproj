@@ -646,6 +646,7 @@
     <Content Include="Assets\images\filter-transit.png" />
     <Content Include="Assets\images\filter-trigger-active.png" />
     <Content Include="Assets\images\filter-trigger.png" />
+    <Content Include="Assets\images\flag-britain.png" />
     <Content Include="Assets\images\flag-indonesia.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />

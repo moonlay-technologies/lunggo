@@ -4,7 +4,12 @@
 	img {}
     .site-logo {margin-right:15px;}
     .language-select {margin-left:20px;
+        button {background:none; border:none;}
         img {width:30px;}
+        .dropdown-menu {background:#fff; color:#000; padding:0; left:auto; right:0; width:100px; min-width:0;
+            a {padding:0; font-size:14px; font-weight:bold; padding:10px; text-align:right;}
+            li+li {margin-top:0;}
+        }
     }
 	li+li {margin-right:10px; margin-top:25px; font-weight:bold;}
 	li+li a {font-size:18px;}

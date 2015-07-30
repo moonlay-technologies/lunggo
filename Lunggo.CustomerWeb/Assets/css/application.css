@@ -44,8 +44,27 @@
     margin-right: 15px; }
   .main-menu .language-select {
     margin-left: 20px; }
+    .main-menu .language-select button {
+      background: none;
+      border: none; }
     .main-menu .language-select img {
       width: 30px; }
+    .main-menu .language-select .dropdown-menu {
+      background: #fff;
+      color: #000;
+      padding: 0;
+      left: auto;
+      right: 0;
+      width: 100px;
+      min-width: 0; }
+      .main-menu .language-select .dropdown-menu a {
+        padding: 0;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px;
+        text-align: right; }
+      .main-menu .language-select .dropdown-menu li + li {
+        margin-top: 0; }
   .main-menu li + li {
     margin-right: 10px;
     margin-top: 25px;
