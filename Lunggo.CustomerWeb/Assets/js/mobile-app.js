@@ -502,6 +502,9 @@ function searchFormFunctions() {
             FlightSearchConfig.adult = 1;
             FlightSearchConfig.child = 0;
             FlightSearchConfig.infant = 0;
+            FlightSearchConfig.adultMin = 1;
+            FlightSearchConfig.childMin = 0;
+            FlightSearchConfig.infantMin = 0;
             FlightSearchConfig.flightType = 'RoundTrip';
 
             $('div.btn.increase').click(function() {
@@ -514,8 +517,14 @@ function searchFormFunctions() {
 
             $('div.btn.decrease').click(function () {
                 var dataTarget = $(this).attr('data-target');
-                if (FlightSearchConfig[dataTarget] > 1) {
-                    FlightSearchConfig[dataTarget] = FlightSearchConfig[dataTarget] - 1;
+                if (dataTarget == 'adult') {
+                    if (FlightSearchConfig[dataTarget] > 1) {
+                        FlightSearchConfig[dataTarget] = FlightSearchConfig[dataTarget] - 1;
+                    }
+                } else {
+                    if (FlightSearchConfig[dataTarget] > 0) {
+                        FlightSearchConfig[dataTarget] = FlightSearchConfig[dataTarget] - 1;
+                    }
                 }
                 refreshPassenger();
             });
@@ -524,9 +533,21 @@ function searchFormFunctions() {
                 $('.flight-passenger-adult').html(FlightSearchConfig.adult);
                 $('.flight-passenger-child').html(FlightSearchConfig.child);
                 $('.flight-passenger-infant').html(FlightSearchConfig.infant);
-                $('.adult-passenger span').html(FlightSearchConfig.adult + ' Adult');
-                $('.child-passenger span').html(FlightSearchConfig.child + ' Child');
-                $('.infant-passenger span').html(FlightSearchConfig.infant + ' Infant');
+                if (FlightSearchConfig.adult > 1) {
+                    $('.adult-passenger span').html(FlightSearchConfig.adult + ' Adults');
+                } else {
+                    $('.adult-passenger span').html(FlightSearchConfig.adult + ' Adult');
+                }
+                if (FlightSearchConfig.child > 1) {
+                    $('.child-passenger span').html(FlightSearchConfig.child + ' Childs');
+                } else {
+                    $('.child-passenger span').html(FlightSearchConfig.child + ' Child');
+                }
+                if (FlightSearchConfig.infant > 1) {
+                    $('.infant-passenger span').html(FlightSearchConfig.infant + ' Infants');
+                } else {
+                    $('.infant-passenger span').html(FlightSearchConfig.infant + ' Infant');
+                }
             }
 
         }// flightPassenger()
