@@ -14,7 +14,12 @@
                     <li class="hidden"><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
                     <li class="hidden"><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
                     <li class="pull-right language-select">
-                        <img src="/Assets/images/flag-indonesia.png" alt="Bahasa Indonesia" />
+                        <div class="dropdown">
+                            <button class="" type="button" data-toggle="dropdown">
+                                <img src="/Assets/images/flag-indonesia.png" alt="Bahasa Indonesia" />    
+                                <span class="caret"></span>
+                            </button>
+                        </div>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
