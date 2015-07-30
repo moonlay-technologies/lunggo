@@ -208,11 +208,14 @@ function searchFormFunctions() {
             $('.form-set').stop().animate({
                 top: '100%'
             });
+            $('body').removeClass('modal-active');
         } else {
             $('.form-set').addClass('active');
             $('.form-set').stop().animate({
                 top: 0
             });
+            $('body').addClass('modal-active');
+            
         }
         // show requested form
         $('.form-set .form').removeClass('active');
