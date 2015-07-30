@@ -476,7 +476,7 @@ function searchFormFunctions() {
                     FlightSearchConfig.departureDate = selectedDate;
                     $('.return-calendar').datepicker('option', 'minDate', selectedDate);
                     selectedDate = new Date(selectedDate);
-                    $('.flight-departure-date[data-trigger="show-formset"]').html('<b>Departure Date : </b>' + selectedDate.getDate() + ' ' + GeneralLib.monthName[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() );
+                    $('.flight-departure-date[data-trigger="show-formset"]').html(/*'<b>Departure Date : </b>' + */selectedDate.getDate() + ' ' + GeneralLib.monthName[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear() );
                     $('.flight-return-date[data-trigger="show-formset"]').attr('data-target','.flight-return-date');
                     $('.close-formset').click();
                 }
@@ -491,7 +491,7 @@ function searchFormFunctions() {
                 onSelect: function (selectedDate) {
                     FlightSearchConfig.returnDate = selectedDate;
                     selectedDate = new Date(selectedDate);
-                    $('.flight-return-date[data-trigger="show-formset"]').html('<b>Return Date : </b>' + selectedDate.getDate() + ' ' + GeneralLib.monthName[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear());
+                    $('.flight-return-date[data-trigger="show-formset"]').html(/*'<b>Return Date : </b>' + */selectedDate.getDate() + ' ' + GeneralLib.monthName[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear());
                     $('.close-formset').click();
                 }
             });
