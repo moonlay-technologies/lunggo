@@ -11,10 +11,6 @@
         box-shadow: $settings;
 }
 
-@import '_font_face.scss';
-@import '_header.scss';
-@import '_footer.scss';
-
 @mixin gotham(){
     font-family:'gotham', arial, sans-serif;
 }
@@ -24,6 +20,10 @@
     display:block; 
     width:100%;
 }
+
+@import '_font_face.scss';
+@import '_header.scss';
+@import '_footer.scss';
 
 $border-default :1px solid #ddd;
 $blue-default: #3face4;
