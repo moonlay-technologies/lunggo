@@ -132,11 +132,13 @@
     color: #fff;
     width: 80%;
     float: left; }
-    .site-header-search-form .form-main-content form .form-group:before, .site-header-search-form .form-main-content form .form-group:after {
-      content: "";
-      clear: both;
-      display: block;
-      width: 100%; }
+    .site-header-search-form .form-main-content form .form-group {
+      margin-bottom: 10px; }
+      .site-header-search-form .form-main-content form .form-group:before, .site-header-search-form .form-main-content form .form-group:after {
+        content: "";
+        clear: both;
+        display: block;
+        width: 100%; }
     .site-header-search-form .form-main-content form input[type="text"], .site-header-search-form .form-main-content form select, .site-header-search-form .form-main-content form a.submit-button {
       display: block;
       float: left; }

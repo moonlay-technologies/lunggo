@@ -42,7 +42,7 @@
     }
     .form-main-content {color:#fff; width:80%; float:left;
         form {
-            .form-group {
+            .form-group {margin-bottom:10px;
                 &:before, &:after {@include clearfix();}
             }
             input[type="text"], select, a.submit-button {display:block; float:left;}
