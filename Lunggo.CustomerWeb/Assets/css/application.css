@@ -172,7 +172,8 @@
           width: 22%; }
       .site-header-search-form .form-main-content .form-hotel-search form input[type="text"], .site-header-search-form .form-main-content .form-hotel-search form select {
         padding: 10px;
-        -webkit-appearance: none; }
+        -webkit-appearance: none;
+        font-size: 16px; }
     .site-header-search-form .form-main-content .form-flight-search {
       display: none; }
       .site-header-search-form .form-main-content .form-flight-search.active {
@@ -245,7 +246,7 @@
       -ms-border-radius: 3px;
       border-radius: 3px; }
     .site-header-search-form .form-main-content select {
-      font-size: 20px; }
+      font-size: 16px; }
 
 #site-footer {
   color: #fff; }

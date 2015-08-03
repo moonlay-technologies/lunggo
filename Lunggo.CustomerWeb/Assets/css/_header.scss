@@ -58,7 +58,7 @@
                     .submit-button {font-weight:bold; padding:10px; width:22%;}
                 }
                 // *****
-                input[type="text"], select {padding:10px; -webkit-appearance: none;}
+                input[type="text"], select {padding:10px; -webkit-appearance:none; font-size:16px;}
             }
         }
         .form-flight-search {display:none;
@@ -91,7 +91,7 @@
         // *****
         h3 {margin:0; padding:0; margin-bottom:15px;}
         input[type="text"], select {color:#333; font-size:16px; border:0; @include border-radius(3px);}
-        select {font-size:20px;}
+        select {font-size:16px;}
     }
 
 }
