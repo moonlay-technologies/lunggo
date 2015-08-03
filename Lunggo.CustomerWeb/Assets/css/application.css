@@ -121,11 +121,11 @@
           width: 100%;
           height: 100%; }
           .site-header-search-form .form-switch .switch label span.flight-image {
-            background-position: 0 95px; }
+            background-position: 0 100px; }
         .site-header-search-form .form-switch .switch label.active .hotel-image {
           background-position: 95px 0; }
         .site-header-search-form .form-switch .switch label.active .flight-image {
-          background-position: 95px 95px; }
+          background-position: 95px 100px; }
         .site-header-search-form .form-switch .switch label input[type="radio"] {
           display: none; }
   .site-header-search-form .form-main-content {
@@ -145,7 +145,7 @@
     .site-header-search-form .form-main-content .form-hotel-search {
       display: none; }
       .site-header-search-form .form-main-content .form-hotel-search h3 {
-        margin-bottom: 50px; }
+        margin-bottom: 53px; }
       .site-header-search-form .form-main-content .form-hotel-search.active {
         display: block; }
       .site-header-search-form .form-main-content .form-hotel-search form .hotel-location-wrapper .hotel-location {

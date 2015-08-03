@@ -18,6 +18,12 @@ $(document).ready(function () {
 });
 
 //******************************************
+// format number in thousand
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+}
+
+//******************************************
 // toggle language select
 function toggleLanguageSelect() {
     $('[data-toggle="dropdown"]').click(function() {

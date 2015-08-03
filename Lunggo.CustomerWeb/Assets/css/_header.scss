@@ -30,11 +30,11 @@
                 &.active {background:#ffe794; color:#5c470c;}
                 span {background-image:url(/Assets/images/form-selection-sprite.png); display:block; width:100%; height:100%;
                     &.hotel-image {}
-                    &.flight-image {background-position:0 95px;}
+                    &.flight-image {background-position:0 100px;}
                 }
                 &.active {
                     .hotel-image {background-position:95px 0;}
-                    .flight-image {background-position:95px 95px;}
+                    .flight-image {background-position:95px 100px;}
                 }
                 input[type="radio"] {display:none;}
             }
@@ -48,7 +48,7 @@
             input[type="text"], select, a.submit-button {display:block; float:left;}
         }
         .form-hotel-search {display:none;
-            h3 {margin-bottom:50px;}
+            h3 {margin-bottom:53px;}
             &.active {display:block;}
             form {
                 .hotel-location-wrapper {
