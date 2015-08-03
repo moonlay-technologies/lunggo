@@ -2100,9 +2100,9 @@
     <Content Include="Views\Flight\Checkout2.cshtml" />
     <Content Include="Views\Flight\Checkout3.cshtml" />
     <Content Include="Views\Flight\Checkout4.cshtml" />
-    <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

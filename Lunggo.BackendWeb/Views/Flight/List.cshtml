@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Flight.Constant
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Repository.TableRecord
@@ -24,8 +25,8 @@
                         <th>Reservation Time</th>
                         <th>Flight</th>
                         <th>Type</th>
-                        <th>Departure Time</th>
-                        <th>Return Time</th>
+                        <th>Departure Date</th>
+                        <th>Return Date</th>
                         <th>Passenger</th>
                         <th>Total Price</th>
                         <th>Payment</th>
@@ -38,7 +39,7 @@
                         var trip = rsv.Itinerary.FlightTrips.FirstOrDefault();
                         <tr>
                             <td>
-                                <a href="@Url.Action("Detail", rsv.RsvNo)">@rsv.RsvNo</a>
+                                <a href="@Url.Action("Detail", "Flight", rsv.RsvNo)">@rsv.RsvNo</a>
                             </td>
                             <td>
                                 @rsv.ContactData.Name
@@ -90,18 +91,34 @@
                                 }
                             </td>
                             <td>
-                                @rsv.PaymentInfo.FinalPrice.ToString("Rp0,0")
+                                @rsv.PaymentInfo.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
                             </td>
                             <td>
-                                @if (rsv.PaymentInfo.Status == PaymentStatus.Settled)
+                                @switch (rsv.PaymentInfo.Status)
                                 {
-                                    <span class="label label-success">Complete</span><br />
+                                    case PaymentStatus.Pending:
+                                        <span class="label label-default">Incomplete</span><br />
+                                        <span>by @rsv.PaymentInfo.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Settled:
+                                        <span class="label label-success">Complete</span><br />
+                                        <span>by @rsv.PaymentInfo.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Refunded:
+                                        <span class="label label-info">Refund</span><br />
+                                        break;
+                                    case PaymentStatus.Cancelled:
+                                        <span class="label label-danger">Cancelled</span><br />
+                                        <span>by @rsv.PaymentInfo.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Denied:
+                                        <span class="label label-danger">Denied</span><br />
+                                        <span>by @rsv.PaymentInfo.Method.ToString()</span>
+                                        break;
+                                    case PaymentStatus.Expired:
+                                        <span class="label label-danger">Expired</span><br />
+                                        break;
                                 }
-                                else
-                                {
-                                    <span class="label label-danger">Incomplete</span><br />
-                                }
-                                by @rsv.PaymentInfo.Method.ToString()
                             </td>
 
                             <td>

@@ -12,7 +12,9 @@ namespace Lunggo.ApCommon.Payment.Constant
         Cancelled = 1,
         Pending = 2,
         Settled = 3,
-        Denied = 4
+        Denied = 4,
+        Refunded = 5,
+        Expired = 6
     }
 
     public class PaymentStatusCd
@@ -29,6 +31,10 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "PEN";
                 case PaymentStatus.Denied:
                     return "DEN";
+                case PaymentStatus.Refunded:
+                    return "REF";
+                case PaymentStatus.Expired:
+                    return "EXP";
                 default:
                     return "";
             }
@@ -45,6 +51,10 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return PaymentStatus.Pending;
                 case "DEN":
                     return PaymentStatus.Denied;
+                case "REF":
+                    return PaymentStatus.Refunded;
+                case "EXP":
+                    return PaymentStatus.Expired;
                 default:
                     return PaymentStatus.Undefined;
             }

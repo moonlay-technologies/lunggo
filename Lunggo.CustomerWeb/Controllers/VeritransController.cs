@@ -113,7 +113,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "authorize":
                 case "cancel":
                 case "expire":
-                    return PaymentStatus.Cancelled;
+                    return PaymentStatus.Expired;
                 case "deny":
                     return PaymentStatus.Denied;
                 default:

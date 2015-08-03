@@ -13,6 +13,6 @@ namespace Lunggo.ApCommon.Flight.Constant
         BookingIdNoLongerValid = 2,
         AlreadyBooked = 3,
         InvalidInputData = 4,
-        ProcessFailed = 5
+        FailedOnSupplier = 5
     }
 }

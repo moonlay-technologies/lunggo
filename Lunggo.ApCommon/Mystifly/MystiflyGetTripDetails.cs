@@ -141,6 +141,11 @@ namespace Lunggo.ApCommon.Mystifly
         private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
         {
             var dict = DictionaryService.GetInstance();
+            item.OperatingAirlineCode =
+                (item.OperatingAirlineCode != "  " && item.OperatingAirlineCode != " " &&
+                 item.OperatingAirlineCode != "" && item.OperatingAirlineCode != null)
+                    ? item.OperatingAirlineCode
+                    : item.MarketingAirlineCode;
             return new FlightSegmentDetails
             {
                 Reference = item.ItemRPH,

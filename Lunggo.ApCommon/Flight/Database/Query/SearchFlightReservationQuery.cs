@@ -50,11 +50,11 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 if (condition.PassengerName != null)
                     clauseBuilder.Append("p.FirstName + p.LastName = '%' + @PassengerName + '%' AND ");
                 if (condition.Airline != null)
-                    clauseBuilder.Append("s.Airline = @Airline AND ");
-                if (condition.AirportOrigin != null)
-                    clauseBuilder.Append("s.OriginAirport = @AirportOrigin AND ");
-                if (condition.AirportDestination != null)
-                    clauseBuilder.Append("s.DestinationAirport = @AirportDestination AND ");
+                    clauseBuilder.Append("s.AirlineCd = @Airline AND ");
+                if (condition.OriginAirport != null)
+                    clauseBuilder.Append("s.OriginAirportCd = @OriginAirport AND ");
+                if (condition.DestinationAirport != null)
+                    clauseBuilder.Append("s.DestinationAirportCd = @DestinationAirport AND ");
                 if (condition.RsvDateSelection != null)
                 {
                     switch ((FlightReservationSearch.DateSelectionType)condition.RsvDateSelection)

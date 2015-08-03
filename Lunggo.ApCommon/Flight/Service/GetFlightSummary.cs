@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             RsvNo = rsvNo,
                             Itinerary = summary,
                             Passengers = passengers,
-                            PaymentInfo = ConvertFlightPaymentInfo(payment.Single())
+                            PaymentInfo = ConvertFlightPaymentInfo(payment.Single()),
                         };
                     else
                         return new FlightSummary

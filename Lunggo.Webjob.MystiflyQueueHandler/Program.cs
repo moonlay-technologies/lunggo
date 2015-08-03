@@ -9,8 +9,10 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.SnowMaker;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Webjob.MystiflyQueueHandler
@@ -69,6 +71,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         {
             InitConfigurationManager();
             InitDatabaseService();
+            InitUniqueIdGenerator();
             InitFlightService();
             InitQueueService();
         }
@@ -83,6 +86,19 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         {
             var db = DbService.GetInstance();
             db.Init();
+        }
+
+        private static void InitUniqueIdGenerator()
+        {
+            var generator = UniqueIdGenerator.GetInstance();
+            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            {
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+            };
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
         }
 
         private static void InitFlightService()

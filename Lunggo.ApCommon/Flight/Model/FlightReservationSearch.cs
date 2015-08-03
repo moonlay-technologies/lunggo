@@ -10,8 +10,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public string ContactPhone { get; set; }
         public string PassengerName { get; set; }
         public string Airline { get; set; }
-        public string AirportOrigin { get; set; }
-        public string AirportDestination { get; set; }
+        public string OriginAirport { get; set; }
+        public string DestinationAirport { get; set; }
         public string RsvNo { get; set; }
         public DateSelectionType? RsvDateSelection { get; set; }
         public DateTime? RsvDateStart { get; set; }

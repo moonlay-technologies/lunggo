@@ -29,15 +29,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvTime");
 		    }
 		}
-		public String RsvStatusCd
-		{
-		    get { return _RsvStatusCd; }
-		    set
-		    {
-		        _RsvStatusCd = value;
-		        IncrementLog("RsvStatusCd");
-		    }
-		}
 		public String InvoiceNo
 		{
 		    get { return _InvoiceNo; }
@@ -171,6 +162,42 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _PaymentTargetAccount = value;
 		        IncrementLog("PaymentTargetAccount");
+		    }
+		}
+		public DateTime? RefundTime
+		{
+		    get { return _RefundTime; }
+		    set
+		    {
+		        _RefundTime = value;
+		        IncrementLog("RefundTime");
+		    }
+		}
+		public Decimal? RefundAmount
+		{
+		    get { return _RefundAmount; }
+		    set
+		    {
+		        _RefundAmount = value;
+		        IncrementLog("RefundAmount");
+		    }
+		}
+		public String RefundTargetBank
+		{
+		    get { return _RefundTargetBank; }
+		    set
+		    {
+		        _RefundTargetBank = value;
+		        IncrementLog("RefundTargetBank");
+		    }
+		}
+		public String RefundTargetAccount
+		{
+		    get { return _RefundTargetAccount; }
+		    set
+		    {
+		        _RefundTargetAccount = value;
+		        IncrementLog("RefundTargetAccount");
 		    }
 		}
 		public String LangCd
@@ -321,7 +348,6 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _RsvNo;
 		private DateTime? _RsvTime;
-		private String _RsvStatusCd;
 		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
@@ -337,6 +363,10 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _PaymentTime;
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
+		private DateTime? _RefundTime;
+		private Decimal? _RefundAmount;
+		private String _RefundTargetBank;
+		private String _RefundTargetAccount;
 		private String _LangCd;
 		private String _MemberCd;
 		private String _CancellationTypeCd;
@@ -386,7 +416,6 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("RsvTime", false),
-				new ColumnMetadata("RsvStatusCd", false),
 				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
@@ -402,6 +431,10 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("PaymentTargetAccount", false),
+				new ColumnMetadata("RefundTime", false),
+				new ColumnMetadata("RefundAmount", false),
+				new ColumnMetadata("RefundTargetBank", false),
+				new ColumnMetadata("RefundTargetAccount", false),
 				new ColumnMetadata("LangCd", false),
 				new ColumnMetadata("MemberCd", false),
 				new ColumnMetadata("CancellationTypeCd", false),

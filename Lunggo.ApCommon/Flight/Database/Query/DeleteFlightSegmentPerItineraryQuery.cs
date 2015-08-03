@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateDeleteClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"DELETE * ");
+            clauseBuilder.Append(@"DELETE t ");
             clauseBuilder.Append(@"FROM FlightTrip AS t ");
             clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
             return clauseBuilder.ToString();

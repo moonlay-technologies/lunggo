@@ -311,6 +311,7 @@
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\PaymentExpiry.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
+    <Compile Include="Payment\Model\RefundInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />

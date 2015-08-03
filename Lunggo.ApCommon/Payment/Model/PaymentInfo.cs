@@ -16,5 +16,6 @@ namespace Lunggo.ApCommon.Payment.Model
         public DateTime? Time { get; set; }
         public string TargetAccount { get; set; }
         public decimal FinalPrice { get; set; }
+        public RefundInfo Refund { get; set; }
     }
 }

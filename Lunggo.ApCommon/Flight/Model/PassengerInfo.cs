@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string PassportNumber { get; set; }
     }
 }

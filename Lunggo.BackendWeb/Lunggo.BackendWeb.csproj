@@ -198,7 +198,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
-    <Compile Include="Controllers\FlightReservationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -271,6 +270,7 @@
     <Content Include="assets\img\ui-zac.jpg" />
     <Content Include="assets\img\weather.jpg" />
     <Content Include="assets\img\zoom.png" />
+    <Content Include="assets\js\application.js" />
     <Content Include="assets\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
     <Content Include="assets\js\bootstrap-switch.js" />
     <Content Include="assets\js\bootstrap.min.js" />
@@ -296,9 +296,11 @@
     <Content Include="assets\js\jquery-easy-pie-chart\jquery.easy-pie-chart.css" />
     <Content Include="assets\js\jquery-easy-pie-chart\jquery.easy-pie-chart.js" />
     <Content Include="assets\js\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="assets\js\jquery-ui.min.js" />
     <Content Include="assets\js\jquery.backstretch.min.js" />
     <Content Include="assets\js\jquery.dcjqaccordion.2.7.js" />
     <Content Include="assets\js\jquery.js" />
+    <Content Include="assets\js\jquery.min.js" />
     <Content Include="assets\js\jquery.nicescroll.js" />
     <Content Include="assets\js\jquery.scrollTo.min.js" />
     <Content Include="assets\js\jquery.sparkline.js" />
@@ -313,6 +315,7 @@
     <Content Include="assets\lineicons\lte-ie7.js" />
     <Content Include="assets\lineicons\style.css" />
     <Content Include="Config\i18n_message.xml" />
+    <Content Include="Config\JsConfig.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -322,7 +325,6 @@
     <Content Include="Content\line.png" />
     <Content Include="Content\mid.png" />
     <Content Include="Content\up.png" />
-    <Content Include="COPYING.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -369,12 +371,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomAutoComplete.js" />
     <Content Include="Scripts\Flip.js" />
-    <Content Include="WURFL AGPL License.txt" />
     <Content Include="Introspector\Introspector.pdf" />
     <Content Include="Introspector\Introspector.ashx" />
     <Content Include="App_Readme\WURFL-v1.6.0.1.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <None Include="Properties\PublishProfiles\prod-travorama-support-backend.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
@@ -412,36 +414,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\dashboard.cshtml" />
-    <Content Include="Views\Home\Hotel.cshtml" />
-    <Content Include="Views\Home\FlightReservationList.cshtml" />
-    <Content Include="Views\Home\HotelDetail.cshtml" />
-    <Content Include="Views\Home\FlightReservationDetail.cshtml" />
-    <Content Include="Views\Home\FlightReservationSearch.cshtml" />
-    <Content Include="Views\Home\RenderFlight.cshtml" />
-    <Content Include="Views\Home\RenderFlightReservation.cshtml" />
-    <Content Include="Views\Home\RenderFlightTrip.cshtml" />
-    <Content Include="Views\Home\RenderFlightPassenger.cshtml" />
-    <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
-    <Content Include="Views\Home\RenderFlightContact.cshtml" />
-    <Content Include="Views\Home\Flight.cshtml" />
-    <Content Include="Views\Home\HotelBookingDetail.cshtml" />
-    <Content Include="Views\Home\FlightDetail.cshtml" />
-    <Content Include="Views\Home\FormHotel.cshtml" />
-    <Content Include="Views\Home\ListResultDll.cshtml" />
-    <Content Include="Views\Home\ListResultId.cshtml" />
-    <Content Include="Views\Home\BookingPending.cshtml" />
     <Content Include="Views\Flight\List.cshtml" />
-    <Content Include="Views\Home\HotelDetail.cshtml" />
     <Content Include="Views\Flight\Detail.cshtml" />
     <Content Include="Views\Flight\RenderReservation.cshtml" />
     <Content Include="Views\Flight\RenderTrip.cshtml" />
     <Content Include="Views\Flight\RenderPassenger.cshtml" />
     <Content Include="Views\Flight\RenderSegment.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -478,6 +456,26 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\BookingPending.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
+    <Content Include="Views\Home\dashboard.cshtml" />
+    <Content Include="Views\Home\FlightReservationDetail.cshtml" />
+    <Content Include="Views\Home\FlightReservationList.cshtml" />
+    <Content Include="Views\Home\FlightReservationSearch.cshtml" />
+    <Content Include="Views\Home\FormHotel.cshtml" />
+    <Content Include="Views\Home\Hotel.cshtml" />
+    <Content Include="Views\Home\HotelBookingDetail.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ListResultDll.cshtml" />
+    <Content Include="Views\Home\ListResultId.cshtml" />
+    <Content Include="Views\Home\RenderFlight.cshtml" />
+    <Content Include="Views\Home\RenderFlightContact.cshtml" />
+    <Content Include="Views\Home\RenderFlightPassenger.cshtml" />
+    <Content Include="Views\Home\RenderFlightReservation.cshtml" />
+    <Content Include="Views\Home\RenderFlightTrip.cshtml" />
+    <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />

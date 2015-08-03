@@ -14,8 +14,8 @@
                         <td>Title</td>
                         <td>First Name</td>
                         <td>Last Name</td>
-                        <td>Birth Date</td>
                         <td>Type</td>
+                        <td>Birth Date</td>
                         <td>Passport Number</td>
                     </tr>
                     @foreach (var passenger in Model)
@@ -31,10 +31,13 @@
                                 @passenger.LastName
                             </td>
                             <td>
-                                @passenger.DateOfBirth.ToString("d MMM yyyy")
+                                @passenger.Type.ToString()
                             </td>
                             <td>
-                                @passenger.Type.ToString()
+                                @if (@passenger.DateOfBirth != DateTime.MinValue)
+                                {
+                                    @passenger.DateOfBirth.ToString("d MMM yyyy")
+                                }
                             </td>
                             <td>
                                 @passenger.PassportNumber

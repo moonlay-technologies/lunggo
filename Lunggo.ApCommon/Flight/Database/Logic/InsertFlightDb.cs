@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Database.Model;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -24,7 +25,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                 var reservationRecord = new FlightReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvStatusCd = "xxx",
                     RsvTime = DateTime.Now,
                     ContactName = bookingRecord.ContactData.Name,
                     ContactEmail = bookingRecord.ContactData.Email,
@@ -33,6 +33,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     LangCd = "xxx",
                     MemberCd = "xxx",
                     CancellationTypeCd = "xxx",
+                    PaymentStatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
                     OverallTripTypeCd = TripTypeCd.Mnemonic(bookingRecord.OverallTripType),
                     FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
                     PaymentFeeForCust = 0,
@@ -172,7 +173,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, details).Single();
+                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
                 foreach (var trip in details.FlightItineraries.FlightTrips)
                 {
@@ -198,6 +199,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         {
                             SegmentId = segmentId,
                             TripId = tripId,
+                            Pnr = segment.Pnr,
                             DepartureAirportCd = segment.DepartureAirport,
                             DepartureTime = segment.DepartureTime,
                             ArrivalAirportCd = segment.ArrivalAirport,

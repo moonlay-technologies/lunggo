@@ -34,3 +34,7 @@ var HotelAutocompleteConfig = {
 var FlightAutocompleteConfig = {
     Url: '$apiUrl$$autocompleteAirportPath$'
 };
+
+var AirlineAutocompleteConfig = {
+    Url: '$apiUrl$$autocompleteAirlinePath$'
+};

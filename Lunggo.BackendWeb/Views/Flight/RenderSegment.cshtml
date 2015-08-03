@@ -44,7 +44,10 @@
         <td>
             @segment.AirlineName<br />
             @segment.AirlineCode@segment.FlightNumber<br />
-            <b>PNR : @segment.Pnr</b>
+            @if (segment.Pnr != null)
+            {
+                <b>PNR : @segment.Pnr</b>
+            }
         </td>
     </tr>
     if (segment == Model.Last())

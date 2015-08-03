@@ -8,7 +8,9 @@
 }
 
 @{
-    var titleList = new List<Object>
+    List<Object> titleList;
+    
+    var adultTitleList = new List<Object>
         {
             new {Value = Title.Mister, Text = "Mr"},
             new {Value = Title.Mistress, Text = "Mrs"},
@@ -24,6 +26,8 @@
     var adultCount = 0;
     var childCount = 0;
     var infantCount = 0;
+    var passengerCount = 0;
+    var needBirthDate = false;
     var needPassport = false;
     var hashKey = "";
 
@@ -32,6 +36,8 @@
         adultCount = Model.Itinerary.AdultCount;
         childCount = Model.Itinerary.ChildCount;
         infantCount = Model.Itinerary.InfantCount;
+        passengerCount = adultCount + childCount + infantCount;
+        needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
         hashKey = Model.HashKey;
     }
@@ -63,137 +69,83 @@
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
                                 <label for="" class="control-label">Name (Buyer) :</label>
-                                <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
+                                <input type="text" class="form-control" name="Contact.Name" placeholder="Nama sesuai KTP / SIM">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-inline">
                                         <div class="form-group" style="width:34%;">
                                             <label for="">Country Code :</label>
-                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.CountryCode" placeholder="ex : 62">
+                                            <input type="text" class="form-control" style="width:100%;" name="Contact.CountryCode" placeholder="ex : 62">
                                         </div>
                                         <div class="form-group" style="width:64%;">
                                             <label for="">Phone Number :</label>
-                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
+                                            <input type="text" class="form-control" style="width:100%;" name="Contact.Phone" placeholder="ex : 81234567890">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="" class="control-label">Email :</label>
-                                        <input type="text" class="form-control" name="ContactData.Email" placeholder="ex : nama@email.com">
+                                        <input type="text" class="form-control" name="Contact.Email" placeholder="ex : nama@email.com">
                                     </div>
                                 </div>
                             </div>
-                            @for (var i = 1; i <= adultCount; i++)
+                            @for (var i = 0; i < passengerCount; i++)
                             {
-                                <h5 class="control-label"><b>Passenger Adult @i</b></h5>
+                                if (i < adultCount)
+                                {
+                                    titleList = adultTitleList;
+                                    <h5 class="control-label"><b>Adult Passenger @(i + 1) ( > 12 years old)</b></h5>
+                                    <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
+                                }
+                                else
+                                {
+                                    titleList = childTitleList;
+                                    if ((i - adultCount) < childCount)
+                                    {
+                                        <h5 class="control-label"><b>Child Passenger @(i + 1 - adultCount) ( 2-12 years old )</b></h5>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
+                                    }
+                                    else
+                                    {
+                                        <h5 class="control-label"><b>Infant Passenger @(i + 1 - adultCount - childCount) ( < 2 years old )</b></h5>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
+                                    }
+                                }
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
+                                        @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new {@class = "form-control user-title"})
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].FirstName" placeholder="">
+                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].FirstName" placeholder="">
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">Last Name :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
+                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].LastName" placeholder="">
                                     </div>
                                 </div><br />
-                                <div class="form-group">
-                                    <label for="" class="control-label">Birth Date :</label>
-                                    <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
-                                </div>
+                                if (needBirthDate)
+                                {
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Birth Date :</label>
+                                        <input type="date" class="form-control" name="Passengers[@i].BirthDate" placeholder="">
+                                    </div>
+                                }
                                 if (needPassport)
                                 {
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Number :</label>
-                                        <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].PassportNumber" placeholder="">
+                                        <input type="text" class="form-control" name="Passengers[@i].PassportNumber" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Expiry Date:</label>
-                                        <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
+                                        <input type="date" class="form-control" name="Passengers[@i].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
-                                <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
-                            }
-
-                            @if (childCount > 0)
-                            {
-                                for (var i = 1; i <= childCount; i++)
-                                {
-                                    <h5 class="control-label"><b>Passenger Child @i</b></h5>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">First Name :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].FirstName" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Last Name :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
-                                        <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                    </div>
-                                    if (needPassport)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Number :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].PassportNumber" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Expiry Date:</label>
-                                            <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
-                                        </div>
-                                    }
-                                    <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value="ID">
-                                }
-                            }
-
-                            @if (infantCount > 0)
-                            {
-                                for (var i = 1; i <= infantCount; i++)
-                                {
-                                    <h5 class="control-label"><b>Passenger Infant @i</b></h5>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">First Name :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].FirstName" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Last Name :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
-                                        <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                    </div>
-                                    if (needPassport)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Number :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].PassportNumber" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Expiry Date:</label>
-                                            <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
-                                        </div>
-                                    }
-                                    <input type="hidden" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="" value="ID">
-                                }
+                                <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                             }
                         </form>
                     </section><!-- .customer-form -->

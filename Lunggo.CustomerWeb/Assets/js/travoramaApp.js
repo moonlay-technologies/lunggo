@@ -575,13 +575,15 @@
             $scope.passengersNumber = -1;
             $scope.validTotal = -1;
 
+
             // passengers validation
             $scope.passengersValidation = function() {
+
 
                 $scope.validTotal = 0;
 
                 for (var i = 0; i < $scope.passengersNumber; i++) {
-                    if ($scope.flightPassengers[i].name) {
+                    if ($scope.flightPassengers[i].firstname) {
                         $scope.flightPassengers[i].valid = true;
                         $scope.validTotal++;
                     } else {

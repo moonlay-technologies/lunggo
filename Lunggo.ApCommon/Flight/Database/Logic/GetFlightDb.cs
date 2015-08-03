@@ -185,6 +185,17 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     {
                         if (reservation == null)
                         {
+                            RefundInfo refundInfo = null;
+                            if (reservationRecord.PaymentStatusCd == PaymentStatusCd.Mnemonic(PaymentStatus.Refunded))
+                            {
+                                refundInfo = new RefundInfo
+                                {
+                                    Amount = reservationRecord.RefundAmount.GetValueOrDefault(),
+                                    Time = reservationRecord.RefundTime.GetValueOrDefault(),
+                                    TargetBank = reservationRecord.RefundTargetBank,
+                                    TargetAccount = reservationRecord.RefundTargetAccount
+                                };
+                            }
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
@@ -205,7 +216,8 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                     Time = reservationRecord.PaymentTime,
                                     Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                     TargetAccount = reservationRecord.PaymentTargetAccount,
-                                    FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault()
+                                    FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
+                                    Refund = refundInfo
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                 Itinerary = new FlightItineraryDetails(),
@@ -261,7 +273,8 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                 ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
-                                Baggage = segmentRecord.Baggage
+                                Baggage = segmentRecord.Baggage,
+                                Pnr = segmentRecord.Pnr
                             };
                             segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
                             trip.FlightSegments.Add(segment);

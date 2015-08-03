@@ -39,7 +39,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 HashKey = select.token,
                 Itinerary = itinerary,
-                Message = ""
+                
             });
         }
 
@@ -47,65 +47,28 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightCheckoutData data)
         {
             data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
-            var passengerInfo = new List<PassengerInfoFare>();
-            if (data.AdultPassengerData != null)
+            var passengerInfo = data.Passengers.Select(passenger => new PassengerInfoFare
             {
-                var adultPassengerInfo = data.AdultPassengerData.Select(passenger => new PassengerInfoFare
-                {
-                    Type = PassengerType.Adult,
-                    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                    Title = passenger.Title,
-                    FirstName = passenger.FirstName,
-                    LastName = passenger.LastName,
-                    DateOfBirth = passenger.BirthDate,
-                    PassportNumber = passenger.PassportNumber,
-                    PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
-                }).ToList();
-                passengerInfo.AddRange(adultPassengerInfo);
-            }
-            if (data.ChildPassengerData != null)
-            {
-                var childPassengerInfo = data.ChildPassengerData.Select(passenger => new PassengerInfoFare
-                {
-                    Type = PassengerType.Child,
-                    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                    Title = passenger.Title,
-                    FirstName = passenger.FirstName,
-                    LastName = passenger.LastName,
-                    DateOfBirth = passenger.BirthDate,
-                    PassportNumber = passenger.PassportNumber,
-                    PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
-                }).ToList();
-                passengerInfo.AddRange(childPassengerInfo);
-            }
-            if (data.InfantPassengerData != null)
-            {
-                var infantPassengerInfo = data.InfantPassengerData.Select(passenger => new PassengerInfoFare
-                {
-                    Type = PassengerType.Infant,
-                    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                    Title = passenger.Title,
-                    FirstName = passenger.FirstName,
-                    LastName = passenger.LastName,
-                    DateOfBirth = passenger.BirthDate,
-                    PassportNumber = passenger.PassportNumber,
-                    PassportCountry = passenger.Country,
-                    PassportExpiryDate = passenger.PassportExpiryDate ?? DateTime.Now.AddYears(1).Date
-                }).ToList();
-                passengerInfo.AddRange(infantPassengerInfo);
-            }
+                Type = passenger.Type,
+                Title = passenger.Title,
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
+                Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
+                DateOfBirth = passenger.BirthDate,
+                PassportNumber = passenger.PassportNumber,
+                PassportExpiryDate = passenger.PassportExpiryDate,
+                PassportCountry = passenger.Country
+            });
             var bookInfo = new BookFlightInput
             {
                 ContactData = new ContactData
                 {
-                    Name = data.ContactData.Name,
-                    CountryCode = data.ContactData.CountryCode,
-                    Phone = data.ContactData.Phone,
-                    Email = data.ContactData.Email
+                    Name = data.Contact.Name,
+                    CountryCode = data.Contact.CountryCode,
+                    Phone = data.Contact.Phone,
+                    Email = data.Contact.Email
                 },
-                PassengerInfoFares = passengerInfo,
+                PassengerInfoFares = passengerInfo.ToList(),
                 Itinerary = data.ItineraryFare,
                 TripInfos = new List<FlightTripInfo>
                 {
@@ -119,16 +82,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 OverallTripType = data.ItineraryFare.TripType
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
-            if (bookResult.IsSuccess)
+            if (bookResult.IsSuccess && bookResult.BookResult.BookingStatus == BookingStatus.Booked)
             {
-                if (bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+                var transactionDetails = new TransactionDetails
                 {
-                    var transactionDetails = new TransactionDetails
-                    {
-                        OrderId = bookResult.RsvNo,
-                        Amount = data.ItineraryFare.LocalPrice
-                    };
-                    var itemDetails = new List<ItemDetails>
+                    OrderId = bookResult.RsvNo,
+                    Amount = data.ItineraryFare.LocalPrice
+                };
+                var itemDetails = new List<ItemDetails>
                     {
                         new ItemDetails
                         {
@@ -147,69 +108,18 @@ namespace Lunggo.CustomerWeb.Controllers
                     };
 
 
-                    string url;
-                    PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
-                    return Redirect(url);
-                }
-                else
-                {
-                    data.Message = "Already Booked. Please try again.";
-                    return View(data);
-                }
+                string url;
+                PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
+                return Redirect(url);
             }
             else
             {
-                data.Message = "Already Booked. Please try again.";
-                return View(data);
+                return RedirectToAction("Checkout", new FlightSelectData
+                {
+                    token = data.HashKey,
+                    error = bookResult.Errors[0]
+                });
             }
-        }
-
-        public ActionResult Checkout1(FlightSelectData select)
-        {
-            var service = FlightService.GetInstance();
-            var itineraryFare = service.GetItineraryFromCache(select.token);
-            var itinerary = service.ConvertToItineraryApi(itineraryFare);
-            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
-            var data = new FlightCheckoutData
-            {
-                HashKey = select.token,
-                Itinerary = itinerary,
-                Message = ""
-            };
-            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data));
-            return View(data);
-        }
-
-        [HttpPost]
-        public ActionResult Checkout2(FlightCheckoutData data)
-        {
-            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
-            var data2json = redis.StringGet("cekot");
-            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
-            TryUpdateModel(data2);
-            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data2));
-            return View(data2);
-        }
-
-        [HttpPost]
-        public ActionResult Checkout3(FlightCheckoutData data)
-        {
-            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
-            var data2json = redis.StringGet("cekot");
-            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
-            TryUpdateModel(data2);
-            redis.StringSet("cekot", Newtonsoft.Json.JsonConvert.SerializeObject(data2));
-            return View(data2);
-        }
-
-        [HttpPost]
-        public ActionResult Checkout4(FlightCheckoutData data)
-        {
-            var redis = RedisService.GetInstance().GetDatabase(ApConstant.SearchResultCacheName);
-            var data2json = redis.StringGet("cekot");
-            var data2 = Newtonsoft.Json.JsonConvert.DeserializeObject<FlightCheckoutData>(data2json);
-            TryUpdateModel(data2);
-            return View(data);
         }
 
         public ActionResult Thankyou(string rsvNo)
@@ -225,7 +135,7 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult Eticket(string rsvNo)
-                            {
+        {
             var service = FlightService.GetInstance();
             var summary = service.GetDetails(rsvNo);
             return View(summary);

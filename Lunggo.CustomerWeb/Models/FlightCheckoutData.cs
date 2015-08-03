@@ -13,20 +13,19 @@ namespace Lunggo.CustomerWeb.Models
         public string HashKey { get; set; }
         public FlightItineraryApi Itinerary { get; set; }
         public FlightItineraryFare ItineraryFare { get; set; }
-        public ContactData ContactData { get; set; }
-        public List<PassengerData> AdultPassengerData { get; set; }
-        public List<PassengerData> ChildPassengerData { get; set; }
-        public List<PassengerData> InfantPassengerData { get; set; }
-        public PaymentData PaymentData { get; set; }
+        public ContactData Contact { get; set; }
+        public List<PassengerData> Passengers { get; set; }
+        public PaymentData Payment { get; set; }
         public string Message { get; set; }
     }
 
     public class PassengerData
     {
+        public PassengerType Type { get; set; }
         public Title Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string PassportNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string Country { get; set; }
