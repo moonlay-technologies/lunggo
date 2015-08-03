@@ -37,20 +37,19 @@
                 <div class="site-header-search-form">
                     <div class="form-switch">
                         <div class="switch">
-                            <label class="" data-target="hotel"><span class="fa fa-building"></span><input type="radio" name="form-switch" value="hotel" /></label>
-                            <label class="active" data-target="flight"><span class="fa fa-plane"></span><input type="radio" name="form-switch" value="flight" /></label>
+                            <label class="label-hotel" data-target="hotel"><span class="hotel-image"></span><input type="radio" name="form-switch" value="hotel" /></label>
+                            <label class="active label-flight" data-target="flight"><span class="flight-image"></span><input type="radio" name="form-switch" value="flight" /></label>
                         </div>
                     </div><!-- .form-switch -->
                     <div class="form-main-content">
                         <div class="form-hotel-search">
                             <h3><b>Hotel</b> Booking</h3>
-                            <form action="/UW100/UW100HotelSearch" method="GET">
-                                <div class="hotel-location-wrapper">
+                            <form action="/UW100/UW100HotelSearch" method="GET" class="homepage-form">
+                                <div class="hotel-location-wrapper form-group">
                                     <input type="text" class="hotel-location autocomplete" placeholder="Location" />
                                 </div>
-                                <div class="hotel-data-wrapper">
+                                <div class="hotel-data-wrapper form-group">
                                     <input type="text" class="hotel-checkin date-picker" placeholder="Checkin Date"/>
-                                    <span class="separator">-</span>
                                     <input type="text" class="hotel-checkout date-picker" placeholder="Checkout Date"/>
                                     <!-- <input type="text" class="hotel-room" placeholder="Rooms"/> -->
                                     <select class="hotel-room" name="RoomCount">
@@ -60,7 +59,7 @@
                                         <option value="4">4 Rooms</option>
                                     </select>
                                 </div>
-                                <div class="hotel-submit-wrapper">
+                                <div class="hotel-submit-wrapper form-group">
                                     <input type="text" class="hidden" name="LocationId" id="hotel-search-location" />
                                     <input type="text" class="hidden" name="StayDate" id="hotel-search-checkin" />
                                     <input type="text" class="hidden" name="StayLength" id="hotel-search-length" />
@@ -70,18 +69,17 @@
                         </div><!-- .form-hotel-search -->
                         <div class="form-flight-search active">
                             <h3><b>Flight</b> Booking</h3>
-                            <form action="/id/Flight/SearchResultList" method="GET" data-flightType="round-trip">
-                                <div class="flight-type-wrapper">
+                            <form action="/id/Flight/SearchResultList" class="homepage-form" method="GET" data-flightType="round-trip">
+                                <div class="flight-type-wrapper form-group">
                                     <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> Round-Trip</label>
                                     <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
                                 </div>
-                                <div class="flight-airport-wrapper">
+                                <div class="flight-airport-wrapper form-group">
                                     <input type="text" class="flight-origin autocomplete" placeholder="Initial Airport" data-userInputvalue="" data-airportCode=""/>
                                     <input type="text" class="flight-destination autocomplete" placeholder="Destination Airport" data-userInputValue="" data-airportCode="" />
                                 </div>
-                                <div class="flight-date-wrapper">
+                                <div class="flight-date-wrapper form-group">
                                     <input type="text" class="flight-departure-date date-picker" placeholder="departure date" />
-                                    <span class="separator">-</span>
                                     <input type="text" class="flight-return-date date-picker" placeholder="return date" />
                                     <input type="text" class="flight-return-disable" placeholder="One way" disabled />
                                     <select class="flight-cabin" placeholder="Cabin">
@@ -90,7 +88,7 @@
                                         <option value="f">First Class</option>
                                     </select>
                                 </div>
-                                <div class="flight-submit-wrapper">
+                                <div class="flight-submit-wrapper form-group">
                                     <select class="flight-adult" placeholder="Adult">
                                         <option value="1">1 Adult</option>
                                         <option value="2">2 Adults</option>

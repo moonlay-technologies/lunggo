@@ -402,11 +402,15 @@
 
                 $scope.loaded = false;
 
+                document.title = "Travorama - Loading Flight List";
+
                 $http.get(FlightSearchConfig.Url, {
                     params: {
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
                 }).success(function (data) {
+
+                    document.title = "Travorama";
 
                     console.log(data);
 
@@ -556,6 +560,8 @@
                     }
 
                 }).error(function () {
+
+                    document.title = "Travorama";
 
                     $scope.noFlight = true;
                     $scope.loaded = true;
