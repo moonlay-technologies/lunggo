@@ -342,6 +342,12 @@
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
+    <Content Include="Assets\css\landingPage.css">
+      <DependentUpon>landingPage.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\landingPage.min.css">
+      <DependentUpon>landingPage.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\mobile-app.css">
       <DependentUpon>mobile-app.scss</DependentUpon>
     </Content>
@@ -846,6 +852,7 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\css\mobile-app.scss" />
+    <Content Include="Assets\css\landingPage.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -2109,6 +2116,7 @@
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Template\LandingPage.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

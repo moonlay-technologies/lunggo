@@ -1,0 +1,112 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travorama - Invitation Only</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Assets/css/landingPage.min.css" />
+
+
+</head>
+<body>
+
+    <section class="container">
+        <div class="row">
+            <div class="col-sm-6">
+
+                <div class="text-center website-logo">
+                    <img src="/Assets/images/logo.png" alt="Travorama">
+                </div>
+
+                <h4 class="text-center">BEST OF <span>HOTEL &amp; FLIGHT</span> BOOKING SITE</h4>
+                <h1 class="text-center">PREPARING FOR LANDING</h1>
+
+                <div class="countdown">
+                    <p class="timer"></p>
+                    <p class="info">
+                        <span id="text-day">Day</span>
+                        <span id="text-hour">Hour</span>
+                        <span id="text-minute">Minute</span>
+                        <span id="text-second">Second</span>
+                    </p>
+                </div>
+                
+                <p class="text-center glow-text">Enter your email address below to get updates when we launch.</p>
+
+                <form action="#" class="form-horizontal">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" name="user_name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your email address" name="user_email">
+                    </div>
+                    <div class="form-group">
+                        <a href="#" class="btn btn-yellow btn-block">SUBSCRIBE</a>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-sm-6 text-center">
+                <img src="assets/images/" alt="">
+            </div>
+        </div>
+    </section><!-- .container -->
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul>
+                        <li><a href="#instagram"><span class="fa fa-instagram"></span></a></li>
+                        <li><a href="#facebook"><span class="fa fa-facebook-square"></span></a></li>
+                        <li><a href="#pinterest"><span class="fa fa-pinterest-square"></span></a></li>
+                        <li><a href="#youtube"><span class="fa fa-youtube-play"></span></a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <small>Copyright 2015 Travelmadezy. All rights reserved.</small>
+                </div>
+            </div>
+        </div>
+    </footer><!-- .site-footer -->
+    
+    <!-- scripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+    
+    <script type="text/javascript">
+        $(".countdown .timer").countdown("2016/01/01",
+            function (event) {
+                $(this).html(
+                    event.strftime('<span>%D</span> <span>%H</span> <span>%M</span> <span>%S</span>')
+                );
+                if (event.strftime('%S') != 1) {
+                    $('#text-second').text('Seconds');
+                } else {
+                    $('#text-second').text('Second');
+                }
+                if (event.strftime('%M') != 1) {
+                    $('#text-minute').text('Minutes');
+                } else {
+                    $('#text-minute').text('Minute');
+                }
+                if (event.strftime('%H') != 1) {
+                    $('#text-hour').text('Hours');
+                } else {
+                    $('#text-hour').text('Hour');
+                }
+                if (event.strftime('%D') != 1) {
+                    $('#text-day').text('Days');
+                } else {
+                    $('#text-day').text('Day');
+                }
+            });
+    </script>
+
+</body>
+</html>
