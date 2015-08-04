@@ -16,8 +16,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public DateTime RsvTime { get; set; }
         public FlightItineraryDetails Itinerary { get; set; }
         public List<PassengerInfoDetails> Passengers { get; set; }
-        public PaymentInfo PaymentInfo { get; set; }
-        public ContactData ContactData { get; set; }
+        public PaymentInfo Payment { get; set; }
+        public ContactData Contact { get; set; }
         public string InvoiceNo { get; set; }
         public TripType TripType { get; set; }
     }

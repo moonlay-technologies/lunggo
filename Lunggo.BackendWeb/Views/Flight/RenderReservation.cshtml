@@ -18,19 +18,19 @@
                 </tr>
                 <tr>
                     <td>Contact Name</td>
-                    <td>@Model.ContactData.Name</td>
+                    <td>@Model.Contact.Name</td>
                 </tr>
                 <tr>
                     <td>Contact E-mail</td>
-                    <td>@Model.ContactData.Email</td>
+                    <td>@Model.Contact.Email</td>
                 </tr>
                 <tr>
                     <td>Contact Phone</td>
-                    <td>@Model.ContactData.Phone</td>
+                    <td>@Model.Contact.Phone</td>
                 </tr>
                 <tr>
                     <td>Contact Address</td>
-                    <td>@Model.ContactData.Address</td>
+                    <td>@Model.Contact.Address</td>
                 </tr>
             </tbody>
         </table>
@@ -45,16 +45,16 @@
             <tbody>
                 <tr>
                     <td>Total Price</td>
-                    <td>@Model.PaymentInfo.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>@Model.Payment.FinalPrice.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                 </tr>
                 <tr>
                     <td>Payment Method</td>
-                    <td>@Model.PaymentInfo.Method.ToString()</td>
+                    <td>@Model.Payment.Method.ToString()</td>
                 </tr>
                 <tr>
                     <td>Payment Status</td>
                     <td>
-                        @switch (Model.PaymentInfo.Status)
+                        @switch (Model.Payment.Status)
                         {
                             case PaymentStatus.Pending:
                                 <span class="label label-default">Incomplete</span><br />
@@ -77,23 +77,23 @@
                         }
                     </td>
                 </tr>
-                @if (Model.PaymentInfo.Status == PaymentStatus.Refunded)
+                @if (Model.Payment.Status == PaymentStatus.Refunded)
                 {
                     <tr>
                         <td>Refund Time</td>
-                        <td>@Model.PaymentInfo.Refund.Time.ToString("d MMM yyyy HH:mm:ss")</td>
+                        <td>@Model.Payment.Refund.Time.ToString("d MMM yyyy HH:mm:ss")</td>
                     </tr>
                     <tr>
                         <td>Refund Amount</td>
-                        <td>@Model.PaymentInfo.Refund.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                        <td>@Model.Payment.Refund.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                     </tr>
                     <tr>
                         <td>Refund Bank</td>
-                        <td>@Model.PaymentInfo.Refund.TargetBank</td>
+                        <td>@Model.Payment.Refund.TargetBank</td>
                     </tr>
                     <tr>
                         <td>Refund Account</td>
-                        <td>@Model.PaymentInfo.Refund.TargetAccount</td>
+                        <td>@Model.Payment.Refund.TargetAccount</td>
                     </tr>
                 }
             </tbody>

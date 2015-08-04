@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -9,13 +10,14 @@
 
 @{
     List<Object> titleList;
-    List<Object> dateList = new List<object>();
-    List<Object> monthList = new List<object>();
-    List<Object> yearList = new List<object>();
+    var dateList = new List<object>();
+    var monthList = new List<object>();
+    var birthYearList = new List<object>();
+    var expiryYearList = new List<object>();
 
     for (var i = 1; i <= 31; i++)
     {
-        dateList.Add(new {Value = i, Text = i.ToString() });
+        dateList.Add(new {Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
 
     for (var i = 1; i <= 12; i++)
@@ -25,7 +27,12 @@
 
     for (var i = DateTime.Now.Year-120; i <= DateTime.Now.Year; i++)
     {
-        yearList.Add(new { Value = i, Text = i.ToString() });
+        birthYearList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
+    }
+
+    for (var i = DateTime.Now.Year; i <= DateTime.Now.Year + 15; i++)
+    {
+        expiryYearList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
 
     var adultTitleList = new List<Object>
@@ -87,6 +94,14 @@
 
 
         }
+        // disabled enter key
+        $('body').on('keyup keypress', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
     </script>
 }
@@ -195,13 +210,13 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-12">Birthday</label>
                                     <div class="col-xs-3">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Date, new SelectList(dateList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.date", ng_init = "flightPassengers[" + i + "].birthday.date = '" + 1 + "'", ng_change = "passengersValidation()"})
+                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Date, new SelectList(dateList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.date", ng_init = "flightPassengers[" + i + "].birthday.date = '" + 1 + "'", ng_change = "passengersValidation()"})
                                     </div>
                                     <div class="col-xs-5">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Month, new SelectList(monthList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.month", ng_init = "flightPassengers[" + i + "].birthday.month = '" + 1 + "'", ng_change = "passengersValidation()"})
+                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Month, new SelectList(monthList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.month", ng_init = "flightPassengers[" + i + "].birthday.month = '" + 1 + "'", ng_change = "passengersValidation()"})
                                     </div>
                                     <div class="col-xs-4">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Year, new SelectList(yearList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.Now.Year - 120) + "'", ng_change = "passengersValidation()"})
+                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.Now.Year - 120) + "'", ng_change = "passengersValidation()"})
                                     </div>
                                 </div>
                             }
@@ -216,61 +231,13 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-12">Passport Expiry Date</label>
                                     <div class="col-xs-3">
-                                        <select class="form-control" name="Passengers[@i].PassportExpiry.Date" ng-model="flightPassengers[@i].passportexpiry.date" ng-change="passengersValidation()">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="9">8</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                            <option value="13">13</option>
-                                            <option value="14">14</option>
-                                            <option value="15">15</option>
-                                            <option value="16">16</option>
-                                            <option value="17">17</option>
-                                            <option value="19">18</option>
-                                            <option value="20">20</option>
-                                            <option value="21">21</option>
-                                            <option value="22">22</option>
-                                            <option value="23">23</option>
-                                            <option value="24">24</option>
-                                            <option value="25">25</option>
-                                            <option value="26">26</option>
-                                            <option value="27">27</option>
-                                            <option value="29">28</option>
-                                            <option value="30">30</option>
-                                        </select>
+                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Date, new SelectList(dateList, "Value", "Text"), new { @class = "form-control", ng_model="flightPassengers[@i].passportexpiry.date", ng_init="flightPassengers[" + i + "].passportexpiry.date = '" + 1 + "'", ng_change="passengersValidation()" })
                                     </div>
                                     <div class="col-xs-5">
-                                        <select class="form-control" name="Passengers[@i].PassportExpiry.Month" ng-model="flightPassengers[@i].passportexpiry.month" ng-change="passengersValidation()">
-                                            <option value="1">January</option>
-                                            <option value="2">February</option>
-                                            <option value="3">March</option>
-                                            <option value="4">April</option>
-                                            <option value="5">May</option>
-                                            <option value="6">June</option>
-                                            <option value="7">July</option>
-                                            <option value="8">August</option>
-                                            <option value="9">September</option>
-                                            <option value="10">October</option>
-                                            <option value="11">November</option>
-                                            <option value="12">December</option>
-                                        </select>
+                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Month, new SelectList(monthList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.month", ng_init = "flightPassengers[" + i + "].passportexpiry.month = '" + 1 + "'", ng_change = "passengersValidation()" })
                                     </div>
                                     <div class="col-xs-4">
-                                        <select class="form-control" name="Passengers[@i].PassportExpiry.Year" ng-model="flightPassengers[@i].passportexpiry.year" ng-change="passengersValidation()">
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                        </select>
+                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.year", ng_init = "flightPassengers[" + i + "].passportexpiry.year = '" + DateTime.Now.Year + "'", ng_change = "passengersValidation()" })
                                     </div>
                                 </div>
                                 <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
@@ -448,11 +415,21 @@
 
                 <div class="payment row">
                     <div class="payment-name col-xs-7">
-                        <h2>Transfer</h2>
+                        <h2>Bank Transfer</h2>
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button name="Payment.Method" value="@PaymentMethod.BankTransfer" class="btn btn-yellow">Pay Now</button>
+                    </div>
+                </div>
+            
+                <div class="payment row">
+                    <div class="payment-name col-xs-7">
+                        <h2>ATM</h2>
+                        <img src="//placehold.it/120x40" alt="Alternate Text" />
+                    </div>
+                    <div class="payment-button col-xs-5">
+                        <button name="Payment.Method" value="@PaymentMethod.VirtualAccount" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -462,7 +439,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button name="Payment.Method" value="@PaymentMethod.CreditCard" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -472,17 +449,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>BCA Klikpay</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button name="Payment.Method" value="@PaymentMethod.CimbClicks" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 
@@ -492,7 +459,7 @@
                         <img src="//placehold.it/120x40" alt="Alternate Text" />
                     </div>
                     <div class="payment-button col-xs-5">
-                        <button href="#" class="btn btn-yellow">Pay Now</button>
+                        <button name="Payment.Method" value="@PaymentMethod.MandiriClickPay" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
 

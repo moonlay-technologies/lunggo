@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Veritrans.Model
 {
     internal class VtWeb
     {
         [JsonProperty("enabled_payments")]
-        internal string EnabledPayments { get; set; }
+        internal List<string> EnabledPayments { get; set; }
         [JsonProperty("credit_card_3d_secure")]
         internal bool CreditCard3DSecure { get; set; }
         [JsonProperty("payment_options")]

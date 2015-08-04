@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightSummary
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 @{
     ViewBag.Title = "FlightCheckoutThankyou";
@@ -19,7 +19,7 @@
 @section PageJavascript {
     <script>
 
-        var startTime = new Date('@Model.PaymentInfo.Time.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ")');
+        var startTime = new Date('@Model.Payment.Time.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ")');
         var timeOut = @timeout;
         startTime = startTime.setMinutes(startTime.getMinutes() + timeOut);
 
@@ -37,10 +37,11 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                @switch (Model.PaymentInfo.Status)
+                @switch (Model.Payment.Status)
                 {
                     case PaymentStatus.Undefined:
                     case PaymentStatus.Cancelled:
+                    case PaymentStatus.Expired:
                         
                         <div class="no-reservation">
                             <h1 class="text-center">Belum Ada Reservasi</h1>
@@ -79,7 +80,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
-                                    <p>Nomor Virtual Account : @Model.PaymentInfo.TargetAccount</p>
+                                    <p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="payment-countdown text-center"></div>
@@ -95,7 +96,7 @@
 
                         <div class="ticket-wrapper">
                             <h1 class="text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank you" /></h1>
-                            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email anda __insert_user_email_here__ setelah :</p>
+                            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
                             
                             <div class="print-ticket-wrapper">
                             
@@ -128,7 +129,7 @@
             </div>
         </div>
         
-        @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+        @if (Model.Payment.Status == PaymentStatus.Settled)
         {
 
             <div class="row">
@@ -140,7 +141,7 @@
                             <div class="col-sm-4 receipt-summary">
 
                                 <div class="receipt-number">
-                                    <h3>Nomer Pemesanan</h3>
+                                    <h3>Nomor Pemesanan</h3>
                                     <h4>@Model.RsvNo</h4>
                                 </div>
 
@@ -199,7 +200,7 @@
                                     <h4><b>Harga Total:</b> @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>  
                                 </div>
                                 <div class="col-sm-6">
-                                    <h4><b>Metode Pembayaran:</b> @Model.PaymentInfo.Method</h4>  
+                                    <h4><b>Metode Pembayaran:</b> @Model.Payment.Method</h4>  
                                 </div>
                             </div>
                         </div>

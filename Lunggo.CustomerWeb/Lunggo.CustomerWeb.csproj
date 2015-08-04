@@ -2076,7 +2076,6 @@
     <Content Include="Views\Flight\SearchResultList.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
-    <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
@@ -2102,10 +2101,6 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\Checkout1.cshtml" />
-    <Content Include="Views\Flight\Checkout2.cshtml" />
-    <Content Include="Views\Flight\Checkout3.cshtml" />
-    <Content Include="Views\Flight\Checkout4.cshtml" />
     <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />

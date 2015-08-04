@@ -47,6 +47,7 @@ function paymentOptionForm() {
         $(this).addClass('active');
         $('.payment-form .payment-detail section').removeClass('active');
         $('.payment-form .payment-detail section.' + activeClass + '-detail').addClass('active');
+        console.log('');
     });
 
 }

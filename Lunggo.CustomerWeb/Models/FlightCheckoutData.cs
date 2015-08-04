@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.Framework.Payment.Data;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.CustomerWeb.Models
 {
@@ -15,7 +15,7 @@ namespace Lunggo.CustomerWeb.Models
         public FlightItineraryFare ItineraryFare { get; set; }
         public ContactData Contact { get; set; }
         public List<PassengerData> Passengers { get; set; }
-        public PaymentData Payment { get; set; }
+        public PaymentInfo Payment { get; set; }
         public string Message { get; set; }
     }
 

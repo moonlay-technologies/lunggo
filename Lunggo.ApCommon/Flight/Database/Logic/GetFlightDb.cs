@@ -15,31 +15,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {
-        internal static FlightItineraryApi Summary(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var service = FlightService.GetInstance();
-                var tripRecords = GetFlightTripSummaryQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
-                return tripRecords.Any()
-                    ? new FlightItineraryApi
-                    {
-                        FlightTrips = tripRecords.Select(tripRecord =>
-                        {
-                            var segmentRecords = GetFlightSegmentSummaryQuery.GetInstance()
-                                .Execute(conn, new { tripRecord.TripId });
-                            var tripSummary = service.ConvertToTripApi(tripRecord);
-                            tripSummary.FlightSegments =
-                                segmentRecords.Select(service.ConvertToSegmentApi).ToList();
-                            return tripSummary;
-                        }).ToList(),
-                        TotalFare = GetFlightTotalFareQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Sum(),
-                        Currency = GetFlightLocalCurrencyQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single()
-                    }
-                    : null;
-            }
-        }
-
         internal static IEnumerable<FlightReservation> OverviewReservations(string contactEmail)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -82,14 +57,14 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
-                                ContactData = new ContactData
+                                Contact = new ContactData
                                 {
                                     Name = reservationRecord.ContactName,
                                     Email = reservationRecord.ContactEmail,
                                     CountryCode = reservationRecord.ContactCountryCd,
                                     Phone = reservationRecord.ContactPhone
                                 },
-                                PaymentInfo = new PaymentInfo
+                                Payment = new PaymentInfo
                                 {
                                     Time = reservationRecord.PaymentTime
                                 },
@@ -201,14 +176,14 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
-                                ContactData = new ContactData
+                                Contact = new ContactData
                                 {
                                     Name = reservationRecord.ContactName,
                                     Email = reservationRecord.ContactEmail,
                                     CountryCode = reservationRecord.ContactCountryCd,
                                     Phone = reservationRecord.ContactPhone
                                 },
-                                PaymentInfo = new PaymentInfo
+                                Payment = new PaymentInfo
                                 {
                                     Id = reservationRecord.PaymentId,
                                     Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),

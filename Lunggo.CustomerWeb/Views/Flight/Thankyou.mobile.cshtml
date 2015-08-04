@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightSummary
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 @{
     Layout = "/Views/Shared/_layout_mobile.cshtml";
@@ -30,10 +30,11 @@
             <div class="bar-5 active"></div>
         </div>
     </section><!-- .checkout-progress -->
-    @switch (Model.PaymentInfo.Status)
+    @switch (Model.Payment.Status)
     {
         case PaymentStatus.Undefined:
         case PaymentStatus.Cancelled:
+        case PaymentStatus.Expired:
 
             <div class="no-reservation">
                 <h1 class="text-center">Belum Ada Reservasi</h1>
@@ -72,7 +73,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
-                    <p>Nomor Virtual Account : @Model.PaymentInfo.TargetAccount</p>
+                    <p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
                 </div>
                 <div class="col-sm-6">
                     <div class="payment-countdown text-center"></div>
@@ -88,13 +89,13 @@
 
         <div class="container">
             <h1 class="thank-you text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank You" /></h1>
-            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email anda __insert_user_email_here__ setelah :</p>
+            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
             <div class="ticket-wrapper">
                 <div class="row text-center">
                     <div class="col-sm-12">
                         <div class="ticket-print">
                             <a href="#" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span> Cetak e-Ticket</a>
-                            <p>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
+                            <p>Anda dapat menutup halaman inxi dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +110,7 @@
     </div>
     </div>
 
-    @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+    @if (Model.Payment.Status == PaymentStatus.Settled)
     {
 
         <div class="row">
@@ -177,7 +178,7 @@
                             <div class="col-sm-4 receipt-payment">
                                 <h3>Informasi Pembayaran</h3>
                                 <h4><b>Harga total :</b> @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
-                                <h4><b>Metode Pembayaran :</b> @Model.PaymentInfo.Method</h4>
+                                <h4><b>Metode Pembayaran :</b> @Model.Payment.Method</h4>
                             </div>
                         </div>
 

@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -63,9 +64,9 @@
         <div class="row">
 
             <div class="col-sm-8">
-                <section class="customer-detail">
-                    <section class="customer-form">
-                        <form action="" class="form" id="flight-customer-form" method="post">
+                <form action="" class="form" id="flight-customer-form" method="post">
+                    <section class="customer-detail">
+                        <section class="customer-form">
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
                                 <label for="" class="control-label">Name (Buyer) :</label>
@@ -116,7 +117,7 @@
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new {@class = "form-control user-title"})
+                                        @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
@@ -147,40 +148,50 @@
                                 }
                                 <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                             }
-                        </form>
-                    </section><!-- .customer-form -->
-                    <section class="payment-form">
-                        <h2><b>PAYMENT</b> METHOD</h2>
+                        </section><!-- .customer-form -->
+                        <section class="payment-form">
+                            <h2><b>PAYMENT</b> METHOD</h2>
 
-                        <section class="payment-option">
-                            <form action="#" class="form">
-                                <label class="payment-veritrans active" for="payment-veritrans">
-                                    <input type="radio" name="payment-option" id="payment-veritrans" checked>
-                                    <span>Veritrans</span>
+                            <section class="payment-option">
+                                <label class="payment-transfer active" for="payment-transfer">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer" checked>
+                                    <span>Bank Transfer</span>
                                 </label>
-                                <label class="payment-transfer" for="payment-transfer">
-                                    <input type="radio" name="payment-option" id="payment-transfer">
-                                    <span>Transfer Bank</span>
+                                <label class="payment-veritrans" for="payment-virtual">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual">
+                                    <span>ATM</span>
                                 </label>
-                            </form>
-                        </section><!-- .payment-option -->
-                        <section class="payment-detail">
-                            <section class="payment-veritrans-detail active">
-                                <h4>Veritrans</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
-                            </section>
-                            <section class="payment-transfer-detail">
-                                <h4>Transfer Bank</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
-                            </section>
-                        </section><!-- .payment-detail -->
+                                <label class="payment-veritrans" for="payment-creditcard">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.CreditCard" id="payment-creditcard">
+                                    <span>Credit Card</span>
+                                </label>
+                                <label class="payment-veritrans" for="payment-mandiri">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
+                                    <span>Mandiri ClickPay</span>
+                                </label>
+                                <label class="payment-veritrans" for="payment-cimb">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
+                                    <span>CIMB Clicks</span>
+                                </label>
+                            </section><!-- .payment-option -->
+                            <section class="payment-detail">
+                                <section class="payment-veritrans-detail active">
+                                    <h4>Veritrans</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
+                                </section>
+                                <section class="payment-transfer-detail">
+                                    <h4>Transfer Bank</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
+                                </section>
+                            </section><!-- .payment-detail -->
 
-                    </section><!-- .payment-form -->
-                    <section class="payment-button">
-                        <small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="#">ketentuan dan kebijakan privasi.</a></small>
-                        <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
-                    </section><!-- .payment-button -->
-                </section><!-- .customer-detail -->
+                        </section><!-- .payment-form -->
+                        <section class="payment-button">
+                            <small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="#">ketentuan dan kebijakan privasi.</a></small>
+                            <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
+                        </section><!-- .payment-button -->
+                    </section><!-- .customer-detail -->
+                </form>
             </div><!-- .col-sm-8 -->
 
             <div class="col-sm-4">

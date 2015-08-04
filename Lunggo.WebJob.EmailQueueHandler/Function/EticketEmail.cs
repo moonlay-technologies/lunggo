@@ -34,7 +34,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] {summary.ContactData.Email},
+                RecipientList = new[] {summary.Contact.Email},
                 Subject = "[Travorama.com] Eticket Spesial untuk Anda",
                 FromMail = "jangan-reply-ke-sini@travorama.com",
                 FromName = "Travorama.com",

@@ -108,9 +108,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     };
 
 
-                string url;
-                PaymentService.GetInstance().ProcessViaThirdPartyWeb(transactionDetails, itemDetails, out url);
-                return Redirect(url);
+                var url = PaymentService.GetInstance().GetPaymentUrl(transactionDetails, itemDetails, data.Payment.Method);
+                if (url != null)
+                    return Redirect(url);
+                else
+                    return RedirectToAction("Confirmation", "Flight", new {RsvNo = bookResult.RsvNo});
             }
             else
             {
@@ -125,20 +127,13 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Thankyou(string rsvNo)
         {
             var service = FlightService.GetInstance();
-            var summary = service.GetFlightSummary(rsvNo);
+            var summary = service.GetReservation(rsvNo);
             return View(summary);
         }
 
         public ActionResult Confirmation()
         {
             return View();
-        }
-
-        public ActionResult Eticket(string rsvNo)
-        {
-            var service = FlightService.GetInstance();
-            var summary = service.GetDetails(rsvNo);
-            return View(summary);
         }
     }
 }
