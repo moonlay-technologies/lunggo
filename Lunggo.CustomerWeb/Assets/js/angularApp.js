@@ -422,7 +422,9 @@
 
                     // *****
                     // generate flight list for search filtering
+                    var userTImezone = new Date().getTimezoneOffset();
                     for (var i = 0; i < flightList.list.length ; i++) {
+
                         flightList.list[i].AirlinesTag = [];
                         $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
                         for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {

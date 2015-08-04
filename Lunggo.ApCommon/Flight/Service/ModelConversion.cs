@@ -84,7 +84,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationAirport = summaryRecord.DestinationAirportCd,
                 DestinationAirportName = dict.GetAirportName(summaryRecord.DestinationAirportCd),
                 DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
-                DepartureDate = summaryRecord.DepartureDate.GetValueOrDefault(),
+                DepartureDate = summaryRecord.DepartureDate.GetValueOrDefault().ToUniversalTime(),
             };
         }
 
@@ -95,10 +95,10 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 DepartureAirport = summaryRecord.DepartureAirportCd,
                 DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
-                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault().ToUniversalTime(),
                 ArrivalAirport = summaryRecord.ArrivalAirportCd,
                 ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
-                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault().ToUniversalTime(),
                 AirlineCode = summaryRecord.AirlineCd,
                 FlightNumber = summaryRecord.FlightNumber
             };
@@ -113,12 +113,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 DepartureAirportName = dict.GetAirportName(summaryRecord.DepartureAirportCd),
                 DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
                 DepartureTerminal = summaryRecord.DepartureTerminal,
-                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault(),
+                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault().ToUniversalTime(),
                 ArrivalAirport = summaryRecord.ArrivalAirportCd,
                 ArrivalAirportName = dict.GetAirportName(summaryRecord.ArrivalAirportCd),
                 ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
                 ArrivalTerminal = summaryRecord.ArrivalTerminal,
-                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault(),
+                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault().ToUniversalTime(),
                 AirlineCode = summaryRecord.AirlineCd,
                 AirlineName = dict.GetAirlineName(summaryRecord.AirlineCd),
                 AirlineLogoUrl = dict.GetAirlineLogoUrl(summaryRecord.AirlineCd),
@@ -156,13 +156,16 @@ namespace Lunggo.ApCommon.Flight.Service
 
         internal PaymentInfo ConvertFlightPaymentInfo(FlightReservationTableRecord record)
         {
+            DateTime? paymentTime = null;
+            if (record.PaymentTime.HasValue)
+                paymentTime = record.PaymentTime.Value.ToUniversalTime();
             return new PaymentInfo
             {
                 Id = record.PaymentId,
                 Medium = PaymentMediumCd.Mnemonic(record.PaymentMediumCd),
                 Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
                 Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
-                Time = record.PaymentTime,
+                Time = paymentTime,
                 TargetAccount = record.PaymentTargetAccount,
                 FinalPrice = record.FinalPrice.GetValueOrDefault()
             };
@@ -180,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationAirport = trip.DestinationAirport,
                 DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
                 DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
-                DepartureDate = trip.DepartureDate,
+                DepartureDate = trip.DepartureDate.ToUniversalTime(),
                 TotalDuration = CalculateTotalDuration(trip),
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
@@ -196,11 +199,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 DepartureAirport = segment.DepartureAirport,
                 DepartureCity = dict.GetAirportCity(segment.DepartureAirport),
                 DepartureAirportName = dict.GetAirportName(segment.DepartureAirport),
-                DepartureTime = segment.DepartureTime,
+                DepartureTime = segment.DepartureTime.ToUniversalTime(),
                 ArrivalAirport = segment.ArrivalAirport,
                 ArrivalCity = dict.GetAirportCity(segment.ArrivalAirport),
                 ArrivalAirportName = dict.GetAirportName(segment.ArrivalAirport),
-                ArrivalTime = segment.ArrivalTime,
+                ArrivalTime = segment.ArrivalTime.ToUniversalTime(),
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
                 AirlineName = dict.GetAirlineName(segment.AirlineCode),
@@ -257,8 +260,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         IsStop = true,
                         Airport = stop.Airport,
-                        ArrivalTime = stop.ArrivalTime,
-                        DepartureTime = stop.DepartureTime,
+                        ArrivalTime = stop.ArrivalTime.ToUniversalTime(),
+                        DepartureTime = stop.DepartureTime.ToUniversalTime(),
                         Duration = stop.DepartureTime - stop.ArrivalTime
                     }));
                 }
@@ -268,8 +271,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         IsStop = false,
                         Airport = segments[i].DepartureAirport,
-                        ArrivalTime = segments[i - 1].ArrivalTime,
-                        DepartureTime = segments[i].DepartureTime,
+                        ArrivalTime = segments[i - 1].ArrivalTime.ToUniversalTime(),
+                        DepartureTime = segments[i].DepartureTime.ToUniversalTime(),
                         Duration = segments[i].DepartureTime - segments[i - 1].ArrivalTime
                     });
                 }
