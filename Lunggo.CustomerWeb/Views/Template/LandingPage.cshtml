@@ -75,13 +75,35 @@
         </div>
     </footer><!-- .site-footer -->
     
+    <div class="modal thankyou-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="fa fa-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-center">Thank you for Registering</h2>
+                    <p class="text-center"><b>Your details have been added to our database and we will be in touch shortly with the latest updates on the programme.</b></p>
+                    <p class="text-center">In the meantime, you can find the latest information from our social media</p>
+                    <div class="social-media">
+                        <a href="#"><span class="fa fa-instagram"></span></a>
+                        <a href="#"><span class="fa fa-facebook"></span></a>
+                        <a href="#"><span class="fa fa-pinterest"></span></a>
+                        <a href="#"><span class="fa fa-youtube-play"></span></a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!-- scripts -->
     <script src="/Assets/js/jquery.min.js"></script>
     <script src="/Assets/js/jquery.countdown.min.js"></script>
     
     <script type="text/javascript">
+        // countdown timer
         $(".countdown .timer").countdown("2016/01/01",
-            function (event) {
+            function(event) {
                 $(this).html(
                     event.strftime('<span>%D</span> <span>%H</span> <span>%M</span> <span>%S</span>')
                 );
@@ -106,6 +128,20 @@
                     $('#text-day').text('Day');
                 }
             });
+
+// modal functions
+        function modal(state) {
+            if (state == 'open'|| state == 'show' || state == true) {
+                $('.thankyou-modal').show();
+            } else if(state == 'close' || state == 'hide' || state == false) {
+                $('.thankyou-modal').hide();
+            } else {
+                $('.thankyou-modal').toggle();
+            }
+        }
+        $('.thankyou-modal .close').click(function() {
+            modal('hide');
+        })
     </script>
 
 </body>

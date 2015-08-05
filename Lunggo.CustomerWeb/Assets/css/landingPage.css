@@ -117,6 +117,29 @@ form input[type="text"] {
   text-align: center;
   border-radius: 0; }
 
+.thankyou-modal {
+  background: rgba(10, 10, 10, 0.8); }
+  .thankyou-modal .modal-content .modal-header {
+    border-bottom: 0; }
+    .thankyou-modal .modal-content .modal-header .fa {
+      color: #30b3e7; }
+  .thankyou-modal .modal-content .modal-body {
+    text-align: center;
+    padding-bottom: 50px; }
+    .thankyou-modal .modal-content .modal-body .social-media {
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #30b3e7;
+      text-align: center;
+      border-radius: 5px;
+      display: inline-block;
+      padding: 10px 25px;
+      margin-top: 20px; }
+      .thankyou-modal .modal-content .modal-body .social-media a {
+        color: #30b3e7;
+        font-size: 32px; }
+      .thankyou-modal .modal-content .modal-body .social-media a + a {
+        margin-left: 25px; }
+
 footer {
   padding: 30px 0;
   background: #303030;
