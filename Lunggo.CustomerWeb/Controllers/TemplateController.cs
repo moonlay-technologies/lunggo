@@ -96,5 +96,15 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult Activity()
+        {
+            return View();
+        }
+
+        public ActionResult eticket()
+        {
+            return View();
+        }
     }
 }
