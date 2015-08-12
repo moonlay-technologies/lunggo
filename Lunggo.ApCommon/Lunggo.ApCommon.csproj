@@ -174,6 +174,7 @@
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
     <Compile Include="Flight\Model\MarginRule.cs" />
+    <Compile Include="Flight\Model\DiscountRule.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
     <Compile Include="Flight\Model\PassengerInfo.cs" />
     <Compile Include="Flight\Model\ResultBase.cs" />
