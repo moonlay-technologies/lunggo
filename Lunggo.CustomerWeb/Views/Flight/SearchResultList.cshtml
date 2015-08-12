@@ -721,6 +721,7 @@
                                     <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>DEPARTURE</b> FLIGHTS</h4>
                                     <ol>
                                         <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
+                                            <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</div>
                                             <div class="flight-airline">
                                                 <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                 <h5>{{trip.AirlineName}}</h5>

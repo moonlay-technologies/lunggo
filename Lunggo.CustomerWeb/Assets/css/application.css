@@ -1901,6 +1901,16 @@ hr {
             clear: both; }
           .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route > div {
             float: left; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-transit {
+            width: 100%;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 18px;
+            font-style: italic; }
           .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.route .flight-airline {
             width: 15%;
             text-align: center; }
@@ -1950,7 +1960,9 @@ hr {
             .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li.transit h3 {
               text-align: center; }
         .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li + li {
-          border-top: 1px solid #ddd; }
+          padding-top: 0; }
+          .flight-search-page .flight-list.horizontal .flight .flight-detail .flight-detail-content ol li + li.route .flight-transit {
+            display: block; }
   .flight-search-page .flight-list.horizontal .flight .flight-rules {
     padding: 0 20px;
     height: 0;

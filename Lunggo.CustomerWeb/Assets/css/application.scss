@@ -795,6 +795,7 @@ hr {border-color:#aaa;}
                             &:after {content:""; display:block; width:100%; clear:both;}
                             &.route>div {float:left;}
                             &.route {
+                                .flight-transit {width:100%; border-top:$border-default; border-bottom:$border-default; text-align:center; padding:10px 0; margin-bottom:15px; display:none; font-size:18px; font-style:italic;}
                                 .flight-airline {width:15%; text-align:center;
                                     img {max-width:75px; height:auto;}
                                 }
@@ -817,7 +818,9 @@ hr {border-color:#aaa;}
                                 h4 {}
                             }
                         }
-                        li+li {border-top:$border-default;}
+                        li+li {padding-top:0;
+                            &.route .flight-transit {display:block;}
+                        }
                     }
 			    }
             }
