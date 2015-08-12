@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/Assets/css/application.min.css">
 
 </head>
-<body ng-app="travorama" class="page home-page">
+<body ng-app="travorama" class="page @ViewBag.BodyClass">
 
     <header id="site-header" class="site-header home-header" data-activeTab="hotel">
         @{ Html.RenderPartial("_Mainmenu"); }
@@ -94,6 +94,11 @@
                                         <option value="2">2 Adults</option>
                                         <option value="3">3 Adults</option>
                                         <option value="4">4 Adults</option>
+                                        <option value="5">5 Adults</option>
+                                        <option value="6">6 Adults</option>
+                                        <option value="7">7 Adults</option>
+                                        <option value="8">8 Adults</option>
+                                        <option value="9">9 Adults</option>
                                     </select>
                                     <select class="flight-child" placeholder="Child">
                                         <option value="0">0 Children</option>
@@ -101,6 +106,10 @@
                                         <option value="2">2 Children</option>
                                         <option value="3">3 Children</option>
                                         <option value="4">4 Children</option>
+                                        <option value="5">5 Children</option>
+                                        <option value="6">6 Children</option>
+                                        <option value="7">7 Children</option>
+                                        <option value="8">8 Children</option>
                                     </select>
                                     <select class="flight-infant" placeholder="Infant">
                                         <option value="0">0 Infants</option>
@@ -115,6 +124,10 @@
                                     <input type="text" class="hidden flight-destination-airport-real" value="" />
                                     <input type="text" id="flight-data-info" name="info" class="hidden" />
                                     <a class="submit-button flight-submit-button btn btn-yellow">SEARCH</a>
+                                </div>
+                                <div class="passenger-warning">
+                                    <p class="max-passenger">Maximum number of passenger is 9 person.</p>
+                                    <p class="max-infant">Infant cannot be more than adult.</p>
                                 </div>
                             </form><!-- .form-flight-search -->
                         </div><!-- .form-flight-search -->
@@ -212,6 +225,23 @@
         </section><!-- .footer-copyright -->
     </footer><!-- .site-footer -->
     
+    <div class="site-feedback">
+        <a class="feedback-header">Feedback? klik disini</a>
+        <div class="feedback-form">
+            <form action="#" method="post" class="form form-horizontal">
+                <div class="form-group">
+                    <input type="type" name="name" value="" class="form-control" placeholder="Subject" />
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <a href="#" class="form-control">SUBMIT</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ****************************** -->
     <!-- javascripts -->
     <script src="/Assets/js/jquery.min.js"></script>

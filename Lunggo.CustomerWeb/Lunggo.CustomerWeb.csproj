@@ -347,6 +347,12 @@
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
+    <Content Include="Assets\css\landingPage.css">
+      <DependentUpon>landingPage.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\landingPage.min.css">
+      <DependentUpon>landingPage.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\mobile-app.css">
       <DependentUpon>mobile-app.scss</DependentUpon>
     </Content>
@@ -638,6 +644,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
@@ -659,9 +666,10 @@
     <Content Include="Assets\images\flight-toggle-down.png" />
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
-    <Content Include="Assets\images\fliter-return.png" />
+    <Content Include="Assets\images\filter-return.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\googlePlay.png" />
+    <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
@@ -737,6 +745,7 @@
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\payment-veritrans.png" />
+    <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\youtube-icon.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
@@ -853,6 +862,7 @@
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\css\mobile-app.scss" />
     <Content Include="Config\Country.csv" />
+    <Content Include="Assets\css\landingPage.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -2111,6 +2121,10 @@
     <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
+    <Content Include="Views\Template\LandingPage.cshtml" />
+    <Content Include="Views\Template\Activity.cshtml" />
+    <Content Include="Views\Shared\_layout_eticket.cshtml" />
+    <None Include="Views\Template\eticket.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

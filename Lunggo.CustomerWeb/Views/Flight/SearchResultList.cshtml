@@ -248,16 +248,25 @@
                                         <option value="2">2 Adults</option>
                                         <option value="3">3 Adults</option>
                                         <option value="4">4 Adults</option>
+                                        <option value="5">5 Adults</option>
+                                        <option value="6">6 Adults</option>
+                                        <option value="7">7 Adults</option>
+                                        <option value="8">8 Adults</option>
+                                        <option value="9">9 Adults</option>
                                     </select>
                                     <select class="form-control flight-child">
-                                        <option value="0">0 Child</option>
+                                        <option value="0">0 Children</option>
                                         <option value="1">1 Child</option>
-                                        <option value="2">2 Childs</option>
-                                        <option value="3">3 Childs</option>
-                                        <option value="4">4 Childs</option>
+                                        <option value="2">2 Children</option>
+                                        <option value="3">3 Children</option>
+                                        <option value="4">4 Children</option>
+                                        <option value="5">5 Children</option>
+                                        <option value="6">6 Children</option>
+                                        <option value="7">7 Children</option>
+                                        <option value="8">8 Children</option>
                                     </select>
                                     <select class="form-control flight-infant">
-                                        <option value="0">0 Child</option>
+                                        <option value="0">0 Infant</option>
                                         <option value="1">1 Infant</option>
                                         <option value="2">2 Infants</option>
                                         <option value="3">3 Infants</option>
@@ -269,6 +278,10 @@
                                     <input type="text" class="hidden flight-destination-airport-real" value="@data.TripInfos[0].DestinationAirport" />
                                     <input type="text" id="flight-data-info" name="info" class="hidden" />
                                     <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
+                                    <div class="passenger-warning">
+                                        <p class="max-passenger">Maximum number of passenger is 9 person.</p>
+                                        <p class="max-infant">Infant cannot be more than adult.</p>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -708,6 +721,7 @@
                                     <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>DEPARTURE</b> FLIGHTS</h4>
                                     <ol>
                                         <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
+                                            <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</div>
                                             <div class="flight-airline">
                                                 <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                 <h5>{{trip.AirlineName}}</h5>
@@ -746,6 +760,7 @@
                                         <h4 class="detail-title"> <b>RETURN</b> FLIGHTS</h4>
                                         <ol>
                                             <li class="route" ng-repeat="trip in flight.FlightTrips[1].FlightSegments">
+                                                <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[1].Transits[ $index-1 ].Duration}}</div>
                                                 <div class="flight-airline">
                                                     <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                     <h5>{{trip.AirlineName}}</h5>

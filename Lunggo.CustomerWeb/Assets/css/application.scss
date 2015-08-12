@@ -114,6 +114,13 @@ hr {border-color:#aaa;}
 
 
 // ----------------------------------------------
+// feedback
+.site-feedback {position:fixed; bottom:0; right:100px; z-index:9999; background:$blue-default; color:#fff; border-bottom:none; padding:10px; width:200px; text-align:center; font-size:16px; display:none;
+ -webkit-border-top-left-radius:5px; -webkit-border-top-right-radius:5px; -moz-border-radius-topleft:5px; -moz-border-radius-topright:5px; border-top-left-radius:5px; border-top-right-radius:5px;
+    .feedback-header {color:#fff;}
+}
+
+// ----------------------------------------------
 // jquery ui
 
 .ui-autocomplete {width:500px;
@@ -616,6 +623,9 @@ hr {border-color:#aaa;}
             .flight-child {background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
             .flight-infant {background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
             .submit-button {font-weight:bold; width:11%;}
+            .passenger-warning {position:absolute; left:50%; padding-top:10px;
+                p {background:#ffb911; color:#000; padding:0 10px; display:none;}
+            }
         }
     }
 
@@ -785,6 +795,7 @@ hr {border-color:#aaa;}
                             &:after {content:""; display:block; width:100%; clear:both;}
                             &.route>div {float:left;}
                             &.route {
+                                .flight-transit {width:100%; border-top:$border-default; border-bottom:$border-default; text-align:center; padding:10px 0; margin-bottom:15px; display:none; font-size:18px; font-style:italic;}
                                 .flight-airline {width:15%; text-align:center;
                                     img {max-width:75px; height:auto;}
                                 }
@@ -807,7 +818,9 @@ hr {border-color:#aaa;}
                                 h4 {}
                             }
                         }
-                        li+li {border-top:$border-default;}
+                        li+li {padding-top:0;
+                            &.route .flight-transit {display:block;}
+                        }
                     }
 			    }
             }
