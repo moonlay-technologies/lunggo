@@ -760,6 +760,7 @@
                                         <h4 class="detail-title"> <b>RETURN</b> FLIGHTS</h4>
                                         <ol>
                                             <li class="route" ng-repeat="trip in flight.FlightTrips[1].FlightSegments">
+                                                <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[1].Transits[ $index-1 ].Duration}}</div>
                                                 <div class="flight-airline">
                                                     <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                     <h5>{{trip.AirlineName}}</h5>
