@@ -25,12 +25,12 @@
         monthList.Add(new { Value = i, Text = new DateTime(2000,i,1).ToString("MMMM") });
     }
 
-    for (var i = DateTime.Now.Year-120; i <= DateTime.Now.Year; i++)
+    for (var i = DateTime.UtcNow.Year-120; i <= DateTime.UtcNow.Year; i++)
     {
         birthYearList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
 
-    for (var i = DateTime.Now.Year; i <= DateTime.Now.Year + 15; i++)
+    for (var i = DateTime.UtcNow.Year; i <= DateTime.UtcNow.Year + 15; i++)
     {
         expiryYearList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
@@ -216,7 +216,7 @@
                                         @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Month, new SelectList(monthList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.month", ng_init = "flightPassengers[" + i + "].birthday.month = '" + 1 + "'", ng_change = "passengersValidation()"})
                                     </div>
                                     <div class="col-xs-4">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.Now.Year - 120) + "'", ng_change = "passengersValidation()"})
+                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.UtcNow.Year - 120) + "'", ng_change = "passengersValidation()"})
                                     </div>
                                 </div>
                             }
@@ -237,7 +237,7 @@
                                         @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Month, new SelectList(monthList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.month", ng_init = "flightPassengers[" + i + "].passportexpiry.month = '" + 1 + "'", ng_change = "passengersValidation()" })
                                     </div>
                                     <div class="col-xs-4">
-                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.year", ng_init = "flightPassengers[" + i + "].passportexpiry.year = '" + DateTime.Now.Year + "'", ng_change = "passengersValidation()" })
+                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.year", ng_init = "flightPassengers[" + i + "].passportexpiry.year = '" + DateTime.UtcNow.Year + "'", ng_change = "passengersValidation()" })
                                     </div>
                                 </div>
                                 <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
@@ -412,7 +412,8 @@
             <h1 class="section-title">Payment Method</h1>
 
             <div class="section-content container">
-
+            
+@*
                 <div class="payment row">
                     <div class="payment-name col-xs-7">
                         <h2>Bank Transfer</h2>
@@ -422,6 +423,7 @@
                         <button name="Payment.Method" value="@PaymentMethod.BankTransfer" class="btn btn-yellow">Pay Now</button>
                     </div>
                 </div>
+*@
             
                 <div class="payment row">
                     <div class="payment-name col-xs-7">

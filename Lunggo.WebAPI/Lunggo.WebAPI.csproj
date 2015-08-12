@@ -154,6 +154,8 @@
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRules.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\ExpireReservations.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\FilterFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetRulesLogic.cs" />
@@ -191,6 +193,7 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
+    <Content Include="Config\Country.csv" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />

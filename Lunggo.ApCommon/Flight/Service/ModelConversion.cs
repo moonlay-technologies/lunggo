@@ -159,6 +159,15 @@ namespace Lunggo.ApCommon.Flight.Service
             DateTime? paymentTime = null;
             if (record.PaymentTime.HasValue)
                 paymentTime = record.PaymentTime.Value.ToUniversalTime();
+            RefundInfo refund = null;
+            if (record.RefundTime != null)
+                refund = new RefundInfo
+                {
+                    Time = record.RefundTime.GetValueOrDefault(),
+                    Amount = record.RefundAmount.GetValueOrDefault(),
+                    TargetBank = record.RefundTargetBank,
+                    TargetAccount = record.RefundTargetAccount
+                };
             return new PaymentInfo
             {
                 Id = record.PaymentId,
@@ -167,7 +176,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
                 Time = paymentTime,
                 TargetAccount = record.PaymentTargetAccount,
-                FinalPrice = record.FinalPrice.GetValueOrDefault()
+                FinalPrice = record.FinalPrice.GetValueOrDefault(),
+                PaidAmount = record.PaidAmount.GetValueOrDefault(),
+                Refund = refund
             };
         }
 
@@ -216,6 +227,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 StopQuantity = segment.StopQuantity,
                 FlightStops = segment.FlightStops,
                 Rbd = segment.Rbd,
+                Meal = segment.Meal,
                 RemainingSeats = segment.RemainingSeats
             }).ToList();
         }

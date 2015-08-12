@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                 var reservationRecord = new FlightReservationTableRecord
                 {
                     RsvNo = rsvNo,
-                    RsvTime = DateTime.Now,
+                    RsvTime = DateTime.UtcNow,
                     ContactName = bookingRecord.ContactData.Name,
                     ContactEmail = bookingRecord.ContactData.Email,
                     ContactCountryCd = bookingRecord.ContactData.CountryCode,
@@ -35,13 +35,13 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     CancellationTypeCd = "xxx",
                     PaymentStatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
                     OverallTripTypeCd = TripTypeCd.Mnemonic(bookingRecord.OverallTripType),
-                    FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
+                    TotalSupplierPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
                     PaymentFeeForCust = 0,
                     PaymentFeeForUs = 0,
-                    TotalSupplierPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
+                    FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
                     GrossProfit = 0,
                     InsertBy = "xxx",
-                    InsertDate = DateTime.Now,
+                    InsertDate = DateTime.UtcNow,
                     InsertPgId = "xxx",
                     AdultCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Adult),
                     ChildCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Child),
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         LocalExchangeRate = record.Itinerary.LocalRate,
                         TripTypeCd = TripTypeCd.Mnemonic(record.Itinerary.TripType),
                         InsertBy = "xxx",
-                        InsertDate = DateTime.Now,
+                        InsertDate = DateTime.UtcNow,
                         InsertPgId = "xxx"
                     };
                     FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             DestinationAirportCd = trip.DestinationAirport,
                             DepartureDate = trip.DepartureDate,
                             InsertBy = "xxx",
-                            InsertDate = DateTime.Now,
+                            InsertDate = DateTime.UtcNow,
                             InsertPgId = "xxx"
                         };
                         FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
@@ -115,7 +115,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 Duration = segment.Duration,
                                 StopQuantity = segment.StopQuantity,
                                 InsertBy = "xxx",
-                                InsertDate = DateTime.Now,
+                                InsertDate = DateTime.UtcNow,
                                 InsertPgId = "xxx"
                             };
                             FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
@@ -134,7 +134,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                         Duration = stop.Duration,
                                         AirportCd = stop.Airport,
                                         InsertBy = "xxx",
-                                        InsertDate = DateTime.Now,
+                                        InsertDate = DateTime.UtcNow,
                                         InsertPgId = "xxx"
                                     };
                                     FlightStopTableRepo.GetInstance().Insert(conn, stopRecord);
@@ -160,7 +160,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             IdNumber = passenger.PassportNumber,
                             PassportExpiryDate = passenger.PassportExpiryDate,
                             InsertBy = "xxx",
-                            InsertDate = DateTime.Now,
+                            InsertDate = DateTime.UtcNow,
                             InsertPgId = "xxx"
                         }; ;
                         FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
@@ -186,7 +186,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         DestinationAirportCd = trip.DestinationAirport,
                         DepartureDate = trip.DepartureDate,
                         InsertBy = "xxx",
-                        InsertDate = DateTime.Now,
+                        InsertDate = DateTime.UtcNow,
                         InsertPgId = "xxx"
                     };
                     FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             Duration = segment.Duration,
                             StopQuantity = segment.StopQuantity,
                             InsertBy = "xxx",
-                            InsertDate = DateTime.Now,
+                            InsertDate = DateTime.UtcNow,
                             InsertPgId = "xxx"
                         };
                         FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
@@ -274,7 +274,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             Priority = rule.Priority,
                             IsActive = true,
                             InsertBy = "xxx",
-                            InsertDate = DateTime.Now,
+                            InsertDate = DateTime.UtcNow,
                             InsertPgId = "xxx"
                         };
                         FlightPriceMarginRuleTableRepo.GetInstance().Insert(conn, ruleRecord);

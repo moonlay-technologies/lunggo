@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
                 var output = new GetDetailsOutput();
                 var request = new TripDetailsConditions
-                {
+                {   
                     BookingId = input.BookingId,
                     TripInfos = tripInfos
                 };

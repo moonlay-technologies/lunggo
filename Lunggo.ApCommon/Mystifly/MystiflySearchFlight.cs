@@ -423,6 +423,7 @@ namespace Lunggo.ApCommon.Mystifly
                 OperatingAirlineCode = flightSegment.OperatingAirline.Code,
                 AircraftCode = flightSegment.OperatingAirline.Equipment,
                 Rbd = flightSegment.ResBookDesigCode,
+                Meal = !string.IsNullOrEmpty(flightSegment.MealCode),
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,
                 FlightStops = stops

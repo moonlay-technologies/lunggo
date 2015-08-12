@@ -277,6 +277,11 @@
     <Compile Include="Models\PaymentConfirmationData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -611,6 +616,7 @@
     <Content Include="Assets\images\airlines\XJ.png" />
     <Content Include="Assets\images\airlines\XL.png" />
     <Content Include="Assets\images\airlines\XN.png" />
+    <Content Include="Assets\images\airlines\XT.png" />
     <Content Include="Assets\images\airlines\XY.png" />
     <Content Include="Assets\images\airlines\Y6.png" />
     <Content Include="Assets\images\airlines\YO.png" />
@@ -846,6 +852,7 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\css\mobile-app.scss" />
+    <Content Include="Config\Country.csv" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -2119,6 +2126,7 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Assets\images\countries\" />
     <Folder Include="Helper\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />
@@ -2153,6 +2161,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Mystifly.OnePointService.Flight\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

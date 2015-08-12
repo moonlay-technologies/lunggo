@@ -376,6 +376,7 @@
     <Content Include="App_Readme\WURFL-v1.6.0.1.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <Content Include="Config\Country.csv" />
     <None Include="Properties\PublishProfiles\prod-travorama-support-backend.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />

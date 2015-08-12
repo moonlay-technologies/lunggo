@@ -20,7 +20,7 @@ namespace Lunggo.Worker.EticketHandler
 
         public static async Task ProcessQueue()
         {
-            var queue = QueueService.GetInstance().GetQueueByReference(Queue.Eticket);
+            var queue = QueueService.GetInstance().GetQueueByReference(Queue.FlightEticket);
             Trace.WriteLine("Checking Eticket Queue...");
             var message = await queue.GetMessageAsync();
             if (message == null)
@@ -132,7 +132,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Pushing Eticket Email Queue for RsvNo " + rsvNo + "...");
                 var queueService = QueueService.GetInstance();
-                var emailQueue = queueService.GetQueueByReference(Queue.EticketEmail);
+                var emailQueue = queueService.GetQueueByReference(Queue.FlightEticketEmail);
                 emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
                 Trace.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
             }

@@ -39,14 +39,14 @@
                         var trip = rsv.Itinerary.FlightTrips.FirstOrDefault();
                         <tr>
                             <td>
-                                <a href="@Url.Action("Detail", "Flight", rsv.RsvNo)">@rsv.RsvNo</a>
+                                <a href="@Url.Action("Detail", "Flight", new { RsvNo = rsv.RsvNo})">@rsv.RsvNo</a>
                             </td>
                             <td>
                                 @rsv.Contact.Name
                             </td>
                             <td>
-                                @rsv.RsvTime.ToString("d MMM yyyy")<br />
-                                @rsv.RsvTime.ToString("HH:mm:ss")
+                                @rsv.RsvTime.AddHours(7).ToString("d MMM yyyy")<br />
+                                @rsv.RsvTime.AddHours(7).ToString("HH:mm:ss")
                             </td>
                             <td>
                                 @trip.OriginAirport - @trip.DestinationAirport
@@ -103,9 +103,6 @@
                                     case PaymentStatus.Settled:
                                         <span class="label label-success">Complete</span><br />
                                         <span>by @rsv.Payment.Method.ToString()</span>
-                                        break;
-                                    case PaymentStatus.Refunded:
-                                        <span class="label label-info">Refund</span><br />
                                         break;
                                     case PaymentStatus.Cancelled:
                                         <span class="label label-danger">Cancelled</span><br />

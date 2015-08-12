@@ -150,7 +150,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool BookingDateMatches(MarginRule rule)
         {
-            var nowDate = DateTime.Now.Date;
+            var nowDate = DateTime.UtcNow.Date;
             var dateSpanOk = !rule.BookingDateSpans.Any() || rule.BookingDateSpans.Any(dateSpan => dateSpan.Includes(nowDate));
             var dayOk = !rule.BookingDays.Any() || rule.BookingDays.Contains(nowDate.DayOfWeek);
             var dateOk = !rule.BookingDates.Any() || rule.BookingDates.Contains(nowDate);

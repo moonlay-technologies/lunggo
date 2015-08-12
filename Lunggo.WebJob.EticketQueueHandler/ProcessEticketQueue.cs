@@ -25,7 +25,7 @@ namespace Lunggo.WebJob.EticketQueueHandler
     public class ProcessEticketQueue
     {
 
-        public static void ProcessQueue([QueueTrigger("eticket")] string rsvNo)
+        public static void ProcessQueue([QueueTrigger("flighteticket")] string rsvNo)
         {
             Console.WriteLine("Processing Eticket for RsvNo " + rsvNo + "...");
             if (rsvNo.First() == 'F')
@@ -105,7 +105,7 @@ namespace Lunggo.WebJob.EticketQueueHandler
 
                 Console.WriteLine("Pushing Eticket Email Queue for RsvNo " + rsvNo + "...");
                 var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference(Queue.EticketEmail);
+                var queue = queueService.GetQueueByReference(Queue.FlightEticketEmail);
                 queue.AddMessage(new CloudQueueMessage(rsvNo));
                 swTotal.Stop();
                 Console.WriteLine("Done Processing Eticket for RsvNo " + rsvNo + ". (" + swTotal.Elapsed.TotalSeconds + "s Total)");

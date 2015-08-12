@@ -8,7 +8,9 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Logic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -22,14 +24,34 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetFlightDb.Reservation(rsvNo);
         }
 
-        public List<FlightReservation> GetOverviewReservations(string contactEmail)
+        public FlightReservation GetOverviewReservation(string rsvNo)
         {
-            return GetFlightDb.OverviewReservations(contactEmail).ToList();
+            return GetFlightDb.OverviewReservation(rsvNo);
+        }
+
+        public List<FlightReservation> GetOverviewReservationsByContactEmail(string contactEmail)
+        {
+            return GetFlightDb.OverviewReservationsByContactEmail(contactEmail).ToList();
         }
 
         public List<FlightReservation> SearchReservations(FlightReservationSearch search)
         {
             return GetFlightDb.SearchReservations(search).ToList();
+        }
+
+        public void ExpireReservations()
+        {
+            UpdateFlightDb.ExpireReservations();
+        }
+
+        public void CancelReservation(string rsvNo, CancellationType cancellationType)
+        {
+            UpdateFlightDb.CancelReservation(rsvNo, cancellationType);
+        }
+
+        public void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
+        {
+            UpdateFlightDb.ConfirmRefund(rsvNo, refund);
         }
     }
 }

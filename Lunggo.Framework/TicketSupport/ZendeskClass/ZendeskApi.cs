@@ -78,7 +78,7 @@ namespace Lunggo.Framework.TicketSupport.ZendeskClass
         {
             string url = string.Format("{0}/access/remoteauth/", ZendeskUrl);
 
-            string timestamp = GetUnixEpoch(DateTime.Now).ToString();
+            string timestamp = GetUnixEpoch(DateTime.UtcNow).ToString();
 
 
             string message = string.Format("{0}|{1}|||||{2}|{3}", name, email, authenticationToken, timestamp);

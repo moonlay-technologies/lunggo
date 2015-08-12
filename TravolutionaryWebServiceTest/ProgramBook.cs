@@ -72,8 +72,8 @@ namespace TravolutionaryWebServiceTest
         {
             var searchRequest = new HotelsServiceSearchRequest()
             {
-                CheckIn = DateTime.Now.AddDays(3),
-                CheckOut = DateTime.Now.AddDays(4),
+                CheckIn = DateTime.UtcNow.AddDays(3),
+                CheckOut = DateTime.UtcNow.AddDays(4),
                 Nights = 1,
                 DesiredResultCurrency = "USD",
                 DetailLevel = SearchDetailLevel.Default, //THIS IS A VERY IMPORTANG PARAMETER

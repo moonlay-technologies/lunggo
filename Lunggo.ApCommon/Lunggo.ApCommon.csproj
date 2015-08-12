@@ -142,6 +142,7 @@
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
+    <Compile Include="Flight\Constant\CancellationType.cs" />
     <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
     <Compile Include="Flight\Constant\FlightSupplier.cs" />
@@ -149,6 +150,9 @@
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
+    <Compile Include="Flight\Database\Logic\UpdateFlightDb.cs" />
+    <Compile Include="Flight\Database\Query\CancelReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\ExpireReservationsQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
@@ -204,7 +208,9 @@
     <Compile Include="Flight\Database\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightPaymentQuery.cs" />
-    <Compile Include="Flight\Service\GetReservations.cs" />
+    <Compile Include="Flight\Service\Discount.cs" />
+    <Compile Include="Flight\Service\SendToCustomer.cs" />
+    <Compile Include="Flight\Service\Reservations.cs" />
     <Compile Include="Flight\Database\Logic\InsertFlightDb.cs" />
     <Compile Include="Flight\Database\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Service\BookFlight.cs" />
@@ -275,7 +281,6 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
-    <Compile Include="Helper\AutocompleteHelper.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />

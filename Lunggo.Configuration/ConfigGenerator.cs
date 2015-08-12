@@ -62,7 +62,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
+            generator.StartConfig(DeploymentEnvironment.Production, projectList);
             HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -87,7 +87,7 @@ namespace Lunggo.Configuration
 
         private void SetCurrentExecutionDirectory()
         {
-            _currentExecutionDir = Path.Combine(ParentLogDirectory, DateTime.Now.ToString(FormatDate));
+            _currentExecutionDir = Path.Combine(ParentLogDirectory, DateTime.UtcNow.ToString(FormatDate));
         }
 
         private void SetConfigDictionary(Range excelFile, DeploymentEnvironment environment)

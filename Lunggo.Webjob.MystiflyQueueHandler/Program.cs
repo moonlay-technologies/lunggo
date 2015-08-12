@@ -47,9 +47,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
                 Console.WriteLine("Processing Ticketed " + ticketedRsvNo + "...");
                 var detailsInput = new GetDetailsInput {RsvNo = ticketedRsvNo};
                 flightService.GetAndUpdateNewDetails(detailsInput);
-                var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference(Queue.Eticket);
-                queue.AddMessage(new CloudQueueMessage(ticketedRsvNo));
+                flightService.SendEticketToCustomer(ticketedRsvNo);
             }
         }
 
@@ -61,9 +59,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
                 Console.WriteLine("Processing Schedule Changed " + scheduleChangedRsvNo + "...");
                 var detailsInput = new GetDetailsInput { RsvNo = scheduleChangedRsvNo };
                 flightService.GetAndUpdateNewDetails(detailsInput);
-                var queueService = QueueService.GetInstance();
-                var queue = queueService.GetQueueByReference(Queue.ChangedEticket);
-                queue.AddMessage(new CloudQueueMessage(scheduleChangedRsvNo));
+                flightService.SendChangedEticketToCustomer(scheduleChangedRsvNo);
             }
         }
 

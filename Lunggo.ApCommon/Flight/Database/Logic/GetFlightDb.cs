@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
@@ -15,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {
-        internal static IEnumerable<FlightReservation> OverviewReservations(string contactEmail)
+        internal static IEnumerable<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -66,6 +67,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 },
                                 Payment = new PaymentInfo
                                 {
+                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                     Time = reservationRecord.PaymentTime
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
@@ -161,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         if (reservation == null)
                         {
                             RefundInfo refundInfo = null;
-                            if (reservationRecord.PaymentStatusCd == PaymentStatusCd.Mnemonic(PaymentStatus.Refunded))
+                            if (reservationRecord.RefundTime != null)
                             {
                                 refundInfo = new RefundInfo
                                 {
@@ -192,6 +194,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                     Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                     TargetAccount = reservationRecord.PaymentTargetAccount,
                                     FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
+                                    PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
                                     Refund = refundInfo
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
@@ -313,6 +316,24 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     Priority = record.Priority.GetValueOrDefault(),
                 });
                 return activeRules.ToList();
+            }
+        }
+
+        internal static List<string> RsvNoByBookingId(List<string> bookingIds)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+            }
+        }
+
+        internal static PaymentStatus PaymentStatus(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var statusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
+                var status = PaymentStatusCd.Mnemonic(statusCd);
+                return status;
             }
         }
     }

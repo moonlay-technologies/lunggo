@@ -39,9 +39,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
                         GetAndUpdateNewDetails(detailsInput);
-                        var queueService = QueueService.GetInstance();
-                        var queue = queueService.GetQueueByReference(Queue.Eticket);
-                        queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                        SendEticketToCustomer(input.RsvNo);
                     }
                 }
                 else

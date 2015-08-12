@@ -30,11 +30,11 @@
             <div class="form-group">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     Checkin
-                    <input type="text" class="input-sm form-control" data-control="datetime" placeholder="CheckIn" value="@DateTime.Now.ToString("dd/MM/yyyy")" name="@Html.NameFor(model => model.StringChkInDate)" />
+                    <input type="text" class="input-sm form-control" data-control="datetime" placeholder="CheckIn" value="@DateTime.UtcNow.ToString("dd/MM/yyyy")" name="@Html.NameFor(model => model.StringChkInDate)" />
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     Checkout
-                    <input type="text" class="input-sm form-control" data-control="datetime" placeholder="Checkout" value="@DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")" name="@Html.NameFor(model => model.StringChkOutDate)" />
+                    <input type="text" class="input-sm form-control" data-control="datetime" placeholder="Checkout" value="@DateTime.UtcNow.AddDays(2).ToString("dd/MM/yyyy")" name="@Html.NameFor(model => model.StringChkOutDate)" />
                 </div>
             </div>
             <div class="form-group">

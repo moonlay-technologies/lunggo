@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Flight.Database.Model
         internal List<PassengerInfoFare> Passengers { get; set; }
         internal List<FlightBookingItineraryRecord> ItineraryRecords { get; set; }
         internal ContactData ContactData { get; set; }
+        internal string DiscountCode { get; set; }
     }
 
     internal class FlightBookingItineraryRecord

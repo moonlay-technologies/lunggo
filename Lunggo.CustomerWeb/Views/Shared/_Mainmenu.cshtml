@@ -27,7 +27,7 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @Html.BeginForm("Logout", "Account", FormMethod.Post) { 
+                        using (Html.BeginForm("Logout", "Account", FormMethod.Post)) { 
                             @Html.AntiForgeryToken()
                             <li class="pull-right site-login">Hi, @User.Identity.GetFirstName() <button type="submit">(Logout)</button></li>
                         }

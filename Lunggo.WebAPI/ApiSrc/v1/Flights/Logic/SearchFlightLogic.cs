@@ -58,7 +58,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     (request.TripType == TripType.OpenJaw && request.TripInfos.Count > 1) ||
                     (request.TripType == TripType.Circle && request.TripInfos.Count > 2)
                 ) &&
-                request.TripInfos.TrueForAll(data => data.DepartureDate >= DateTime.Now);
+                request.TripInfos.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow);
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)

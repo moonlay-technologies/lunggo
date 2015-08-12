@@ -30,6 +30,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(search);
         }
 
+        [RequireHttps]
         public ActionResult Checkout(FlightSelectData select)
         {
             var service = FlightService.GetInstance();
@@ -39,10 +40,10 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 HashKey = select.token,
                 Itinerary = itinerary,
-                
             });
         }
 
+        [RequireHttps]
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
@@ -107,7 +108,6 @@ namespace Lunggo.CustomerWeb.Controllers
                         }
                     };
 
-
                 var url = PaymentService.GetInstance().GetPaymentUrl(transactionDetails, itemDetails, data.Payment.Method);
                 if (url != null)
                     return Redirect(url);
@@ -124,6 +124,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        [RequireHttps]
         public ActionResult Thankyou(string rsvNo)
         {
             var service = FlightService.GetInstance();

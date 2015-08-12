@@ -1,4 +1,4 @@
-AirportId|AirportCode|AirPortName|cityCode|cityName|countryCode|countryName
+AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName
 0|0A7|Hendersonville Arpt.|0A7|Hendersonville|US|United States
 1|AAA|AnaaTest|AAA|Anaa|PF|French Polynesia
 2|AAB|Arrabury|AAB|Arrabury|AU|Australia

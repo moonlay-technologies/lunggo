@@ -14,7 +14,7 @@
                 </tr>
                 <tr>
                     <td>Reservation Time</td>
-                    <td>@Model.RsvTime.ToString("d MMM yyyy HH:mm:ss")</td>
+                    <td>@Model.RsvTime.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
                 </tr>
                 <tr>
                     <td>Contact Name</td>
@@ -62,9 +62,6 @@
                             case PaymentStatus.Settled:
                                 <span class="label label-success">Complete</span><br />
                                 break;
-                            case PaymentStatus.Refunded:
-                                <span class="label label-info">Refund</span><br />
-                                break;
                             case PaymentStatus.Cancelled:
                                 <span class="label label-danger">Cancelled</span><br />
                                 break;
@@ -77,11 +74,11 @@
                         }
                     </td>
                 </tr>
-                @if (Model.Payment.Status == PaymentStatus.Refunded)
+                @if (Model.Payment.Refund != null)
                 {
                     <tr>
                         <td>Refund Time</td>
-                        <td>@Model.Payment.Refund.Time.ToString("d MMM yyyy HH:mm:ss")</td>
+                        <td>@Model.Payment.Refund.Time.AddHours(7).ToString("d MMM yyyy HH:mm:ss")</td>
                     </tr>
                     <tr>
                         <td>Refund Amount</td>

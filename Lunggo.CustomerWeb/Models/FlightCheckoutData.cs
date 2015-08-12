@@ -16,6 +16,7 @@ namespace Lunggo.CustomerWeb.Models
         public ContactData Contact { get; set; }
         public List<PassengerData> Passengers { get; set; }
         public PaymentInfo Payment { get; set; }
+        public string DiscountCode { get; set; }
         public string Message { get; set; }
     }
 

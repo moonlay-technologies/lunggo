@@ -21,17 +21,21 @@ namespace Lunggo.ApCommon.Dictionary
         public Dictionary<long, AirlineDict> AirlineDict;
         public Dictionary<long, AirportDict> AirportDict;
         public Dictionary<long, HotelLocationDict> HotelLocationDict;
+        public Dictionary<long, CountryDict> CountryDict;
 
         private const string AirlineFileName = @"Airline.csv";
         private const string AirportFileName = @"Airport.csv";
         private const string HotelLocationFileName = @"HotelLocation.csv";
+        private const string CountryFileName = @"Country.csv";
         private const string AirlineLogoFileExtension = @".png";
 
         private const string AirlineLogoPath = @"/Assets/Images/Airlines/";
+        private const string CountryFlagPath = @"/Assets/Images/Countries/";
         private static string _configPath;
         private static string _airlineFilePath;
         private static string _airportFilePath;
         private static string _hotelLocationFilePath;
+        private static string _countryFilePath;
         
 
         private DictionaryService()
@@ -54,9 +58,11 @@ namespace Lunggo.ApCommon.Dictionary
                 _airlineFilePath = Path.Combine(_configPath, AirlineFileName);
                 _airportFilePath = Path.Combine(_configPath, AirportFileName);
                 _hotelLocationFilePath = Path.Combine(_configPath, HotelLocationFileName);
+                _countryFilePath = Path.Combine(_configPath, CountryFileName);
                 AirlineDict = PopulateAirlineDict(_airlineFilePath);
                 AirportDict = PopulateAirportDict(_airportFilePath);
                 HotelLocationDict = PopulateHotelLocationDict(_hotelLocationFilePath);
+                CountryDict = PopulateCountryDict(_countryFilePath);
                 _isInitialized = true;
             }
         }
@@ -190,6 +196,34 @@ namespace Lunggo.ApCommon.Dictionary
             }
         }
 
+        public string GetCountryName(string code)
+        {
+            try
+            {
+                var valueList = CountryDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.Name;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public string GetCountryCallingCode(string code)
+        {
+            try
+            {
+                var valueList = CountryDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.CallingCode;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         private static Dictionary<long, AirlineDict> PopulateAirlineDict(String airlineFilePath)
         {
             var result = new Dictionary<long, AirlineDict>();
@@ -263,6 +297,27 @@ namespace Lunggo.ApCommon.Dictionary
             }
             return result;
         }
+
+        private static Dictionary<long, CountryDict> PopulateCountryDict(String countryFilePath)
+        {
+            var result = new Dictionary<long, CountryDict>();
+            using (var file = new StreamReader(countryFilePath))
+            {
+                var line = file.ReadLine();
+                while (!file.EndOfStream)
+                {
+                    line = file.ReadLine();
+                    var splittedLine = line.Split('|');
+                    result.Add(long.Parse(splittedLine[0]), new CountryDict
+                    {
+                        Name = splittedLine[0],
+                        Code = splittedLine[1],
+                        CallingCode = splittedLine[2]
+                    });
+                }
+            }
+            return result;
+        }
     }
 
     public class AirlineDict
@@ -295,5 +350,12 @@ namespace Lunggo.ApCommon.Dictionary
         public bool? IsRegion { get; set; }
         public bool? IsAirport { get; set; }
         public bool? IsActive { get; set; }
+    }
+
+    public class CountryDict
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string CallingCode { get; set; }
     }
 }

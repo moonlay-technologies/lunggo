@@ -13,11 +13,13 @@ namespace Lunggo.ApCommon.Flight.Model
         public string AirlineLogoUrl { get; set; }
         public string OperatingAirlineName { get; set; }
         public string OperatingAirlineLogoUrl { get; set; }
+        public bool Meal { get; set; }
         public int RemainingSeats { get; set; }
         public List<FlightStop> FlightStops { get; set; }
     }
     public class FlightSegmentFare : FlightSegmentBase
     {
+        public bool Meal { get; set; }
         public int RemainingSeats { get; set; }
         public List<FlightStop> FlightStops { get; set; }
     }

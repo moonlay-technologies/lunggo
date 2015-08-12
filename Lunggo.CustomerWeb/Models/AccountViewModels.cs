@@ -64,7 +64,7 @@ namespace Lunggo.CustomerWeb.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required()]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

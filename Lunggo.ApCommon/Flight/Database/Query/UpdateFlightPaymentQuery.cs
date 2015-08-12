@@ -67,6 +67,16 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                             @"END ");
                 clauseBuilder.Append(
+                        @"WHEN @PaymentStatusCd = 'EXP' THEN ");
+                clauseBuilder.Append(
+                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) ");
+                clauseBuilder.Append(
+                                @"THEN @PaymentStatusCd ");
+                clauseBuilder.Append(
+                                @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                            @"END ");
+                clauseBuilder.Append(
                         @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
                     @"END, ");
