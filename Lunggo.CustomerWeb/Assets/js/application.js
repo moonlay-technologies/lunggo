@@ -323,6 +323,53 @@ function flightSearchFormFunctions() {
     });
 
     // ******************************
+    // validate passengers
+    function validatePassengers(changedElement) {
+        var maxPassenger = 9;
+        var adultPassenger = parseInt($('.flight-adult').val());
+        var childPassenger = parseInt($('.flight-child').val());
+        var infantPassenger = parseInt($('.flight-infant').val());
+
+        var totalPassenger = adultPassenger + childPassenger + infantPassenger;
+
+        // if adult less than infant
+        if ( infantPassenger > adultPassenger ) {
+            $('.flight-infant').val( adultPassenger );
+            $('.passenger-warning .max-infant').show();
+        } else {
+
+            // if total passenger more than 9
+            if (totalPassenger > maxPassenger) {
+
+                if (changedElement == 'adult') {
+                    $('.flight-adult').val(9 - (childPassenger + infantPassenger));
+                } else if (changedElement == 'child') {
+                    $('.flight-child').val(9 - (adultPassenger + infantPassenger));
+                } else if (changedElement == 'infant') {
+                    $('.flight-infant').val(9 - (childPassenger + adultPassenger));
+                }
+
+                $('.passenger-warning .max-passenger').show();
+            } else {
+                $('.passenger-warning .max-passenger').hide();
+            }
+
+            $('.passenger-warning .max-infant').hide();
+        }
+
+
+    }// validatePassengers()
+    $('.flight-adult').change(function() {
+        validatePassengers('adult');
+    });
+    $('.flight-child').change(function() {
+        validatePassengers('child');
+    });
+    $('.flight-infant').change(function () {
+        validatePassengers('infant');
+    });
+
+    // ******************************
     // generate flight info data
     $('.flight-submit-button').click(function(evt) {
         evt.preventDefault();

@@ -242,6 +242,14 @@
         margin-left: 1%;
         padding: 10px;
         font-weight: bold; }
+      .site-header-search-form .form-main-content .form-flight-search form .passenger-warning {
+        position: absolute; }
+        .site-header-search-form .form-main-content .form-flight-search form .passenger-warning p {
+          background: #ffb911;
+          color: #000;
+          padding: 0 10px;
+          display: inline-block;
+          display: none; }
       .site-header-search-form .form-main-content .form-flight-search form input[type="text"], .site-header-search-form .form-main-content .form-flight-search form select {
         padding: 10px;
         -webkit-appearance: none; }
@@ -474,6 +482,28 @@ hr {
     background-image: url(/Assets/images/hexagon-cover-blue.png); }
   .hexagon.yellow a:before {
     background-image: url(/Assets/images/hexagon-cover-yellow.png); }
+
+.site-feedback {
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+  z-index: 9999;
+  background: #3face4;
+  color: #fff;
+  border-bottom: none;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  font-size: 16px;
+  display: none;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; }
+  .site-feedback .feedback-header {
+    color: #fff; }
 
 .ui-autocomplete {
   width: 500px; }
@@ -1475,6 +1505,15 @@ hr {
     .flight-search-page .flight-search-form form .submit-button {
       font-weight: bold;
       width: 11%; }
+    .flight-search-page .flight-search-form form .passenger-warning {
+      position: absolute;
+      left: 50%;
+      padding-top: 10px; }
+      .flight-search-page .flight-search-form form .passenger-warning p {
+        background: #ffb911;
+        color: #000;
+        padding: 0 10px;
+        display: none; }
 
 .flight-search-page .flight-sort {
   border-top: 1px solid #ddd;

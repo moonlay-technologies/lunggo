@@ -91,6 +91,9 @@
                     .flight-infant {width:24.25%; margin-left:1%; background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px;}
                     .submit-button {width:24.25%; margin-left:1%; padding:10px; font-weight:bold;}
                 }
+                .passenger-warning {position:absolute;
+                    p {background:#ffb911; color:#000; padding:0 10px; display:inline-block; display:none;}
+                }
                 // *****
                 input[type="text"], select {padding:10px; -webkit-appearance: none;}
             }
