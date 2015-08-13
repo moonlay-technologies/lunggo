@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly List<DiscountRule> DiscountRules = new List<DiscountRule>();
         private static readonly List<DiscountRule> DeletedDiscountRules = new List<DiscountRule>();
 
-        internal void InitDiscountRules()
+        internal void InitPriceDiscountRules()
         {
             DiscountRules.Add(new DiscountRule
             {
@@ -22,6 +22,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 Coefficient = 0.07M,
                 Constant = 0
             });
+        }
+        public DiscountRule AddDiscount(string discountCode)
+        {
+            //TODO nih discount code
+            if (discountCode == "asdasdsad")
+            {
+                return DiscountRules[0];
+            }
+            else
+            {
+                return new DiscountRule();
+            }
         }
     }
 }

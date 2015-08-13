@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Model;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
@@ -21,6 +22,10 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                //TODO diskon ga seharusnya di sini. konstruk reservasinya sebelum masuk sini.
+                var discountRule = FlightService.GetInstance().AddDiscount(bookingRecord.DiscountCode);
+                var discountNominal = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice*discountRule.Coefficient +
+                                      discountRule.Constant;
                 rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
                 var reservationRecord = new FlightReservationTableRecord
                 {
@@ -38,7 +43,11 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     TotalSupplierPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
                     PaymentFeeForCust = 0,
                     PaymentFeeForUs = 0,
-                    FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
+                    DiscountId = discountRule.RuleId,
+                    DiscountCoefficient = discountRule.Coefficient,
+                    DiscountConstant = discountRule.Constant,
+                    DiscountNominal = discountNominal,
+                    FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice + discountNominal,
                     GrossProfit = 0,
                     InsertBy = "xxx",
                     InsertDate = DateTime.UtcNow,

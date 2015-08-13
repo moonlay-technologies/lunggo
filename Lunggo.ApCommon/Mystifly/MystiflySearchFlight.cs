@@ -353,6 +353,15 @@ namespace Lunggo.ApCommon.Mystifly
                         break;
                 }
             }
+            var dict = DictionaryService.GetInstance();
+            var flightTripOriginAirports = flightItineraryFare.FlightTrips.Select(trip => trip.OriginAirport);
+            var flightTripDestinationAirports = flightItineraryFare.FlightTrips.Select(trip => trip.DestinationAirport);
+            var flightTripAirports = new List<string>();
+            flightTripAirports.AddRange(flightTripOriginAirports);
+            flightTripAirports.AddRange(flightTripDestinationAirports);
+            var flightTripCountries = flightTripAirports.Select(dict.GetAirportCountryCode).Distinct();
+            if (flightTripCountries.Count() > 1)
+                flightItineraryFare.RequirePassport = true;
         }
 
         private static List<FlightTripFare> MapFlightFareTrips(PricedItinerary pricedItinerary, ConditionsBase conditions)

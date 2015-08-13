@@ -47,7 +47,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         }
                     },
                     ContactData = input.ContactData,
-                    Passengers = input.PassengerInfoFares
+                    Passengers = input.PassengerInfoFares,
+                    DiscountCode = input.DiscountCode
                 };
                 string rsvNo;
                 InsertFlightDb.Booking(bookingRecord, out rsvNo);

@@ -50,7 +50,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.AdultCount >= 1 &&
                 request.ChildCount >= 0 &&
                 request.InfantCount >= 0 &&
-                request.AdultCount + request.ChildCount <= 9 &&
+                request.AdultCount + request.ChildCount + request.InfantCount <= 9 &&
                 request.InfantCount <= request.AdultCount &&
                 (
                     (request.TripType == TripType.OneWay && request.TripInfos.Count == 1) ||
