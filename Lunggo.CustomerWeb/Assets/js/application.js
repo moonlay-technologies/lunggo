@@ -455,7 +455,6 @@ function flightSearchFormFunctions() {
 // toggle filter functions
 function toggleFilter() {
     $('aside.filter .filter-button').click(function (evt) {
-        console.log('JEMPING');
         evt.preventDefault();
         var filterEl = 'aside.filter';
         var state = $(filterEl).attr('data-active');

@@ -1403,6 +1403,15 @@ hr {
       display: none;
       border: 1px solid #ddd;
       background: #fff; }
+      .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .filter-reset-wrapper {
+        position: relative; }
+        .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .filter-reset-wrapper .filter-reset {
+          position: absolute;
+          font-size: 12px;
+          right: 10px;
+          bottom: 0;
+          cursor: pointer;
+          font-style: italic; }
       .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper h4 {
         padding: 0 10px;
         color: #3fabe3;
@@ -1416,6 +1425,11 @@ hr {
         .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter h5 span {
           display: inline-block;
           margin-right: 10px; }
+        .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter .filter-option a {
+          cursor: pointer;
+          font-style: italic; }
+        .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter .filter-option a + a {
+          float: right; }
         .flight-search-page .flight-result.page-container .page-aside .flight-filter-wrapper .flight-filter.airline-filter .filter-content {
           max-height: 250px;
           overflow: auto; }
