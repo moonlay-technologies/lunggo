@@ -38,7 +38,9 @@ p {
 .page {
   width: 21cm;
   height: 29.6cm;
-  position: relative; }
+  position: absolute;
+  background: url(/Assets/images/eticket-background.png) left 60% no-repeat;
+  background-size: cover; }
   .page:before, .page:after {
     content: "";
     clear: both;
@@ -148,7 +150,8 @@ Site Content
         border-bottom: 1px dashed #666;
         margin-bottom: 10px;
         padding-bottom: 5px;
-        font-size: 8pt; }
+        font-size: 8pt;
+        font-style: italic; }
       .flight-list-wrapper .flight-list .flight .flight-detail .flight-route {
         width: 100%; }
         .flight-list-wrapper .flight-list .flight .flight-detail .flight-route:before, .flight-list-wrapper .flight-list .flight .flight-detail .flight-route:after {

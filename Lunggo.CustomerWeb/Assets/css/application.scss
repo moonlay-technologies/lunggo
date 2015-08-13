@@ -563,11 +563,18 @@ hr {border-color:#aaa;}
                 &.active {background-image:url(/Assets/images/filter-trigger-active.png);}
             }
             .flight-filter-wrapper {display:none; border:$border-default; background:#fff;
+                .filter-reset-wrapper {position:relative;
+                    .filter-reset {position:absolute; font-size:12px; right:10px; bottom:0; cursor:pointer; font-style:italic;}
+                }                
                 h4 {padding:0 10px; color:#3fabe3; @include gotham();}
                 h5 {@include gotham();}
                 .flight-filter {position:relative; padding:10px; border-top:$border-default;
                     h5 {
                         span {display:inline-block; margin-right:10px;}
+                    }
+                    .filter-option {
+                        a {cursor:pointer; font-style:italic;}
+                        a+a {float:right;}
                     }
                     .filter-content {}
                     &.airline-filter {

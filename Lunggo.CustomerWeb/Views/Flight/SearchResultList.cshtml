@@ -90,7 +90,7 @@
 
     <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
         
-        <div class="container page-container flight-result">
+        <div class="container page-container flight-result active">
             <div class="page-aside">
             
                 <div class="filter-trigger-wrapper">
@@ -100,10 +100,10 @@
                     <div class="filter-trigger filter-onward"></div><!-- .filter-trigger -->
                 </div><!-- .filter-trigger-wrapper -->
             
-                <div class="filter-close"></div>
+                <div class="filter-close active"></div>
 
                 <div class="flight-filter-wrapper">
-                    <h4>Flight Filter</h4>
+                    <h4 class="filter-reset-wrapper">Flight Filter <a class="filter-reset" ng-click="resetFlightFilter()">reset filter</a></h4>
                     <div class="flight-filter stop-filter">
                         <h5><span><img src="/Assets/images/filter-transit.png" alt="Filter by Transit" /></span>Stop</h5>
                         <div class="filter-content">
@@ -132,8 +132,8 @@
                                 <span class="pull-right">Max Price</span>
                             </div>
                             <div class="price-slider-text">
-                                <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                             </div>
                             <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                             <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -142,9 +142,13 @@
                     </div><!-- .price-filter -->
                     <div class="flight-filter airline-filter">
                         <h5><span><img src="/Assets/images/filter-airline.png" alt="Filter by Airline" /></span>Airline</h5>
+                        <div class="filter-option">
+                            <a ng-click="filterSelectAirline('all')">Select All</a>
+                            <a ng-click="filterSelectAirline('none')">Select None</a>
+                        </div>
                         <div class="filter-content">
                             <label ng-repeat="airline in FlightSearchFilter.Airlines">
-                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
+                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()"/>
                                 <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
                                 <span>{{airline.Name}}</span>
                             </label>
@@ -337,8 +341,8 @@
                                     <span class="pull-right">Max Price</span>
                                 </div>
                                 <div class="price-slider-text">
-                                    <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                    <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                                 </div>
                                 <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                                 <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -422,8 +426,8 @@
                                     <span class="pull-right">Max Price</span>
                                 </div>
                                 <div class="price-slider-text">
-                                    <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                    <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                                 </div>
                                 <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                                 <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -706,7 +710,7 @@
                                         <span class="tag red hidden">Disc 20%</span>
                                         <p>Total Fare:</p>
                                         <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
-                                        <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number:0}}</h4>
+                                        <h4 class="price-now">{{flight.Currency || 'Rp'}} {{flight.TotalFare | number:0}}</h4>
                                         <small>harga sudah termasuk <b>pajak</b></small>
                                         <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                         <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
@@ -802,7 +806,10 @@
                             <div class="flight-rules">
                                 <div class="flight-rules-content">
                                     <div class="text-center rules-loading" ng-if="flight.FareLoaded == false">
-                                        <img src="/assets/images/loading-image-dark.gif" alt="Loading" />
+                                        <p class="text-center">Loading</p>
+                                        
+
+
                                     </div>
                                     <div ng-if="flight.FareLoaded == true">
                                         <div class="no-rules" ng-if="flight.FareRules.BaggageRules.length == 0 && flight.FareRules.AirlineRules.length == 0">
