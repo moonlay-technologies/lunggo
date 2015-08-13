@@ -38,7 +38,7 @@ p {
 .page {
   width: 21cm;
   height: 29.6cm;
-  position: absolute; }
+  position: relative; }
   .page:before, .page:after {
     content: "";
     clear: both;

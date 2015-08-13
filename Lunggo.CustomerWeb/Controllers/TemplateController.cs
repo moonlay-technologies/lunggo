@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Microsoft.AspNet.Identity;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -105,6 +107,12 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult eticket()
         {
             return View();
+        }
+
+        public ActionResult eticket2(string rsvNo)
+        {
+            var rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            return View(rsv);
         }
     }
 }

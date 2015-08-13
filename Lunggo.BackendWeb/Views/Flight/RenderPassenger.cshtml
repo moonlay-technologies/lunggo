@@ -36,7 +36,7 @@
                             <td>
                                 @if (@passenger.DateOfBirth != DateTime.MinValue)
                                 {
-                                    @passenger.DateOfBirth.ToString("d MMM yyyy")
+                                    @passenger.DateOfBirth.GetValueOrDefault().ToString("d MMM yyyy")
                                 }
                             </td>
                             <td>

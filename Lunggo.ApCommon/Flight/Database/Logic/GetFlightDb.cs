@@ -96,6 +96,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
                                 FlightSegments = new List<FlightSegmentDetails>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
