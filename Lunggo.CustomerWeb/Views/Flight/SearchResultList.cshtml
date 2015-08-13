@@ -132,8 +132,8 @@
                                 <span class="pull-right">Max Price</span>
                             </div>
                             <div class="price-slider-text">
-                                <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                             </div>
                             <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                             <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -337,8 +337,8 @@
                                     <span class="pull-right">Max Price</span>
                                 </div>
                                 <div class="price-slider-text">
-                                    <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                    <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                                 </div>
                                 <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                                 <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -422,8 +422,8 @@
                                     <span class="pull-right">Max Price</span>
                                 </div>
                                 <div class="price-slider-text">
-                                    <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
-                                    <span class="pull-right">IDR {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
                                 </div>
                                 <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
                                 <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
@@ -706,7 +706,7 @@
                                         <span class="tag red hidden">Disc 20%</span>
                                         <p>Total Fare:</p>
                                         <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
-                                        <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number:0}}</h4>
+                                        <h4 class="price-now">{{flight.Currency || 'Rp'}} {{flight.TotalFare | number:0}}</h4>
                                         <small>harga sudah termasuk <b>pajak</b></small>
                                         <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                         <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />

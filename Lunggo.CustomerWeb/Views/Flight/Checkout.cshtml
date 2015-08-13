@@ -254,7 +254,7 @@
                         <div class="content-wrapper">
                             <div class="row">
                                 <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">Tax</div>
@@ -267,7 +267,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6">TOTAL</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                             </div>
                         </div>
                     </section><!-- .price-detail -->
