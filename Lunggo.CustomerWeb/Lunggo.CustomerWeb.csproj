@@ -650,6 +650,7 @@
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\enjoy.png" />
+    <Content Include="Assets\images\eticket-background.png" />
     <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\filter-airline.png" />
