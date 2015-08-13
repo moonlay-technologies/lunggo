@@ -2071,7 +2071,6 @@
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
-    <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -2125,6 +2124,7 @@
     <Content Include="Views\Template\LandingPage.cshtml" />
     <Content Include="Views\Template\Activity.cshtml" />
     <Content Include="Views\Shared\_layout_eticket.cshtml" />
+    <Content Include="Views\Template\eticket2.cshtml" />
     <Content Include="Views\Shared\_layout_orderHIstory.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
@@ -2132,6 +2132,7 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

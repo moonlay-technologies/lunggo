@@ -275,6 +275,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/ExternalLogin
         [HttpPost]

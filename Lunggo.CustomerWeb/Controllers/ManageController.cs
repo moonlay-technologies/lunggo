@@ -226,13 +226,6 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
         // POST: /Account/Manage
         [HttpPost]
         [ValidateAntiForgeryToken]
