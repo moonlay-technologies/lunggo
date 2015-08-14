@@ -31,7 +31,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ValidateSubscribe(string hashLink)
         {
             SubscriberService.GetInstance().ValidateSubscriber(hashLink);
-            return RedirectToAction("/")
+            return RedirectToAction("/");
         }
     }
 }
