@@ -683,6 +683,7 @@
     <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-right.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-top.jpg" />
+    <Content Include="Assets\images\email\travorama-logo.jpg" />
     <Content Include="Assets\images\email\twitter-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
     <Content Include="Assets\images\eticket-background.png" />
