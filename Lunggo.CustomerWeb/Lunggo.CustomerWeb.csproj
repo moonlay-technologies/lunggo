@@ -2144,6 +2144,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
+    <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

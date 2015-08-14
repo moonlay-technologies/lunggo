@@ -1,0 +1,92 @@
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservation
+
+@{
+    ViewBag.Title = "Hotel Detail";
+    Layout = "/Views/Shared/_Layout_OrderHistory.cshtml";
+}
+
+<div class="flight-history">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm-8">
+                <div class="history-left">
+                    <div class="order-detail">
+                        
+                        <h4><b>HISTORY</b> ORDER - DETAIL <span class="order-id"><b>Reservation No:</b> @Model.RsvNo</span></h4>
+                        
+                        <div class="detail-wrapper">
+                            <div class="row">
+                                <div class="col-sm-4"><b>Contact Name</b></div>
+                                <div class="col-sm-8">@Model.Contact.Name</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Contact Email</b></div>
+                                <div class="col-sm-8">@Model.Contact.Email</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Contact Phone</b></div>
+                                <div class="col-sm-8">@Model.Contact.Phone</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Order Type</b></div>
+                                <div class="col-sm-8">Flight</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Price</b></div>
+                                <div class="col-sm-8">Rp @Model.Payment.FinalPrice</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Payment Method</b></div>
+                                <div class="col-sm-8">@Model.Payment.Method</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4"><b>Payment Status</b></div>
+                                <div class="col-sm-8">@Model.Payment.Status</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-4">
+                <div class="history-right">
+                    @foreach (var trip in Model.Itinerary.FlightTrips)
+                    {
+                        <div class="flight-detail">
+                            @if (trip == Model.Itinerary.FlightTrips.First())
+                            {
+                                <h4 class="text-center"><b>DEPARTURE</b> FLIGHT</h4>
+                            }
+                            else
+                            {
+                                <h4 class="text-center"><b>RETURN</b> FLIGHT</h4>
+                            }
+                            <div class="flight-airline">
+                                <img src="@trip.FlightSegments[0].AirlineLogoUrl" alt="@trip.FlightSegments[0].AirlineName" />
+                                <h4>@trip.FlightSegments[0].AirlineName</h4>
+                                <h5>@trip.FlightSegments[0].AirlineCode@trip.FlightSegments[0].FlightNumber</h5>
+                            </div>
+                            <div class="flight-detail">
+                                <div class="row">
+                                    <div class="col-sm-4">Origin</div>
+                                    <div class="col-sm-8">@trip.OriginCity</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">Destination</div>
+                                    <div class="col-sm-8">@trip.DestinationCity</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">Date</div>
+                                    <div class="col-sm-8">@trip.DepartureDate.ToString("d MMMM yyyy")</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

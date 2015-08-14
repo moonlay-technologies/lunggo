@@ -142,19 +142,17 @@
                                                     </div>
                                                     <div class="history-id">
                                                         <div class="row">
-                                                            <div class="col-sm-5"><b>Order ID</b></div>
-                                                            <div class="col-sm-7">@rsv.RsvTime</div>
+                                                            <div class="col-sm-5"><b>Reservation No</b></div>
+                                                            <div class="col-sm-7">@rsv.RsvNo</div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-5"><b>Status</b></div>
                                                             <div class="col-sm-7">@rsv.Payment.Status</div>
                                                         </div>
                                                     </div>
-@*
                                                     <div class="history-action">
-                                                        <a href="#" class="btn btn-primary">DETAIL</a>
+                                                        <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new {rsvNo = rsv.RsvNo})" target="_blank" class="btn btn-primary">DETAIL</a>
                                                     </div>
-*@
                                                 </div>
                                             </div>
                                         }
