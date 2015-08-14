@@ -651,8 +651,18 @@
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\email-image.jpg" />
+    <Content Include="Assets\images\email\facebook-icon.png" />
+    <Content Include="Assets\images\email\instagram-icon.png" />
+    <Content Include="Assets\images\email\mail-icon.png" />
+    <Content Include="Assets\images\email\phone-icon.png" />
+    <Content Include="Assets\images\email\specialrelease\mail-bottom.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-right.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-top.jpg" />
+    <Content Include="Assets\images\email\twitter-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
     <Content Include="Assets\images\eticket-background.png" />
+    <Content Include="Assets\images\exclamation-mark.png" />
     <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\filter-airline.png" />
@@ -691,6 +701,7 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\howto-bg.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />
@@ -2139,6 +2150,7 @@
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
     <Content Include="Views\Template\HowToBook.cshtml" />
     <Content Include="Views\Term\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Template\EmailSpecialRelease.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

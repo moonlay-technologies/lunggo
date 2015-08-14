@@ -2418,6 +2418,26 @@ hr {
       position: absolute;
       margin-left: -5px; }
 
+.page.howto-page .site-header {
+  background: url(/Assets/images/howto-bg.jpg) top center no-repeat;
+  background-size: cover; }
+  .page.howto-page .site-header .page-title {
+    text-align: center;
+    padding: 30px 0 20px; }
+    .page.howto-page .site-header .page-title h1 {
+      font-weight: bold;
+      font-family: 'gotham', arial, sans-serif;
+      font-size: 36px; }
+
+.page.howto-page .page-footer .note-wrapper {
+  background: #ddd;
+  padding: 20px 0; }
+  .page.howto-page .page-footer .note-wrapper p {
+    font-style: italic; }
+  .page.howto-page .page-footer .note-wrapper .contact-button {
+    text-align: center;
+    padding-top: 10px; }
+
 .user-page-login #site-header {
   background: none; }
 

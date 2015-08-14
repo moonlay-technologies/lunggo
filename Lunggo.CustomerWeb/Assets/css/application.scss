@@ -1010,6 +1010,25 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// how to page
+.page.howto-page {
+    .site-header {background:url(/Assets/images/howto-bg.jpg) top center no-repeat; background-size:cover;
+        .page-title {text-align:center; padding:30px 0 20px;
+            h1 {font-weight:bold; @include gotham(); font-size:36px;}
+            h5 {}
+        }
+    }
+    .page-footer {
+        .note-wrapper {background:#ddd; padding:20px 0;
+            p {font-style:italic;}
+            .contact-button {text-align:center; padding-top:10px;}
+        }
+    }
+}
+
+
+
+// ----------------------------------------------
 // user login
 .user-page-login {
 	#site-header {background:none;}
