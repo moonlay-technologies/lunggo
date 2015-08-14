@@ -103,33 +103,32 @@
                 <div class="filter-close"></div>
 
                 <div class="flight-filter-wrapper">
-                    <h4>Flight Filter</h4>
+                    <h4>@Html.I18NString("CW00001")</h4>
                     <div class="flight-filter stop-filter">
-                        <h5><span><img src="/Assets/images/filter-transit.png" alt="Filter by Transit" /></span>Stop</h5>
+                        <h5><span><img src="/Assets/images/filter-transit.png" alt="Filter by Transit" /></span>@Html.I18NString("CW00002")</h5>
                         <div class="filter-content">
-                            <p>Show flight with :</p>
                             <label for="flight-stop-0">
-                                <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> Direct Flight
+                                <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> @Html.I18NString("CW00003")
                             </label>
                             <br/>
                             <label for="flight-stop-1">
-                                <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> 1 stop
+                                <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> @Html.I18NString("CW00004")
                             </label>
                             <br/>
                             <label for="flight-stop-2">
-                                <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> more than 1 stop
+                                <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> @Html.I18NString("CW00005")
                             </label>
                         </div>
                     </div><!-- .stop-filter -->
                     <div class="flight-filter price-filter">
-                        <h5><span><img src="/Assets/images/filter-price.png" alt="Filter by Price" /></span>Price</h5>
+                        <h5><span><img src="/Assets/images/filter-price.png" alt="Filter by Price" /></span>@Html.I18NString("CW00006")</h5>
                         <div class="filter-content">
 
                             <div class="price-slider"></div>
                             <div class="price-slider-text">
                                 <br />
-                                <span>Min Price</span>
-                                <span class="pull-right">Max Price</span>
+                                <span>@Html.I18NString("CW00007")</span>
+                                <span class="pull-right">@Html.I18NString("CW00008")</span>
                             </div>
                             <div class="price-slider-text">
                                 <span>IDR {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
@@ -141,7 +140,7 @@
                         </div>
                     </div><!-- .price-filter -->
                     <div class="flight-filter airline-filter">
-                        <h5><span><img src="/Assets/images/filter-airline.png" alt="Filter by Airline" /></span>Airline</h5>
+                        <h5><span><img src="/Assets/images/filter-airline.png" alt="Filter by Airline" /></span>@Html.I18NString("CW00009")</h5>
                         <div class="filter-content">
                             <label ng-repeat="airline in FlightSearchFilter.Airlines">
                                 <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
@@ -152,9 +151,9 @@
                     </div><!-- .airline-filter -->
                     <div class="flight-filter onward-time">
                         <h5 ng-if="'@tripType' == 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Onward Flight" /></span>Onward Flight</h5>
-                        <h5 ng-if="'@tripType' != 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Flight Time" /></span>Flight Time</h5>
+                        <h5 ng-if="'@tripType' != 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Flight Time" /></span>@Html.I18NString("CW00010")</h5>
                         <div class="filter-content">
-                            <small>Take-off from ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
+                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
                             <div class="onward-depart-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
@@ -163,7 +162,7 @@
                             <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
                             <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
                             <hr/>
-                            <small>Landing at ({{FlightSearchParams.TripInfos[0].DestinationAirport}})</small>
+                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.TripInfos[0].DestinationAirport}})</small>
                             <div class="onward-arrival-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
@@ -202,14 +201,14 @@
 
                 <header class="page-header">
                     <div class="">
-                        <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+                        <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
                         <!-- <hr> -->
                         <div class="flight-data">
-                            <b>(@data.TripInfos[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.TripInfos[0].DestinationAirport) @destinationCityNames[0]</b> <br />
-                            <span><b>Departure Date : </b>@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
+                            <b>(@data.TripInfos[0].OriginAirport) @originCityNames[0]</b> @Html.I18NString("CW00034") <b>(@data.TripInfos[0].DestinationAirport) @destinationCityNames[0]</b> <br />
+                            <span><b>@Html.I18NString("CW00016") : </b>@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
                             {
                                 <span><b>Return Flight : </b>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
-                            } <b>Passenger : </b> @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant <a href="#" class="btn btn-yellow btn-sm show-flight-search-form pull-right">CHANGE</a>
+                            } <b>@Html.I18NString("CW00017") : </b> @data.AdultCount @Html.I18NString("CW00018"), @data.ChildCount @Html.I18NString("CW00019"), @data.InfantCount @Html.I18NString("CW00020") <a href="#" class="btn btn-yellow btn-sm show-flight-search-form pull-right">@Html.I18NString("CW00014")</a>
                         </div>
 
                     </div>
@@ -220,8 +219,8 @@
                         <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
                             <div class="row flight-type-wrapper">
                                 <div class="col-sm-12">
-                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> Round-Trip</label>
-                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
+                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
+                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
                                 </div>
                             </div>
                             <div class="row airport-wrapper">
@@ -229,39 +228,44 @@
                                     <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" value="@originAirportNames[0], @originCityNames[0], @originCountryNames[0] " />
                                     <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" value="@destinationAirportNames[0], @destinationCityNames[0], @destinationCountryNames[0]" />
                                     <select class="flight-cabin form-control">
-                                        <option value="y">Economy Class</option>
-                                        <option value="c">Business Class</option>
-                                        <option value="f">First Class</option>
+                                        <option value="y">@Html.I18NString("CW00054")</option>
+                                        <option value="c">@Html.I18NString("CW00055")</option>
+                                        <option value="f">@Html.I18NString("CW00056")</option>
                                     </select>
                                 </div>
                             </div>
+                            
+                            @{
+                                var departureDateString = Html.I18NString("CW00057");
+                                var returnDateString = Html.I18NString("CW00058");
+                            }
 
                             <div class="row passenger-wrapper">
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" value="@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
+                                    <input type="text" class="form-control flight-departure-date date-picker " placeholder="@departureDateString" value="@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
                                     <span class="separator">-</span>
-                                    <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
+                                    <input type="text" class="form-control flight-return-date date-picker" placeholder="@returnDateString" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
 
                                     <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
                                     <select class="form-control flight-adult">
-                                        <option value="1">1 Adult</option>
-                                        <option value="2">2 Adults</option>
-                                        <option value="3">3 Adults</option>
-                                        <option value="4">4 Adults</option>
+                                        <option value="1">1 @Html.I18NString("CW00018")</option>
+                                        <option value="2">2 @Html.I18NString("CW00059")</option>
+                                        <option value="3">3 @Html.I18NString("CW00059")</option>
+                                        <option value="4">4 @Html.I18NString("CW00059")</option>
                                     </select>
                                     <select class="form-control flight-child">
-                                        <option value="0">0 Child</option>
-                                        <option value="1">1 Child</option>
-                                        <option value="2">2 Childs</option>
-                                        <option value="3">3 Childs</option>
-                                        <option value="4">4 Childs</option>
+                                        <option value="0">0 @Html.I18NString("CW00019")</option>
+                                        <option value="1">1 @Html.I18NString("CW00019")</option>
+                                        <option value="2">2 @Html.I18NString("CW00060")</option>
+                                        <option value="3">3 @Html.I18NString("CW00060")</option>
+                                        <option value="4">4 @Html.I18NString("CW00060")</option>
                                     </select>
                                     <select class="form-control flight-infant">
-                                        <option value="0">0 Child</option>
-                                        <option value="1">1 Infant</option>
-                                        <option value="2">2 Infants</option>
-                                        <option value="3">3 Infants</option>
-                                        <option value="4">4 Infants</option>
+                                        <option value="0">0 @Html.I18NString("CW00020")</option>
+                                        <option value="1">1 @Html.I18NString("CW00020")</option>
+                                        <option value="2">2 @Html.I18NString("CW00061")</option>
+                                        <option value="3">3 @Html.I18NString("CW00061")</option>
+                                        <option value="4">4 @Html.I18NString("CW00061")</option>
                                     </select>
                                     <input type="text" class="hidden flight-departure-date-real" value="@data.TripInfos[0].DepartureDate.ToString("dd-MM-yyyy")" />
                                     <input type="text" class="hidden flight-return-date-real" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MM-yyyy")  }" />
@@ -282,7 +286,7 @@
                 </div><!-- .flight-filter for mobile -->
 
                 <div class="" ng-if="loaded && !noFlight">
-                    <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+                    <h2 class="page-title"><b>@Html.I18NString("CW00050")</b> @Html.I18NString("CW00051")</h2>
                 </div>
 
                 <section class="flight-search-filter hidden"><!-- temporary hidden on development new filter widget -->
@@ -328,13 +332,13 @@
                             <div class="filter-content">
                                 <p>Show flight with :</p>
                                 <label for="flight-stop-0">
-                                    <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> Direct Flight
+                                    <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> @Html.I18NString("CW00003")
                                 </label>
                                 <label for="flight-stop-1">
-                                    <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> 1 stop
+                                    <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> @Html.I18NString("CW00004")
                                 </label>
                                 <label for="flight-stop-2">
-                                    <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> more than 1 stop
+                                    <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> @Html.I18NString("CW00005")
                                 </label>
                             </div>
                         </div>
@@ -352,8 +356,8 @@
                         <div class="loading-image-wrapper">
                             <img src="/Assets/images/loading-sample.png" alt="Loading" />
                             <div class="loading-text">
-                                <h2>Please Wait</h2>
-                                <h4>While we search for the best fare deal for you</h4>
+                                <h2>@Html.I18NString("CW00041")</h2>
+                                <h4>@Html.I18NString("CW00042")</h4>
                             </div>
                         </div>
 
@@ -364,7 +368,7 @@
                         <div class="loading-image-wrapper">
                             <img src="/Assets/images/loading-sample.png" alt="Loading" />
                             <div class="loading-text">
-                                <h2>Please Wait</h2>
+                                <h2>@Html.I18NString("CW00041")</h2>
                                 <h4>While we validating your flight of choice</h4>
                             </div>
                         </div>
@@ -380,27 +384,27 @@
 
                         <div class="flight-sort single-flight" ng-if="FlightSearchParams.TripType == 'OneWay'">
                             <div class="sort-airline">
-                                <a href="#" ng-click="order('airline')">Airline
+                                <a href="#" ng-click="order('airline')">@Html.I18NString("CW00021")
                                     <span class="sortorder" ng-show="sort.label === 'airline'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-departure">
-                                <a href="#" ng-click="order('departure')">Departure
+                                <a href="#" ng-click="order('departure')">@Html.I18NString("CW00022")
                                     <span class="sortorder" ng-show="sort.label === 'departure'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-duration">
-                                <a href="#" ng-click="order('duration')">Duration
+                                <a href="#" ng-click="order('duration')">@Html.I18NString("CW00023")
                                     <span class="sortorder" ng-show="sort.label === 'duration'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-arrival">
-                                <a href="#" ng-click="order('arrival')">Arrival
+                                <a href="#" ng-click="order('arrival')">@Html.I18NString("CW00024")
                                     <span class="sortorder" ng-show="sort.label === 'arrival'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-price">
-                                <a href="#" ng-click="order('price')">Price
+                                <a href="#" ng-click="order('price')">@Html.I18NString("CW00025")
                                     <span class="sortorder" ng-show="sort.label === 'price'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
@@ -415,49 +419,49 @@
                             </div>
                             <div class="sort-depart-departure">
                                 <a href="#" ng-click="order('departDeparture')">
-                                    Departure
+                                   @Html.I18NString("CW00022")
                                     <span class="sortorder" ng-show="sort.label === 'departDeparture'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-depart-duration">
                                 <a href="#" ng-click="order('departDuration')">
-                                    Duration
+                                    @Html.I18NString("CW00023")
                                     <span class="sortorder" ng-show="sort.label === 'departDuration'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-depart-arrival">
                                 <a href="#" ng-click="order('departArrival')">
-                                    Arrival
+                                    @Html.I18NString("CW00024")
                                     <span class="sortorder" ng-show="sort.label === 'departArrival'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-return-airline">
                                 <a href="#" ng-click="order('returnAirline')">
-                                    Airline
+                                    @Html.I18NString("CW00021")
                                     <span class="sortorder" ng-show="sort.label === 'returnAirline'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-return-departure">
                                 <a href="#" ng-click="order('returnDeparture')">
-                                    Departure
+                                    @Html.I18NString("CW00022")
                                     <span class="sortorder" ng-show="sort.label === 'returnDeparture'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-return-duration">
                                 <a href="#" ng-click="order('returnDuration')">
-                                    Duration
+                                    @Html.I18NString("CW00023")
                                     <span class="sortorder" ng-show="sort.label === 'returnDuration'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-return-arrival">
                                 <a href="#" ng-click="order('returnArrival')">
-                                    Arrival
+                                    @Html.I18NString("CW00024")
                                     <span class="sortorder" ng-show="sort.label === 'returnArrival'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
                             <div class="sort-price">
                                 <a href="#" ng-click="order('price')">
-                                    Price
+                                    @Html.I18NString("CW00025")
                                     <span class="sortorder" ng-show="sort.label === 'price'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
@@ -490,10 +494,10 @@
                                             </div><!-- .departure -->
 
                                             <div class="duration">
-                                                <h5>duration <br /> {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                                <h5>@Html.I18NString("CW00028") <br /> {{flight.FlightTrips[0].TotalDuration}}</h5>
                                                 <hr />
-                                                <h5 ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</h5>
-                                                <h5 ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop</h5>
+                                                <h5 ng-if="flight.FlightTrips[0].TotalTransit == 0">@Html.I18NString("CW00003")</h5>
+                                                <h5 ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} @Html.I18NString("CW00029")</h5>
                                             </div><!-- .duration -->
 
                                             <div class="arrival">
@@ -507,8 +511,8 @@
 
                                     </div><!-- .flight-content -->
                                     <div class="flight-action">
-                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> Flight Details</a>
-                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> Fares Rules</a>
+                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> @Html.I18NString("CW00026")</a>
+                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> @Html.I18NString("CW00027")</a>
                                     </div><!-- .flight-action -->
                                 </div><!-- .flight-left -->
                                 <!-- end if single flight type -->
@@ -516,7 +520,7 @@
                                 <div class="flight-left" ng-if="'@tripType' == 'return'">
                                     <div class="flight-departure">
                                         <div class="flight-header">
-                                            <span>berangkat</span>
+                                            <span>@Html.I18NString("CW00039")</span>
                                             <span class="pull-right flight-cabin hidden"><i>economy</i></span>
                                         </div><!-- .flight-header -->
                                         <div class="flight-content">
@@ -538,14 +542,14 @@
                                                         <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                                     </div>
                                                 </div>
-                                                <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[0].TotalDuration}}</h5>
-                                                <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} stop - {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit == 0">@Html.I18NString("CW00003") - {{flight.FlightTrips[0].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.FlightTrips[0].TotalTransit > 0">{{flight.FlightTrips[0].TotalTransit}} @Html.I18NString("CW00029") - {{flight.FlightTrips[0].TotalDuration}}</h5>
                                             </div>
                                         </div><!-- .flight-content -->
                                     </div><!-- .flight-departure -->
                                     <div class="flight-return">
                                         <div class="flight-header">
-                                            <span>kembali</span>
+                                            <span>@Html.I18NString("CW00040")</span>
                                             <span class="pull-right flight-cabin hidden"><i>economy</i></span>
                                         </div><!-- .flight-header -->
                                         <div class="flight-content">
@@ -567,35 +571,35 @@
                                                         <h5>{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h5>
                                                     </div>
                                                 </div>
-                                                <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit == 0">Direct Flight - {{flight.FlightTrips[1].TotalDuration}}</h5>
-                                                <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} stop - {{flight.FlightTrips[1].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit == 0">@Html.I18NString("CW00003") - {{flight.FlightTrips[1].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.FlightTrips[1].TotalTransit > 0">{{flight.FlightTrips[1].TotalTransit}} @Html.I18NString("CW00029") - {{flight.FlightTrips[1].TotalDuration}}</h5>
                                             </div>
                                         </div><!-- .flight-content -->
                                     </div><!-- .flight-return -->
                                     <div class="flight-action">
-                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> Flight Details</a>
-                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> Fares Rules</a>
+                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> @Html.I18NString("CW00026")</a>
+                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> @Html.I18NString("CW00027")</a>
                                     </div><!-- .flight-action -->
                                 </div><!-- .flight-left -->
                                 <!-- end if Return Flight Type -->
                                 <div class="flight-right">
                                     <form ng-submit="revalidate(flight.SequenceNo)">
                                         <span class="tag red hidden">Disc 20%</span>
-                                        <p>Total Fare:</p>
+                                        <p>@Html.I18NString("CW00030"):</p>
                                         <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
                                         <h4 class="price-now">{{flight.Currency || 'IDR'}} {{flight.TotalFare | number:0}}</h4>
-                                        <small>harga sudah termasuk <b>pajak</b></small>
+                                        <small>@Html.I18NString("CW00031")</small>
                                         <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
                                         <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
-                                        <button type="submit" class="btn btn-blue">Book now !</button>
+                                        <button type="submit" class="btn btn-blue">@Html.I18NString("CW00032") !</button>
                                     </form>
                                 </div><!-- .flight-right -->
                             </div><!-- .flight-main -->
 
                             <div class="flight-detail">
                                 <div class="flight-detail-content">
-                                    <h4 class="detail-title" ng-if="'@tripType' == 'single'"> <b>FLIGHT</b> DETAILS</h4>
-                                    <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>DEPARTURE</b> FLIGHTS</h4>
+                                    <h4 class="detail-title" ng-if="'@tripType' == 'single'"> <b>@Html.I18NString("CW00049")</b> @Html.I18NString("CW00048")</h4>
+                                    <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>@Html.I18NString("CW00044")</b> @Html.I18NString("CW00046")</h4>
                                     <ol>
                                         <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
                                             <div class="flight-airline">
@@ -614,7 +618,7 @@
                                                     <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                                 </div><!-- .flight-departure-time -->
                                                 <div class="flight-duration">
-                                                    <h5>Duration<br />{{trip.Duration}}</h5>
+                                                    <h5>@Html.I18NString("CW00028")<br />{{trip.Duration}}</h5>
                                                     <hr />
                                                 </div><!-- .flight-departure-duration -->
                                                 <div class="flight-arrival-time">
@@ -628,12 +632,12 @@
                                                 </div><!-- .flight-departure-airport -->
                                             </div>
                                             <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
-                                                <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
+                                                <h5>@Html.I18NString("CW00033") {{trip.OperatingAirlineName}}</h5>
                                             </div>
                                         </li>
                                     </ol>
                                     <div ng-if="'@tripType' == 'return'" class="return-flight-detail">
-                                        <h4 class="detail-title"> <b>RETURN</b> FLIGHTS</h4>
+                                        <h4 class="detail-title"> <b>@Html.I18NString("CW00045")</b> @Html.I18NString("CW00047")</h4>
                                         <ol>
                                             <li class="route" ng-repeat="trip in flight.FlightTrips[1].FlightSegments">
                                                 <div class="flight-airline">
@@ -652,7 +656,7 @@
                                                         <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC'}}</h5>
                                                     </div><!-- .flight-departure-time -->
                                                     <div class="flight-duration">
-                                                        <h5>Duration<br />{{trip.Duration}}</h5>
+                                                        <h5>@Html.I18NString("CW00028")<br />{{trip.Duration}}</h5>
                                                         <hr />
                                                     </div><!-- .flight-departure-duration -->
                                                     <div class="flight-arrival-time">
@@ -666,7 +670,7 @@
                                                     </div><!-- .flight-departure-airport -->
                                                 </div>
                                                 <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
-                                                    <h5>This flight is operated by {{trip.OperatingAirlineName}}</h5>
+                                                    <h5>@Html.I18NString("CW00033") {{trip.OperatingAirlineName}}</h5>
                                                 </div>
                                             </li>
                                         </ol>
@@ -733,9 +737,9 @@ else
 
         <header class="page-header">
             <div class="container">
-                <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+                <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
                 <hr>
-                Data invalid, please change your data <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">CHANGE</a>
+                Data invalid, please change your data <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">@Html.I18NString("CW00014")</a>
             </div>
         </header><!-- .page-header -->
         
@@ -744,8 +748,8 @@ else
                 <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
                     <div class="row flight-type-wrapper">
                         <div class="col-sm-12">
-                            <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> Round-Trip</label>
-                            <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
+                            <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
+                            <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
                         </div>
                     </div>
                     <div class="row airport-wrapper">
@@ -753,17 +757,18 @@ else
                             <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" />
                             <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" />
                             <select class="flight-cabin form-control">
-                                <option value="y">Economy Class</option>
-                                <option value="c">Business Class</option>
-                                <option value="f">First Class</option>
+                                <option value="y">@Html.I18NString("CW00054")</option>
+                                <option value="c">@Html.I18NString("CW00055")</option>
+                                <option value="f">@Html.I18NString("CW00056")</option>
                             </select>
                         </div>
                     </div>
+                    
                     <div class="row passenger-wrapper">
                         <div class="col-sm-12">
-                            <input type="text" class="form-control flight-departure-date date-picker " placeholder="Departure Date" />
+                            <input type="text" class="form-control flight-departure-date date-picker" placeholder="" />
                             <span class="separator">-</span>
-                            <input type="text" class="form-control flight-return-date date-picker" placeholder="Return Date" />
+                            <input type="text" class="form-control flight-return-date date-picker" placeholder="" />
                             <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
                             <select class="form-control flight-adult">
                                 <option value="1">1 Adult</option>

@@ -1,7 +1,69 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Messages>
-   <Message code="VAL0001" lang="en_US" value="User ID" />
-   <Message code="VAL0001" lang="id_ID" value="Id Pengguna" />
-   <Message code="VAL0002" lang="en_US" value="Password" />
-   <Message code="VAL0002" lang="id_ID" value="Kata Kunci" />
+   <Message code="CW00001" lang="en_US" value="Refine Your Search" />
+   <Message code="CW00001" lang="id_ID" value="Pilih Berdasarkan" />
+   <Message code="CW00002" lang="en_US" value="Stops" />
+   <Message code="CW00002" lang="id_ID" value="Pemberhentian" />
+   <Message code="CW00003" lang="en_US" value="Direct Flight" />
+   <Message code="CW00003" lang="id_ID" value="Penerbangan Langsung" />
+   <Message code="CW00004" lang="en_US" value="1 Stop" />
+   <Message code="CW00004" lang="id_ID" value="1 Transit" />
+   <Message code="CW00005" lang="en_US" value="More than 1 Stop" />
+   <Message code="CW00005" lang="id_ID" value="Lebih dari 1 Transit" />
+   <Message code="CW00006" lang="en_US" value="Price Range" />
+   <Message code="CW00006" lang="id_ID" value="Harga" />
+   <Message code="CW00007" lang="en_US" value="Min Price" />
+   <Message code="CW00007" lang="id_ID" value="Harga Min" />
+   <Message code="CW00008" lang="en_US" value="Max Price" />
+   <Message code="CW00008" lang="id_ID" value="Harga Max" />
+   <Message code="CW00009" lang="en_US" value="Airlines" />
+   <Message code="CW00009" lang="id_ID" value="Airline" />
+   <Message code="CW00010" lang="en_US" value="Flight Time" />
+   <Message code="CW00010" lang="id_ID" value="Waktu Penerbangan" />
+   <Message code="CW00011" lang="en_US" value="Take-off from" />
+   <Message code="CW00011" lang="id_ID" value="Berangkat dari" />
+   <Message code="CW00012" lang="en_US" value="Landing at" />
+   <Message code="CW00012" lang="id_ID" value="Tiba di" />
+   <Message code="CW00013" lang="en_US" value="Home" />
+   <Message code="CW00013" lang="id_ID" value="Beranda" />
+   <Message code="CW00014" lang="en_US" value="Search" />
+   <Message code="CW00014" lang="id_ID" value="Cari Tiket" />
+   <Message code="CW00015" lang="en_US" value="Flight Search Result" />
+   <Message code="CW00015" lang="id_ID" value="Hasil Pencarian" />
+   <Message code="CW00016" lang="en_US" value="Departure Date" />
+   <Message code="CW00016" lang="id_ID" value="Tanggal Keberangkatan" />
+   <Message code="CW00017" lang="en_US" value="Passenger" />
+   <Message code="CW00017" lang="id_ID" value="Penumpang" />
+   <Message code="CW00018" lang="en_US" value="Adult" />
+   <Message code="CW00018" lang="id_ID" value="Dewasa" />
+   <Message code="CW00019" lang="en_US" value="Children" />
+   <Message code="CW00019" lang="id_ID" value="Anak-anak" />
+   <Message code="CW00020" lang="en_US" value="Infant" />
+   <Message code="CW00020" lang="id_ID" value="Bayi" />
+   <Message code="CW00021" lang="en_US" value="Airline" />
+   <Message code="CW00021" lang="id_ID" value="Airline" />
+   <Message code="CW00022" lang="en_US" value="Departure" />
+   <Message code="CW00022" lang="id_ID" value="Keberangkatan" />
+   <Message code="CW00023" lang="en_US" value="Duration" />
+   <Message code="CW00023" lang="id_ID" value="Durasi" />
+   <Message code="CW00024" lang="en_US" value="Arrival" />
+   <Message code="CW00024" lang="id_ID" value="Kedatangan" />
+   <Message code="CW00025" lang="en_US" value="Price" />
+   <Message code="CW00025" lang="id_ID" value="Harga" />
+   <Message code="CW00026" lang="en_US" value="Flight Details" />
+   <Message code="CW00026" lang="id_ID" value="Detail Penerbangan" />
+   <Message code="CW00027" lang="en_US" value="Fares Rules" />
+   <Message code="CW00027" lang="id_ID" value="Syarat dan Ketentuan" />
+   <Message code="CW00028" lang="en_US" value="Duration" />
+   <Message code="CW00028" lang="id_ID" value="Durasi" />
+   <Message code="CW00029" lang="en_US" value="Stop" />
+   <Message code="CW00029" lang="id_ID" value="Transit" />
+   <Message code="CW00030" lang="en_US" value="Total Fare" />
+   <Message code="CW00030" lang="id_ID" value="Harga Total" />
+   <Message code="CW00031" lang="en_US" value="No Hidden Fees !" />
+   <Message code="CW00031" lang="id_ID" value="Termasuk Pajak dan Service Charge" />
+   <Message code="CW00032" lang="en_US" value="Book Now" />
+   <Message code="CW00032" lang="id_ID" value="Pesan Sekarang" />
+   <Message code="CW00033" lang="en_US" value="This flight is operated by" />
+   <Message code="CW00033" lang="id_ID" value="Penerbangan ini dioperasikan oleh" />
 </Messages>
