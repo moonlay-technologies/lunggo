@@ -2131,9 +2131,12 @@
     <Content Include="Views\Shared\_layout_eticket.cshtml" />
     <Content Include="Views\Template\eticket2.cshtml" />
     <Content Include="Views\Shared\_layout_orderHIstory.cshtml" />
+    <Content Include="Views\Shared\_layout_howto.cshtml" />
+    <Content Include="Views\Shared\_googleTag.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Template\HowToBook.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
