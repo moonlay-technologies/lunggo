@@ -97,7 +97,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
             return apiResponse;
         }
 
-        [HttpGet]
+        [HttpPost]
         [LunggoCorsPolicy]
         [Route("api/v1/flights/cancel")]
         public FlightCancelApiResponse CancelFlightBooking(HttpRequestMessage httpRequest, [FromUri] FlightCancelApiRequest request)
@@ -107,11 +107,18 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Route("api/v1/flights/expire")]
+        public void ExpireFlightReservations(HttpRequestMessage httpRequest)
+        {
+            FlightLogic.ExpireReservations();
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
         [Route("api/v1/flights/sync")]
         public void SyncPriceMarginRules(HttpRequestMessage httpRequest)
         {
-            var flightService = FlightService.GetInstance();
-            flightService.PullRemotePriceMarginRules();
+            FlightLogic.SyncFlightMarginRules();
         }
     }
 }

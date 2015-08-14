@@ -79,8 +79,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,6 +143,7 @@
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
+    <Compile Include="Flight\Constant\CancellationType.cs" />
     <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
     <Compile Include="Flight\Constant\FlightSupplier.cs" />
@@ -149,6 +151,11 @@
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
     <Compile Include="Flight\Constant\TripType.cs" />
+    <Compile Include="Flight\Database\Logic\UpdateFlightDb.cs" />
+    <Compile Include="Flight\Database\Query\CancelReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\ExpireReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
+    <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
@@ -156,7 +163,7 @@
     <Compile Include="Flight\Model\ContactData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
-    <Compile Include="Flight\Model\FlightSummary.cs" />
+    <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />
@@ -169,6 +176,7 @@
     <Compile Include="Flight\Model\GetRulesResult.cs" />
     <Compile Include="Flight\Model\GetTripDetailsResult.cs" />
     <Compile Include="Flight\Model\MarginRule.cs" />
+    <Compile Include="Flight\Model\DiscountRule.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
     <Compile Include="Flight\Model\PassengerInfo.cs" />
     <Compile Include="Flight\Model\ResultBase.cs" />
@@ -192,22 +200,20 @@
     <Compile Include="Flight\Database\Query\GetFlightItineraryIdQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightLocalCurrencyQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightPassengerPrimKeyQuery.cs" />
-    <Compile Include="Flight\Database\Query\GetFlightPassengerSummaryQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightPaymentIdQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightPaymentInfoQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightPaymentStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightRsvNoByBookingIdQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightRsvNosByContactEmailQuery.cs" />
-    <Compile Include="Flight\Database\Query\GetFlightSegmentSummaryQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightTotalFareQuery.cs" />
     <Compile Include="Flight\Database\Query\GetFlightTripInfoQuery.cs" />
-    <Compile Include="Flight\Database\Query\GetFlightTripSummaryQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightPaymentQuery.cs" />
-    <Compile Include="Flight\Service\GetReservations.cs" />
-    <Compile Include="Flight\Service\GetFlightSummary.cs" />
+    <Compile Include="Flight\Service\Discount.cs" />
+    <Compile Include="Flight\Service\SendToCustomer.cs" />
+    <Compile Include="Flight\Service\Reservations.cs" />
     <Compile Include="Flight\Database\Logic\InsertFlightDb.cs" />
     <Compile Include="Flight\Database\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Service\BookFlight.cs" />
@@ -278,7 +284,6 @@
     <Compile Include="Hotel\Object\HotelsSearchServiceRequest.cs" />
     <Compile Include="Hotel\Model\RoomOccupant.cs" />
     <Compile Include="Hotel\Object\HotelsSearchServiceResponse.cs" />
-    <Compile Include="Helper\AutocompleteHelper.cs" />
     <Compile Include="Identity\Claim\IdentityUserClaim.cs" />
     <Compile Include="Identity\Claim\UserClaim.cs" />
     <Compile Include="Identity\ExternalLogin\IdentityUserExternalLogin.cs" />
@@ -309,6 +314,7 @@
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\PaymentExpiry.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
+    <Compile Include="Payment\Model\RefundInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
@@ -321,11 +327,13 @@
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
+    <Compile Include="Sequence\VoucherSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -356,6 +364,10 @@
     <Compile Include="Veritrans\Model\Response.cs" />
     <Compile Include="Veritrans\Model\VtWeb.cs" />
     <Compile Include="Veritrans\VeritransWrapper.cs" />
+    <Compile Include="Subscriber\SubscriberService.cs" />
+    <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />
+    <Compile Include="Voucher\VoucherEmailModel.cs" />
+    <Compile Include="Voucher\VoucherService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 
@@ -14,32 +16,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {
-        internal static FlightItineraryApi Summary(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var service = FlightService.GetInstance();
-                var tripRecords = GetFlightTripSummaryQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
-                return tripRecords.Any()
-                    ? new FlightItineraryApi
-                    {
-                        FlightTrips = tripRecords.Select(tripRecord =>
-                        {
-                            var segmentRecords = GetFlightSegmentSummaryQuery.GetInstance()
-                                .Execute(conn, new { tripRecord.TripId });
-                            var tripSummary = service.ConvertToTripApi(tripRecord);
-                            tripSummary.FlightSegments =
-                                segmentRecords.Select(service.ConvertToSegmentApi).ToList();
-                            return tripSummary;
-                        }).ToList(),
-                        TotalFare = GetFlightTotalFareQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Sum(),
-                        Currency = GetFlightLocalCurrencyQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single()
-                    }
-                    : null;
-            }
-        }
-
-        internal static IEnumerable<FlightReservation> OverviewReservations(string contactEmail)
+        internal static IEnumerable<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -48,6 +25,16 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                 {
                     yield return OverviewReservation(rsvNo);
                 }
+            }
+        }
+
+        internal static IEnumerable<FlightReservation> SearchReservations(FlightReservationSearch search)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos = SearchFlightReservationQuery.GetInstance().Execute(conn, search, search);
+                var reservations = rsvNos.Select(Reservation);
+                return reservations;
             }
         }
 
@@ -69,16 +56,18 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
-                                ContactData = new ContactData
+                                Contact = new ContactData
                                 {
                                     Name = reservationRecord.ContactName,
                                     Email = reservationRecord.ContactEmail,
                                     CountryCode = reservationRecord.ContactCountryCd,
                                     Phone = reservationRecord.ContactPhone
                                 },
-                                PaymentInfo = new PaymentInfo
+                                Payment = new PaymentInfo
                                 {
+                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                     Time = reservationRecord.PaymentTime
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
@@ -107,6 +96,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
                                 FlightSegments = new List<FlightSegmentDetails>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
@@ -117,7 +107,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         {
                             segment = new FlightSegmentDetails
                             {
-                                Pnr = segmentRecord.Pnr,
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
                                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
@@ -174,20 +163,40 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     {
                         if (reservation == null)
                         {
+                            RefundInfo refundInfo = null;
+                            if (reservationRecord.RefundTime != null)
+                            {
+                                refundInfo = new RefundInfo
+                                {
+                                    Amount = reservationRecord.RefundAmount.GetValueOrDefault(),
+                                    Time = reservationRecord.RefundTime.GetValueOrDefault(),
+                                    TargetBank = reservationRecord.RefundTargetBank,
+                                    TargetAccount = reservationRecord.RefundTargetAccount
+                                };
+                            }
                             reservation = new FlightReservation
                             {
                                 RsvNo = rsvNo,
+                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                                 InvoiceNo = reservationRecord.InvoiceNo,
-                                ContactData = new ContactData
+                                Contact = new ContactData
                                 {
                                     Name = reservationRecord.ContactName,
                                     Email = reservationRecord.ContactEmail,
                                     CountryCode = reservationRecord.ContactCountryCd,
                                     Phone = reservationRecord.ContactPhone
                                 },
-                                PaymentInfo = new PaymentInfo
+                                Payment = new PaymentInfo
                                 {
-                                    Time = reservationRecord.PaymentTime
+                                    Id = reservationRecord.PaymentId,
+                                    Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
+                                    Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
+                                    Time = reservationRecord.PaymentTime,
+                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
+                                    TargetAccount = reservationRecord.PaymentTargetAccount,
+                                    FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
+                                    PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
+                                    Refund = refundInfo
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                 Itinerary = new FlightItineraryDetails(),
@@ -215,6 +224,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirport = tripRecord.DestinationAirportCd,
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
                                 FlightSegments = new List<FlightSegmentDetails>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
@@ -225,7 +235,6 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                         {
                             segment = new FlightSegmentDetails
                             {
-                                Pnr = segmentRecord.Pnr,
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
                                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
@@ -243,7 +252,8 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
                                 ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                 ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
-                                Baggage = segmentRecord.Baggage
+                                Baggage = segmentRecord.Baggage,
+                                Pnr = segmentRecord.Pnr
                             };
                             segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
                             trip.FlightSegments.Add(segment);
@@ -307,6 +317,24 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     Priority = record.Priority.GetValueOrDefault(),
                 });
                 return activeRules.ToList();
+            }
+        }
+
+        internal static List<string> RsvNoByBookingId(List<string> bookingIds)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+            }
+        }
+
+        internal static PaymentStatus PaymentStatus(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var statusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
+                var status = PaymentStatusCd.Mnemonic(statusCd);
+                return status;
             }
         }
     }

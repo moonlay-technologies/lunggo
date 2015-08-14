@@ -15,5 +15,9 @@ namespace Lunggo.ApCommon.Payment.Model
         public PaymentStatus Status { get; set; }
         public DateTime? Time { get; set; }
         public string TargetAccount { get; set; }
+        public decimal FinalPrice { get; set; }
+        public decimal PaidAmount { get; set; }
+        public string Currency { get; set; }
+        public RefundInfo Refund { get; set; }
     }
 }

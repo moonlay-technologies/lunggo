@@ -18,8 +18,15 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
         {
             var flight = FlightService.GetInstance();
             var email = User.Identity.GetEmail();
-            var reservations = flight.GetOverviewReservations(email);
+            var reservations = flight.GetOverviewReservationsByContactEmail(email);
             return View(reservations);
+        }
+
+        public ActionResult OrderFlightHistoryDetail(string rsvNo)
+        {
+            var flight = FlightService.GetInstance();
+            var reservation = flight.GetReservation(rsvNo);
+            return View(reservation);
         }
     }
 }

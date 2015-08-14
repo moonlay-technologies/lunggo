@@ -120,8 +120,8 @@ namespace Lunggo.ApCommon.Mystifly
                             result.Errors.Add(FlightError.AlreadyBooked);
                         break;
                     case "ProcessFailed":
-                        if (!result.Errors.Contains(FlightError.ProcessFailed))
-                            result.Errors.Add(FlightError.ProcessFailed);
+                        if (!result.Errors.Contains(FlightError.FailedOnSupplier))
+                            result.Errors.Add(FlightError.FailedOnSupplier);
                         break;
                     case "TechnicalError":
                         if (!result.Errors.Contains(FlightError.TechnicalError))

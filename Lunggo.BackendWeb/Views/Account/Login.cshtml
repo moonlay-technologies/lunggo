@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Hotel Detail";
+}
+<!-- page start -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travorama</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/application.css">
+
+</head>
+<body>
+    <!-- page start -->
+    <div class="page user-page user-page-login">
+
+        <section class="user-login">
+
+            <div class="container">
+                <section class="user-form">
+                    <h1 class="text-center">LOG IN</h1>
+                    @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <input type="text" class="form-control" name="Email" placeholder="Your email address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <input type="password" class="form-control" name="Password" placeholder="Your account password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <button class="btn btn-yellow">LOGIN</button>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+
+        </section><!-- .user-login -->
+        <!-- site content start -->
+        <div id="site-content" class="site-content">

@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -7,8 +8,24 @@
     Layout = "/Views/Shared/_layout_20150506.cshtml";
 }
 
+@section AdditionalPageCSS {
+    <link href="/Assets/vendor/intltelinput/css/intlTelInput.css" rel="stylesheet" />
+}
+@section AdditionalPageJavascript {
+    <script src="/Assets/vendor/intltelinput/js/intlTelInput.min.js"></script>
+}
+@section PageJavascript {
+    <script>
+        $(".phone-number").intlTelInput({
+            defaultCountry: 'ID'
+        });
+    </script>
+}
+
 @{
-    var titleList = new List<Object>
+    List<Object> titleList;
+
+    var adultTitleList = new List<Object>
         {
             new {Value = Title.Mister, Text = "Mr"},
             new {Value = Title.Mistress, Text = "Mrs"},
@@ -24,6 +41,8 @@
     var adultCount = 0;
     var childCount = 0;
     var infantCount = 0;
+    var passengerCount = 0;
+    var needBirthDate = false;
     var needPassport = false;
     var hashKey = "";
 
@@ -32,6 +51,8 @@
         adultCount = Model.Itinerary.AdultCount;
         childCount = Model.Itinerary.ChildCount;
         infantCount = Model.Itinerary.InfantCount;
+        passengerCount = adultCount + childCount + infantCount;
+        needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
         hashKey = Model.HashKey;
     }
@@ -54,260 +75,225 @@
     </header>
 
     <div class="container">
-        <div class="row">
+        <form action="" class="form" id="flight-customer-form" method="post">
+            <div class="row">
 
-            <div class="col-sm-8">
-                <section class="customer-detail">
-                    <section class="customer-form">
-                        <form action="" class="form" id="flight-customer-form" method="post">
+                <div class="col-sm-8">
+
+                    <section class="customer-detail">
+                        <section class="customer-form">
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
                                 <label for="" class="control-label">Name (Buyer) :</label>
-                                <input type="text" class="form-control" name="ContactData.Name" placeholder="Nama sesuai KTP / SIM">
+                                <input type="text" class="form-control" name="Contact.Name" placeholder="Nama sesuai KTP / SIM">
+                                @Html.ValidationMessageFor(data => data.Contact.Name)
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-inline">
-                                        <div class="form-group" style="width:34%;">
-                                            <label for="">Country Code :</label>
-                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.CountryCode" placeholder="ex : 62">
-                                        </div>
-                                        <div class="form-group" style="width:64%;">
+                                        <div class="form-group" style="width:100%;">
                                             <label for="">Phone Number :</label>
-                                            <input type="text" class="form-control" style="width:100%;" name="ContactData.Phone" placeholder="ex : 81234567890">
+                                            <input type="tel" class="phone-number form-control" style="width:100%;" name="Contact.Phone" value="" />
+                                            @Html.ValidationMessageFor(data => data.Contact.Phone)
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="" class="control-label">Email :</label>
-                                        <input type="text" class="form-control" name="ContactData.Email" placeholder="ex : nama@email.com">
+                                        <input type="text" class="form-control" name="Contact.Email" placeholder="ex : nama@email.com">
+                                        @Html.ValidationMessageFor(data => data.Contact.Email)
                                     </div>
                                 </div>
                             </div>
-                            @for (var i = 1; i <= adultCount; i++)
+                            @for (var i = 0; i < passengerCount; i++)
                             {
-                                <h5 class="control-label"><b>Passenger Adult @i</b></h5>
+                                if (i < adultCount)
+                                {
+                                    titleList = adultTitleList;
+                                    <h5 class="control-label"><b>Adult Passenger @(i + 1) ( > 12 years old)</b></h5>
+                                    <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
+                                }
+                                else
+                                {
+                                    titleList = childTitleList;
+                                    if ((i - adultCount) < childCount)
+                                    {
+                                        <h5 class="control-label"><b>Child Passenger @(i + 1 - adultCount) ( 2-12 years old )</b></h5>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
+                                    }
+                                    else
+                                    {
+                                        <h5 class="control-label"><b>Infant Passenger @(i + 1 - adultCount - childCount) ( < 2 years old )</b></h5>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
+                                    }
+                                }
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
                                         <label for="">Title :</label>
-                                        @Html.DropDownListFor(model => model.AdultPassengerData[i - 1].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
+                                        @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">First Name :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].FirstName" placeholder="">
+                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].FirstName" placeholder="">
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">Last Name :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="AdultPassengerData[@(i-1)].LastName" placeholder="">
+                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].LastName" placeholder="">
                                     </div>
                                 </div><br />
-                                <div class="form-group">
-                                    <label for="" class="control-label">Birth Date :</label>
-                                    <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].BirthDate" placeholder="">
-                                </div>
+                                if (needBirthDate)
+                                {
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Birth Date :</label>
+                                        <input type="date" class="form-control" name="Passengers[@i].BirthDate" placeholder="">
+                                    </div>
+                                }
                                 if (needPassport)
                                 {
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Number :</label>
-                                        <input type="text" class="form-control" name="AdultPassengerData[@(i-1)].PassportNumber" placeholder="">
+                                        <input type="text" class="form-control" name="Passengers[@i].PassportNumber" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">Passport Expiry Date:</label>
-                                        <input type="date" class="form-control" name="AdultPassengerData[@(i-1)].PassportExpiryDate" placeholder="">
+                                        <input type="date" class="form-control" name="Passengers[@i].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
-                                <input type="hidden" class="form-control" name="AdultPassengerData[@(i-1)].Country" placeholder="" value="ID">
+                                <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                             }
+                        </section><!-- .customer-form -->
+                        <section class="payment-form">
+                            <h2><b>PAYMENT</b> METHOD</h2>
 
-                            @if (childCount > 0)
-                            {
-                                for (var i = 1; i <= childCount; i++)
-                                {
-                                    <h5 class="control-label"><b>Passenger Child @i</b></h5>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.ChildPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">First Name :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].FirstName" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Last Name :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].LastName" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
-                                        <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                    </div>
-                                    if (needPassport)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Number :</label>
-                                            <input type="text" class="form-control" name="ChildPassengerData[@(i - 1)].PassportNumber" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Expiry Date:</label>
-                                            <input type="date" class="form-control" name="ChildPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
-                                        </div>
-                                    }
-                                    <input type="hidden" class="form-control" name="ChildPassengerData[@(i - 1)].Country" placeholder="" value="ID">
-                                }
-                            }
-
-                            @if (infantCount > 0)
-                            {
-                                for (var i = 1; i <= infantCount; i++)
-                                {
-                                    <h5 class="control-label"><b>Passenger Infant @i</b></h5>
-                                    <div class="form-inline">
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Title :</label>
-                                            @Html.DropDownListFor(model => model.InfantPassengerData[i - 1].Title, new SelectList(childTitleList, "Value", "Text"), new { @class = "form-control user-title" })
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">First Name :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].FirstName" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Last Name :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].LastName" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
-                                        <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].BirthDate" placeholder="">
-                                    </div>
-                                    if (needPassport)
-                                    {
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Number :</label>
-                                            <input type="text" class="form-control" name="InfantPassengerData[@(i - 1)].PassportNumber" placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="control-label">Passport Expiry Date:</label>
-                                            <input type="date" class="form-control" name="InfantPassengerData[@(i - 1)].PassportExpiryDate" placeholder="">
-                                        </div>
-                                    }
-                                    <input type="hidden" class="form-control" name="InfantPassengerData[@(i - 1)].Country" placeholder="" value="ID">
-                                }
-                            }
-                        </form>
-                    </section><!-- .customer-form -->
-                    <section class="payment-form">
-                        <h2><b>PAYMENT</b> METHOD</h2>
-
-                        <section class="payment-option">
-                            <form action="#" class="form">
-                                <label class="payment-veritrans active" for="payment-veritrans">
-                                    <input type="radio" name="payment-option" id="payment-veritrans" checked>
-                                    <span>Veritrans</span>
+                            <section class="payment-option">
+                                @*
+                                    <label class="payment-transfer active" for="payment-transfer">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
+                                        <span>Bank Transfer</span>
+                                    </label>
+                                *@
+                                <label class="payment-veritrans" for="payment-virtual">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual" checked>
+                                    <span>ATM</span>
                                 </label>
-                                <label class="payment-transfer" for="payment-transfer">
-                                    <input type="radio" name="payment-option" id="payment-transfer">
-                                    <span>Transfer Bank</span>
+                                <label class="payment-veritrans" for="payment-creditcard">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.CreditCard" id="payment-creditcard">
+                                    <span>Credit Card</span>
                                 </label>
-                            </form>
-                        </section><!-- .payment-option -->
-                        <section class="payment-detail">
-                            <section class="payment-veritrans-detail active">
-                                <h4>Veritrans</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
-                            </section>
-                            <section class="payment-transfer-detail">
-                                <h4>Transfer Bank</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
-                            </section>
-                        </section><!-- .payment-detail -->
+                                @*
+                                    <label class="payment-veritrans" for="payment-mandiri">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
+                                        <span>Mandiri ClickPay</span>
+                                    </label>
+                                    <label class="payment-veritrans" for="payment-cimb">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
+                                        <span>CIMB Clicks</span>
+                                    </label>
+                                *@
+                            </section><!-- .payment-option -->
+                            <section class="payment-detail">
+                                <section class="payment-veritrans-detail active">
+                                    <h4>Veritrans</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
+                                </section>
+                                <section class="payment-transfer-detail">
+                                    <h4>Transfer Bank</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
+                                </section>
+                            </section><!-- .payment-detail -->
 
-                    </section><!-- .payment-form -->
-                    <section class="payment-button">
-                        <small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="#">ketentuan dan kebijakan privasi.</a></small>
-                        <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
-                    </section><!-- .payment-button -->
-                </section><!-- .customer-detail -->
-            </div><!-- .col-sm-8 -->
+                        </section><!-- .payment-form -->
+                        <section class="payment-button">
+                            <small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>
+                            <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
+                        </section><!-- .payment-button -->
+                    </section><!-- .customer-detail -->
 
-            <div class="col-sm-4">
-                <section class="order-detail">
-                    <h2><b>ORDER</b> DETAILS</h2>
-                    <section class="flight-detail">
-                        <h3 class="text-center">DEPARTURE FLIGHT</h3>
-                        <h5 class="airline-name">
-                            <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
-                        </h5>
-                        <div class="row flight-route">
-                            <div class="col-sm-6 text-right flight-origin">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
-                            </div>
-                            <div class="separator">to</div>
-                            <div class="col-sm-6 text-left flight-destination">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
-                            </div>
-                        </div>
-                    </section><!-- .flight-detail -->
-                    @if (@Model.Itinerary.TripType == TripType.Return)
-                    {
+                </div><!-- .col-sm-8 -->
+
+                <div class="col-sm-4">
+                    <section class="order-detail">
+                        <h2><b>ORDER</b> DETAILS</h2>
                         <section class="flight-detail">
-                            <h3 class="text-center">RETURN FLIGHT</h3>
-                            <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                            <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                            <h5 class="airline-name">
+                                <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                            </h5>
                             <div class="row flight-route">
                                 <div class="col-sm-6 text-right flight-origin">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
                                 </div>
                                 <div class="separator">to</div>
                                 <div class="col-sm-6 text-left flight-destination">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
                                 </div>
                             </div>
-                        </section>
+                        </section><!-- .flight-detail -->
+                        @if (@Model.Itinerary.TripType == TripType.Return)
+                        {
+                            <section class="flight-detail">
+                                <h3 class="text-center">RETURN FLIGHT</h3>
+                                <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                                <div class="row flight-route">
+                                    <div class="col-sm-6 text-right flight-origin">
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                    </div>
+                                    <div class="separator">to</div>
+                                    <div class="col-sm-6 text-left flight-destination">
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                    </div>
+                                </div>
+                            </section>
                         <!-- .flight-detail -->
-                    }
-                    <section class="price-detail">
-                        <h2><b>PRICE</b> DETAIL</h2>
-                        <div class="content-wrapper">
-                            <div class="row">
-                                <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                        }
+                        <section class="price-detail">
+                            <h2><b>PRICE</b> DETAIL</h2>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
+                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Tax</div>
+                                    <div class="col-sm-6">INCLUDED</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Travorama Fee</div>
+                                    <div class="col-sm-6">FREE</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">TOTAL</div>
+                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Voucher Code</div>
+                                    <div class="col-sm-6"><input type="text" class="form-control" name="DiscountCode" placeholder=""></div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">Tax</div>
-                                <div class="col-sm-6">INCLUDED</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">Travorama Fee</div>
-                                <div class="col-sm-6">FREE</div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">TOTAL</div>
-                                <div class="col-sm-6">IDR @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                            </div>
-                        </div>
-                    </section><!-- .price-detail -->
-                </section><!-- .order-detail -->
-            </div><!-- .col-sm-4 -->
+                        </section><!-- .price-detail -->
+                    </section><!-- .order-detail -->
+                </div><!-- .col-sm-4 -->
 
-        </div>
+            </div>
+        </form>
     </div>
 
 

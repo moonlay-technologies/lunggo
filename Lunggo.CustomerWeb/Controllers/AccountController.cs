@@ -276,6 +276,52 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         //
+        // POST: /Account/Manage
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("/");
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            }
+            var updatedUser = new CustomUser
+            {
+                Id = User.Identity.GetUserId(),
+                Email = User.Identity.GetEmail(),
+                UserName = User.Identity.GetEmail(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber
+            };
+            var result = await UserManager.UpdateAsync(updatedUser);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            }
+            AddErrors(result);
+            return RedirectToAction("OrderHistory", "UW620OrderHistory");
+        }
+
+        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -407,10 +453,8 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        // POST: /Account/Logout
+        public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
             return Redirect("/");
@@ -429,7 +473,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var model = new AccountViewModel();
             var flightService = FlightService.GetInstance();
             model.User = User.Identity.GetCustomUser();
-            model.FlightReservations = flightService.GetOverviewReservations(model.User.Email);
+            model.FlightReservations = flightService.GetOverviewReservationsByContactEmail(model.User.Email);
             return View(model);
         }
 

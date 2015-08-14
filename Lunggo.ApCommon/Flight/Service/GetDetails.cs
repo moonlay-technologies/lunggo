@@ -17,11 +17,17 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 if (input.BookingId == null)
                     input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
-                var tripInfos = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { input.BookingId }).ToList();
+                var tripInfoRecords = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { input.BookingId });
+                var tripInfos = tripInfoRecords.Select(record => new FlightTripInfo
+                {
+                    OriginAirport = record.OriginAirportCd,
+                    DestinationAirport = record.DestinationAirportCd,
+                    DepartureDate = record.DepartureDate.GetValueOrDefault()
+                }).ToList();
 
                 var output = new GetDetailsOutput();
                 var request = new TripDetailsConditions
-                {
+                {   
                     BookingId = input.BookingId,
                     TripInfos = tripInfos
                 };
@@ -31,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     output = MapDetails(details);
                     output.IsSuccess = true;
 
-                    DeleteFlightTripPerItineraryQuery.GetInstance().Execute(conn, details);
+                    DeleteFlightTripPerItineraryQuery.GetInstance().Execute(conn, new {details.BookingId});
                     InsertFlightDb.Details(details);
                 }
                 else

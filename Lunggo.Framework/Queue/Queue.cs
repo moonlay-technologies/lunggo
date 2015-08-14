@@ -2,11 +2,17 @@
 {
     public enum Queue
     {
-        Eticket,
-        EticketEmail,
-        ChangedEticket,
-        ChangedEticketEmail,
+        FlightEticket,
+        FlightEticketEmail,
+        FlightChangedEticket,
+        FlightChangedEticketEmail,
+        FlightInstantPaymentNotif,
+        FlightPendingPaymentNotif,
+        FlightPendingPaymentConfirmedNotif,
+        FlightPendingPaymentExpiredNotif,
         UserConfirmationEmail,
-        ForgotPasswordEmail
+        ForgotPasswordEmail,
+        InitialSubscriberEmail,
+        VoucherEmail
     }
 }

@@ -42,7 +42,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     Status = MapPaymentStatus(notif),
                     Time = time,
                     Id = notif.approval_code,
-                    TargetAccount = notif.permata_va_number
+                    TargetAccount = notif.permata_va_number,
+                    FinalPrice = notif.gross_amount
                 };
 
                 if (notif.order_id.First() == 'F')
@@ -112,7 +113,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "authorize":
                 case "cancel":
                 case "expire":
-                    return PaymentStatus.Cancelled;
+                    return PaymentStatus.Expired;
                 case "deny":
                     return PaymentStatus.Denied;
                 default:
@@ -132,6 +133,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public string approval_code { get; set; }
         public string bank { get; set; }
         public string permata_va_number { get; set; }
+        public decimal gross_amount { get; set; }
     }
 
     public class VeritransResponse

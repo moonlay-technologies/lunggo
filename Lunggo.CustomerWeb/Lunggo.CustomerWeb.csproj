@@ -16,10 +16,10 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>23322</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -260,6 +260,7 @@
     <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -277,6 +278,11 @@
     <Compile Include="Models\PaymentConfirmationData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -342,6 +348,12 @@
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
+    <Content Include="Assets\css\landingPage.css">
+      <DependentUpon>landingPage.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\landingPage.min.css">
+      <DependentUpon>landingPage.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\mobile-app.css">
       <DependentUpon>mobile-app.scss</DependentUpon>
     </Content>
@@ -611,6 +623,7 @@
     <Content Include="Assets\images\airlines\XJ.png" />
     <Content Include="Assets\images\airlines\XL.png" />
     <Content Include="Assets\images\airlines\XN.png" />
+    <Content Include="Assets\images\airlines\XT.png" />
     <Content Include="Assets\images\airlines\XY.png" />
     <Content Include="Assets\images\airlines\Y6.png" />
     <Content Include="Assets\images\airlines\YO.png" />
@@ -625,6 +638,7 @@
     <Content Include="Assets\images\airline\garuda.png" />
     <Content Include="Assets\images\airline\lionair.png" />
     <Content Include="Assets\images\airline\sriwijaya.png" />
+    <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\bed-bg.png" />
@@ -632,27 +646,43 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\email-image.jpg" />
+    <Content Include="Assets\images\email\facebook-icon.png" />
+    <Content Include="Assets\images\email\instagram-icon.png" />
+    <Content Include="Assets\images\email\mail-icon.png" />
+    <Content Include="Assets\images\email\phone-icon.png" />
+    <Content Include="Assets\images\email\specialrelease\mail-bottom.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-right.jpg" />
+    <Content Include="Assets\images\email\specialrelease\mail-top.jpg" />
+    <Content Include="Assets\images\email\twitter-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
+    <Content Include="Assets\images\eticket-background.png" />
+    <Content Include="Assets\images\exclamation-mark.png" />
     <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\filter-airline.png" />
+    <Content Include="Assets\images\filter-close.png" />
     <Content Include="Assets\images\filter-onward.png" />
     <Content Include="Assets\images\filter-price.png" />
     <Content Include="Assets\images\filter-transit.png" />
     <Content Include="Assets\images\filter-trigger-active.png" />
     <Content Include="Assets\images\filter-trigger.png" />
+    <Content Include="Assets\images\flag-britain.png" />
     <Content Include="Assets\images\flag-indonesia.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
     <Content Include="Assets\images\flight-toggle-down.png" />
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
-    <Content Include="Assets\images\fliter-return.png" />
+    <Content Include="Assets\images\filter-return.png" />
+    <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\googlePlay.png" />
+    <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
@@ -671,6 +701,7 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\howto-bg.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />
@@ -690,6 +721,9 @@
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
+    <Content Include="Assets\images\plane-down.png" />
+    <Content Include="Assets\images\plane-up.png" />
+    <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
@@ -704,6 +738,7 @@
     <Content Include="Assets\images\tag-orange.png" />
     <Content Include="Assets\images\tag-purple.png" />
     <Content Include="Assets\images\tag-red.png" />
+    <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -724,6 +759,7 @@
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\payment-veritrans.png" />
+    <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\youtube-icon.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
@@ -769,6 +805,10 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Assets\vendor\intltelinput\css\intlTelInput.css" />
+    <Content Include="Assets\vendor\intltelinput\img\flags%402x.png" />
+    <Content Include="Assets\vendor\intltelinput\img\flags.png" />
+    <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
     <Content Include="Config\Airline.csv" />
@@ -839,6 +879,8 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Assets\css\eticket.scss" />
     <Content Include="Assets\css\mobile-app.scss" />
+    <Content Include="Config\Country.csv" />
+    <Content Include="Assets\css\landingPage.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -2046,7 +2088,6 @@
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
-    <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
       <SubType>Designer</SubType>
@@ -2069,7 +2110,6 @@
     <Content Include="Views\Flight\SearchResultList.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
-    <Content Include="Views\Flight\Eticket.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
     <Content Include="Views\Flight\Thankyou.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
@@ -2095,17 +2135,28 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\Checkout1.cshtml" />
-    <Content Include="Views\Flight\Checkout2.cshtml" />
-    <Content Include="Views\Flight\Checkout3.cshtml" />
-    <Content Include="Views\Flight\Checkout4.cshtml" />
-    <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
+    <Content Include="Views\Flight\Checkout.mobile.cshtml" />
+    <Content Include="Views\Template\LandingPage.cshtml" />
+    <Content Include="Views\Template\Activity.cshtml" />
+    <Content Include="Views\Shared\_layout_eticket.cshtml" />
+    <Content Include="Views\Template\eticket2.cshtml" />
+    <Content Include="Views\Shared\_layout_orderHIstory.cshtml" />
+    <Content Include="Views\Shared\_layout_howto.cshtml" />
+    <Content Include="Views\Shared\_googleTag.cshtml" />
+    <None Include="Views\Template\eticket.cshtml" />
+    <Content Include="Views\Template\OrderFlightHistory.cshtml" />
+    <Content Include="Views\Template\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Template\HowToBook.cshtml" />
+    <Content Include="Views\Term\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Template\EmailSpecialRelease.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
+    <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2117,6 +2168,7 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Assets\images\countries\" />
     <Folder Include="Helper\" />
     <Folder Include="WebSrc\UW300\Logic\" />
     <Folder Include="WebSrc\UW300\Object\" />
@@ -2151,6 +2203,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Mystifly.OnePointService.Flight\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

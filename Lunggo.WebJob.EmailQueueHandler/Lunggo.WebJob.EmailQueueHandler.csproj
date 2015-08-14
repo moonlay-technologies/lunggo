@@ -99,9 +99,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Function\ChangedEticketEmail.cs" />
-    <Compile Include="Function\EticketEmail.cs" />
+    <Compile Include="Function\FlightChangedEticketEmail.cs" />
+    <Compile Include="Function\FlightEticketEmail.cs" />
+    <Compile Include="Function\FlightPendingPaymentExpiredNotifEmail.cs" />
+    <Compile Include="Function\FlightPendingPaymentConfirmedNotifEmail.cs" />
+    <Compile Include="Function\FlightPendingPaymentNotifEmail.cs" />
+    <Compile Include="Function\FlightInstantPaymentNotifEmail.cs" />
     <Compile Include="Function\ForgotPasswordEmail.cs" />
+    <Compile Include="Function\VoucherEmail.cs" />
+    <Compile Include="Function\InitialSubscriberEmail.cs" />
     <Compile Include="Function\UserConfirmationEmail.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

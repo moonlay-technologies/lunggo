@@ -2,6 +2,7 @@
 // on document ready
 $(document).ready(function () {
 
+    toggleLanguageSelect();
     homePageFunctions();
     toggleFilter();
     hotelSearch();
@@ -12,8 +13,39 @@ $(document).ready(function () {
     paymentOptionForm();
     checkoutPageFunctions();
     modalFunctions();
+    toggleFilterMobile();
 
 });
+
+//******************************************
+// format number in thousand
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+}
+
+//******************************************
+// toggle language select
+function toggleLanguageSelect() {
+    $('[data-toggle="dropdown"]').click(function (evt) {
+        evt.stopPropagation();
+        $(this).siblings('.dropdown-menu').toggle();
+    });
+    $('body').click(function() {
+        $('.dropdown-menu').hide();
+    });
+}
+
+
+//******************************************
+// toggle filter mobile
+function toggleFilterMobile() {
+    $('.flight-filter-mobile .filter-trigger').click(function() {
+        console.log('JEMPING');
+        $('.flight-filter-mobile-content').toggleClass('hidden');
+        $('.flight-filter-mobile .filter-trigger .toggle').toggle();
+    });
+}
+
 
 //******************************************
 // payment option form
@@ -25,6 +57,7 @@ function paymentOptionForm() {
         $(this).addClass('active');
         $('.payment-form .payment-detail section').removeClass('active');
         $('.payment-form .payment-detail section.' + activeClass + '-detail').addClass('active');
+        console.log('');
     });
 
 }
@@ -257,6 +290,44 @@ function flightSearchFormFunctions() {
     });
 
     // ******************************
+    // airline autocomplete
+    var airlineAutocompleteCache = {};
+    $('.airline.autocomplete').autocomplete({
+        minLength: 3,
+        source: function (request, response) {
+            var term = request.term;
+            if (term in airlineAutocompleteCache) {
+                response(airlineAutocompleteCache[term]);
+                return;
+            }
+            $.getJSON(AirlineAutocompleteConfig.Url + request.term, function (data, status, xhr) {
+                var cleanData = [];
+                for (var i = 0; i < data.length; i++) {
+                    var newData = {
+                        label: data[i].Name + ' (' + data[i].Code + ')',
+                        value: data[i].Code
+                    };
+                    cleanData.push(newData);
+                }
+                airlineAutocompleteCache[term] = cleanData;
+                response(cleanData);
+            });
+        },
+        select: function (event, ui) {
+            event.preventDefault();
+            $(event.target).attr('data-userInputValue', $(event.target).val());
+            $(event.target).val(ui.item.label);
+            $(event.target).attr('data-airportCode', ui.item.value);
+        }
+    });
+    $('.airline.autocomplete').each(function () {
+        $(this).focus(function () {
+            var userInputValue = $(this).attr('data-userInputValue');
+            $(this).val(userInputValue);
+        });
+    });
+
+    // ******************************
     // flight type
     $('.flight-type-wrapper label').click(function() {
         var flightType = $(this).attr('for');
@@ -292,6 +363,53 @@ function flightSearchFormFunctions() {
         onClose: function() {
             $('.flight-return-date-real').attr('data-valid','true');
         }
+    });
+
+    // ******************************
+    // validate passengers
+    function validatePassengers(changedElement) {
+        var maxPassenger = 9;
+        var adultPassenger = parseInt($('.flight-adult').val());
+        var childPassenger = parseInt($('.flight-child').val());
+        var infantPassenger = parseInt($('.flight-infant').val());
+
+        var totalPassenger = adultPassenger + childPassenger + infantPassenger;
+
+        // if adult less than infant
+        if ( infantPassenger > adultPassenger ) {
+            $('.flight-infant').val( adultPassenger );
+            $('.passenger-warning .max-infant').show();
+        } else {
+
+            // if total passenger more than 9
+            if (totalPassenger > maxPassenger) {
+
+                if (changedElement == 'adult') {
+                    $('.flight-adult').val(9 - (childPassenger + infantPassenger));
+                } else if (changedElement == 'child') {
+                    $('.flight-child').val(9 - (adultPassenger + infantPassenger));
+                } else if (changedElement == 'infant') {
+                    $('.flight-infant').val(9 - (childPassenger + adultPassenger));
+                }
+
+                $('.passenger-warning .max-passenger').show();
+            } else {
+                $('.passenger-warning .max-passenger').hide();
+            }
+
+            $('.passenger-warning .max-infant').hide();
+        }
+
+
+    }// validatePassengers()
+    $('.flight-adult').change(function() {
+        validatePassengers('adult');
+    });
+    $('.flight-child').change(function() {
+        validatePassengers('child');
+    });
+    $('.flight-infant').change(function () {
+        validatePassengers('infant');
     });
 
     // ******************************
@@ -341,7 +459,6 @@ function flightSearchFormFunctions() {
 // toggle filter functions
 function toggleFilter() {
     $('aside.filter .filter-button').click(function (evt) {
-        console.log('JEMPING');
         evt.preventDefault();
         var filterEl = 'aside.filter';
         var state = $(filterEl).attr('data-active');

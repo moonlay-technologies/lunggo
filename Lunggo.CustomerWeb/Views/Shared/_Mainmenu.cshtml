@@ -9,19 +9,25 @@
             <div class="col-sm-12">
                 <ul class="list-inline">
                     <li class="site-logo pull-left"><a href="@Href("~/")"><img src="/assets/images/logo.png" alt="Travorama"></a></li>
-                    <li><a href="@Href("~/")"><span class="fa fa-building"></span> Hotel</a></li>
-                    <li><a href="#"><span class="fa fa-plane"></span> Flight</a></li>
+                    <li class="hidden"><a href="@Href("~/")"><span class="fa fa-building"></span> Hotel</a></li>
+                    <li><a href="/"><span class="fa fa-plane"></span> Flight</a></li>
                     <li class="hidden"><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
                     <li class="hidden"><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
                     <li class="pull-right language-select">
-                        <img src="/Assets/images/flag-indonesia.png" alt="Bahasa Indonesia" />
+                        <div class="dropdown">
+                            <button class="" type="button" data-toggle="dropdown">
+                                <img src="/Assets/images/flag-indonesia.png" alt="Bahasa Indonesia" />    
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Indonesia</a></li>
+                                <li><a href="#">English</a></li>
+                            </ul>
+                        </div>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @Html.BeginForm("LogOff", "Account", FormMethod.Post) { 
-                            @Html.AntiForgeryToken()
-                            <li class="pull-right site-login">Hi, @User.Identity.GetFirstName() <button type="submit" href="@Url.Action("LogOff", "Account")">(Logoff)</button></li>
-                        }
+                        <li class="pull-right site-login"><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">MY ACCOUNT</a> | <a href="@Url.Action("Logout", "Account")">Logout</a></li>
                     }
                     else
                     {

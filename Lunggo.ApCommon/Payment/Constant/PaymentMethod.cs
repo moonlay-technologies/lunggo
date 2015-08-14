@@ -12,7 +12,8 @@ namespace Lunggo.ApCommon.Payment.Constant
         CreditCard = 1,
         BankTransfer = 2,
         MandiriClickPay = 3,
-        CimbClicks = 4
+        CimbClicks = 4,
+        VirtualAccount = 5
     }
 
     public class PaymentMethodCd
@@ -29,6 +30,8 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "MCP";
                 case PaymentMethod.CimbClicks:
                     return "CCL";
+                case PaymentMethod.VirtualAccount:
+                    return "VIR";
                 default:
                     return "";
             }
@@ -45,6 +48,8 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return PaymentMethod.MandiriClickPay;
                 case "CCL":
                     return PaymentMethod.CimbClicks;
+                case "VIR":
+                    return PaymentMethod.VirtualAccount;
                 default:
                     return PaymentMethod.Undefined;
             }

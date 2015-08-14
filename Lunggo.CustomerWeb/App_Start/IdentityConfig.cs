@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Role;
 using Lunggo.ApCommon.Identity.RoleStore;
 using Lunggo.ApCommon.Identity.User;
@@ -8,17 +10,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace Lunggo.CustomerWeb.Models
+namespace Lunggo.CustomerWeb
 {
 
     public class ApplicationUserManager : UserManager<CustomUser>
@@ -43,9 +38,9 @@ namespace Lunggo.CustomerWeb.Models
             {
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;

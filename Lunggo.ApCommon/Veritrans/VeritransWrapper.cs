@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.Config;
@@ -31,9 +32,9 @@ namespace Lunggo.ApCommon.Veritrans
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
 
-        private static readonly string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
-        private static readonly string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
-        private static readonly string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
+        private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
+        private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
+        private const string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
 
         private VeritransWrapper()
         {
@@ -59,10 +60,10 @@ namespace Lunggo.ApCommon.Veritrans
             }
         }
 
-        internal string GetPaymentUrl(TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
+        internal string GetPaymentUrl(TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var authorizationKey = ProcessAuthorizationKey(_serverKey);
-            var request = CreateRequest(authorizationKey, transactionDetail, itemDetails);
+            var request = CreateRequest(authorizationKey, transactionDetail, itemDetails, method);
             var response = SubmitRequest(request);
             var url = GetUrlFromResponse(response);
             return url;
@@ -75,18 +76,18 @@ namespace Lunggo.ApCommon.Veritrans
             return hashedAuthorizationKey;
         }
 
-        private static WebRequest CreateRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
+        private static WebRequest CreateRequest(string authorizationKey, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var request = (HttpWebRequest) WebRequest.Create(_endPoint);
             request.Method = "POST";
             request.Headers.Add("Authorization", "Basic " + authorizationKey);
             request.ContentType = "application/json";
             request.Accept = "application/json";
-            ProcessRequestParams(request, transactionDetail, itemDetails);
+            ProcessRequestParams(request, transactionDetail, itemDetails, method);
             return request;
         }
 
-        private static void ProcessRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails)
+        private static void ProcessRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new Request
@@ -101,6 +102,7 @@ namespace Lunggo.ApCommon.Veritrans
                 },
                 VtWeb = new VtWeb
                 {
+                    EnabledPayments = new List<string> {MapEnabledPayment(method)},
                     CreditCard3DSecure = true,
                     FinishRedirectUrl = _finishedRedirectUrl,
                     UnfinishRedirectUrl = _unfinishedRedirectUrl,
@@ -112,6 +114,23 @@ namespace Lunggo.ApCommon.Veritrans
             using (var streamWriter = new StreamWriter(dataStream))
             {
                 streamWriter.Write(jsonRequestParams);
+            }
+        }
+
+        private static string MapEnabledPayment(PaymentMethod method)
+        {
+            switch (method)
+            {
+                case PaymentMethod.CreditCard:
+                    return "credit_card";
+                case PaymentMethod.MandiriClickPay:
+                    return "mandiri_clickpay";
+                case PaymentMethod.CimbClicks:
+                    return "cimb_clicks";
+                case PaymentMethod.VirtualAccount:
+                    return "bank_transfer";
+                default:
+                    return null;
             }
         }
 

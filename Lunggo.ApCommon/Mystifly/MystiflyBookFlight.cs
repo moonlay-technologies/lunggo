@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Mystifly
                     { 
                         BookingId = FlightIdUtil.ConstructIntegratedId(bookingId, FlightSupplier.Mystifly, fareType),
                         BookingStatus = BookingStatus.Booked,
-                        TimeLimit = DateTime.Now.AddHours(2)
+                        TimeLimit = DateTime.UtcNow.AddHours(2)
                     }
                 };
                 return result;
@@ -362,7 +362,9 @@ namespace Lunggo.ApCommon.Mystifly
                     case "ERBUK080":
                     case "ERBUK082":
                     case "ERBUK083":
-                        goto case "ProcessFailed";
+                    case "ERBUK081":
+                    case "ERBUK085":
+                        goto case "FailedOnSupplier";
                     case "ERBUK001":
                     case "ERBUK002":
                         if (result.ErrorMessages == null)
@@ -375,13 +377,6 @@ namespace Lunggo.ApCommon.Mystifly
                             result.ErrorMessages = new List<string>();
                         if (!result.ErrorMessages.Contains("Insufficient balance!"))
                             result.ErrorMessages.Add("Insufficient balance!");
-                        goto case "TechnicalError";
-                    case "ERBUK081":
-                    case "ERBUK085":
-                        if (result.ErrorMessages == null)
-                            result.ErrorMessages = new List<string>();
-                        if (!result.ErrorMessages.Contains("Host not responding!"))
-                            result.ErrorMessages.Add("Host not responding!");
                         goto case "TechnicalError";
                     case "ERGEN003":
                         if (result.ErrorMessages == null)
@@ -408,9 +403,9 @@ namespace Lunggo.ApCommon.Mystifly
                         if (!result.Errors.Contains(FlightError.AlreadyBooked))
                             result.Errors.Add(FlightError.AlreadyBooked);
                         break;
-                    case "ProcessFailed":
-                        if (!result.Errors.Contains(FlightError.ProcessFailed))
-                            result.Errors.Add(FlightError.ProcessFailed);
+                    case "FailedOnSupplier":
+                        if (!result.Errors.Contains(FlightError.FailedOnSupplier))
+                            result.Errors.Add(FlightError.FailedOnSupplier);
                         break;
                     case "TechnicalError":
                         if (!result.Errors.Contains(FlightError.TechnicalError))

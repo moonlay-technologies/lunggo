@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Microsoft.AspNet.Identity;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -88,6 +90,47 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult FlightSearchListNew()
+        {
+            return View();
+        }
+
+        public ActionResult LandingPage()
+        {
+            return View();
+        }
+
+        public ActionResult Activity()
+        {
+            return View();
+        }
+
+        public ActionResult eticket()
+        {
+            return View();
+        }
+
+        public ActionResult eticket2(string rsvNo)
+        {
+            var rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            return View(rsv);
+        }
+
+        public ActionResult OrderFlightHistory()
+        {
+            return View();
+        }
+
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
+        public ActionResult HowToBook()
+        {
+            return View();
+        }
+
+        public ActionResult EmailSpecialRelease()
         {
             return View();
         }

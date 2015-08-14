@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightSummary
+@model Lunggo.ApCommon.Flight.Model.FlightReservation
 
 @{
     Layout = "/Views/Shared/_layout_mobile.cshtml";
@@ -30,10 +30,11 @@
             <div class="bar-5 active"></div>
         </div>
     </section><!-- .checkout-progress -->
-    @switch (Model.PaymentInfo.Status)
+    @switch (Model.Payment.Status)
     {
         case PaymentStatus.Undefined:
         case PaymentStatus.Cancelled:
+        case PaymentStatus.Expired:
 
             <div class="no-reservation">
                 <h1 class="text-center">Belum Ada Reservasi</h1>
@@ -72,7 +73,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
-                    <p>Nomor Virtual Account : @Model.PaymentInfo.TargetAccount</p>
+                    <p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
                 </div>
                 <div class="col-sm-6">
                     <div class="payment-countdown text-center"></div>
@@ -86,15 +87,16 @@
 
         case PaymentStatus.Settled:
 
-        <div class="ticket-wrapper">
-            <h2 class="text-center ticket-title">Cetak e-Ticket Anda</h2>
-            <div class="row">
-                <div class="col-sm-6 ticket-left">
-                    <p>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mencetak eTicket Anda.</p>
-                </div>
-                <div class="col-sm-6 ticket-right">
-                    <div class="ticket-print">
-                        <a href="#" class="btn btn-yellow">Cetak e-Ticket</a>
+        <div class="container">
+            <h1 class="thank-you text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank You" /></h1>
+            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
+            <div class="ticket-wrapper">
+                <div class="row text-center">
+                    <div class="col-sm-12">
+                        <div class="ticket-print">
+                            <a href="#" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span> Cetak e-Ticket</a>
+                            <p>Anda dapat menutup halaman inxi dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,65 +110,84 @@
     </div>
     </div>
 
-    @if (Model.PaymentInfo.Status == PaymentStatus.Settled)
+    @if (Model.Payment.Status == PaymentStatus.Settled)
     {
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="receipt-wrapper">
 
-                    <h2 class="text-center receipt-title">Tanda bukti pemesanan</h2>
+                    <h3 class="text-center receipt-title"><b>TANDA BUKTI</b> PEMESANAN</h3>
+                    
+                    <div class="container">
+                        <div class="row receipt-content">
+                            <div class="col-sm-4 receipt-summary">
 
-                    <div class="row">
-                        <div class="col-sm-4 receipt-summary">
+                                <div class="receipt-number">
+                                    <h3>Nomer Pemesanan</h3>
+                                    <h4>@Model.RsvNo</h4>
+                                </div>
 
-                            <div class="receipt-number">
-                                <h3>Nomer Pemesanan</h3>
-                                <p>@Model.RsvNo</p>
+                                <div class="receipt-user">
+                                    <h3>Info Penumpang</h3>
+                                    <ol>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
+                                        }
+                                    </ol>
+                                </div>
+
                             </div>
+                            <div class="col-sm-4 receipt-flight">
 
-                            <div class="receipt-user">
-                                <h3>Info Penumpang</h3>
-                                <ol>
-                                    @foreach (var passenger in Model.Passengers)
-                                    {
-                                        <li><h5>@passenger.Title @passenger.FirstName @passenger.LastName <br /> Jenis Tiket : @passenger.Type</h5></li>
-                                    }
-                                </ol>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-4 receipt-flight">
-
-                            <h3>Informasi Penerbangan</h3>
-                            <h4><b>Berangkat</b></h4>
-                            @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
-                            {
-                                <h5>Maskapai : @segment.AirlineName</h5>
-                                <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
-                                <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
-                            }
-                            @if (Model.Itinerary.FlightTrips.Count > 1)
-                            {
-                                foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                <h3>Informasi Penerbangan</h3>
+                                <h4><b>Berangkat</b></h4>
+                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
                                 {
-                                    <h5>Maskapai : @segment.AirlineName</h5>
-                                    <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
-                                    <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                    <div class="flight row">
+                                        <div class="flight-image col-xs-4">
+                                            <img src="/Assets/images/airlines/@(segment.AirlineCode).png" alt="@segment.AirlineName" />
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h5>Maskapai : @segment.AirlineName</h5>
+                                            <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                            <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                        </div>
+                                    </div>
                                 }
-                            }
+                                @if (Model.Itinerary.FlightTrips.Count > 1)
+                                {
+                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                    {
+                                        <h4><b>Kembali</b></h4>
+                                        <div class="flight row">
+                                            <div class="flight-image col-xs-4">
+                                                <img src="/Assets/images/airlines/@(segment.AirlineCode).png" alt="@segment.AirlineName" />
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h5>Maskapai : @segment.AirlineName</h5>
+                                                <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
+                                                <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
+                                            </div>
+                                        </div>
+                                    }
+                                }
 
+                            </div>
+                            <div class="col-sm-4 receipt-payment">
+                                <h3>Informasi Pembayaran</h3>
+                                <h4><b>Harga total :</b> @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                <h4><b>Metode Pembayaran :</b> @Model.Payment.Method</h4>
+                            </div>
                         </div>
-                        <div class="col-sm-4 receipt-payment">
-                            <h3>Informasi Pembayaran</h3>
-                            <h5>Harga total : @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h5>
-                            <h5>Metode Pembayaran : @Model.PaymentInfo.Method</h5>
-                        </div>
+
                     </div>
+                    </div><!-- .receipt-wrapper -->
 
-                </div><!-- .receipt-wrapper -->
-
-                <small>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</small>
+                <div class="container">
+                    <small><i>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</i></small>
+                </div>
             </div>
         </div>
     }

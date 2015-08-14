@@ -5,80 +5,88 @@
 
         <!-- site footer start -->
         <footer id="site-footer" class="site-footer">
-            <section class="footer-menu">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-6">
-
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Tentang Kami</h4>
-                                    <ul>
-                                        <li><a href="#">Sejarah</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li><a href="#">Syarat &amp; Ketentuan</a></li>
-                                        <li><a href="#">Kebijakan &amp; privasi</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <h4>Penawaran</h4>
-                                    <ul>
-                                        <li><a href="#">Hotel</a></li>
-                                        <li><a href="#">Mitra Kami</a></li>
-                                        <li><a href="#">Program Perjalanan</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <h4>Kontak</h4>
-                                    <ul>
-                                        <li><a href="#">Lokasi</a></li>
-                                        <li><a href="#">Email</a></li>
-                                        <li><a href="#">Social Media</a></li>
-                                        <li><a href="#">Maps</a></li>
-                                    </ul>
-                                </div>
+    @if (ViewBag.ShowSubscribeForm == true)
+    {
+        <section class="footer-subscribe">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="/Assets/images/email-image.jpg" alt="Subscribe" />
+                    </div>
+                    <div class="col-sm-9">
+                        <h3><b>SUBSCRIBE </b> TO GET UPDATES AND PROMOTIONS FROM US</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        <form class="form form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Name" /></div>
+                                <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Email" /></div>
+                                <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="SUBSCRIBE" /></div>
                             </div>
-
-                        </div>
-                        <div class="col-sm-5 col-sm-offset-1">
-                            <h4>Subscribe Email</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur odit fugit, harum, voluptas distinctio ratione enim ipsum.</p>
-                            <form action="#" class="form subscribe-form">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Email address" class="form-control no-radius">
-                                </div>
-                                <div class="form-group text-right">
-                                    <button class="btn btn-primary no-radius">SUBSCRIBE</button>
-                                </div>
-                            </form>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
-            </section>
-            <section class="footer-copyright">
-                <div class="container">
-                    <div class="row">
+            </div>
+        </section>
+            <!-- .footer-subscribe -->
+    }
+    @if (ViewBag.ShowPaymentInfo == true)
+    {
+        <section class="footer-payment">
+            <div class="container">
+                <h2 class="section-title"><b>PAYMENT METHOD</b> THAT WE USE</h2>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad p ex ea commodo consequat. Ut wisi eniTm ad minim veniam:</p>
+                <img src="/Assets/images/payment-method.jpg" alt="Travorama Payment Method" />
+            </div>
+        </section>
+        <!-- .footer-payment -->
+    }
+        <section class="footer-menu">
+            <div class="container">
+                <div class="row">
 
-                        <div class="col-sm-12">
-
-                            <div class="text-center footer-socialmedia">
-                                <a href="#" class="fa fa-instagram"></a>
-                                <a href="#" class="fa fa-facebook"></a>
-                                <a href="#" class="fa fa-pinterest"></a>
-                                <a href="#" class="fa fa-youtube"></a>
-                            </div>
-                            <p class="text-center">
-                                Copyright 2014 - Travelmadezy. All Rights Reserved.
-                            </p>
-
-                        </div>
-
+                    <div class="col-sm-3">
+                        <img src="/Assets/images/logo.png" alt="Travorama" />
                     </div>
+                    <div class="col-sm-9">
+                        <h2>CALL CENTER : 1500 650</h2>
+                        <nav>
+                            <ul class="list-inline">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Jobs</a></li>
+                                <li><a href="#">Press</a></li>
+                                <li><a href="#">Affiliate</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">Privacy Policy</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
                 </div>
-            </section>
-        </footer>
+            </div>
+        </section><!-- .footer-menu -->
+    
+    <section class="footer-copyright">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-12">
+
+                    <div class="text-center footer-socialmedia">
+                        <a href="#" class="fa fa-instagram"></a>
+                        <a href="#" class="fa fa-facebook"></a>
+                        <a href="#" class="fa fa-pinterest"></a>
+                        <a href="#" class="fa fa-youtube"></a>
+                    </div>
+                    <p class="text-center">
+                        Copyright 2014 - Travelmadezy. All Rights Reserved.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </section><!-- .footer-copyright -->
+</footer><!-- .site-footer -->
         <!-- site footer end -->
 
     </div>

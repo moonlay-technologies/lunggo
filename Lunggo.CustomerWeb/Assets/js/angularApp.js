@@ -287,14 +287,53 @@
             $scope.FlightSearchFilter.AirlinesList = [];
             $scope.FlightSearchFilter.AirlinesFilter = [];
             $scope.FlightSearchFilter.PriceFilter = {};
+            $scope.FlightSearchFilter.AirlineChanged = false;
 
             // log on click
             $scope.consoleLog = function (dataToLog) {
                 console.log(dataToLog);
             }
 
+            // reset airline filter
+            $scope.resetFlightFilter = function () {
+                // reset flight stop filter
+                $scope.FlightSearchFilter.StopFilter.direct = true;
+                $scope.FlightSearchFilter.StopFilter.one = true;
+                $scope.FlightSearchFilter.StopFilter.two = true;
+
+                // reset flight departure and arrival filter
+                $('.onward-depart-slider-min, .onward-arrival-slider-min, .return-depart-slider-min, .return-arrival-slider-min').val(0);
+                $('.onward-depart-slider-min, .onward-arrival-slider-min, .return-depart-slider-min, .return-arrival-slider-min').trigger('input');
+                $('.onward-depart-slider-max, .onward-arrival-slider-max, .return-depart-slider-max, .return-arrival-slider-max').val(24);
+                $('.onward-depart-slider-max, .onward-arrival-slider-max, .return-depart-slider-max, .return-arrival-slider-max').trigger('input');
+
+                $('.onward-depart-slider, .onward-arrival-slider, .return-depart-slider, .return-arrival-slider').slider({ values : [0,24] });
+
+                // reset flight price filter
+                $('.price-slider-min').val($scope.FlightSearchFilter.PriceFilter.min);
+                $('.price-slider-min').trigger('input');
+                $('.price-slider-max').val($scope.FlightSearchFilter.PriceFilter.max);
+                $('.price-slider-max').trigger('input');
+                $('.price-slider').slider({ values: [$scope.FlightSearchFilter.PriceFilter.min, $scope.FlightSearchFilter.PriceFilter.max] });
+            }
+
+            // select airline
+            $scope.filterSelectAirline = function (modifier) {
+                $scope.FlightSearchFilter.AirlineChanged = true;
+                for (var i = 0; i < $scope.FlightSearchFilter.Airlines.length; i++) {
+                    if ( modifier == 'all' ) {
+                        $scope.FlightSearchFilter.Airlines[i].checked = true;
+                        $scope.checkAirline();
+                    } else if( modifier == 'none' ) {
+                        $scope.FlightSearchFilter.Airlines[i].checked = false;
+                        $scope.checkAirline();
+                    }
+                }
+            }
+
             // generate Airlines Filter
             $scope.checkAirline = function () {
+                $scope.FlightSearchFilter.AirlineChanged = true;
                 $scope.FlightSearchFilter.AirlinesFilter = [];
                 for (var i =0; i < $scope.FlightSearchFilter.Airlines.length; i++) {
                     if ($scope.FlightSearchFilter.Airlines[i].checked == true) {
@@ -337,11 +376,6 @@
             }
 
             $scope.stopFilter = function (flight) {
-                // return (flight.FightTrips[0].TotalTransit);
-
-                if ($scope.FlightSearchFilter.StopFilter.direct == false && $scope.FlightSearchFilter.StopFilter.one == false && $scope.FlightSearchFilter.StopFilter.two == false) {
-                    return flight;
-                }
 
                 if ($scope.FlightSearchFilter.StopFilter.direct) {
                     if ( flight.FlightTrips[0].TotalTransit == 0 ) {
@@ -359,19 +393,17 @@
                     }
                 }
 
-
             }
 
             $scope.airlineFilter = function (flight) {
-                if ( $scope.FlightSearchFilter.AirlinesFilter.length > 0 ) {
+                if ($scope.FlightSearchFilter.AirlineChanged == false) {
+                    return flight;
+                } else {
                     for (var i in flight.AirlinesTag) {
                         if ($scope.FlightSearchFilter.AirlinesFilter.indexOf(flight.AirlinesTag[i]) != -1) {
                             return flight;
                         }
                     }
-                    return false;
-                } else {
-                    return flight;
                 }
             }
 
@@ -402,11 +434,15 @@
 
                 $scope.loaded = false;
 
+                document.title = "Travorama - Loading Flight List";
+
                 $http.get(FlightSearchConfig.Url, {
                     params: {
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
                 }).success(function (data) {
+
+                    document.title = "Travorama";
 
                     console.log(data);
 
@@ -418,7 +454,9 @@
 
                     // *****
                     // generate flight list for search filtering
+                    var userTImezone = new Date().getTimezoneOffset();
                     for (var i = 0; i < flightList.list.length ; i++) {
+
                         flightList.list[i].AirlinesTag = [];
                         $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
                         for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
@@ -460,8 +498,9 @@
                     FlightSearchConfig.loaded = true;
 
                     // show filter
-                    $('.flight-search-page .flight-search-filter').show();
-                    
+                    $('.flight-search-page .flight-search-filter, .flight-search-page .flight-result .page-aside').show();
+                    $('.flight-search-page .flight-filter-mobile').removeClass('hidden');
+
                     // generate price slider
                     $('.price-slider').slider({
                         range: true,
@@ -548,6 +587,10 @@
                         }
                     });
 
+                    // check all airline filter
+                    for (var i = 0; i < $scope.FlightSearchFilter.Airlines.length; i++) {
+                        $scope.FlightSearchFilter.Airlines[i].checked = true;
+                    }
 
                     // generate return flight time slider
                     if (FlightSearchConfig.params.TripType != 'OneWay') {
@@ -555,6 +598,8 @@
                     }
 
                 }).error(function () {
+
+                    document.title = "Travorama";
 
                     $scope.noFlight = true;
                     $scope.loaded = true;

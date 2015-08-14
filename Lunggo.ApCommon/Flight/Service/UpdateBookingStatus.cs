@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Database.Logic;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Database;
@@ -16,29 +18,15 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var statusData = GetBookingStatusInternal();
             if (statusData.Any())
-            {
-                using (var conn = DbService.GetInstance().GetOpenConnection())
-                {
-                    var query = UpdateFlightBookingStatusQuery.GetInstance();
-                    var dbBookingStatusInfo = statusData.Select(info => new
-                    {
-                        info.BookingId,
-                        BookingStatusCd = BookingStatusCd.Mnemonic(info.BookingStatus)
-                    }).ToArray();
-                    query.Execute(conn, dbBookingStatusInfo);
-                }
-            }
+                UpdateFlightDb.UpdateBookingStatus(statusData);
             var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
             var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                ticketedRsvNos = ticketedBookingIds.Any()
-                    ? GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, ticketedBookingIds).Distinct().ToList()
-                    : new List<string>();
-                scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
-                    ? GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, scheduleChangedBookingIds).Distinct().ToList()
-                    : new List<string>();
-            }
+            ticketedRsvNos = ticketedBookingIds.Any()
+                ? GetFlightDb.RsvNoByBookingId(ticketedBookingIds)
+                : new List<string>();
+            scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
+                ? GetFlightDb.RsvNoByBookingId(scheduleChangedBookingIds)
+                : new List<string>();
         }
     }
 }

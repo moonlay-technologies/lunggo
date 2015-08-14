@@ -18,10 +18,14 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT r.RsvNo, r.InvoiceNo, r.ContactName, r.ContactEmail, r.ContactCountryCd, r.ContactPhone, ");
-            clauseBuilder.Append(@"r.PaymentTime, r.OverallTripTypeCd, r.FinalPrice, ");
+            clauseBuilder.Append(@"SELECT r.RsvNo, r.RsvTime, r.InvoiceNo, r.OverallTripTypeCd, ");
+            clauseBuilder.Append(@"r.ContactName, r.ContactEmail, r.ContactCountryCd, r.ContactPhone, ");
+            clauseBuilder.Append(@"r.PaymentId, r.PaymentMediumCd, r.PaymentMethodCd, ");
+            clauseBuilder.Append(@"r.PaymentTime, r.PaymentStatusCd, r.PaymentTargetAccount, ");
+            clauseBuilder.Append(@"r.RefundAmount, r.RefundTime, r.RefundTargetBank, r.RefundTargetAccount, ");
+            clauseBuilder.Append(@"r.FinalPrice, r.PaidAmount, ");
             clauseBuilder.Append(@"i.ItineraryId, i.RsvNo, ");
-            clauseBuilder.Append(@"t.TripId, t.ItineraryId, t.OriginAirportCd, t.DestinationAirportCd, ");
+            clauseBuilder.Append(@"t.TripId, t.ItineraryId, t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate, ");
             clauseBuilder.Append(@"s.SegmentId, s.TripId, s.Pnr, s.OperatingAirlineCd, s.AirlineCd, s.FlightNumber, ");
             clauseBuilder.Append(@"s.DepartureAirportCd, s.DepartureTerminal, s.DepartureTime, ");
             clauseBuilder.Append(@"s.ArrivalAirportCd, s.ArrivalTerminal, s.ArrivalTime, ");

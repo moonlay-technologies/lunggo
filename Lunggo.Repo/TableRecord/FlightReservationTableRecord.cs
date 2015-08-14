@@ -29,15 +29,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RsvTime");
 		    }
 		}
-		public String RsvStatusCd
-		{
-		    get { return _RsvStatusCd; }
-		    set
-		    {
-		        _RsvStatusCd = value;
-		        IncrementLog("RsvStatusCd");
-		    }
-		}
 		public String InvoiceNo
 		{
 		    get { return _InvoiceNo; }
@@ -173,6 +164,51 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentTargetAccount");
 		    }
 		}
+		public Decimal? PaidAmount
+		{
+		    get { return _PaidAmount; }
+		    set
+		    {
+		        _PaidAmount = value;
+		        IncrementLog("PaidAmount");
+		    }
+		}
+		public DateTime? RefundTime
+		{
+		    get { return _RefundTime; }
+		    set
+		    {
+		        _RefundTime = value;
+		        IncrementLog("RefundTime");
+		    }
+		}
+		public Decimal? RefundAmount
+		{
+		    get { return _RefundAmount; }
+		    set
+		    {
+		        _RefundAmount = value;
+		        IncrementLog("RefundAmount");
+		    }
+		}
+		public String RefundTargetBank
+		{
+		    get { return _RefundTargetBank; }
+		    set
+		    {
+		        _RefundTargetBank = value;
+		        IncrementLog("RefundTargetBank");
+		    }
+		}
+		public String RefundTargetAccount
+		{
+		    get { return _RefundTargetAccount; }
+		    set
+		    {
+		        _RefundTargetAccount = value;
+		        IncrementLog("RefundTargetAccount");
+		    }
+		}
 		public String LangCd
 		{
 		    get { return _LangCd; }
@@ -243,6 +279,51 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _PaymentFeeForUs = value;
 		        IncrementLog("PaymentFeeForUs");
+		    }
+		}
+		public String VoucherCode
+		{
+		    get { return _VoucherCode; }
+		    set
+		    {
+		        _VoucherCode = value;
+		        IncrementLog("VoucherCode");
+		    }
+		}
+		public long? DiscountId
+		{
+		    get { return _DiscountId; }
+		    set
+		    {
+		        _DiscountId = value;
+		        IncrementLog("DiscountId");
+		    }
+		}
+		public Decimal? DiscountCoefficient
+		{
+		    get { return _DiscountCoefficient; }
+		    set
+		    {
+		        _DiscountCoefficient = value;
+		        IncrementLog("DiscountCoefficient");
+		    }
+		}
+		public Decimal? DiscountConstant
+		{
+		    get { return _DiscountConstant; }
+		    set
+		    {
+		        _DiscountConstant = value;
+		        IncrementLog("DiscountConstant");
+		    }
+		}
+		public Decimal? DiscountNominal
+		{
+		    get { return _DiscountNominal; }
+		    set
+		    {
+		        _DiscountNominal = value;
+		        IncrementLog("DiscountNominal");
 		    }
 		}
 		public Decimal? FinalPrice
@@ -321,7 +402,6 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _RsvNo;
 		private DateTime? _RsvTime;
-		private String _RsvStatusCd;
 		private String _InvoiceNo;
 		private String _ContactName;
 		private String _ContactEmail;
@@ -337,6 +417,11 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _PaymentTime;
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
+		private Decimal? _PaidAmount;
+		private DateTime? _RefundTime;
+		private Decimal? _RefundAmount;
+		private String _RefundTargetBank;
+		private String _RefundTargetAccount;
 		private String _LangCd;
 		private String _MemberCd;
 		private String _CancellationTypeCd;
@@ -345,6 +430,11 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _TotalSupplierPrice;
 		private Decimal? _PaymentFeeForCust;
 		private Decimal? _PaymentFeeForUs;
+		private String _VoucherCode;
+		private long? _DiscountId;
+		private Decimal? _DiscountCoefficient;
+		private Decimal? _DiscountConstant;
+		private Decimal? _DiscountNominal;
 		private Decimal? _FinalPrice;
 		private Decimal? _GrossProfit;
 		private String _InsertBy;
@@ -386,7 +476,6 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("RsvTime", false),
-				new ColumnMetadata("RsvStatusCd", false),
 				new ColumnMetadata("InvoiceNo", false),
 				new ColumnMetadata("ContactName", false),
 				new ColumnMetadata("ContactEmail", false),
@@ -402,6 +491,11 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("PaymentTargetAccount", false),
+				new ColumnMetadata("PaidAmount", false),
+				new ColumnMetadata("RefundTime", false),
+				new ColumnMetadata("RefundAmount", false),
+				new ColumnMetadata("RefundTargetBank", false),
+				new ColumnMetadata("RefundTargetAccount", false),
 				new ColumnMetadata("LangCd", false),
 				new ColumnMetadata("MemberCd", false),
 				new ColumnMetadata("CancellationTypeCd", false),
@@ -410,6 +504,11 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("TotalSupplierPrice", false),
 				new ColumnMetadata("PaymentFeeForCust", false),
 				new ColumnMetadata("PaymentFeeForUs", false),
+				new ColumnMetadata("VoucherCode", false),
+				new ColumnMetadata("DiscountId", false),
+				new ColumnMetadata("DiscountCoefficient", false),
+				new ColumnMetadata("DiscountConstant", false),
+				new ColumnMetadata("DiscountNominal", false),
 				new ColumnMetadata("FinalPrice", false),
 				new ColumnMetadata("GrossProfit", false),
 				new ColumnMetadata("InsertBy", false),

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Lunggo.ApCommon.Identity.User
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -41,18 +43,31 @@
                 <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo"><b>TRAVORAMA</b></a>
+            <a href="/" class="logo"><b>TRAVORAMA</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
                 <ul class="nav top-menu"></ul>
                 <!--  notification end -->
             </div>
-            <div class="top-menu">
-                <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Logout</a></li>
-                </ul>
-            </div>
+                <div class="top-menu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            using (@Html.BeginForm("Logout", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <ul class="nav pull-right top-menu">
+                                    <li><button class="logout" type="submit">Logout</button></li>
+                                </ul>
+                            }
+                        }
+                        else
+                        {   
+                            <ul class="nav pull-right top-menu">
+                                <li><a class="logout" href="@Url.Action("Login", "Account")">Login</a></li>
+                            </ul>
+                        }
+                </div>
         </header>
         <!--header end-->
         <!-- **********************************************************************************************************************************************************
@@ -65,7 +80,10 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                    <h5 class="centered">Rama Adhitia</h5>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <h5 class="centered">Hi, @User.Identity.GetFirstName()!</h5>
+                    }
 
                     <li class="sub-menu" id="menu-dashboard">
                         <a href="/Home/Dashboard">
@@ -75,23 +93,9 @@
                     </li>
 
                     <li class="sub-menu" id="menu-flight">
-                        <a href="/FlightReservation/Search">
+                        <a href="@Url.Action("Search", "Flight")">
                             <i class="fa fa-plane"></i>
-                            <span>Flight Booking</span>
-                        </a>
-                    </li>
-
-                    <li class="sub-menu" id="menu-hotel">
-                        <a href="/Home/FormHotel">
-                            <i class="fa fa-bed"></i>
-                            <span>Hotel Booking</span>
-                        </a>
-                    </li>
-                    
-                    <li class="sub-menu" id="menu-booking">
-                        <a href="/Home/BookingPending">
-                            <i class="fa fa-spinner"></i>
-                            <span>Booking Pending Payment</span>
+                            <span>Flight Reservation</span>
                         </a>
                     </li>
 
@@ -138,15 +142,20 @@
     <!--script for this page-->
 
     <script>
-      //custom select box
+        //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+        $(function(){
+            $('select.styled').customSelect();
+        });
 
-      $('#menu-@ViewBag.ActiveMenu a').addClass('active');
+        $('#menu-@ViewBag.ActiveMenu a').addClass('active');
 
     </script>
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Config/JsConfig.js"></script>
+    <script src="/Assets/js/application.js"></script>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")

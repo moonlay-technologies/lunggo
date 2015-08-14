@@ -63,8 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,6 +89,7 @@
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
     <None Include="Config\BackendWeb\azureStorage.properties" />
+    <None Include="Config\BackendWeb\Country.csv" />
     <None Include="Config\BackendWeb\db.properties" />
     <None Include="Config\BackendWeb\domain.properties" />
     <None Include="Config\BackendWeb\freshdesk.properties" />
@@ -107,9 +109,11 @@
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
+    <None Include="Config\CustomerWeb\Country.csv" />
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
     <None Include="Config\WebAPI\azureStorage.properties" />
+    <None Include="Config\WebAPI\Country.csv" />
     <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
@@ -122,6 +126,7 @@
     <None Include="Config\Worker.EticketHandler\Airline.csv" />
     <None Include="Config\Worker.EticketHandler\Airport.csv" />
     <None Include="Config\Worker.EticketHandler\azureStorage.properties" />
+    <None Include="Config\Worker.EticketHandler\Country.csv" />
     <None Include="Config\Worker.EticketHandler\db.properties" />
     <None Include="Config\Worker.EticketHandler\flight.properties">
       <SubType>Designer</SubType>
@@ -218,7 +223,13 @@
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightPendingPaymentNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightInstantPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
+    <None Include="HtmlTemplate\VoucherEmail.cshtml" />
+    <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />

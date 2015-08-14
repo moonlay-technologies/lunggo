@@ -22,7 +22,7 @@ namespace Lunggo.WebJob.TicketQueueHandler
         {
             new Program().Init();
             var queueService = QueueService.GetInstance();
-            CloudQueue _queue = queueService.GetQueueByReference(Queue.Eticket); // TODO Flight placeholder queue, change it
+            CloudQueue _queue = queueService.GetQueueByReference(Queue.FlightEticket); // TODO Flight placeholder queue, change it
             _queue.CreateIfNotExists();
 
             JobHostConfiguration configuration = new JobHostConfiguration();

@@ -1,10 +1,11 @@
 ﻿using System.Text;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightTripInfoQuery : QueryBase<GetFlightTripInfoQuery, FlightTripInfo>
+    internal class GetFlightTripInfoQuery : QueryBase<GetFlightTripInfoQuery, FlightTripTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
