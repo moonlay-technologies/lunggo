@@ -52,6 +52,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 };
                 string rsvNo;
                 InsertFlightDb.Booking(bookingRecord, out rsvNo);
+                output.RsvNo = rsvNo;
             }
             else
             {
