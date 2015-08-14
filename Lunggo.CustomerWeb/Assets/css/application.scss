@@ -626,9 +626,9 @@ hr {border-color:#aaa;}
             .flight-departure-date {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
             .flight-return-date, .flight-return-disable {background:url(../images/cal-bg.png) 10px center no-repeat #fff; padding-left:50px; width:20%;}
             .flight-return-disable {display:none;}
-            .flight-adult {background:url(../images/adult-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
-            .flight-child {background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
-            .flight-infant {background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%;}
+            .flight-adult {background:url(../images/adult-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%; -webkit-appearance:none;}
+            .flight-child {background:url(../images/child-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%; -webkit-appearance:none;}
+            .flight-infant {background:url(../images/infant-icon.png) 10px center no-repeat #fff; padding-left:40px; width:15%; -webkit-appearance:none;}
             .submit-button {font-weight:bold; width:11%;}
             .passenger-warning {position:absolute; left:50%; padding-top:10px;
                 p {background:#ffb911; color:#000; padding:0 10px; display:none;}

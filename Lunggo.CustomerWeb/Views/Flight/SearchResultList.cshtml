@@ -806,10 +806,7 @@
                             <div class="flight-rules">
                                 <div class="flight-rules-content">
                                     <div class="text-center rules-loading" ng-if="flight.FareLoaded == false">
-                                        <p class="text-center">Loading</p>
-                                        
-
-
+                                        <p class="text-center"><img src="/Assets/images/ajax-loader.gif" alt="Loading" /></p>
                                     </div>
                                     <div ng-if="flight.FareLoaded == true">
                                         <div class="no-rules" ng-if="flight.FareRules.BaggageRules.length == 0 && flight.FareRules.AirlineRules.length == 0">

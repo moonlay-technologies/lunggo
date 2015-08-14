@@ -637,6 +637,7 @@
     <Content Include="Assets\images\airline\garuda.png" />
     <Content Include="Assets\images\airline\lionair.png" />
     <Content Include="Assets\images\airline\sriwijaya.png" />
+    <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\bed-bg.png" />
