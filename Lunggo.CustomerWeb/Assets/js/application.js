@@ -26,8 +26,12 @@ function formatNumber(num) {
 //******************************************
 // toggle language select
 function toggleLanguageSelect() {
-    $('[data-toggle="dropdown"]').click(function() {
+    $('[data-toggle="dropdown"]').click(function (evt) {
+        evt.stopPropagation();
         $(this).siblings('.dropdown-menu').toggle();
+    });
+    $('body').click(function() {
+        $('.dropdown-menu').hide();
     });
 }
 
