@@ -24,7 +24,7 @@
 
 @{
     List<Object> titleList;
-    
+
     var adultTitleList = new List<Object>
         {
             new {Value = Title.Mister, Text = "Mr"},
@@ -75,10 +75,11 @@
     </header>
 
     <div class="container">
-        <div class="row">
+        <form action="" class="form" id="flight-customer-form" method="post">
+            <div class="row">
 
-            <div class="col-sm-8">
-                <form action="" class="form" id="flight-customer-form" method="post">
+                <div class="col-sm-8">
+
                     <section class="customer-detail">
                         <section class="customer-form">
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
@@ -166,12 +167,12 @@
                             <h2><b>PAYMENT</b> METHOD</h2>
 
                             <section class="payment-option">
-@*
-                                <label class="payment-transfer active" for="payment-transfer">
-                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
-                                    <span>Bank Transfer</span>
-                                </label>
-*@
+                                @*
+                                    <label class="payment-transfer active" for="payment-transfer">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
+                                        <span>Bank Transfer</span>
+                                    </label>
+                                *@
                                 <label class="payment-veritrans" for="payment-virtual">
                                     <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual" checked>
                                     <span>ATM</span>
@@ -180,16 +181,16 @@
                                     <input type="radio" name="Payment.Method" value="@PaymentMethod.CreditCard" id="payment-creditcard">
                                     <span>Credit Card</span>
                                 </label>
-@*
-                                <label class="payment-veritrans" for="payment-mandiri">
-                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
-                                    <span>Mandiri ClickPay</span>
-                                </label>
-                                <label class="payment-veritrans" for="payment-cimb">
-                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
-                                    <span>CIMB Clicks</span>
-                                </label>
-*@
+                                @*
+                                    <label class="payment-veritrans" for="payment-mandiri">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
+                                        <span>Mandiri ClickPay</span>
+                                    </label>
+                                    <label class="payment-veritrans" for="payment-cimb">
+                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
+                                        <span>CIMB Clicks</span>
+                                    </label>
+                                *@
                             </section><!-- .payment-option -->
                             <section class="payment-detail">
                                 <section class="payment-veritrans-detail active">
@@ -208,86 +209,91 @@
                             <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
                         </section><!-- .payment-button -->
                     </section><!-- .customer-detail -->
-                </form>
-            </div><!-- .col-sm-8 -->
 
-            <div class="col-sm-4">
-                <section class="order-detail">
-                    <h2><b>ORDER</b> DETAILS</h2>
-                    <section class="flight-detail">
-                        <h3 class="text-center">DEPARTURE FLIGHT</h3>
-                        <h5 class="airline-name">
-                            <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
-                        </h5>
-                        <div class="row flight-route">
-                            <div class="col-sm-6 text-right flight-origin">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
-                            </div>
-                            <div class="separator">to</div>
-                            <div class="col-sm-6 text-left flight-destination">
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
-                                <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
-                            </div>
-                        </div>
-                    </section><!-- .flight-detail -->
-                    @if (@Model.Itinerary.TripType == TripType.Return)
-                    {
+                </div><!-- .col-sm-8 -->
+
+                <div class="col-sm-4">
+                    <section class="order-detail">
+                        <h2><b>ORDER</b> DETAILS</h2>
                         <section class="flight-detail">
-                            <h3 class="text-center">RETURN FLIGHT</h3>
-                            <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                            <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                            <h5 class="airline-name">
+                                <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                            </h5>
                             <div class="row flight-route">
                                 <div class="col-sm-6 text-right flight-origin">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
                                 </div>
                                 <div class="separator">to</div>
                                 <div class="col-sm-6 text-left flight-destination">
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
+                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
                                 </div>
                             </div>
-                        </section>
+                        </section><!-- .flight-detail -->
+                        @if (@Model.Itinerary.TripType == TripType.Return)
+                        {
+                            <section class="flight-detail">
+                                <h3 class="text-center">RETURN FLIGHT</h3>
+                                <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                                <div class="row flight-route">
+                                    <div class="col-sm-6 text-right flight-origin">
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                    </div>
+                                    <div class="separator">to</div>
+                                    <div class="col-sm-6 text-left flight-destination">
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
+                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                    </div>
+                                </div>
+                            </section>
                         <!-- .flight-detail -->
-                    }
-                    <section class="price-detail">
-                        <h2><b>PRICE</b> DETAIL</h2>
-                        <div class="content-wrapper">
-                            <div class="row">
-                                <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
-                                <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                        }
+                        <section class="price-detail">
+                            <h2><b>PRICE</b> DETAIL</h2>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
+                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Tax</div>
+                                    <div class="col-sm-6">INCLUDED</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Travorama Fee</div>
+                                    <div class="col-sm-6">FREE</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">TOTAL</div>
+                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">Voucher Code</div>
+                                    <div class="col-sm-6"><input type="text" class="form-control" name="DiscountCode" placeholder=""></div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">Tax</div>
-                                <div class="col-sm-6">INCLUDED</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">Travorama Fee</div>
-                                <div class="col-sm-6">FREE</div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-6">TOTAL</div>
-                                <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
-                            </div>
-                        </div>
-                    </section><!-- .price-detail -->
-                </section><!-- .order-detail -->
-            </div><!-- .col-sm-4 -->
+                        </section><!-- .price-detail -->
+                    </section><!-- .order-detail -->
+                </div><!-- .col-sm-4 -->
 
-        </div>
+            </div>
+        </form>
     </div>
 
 

@@ -228,6 +228,8 @@
     <None Include="HtmlTemplate\FlightPendingPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightInstantPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
+    <None Include="HtmlTemplate\VoucherEmail.cshtml" />
+    <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="Config\CustomerWeb\db.properties" />

@@ -11,6 +11,8 @@
         FlightPendingPaymentConfirmedNotif,
         FlightPendingPaymentExpiredNotif,
         UserConfirmationEmail,
-        ForgotPasswordEmail
+        ForgotPasswordEmail,
+        InitialSubscriberEmail,
+        VoucherEmail
     }
 }

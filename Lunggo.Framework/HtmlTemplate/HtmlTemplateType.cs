@@ -17,6 +17,8 @@ namespace Lunggo.Framework.HtmlTemplate
         FlightPendingPaymentConfirmedNotifEmail,
         FlightPendingPaymentExpiredNotifEmail,
         UserConfirmationEmail,
-        ForgotPasswordEmail
+        ForgotPasswordEmail,
+        InitialSubscriberEmail,
+        VoucherEmail
     }
 }
