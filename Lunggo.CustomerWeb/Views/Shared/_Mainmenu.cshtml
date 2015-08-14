@@ -27,7 +27,7 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="pull-right site-login"><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">MY ACCOUNT</a> | <a href="/id/Logout">Logout</a></li>
+                        <li class="pull-right site-login"><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">MY ACCOUNT</a> | <a href="@Url.Action("Logout", "Account")">Logout</a></li>
                     }
                     else
                     {

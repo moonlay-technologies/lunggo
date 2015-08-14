@@ -77,18 +77,6 @@ namespace Lunggo.CustomerWeb
             //TODO End of Todo
 
             routes.MapRoute(
-                name: "Account",
-                url: "{langCode}/{action}",
-                defaults: new { controller = "Account" }
-            );
-
-            routes.MapRoute(
-                name: "Manage",
-                url: "{langCode}/{action}",
-                defaults: new { controller = "Manage" }
-            );
-
-            routes.MapRoute(
                 name: "Default",
                 url: "{langCode}/{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
