@@ -702,6 +702,7 @@
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
+    <Content Include="Assets\images\howtoguide.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\loading-icon.png" />

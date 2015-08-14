@@ -2429,6 +2429,35 @@ hr {
       font-family: 'gotham', arial, sans-serif;
       font-size: 36px; }
 
+.page.howto-page .howto-guide {
+  padding-top: 25px;
+  position: relative; }
+  .page.howto-page .howto-guide .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2; }
+    .page.howto-page .howto-guide .text > div {
+      padding-left: 100px;
+      position: absolute; }
+      .page.howto-page .howto-guide .text > div h3 {
+        color: #2fb4e6;
+        font-family: 'gotham', arial, sans-serif;
+        font-weight: bold; }
+      .page.howto-page .howto-guide .text > div p {
+        font-size: 18px; }
+    .page.howto-page .howto-guide .text .point-1 {
+      top: 15px; }
+    .page.howto-page .howto-guide .text .point-2 {
+      top: 620px; }
+    .page.howto-page .howto-guide .text .point-3 {
+      top: 1245px; }
+    .page.howto-page .howto-guide .text .point-4 {
+      top: 1870px; }
+    .page.howto-page .howto-guide .text .point-5 {
+      top: 2470px; }
+
 .page.howto-page .page-footer .note-wrapper {
   background: #ddd;
   padding: 20px 0; }
@@ -2803,3 +2832,21 @@ hr {
         border-top: 1px solid #ddd; }
     .flight-search-page .flight-filter-mobile-content .filter-container + .filter-container {
       border-left: none; } }
+
+@media screen and (max-width: 1000px) {
+  .howto-guide .text {
+    height: 100%; }
+    .howto-guide .text .point-1 {
+      top: 0% !important; }
+    .howto-guide .text .point-2 {
+      top: 19% !important; }
+    .howto-guide .text .point-3 {
+      top: 38.5% !important; }
+    .howto-guide .text .point-4 {
+      top: 58% !important; }
+    .howto-guide .text .point-5 {
+      top: 77% !important; }
+    .howto-guide .text h3 {
+      font-size: 18px !important; }
+    .howto-guide .text p {
+      font-size: 14px !important; } }
