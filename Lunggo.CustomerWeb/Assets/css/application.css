@@ -1675,7 +1675,8 @@ hr {
         float: left; }
       .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline {
         width: 40%;
-        text-align: center; }
+        text-align: center;
+        font-size: 12px; }
         .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline img {
           display: block;
           margin-left: auto;

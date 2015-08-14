@@ -793,6 +793,10 @@
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
+    <Content Include="Assets\vendor\intltelinput\css\intlTelInput.css" />
+    <Content Include="Assets\vendor\intltelinput\img\flags%402x.png" />
+    <Content Include="Assets\vendor\intltelinput\img\flags.png" />
+    <Content Include="Assets\vendor\intltelinput\js\intlTelInput.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.jquery.min.js" />
     <Content Include="Assets\vendor\swiper\swiper.min.css" />
     <Content Include="Config\Airline.csv" />
