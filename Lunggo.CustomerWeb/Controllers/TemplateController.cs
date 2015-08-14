@@ -114,5 +114,15 @@ namespace Lunggo.CustomerWeb.Controllers
             var rsv = FlightService.GetInstance().GetReservation(rsvNo);
             return View(rsv);
         }
+
+        public ActionResult OrderFlightHistory()
+        {
+            return View();
+        }
+
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
     }
 }

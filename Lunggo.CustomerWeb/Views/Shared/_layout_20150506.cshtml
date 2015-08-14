@@ -17,6 +17,22 @@
 
 </head>
 <body ng-app="travorama" class="page @ViewBag.BodyClass">
+    
+<!-- Google Tag Manager -->
+<noscript>
+<iframe src="//www.googletagmanager.com/ns.html?id=GTM-TG9CHZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>
+(function (w, d, s, l, i) {
+w[l] = w[l] || []; w[l].push({
+'gtm.start':
+new Date().getTime(), event: 'gtm.js'
+}); var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+'//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-TG9CHZ');</script>
+<!-- End Google Tag Manager -->
 
     <header id="site-header" class="site-header home-header" data-activeTab="hotel">
         @{ Html.RenderPartial("_Mainmenu"); }
@@ -176,7 +192,9 @@
                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad p ex ea commodo consequat. Ut wisi eniTm ad minim veniam:</p>
                     <img src="/Assets/images/payment-method.jpg" alt="Travorama Payment Method" />
                 </div>
-            </section><!-- .footer-payment -->
+            </section>
+            <!-- .footer-payment -->
+        }
             <section class="footer-menu">
                 <div class="container">
                     <div class="row">
@@ -201,7 +219,6 @@
                     </div>
                 </div>
             </section><!-- .footer-menu -->
-        }
         <section class="footer-copyright">
             <div class="container">
                 <div class="row">
@@ -209,10 +226,9 @@
                     <div class="col-sm-12">
 
                         <div class="text-center footer-socialmedia">
-                            <a href="#" class="fa fa-instagram"></a>
-                            <a href="#" class="fa fa-facebook"></a>
-                            <a href="#" class="fa fa-pinterest"></a>
-                            <a href="#" class="fa fa-youtube"></a>
+                            <a href="http://facebook.com/travorama" class="fa fa-facebook"></a>
+                            <a href="http://twitter.com/travoramaid" class="fa fa-twitter"></a>
+                            <a href="http://instagram.com/travorama" class="fa fa-instagram"></a>
                         </div>
                         <p class="text-center">
                             Copyright 2014 - Travelmadezy. All Rights Reserved.
