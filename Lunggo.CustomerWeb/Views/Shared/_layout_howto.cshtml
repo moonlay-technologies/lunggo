@@ -19,128 +19,17 @@
     <link rel="stylesheet" href="/Assets/css/application.min.css">
 
 </head>
-<body ng-app="travorama" class="page @ViewBag.BodyClass">
+<body class="page howto-page">
 @{ Html.RenderPartial("_googleTag"); }
 
 
-    <header id="site-header" class="site-header home-header" data-activeTab="hotel">
+    <header id="site-header" class="site-header" data-activeTab="hotel">
         @{ Html.RenderPartial("_Mainmenu"); }
     
-        @if (ViewBag.ShowTagline == true)
-        {
-            <div class="container">
-                <div class="site-slogan">
-                    <h1><img src="/Assets/images/enjoy.png" alt="Enjoy Your Every Moment"></h1>
-                    <h2>However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h2>
-                </div><!-- .site-slogan -->
-            </div>
-        }
-    
-        @if (ViewBag.ShowHeaderForm == true)
-        {
-            <div class="container">
-                <div class="site-header-search-form">
-                    <div class="form-switch">
-                        <div class="switch">
-                            <label class="label-hotel" data-target="hotel"><span class="hotel-image"></span><input type="radio" name="form-switch" value="hotel" /></label>
-                            <label class="active label-flight" data-target="flight"><span class="flight-image"></span><input type="radio" name="form-switch" value="flight" /></label>
-                        </div>
-                    </div><!-- .form-switch -->
-                    <div class="form-main-content">
-                        <div class="form-hotel-search">
-                            <h3><b>Hotel</b> Booking</h3>
-                            <form action="/UW100/UW100HotelSearch" method="GET" class="homepage-form">
-                                <div class="hotel-location-wrapper form-group">
-                                    <input type="text" class="hotel-location autocomplete" placeholder="Location" />
-                                </div>
-                                <div class="hotel-data-wrapper form-group">
-                                    <input type="text" class="hotel-checkin date-picker" placeholder="Checkin Date"/>
-                                    <input type="text" class="hotel-checkout date-picker" placeholder="Checkout Date"/>
-                                    <!-- <input type="text" class="hotel-room" placeholder="Rooms"/> -->
-                                    <select class="hotel-room" name="RoomCount">
-                                        <option value="1">1 Room</option>
-                                        <option value="2">2 Rooms</option>
-                                        <option value="3">3 Rooms</option>
-                                        <option value="4">4 Rooms</option>
-                                    </select>
-                                </div>
-                                <div class="hotel-submit-wrapper form-group">
-                                    <input type="text" class="hidden" name="LocationId" id="hotel-search-location" />
-                                    <input type="text" class="hidden" name="StayDate" id="hotel-search-checkin" />
-                                    <input type="text" class="hidden" name="StayLength" id="hotel-search-length" />
-                                    <a class="submit-button btn btn-yellow">SEARCH</a>
-                                </div>
-                            </form><!-- .form-hotel-search -->
-                        </div><!-- .form-hotel-search -->
-                        <div class="form-flight-search active">
-                            <h3><b>Flight</b> Booking</h3>
-                            <form action="/id/Flight/SearchResultList" class="homepage-form" method="GET" data-flightType="round-trip">
-                                <div class="flight-type-wrapper form-group">
-                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> Round-Trip</label>
-                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
-                                </div>
-                                <div class="flight-airport-wrapper form-group">
-                                    <input type="text" class="flight-origin autocomplete" placeholder="Initial Airport" data-userInputvalue="" data-airportCode=""/>
-                                    <input type="text" class="flight-destination autocomplete" placeholder="Destination Airport" data-userInputValue="" data-airportCode="" />
-                                </div>
-                                <div class="flight-date-wrapper form-group">
-                                    <input type="text" class="flight-departure-date date-picker" placeholder="departure date" />
-                                    <input type="text" class="flight-return-date date-picker" placeholder="return date" />
-                                    <input type="text" class="flight-return-disable" placeholder="One way" disabled />
-                                    <select class="flight-cabin" placeholder="Cabin">
-                                        <option value="y">Economy Class</option>
-                                        <option value="c">Business Class</option>
-                                        <option value="f">First Class</option>
-                                    </select>
-                                </div>
-                                <div class="flight-submit-wrapper form-group">
-                                    <select class="flight-adult" placeholder="Adult">
-                                        <option value="1">1 Adult</option>
-                                        <option value="2">2 Adults</option>
-                                        <option value="3">3 Adults</option>
-                                        <option value="4">4 Adults</option>
-                                        <option value="5">5 Adults</option>
-                                        <option value="6">6 Adults</option>
-                                        <option value="7">7 Adults</option>
-                                        <option value="8">8 Adults</option>
-                                        <option value="9">9 Adults</option>
-                                    </select>
-                                    <select class="flight-child" placeholder="Child">
-                                        <option value="0">0 Children</option>
-                                        <option value="1">1 Child</option>
-                                        <option value="2">2 Children</option>
-                                        <option value="3">3 Children</option>
-                                        <option value="4">4 Children</option>
-                                        <option value="5">5 Children</option>
-                                        <option value="6">6 Children</option>
-                                        <option value="7">7 Children</option>
-                                        <option value="8">8 Children</option>
-                                    </select>
-                                    <select class="flight-infant" placeholder="Infant">
-                                        <option value="0">0 Infants</option>
-                                        <option value="1">1 Infant</option>
-                                        <option value="2">2 Infants</option>
-                                        <option value="3">3 Infants</option>
-                                        <option value="4">4 Infants</option>
-                                    </select>
-                                    <input type="text" class="hidden flight-departure-date-real" value="" />
-                                    <input type="text" class="hidden flight-return-date-real" value="" />
-                                    <input type="text" class="hidden flight-origin-airport-real" value=""/>
-                                    <input type="text" class="hidden flight-destination-airport-real" value="" />
-                                    <input type="text" id="flight-data-info" name="info" class="hidden" />
-                                    <a class="submit-button flight-submit-button btn btn-yellow">SEARCH</a>
-                                </div>
-                                <div class="passenger-warning">
-                                    <p class="max-passenger">Maximum number of passenger is 9 person.</p>
-                                    <p class="max-infant">Infant cannot be more than adult.</p>
-                                </div>
-                            </form><!-- .form-flight-search -->
-                        </div><!-- .form-flight-search -->
-                    </div><!-- .form-main-content -->
-                </div><!-- .site-header-search-form -->
-            </div>
-        }
-        
+        <div class="page-title">
+            <h1>HOW TO BOOK FLIGHT TICKET</h1>
+            <h5>FAST &amp; EASY! ONLY TOOK 5 MINUTES</h5>
+        </div>
 
     </header><!-- .site-header -->
 
