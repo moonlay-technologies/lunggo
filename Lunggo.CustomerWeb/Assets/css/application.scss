@@ -981,6 +981,34 @@ hr {border-color:#aaa;}
     }
 }
 
+// order history
+.flight-history {padding-top:20px;
+    .history-left {
+        .order-detail {
+            h4 {margin-bottom:20px;
+                .order-id {float:right;}
+            }
+            .detail-wrapper {
+                .row {margin-bottom:5px;
+                    div + div:before {content:" : "; position:absolute; margin-left:-15px;}
+                }
+            }
+        }
+    }
+    .history-right {
+        .flight-detail {background:#ededed; padding:5px; padding-top:0;
+            &>h4 {background:#ccc; padding:10px 0; margin-bottom:0; margin-left:-5px; margin-right:-5px;}
+            .flight-airline {text-align:center;
+                h4 {color:$blue-default; font-weight:bold; margin-bottom:10px;}
+                h5 {margin-top:0; font-weight:bold;}
+            }
+            .row {
+                div + div:before {content:":"; position:absolute; margin-left:-5px;}
+            }
+        }
+    }
+}
+
 // ----------------------------------------------
 // user login
 .user-page-login {

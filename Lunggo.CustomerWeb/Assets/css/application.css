@@ -2382,6 +2382,42 @@ hr {
         .tab-pane#history .history-wrapper .history-list .history .history-detail .history-action .btn {
           width: 100%; }
 
+.flight-history {
+  padding-top: 20px; }
+  .flight-history .history-left .order-detail h4 {
+    margin-bottom: 20px; }
+    .flight-history .history-left .order-detail h4 .order-id {
+      float: right; }
+  .flight-history .history-left .order-detail .detail-wrapper .row {
+    margin-bottom: 5px; }
+    .flight-history .history-left .order-detail .detail-wrapper .row div + div:before {
+      content: " : ";
+      position: absolute;
+      margin-left: -15px; }
+  .flight-history .history-right .flight-detail {
+    background: #ededed;
+    padding: 5px;
+    padding-top: 0; }
+    .flight-history .history-right .flight-detail > h4 {
+      background: #ccc;
+      padding: 10px 0;
+      margin-bottom: 0;
+      margin-left: -5px;
+      margin-right: -5px; }
+    .flight-history .history-right .flight-detail .flight-airline {
+      text-align: center; }
+      .flight-history .history-right .flight-detail .flight-airline h4 {
+        color: #3face4;
+        font-weight: bold;
+        margin-bottom: 10px; }
+      .flight-history .history-right .flight-detail .flight-airline h5 {
+        margin-top: 0;
+        font-weight: bold; }
+    .flight-history .history-right .flight-detail .row div + div:before {
+      content: ":";
+      position: absolute;
+      margin-left: -5px; }
+
 .user-page-login #site-header {
   background: none; }
 
