@@ -154,6 +154,7 @@
     <Compile Include="Flight\Database\Logic\UpdateFlightDb.cs" />
     <Compile Include="Flight\Database\Query\CancelReservationsQuery.cs" />
     <Compile Include="Flight\Database\Query\ExpireReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
+    <Compile Include="Sequence\VoucherSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -361,6 +363,8 @@
     <Compile Include="Veritrans\Model\Response.cs" />
     <Compile Include="Veritrans\Model\VtWeb.cs" />
     <Compile Include="Veritrans\VeritransWrapper.cs" />
+    <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />
+    <Compile Include="Voucher\VoucherService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">

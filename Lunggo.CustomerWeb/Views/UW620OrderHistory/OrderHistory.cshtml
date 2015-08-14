@@ -62,22 +62,23 @@
                                     
                                     @using (Html.BeginForm("ChangeProfile", "Account", FormMethod.Post, new {@class = "user-account-form form-horizontal"}))
                                     {
+                                        @Html.AntiForgeryToken()
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Nama Depan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" value="@User.Identity.GetFirstName()" />
+                                                <input type="text" name="FirstName" class="form-control" value="@User.Identity.GetFirstName()" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Nama Belakang</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" value="@User.Identity.GetLastName()" />
+                                                <input type="text" name="LastName" class="form-control" value="@User.Identity.GetLastName()" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Telepon</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" value="@User.Identity.GetPhoneNumber()" />
+                                                <input type="text" name="PhoneNumber" class="form-control" value="@User.Identity.GetPhoneNumber()" />
                                             </div>
                                         </div>
                                         <div class="form-group">

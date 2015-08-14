@@ -45,13 +45,13 @@ namespace Lunggo.CustomerWeb
                 url: "UW600/UW610ChangeProfile",
                 defaults: new { controller = "UW610ChangeProfile", action = "ChangeProfile" }
             );
-
+            /*
             routes.MapRoute(
                 name: "UW620OrderHistory",
                 url: "UW600/UW620OrderHistory",
                 defaults: new { controller = "UW620OrderHistory", action = "OrderHistory" }
             );
-
+            */
             routes.MapRoute(
                 name: "UW400BookhHotel",
                 url: "{langCode}/Hotel/Booking",
@@ -75,18 +75,6 @@ namespace Lunggo.CustomerWeb
             ).DataTokens = new RouteValueDictionary(new { area = "UW100" });
                 
             //TODO End of Todo
-
-            routes.MapRoute(
-                name: "Account",
-                url: "{langCode}/{action}",
-                defaults: new { controller = "Account" }
-            );
-
-            routes.MapRoute(
-                name: "Manage",
-                url: "{langCode}/{action}",
-                defaults: new { controller = "Manage" }
-            );
 
             routes.MapRoute(
                 name: "Default",

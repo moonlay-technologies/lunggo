@@ -3,6 +3,8 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -41,6 +43,11 @@ namespace Lunggo.ApCommon.Flight.Service
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
                     }
+
+                    //TODO voucher code di sini? no.
+                    //TODO rapiin juga ini biar ga ada akses query lgsg
+                    var usedVoucherCode = GetVoucherCodeQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
+                    VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
                 }
                 else
                 {

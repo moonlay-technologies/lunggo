@@ -260,6 +260,7 @@
     <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2137,6 +2138,7 @@
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
     <Content Include="Views\Template\HowToBook.cshtml" />
+    <Content Include="Views\Term\PrivacyPolicy.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>

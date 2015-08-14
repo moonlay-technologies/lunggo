@@ -5,25 +5,25 @@ using Lunggo.ApCommon.Model;
 
 namespace Lunggo.ApCommon.Trie
 {
-    public class TrieIndexService
+    internal class TrieIndexService
     {
         private static readonly TrieIndexService Instance = new TrieIndexService();
         private bool _isInitialized;
-        public TrieNode AirlineIndex = new TrieNode();
-        public TrieNode AirportIndex = new TrieNode();
-        public TrieNode HotelLocationIndex = new TrieNode();
+        internal TrieNode AirlineIndex = new TrieNode();
+        internal TrieNode AirportIndex = new TrieNode();
+        internal TrieNode HotelLocationIndex = new TrieNode();
 
         private TrieIndexService()
         {
             
         }
 
-        public static TrieIndexService GetInstance()
+        internal static TrieIndexService GetInstance()
         {
             return Instance;
         }
 
-        public void Init()
+        internal void Init()
         {
             if (!_isInitialized)
             {
