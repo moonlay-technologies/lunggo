@@ -333,6 +333,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Subscriber\Query\GetSubscriberRowQuery.cs" />
     <Compile Include="Travolutionary\TravolutionaryPreBookCheckResponse.cs" />
     <Compile Include="Trie\TrieIndexService.cs" />
     <Compile Include="Trie\TrieNode.cs" />
@@ -363,7 +364,9 @@
     <Compile Include="Veritrans\Model\Response.cs" />
     <Compile Include="Veritrans\Model\VtWeb.cs" />
     <Compile Include="Veritrans\VeritransWrapper.cs" />
+    <Compile Include="Subscriber\SubscriberService.cs" />
     <Compile Include="Voucher\Query\GetVoucherRecordQuery.cs" />
+    <Compile Include="Voucher\VoucherEmailModel.cs" />
     <Compile Include="Voucher\VoucherService.cs" />
   </ItemGroup>
   <ItemGroup>

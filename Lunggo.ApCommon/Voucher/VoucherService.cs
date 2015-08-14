@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher.Query;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Voucher
 {
@@ -76,6 +79,18 @@ namespace Lunggo.ApCommon.Voucher
                     VoucherId = code,
                     IsUsed = true
                 });
+        }
+
+        public void SendVoucherEmailToCustomer(string email, string voucherCode)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference(Queue.VoucherEmail);
+            var model = new VoucherEmailModel
+            {
+                Email = email,
+                VoucherCode = voucherCode
+            };
+            queue.AddMessage(new CloudQueueMessage(model.Serialize()));
         }
     }
 }
