@@ -1194,6 +1194,23 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// campaign page
+.campaign-page {background-position:top center; background-repeat:no-repeat;
+    // campaign background
+    &.jakarta {background-image:url(/Assets/images/campaign/jakarta.jpg);}
+    &.bandung {background-image:url(/Assets/images/campaign/bandung.jpg);}
+    &.surabaya {background-image:url(/Assets/images/campaign/surabaya.jpg);}
+    &.yogyakarta {background-image:url(/Assets/images/campaign/yogyakarta.jpg);}
+    &.bali {background-image:url(/Assets/images/campaign/bali.jpg);}
+    &.singapore {background-image:url(/Assets/images/campaign/singapore.jpg);}
+    &.malaysia {background-image:url(/Assets/images/campaign/malaysia.jpg);}
+    &.hongkong {background-image:url(/Assets/images/campaign/hongkong.jpg);}
+
+    .site-header {background:url(/Assets/images/home-section-title-bg.png) bottom center repeat-x;}
+    .site-content {min-height:0;}
+}
+
+// ----------------------------------------------
 // if width 1200 pixels and below
 
 @media screen and (max-width: 1200px) {

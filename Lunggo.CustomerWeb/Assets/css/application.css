@@ -2777,6 +2777,30 @@ hr {
   .error-page .error-detail {
     display: none; }
 
+.campaign-page {
+  background-position: top center;
+  background-repeat: no-repeat; }
+  .campaign-page.jakarta {
+    background-image: url(/Assets/images/campaign/jakarta.jpg); }
+  .campaign-page.bandung {
+    background-image: url(/Assets/images/campaign/bandung.jpg); }
+  .campaign-page.surabaya {
+    background-image: url(/Assets/images/campaign/surabaya.jpg); }
+  .campaign-page.yogyakarta {
+    background-image: url(/Assets/images/campaign/yogyakarta.jpg); }
+  .campaign-page.bali {
+    background-image: url(/Assets/images/campaign/bali.jpg); }
+  .campaign-page.singapore {
+    background-image: url(/Assets/images/campaign/singapore.jpg); }
+  .campaign-page.malaysia {
+    background-image: url(/Assets/images/campaign/malaysia.jpg); }
+  .campaign-page.hongkong {
+    background-image: url(/Assets/images/campaign/hongkong.jpg); }
+  .campaign-page .site-header {
+    background: url(/Assets/images/home-section-title-bg.png) bottom center repeat-x; }
+  .campaign-page .site-content {
+    min-height: 0; }
+
 @media screen and (max-width: 1200px) {
   .flight-search-page .flight-result.page-container .page-wrapper {
     width: 100% !important; }
