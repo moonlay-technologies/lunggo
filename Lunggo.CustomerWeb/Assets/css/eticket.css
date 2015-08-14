@@ -38,9 +38,7 @@ p {
 .page {
   width: 21cm;
   height: 29.6cm;
-  position: absolute;
-  background: url(/Assets/images/eticket-background.png) left 60% no-repeat;
-  background-size: cover; }
+  position: absolute; }
   .page:before, .page:after {
     content: "";
     clear: both;

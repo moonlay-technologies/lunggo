@@ -275,9 +275,48 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult ChangePassword()
+        //
+        // POST: /Account/Manage
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return Redirect("/");
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            }
+            var updatedUser = new CustomUser
+            {
+                Email = User.Identity.GetEmail(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber
+            };
+            var result = await UserManager.UpdateAsync(updatedUser);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("OrderHistory", "UW620OrderHistory");
+            }
+            AddErrors(result);
+            return RedirectToAction("OrderHistory", "UW620OrderHistory");
         }
 
         //
@@ -413,8 +452,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         //
         // POST: /Account/Logout
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
