@@ -305,7 +305,9 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             var updatedUser = new CustomUser
             {
+                Id = User.Identity.GetUserId(),
                 Email = User.Identity.GetEmail(),
+                UserName = User.Identity.GetEmail(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber

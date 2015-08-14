@@ -49,6 +49,7 @@
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
     <Compile Include="TableRecord\FlightTripTableRecord.cs" />
+    <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
     <Compile Include="TableRecord\MemberTableRecord.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />
     <Compile Include="TableRepository\FlightStopRepository.cs" />
     <Compile Include="TableRepository\FlightTripRepository.cs" />
+    <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
     <Compile Include="TableRepository\HotelReservationsRepository.cs" />
     <Compile Include="TableRepository\MemberRepository.cs" />

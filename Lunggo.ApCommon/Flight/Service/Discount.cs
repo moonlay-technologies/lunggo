@@ -16,6 +16,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             DiscountRules.Add(new DiscountRule
             {
+                RuleId = 0,
                 Name = "Default",
                 Description = "This is the default Discount rules",
                 ConstraintCount = 0,
@@ -23,16 +24,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 Constant = 0
             });
         }
-        public DiscountRule AddDiscount(string discountCode)
+
+        public DiscountRule GetMatchingDiscountRule(List<long> ruleIds)
         {
             //TODO nih discount code
-            if (discountCode == "asdasdsad")
+            if (ruleIds.Contains(0))
             {
                 return DiscountRules[0];
             }
             else
             {
-                return new DiscountRule();
+                return null;
             }
         }
     }

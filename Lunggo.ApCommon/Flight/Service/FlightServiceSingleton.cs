@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 
@@ -35,6 +36,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 MystiflyWrapper.Init();
                 CurrencyService.GetInstance().Init();
+                VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
                 _isInitialized = true;
             }

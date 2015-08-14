@@ -281,6 +281,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentFeeForUs");
 		    }
 		}
+		public String VoucherCode
+		{
+		    get { return _VoucherCode; }
+		    set
+		    {
+		        _VoucherCode = value;
+		        IncrementLog("VoucherCode");
+		    }
+		}
 		public long? DiscountId
 		{
 		    get { return _DiscountId; }
@@ -421,6 +430,7 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _TotalSupplierPrice;
 		private Decimal? _PaymentFeeForCust;
 		private Decimal? _PaymentFeeForUs;
+		private String _VoucherCode;
 		private long? _DiscountId;
 		private Decimal? _DiscountCoefficient;
 		private Decimal? _DiscountConstant;
@@ -494,6 +504,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("TotalSupplierPrice", false),
 				new ColumnMetadata("PaymentFeeForCust", false),
 				new ColumnMetadata("PaymentFeeForUs", false),
+				new ColumnMetadata("VoucherCode", false),
 				new ColumnMetadata("DiscountId", false),
 				new ColumnMetadata("DiscountCoefficient", false),
 				new ColumnMetadata("DiscountConstant", false),
