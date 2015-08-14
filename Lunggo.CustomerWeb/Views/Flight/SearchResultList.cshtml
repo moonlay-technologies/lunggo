@@ -744,6 +744,7 @@
                                                 <div class="flight-duration">
                                                     <h5>Duration<br />{{trip.Duration}}</h5>
                                                     <hr />
+                                                    <span class="fa fa-cutlery" ng-if="trip.Meal"></span>
                                                 </div><!-- .flight-departure-duration -->
                                                 <div class="flight-arrival-time">
                                                     <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
@@ -783,6 +784,7 @@
                                                     <div class="flight-duration">
                                                         <h5>Duration<br />{{trip.Duration}}</h5>
                                                         <hr />
+                                                        <span class="fa fa-cutlery" ng-if="trip.Meal"></span>
                                                     </div><!-- .flight-departure-duration -->
                                                     <div class="flight-arrival-time">
                                                         <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' }}</h4>
@@ -806,10 +808,7 @@
                             <div class="flight-rules">
                                 <div class="flight-rules-content">
                                     <div class="text-center rules-loading" ng-if="flight.FareLoaded == false">
-                                        <p class="text-center">Loading</p>
-                                        
-
-
+                                        <p class="text-center"><img src="/Assets/images/ajax-loader.gif" alt="Loading" /></p>
                                     </div>
                                     <div ng-if="flight.FareLoaded == true">
                                         <div class="no-rules" ng-if="flight.FareRules.BaggageRules.length == 0 && flight.FareRules.AirlineRules.length == 0">

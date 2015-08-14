@@ -1507,15 +1507,18 @@ hr {
     .flight-search-page .flight-search-form form .flight-adult {
       background: url(../images/adult-icon.png) 10px center no-repeat #fff;
       padding-left: 40px;
-      width: 15%; }
+      width: 15%;
+      -webkit-appearance: none; }
     .flight-search-page .flight-search-form form .flight-child {
       background: url(../images/child-icon.png) 10px center no-repeat #fff;
       padding-left: 40px;
-      width: 15%; }
+      width: 15%;
+      -webkit-appearance: none; }
     .flight-search-page .flight-search-form form .flight-infant {
       background: url(../images/infant-icon.png) 10px center no-repeat #fff;
       padding-left: 40px;
-      width: 15%; }
+      width: 15%;
+      -webkit-appearance: none; }
     .flight-search-page .flight-search-form form .submit-button {
       font-weight: bold;
       width: 11%; }
@@ -1672,7 +1675,8 @@ hr {
         float: left; }
       .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline {
         width: 40%;
-        text-align: center; }
+        text-align: center;
+        font-size: 12px; }
         .flight-search-page .flight-list.horizontal .flight.flight-return .flight-main .flight-left > div .flight-content .flight-airline img {
           display: block;
           margin-left: auto;
