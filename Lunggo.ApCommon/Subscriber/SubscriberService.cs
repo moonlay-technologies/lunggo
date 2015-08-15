@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls.WebParts;
 using Base36Encoder;
+using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Subscriber.Query;
 using Lunggo.ApCommon.Voucher;
@@ -39,7 +41,7 @@ namespace Lunggo.ApCommon.Subscriber
             }
         }
 
-        public void Subscribe(string email)
+        public string Subscribe(string email)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -53,7 +55,7 @@ namespace Lunggo.ApCommon.Subscriber
                         IsValidated = false,
                         HashLink = hash
                     });
-
+                return hash;
             }
         }
 
@@ -75,11 +77,16 @@ namespace Lunggo.ApCommon.Subscriber
             }
         }
 
-        public void SendInitialSubscriberEmailToCustomer(string email)
+        public void SendInitialSubscriberEmailToCustomer(string email, string hashLink)
         {
             var queueService = QueueService.GetInstance();
             var queue = queueService.GetQueueByReference(Queue.InitialSubscriberEmail);
-            queue.AddMessage(new CloudQueueMessage(email));
+            var message = new SubscriberEmailModel
+            {
+                Email = email,
+                Url = "http://travorama.com/id/Term/ValidateSubscriber?hashLink=" + hashLink
+            };
+            queue.AddMessage(new CloudQueueMessage(message.Serialize()));
         }
     }
 }

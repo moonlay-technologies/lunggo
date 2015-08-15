@@ -161,10 +161,10 @@
                         <div class="col-sm-9">
                             <h3><b>SUBSCRIBE </b> TO GET UPDATES AND PROMOTIONS FROM US</h3>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                            <form class="form form-horizontal">
+                            <form action="@Url.Action("Subscribe", "Term")" method="POST" class="form form-horizontal">
                                 <div class="form-group">
                                     <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Name"/></div>
-                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Email" /></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" name="Email" class="form-control" placeholder="Your Email" /></div>
                                     <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="SUBSCRIBE" /></div>
                                 </div>
                             </form>

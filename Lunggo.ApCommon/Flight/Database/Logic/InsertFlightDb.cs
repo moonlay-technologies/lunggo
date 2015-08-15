@@ -19,16 +19,22 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class InsertFlightDb
     {
-        internal static void Booking(FlightBookingRecord bookingRecord, out string rsvNo)
+        internal static void Booking(FlightBookingRecord bookingRecord, out string rsvNo, out decimal finalPrice)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 //TODO diskon ga seharusnya di sini. konstruk reservasinya sebelum masuk sini.
                 var discountRuleIds = VoucherService.GetInstance()
                     .GetFlightDiscountRules(bookingRecord.DiscountCode, bookingRecord.ContactData.Email);
-                var discountRule = FlightService.GetInstance().GetMatchingDiscountRule(discountRuleIds);
+                var discountRule = FlightService.GetInstance().GetMatchingDiscountRule(discountRuleIds) ??
+                                   new DiscountRule
+                {
+                    Coefficient = 0,
+                    Constant = 0
+                };
                 var discountNominal = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice*discountRule.Coefficient +
                                       discountRule.Constant;
+                finalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice - discountNominal;
                 rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
                 var reservationRecord = new FlightReservationTableRecord
                 {
@@ -51,7 +57,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                     DiscountCoefficient = discountRule.Coefficient,
                     DiscountConstant = discountRule.Constant,
                     DiscountNominal = discountNominal,
-                    FinalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice + discountNominal,
+                    FinalPrice = finalPrice,
                     GrossProfit = 0,
                     InsertBy = "xxx",
                     InsertDate = DateTime.UtcNow,

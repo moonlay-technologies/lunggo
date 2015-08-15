@@ -19,19 +19,5 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public ActionResult Subscribe(string email)
-        {
-            SubscriberService.GetInstance().Subscribe(email);
-            SubscriberService.GetInstance().SendInitialSubscriberEmailToCustomer(email);
-            return RedirectToAction("/");
-        }
-
-        public ActionResult ValidateSubscribe(string hashLink)
-        {
-            SubscriberService.GetInstance().ValidateSubscriber(hashLink);
-            return RedirectToAction("/");
-        }
     }
 }

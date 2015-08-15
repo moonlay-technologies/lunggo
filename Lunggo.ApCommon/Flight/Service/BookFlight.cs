@@ -51,8 +51,10 @@ namespace Lunggo.ApCommon.Flight.Service
                     DiscountCode = input.DiscountCode
                 };
                 string rsvNo;
-                InsertFlightDb.Booking(bookingRecord, out rsvNo);
+                decimal finalPrice;
+                InsertFlightDb.Booking(bookingRecord, out rsvNo, out finalPrice);
                 output.RsvNo = rsvNo;
+                output.FinalPrice = finalPrice;
             }
             else
             {

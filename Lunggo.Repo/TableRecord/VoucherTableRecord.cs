@@ -77,7 +77,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "FlightVoucher";
+            _tableName = "Voucher";
         }
 
         private static void InitRecordMetadata()

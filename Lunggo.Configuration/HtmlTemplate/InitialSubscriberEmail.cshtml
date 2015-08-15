@@ -1,13 +1,13 @@
 ﻿@using System.Globalization
-@model Microsoft.AspNet.Identity.IdentityMessage
+@model Lunggo.ApCommon.Subscriber.SubscriberEmailModel
 
 <html>
     <body>
         
-        Dear @Model.Destination,<br/><br/>
+        Dear @Model.Email,<br/><br/>
 
         Klik link berikut untuk verifikasi email Anda.<br/>
-        <a href="@Model.Body">Pijit Saya</a>
+        <a href="@Model.Url">Pijit Saya</a>
 
     </body>
 </html>
