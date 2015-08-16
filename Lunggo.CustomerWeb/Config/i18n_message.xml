@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Messages>
-   <Message code="CW00001" lang="en_US" value="Refine Your Search" />
-   <Message code="CW00001" lang="id_ID" value="Pilih Berdasarkan" />
+   <Message code="CW00001" lang="en_US" value="Filter" />
+   <Message code="CW00001" lang="id_ID" value="Filter" />
    <Message code="CW00002" lang="en_US" value="Stops" />
    <Message code="CW00002" lang="id_ID" value="Pemberhentian" />
    <Message code="CW00003" lang="en_US" value="Direct Flight" />
@@ -17,7 +17,7 @@
    <Message code="CW00008" lang="en_US" value="Max Price" />
    <Message code="CW00008" lang="id_ID" value="Harga Max" />
    <Message code="CW00009" lang="en_US" value="Airlines" />
-   <Message code="CW00009" lang="id_ID" value="Airline" />
+   <Message code="CW00009" lang="id_ID" value="Maskapai" />
    <Message code="CW00010" lang="en_US" value="Flight Time" />
    <Message code="CW00010" lang="id_ID" value="Waktu Penerbangan" />
    <Message code="CW00011" lang="en_US" value="Take-off from" />
@@ -41,13 +41,13 @@
    <Message code="CW00020" lang="en_US" value="Infant" />
    <Message code="CW00020" lang="id_ID" value="Bayi" />
    <Message code="CW00021" lang="en_US" value="Airline" />
-   <Message code="CW00021" lang="id_ID" value="Airline" />
+   <Message code="CW00021" lang="id_ID" value="Maskapai" />
    <Message code="CW00022" lang="en_US" value="Departure" />
-   <Message code="CW00022" lang="id_ID" value="Keberangkatan" />
+   <Message code="CW00022" lang="id_ID" value="Berangkat" />
    <Message code="CW00023" lang="en_US" value="Duration" />
    <Message code="CW00023" lang="id_ID" value="Durasi" />
    <Message code="CW00024" lang="en_US" value="Arrival" />
-   <Message code="CW00024" lang="id_ID" value="Kedatangan" />
+   <Message code="CW00024" lang="id_ID" value="Tiba" />
    <Message code="CW00025" lang="en_US" value="Price" />
    <Message code="CW00025" lang="id_ID" value="Harga" />
    <Message code="CW00026" lang="en_US" value="Flight Details" />
@@ -63,7 +63,7 @@
    <Message code="CW00031" lang="en_US" value="No Hidden Fees !" />
    <Message code="CW00031" lang="id_ID" value="Termasuk Pajak dan Service Charge" />
    <Message code="CW00032" lang="en_US" value="Book Now" />
-   <Message code="CW00032" lang="id_ID" value="Pesan Sekarang" />
+   <Message code="CW00032" lang="id_ID" value="Pesan" />
    <Message code="CW00033" lang="en_US" value="This flight is operated by" />
    <Message code="CW00033" lang="id_ID" value="Penerbangan ini dioperasikan oleh" />
    <Message code="CW00034" lang="en_US" value="to" />
@@ -122,4 +122,53 @@
    <Message code="CW00060" lang="id_ID" value="Anak" />
    <Message code="CW00061" lang="en_US" value="Infants" />
    <Message code="CW00061" lang="id_ID" value="Bayi" />
+   <Message code="CW00062" lang="en_US" value="Onward Flight" />
+   <Message code="CW00062" lang="id_ID" value="Penerbangan Pergi" />
+   <Message code="CW00063" lang="en_US" value="Return Flight" />
+   <Message code="CW00063" lang="id_ID" value="Penerbangan Pulang" />
+   <Message code="CW00064" lang="en_US" value="reset filter" />
+   <Message code="CW00064" lang="id_ID" value="reset filter" />
+   <Message code="CW00065" lang="en_US" value="Select All" />
+   <Message code="CW00065" lang="id_ID" value="Pilih Semua" />
+   <Message code="CW00066" lang="en_US" value="Select None" />
+   <Message code="CW00066" lang="id_ID" value="Nihil" />
+   <Message code="CW00067" lang="en_US" value="FIND THE BEST FLIGHT DESTINATION AROUND THE WORLD" />
+   <Message code="CW00067" lang="id_ID" value="TUJUAN PENERBANGAN TERPOPULER" />
+   <Message code="CW00068" lang="en_US" value="Wherever you like to travel, we have domestic and international flight from over 900 airlines" />
+   <Message code="CW00068" lang="id_ID" value="Kemanapun anda ingin bepergian, kami menyediakan pilihan penerbangan domestik dan internasional dari 900 maskapai" />
+   <Message code="CW00069" lang="en_US" value="Initial Airport" />
+   <Message code="CW00069" lang="id_ID" value="Bandara Asal" />
+   <Message code="CW00070" lang="en_US" value="Destination Airport" />
+   <Message code="CW00070" lang="id_ID" value="Bandara Tujuan" />
+   <Message code="CW00071" lang="en_US" value="LOGIN" />
+   <Message code="CW00071" lang="id_ID" value="LOGIN" />
+   <Message code="CW00072" lang="en_US" value="REGISTER" />
+   <Message code="CW00072" lang="id_ID" value="REGISTER" />
+   <Message code="CW00073" lang="en_US" value="MY ACCOUNT" />
+   <Message code="CW00073" lang="id_ID" value="AKUN SAYA" />
+   <Message code="CW00074" lang="en_US" value="LOGOUT" />
+   <Message code="CW00074" lang="id_ID" value="LOGOUT" />
+   <Message code="CW00075" lang="en_US" value="SUBSCRIBE" />
+   <Message code="CW00075" lang="id_ID" value="DAFTAR" />
+   <Message code="CW00076" lang="en_US" value="TO GET UPDATES AND PROMOTIONS FROM TRAVORAMA" />
+   <Message code="CW00076" lang="id_ID" value="DAN DAPATKAN INFO PROMO DAN TRAVEL TERKINI DARI TRAVORAMA" />
+   <Message code="CW00077" lang="en_US" value="Your Name" />
+   <Message code="CW00077" lang="id_ID" value="Nama Anda" />
+   <Message code="CW00078" lang="en_US" value="Your Email Address" />
+   <Message code="CW00078" lang="id_ID" value="Alamat Email Anda" />
+   <Message code="CW00079" lang="en_US" value="SUBSCRIBE" />
+   <Message code="CW00079" lang="id_ID" value="DAFTAR" />
+   <Message code="CW00080" lang="en_US" value="SEARCH" />
+   <Message code="CW00080" lang="id_ID" value="CARI" />
+   <Message code="CW00081" lang="en_US" value="Flight Booking" />
+   <Message code="CW00081" lang="id_ID" value="Cari Tiket Pesawat" />
+   <Message code="CW00082" lang="en_US" value="Flight" />
+   <Message code="CW00082" lang="id_ID" value="Tiket Pesawat" />
+   <Message code="CW00083" lang="en_US" value="WE ACCEPT" />
+   <Message code="CW00083" lang="id_ID" value="KAMI MENERIMA" />
+   <Message code="CW00084" lang="en_US" value="PAYMENT" />
+   <Message code="CW00084" lang="id_ID" value="PEMBAYARAN" />
+   <Message code="CW00085" lang="en_US" value="FROM" />
+   <Message code="CW00085" lang="id_ID" value="DARI" />
 </Messages>
+

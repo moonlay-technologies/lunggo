@@ -18,7 +18,7 @@ namespace Lunggo.CustomerWeb
 
             routes.MapRoute(
                 name: "toppage",
-                url: "",
+                url: "{langCode}",
                 defaults: new { controller = "UW000TopPage", action = "Index", langCode = "id" }
             );
 
