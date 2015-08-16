@@ -24,9 +24,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {address},
-                FromMail = "jangan-balas-ke-sini@travorama.com",
-                FromName = "Travorama.com",
-                Subject = "f dgbdvuen sdghuhfsu gfrngk Anda"
+                FromMail = "no-reply@travorama.com",
+                FromName = "Travorama",
+                Subject = "Selamat! Voucher Diskon Hingga Rp 500.000 untuk Anda"
             };
             mailService.SendEmail(message, mailModel, HtmlTemplateType.VoucherEmail);
             sw.Stop();

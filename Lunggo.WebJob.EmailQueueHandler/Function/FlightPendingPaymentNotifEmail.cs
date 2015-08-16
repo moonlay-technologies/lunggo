@@ -33,9 +33,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {reservation.Contact.Email},
-                Subject = "[Travorama.com] Harap Selesaikan Pembayaran Anda; Terima Kasih Sudah Memesan di Travorama",
-                FromMail = "jangan-reply-ke-sini@travorama.com",
-                FromName = "Travorama.com"
+                Subject = "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
+                FromMail = "booking@travorama.com",
+                FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(reservation, mailModel, HtmlTemplateType.FlightPendingPaymentNotifEmail);

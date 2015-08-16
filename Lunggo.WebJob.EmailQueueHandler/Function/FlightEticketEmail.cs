@@ -35,23 +35,25 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {summary.Contact.Email},
-                Subject = "[Travorama.com] Eticket Spesial untuk Anda",
-                FromMail = "jangan-reply-ke-sini@travorama.com",
-                FromName = "Travorama.com",
+                Subject = "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
+                FromMail = "booking@travorama.com",
+                FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>
                 {
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "Eticket Anda - No. Reservasi " + summary.RsvNo + ".pdf",
+                        FileName = "E-tiket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = eticketFile
                     },
+                    /*
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "Invoice Anda - No. Reservasi " + summary.RsvNo + ".pdf",
+                        FileName = "Invoice Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = invoiceFile
                     }
+                    */
                 }
             };
             Console.WriteLine("Sending Flight Eticket Email...");

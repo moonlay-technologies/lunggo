@@ -23,9 +23,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {address},
-                FromMail = "jangan-balas-ke-sini@travorama.com",
-                FromName = "Travorama.com",
-                Subject = "Verifikasikan E-mail Anda"
+                FromMail = "no-reply@travorama.com",
+                FromName = "Travorama",
+                Subject = "[Travorama] Verifikasikan E-mail Anda"
             };
             mailService.SendEmail(message, mailModel, HtmlTemplateType.UserConfirmationEmail);
             sw.Stop();
