@@ -67,10 +67,10 @@
 
     <header class="page-header">
         <div class="container">
-            <div class="site-nav"> <a href="#">Beranda</a> / <strong>Flight List</strong></div>
+            <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00088")</strong></div>
             <hr>
             <h1><b>@Model.Message</b></h1>
-            <h1><b>CUSTOMER</b> DETAIL</h1>
+            <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090")</h1>
         </div>
     </header>
 
@@ -84,15 +84,15 @@
                         <section class="customer-form">
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
-                                <label for="" class="control-label">Name (Buyer) :</label>
-                                <input type="text" class="form-control" name="Contact.Name" placeholder="Nama sesuai KTP / SIM">
+                                <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
+                                <input type="text" class="form-control" name="Contact.Name" placeholder="@Html.I18NString("CW00092")">
                                 @Html.ValidationMessageFor(data => data.Contact.Name)
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-inline">
                                         <div class="form-group" style="width:100%;">
-                                            <label for="">Phone Number :</label>
+                                            <label for="">@Html.I18NString("CW00093") :</label>
                                             <input type="tel" class="phone-number form-control" style="width:100%;" name="Contact.Phone" value="" />
                                             @Html.ValidationMessageFor(data => data.Contact.Phone)
                                         </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="" class="control-label">Email :</label>
+                                        <label for="" class="control-label">@Html.I18NString("CW00094") :</label>
                                         <input type="text" class="form-control" name="Contact.Email" placeholder="ex : nama@email.com">
                                         @Html.ValidationMessageFor(data => data.Contact.Email)
                                     </div>
@@ -111,7 +111,7 @@
                                 if (i < adultCount)
                                 {
                                     titleList = adultTitleList;
-                                    <h5 class="control-label"><b>Adult Passenger @(i + 1) ( > 12 years old)</b></h5>
+                                    <h5 class="control-label"><b>@Html.I18NString("CW00095") @(i + 1) ( > 12 @Html.I18NString("CW00096"))</b></h5>
                                     <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
                                 }
                                 else
@@ -119,44 +119,44 @@
                                     titleList = childTitleList;
                                     if ((i - adultCount) < childCount)
                                     {
-                                        <h5 class="control-label"><b>Child Passenger @(i + 1 - adultCount) ( 2-12 years old )</b></h5>
+                                        <h5 class="control-label"><b>@Html.I18NString("CW00097") @(i + 1 - adultCount) ( 2-12 @Html.I18NString("CW00096") )</b></h5>
                                         <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
                                     }
                                     else
                                     {
-                                        <h5 class="control-label"><b>Infant Passenger @(i + 1 - adultCount - childCount) ( < 2 years old )</b></h5>
+                                        <h5 class="control-label"><b>@Html.I18NString("CW00098") @(i + 1 - adultCount - childCount) ( < 2 @Html.I18NString("CW00096") )</b></h5>
                                         <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
                                     }
                                 }
                                 <div class="form-inline">
                                     <div class="form-group" style="width:20%;">
-                                        <label for="">Title :</label>
+                                        <label for="">@Html.I18NString("CW00099") :</label>
                                         @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
                                     </div>
                                     <div class="form-group" style="width:39%;">
-                                        <label for="">First Name :</label>
+                                        <label for="">@Html.I18NString("CW00100") :</label>
                                         <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].FirstName" placeholder="">
                                     </div>
                                     <div class="form-group" style="width:39%;">
-                                        <label for="">Last Name :</label>
+                                        <label for="">@Html.I18NString("CW00101") :</label>
                                         <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].LastName" placeholder="">
                                     </div>
                                 </div><br />
                                 if (needBirthDate)
                                 {
                                     <div class="form-group">
-                                        <label for="" class="control-label">Birth Date :</label>
+                                        <label for="" class="control-label">@Html.I18NString("CW00102") :</label>
                                         <input type="date" class="form-control" name="Passengers[@i].BirthDate" placeholder="">
                                     </div>
                                 }
                                 if (needPassport)
                                 {
                                     <div class="form-group">
-                                        <label for="" class="control-label">Passport Number :</label>
+                                        <label for="" class="control-label">@Html.I18NString("CW00103") :</label>
                                         <input type="text" class="form-control" name="Passengers[@i].PassportNumber" placeholder="">
                                     </div>
                                     <div class="form-group">
-                                        <label for="" class="control-label">Passport Expiry Date:</label>
+                                        <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
                                         <input type="date" class="form-control" name="Passengers[@i].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
@@ -164,7 +164,7 @@
                             }
                         </section><!-- .customer-form -->
                         <section class="payment-form">
-                            <h2><b>PAYMENT</b> METHOD</h2>
+                            <h2><b>@Html.I18NString("CW00106")</b> @Html.I18NString("CW00107")</h2>
 
                             <section class="payment-option">
                                 @*
@@ -192,7 +192,7 @@
                                     </label>
                                 *@
                             </section><!-- .payment-option -->
-                            <section class="payment-detail">
+                            <section class="payment-detail hidden">
                                 <section class="payment-veritrans-detail active">
                                     <h4>Veritrans</h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
@@ -205,8 +205,9 @@
 
                         </section><!-- .payment-form -->
                         <section class="payment-button">
-                            <small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>
-                            <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">BAYAR</button>
+                            <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
+                            <small>@Html.I18NString("CW00109")</small>
+                        <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">@Html.I18NString("CW00108")</button>
                         </section><!-- .payment-button -->
                     </section><!-- .customer-detail -->
 
@@ -214,9 +215,9 @@
 
                 <div class="col-sm-4">
                     <section class="order-detail">
-                        <h2><b>ORDER</b> DETAILS</h2>
+                        <h2><b>@Html.I18NString("CW00110")</b> @Html.I18NString("CW00111")</h2>
                         <section class="flight-detail">
-                            <h3 class="text-center">DEPARTURE FLIGHT</h3>
+                            <h3 class="text-center">@Html.I18NString("CW00112")</h3>
                             <h5 class="airline-name">
                                 <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
                             </h5>
@@ -228,7 +229,7 @@
                                     <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
                                     <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
                                 </div>
-                                <div class="separator">to</div>
+                                <div class="separator">@Html.I18NString("CW00034")</div>
                                 <div class="col-sm-6 text-left flight-destination">
                                     <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
                                     <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
@@ -241,7 +242,7 @@
                         @if (@Model.Itinerary.TripType == TripType.Return)
                         {
                             <section class="flight-detail">
-                                <h3 class="text-center">RETURN FLIGHT</h3>
+                                <h3 class="text-center">@Html.I18NString("CW00113")</h3>
                                 <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
                                 <div class="row flight-route">
                                     <div class="col-sm-6 text-right flight-origin">
@@ -251,7 +252,7 @@
                                         <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
                                         <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
                                     </div>
-                                    <div class="separator">to</div>
+                                    <div class="separator">@Html.I18NString("CW00034")</div>
                                     <div class="col-sm-6 text-left flight-destination">
                                         <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
                                         <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
@@ -264,23 +265,23 @@
                         <!-- .flight-detail -->
                         }
                         <section class="price-detail">
-                            <h2><b>PRICE</b> DETAIL</h2>
+                            <h2><b>@Html.I18NString("CW00114")</b> @Html.I18NString("CW00115")</h2>
                             <div class="content-wrapper">
                                 <div class="row">
-                                    <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) Person</div>
+                                    <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) @Html.I18NString("CW00116")</div>
                                     <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6">Tax</div>
-                                    <div class="col-sm-6">INCLUDED</div>
+                                    <div class="col-sm-6">@Html.I18NString("CW00117")</div>
+                                    <div class="col-sm-6">@Html.I18NString("CW00120")</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6">Travorama Fee</div>
-                                    <div class="col-sm-6">FREE</div>
+                                    <div class="col-sm-6">@Html.I18NString("CW00118")</div>
+                                    <div class="col-sm-6">@Html.I18NString("CW00121")</div>
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-sm-6">TOTAL</div>
+                                    <div class="col-sm-6">@Html.I18NString("CW00119")</div>
                                     <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                 </div>
                                 <div class="row">
@@ -303,8 +304,8 @@
         <div class="loading-image-wrapper">
             <img src="/Assets/images/loading-sample.png" alt="Loading" />
             <div class="loading-text">
-                <h2>Please Wait</h2>
-                <h4>While we validating your flight of choice</h4>
+                <h2>@Html.I18NString("CW00041")</h2>
+                <h4>@Html.I18NString("CW00105")</h4>
             </div>
         </div>
 

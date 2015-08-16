@@ -496,7 +496,7 @@
                             <img src="/Assets/images/loading-sample.png" alt="Loading" />
                             <div class="loading-text">
                                 <h2>@Html.I18NString("CW00041")</h2>
-                                <h4>While we validating your flight of choice</h4>
+                                <h4>@Html.I18NString("CW00105")</h4>
                             </div>
                         </div>
 
@@ -729,7 +729,7 @@
                                     <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>@Html.I18NString("CW00044")</b> @Html.I18NString("CW00046")</h4>
                                     <ol>
                                         <li class="route" ng-repeat="trip in flight.FlightTrips[0].FlightSegments">
-                                            <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</div>
+                                            <div class="flight-transit" ng-if="$index > 0">@Html.I18NString("CW00086") {{trip.DepartureCity}} @Html.I18NString("CW00087") {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</div>
                                             <div class="flight-airline">
                                                 <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                 <h5>{{trip.AirlineName}}</h5>
