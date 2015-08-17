@@ -640,9 +640,9 @@
                         RevalidateConfig.value = returnData;
 
                         if (returnData.IsValid == true) {
-                            if (SiteLanguage == 'indonesia') {
+                            if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
                                 window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
-                            } else if(SiteLanguage == 'english') {
+                            } else if(SiteLanguage == 'en' || SiteLanguage == 'english') {
                                 window.location.assign(location.origin + '/en/flight/Checkout?token=' + returnData.HashKey);
                             }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
