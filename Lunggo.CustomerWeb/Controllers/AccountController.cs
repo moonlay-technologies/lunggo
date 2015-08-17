@@ -1,6 +1,8 @@
 ﻿using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
@@ -188,6 +190,12 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+            var email = await UserManager.GetEmailAsync(userId);
+            if (result.Succeeded)
+            {
+                var voucherCode = VoucherService.GetInstance().GenerateVoucherCode(email);
+                VoucherService.GetInstance().SendVoucherEmailToCustomer(email, voucherCode);
+            }
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

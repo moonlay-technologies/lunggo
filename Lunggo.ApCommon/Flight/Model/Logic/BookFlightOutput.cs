@@ -7,6 +7,7 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
     {
         public BookResult BookResult { get; set; }
         public string RsvNo { get; set; }
+        public decimal FinalPrice { get; set; }
     }
 
     public class BookResult

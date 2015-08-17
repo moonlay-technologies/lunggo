@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Voucher
         public string GenerateVoucherCode(string email)
         {
             var sequence = VoucherSequence.GetInstance().GetNext();
-            var code = "NSC9T" + Base36Encoder.Base36.Encode(sequence);
+            var code = "NSC9T" + Base36Encoder.Base36.Encode(sequence) + "AA";
             var voucherRecord = new VoucherTableRecord
             {
                 VoucherId = code,
@@ -48,7 +48,9 @@ namespace Lunggo.ApCommon.Voucher
                 IsUsed = false
             };
             using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
                 VoucherTableRepo.GetInstance().Insert(conn, voucherRecord);
+            }
             return code;
         }
 
@@ -58,7 +60,7 @@ namespace Lunggo.ApCommon.Voucher
             {
                 var voucherRecord = GetVoucherRecordQuery.GetInstance().Execute(conn, new {VoucherCode = code}).Single();
                 if (voucherRecord.ValidEmail == email &&
-                    voucherRecord.ExpiryDate <= DateTime.UtcNow &&
+                    DateTime.UtcNow <= voucherRecord.ExpiryDate &&
                     voucherRecord.IsUsed == false)
                 {
                     return new List<long> {0};

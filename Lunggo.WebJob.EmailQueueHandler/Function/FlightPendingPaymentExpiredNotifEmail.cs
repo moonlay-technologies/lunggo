@@ -42,9 +42,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 {
                     RecipientList = new[] {reservation.Contact.Email},
                     Subject =
-                        "[Travorama.com] Maaf, Reservasi Anda Sudah Basi",
-                    FromMail = "jangan-reply-ke-sini@travorama.com",
-                    FromName = "Travorama.com"
+                        "[Travorama] Reservasi Anda Kadaluarsa - No. Pemesanan " + reservation.RsvNo",
+                    FromMail = "booking@travorama.com",
+                    FromName = "Travorama"
                 };
                 Console.WriteLine("Sending Notification Email...");
                 mailService.SendEmail(reservation, mailModel, HtmlTemplateType.FlightPendingPaymentNotifEmail);

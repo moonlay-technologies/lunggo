@@ -1018,6 +1018,19 @@ hr {border-color:#aaa;}
             h5 {}
         }
     }
+    .howto-guide {padding-top:25px; position:relative;
+        .text {position:absolute; top:0; left:0; width:100%; z-index:2;
+            &>div {padding-left:100px; position:absolute;
+                h3 {color:#2fb4e6; @include gotham(); font-weight:bold;}
+                p {font-size:18px;}
+            }
+            .point-1 {top:15px;}
+            .point-2 {top:620px;}
+            .point-3 {top:1245px;}
+            .point-4 {top:1870px;}
+            .point-5 {top:2470px;}
+        }
+    }
     .page-footer {
         .note-wrapper {background:#ddd; padding:20px 0;
             p {font-style:italic;}
@@ -1181,6 +1194,23 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// campaign page
+.campaign-page {background-position:top center; background-repeat:no-repeat;
+    // campaign background
+    &.jakarta {background-image:url(/Assets/images/campaign/jakarta.jpg);}
+    &.bandung {background-image:url(/Assets/images/campaign/bandung.jpg);}
+    &.surabaya {background-image:url(/Assets/images/campaign/surabaya.jpg);}
+    &.yogyakarta {background-image:url(/Assets/images/campaign/yogyakarta.jpg);}
+    &.bali {background-image:url(/Assets/images/campaign/bali.jpg);}
+    &.singapore {background-image:url(/Assets/images/campaign/singapore.jpg);}
+    &.malaysia {background-image:url(/Assets/images/campaign/malaysia.jpg);}
+    &.hongkong {background-image:url(/Assets/images/campaign/hongkong.jpg);}
+
+    .site-header {background:url(/Assets/images/home-section-title-bg.png) bottom center repeat-x;}
+    .site-content {min-height:0;}
+}
+
+// ----------------------------------------------
 // if width 1200 pixels and below
 
 @media screen and (max-width: 1200px) {
@@ -1228,6 +1258,20 @@ hr {border-color:#aaa;}
     }
 }// .flight-search-page
 
-
 }
 
+// max width 1000 px
+@media screen and (max-width: 1000px) {
+    // how to page
+    .howto-guide {
+        .text {height:100%;
+            .point-1 {top:0% !important;}
+            .point-2 {top:19% !important;}
+            .point-3 {top:38.5% !important;}
+            .point-4 {top:58% !important;}
+            .point-5 {top:77% !important;}
+            h3 {font-size:18px !important;}
+            p {font-size:14px !important;}
+        }
+    }
+}

@@ -38,6 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
+                InitPriceDiscountRules();
                 _isInitialized = true;
             }
         }

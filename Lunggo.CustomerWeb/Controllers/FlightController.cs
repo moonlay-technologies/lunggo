@@ -78,7 +78,8 @@ namespace Lunggo.CustomerWeb.Controllers
                         DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
                     }
                 },
-                OverallTripType = data.ItineraryFare.TripType
+                OverallTripType = data.ItineraryFare.TripType,
+                DiscountCode = data.DiscountCode
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
             if (bookResult.IsSuccess && bookResult.BookResult.BookingStatus == BookingStatus.Booked)
@@ -86,7 +87,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var transactionDetails = new TransactionDetails
                 {
                     OrderId = bookResult.RsvNo,
-                    Amount = data.ItineraryFare.LocalPrice
+                    Amount = bookResult.FinalPrice
                 };
                 var itemDetails = new List<ItemDetails>
                     {
@@ -102,7 +103,7 @@ namespace Lunggo.CustomerWeb.Controllers
                                 ? "-" + data.ItineraryFare.FlightTrips[1].DepartureDate.ToString("d MMM yy")
                                 : ""),
                             Quantity = 1,
-                            Price = data.ItineraryFare.LocalPrice
+                            Price = bookResult.FinalPrice
                         }
                     };
 

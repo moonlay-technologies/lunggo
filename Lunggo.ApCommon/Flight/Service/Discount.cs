@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public DiscountRule GetMatchingDiscountRule(List<long> ruleIds)
         {
             //TODO nih discount code
-            if (ruleIds.Contains(0))
+            if (ruleIds != null && ruleIds.Contains(0))
             {
                 return DiscountRules[0];
             }

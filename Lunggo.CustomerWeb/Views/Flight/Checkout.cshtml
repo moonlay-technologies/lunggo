@@ -89,11 +89,20 @@
                                 @Html.ValidationMessageFor(data => data.Contact.Name)
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-2">
+                                    <div class="form-inline">
+                                        <div class="form-group" style="width:100%;">
+                                            <label for="">Country :</label>
+                                            <input type="text" class="form-control" style="width:100%;" name="Contact.CountryCode" placeholder="ex:62" />
+                                            @Html.ValidationMessageFor(data => data.Contact.CountryCode)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
                                     <div class="form-inline">
                                         <div class="form-group" style="width:100%;">
                                             <label for="">@Html.I18NString("CW00093") :</label>
-                                            <input type="tel" class="phone-number form-control" style="width:100%;" name="Contact.Phone" value="" />
+                                            <input type="tel" class="form-control" style="width:100%;" name="Contact.Phone" placeholder="ex: 81521807096" />
                                             @Html.ValidationMessageFor(data => data.Contact.Phone)
                                         </div>
                                     </div>
@@ -168,12 +177,12 @@
 
                             <section class="payment-option">
                                 @*
-                                    <label class="payment-transfer active" for="payment-transfer">
+                                    <label class="payment-transfer" for="payment-transfer">
                                         <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
                                         <span>Bank Transfer</span>
                                     </label>
                                 *@
-                                <label class="payment-veritrans" for="payment-virtual">
+                                <label class="payment-veritrans active" for="payment-virtual">
                                     <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual" checked>
                                     <span>ATM</span>
                                 </label>
@@ -192,6 +201,7 @@
                                     </label>
                                 *@
                             </section><!-- .payment-option -->
+@*
                             <section class="payment-detail hidden">
                                 <section class="payment-veritrans-detail active">
                                     <h4>Veritrans</h4>
@@ -202,6 +212,7 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
                                 </section>
                             </section><!-- .payment-detail -->
+    *@
 
                         </section><!-- .payment-form -->
                         <section class="payment-button">
