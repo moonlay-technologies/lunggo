@@ -75,13 +75,13 @@
                         </div><!-- .form-hotel-search -->
                         <div class="form-flight-search active">
                             <h3>@Html.I18NString("CW00081")</h3>
-                            <form action="/id/Flight/SearchResultList" class="homepage-form" method="GET" data-flightType="round-trip">
+                            <form action="@Url.Action("SearchResultList", "Flight")" class="homepage-form" method="GET" data-flighttype="round-trip">
                                 <div class="flight-type-wrapper form-group">
-                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> @Html.I18NString("CW00052")</label>
+                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
                                     <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
                                 </div>
                                 <div class="flight-airport-wrapper form-group">
-                                    <input type="text" class="flight-origin autocomplete" placeholder="@Html.I18NString("CW00069")" data-userInputvalue="" data-airportCode=""/>
+                                    <input type="text" class="flight-origin autocomplete" placeholder="@Html.I18NString("CW00069")" data-userinputvalue="" data-airportcode="" />
                                     <input type="text" class="flight-destination autocomplete" placeholder="@Html.I18NString("CW00070")" data-userinputvalue="" data-airportcode="" />
                                 </div>
                                 <div class="flight-date-wrapper form-group">
@@ -126,7 +126,7 @@
                                     </select>
                                     <input type="text" class="hidden flight-departure-date-real" value="" />
                                     <input type="text" class="hidden flight-return-date-real" value="" />
-                                    <input type="text" class="hidden flight-origin-airport-real" value=""/>
+                                    <input type="text" class="hidden flight-origin-airport-real" value="" />
                                     <input type="text" class="hidden flight-destination-airport-real" value="" />
                                     <input type="text" id="flight-data-info" name="info" class="hidden" />
                                     <a class="submit-button flight-submit-button btn btn-yellow">@Html.I18NString("CW00080")</a>
@@ -193,11 +193,11 @@
                             <img src="/Assets/images/logo.png" alt="Travorama" />
                         </div>
                         <div class="col-sm-9">
-                            <h2>CALL CENTER : 1500 650</h2>
+                            <h2>@Html.I18NString("CW00153")</h2>
                             <nav>
                                 <ul class="list-inline">
-                                    <li><a href="@Url.Action("HowToBook", "Term")" target="_blank">How to Book</a></li>
-                                    <li><a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">Privacy Policy</a></li>
+                                    <li><a href="@Url.Action("HowToBook", "Term")" target="_blank">@Html.I18NString("CW00151")</a></li>
+                                    <li><a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">@Html.I18NString("CW00152")</a></li>
                                 </ul>
                             </nav>
                         </div>
