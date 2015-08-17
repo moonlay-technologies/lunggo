@@ -242,5 +242,42 @@
    <Message code="CW00120" lang="id_ID" value="INCLUDED" />
    <Message code="CW00121" lang="en_US" value="FREE" />
    <Message code="CW00121" lang="id_ID" value="GRATIS" />
+
+   <Message code="CW00122" lang="en_US" value="WITH TRAVORAMA ACCOUNT" />
+   <Message code="CW00122" lang="id_ID" value="DENGAN AKUN TRAVORAMA" />
+   <Message code="CW00123" lang="en_US" value="Your email address" />
+   <Message code="CW00123" lang="id_ID" value="Alamat email anda" />
+   <Message code="CW00124" lang="en_US" value="Your account password" />
+   <Message code="CW00124" lang="id_ID" value="Akun password anda" />
+   <Message code="CW00125" lang="en_US" value="Remember Me" />  
+   <Message code="CW00125" lang="id_ID" value="Ingat Saya" />
+   <Message code="CW00126" lang="en_US" value="Forgot password" />
+   <Message code="CW00126" lang="id_ID" value="Lupa password" />
+   <Message code="CW00127" lang="en_US" value="Register" />
+   <Message code="CW00127" lang="id_ID" value="Register" />
+   <Message code="CW00128" lang="en_US" value="OR" />
+   <Message code="CW00128" lang="id_ID" value="ATAU" />
+   <Message code="CW00129" lang="en_US" value="LOG IN" />
+   <Message code="CW00129" lang="id_ID" value="LOG IN" />
+   <Message code="CW00130" lang="en_US" value="LOGIN" />
+   <Message code="CW00130" lang="id_ID" value="LOGIN" />
+   <Message code="CW00131" lang="en_US" value="Log In with Facebook" />
+   <Message code="CW00131" lang="id_ID" value="Log In dengan Facebook" />
+   <Message code="CW00132" lang="en_US" value="BENEFIT OF" />
+   <Message code="CW00132" lang="id_ID" value="MANFAAT" />
+   <Message code="CW00133" lang="en_US" value="TRAVORAMA MEMBERSHIP" />
+   <Message code="CW00133" lang="id_ID" value="KEANGGOTAAN TRAVORAMA" />
+   <Message code="CW00134" lang="en_US" value="PROMO UPDATES" />
+   <Message code="CW00134" lang="id_ID" value="INFO PROMO" />
+   <Message code="CW00135" lang="en_US" value="Get promo updates and travel information directly delivered to your email address by Travorama" />
+   <Message code="CW00135" lang="id_ID" value="Dapatkan update promo dan informasi travel langsung dikirimkan ke alamat email anda oleh Travorama" />
+   <Message code="CW00136" lang="en_US" value="Exclusive Discount" />
+   <Message code="CW00136" lang="id_ID" value="Diskon Eksklusif" />
+   <Message code="CW00137" lang="en_US" value="We always strive to give our member nice surprises. Get exclusive discount only for Travorama member" />
+   <Message code="CW00137" lang="id_ID" value="Kami selalu berusaha untuk memberikan surprise menyenangkan untuk anda. Dapatkan diskon eksklusif hanya untuk member Travorama" />
+   <Message code="CW00138" lang="en_US" value="Manage My Booking " />
+   <Message code="CW00138" lang="id_ID" value="Atur Pemesanan" />
+   <Message code="CW00139" lang="en_US" value="Check and view your reservation detail. Download e-ticket and enjoy hassle free travelling with Travorama" />
+   <Message code="CW00139" lang="id_ID" value="Cek pemesanan anda secara detail. Download e-tiket dan nikmati kemudahan bepergian dengan Travorama" />
 </Messages>
 
