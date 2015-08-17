@@ -242,7 +242,6 @@
 	<Message code="CW00120" lang="id_ID" value="INCLUDED" />
 	<Message code="CW00121" lang="en_US" value="FREE" />
 	<Message code="CW00121" lang="id_ID" value="GRATIS" />
-
 	<Message code="CW00122" lang="en_US" value="WITH TRAVORAMA ACCOUNT" />
 	<Message code="CW00122" lang="id_ID" value="DENGAN AKUN TRAVORAMA" />
 	<Message code="CW00123" lang="en_US" value="Your email address" />
