@@ -3,6 +3,7 @@ using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Identity.UserStore;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
@@ -72,6 +73,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
+            var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -83,7 +87,7 @@ namespace Lunggo.CustomerWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return Redirect(returnUrl);
+                    return Redirect(String.IsNullOrEmpty(returnUrl) ? defaultReturnUrl : returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
