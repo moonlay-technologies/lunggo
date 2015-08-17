@@ -144,7 +144,11 @@ function homePageFunctions() {
     
     //------------------------------
     // detect form in selection
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+        showSearchForm('#search-flight');
+
+        /* Flight only search
         if (window.location.hash) {
             if (window.location.hash == '#search-flight') {
                 showSearchForm('#search-flight');
@@ -152,6 +156,7 @@ function homePageFunctions() {
                 showSearchForm('#search-hotel');
             }
         }
+        */
     });
     // switch to search form section
     $('.section-search a[data-trigger="showSearchForm"]').click(function() {
@@ -455,10 +460,10 @@ function searchFormFunctions() {
                     var elementTarget = $(this).parent().attr('data-target');
                     $('.form-control.flight-' + elementTarget).empty();
                     if ( $(this).parent().attr('data-target') == 'origin' ) {
-                        $('.form-control.flight-' + elementTarget).html('<b>Origin : </b>' + $(this).html());
+                        $('.form-control.flight-' + elementTarget).html($(this).html());
                         FlightSearchConfig.origin = $(this).attr('data-value');
                     } else {
-                        $('.form-control.flight-' + elementTarget).html('<b>Destination : </b>' + $(this).html());
+                        $('.form-control.flight-' + elementTarget).html($(this).html());
                         FlightSearchConfig.destination = $(this).attr('data-value');
                     }
                 }
