@@ -350,4 +350,6 @@
   <Message code="CW00174" lang="id_ID" value="Status Pembayaran" />
   <Message code="CW00175" lang="en_US" value="DETAIL" />
   <Message code="CW00175" lang="id_ID" value="DETAIL" />
+  <Message code="CW00176" lang="en_US" value="Flight to" />
+  <Message code="CW00176" lang="id_ID" value="Penerbangan ke" />
 </Messages>

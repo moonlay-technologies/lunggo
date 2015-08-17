@@ -306,4 +306,48 @@
   <Message code="CW00152" lang="id_ID" value="Kebijakan Privasi" />
   <Message code="CW00153" lang="en_US" value="CALL CENTER : 1500 650" />
   <Message code="CW00153" lang="id_ID" value="CALL CENTER : 1500 650" />
+  <Message code="CW00154" lang="en_US" value="User Account" />
+  <Message code="CW00154" lang="id_ID" value="Akun Pengguna" />
+  <Message code="CW00155" lang="en_US" value="My" />
+  <Message code="CW00155" lang="id_ID" value="Akun" />
+  <Message code="CW00156" lang="en_US" value="Account" />
+  <Message code="CW00156" lang="id_ID" value="Saya" />
+  <Message code="CW00157" lang="en_US" value="User Account" />
+  <Message code="CW00157" lang="id_ID" value="Akun Pengguna" />
+  <Message code="CW00158" lang="en_US" value="Profile" />
+  <Message code="CW00158" lang="id_ID" value="Profil" />
+  <Message code="CW00159" lang="en_US" value="User" />
+  <Message code="CW00159" lang="id_ID" value="Profil" />
+  <Message code="CW00160" lang="en_US" value="Profile" />
+  <Message code="CW00160" lang="id_ID" value="Pengguna" />
+  <Message code="CW00161" lang="en_US" value="Phone" />
+  <Message code="CW00161" lang="id_ID" value="Telepon" />
+  <Message code="CW00162" lang="en_US" value="UPDATE" />
+  <Message code="CW00162" lang="id_ID" value="UPDATE" />
+  <Message code="CW00163" lang="en_US" value="CHANGE" />
+  <Message code="CW00163" lang="id_ID" value="GANTI" />
+  <Message code="CW00164" lang="en_US" value="PASSWORD" />
+  <Message code="CW00164" lang="id_ID" value="PASSWORD" />
+  <Message code="CW00165" lang="en_US" value="Current Password" />
+  <Message code="CW00165" lang="id_ID" value="Password Saat Ini" />
+  <Message code="CW00166" lang="en_US" value="New Password" />
+  <Message code="CW00166" lang="id_ID" value="Password Baru" />
+  <Message code="CW00167" lang="en_US" value="Confirm New Password" />
+  <Message code="CW00167" lang="id_ID" value="Konfirmasi Password Baru" />
+  <Message code="CW00168" lang="en_US" value="CHANGE" />
+  <Message code="CW00168" lang="id_ID" value="UBAH" />
+  <Message code="CW00169" lang="en_US" value="Order History" />
+  <Message code="CW00169" lang="id_ID" value="Daftar Reservasi" />
+  <Message code="CW00170" lang="en_US" value="ORDER" />
+  <Message code="CW00170" lang="id_ID" value="DAFTAR"/>
+  <Message code="CW00171" lang="en_US" value="HISTORY" />
+  <Message code="CW00171" lang="id_ID" value="RESERVASI" />
+  <Message code="CW00172" lang="en_US" value="Destination" />
+  <Message code="CW00172" lang="id_ID" value="Tujuan" />
+  <Message code="CW00173" lang="en_US" value="Reservation No" />
+  <Message code="CW00173" lang="id_ID" value="Nomor Reservasi"/>
+  <Message code="CW00174" lang="en_US" value="Payment Status" />
+  <Message code="CW00174" lang="id_ID" value="Status Pembayaran" />
+  <Message code="CW00175" lang="en_US" value="DETAIL" />
+  <Message code="CW00175" lang="id_ID" value="DETAIL" />
 </Messages>
