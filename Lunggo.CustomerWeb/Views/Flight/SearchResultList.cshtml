@@ -787,8 +787,8 @@
                                                         <span class="fa fa-cutlery" ng-if="trip.Meal"></span>
                                                     </div><!-- .flight-departure-duration -->
                                                     <div class="flight-arrival-time">
-                                                        <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' }}</h4>
-                                                        <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' }}</h5>
+                                                        <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                                        <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
                                                     </div><!-- .flight-arrival-time -->
                                                     <div class="flight-arrival-airport">
                                                         <h4>{{trip.ArrivalAirport}}</h4>

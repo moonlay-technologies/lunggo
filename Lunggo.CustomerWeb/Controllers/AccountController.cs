@@ -311,15 +311,10 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("OrderHistory", "UW620OrderHistory");
             }
-            var updatedUser = new CustomUser
-            {
-                Id = User.Identity.GetUserId(),
-                Email = User.Identity.GetEmail(),
-                UserName = User.Identity.GetEmail(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber
-            };
+            var updatedUser = User.Identity.GetCustomUser();
+            updatedUser.FirstName = model.FirstName;
+            updatedUser.LastName = model.LastName;
+            updatedUser.PhoneNumber = model.PhoneNumber;
             var result = await UserManager.UpdateAsync(updatedUser);
             if (result.Succeeded)
             {
