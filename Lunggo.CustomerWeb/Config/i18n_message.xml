@@ -300,4 +300,11 @@
   <Message code="CW00149" lang="id_ID" value="Lupa Password Anda?" />
   <Message code="CW00150" lang="en_US" value="Send Link" />
   <Message code="CW00150" lang="id_ID" value="Kirim" />
+  
+  <Message code="CW00151" lang="en_US" value="How to Book" />
+  <Message code="CW00151" lang="id_ID" value="Cara Pesan" />
+  <Message code="CW00152" lang="en_US" value="Privacy Policy" />
+  <Message code="CW00152" lang="id_ID" value="Kebijakan Privasi" />
+  <Message code="CW00153" lang="en_US" value="CALL CENTER : 1500 650" />
+  <Message code="CW00153" lang="id_ID" value="CALL CENTER : 1500 650" />
 </Messages>

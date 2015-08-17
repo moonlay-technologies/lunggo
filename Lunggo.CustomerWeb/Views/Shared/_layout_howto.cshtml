@@ -27,8 +27,8 @@
         @{ Html.RenderPartial("_Mainmenu"); }
     
         <div class="page-title">
-            <h1>HOW TO BOOK FLIGHT TICKET</h1>
-            <h5>FAST &amp; EASY! ONLY TOOK 5 MINUTES</h5>
+            <h1>CARA PESAN TIKET PESAWAT DI TRAVORAMA</h1>
+            <h5>CEPAT &amp; MUDAH! HANYA BUTUH 5 MENIT</h5>
         </div>
 
     </header><!-- .site-header -->
@@ -73,30 +73,29 @@
             </section>
             <!-- .footer-payment -->
         }
-            <section class="footer-menu">
-                <div class="container">
-                    <div class="row">
+        
+        <section class="footer-menu">
+            <div class="container">
+                <div class="row">
 
-                        <div class="col-sm-3">
-                            <img src="/Assets/images/logo.png" alt="Travorama" />
-                        </div>
-                        <div class="col-sm-9">
-                            <h2>CALL CENTER : 1500 650</h2>
-                            <nav>
-                                <ul class="list-inline">
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Jobs</a></li>
-                                    <li><a href="#">Press</a></li>
-                                    <li><a href="#">Affiliate</a></li>
-                                    <li><a href="#">Terms of Use</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-
+                    <div class="col-sm-3">
+                        <img src="/Assets/images/logo.png" alt="Travorama" />
                     </div>
+                    <div class="col-sm-9">
+                        <h2>@Html.I18NString("CW00153")</h2>
+                        <nav>
+                            <ul class="list-inline">
+                                <li><a href="@Url.Action("HowToBook", "Term")" target="_blank">@Html.I18NString("CW00151")</a></li>
+                                <li><a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">@Html.I18NString("CW00152")</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
                 </div>
-            </section><!-- .footer-menu -->
+            </div>
+        </section>
+
+        <!-- .footer-menu -->
         <section class="footer-copyright">
             <div class="container">
                 <div class="row">
