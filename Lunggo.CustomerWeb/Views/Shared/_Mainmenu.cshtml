@@ -5,11 +5,19 @@
 @using RazorEngine.Compilation.ImpromptuInterface.Optimization
 
 @{
+    var langCode = OnlineContext.GetActiveLanguageCode();
     var path = Context.Request.Url.PathAndQuery;
     if (Context.Request.Url.Segments.Count() > 1)
     {
         path = path.Substring(3);
     }
+}
+
+@section AdditionalPageJavascript {
+    <script src="/Assets/js/jquery.sticky.js"></script>
+    <script>
+        hello( @{langCode} );
+    </script>
 }
 
 <nav class="main-menu">
