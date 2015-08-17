@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

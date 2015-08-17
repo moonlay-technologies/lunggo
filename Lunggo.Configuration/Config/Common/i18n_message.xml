@@ -83,9 +83,9 @@
 	<Message code="CW00041" lang="en_US" value="Please Wait" />
 	<Message code="CW00041" lang="id_ID" value="Mohon Tunggu" />
 	<Message code="CW00042" lang="en_US" value="While we are searching for the best fare deal for you" />
-	<Message code="CW00042" lang="id_ID" value="Kami sedang mencari harga terbaik hanya untuk anda" />
+	<Message code="CW00042" lang="id_ID" value="Kami sedang mencari harga terbaik hanya untuk Anda" />
 	<Message code="CW00043" lang="en_US" value="While we are validating your flight of choice" />
-	<Message code="CW00043" lang="id_ID" value="Kami sedang memvalidasi pilihan penerbangan anda" />
+	<Message code="CW00043" lang="id_ID" value="Kami sedang memvalidasi pilihan penerbangan Anda" />
 	<Message code="CW00044" lang="en_US" value="DEPARTURE" />
 	<Message code="CW00044" lang="id_ID" value="PENERBANGAN" />
 	<Message code="CW00045" lang="en_US" value="RETURN" />
@@ -135,7 +135,7 @@
 	<Message code="CW00067" lang="en_US" value="FIND THE BEST FLIGHT DESTINATION AROUND THE WORLD" />
 	<Message code="CW00067" lang="id_ID" value="TUJUAN PENERBANGAN TERPOPULER" />
 	<Message code="CW00068" lang="en_US" value="Wherever you like to travel, we have domestic and international flight from over 900 airlines" />
-	<Message code="CW00068" lang="id_ID" value="Kemanapun anda ingin bepergian, kami menyediakan pilihan penerbangan domestik dan internasional dari 900 maskapai" />
+	<Message code="CW00068" lang="id_ID" value="Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan domestik dan internasional dari 900 maskapai" />
 	<Message code="CW00069" lang="en_US" value="Initial Airport" />
 	<Message code="CW00069" lang="id_ID" value="Bandara Asal" />
 	<Message code="CW00070" lang="en_US" value="Destination Airport" />
@@ -209,7 +209,7 @@
 	<Message code="CW00104" lang="en_US" value="Passport Expiry Date" />
 	<Message code="CW00104" lang="id_ID" value="Tanggal Passport Berakhir" />
 	<Message code="CW00105" lang="en_US" value="While we are validating your flight of choice" />
-	<Message code="CW00105" lang="id_ID" value="Kami sedang memvalidasi penerbangan pilihan anda" />
+	<Message code="CW00105" lang="id_ID" value="Kami sedang memvalidasi penerbangan pilihan Anda" />
 	<Message code="CW00106" lang="en_US" value="PAYMENT" />
 	<Message code="CW00106" lang="id_ID" value="METODE" />
 	<Message code="CW00107" lang="en_US" value="METHOD" />
@@ -217,7 +217,7 @@
 	<Message code="CW00108" lang="en_US" value="PAY" />
 	<Message code="CW00108" lang="id_ID" value="BAYAR" />
 	<Message code="CW00109" lang="en_US" value="By clicking the PAY button below, you agree to all applicable terms and conditions and privacy policy" />
-	<Message code="CW00109" lang="id_ID" value="Dengan men-click tombol BAYAR di bawah ini, anda telah setuju dengan semua syarat dan ketentuan serta kebijakan privasi yang berlaku" />
+	<Message code="CW00109" lang="id_ID" value="Dengan mengklik tombol BAYAR di bawah ini, Anda telah setuju dengan semua syarat dan ketentuan serta kebijakan privasi yang berlaku" />
 	<Message code="CW00110" lang="en_US" value="ORDER" />
 	<Message code="CW00110" lang="id_ID" value="RINCIAN" />
 	<Message code="CW00111" lang="en_US" value="DETAIL" />
@@ -245,7 +245,7 @@
 	<Message code="CW00122" lang="en_US" value="WITH TRAVORAMA ACCOUNT" />
 	<Message code="CW00122" lang="id_ID" value="DENGAN AKUN TRAVORAMA" />
 	<Message code="CW00123" lang="en_US" value="Your email address" />
-	<Message code="CW00123" lang="id_ID" value="Alamat email anda" />
+	<Message code="CW00123" lang="id_ID" value="Alamat email Anda" />
 	<Message code="CW00124" lang="en_US" value="Your account password" />
 	<Message code="CW00124" lang="id_ID" value="Akun password anda" />
 	<Message code="CW00125" lang="en_US" value="Remember Me" />
@@ -273,11 +273,11 @@
 	<Message code="CW00136" lang="en_US" value="Exclusive Discount" />
 	<Message code="CW00136" lang="id_ID" value="Diskon Eksklusif" />
 	<Message code="CW00137" lang="en_US" value="We always strive to give our member nice surprises. Get exclusive discount only for Travorama member" />
-	<Message code="CW00137" lang="id_ID" value="Kami selalu berusaha untuk memberikan surprise menyenangkan untuk anda. Dapatkan diskon eksklusif hanya untuk member Travorama" />
+	<Message code="CW00137" lang="id_ID" value="Kami selalu berusaha untuk memberikan surprise menyenangkan untuk Anda. Dapatkan diskon eksklusif hanya untuk member Travorama" />
 	<Message code="CW00138" lang="en_US" value="Manage My Booking " />
 	<Message code="CW00138" lang="id_ID" value="Atur Pemesanan" />
 	<Message code="CW00139" lang="en_US" value="Check and view your reservation detail. Download e-ticket and enjoy hassle free travelling with Travorama" />
-	<Message code="CW00139" lang="id_ID" value="Cek pemesanan anda secara detail. Download e-tiket dan nikmati kemudahan bepergian dengan Travorama" />
+	<Message code="CW00139" lang="id_ID" value="Cek pemesanan Anda secara detail. Download e-tiket dan nikmati kemudahan bepergian dengan Travorama" />
   <Message code="CW00140" lang="en_US" value="JOIN TRAVORAMA" />
   <Message code="CW00140" lang="id_ID" value="JOIN TRAVORAMA" />
   <Message code="CW00141" lang="en_US" value="First Name" />

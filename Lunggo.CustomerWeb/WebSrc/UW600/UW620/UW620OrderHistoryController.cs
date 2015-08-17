@@ -11,6 +11,7 @@ using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
+    [Authorize]
     public class Uw620OrderHistoryController : Controller
     {
         // GET: UW620OrderHistory

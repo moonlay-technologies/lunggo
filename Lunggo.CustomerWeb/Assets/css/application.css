@@ -2347,8 +2347,7 @@ hr {
       content: ""; }
     .tab-pane#history .history-wrapper .history-list .history .history-number {
       width: 10%;
-      float: left;
-      background-color: #b2b2b2; }
+      float: left; }
     .tab-pane#history .history-wrapper .history-list .history .history-detail {
       width: 90%;
       float: left;
