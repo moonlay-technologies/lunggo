@@ -278,33 +278,26 @@
 	<Message code="CW00138" lang="id_ID" value="Atur Pemesanan" />
 	<Message code="CW00139" lang="en_US" value="Check and view your reservation detail. Download e-ticket and enjoy hassle free travelling with Travorama" />
 	<Message code="CW00139" lang="id_ID" value="Cek pemesanan anda secara detail. Download e-tiket dan nikmati kemudahan bepergian dengan Travorama" />
-  
   <Message code="CW00140" lang="en_US" value="JOIN TRAVORAMA" />
   <Message code="CW00140" lang="id_ID" value="JOIN TRAVORAMA" />
   <Message code="CW00141" lang="en_US" value="First Name" />
   <Message code="CW00141" lang="id_ID" value="Nama Depan" />
   <Message code="CW00142" lang="en_US" value="Last Name" />
   <Message code="CW00142" lang="id_ID" value="Nama Belakang" />
-
   <Message code="CW00143" lang="en_US" value="Phone Number" />
   <Message code="CW00143" lang="id_ID" value="Nomor Telepon" />
   <Message code="CW00144" lang="en_US" value="Password" />
   <Message code="CW00144" lang="id_ID" value="Password" />
   <Message code="CW00145" lang="en_US" value="Password Confirmation" />
   <Message code="CW00145" lang="id_ID" value="Konfirmasi Password" />
-
   <Message code="CW00146" lang="en_US" value="Your Email Address" />
   <Message code="CW00146" lang="id_ID" value="Alamat Email Anda" />
   <Message code="CW00147" lang="en_US" value="REGISTER" />
   <Message code="CW00147" lang="id_ID" value="REGISTER" />
   <Message code="CW00148" lang="en_US" value="Sign Up with Facebook" />
   <Message code="CW00148" lang="id_ID" value="Daftar dengan Facebook" />
-
   <Message code="CW00149" lang="en_US" value="Forgot Your Password?" />
   <Message code="CW00149" lang="id_ID" value="Lupa Password Anda?" />
   <Message code="CW00150" lang="en_US" value="Send Link" />
   <Message code="CW00150" lang="id_ID" value="Kirim" />
-  
-  
-  
 </Messages>
