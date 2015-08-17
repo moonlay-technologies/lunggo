@@ -19,6 +19,7 @@
         $(".phone-number").intlTelInput({
             defaultCountry: 'ID'
         });
+        validateCheckoutForm();
     </script>
 }
 
@@ -85,7 +86,7 @@
                             <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
                             <div class="form-group">
                                 <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
-                                <input type="text" class="form-control" name="Contact.Name" placeholder="@Html.I18NString("CW00092")">
+                                <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")">
                                 @Html.ValidationMessageFor(data => data.Contact.Name)
                             </div>
                             <div class="row">
@@ -93,7 +94,7 @@
                                     <div class="form-inline">
                                         <div class="form-group" style="width:100%;">
                                             <label for="">Country :</label>
-                                            <input type="text" class="form-control" style="width:100%;" name="Contact.CountryCode" placeholder="ex:62" />
+                                            <input type="text" class="form-control control-countrycode control-check" style="width:100%;" name="Contact.CountryCode" placeholder="ex:62" />
                                             @Html.ValidationMessageFor(data => data.Contact.CountryCode)
                                         </div>
                                     </div>
@@ -102,7 +103,7 @@
                                     <div class="form-inline">
                                         <div class="form-group" style="width:100%;">
                                             <label for="">@Html.I18NString("CW00093") :</label>
-                                            <input type="tel" class="form-control" style="width:100%;" name="Contact.Phone" placeholder="ex: 81521807096" />
+                                            <input type="tel" class="form-control control-phone control-check" style="width:100%;" name="Contact.Phone" placeholder="ex: 81521807096" />
                                             @Html.ValidationMessageFor(data => data.Contact.Phone)
                                         </div>
                                     </div>
@@ -110,7 +111,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="" class="control-label">@Html.I18NString("CW00094") :</label>
-                                        <input type="text" class="form-control" name="Contact.Email" placeholder="ex : nama@email.com">
+                                        <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com">
                                         @Html.ValidationMessageFor(data => data.Contact.Email)
                                     </div>
                                 </div>
@@ -120,7 +121,7 @@
                                 if (i < adultCount)
                                 {
                                     titleList = adultTitleList;
-                                    <h5 class="control-label"><b>@Html.I18NString("CW00095") @(i + 1) ( > 12 @Html.I18NString("CW00096"))</b></h5>
+                                    <h5 class="control-label"><b>@Html.I18NString("CW00095") @(i + 1) ( more than 12 @Html.I18NString("CW00096"))</b></h5>
                                     <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
                                 }
                                 else
@@ -133,7 +134,7 @@
                                     }
                                     else
                                     {
-                                        <h5 class="control-label"><b>@Html.I18NString("CW00098") @(i + 1 - adultCount - childCount) ( < 2 @Html.I18NString("CW00096") )</b></h5>
+                                        <h5 class="control-label"><b>@Html.I18NString("CW00098") @(i + 1 - adultCount - childCount) ( less than 2 @Html.I18NString("CW00096") )</b></h5>
                                         <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
                                     }
                                 }
@@ -144,29 +145,29 @@
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">@Html.I18NString("CW00100") :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].FirstName" placeholder="">
+                                        <input type="text" class="form-control control-firstname control-check" style="width:100%;" name="Passengers[@i].FirstName" placeholder="">
                                     </div>
                                     <div class="form-group" style="width:39%;">
                                         <label for="">@Html.I18NString("CW00101") :</label>
-                                        <input type="text" class="form-control" style="width:100%;" name="Passengers[@i].LastName" placeholder="">
+                                        <input type="text" class="form-control control-lastname control-check" style="width:100%;" name="Passengers[@i].LastName" placeholder="">
                                     </div>
                                 </div><br />
                                 if (needBirthDate)
                                 {
                                     <div class="form-group">
                                         <label for="" class="control-label">@Html.I18NString("CW00102") :</label>
-                                        <input type="date" class="form-control" name="Passengers[@i].BirthDate" placeholder="">
+                                        <input type="date" class="form-control control-birthdate control-check date-picker" name="Passengers[@i].BirthDate" placeholder="">
                                     </div>
                                 }
                                 if (needPassport)
                                 {
                                     <div class="form-group">
                                         <label for="" class="control-label">@Html.I18NString("CW00103") :</label>
-                                        <input type="text" class="form-control" name="Passengers[@i].PassportNumber" placeholder="">
+                                        <input type="text" class="form-control control-passport control-check" name="Passengers[@i].PassportNumber" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
-                                        <input type="date" class="form-control" name="Passengers[@i].PassportExpiryDate" placeholder="">
+                                        <input type="date" class="form-control control-expiry control-check date-picker" name="Passengers[@i].PassportExpiryDate" placeholder="">
                                     </div>
                                 }
                                 <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
@@ -218,7 +219,7 @@
                         <section class="payment-button">
                             <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
                             <small>@Html.I18NString("CW00109")</small>
-                        <button class="btn btn-primary btn-yellow validate-fare" data-hashkey="@hashKey">@Html.I18NString("CW00108")</button>
+                        <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-hashkey="@hashKey">@Html.I18NString("CW00108")</button>
                         </section><!-- .payment-button -->
                     </section><!-- .customer-detail -->
 

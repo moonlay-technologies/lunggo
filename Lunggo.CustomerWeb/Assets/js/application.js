@@ -24,6 +24,42 @@ function formatNumber(num) {
 }
 
 //******************************************
+// validate checkout form
+function validateCheckoutForm() {
+
+    $('.date-picker').datepicker({
+        changeMonth: true,
+        changeyear: true,
+        dateFormat: 'yy-mm-dd'
+    });
+
+    var inputTotal = $('input[class~="control-check"]').length;
+    var inputValid = 0;
+
+    $('input[class~="control-check"]').keypress(function () {
+        checkInput();
+    });
+    $('input[class~="control-check"]').change(function () {
+        checkInput();
+    });
+
+    function checkInput() {
+        inputValid = 0;
+        $('input[class~="control-check"]').each(function () {
+            if ($(this).val().length > 0) {
+                inputValid = inputValid + 1;
+            }
+        });
+        if (inputValid == inputTotal) {
+            $('.send-form').attr('disabled', false);
+        } else {
+            $('.send-form').attr('disabled', true);
+        }
+    }
+
+}
+
+//******************************************
 // toggle language select
 function toggleLanguageSelect() {
     $('[data-toggle="dropdown"]').click(function (evt) {
