@@ -42,7 +42,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 {
                     RecipientList = new[] {reservation.Contact.Email},
                     Subject =
-                        "[Travorama] Reservasi Anda Kadaluarsa - No. Pemesanan " + reservation.RsvNo",
+                        "[Travorama] Reservasi Anda Kadaluarsa - No. Pemesanan " + reservation.RsvNo,
                     FromMail = "booking@travorama.com",
                     FromName = "Travorama"
                 };

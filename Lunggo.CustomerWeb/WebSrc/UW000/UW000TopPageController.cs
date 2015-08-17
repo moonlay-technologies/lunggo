@@ -11,9 +11,15 @@ namespace Lunggo.CustomerWeb.WebSrc.UW000
     {
         // GET: UW000TopPage
         [DeviceDetectionFilter]
-        public ActionResult Index()
+        public ActionResult Index(string destination)
         {
-            return View();
+            if (destination == null)
+                return View();
+            else
+            {
+                ViewBag.Destination = destination;
+                return View("HomePageCampaign");
+            }
         }
     }
 }

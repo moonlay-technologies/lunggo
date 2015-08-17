@@ -23,6 +23,12 @@ namespace Lunggo.CustomerWeb
             );
 
             routes.MapRoute(
+                name: "toppagecampaign",
+                url: "{langCode}/{destination}",
+                defaults: new { controller = "UW000TopPage", action = "Index", langCode = "id", destination = "" }
+            );
+
+            routes.MapRoute(
                 name: "UW100HotelSearch",
                 url: "UW100/UW100HotelSearch",
                 defaults: new { controller = "UW100HotelSearch", action = "Search"}
