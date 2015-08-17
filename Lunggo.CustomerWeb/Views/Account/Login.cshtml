@@ -31,39 +31,39 @@
 
             <div class="container">
                 <section class="user-form">
-                    <h1 class="text-center">LOG IN</h1>
-                    <h3 class="text-center">WITH TRAVORAMA ACCOUNT</h3>
+                    <h1 class="text-center">@Html.I18NString("CW00129")</h1>
+                    <h3 class="text-center">@Html.I18NString("CW00122")</h3>
                     @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">
-                                <input type="text" class="form-control" name="Email" placeholder="Your email address">
+                                <input type="text" class="form-control" name="Email" placeholder="@Html.I18NString("CW00123")">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="Password" placeholder="Your account password">
+                                        <input type="password" class="form-control" name="Password" placeholder="@Html.I18NString("CW00124")">
                                     </div>
                                     <div class="col-sm-3">
-                                        <button class="btn btn-yellow">LOGIN</button>
+                                        <button class="btn btn-yellow">@Html.I18NString("CW00130")</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group form-add">
                             <div class="col-sm-8 col-sm-offset-2">
-                                <label for="login-remember"><input type="checkbox" id="login-remember" name="RememberMe"> <span>Remember Me</span></label>
-                                <p class="pull-right"> <a href="@Url.Action("ForgotPassword", "Account")">Forgot password</a> | <a href="@Url.Action("Register", "Account")">Register</a></p>
+                                <label for="login-remember"><input type="checkbox" id="login-remember" name="RememberMe"> <span>@Html.I18NString("CW00125")</span></label>
+                                <p class="pull-right"> <a href="@Url.Action("ForgotPassword", "Account")">@Html.I18NString("CW00126")</a> | <a href="@Url.Action("Register", "Account")">@Html.I18NString("CW00127")</a></p>
                             </div>
                         </div>
                     }
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2">
                             <div class="or text-center">
-                                <span class="or-left"></span><span>OR</span><span class="or-right"></span>
+                                <span class="or-left"></span><span>@Html.I18NString("CW00128")</span><span class="or-right"></span>
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                     {
                         @Html.AntiForgeryToken()
                         <section class="facebook-login text-center">
-                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> Log In with Facebook</button>
+                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> @Html.I18NString("CW00131")</button>
                         </section>
                     }
                 </section>
@@ -83,7 +83,7 @@
 
             <div class="container">
                 <section class="benefit">
-                    <h3 class="text-center"><b>BENEFIT OF</b> TRAVORAMA MEMBERSHIP</h3>
+                    <h3 class="text-center"><b>@Html.I18NString("CW00132")</b> @Html.I18NString("CW00133")</h3>
                     <hr>
                     <div class="row">
                         <div class="col-sm-6">
@@ -93,8 +93,8 @@
                                         <img src="/assets/images/benefit/news.png" alt="Latest News">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>GET UPDATED</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque ad suscipit consectetur! Neque unde vitae mollitia repellat blanditiis error sit possimus dicta doloremque tempore quisquam voluptate similique, voluptatem suscipit, beatae!</p>
+                                        <h4>@Html.I18NString("CW00134")</h4>
+                                        <p>@Html.I18NString("CW00135")</p>
                                     </div>
                                 </div>
                             </article>
@@ -104,8 +104,8 @@
                                         <img src="/assets/images/benefit/discount.png" alt="Discount">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>GET DISCOUNT</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas veniam consequatur, porro beatae blanditiis, deleniti voluptatibus provident, non nostrum distinctio ipsa aut ipsam id quam perspiciatis nulla, autem reiciendis voluptates.</p>
+                                        <h4>@Html.I18NString("CW00136")</h4>
+                                        <p>@Html.I18NString("CW00137")</p>
                                     </div>
                                 </div>
                             </article>
@@ -117,12 +117,12 @@
                                         <img src="/assets/images/benefit/check.png" alt="Check">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>ORDER CHECKING</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam non blanditiis dicta dolores numquam totam illo earum nemo culpa excepturi facere, aut, ad. Rerum voluptatibus eveniet veniam accusantium, velit tempora?</p>
+                                        <h4>@Html.I18NString("CW00138")</h4>
+                                        <p>@Html.I18NString("CW00139")</p>
                                     </div>
                                 </div>
                             </article>
-                            <article class="media">
+                            <article class="media hidden">
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <img src="/assets/images/benefit/refund.png" alt="refund">

@@ -32,7 +32,7 @@
             <div class="container">
                 <div class="site-slogan">
                     <h1><img src="/Assets/images/enjoy.png" alt="Enjoy Your Every Moment"></h1>
-                    <h2>However you like to travel, we have 3.693 hotels in 195 countries all at seriously cheap prices!</h2>
+                    <h2>@Html.I18NString("CW00068")</h2>
                 </div><!-- .site-slogan -->
             </div>
         }
@@ -74,62 +74,62 @@
                             </form><!-- .form-hotel-search -->
                         </div><!-- .form-hotel-search -->
                         <div class="form-flight-search active">
-                            <h3><b>Flight</b> Booking</h3>
+                            <h3>@Html.I18NString("CW00081")</h3>
                             <form action="/id/Flight/SearchResultList" class="homepage-form" method="GET" data-flightType="round-trip">
                                 <div class="flight-type-wrapper form-group">
-                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> Round-Trip</label>
-                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> One-Way</label>
+                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked/> @Html.I18NString("CW00052")</label>
+                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
                                 </div>
                                 <div class="flight-airport-wrapper form-group">
-                                    <input type="text" class="flight-origin autocomplete" placeholder="Initial Airport" data-userInputvalue="" data-airportCode=""/>
-                                    <input type="text" class="flight-destination autocomplete" placeholder="Destination Airport" data-userInputValue="" data-airportCode="" />
+                                    <input type="text" class="flight-origin autocomplete" placeholder="@Html.I18NString("CW00069")" data-userInputvalue="" data-airportCode=""/>
+                                    <input type="text" class="flight-destination autocomplete" placeholder="@Html.I18NString("CW00070")" data-userinputvalue="" data-airportcode="" />
                                 </div>
                                 <div class="flight-date-wrapper form-group">
-                                    <input type="text" class="flight-departure-date date-picker" placeholder="departure date" />
-                                    <input type="text" class="flight-return-date date-picker" placeholder="return date" />
+                                    <input type="text" class="flight-departure-date date-picker" placeholder="@Html.I18NString("CW00016")" />
+                                    <input type="text" class="flight-return-date date-picker" placeholder="@Html.I18NString("CW00058")" />
                                     <input type="text" class="flight-return-disable" placeholder="One way" disabled />
                                     <select class="flight-cabin" placeholder="Cabin">
-                                        <option value="y">Economy Class</option>
-                                        <option value="c">Business Class</option>
-                                        <option value="f">First Class</option>
+                                        <option value="y">@Html.I18NString("CW00054")</option>
+                                        <option value="c">@Html.I18NString("CW00055")</option>
+                                        <option value="f">@Html.I18NString("CW00056")</option>
                                     </select>
                                 </div>
                                 <div class="flight-submit-wrapper form-group">
                                     <select class="flight-adult" placeholder="Adult">
-                                        <option value="1">1 Adult</option>
-                                        <option value="2">2 Adults</option>
-                                        <option value="3">3 Adults</option>
-                                        <option value="4">4 Adults</option>
-                                        <option value="5">5 Adults</option>
-                                        <option value="6">6 Adults</option>
-                                        <option value="7">7 Adults</option>
-                                        <option value="8">8 Adults</option>
-                                        <option value="9">9 Adults</option>
+                                        <option value="1">1 @Html.I18NString("CW00018")</option>
+                                        <option value="2">2 @Html.I18NString("CW00059")</option>
+                                        <option value="3">3 @Html.I18NString("CW00059")</option>
+                                        <option value="4">4 @Html.I18NString("CW00059")</option>
+                                        <option value="5">5 @Html.I18NString("CW00059")</option>
+                                        <option value="6">6 @Html.I18NString("CW00059")</option>
+                                        <option value="7">7 @Html.I18NString("CW00059")</option>
+                                        <option value="8">8 @Html.I18NString("CW00059")</option>
+                                        <option value="9">9 @Html.I18NString("CW00059")</option>
                                     </select>
                                     <select class="flight-child" placeholder="Child">
-                                        <option value="0">0 Children</option>
-                                        <option value="1">1 Child</option>
-                                        <option value="2">2 Children</option>
-                                        <option value="3">3 Children</option>
-                                        <option value="4">4 Children</option>
-                                        <option value="5">5 Children</option>
-                                        <option value="6">6 Children</option>
-                                        <option value="7">7 Children</option>
-                                        <option value="8">8 Children</option>
+                                        <option value="0">0 @Html.I18NString("CW00019")</option>
+                                        <option value="1">1 @Html.I18NString("CW00060")</option>
+                                        <option value="2">2 @Html.I18NString("CW00019")</option>
+                                        <option value="3">3 @Html.I18NString("CW00019")</option>
+                                        <option value="4">4 @Html.I18NString("CW00019")</option>
+                                        <option value="5">5 @Html.I18NString("CW00019")</option>
+                                        <option value="6">6 @Html.I18NString("CW00019")</option>
+                                        <option value="7">7 @Html.I18NString("CW00019")</option>
+                                        <option value="8">8 @Html.I18NString("CW00019")</option>
                                     </select>
                                     <select class="flight-infant" placeholder="Infant">
-                                        <option value="0">0 Infants</option>
-                                        <option value="1">1 Infant</option>
-                                        <option value="2">2 Infants</option>
-                                        <option value="3">3 Infants</option>
-                                        <option value="4">4 Infants</option>
+                                        <option value="0">0 @Html.I18NString("CW00061")</option>
+                                        <option value="1">1 @Html.I18NString("CW00020")</option>
+                                        <option value="2">2 @Html.I18NString("CW00061")</option>
+                                        <option value="3">3 @Html.I18NString("CW00061")</option>
+                                        <option value="4">4 @Html.I18NString("CW00061")</option>
                                     </select>
                                     <input type="text" class="hidden flight-departure-date-real" value="" />
                                     <input type="text" class="hidden flight-return-date-real" value="" />
                                     <input type="text" class="hidden flight-origin-airport-real" value=""/>
                                     <input type="text" class="hidden flight-destination-airport-real" value="" />
                                     <input type="text" id="flight-data-info" name="info" class="hidden" />
-                                    <a class="submit-button flight-submit-button btn btn-yellow">SEARCH</a>
+                                    <a class="submit-button flight-submit-button btn btn-yellow">@Html.I18NString("CW00080")</a>
                                 </div>
                                 <div class="passenger-warning">
                                     <p class="max-passenger">Maximum number of passenger is 9 person.</p>
@@ -159,13 +159,13 @@
                             <img src="/Assets/images/email-image.jpg" alt="Subscribe" />
                         </div>
                         <div class="col-sm-9">
-                            <h3><b>SUBSCRIBE </b> TO GET UPDATES AND PROMOTIONS FROM US</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                            <form action="@Url.Action("Subscribe", "Term")" method="POST" class="form form-horizontal">
+                            <h3><b>@Html.I18NString("CW00075") </b> @Html.I18NString("CW00076")</h3>
+                            <br />
+                            <form class="form form-horizontal">
                                 <div class="form-group">
-                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="Your Name"/></div>
-                                    <div class="col-sm-4 col-md-5"><input type="text" name="Email" class="form-control" placeholder="Your Email" /></div>
-                                    <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="SUBSCRIBE" /></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="@Html.I18NString("CW00077")" /></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="@Html.I18NString("CW00078")" /></div>
+                                    <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="@Html.I18NString("CW00079")" /></div>
                                 </div>
                             </form>
                         </div>
@@ -178,8 +178,8 @@
         {
             <section class="footer-payment">
                 <div class="container">
-                    <h2 class="section-title"><b>PAYMENT METHOD</b> THAT WE USE</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad p ex ea commodo consequat. Ut wisi eniTm ad minim veniam:</p>
+                    <h2 class="section-title">@Html.I18NString("CW00083") <b>@Html.I18NString("CW00084")</b> @Html.I18NString("CW00085")</h2>
+                    <br />
                     <img src="/Assets/images/payment-method.jpg" alt="Travorama Payment Method" />
                 </div>
             </section>

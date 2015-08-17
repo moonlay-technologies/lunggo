@@ -10,7 +10,7 @@
                 <ul class="list-inline">
                     <li class="site-logo pull-left"><a href="@Href("~/")"><img src="/assets/images/logo.png" alt="Travorama"></a></li>
                     <li class="hidden"><a href="@Href("~/")"><span class="fa fa-building"></span> Hotel</a></li>
-                    <li><a href="/"><span class="fa fa-plane"></span> Flight</a></li>
+                    <li><a href="/"><span class="fa fa-plane"></span> @Html.I18NString("CW00082")</a></li>
                     <li class="hidden"><a href="#"><span class="fa fa-tag"></span> Promotion</a></li>
                     <li class="hidden"><a href="#"><span class="fa fa-question-circle"></span> FAQ</a></li>
                     <li class="pull-right language-select">
@@ -27,11 +27,11 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="pull-right site-login"><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">MY ACCOUNT</a> | <a href="@Url.Action("Logout", "Account")">Logout</a></li>
+                        <li class="pull-right site-login"><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">@Html.I18NString("CW00073")</a> | <a href="@Url.Action("Logout", "Account")">@Html.I18NString("CW00074")</a></li>
                     }
                     else
                     {
-                        <li class="pull-right site-login"><a href="@Url.Action("Login", "Account")">Login</a> | <a href="@Url.Action("Register", "Account")">Register</a></li>
+                        <li class="pull-right site-login"><a href="@Url.Action("Login", "Account")">@Html.I18NString("CW00071")</a> | <a href="@Url.Action("Register", "Account")">@Html.I18NString("CW00072")</a></li>
                     }
                 </ul>
             </div>
