@@ -98,7 +98,7 @@ namespace Lunggo.Framework.HtmlHelperExtension
                 builder.Append(langCode);
                 if (absolutePath.Length > 3)
                 {
-                    builder.Append(absolutePath.Substring(3,absolutePath.Length - 3 - 1));    
+                    builder.Append(absolutePath.Substring(3,absolutePath.Length - 3));    
                 }
                 newAbsolutePath = builder.ToString();
             }
@@ -113,7 +113,10 @@ namespace Lunggo.Framework.HtmlHelperExtension
                 urlBuilder.Append(port);
             }
             urlBuilder.Append(newAbsolutePath);
-            urlBuilder.Append("/");
+            if (!newAbsolutePath.EndsWith("/"))
+            {
+                urlBuilder.Append("/");    
+            }
             urlBuilder.Append(query);
             var returnUrl = urlBuilder.ToString();
 
