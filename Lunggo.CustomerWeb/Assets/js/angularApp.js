@@ -622,6 +622,7 @@
                 console.log(indexNo);
 
                 console.log('validating :');
+                console.log('Language : ' + SiteLanguage);
 
                 if (RevalidateConfig.working == false) {
                     RevalidateConfig.working = true;
@@ -639,7 +640,11 @@
                         RevalidateConfig.value = returnData;
 
                         if (returnData.IsValid == true) {
-                            window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            if (SiteLanguage == 'indonesia') {
+                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            } else if(SiteLanguage == 'english') {
+                                window.location.assign(location.origin + '/en/flight/Checkout?token=' + returnData.HashKey);
+                            }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                             flightList.list[indexNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");

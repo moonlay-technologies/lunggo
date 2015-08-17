@@ -11,9 +11,9 @@
 
 @{
     ViewBag.Title = "Hotel Search List";
-
+    ViewBag.Language = "english";
     Layout = "/Views/Shared/_layout_20150506.cshtml";
-}
+    }
 
 @{
     bool isValid;
@@ -76,6 +76,9 @@
 
 @section AdditionalPageJavascript {
     <script src="/Assets/js/jquery.sticky.js"></script>
+    <script>
+        var SiteLanguage = '@ViewBag.Language';
+    </script>
 }
 
 @section PageJavascript {
