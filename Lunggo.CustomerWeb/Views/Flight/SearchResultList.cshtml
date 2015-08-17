@@ -540,7 +540,7 @@
                         <div class="flight-sort return-flight" ng-if="FlightSearchParams.TripType != 'OneWay'">
                             <div class="sort-depart-airline">
                                 <a href="#" ng-click="order('departAirline')">
-                                    Airline
+                                    @Html.I18NString("CW00021")
                                     <span class="sortorder" ng-show="sort.label === 'departAirline'" ng-class="{reverse:reverse}"></span>
                                 </a>
                             </div>
@@ -769,7 +769,7 @@
                                         <h4 class="detail-title"> <b>@Html.I18NString("CW00045")</b> @Html.I18NString("CW00047")</h4>
                                         <ol>
                                             <li class="route" ng-repeat="trip in flight.FlightTrips[1].FlightSegments">
-                                                <div class="flight-transit" ng-if="$index > 0">Transit at {{trip.DepartureCity}} for {{flight.FlightTrips[1].Transits[ $index-1 ].Duration}}</div>
+                                                <div class="flight-transit" ng-if="$index > 0">@Html.I18NString("CW00086") {{trip.DepartureCity}} @Html.I18NString("CW00087") {{flight.FlightTrips[1].Transits[ $index-1 ].Duration}}</div>
                                                 <div class="flight-airline">
                                                     <img ng-src="{{trip.AirlineLogoUrl}}" />
                                                     <h5>{{trip.AirlineName}}</h5>

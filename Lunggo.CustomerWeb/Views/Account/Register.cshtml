@@ -30,7 +30,7 @@
 
             <div class="container">
                 <section class="user-form">
-                    <h1 class="text-center">JOIN TRAVORAMA</h1>
+                    <h1 class="text-center">@Html.I18NString("CW00140")</h1>
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
@@ -38,10 +38,10 @@
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name">
+                                        <input type="text" class="form-control" name="FirstName" placeholder="@Html.I18NString("CW00141")">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name">
+                                        <input type="text" class="form-control" name="LastName" placeholder="@Html.I18NString("CW00142")">
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="PhoneNumber" placeholder="Phone Number">
+                                        <input type="text" class="form-control" name="PhoneNumber" placeholder="@Html.I18NString("CW00143")">
                                     </div>
                                 </div>
                             </div>
@@ -59,10 +59,10 @@
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control" name="Password" placeholder="Password">
+                                        <input type="password" class="form-control" name="Password" placeholder="@Html.I18NString("CW00144")">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control" name="ConfirmPassword" placeholder="Confirm password">
+                                        <input type="password" class="form-control" name="ConfirmPassword" placeholder="@Html.I18NString("CW00145")">
                                     </div>
                                 </div>
                             </div>
@@ -71,10 +71,10 @@
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="Email" placeholder="Your Email Address">
+                                        <input type="text" class="form-control" name="Email" placeholder="@Html.I18NString("CW00146")">
                                     </div>
                                     <div class="col-sm-3">
-                                        <button class="btn btn-yellow">REGISTER</button>
+                                        <button class="btn btn-yellow">@Html.I18NString("CW00147")</button>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2">
                             <div class="or text-center">
-                                <span class="or-left"></span><span>OR</span><span class="or-right"></span>
+                                <span class="or-left"></span><span>@Html.I18NString("CW00128")</span><span class="or-right"></span>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                     {
                         @Html.AntiForgeryToken()
                         <section class="facebook-login text-center">
-                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> Sign Up with Facebook</button>
+                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> @Html.I18NString("CW00148")</button>
                         </section>
                     }
                 </section>
@@ -108,7 +108,7 @@
 
             <div class="container">
                 <section class="benefit">
-                    <h3 class="text-center"><b>BENEFIT OF</b> TRAVORAMA MEMBERSHIP</h3>
+                    <h3 class="text-center"><b>@Html.I18NString("CW00132")</b> @Html.I18NString("CW00133")</h3>
                     <hr>
                     <div class="row">
                         <div class="col-sm-6">
@@ -118,8 +118,8 @@
                                         <img src="/assets/images/benefit/news.png" alt="Latest News">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>GET UPDATED</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque ad suscipit consectetur! Neque unde vitae mollitia repellat blanditiis error sit possimus dicta doloremque tempore quisquam voluptate similique, voluptatem suscipit, beatae!</p>
+                                        <h4>@Html.I18NString("CW00134")</h4>
+                                        <p>@Html.I18NString("CW00135")</p>
                                     </div>
                                 </div>
                             </article>
@@ -129,8 +129,8 @@
                                         <img src="/assets/images/benefit/discount.png" alt="Discount">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>GET DISCOUNT</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas veniam consequatur, porro beatae blanditiis, deleniti voluptatibus provident, non nostrum distinctio ipsa aut ipsam id quam perspiciatis nulla, autem reiciendis voluptates.</p>
+                                        <h4>@Html.I18NString("CW00136")</h4>
+                                        <p>@Html.I18NString("CW00137")</p>
                                     </div>
                                 </div>
                             </article>
@@ -142,12 +142,12 @@
                                         <img src="/assets/images/benefit/check.png" alt="Check">
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>ORDER CHECKING</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam non blanditiis dicta dolores numquam totam illo earum nemo culpa excepturi facere, aut, ad. Rerum voluptatibus eveniet veniam accusantium, velit tempora?</p>
+                                        <h4>@Html.I18NString("CW00138")</h4>
+                                        <p>@Html.I18NString("CW00139")</p>
                                     </div>
-                                </div>%
+                                </div>
                             </article>
-                            <article class="media">
+                            <article class="media hidden">
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <img src="/assets/images/benefit/refund.png" alt="refund">
