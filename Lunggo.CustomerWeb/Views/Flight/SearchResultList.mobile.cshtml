@@ -209,7 +209,7 @@
                     <div class="filter-content">
                         <div>
                             <label class="airline" ng-repeat="airline in flightSearchFilter.airlines">
-                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
+                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-init="airline.checked = true" ng-click="checkAirline()" />
                                 <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
                                 <span>{{airline.Name}}</span>
                             </label>
