@@ -102,7 +102,8 @@ function paymentOptionForm() {
 // Home page functions
 function homePageFunctions() {
 
-    switchForm();
+    // disabled for Special Release
+    // switchForm();
 
     //**********
     function switchForm() {

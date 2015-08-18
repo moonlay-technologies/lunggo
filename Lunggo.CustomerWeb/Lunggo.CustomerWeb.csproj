@@ -705,6 +705,7 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\filter-return.png" />
+    <None Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
