@@ -8,6 +8,13 @@
     
     Layout = "/Views/Shared/_layout_20150506.cshtml";
 }
+
+@section PageJavascript{
+    <script>
+        subscribeForm();
+    </script>
+}
+
 <section class="home-info">
     
     <h3 class="section-title">@Html.I18NString("CW00067")</h3>

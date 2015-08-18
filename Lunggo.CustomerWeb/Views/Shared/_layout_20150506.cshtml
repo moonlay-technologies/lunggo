@@ -161,13 +161,16 @@
                         <div class="col-sm-9">
                             <h3><b>@Html.I18NString("CW00075") </b> @Html.I18NString("CW00076")</h3>
                             <br />
-                            <form class="form form-horizontal">
+                            <form class="form form-horizontal subscribe-form">
                                 <div class="form-group">
-                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="@Html.I18NString("CW00077")" /></div>
-                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control" placeholder="@Html.I18NString("CW00078")" /></div>
-                                    <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow" value="@Html.I18NString("CW00079")" /></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control user-name" placeholder="@Html.I18NString("CW00077")" /></div>
+                                    <div class="col-sm-4 col-md-5"><input type="text" class="form-control user-email" placeholder="@Html.I18NString("CW00078")" /></div>
+                                    <div class="col-sm-4 col-md-2"><input type="submit" class="btn btn-yellow submit-button" value="@Html.I18NString("CW00079")" /></div>
                                 </div>
                             </form>
+                            <div class="subscribe-complete">
+                                <p>Thank you for Subscribing to Travorama Email Newsletter.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

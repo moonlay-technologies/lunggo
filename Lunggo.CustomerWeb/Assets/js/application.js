@@ -18,6 +18,52 @@ $(document).ready(function () {
 });
 
 //******************************************
+// subscribe form
+function subscribeForm() {
+
+    $('.subscribe-form input[type="text"]').keyup(function() {
+        $('.subscribe-form input[type="text"]').css('color','#333333');
+    });
+
+    $('.subscribe-form .user-name').focus(function () {
+        if ($(this).val() == 'Name cannot be blank') {
+            $(this).val('');
+        }
+    });
+
+    $('.subscribe-form .user-email').focus(function() {
+        if ($(this).val() == 'Email cannot be blank') {
+            $(this).val('');
+        }
+    });
+
+    $('.subscribe-form .submit-button').click(function (evt) {
+        if ($('.subscribe-form .user-name').val().length == 0) {
+            $('.subscribe-form .user-name').val('Name cannot be blank');
+            $('.subscribe-form .user-name').css('color', '#a94442');
+        } else {
+            if ($('.subscribe-form .user-email').val().length == 0) {
+                $('.subscribe-form .user-email').val('Email cannot be blank');
+                $('.subscribe-form .user-email').css('color', '#a94442');
+            } else {
+                $(this).prop('disabled', true);
+                var userEmail = $('.subscribe-form .user-email').val();
+                $.ajax({
+                    url: "/id/home/newsletter?address=" + userEmail
+                }).done(function () {
+
+                    $('.subscribe-form').hide();
+                    $('.subscribe-complete').show();
+
+                });
+            }
+        }
+    });
+
+}
+
+
+//******************************************
 // format number in thousand
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
