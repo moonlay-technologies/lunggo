@@ -768,6 +768,7 @@
     <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
     <Content Include="Assets\images\travorama-logo-color.png" />
+    <Content Include="Assets\images\travorama-og.jpg" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -2173,6 +2174,7 @@
     <Content Include="Views\Shared\_layout_howto.cshtml" />
     <Content Include="Views\Shared\_googleTag.cshtml" />
     <Content Include="Views\Shared\_layout_campaign.cshtml" />
+    <Content Include="Views\Shared\_openGraph.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
