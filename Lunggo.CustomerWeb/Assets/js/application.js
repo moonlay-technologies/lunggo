@@ -38,6 +38,7 @@ function subscribeForm() {
     });
 
     $('.subscribe-form .submit-button').click(function (evt) {
+        evt.preventDefault();
         if ($('.subscribe-form .user-name').val().length == 0) {
             $('.subscribe-form .user-name').val('Name cannot be blank');
             $('.subscribe-form .user-name').css('color', '#a94442');
