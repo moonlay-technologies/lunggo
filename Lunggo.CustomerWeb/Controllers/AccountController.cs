@@ -200,7 +200,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 var voucherCode = VoucherService.GetInstance().GenerateVoucherCode(email);
                 VoucherService.GetInstance().SendVoucherEmailToCustomer(email, voucherCode);
             }
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                ViewBag.Message = "thank you";
+            }
+            return View(result.Succeeded ? "Login" : "Error");
         }
 
         //

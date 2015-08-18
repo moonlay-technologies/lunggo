@@ -25,6 +25,13 @@
     <!-- page start -->
     <div class="page user-page user-page-login">
 
+        @if (ViewBag.Message != null)
+        {
+            <div class="container">
+                <h2>Thank you for verifying your email. Please login.</h2>
+            </div>
+        }
+
         <section class="user-login">
             <header id="site-header" class="site-header">
                 @{ Html.RenderPartial("_Mainmenu"); }
@@ -37,7 +44,7 @@
                     @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl"/>
+                        <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">
                                 <input type="text" class="form-control" name="Email" placeholder="@Html.I18NString("CW00123")">
@@ -62,22 +69,22 @@
                             </div>
                         </div>
                     }
-@*
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            <div class="or text-center">
-                                <span class="or-left"></span><span>@Html.I18NString("CW00128")</span><span class="or-right"></span>
+                    @*
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="or text-center">
+                                    <span class="or-left"></span><span>@Html.I18NString("CW00128")</span><span class="or-right"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        <section class="facebook-login text-center">
-                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> @Html.I18NString("CW00131")</button>
-                        </section>
-                    }
-*@
+                        @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <section class="facebook-login text-center">
+                                <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> @Html.I18NString("CW00131")</button>
+                            </section>
+                        }
+                    *@
                 </section>
             </div>
 

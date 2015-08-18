@@ -58,7 +58,16 @@ namespace Lunggo.ApCommon.Voucher
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var voucherRecord = GetVoucherRecordQuery.GetInstance().Execute(conn, new {VoucherCode = code}).Single();
+                var voucherRecords = GetVoucherRecordQuery.GetInstance().Execute(conn, new {VoucherCode = code}).ToList();
+                VoucherTableRecord voucherRecord;
+                if (voucherRecords.Count() == 1)
+                {
+                    voucherRecord = voucherRecords.Single();
+                }
+                else
+                {
+                    return null;
+                }
                 if (voucherRecord.ValidEmail == email &&
                     DateTime.UtcNow <= voucherRecord.ExpiryDate &&
                     voucherRecord.IsUsed == false)
