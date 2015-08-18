@@ -254,6 +254,9 @@ h1 {
         display: inline; }
         .site-footer .footer-copyright ul li a {
           display: inline; }
+    .site-footer .footer-copyright .footer-social .fa {
+      color: #fff;
+      font-size: 24px; }
 
 /*-----------------------------*/
 /* home page */
