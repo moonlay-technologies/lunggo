@@ -68,11 +68,59 @@
             $scope.flightDetailActive = false;
             $scope.flightCurrent = -1;
             $scope.flightCurrentDetail = {};
-                // flight sorting
-                $scope.flightSort = {
-                    label: '',
-                    value: ''
-                };
+            $scope.sort = {
+                label: 'price',
+                value: 'TotalFare'
+            }
+            $scope.reverse = false;
+            $scope.order = function (sort, reverseState) {
+                $scope.reverse = reverseState || false;
+                $scope.sort.label = sort;
+                $scope.selectedItem = -1;
+                $scope.selectedRules = -1;
+                switch (sort) {
+                    case 'airline':
+                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
+                        break;
+                    case 'departure':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        break;
+                    case 'duration':
+                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
+                        break;
+                    case 'arrival':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        break;
+                    case 'price':
+                        $scope.sort.value = 'TotalFare';
+                        break;
+                        // return flight
+                    case 'departAirline':
+                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
+                        break;
+                    case 'departDeparture':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        break;
+                    case 'departDuration':
+                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
+                        break;
+                    case 'departArrival':
+                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        break;
+                    case 'returnAirline':
+                        $scope.sort.value = 'FlightTrips[1].Airlines[0].Name';
+                        break;
+                    case 'returnDeparture':
+                        $scope.sort.value = 'FlightTrips[1].FlightSegments[0].DepartureTime';
+                        break;
+                    case 'returnDuration':
+                        $scope.sort.value = 'FlightTrips[1].TotalDuration';
+                        break;
+                    case 'returnArrival':
+                        $scope.sort.value = 'FlightTrips[1].FlightSegments[(FlightTrips[1].FlightSegments.length-1)].ArrivalTime';
+                        break;
+                }
+            }
                 // flight filtering variables
                 $scope.flightSearchFilter = {};
                 $scope.flightSearchFilter.airlines = [];
