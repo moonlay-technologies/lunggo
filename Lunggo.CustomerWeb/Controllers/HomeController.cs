@@ -7,6 +7,8 @@ using log4net.Repository.Hierarchy;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.Mail;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -58,6 +60,20 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Newsletter(string address)
+        {
+            var mailService = MailService.GetInstance();
+            var mailModel = new MailModel
+            {
+                RecipientList = new[] {"travorama.newsletter@gmail.com"},
+                FromMail = "newsletter@travorama.com",
+                FromName = "Newsletter Travorama",
+                Subject = address
+            };
+            mailService.SendEmail(address, mailModel, HtmlTemplateType.Newsletter);
+            return null;
         }
     }
 }

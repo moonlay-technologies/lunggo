@@ -111,6 +111,9 @@
     <None Include="Config\CustomerWeb\azureStorage.properties" />
     <None Include="Config\CustomerWeb\Country.csv" />
     <None Include="Config\CustomerWeb\facebook.properties" />
+    <None Include="Config\CustomerWeb\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Driver\azureStorage.properties" />
     <None Include="Config\WebAPI\azureStorage.properties" />
     <None Include="Config\WebAPI\Country.csv" />
@@ -228,6 +231,8 @@
     <None Include="HtmlTemplate\FlightPendingPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightInstantPaymentNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
+    <None Include="HtmlTemplate\Subscribe.cshtml" />
+    <None Include="HtmlTemplate\Newsletter.cshtml" />
     <None Include="HtmlTemplate\VoucherEmail.cshtml" />
     <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />

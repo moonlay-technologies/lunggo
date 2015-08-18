@@ -51,17 +51,9 @@ namespace Lunggo.Framework.Mail
 
             internal override void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
             {
-                try
-                {
-                    var emailMessage = GenerateMessage(objectParam, mailModel, type);
-                    var emailMessageRequest = new SendMessageRequest(emailMessage);
-                    _apiOfMandrill.SendMessage(emailMessageRequest);
-                }
-                catch (Exception ex)
-                {
-                    LunggoLogger.Error(ex.Message, ex);
-                    throw;
-                }
+                var emailMessage = GenerateMessage(objectParam, mailModel, type);
+                var emailMessageRequest = new SendMessageRequest(emailMessage);
+                _apiOfMandrill.SendMessage(emailMessageRequest);
             }
 
             private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)

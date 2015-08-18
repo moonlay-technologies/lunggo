@@ -161,6 +161,8 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                 reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
                     (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
                     {
+                        if (reservationRecord == null)
+                            return reservation;
                         if (reservation == null)
                         {
                             RefundInfo refundInfo = null;

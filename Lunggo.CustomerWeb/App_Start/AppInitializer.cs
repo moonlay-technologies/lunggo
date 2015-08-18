@@ -9,6 +9,7 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
@@ -37,7 +38,14 @@ namespace Lunggo.CustomerWeb
             InitPaymentService();
             InitBrowserDetectionService();
             InitDisplayModes();
-        }        
+            InitMailService();
+        }
+
+        private static void InitMailService()
+        {
+            var mailService = MailService.GetInstance();
+            mailService.Init();
+        }
 
         private static void InitRedisService()
         {

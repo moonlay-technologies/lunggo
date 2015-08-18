@@ -19,6 +19,7 @@ namespace Lunggo.Framework.HtmlTemplate
         UserConfirmationEmail,
         ForgotPasswordEmail,
         InitialSubscriberEmail,
-        VoucherEmail
+        VoucherEmail,
+        Newsletter
     }
 }

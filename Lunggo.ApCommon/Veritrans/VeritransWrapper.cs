@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Payment.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -32,9 +33,9 @@ namespace Lunggo.ApCommon.Veritrans
         private static string _unfinishedRedirectUrl;
         private static string _errorRedirectUrl;
 
-        private const string FinishRedirectPath = @"/id/Veritrans/PaymentFinish";
-        private const string UnfinishRedirectPath = @"/id/Veritrans/PaymentUnfinish";
-        private const string ErrorRedirectPath = @"/id/Veritrans/PaymentError";
+        private const string FinishRedirectPath = @"/Veritrans/PaymentFinish";
+        private const string UnfinishRedirectPath = @"/Veritrans/PaymentUnfinish";
+        private const string ErrorRedirectPath = @"/Veritrans/PaymentError";
 
         private VeritransWrapper()
         {
@@ -50,12 +51,13 @@ namespace Lunggo.ApCommon.Veritrans
         {
             if (!_isInitialized)
             {
+                var langCode = @"/" + OnlineContext.GetActiveLanguageCode();
                 _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
                 _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
-                _finishedRedirectUrl = _rootUrl + FinishRedirectPath;
-                _unfinishedRedirectUrl = _rootUrl + UnfinishRedirectPath;
-                _errorRedirectUrl = _rootUrl + ErrorRedirectPath;
+                _finishedRedirectUrl = _rootUrl + langCode + FinishRedirectPath;
+                _unfinishedRedirectUrl = _rootUrl + langCode + UnfinishRedirectPath;
+                _errorRedirectUrl = _rootUrl + langCode + ErrorRedirectPath;
                 _isInitialized = true;
             }
         }
