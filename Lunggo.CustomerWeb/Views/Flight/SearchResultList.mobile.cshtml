@@ -310,10 +310,12 @@
                 </div><!-- .flight-header -->
                 <div class="flight-content">
                     <div class="flight-origin">
+                        <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : MM' : 'UTC'}}</span>
                         <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                         <span class="airport">{{flight.FlightTrips[0].OriginCity}}</span>
                     </div>
                     <div class="flight-destination">
+                        <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : MM' : 'UTC'}}</span>
                         <span class="time">{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                         <span class="airport">{{flight.FlightTrips[0].DestinationCity}}</span>
                     </div>
@@ -329,10 +331,12 @@
                     </div><!-- .flight-header -->
                     <div class="flight-content">
                         <div class="flight-origin">
+                            <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'HH : MM' : 'UTC'}}</span>
                             <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                             <span class="airport">{{flight.FlightTrips[1].OriginCity}}</span>
                         </div>
                         <div class="flight-destination">
+                            <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : MM' : 'UTC'}}</span>
                             <span class="time">{{getDateTime( flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
                             <span class="airport">{{flight.FlightTrips[1].DestinationCity}}</span>
                         </div>
