@@ -11,6 +11,7 @@ using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
+using NReco.PdfGenerator;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Worker.EticketHandler
@@ -48,6 +49,13 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
+                converter.Margins = new PageMargins
+                {
+                    Top = 0,
+                    Bottom = 0,
+                    Left = 0,
+                    Right = 0
+                };
                 var fileContent = converter.GeneratePdf(eticketTemplate);
                 sw.Stop();
                 Trace.WriteLine("Done Generating Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");

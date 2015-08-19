@@ -16,14 +16,16 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {
-        internal static IEnumerable<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
+        internal static List<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail });
-                foreach (var rsvNo in rsvNos)
+                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail }).ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
                 {
-                    yield return OverviewReservation(rsvNo);
+                    return rsvNos.Select(OverviewReservation).ToList();
                 }
             }
         }

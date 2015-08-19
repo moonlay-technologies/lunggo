@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
+using NReco.PdfGenerator;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Worker.EticketHandler
@@ -83,6 +85,13 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Generating Invoice File for RsvNo " + rsvNo + "...");
                 sw.Start();
+                converter.Margins = new PageMargins
+                {
+                    Top = 0,
+                    Bottom = 0,
+                    Left = 0,
+                    Right = 0
+                };
                 var invoiceFile = converter.GeneratePdf(invoiceTemplate);
                 sw.Stop();
                 Trace.WriteLine("Done Generating Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
