@@ -442,6 +442,9 @@
                     }
                 }).success(function (data) {
 
+                    // start countdown
+                    flightTimeout();
+
                     document.title = "Travorama";
 
                     console.log(data);

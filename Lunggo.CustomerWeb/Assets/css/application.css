@@ -366,6 +366,10 @@ body img {
   border-color: #ebb600;
   color: #59544b; }
 
+.btn-block {
+  display: block;
+  width: 100%; }
+
 .no-radius {
   border-radius: 0;
   -moz-border-radius: 0;
@@ -2779,6 +2783,37 @@ hr {
     bottom: -50px; }
   .error-page .error-detail {
     display: none; }
+
+.notice-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background: rgba(50, 50, 50, 0.5);
+  display: none; }
+  .notice-wrapper .notice {
+    background: #fff;
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -150px;
+    padding: 15px; }
+    .notice-wrapper .notice .notice-content {
+      display: none; }
+    .notice-wrapper .notice .notice-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 15px;
+      width: 100%; }
+    .notice-wrapper .notice .btn {
+      display: block;
+      font-weight: bold; }
 
 .campaign-page {
   background-position: top center;

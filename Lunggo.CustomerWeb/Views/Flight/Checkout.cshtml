@@ -9,17 +9,18 @@
 }
 
 @section AdditionalPageCSS {
-    <link href="/Assets/vendor/intltelinput/css/intlTelInput.css" rel="stylesheet" />
+    <link src="/Assets/vendor/countrySelect/css/countrySelect.min.css" rel="stylesheet" />   
 }
 @section AdditionalPageJavascript {
-    <script src="/Assets/vendor/intltelinput/js/intlTelInput.min.js"></script>
+    <script src="/Assets/vendor/countrySelect/js/countrySelect.min.js"></script>
 }
 @section PageJavascript {
     <script>
-        $(".phone-number").intlTelInput({
-            defaultCountry: 'ID'
-        });
         validateCheckoutForm();
+        $('.passport-country').countrySelect({
+            preferredCountries: ['id']
+        });
+        bookingTimeout();
     </script>
 }
 
@@ -161,13 +162,20 @@
                                 }
                                 if (needPassport)
                                 {
-                                    <div class="form-group">
-                                        <label for="" class="control-label">@Html.I18NString("CW00103") :</label>
-                                        <input type="text" class="form-control control-passport control-check" name="Passengers[@i].PassportNumber" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
-                                        <input type="date" class="form-control control-expiry control-check date-picker" name="Passengers[@i].PassportExpiryDate" placeholder="">
+                                    <div class="form-inline">
+                                        <div class="form-group" style="width:34%;">
+                                            <label for="" class="control-label">Passport Country</label>
+                                            <input type="type" name="name" value="" class="passport-country" style="width:100%;"/>
+                                            <input type="type" name="name" value="" class="passport-country_code hidden" />
+                                        </div>
+                                        <div class="form-group" style="width:39%">
+                                            <label for="" class="control-label">@Html.I18NString("CW00103") :</label>
+                                            <input type="text" class="form-control control-passport control-check" name="Passengers[@i].PassportNumber" placeholder="" style="width:100%;">
+                                        </div>
+                                        <div class="form-group" style="width:25%;">
+                                            <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
+                                            <input type="date" class="form-control control-expiry control-check date-picker" name="Passengers[@i].PassportExpiryDate" placeholder="" style="width:100%;">
+                                        </div>
                                     </div>
                                 }
                                 <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">

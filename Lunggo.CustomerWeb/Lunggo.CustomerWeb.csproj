@@ -830,6 +830,9 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
+    <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
+    <Content Include="Assets\vendor\countrySelect\js\countrySelect.min.js" />
+    <Content Include="Assets\vendor\countrySelect\img\flags.png" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
@@ -2175,6 +2178,7 @@
     <Content Include="Views\Shared\_googleTag.cshtml" />
     <Content Include="Views\Shared\_layout_campaign.cshtml" />
     <Content Include="Views\Shared\_openGraph.cshtml" />
+    <Content Include="Views\Shared\_Notice.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
