@@ -34,11 +34,13 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var service = FlightService.GetInstance();
             var itinerary = service.GetItineraryFromCache(select.token);
+            var expiryTime = service.GetItineraryExpiryInCache(select.token);
             var itineraryApi = service.ConvertToItineraryApi(itinerary);
             return View(new FlightCheckoutData
             {
                 HashKey = select.token,
                 ItineraryApi = itineraryApi,
+                ExpiryTime = expiryTime
             });
         }
 

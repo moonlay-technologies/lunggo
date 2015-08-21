@@ -43,6 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 output.Itineraries = result.FlightItineraries;
                 output.SearchId = result.SearchId;
+                output.ExpiryTime = GetItinerariesExpiryInCache(input.SearchId);
             }
             else
             {

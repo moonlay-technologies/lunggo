@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
@@ -6,5 +7,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
     {
         public string SearchId { get; set; }
         public List<FlightItinerary> Itineraries { get; set; }
+        public DateTime ExpiryTime { get; set; }
     }
 }

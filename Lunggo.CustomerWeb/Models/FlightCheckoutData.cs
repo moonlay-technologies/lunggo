@@ -17,6 +17,7 @@ namespace Lunggo.CustomerWeb.Models
         public List<PassengerData> Passengers { get; set; }
         public PaymentInfo Payment { get; set; }
         public string DiscountCode { get; set; }
+        public DateTime ExpiryTime { get; set; }
         public string Message { get; set; }
     }
 
