@@ -19,8 +19,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult HotelDetail()
         {
-
-
             return View();
         }
 
@@ -105,6 +103,11 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult eticket()
+        {
+            return View();
+        }
+
+        public ActionResult invoice()
         {
             return View();
         }

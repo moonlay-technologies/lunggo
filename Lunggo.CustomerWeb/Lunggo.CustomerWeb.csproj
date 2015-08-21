@@ -346,6 +346,12 @@
     <Content Include="Assets\css\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\css\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\css\invoice.css">
+      <DependentUpon>invoice.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\invoice.min.css">
+      <DependentUpon>invoice.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\landingPage.css">
@@ -705,6 +711,7 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\filter-return.png" />
+    <Content Include="Assets\css\invoice.scss" />
     <None Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\googlePlay.png" />
@@ -767,6 +774,7 @@
     <Content Include="Assets\images\tag-red.png" />
     <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
+    <Content Include="Assets\images\travelmadezy-logo.jpg" />
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\travorama-og.jpg" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -2179,6 +2187,8 @@
     <Content Include="Views\Shared\_layout_campaign.cshtml" />
     <Content Include="Views\Shared\_openGraph.cshtml" />
     <Content Include="Views\Shared\_Notice.cshtml" />
+    <Content Include="Views\Template\invoice.cshtml" />
+    <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
