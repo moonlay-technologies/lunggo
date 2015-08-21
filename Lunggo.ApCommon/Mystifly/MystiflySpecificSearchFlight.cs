@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -121,7 +122,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static IntelliBestBuyInformation[] MapItineraryInformations(IEnumerable<FlightSegmentFare> source)
+        private static IntelliBestBuyInformation[] MapItineraryInformations(IEnumerable<FlightSegment> source)
         {
             return source.Select(item => new IntelliBestBuyInformation
             {

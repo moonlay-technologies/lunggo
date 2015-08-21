@@ -61,7 +61,7 @@
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
             CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
-            TripInfos = tripInfos,
+            Trips = tripInfos,
             TripType = FlightSearchData.ParseTripType(tripInfos)
         };
 
@@ -211,10 +211,10 @@
                         <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
                         <!-- <hr> -->
                         <div class="flight-data">
-                            <b>(@data.TripInfos[0].OriginAirport) @originCityNames[0]</b> @Html.I18NString("CW00034") <b>(@data.TripInfos[0].DestinationAirport) @destinationCityNames[0]</b> <br />
-                            <span><b>@Html.I18NString("CW00016") : </b>@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
+                            <b>(@data.Trips[0].OriginAirport) @originCityNames[0]</b> @Html.I18NString("CW00034") <b>(@data.Trips[0].DestinationAirport) @destinationCityNames[0]</b> <br />
+                            <span><b>@Html.I18NString("CW00016") : </b>@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
                             {
-                                <span><b>Return Flight : </b>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
+                                <span><b>Return Flight : </b>@data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
                             } <b>@Html.I18NString("CW00017") : </b> @data.AdultCount @Html.I18NString("CW00018"), @data.ChildCount @Html.I18NString("CW00019"), @data.InfantCount @Html.I18NString("CW00020") <a href="#" class="btn btn-yellow btn-sm show-flight-search-form pull-right">@Html.I18NString("CW00014")</a>
                         </div>
 
@@ -249,9 +249,9 @@
 
                             <div class="row passenger-wrapper">
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control flight-departure-date date-picker " placeholder="@departureDateString" value="@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
+                                    <input type="text" class="form-control flight-departure-date date-picker " placeholder="@departureDateString" value="@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
                                     <span class="separator">-</span>
-                                    <input type="text" class="form-control flight-return-date date-picker" placeholder="@returnDateString" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
+                                    <input type="text" class="form-control flight-return-date date-picker" placeholder="@returnDateString" value="@if (data.TripType == TripType.Return) { @data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
 
                                     <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
                                     <select class="form-control flight-adult">
@@ -283,10 +283,10 @@
                                         <option value="3">3 @Html.I18NString("CW00061")</option>
                                         <option value="4">4 @Html.I18NString("CW00061")</option>
                                     </select>
-                                    <input type="text" class="hidden flight-departure-date-real" value="@data.TripInfos[0].DepartureDate.ToString("dd-MM-yyyy")" />
-                                    <input type="text" class="hidden flight-return-date-real" value="@if (data.TripType == TripType.Return) { @data.TripInfos[1].DepartureDate.ToString("dd-MM-yyyy")  }" />
-                                    <input type="text" class="hidden flight-origin-airport-real" value="@data.TripInfos[0].OriginAirport" />
-                                    <input type="text" class="hidden flight-destination-airport-real" value="@data.TripInfos[0].DestinationAirport" />
+                                    <input type="text" class="hidden flight-departure-date-real" value="@data.Trips[0].DepartureDate.ToString("dd-MM-yyyy")" />
+                                    <input type="text" class="hidden flight-return-date-real" value="@if (data.TripType == TripType.Return) { @data.Trips[1].DepartureDate.ToString("dd-MM-yyyy")  }" />
+                                    <input type="text" class="hidden flight-origin-airport-real" value="@data.Trips[0].OriginAirport" />
+                                    <input type="text" class="hidden flight-destination-airport-real" value="@data.Trips[0].DestinationAirport" />
                                     <input type="text" id="flight-data-info" name="info" class="hidden" />
                                     <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
                                     <div class="passenger-warning">

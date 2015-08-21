@@ -47,7 +47,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return new RevalidateFlightInput
             {
                 FareId = itin.FareId,
-                TripInfos = itin.FlightTrips.Select(trip => new FlightTripInfo
+                Trips = itin.FlightTrips.Select(trip => new FlightTrip
                 {
                     OriginAirport = trip.OriginAirport,
                     DestinationAirport = trip.DestinationAirport,
@@ -56,7 +56,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             };
         }
 
-        private static void UpdateItinerary(FlightItineraryFare itin, string hash)
+        private static void UpdateItinerary(FlightItinerary itin, string hash)
         {
             var service = FlightService.GetInstance();
             service.SaveItineraryToCache(itin, hash);

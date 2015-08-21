@@ -10,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
 {
     public class FlightSearchApiRequest
     {
-        public List<FlightTripInfo> TripInfos { get; set; }
+        public List<FlightTrip> Trips { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }

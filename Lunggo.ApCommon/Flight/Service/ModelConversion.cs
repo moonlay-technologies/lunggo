@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public List<FlightItineraryApi> ConvertToItinerariesApi(IEnumerable<FlightItineraryFare> itineraries)
+        public List<FlightItineraryApi> ConvertToItinerariesApi(IEnumerable<FlightItinerary> itineraries)
         {
             if (itineraries != null)
             {
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public FlightItineraryApi ConvertToItineraryApi(FlightItineraryFare itinerary)
+        public FlightItineraryApi ConvertToItineraryApi(FlightItinerary itinerary)
         {
             if (itinerary != null)
             {
@@ -73,10 +73,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal FlightTripDetails ConvertToTripDetails(FlightTripTableRecord summaryRecord)
+        internal FlightTrip ConvertToTripDetails(FlightTripTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            return new FlightTripDetails
+            return new FlightTrip
             {
                 OriginAirport = summaryRecord.OriginAirportCd,
                 OriginAirportName = dict.GetAirportName(summaryRecord.OriginAirportCd),
@@ -88,10 +88,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal FlightSegmentApi ConvertToSegmentApi(FlightSegmentTableRecord summaryRecord)
+        internal FlightSegment ConvertToSegmentApi(FlightSegmentTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            return new FlightSegmentApi
+            return new FlightSegment
             {
                 DepartureAirport = summaryRecord.DepartureAirportCd,
                 DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
@@ -104,10 +104,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal FlightSegmentDetails ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
+        internal FlightSegment ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            return new FlightSegmentDetails
+            return new FlightSegment
             {
                 DepartureAirport = summaryRecord.DepartureAirportCd,
                 DepartureAirportName = dict.GetAirportName(summaryRecord.DepartureAirportCd),
@@ -182,7 +182,7 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private static List<FlightTripApi> MapTrips(IEnumerable<FlightTripFare> trips)
+        private static List<FlightTripApi> MapTrips(IEnumerable<FlightTrip> trips)
         {
             var dict = DictionaryService.GetInstance();
             return trips.Select(trip => new FlightTripApi
@@ -202,10 +202,10 @@ namespace Lunggo.ApCommon.Flight.Service
             }).ToList();
         }
 
-        private static List<FlightSegmentApi> MapSegments(IEnumerable<FlightSegmentFare> segments)
+        private static List<FlightSegment> MapSegments(IEnumerable<FlightSegment> segments)
         {
             var dict = DictionaryService.GetInstance();
-            return segments.Select(segment => new FlightSegmentApi
+            return segments.Select(segment => new FlightSegment
             {
                 DepartureAirport = segment.DepartureAirport,
                 DepartureCity = dict.GetAirportCity(segment.DepartureAirport),
@@ -232,7 +232,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }).ToList();
         }
 
-        private static TimeSpan CalculateTotalDuration(FlightTripFare trip)
+        private static TimeSpan CalculateTotalDuration(FlightTrip trip)
         {
             var segments = trip.FlightSegments;
             var totalFlightDuration = new TimeSpan();
@@ -246,7 +246,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return totalFlightDuration + totalTransitDuration;
         }
 
-        private static List<Airline> GetAirlineList(FlightTripFare trip)
+        private static List<Airline> GetAirlineList(FlightTrip trip)
         {
             var dict = DictionaryService.GetInstance();
             var segments = trip.FlightSegments;
@@ -260,7 +260,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return airlines.ToList();
         }
 
-        private static List<Transit> MapTransitDetails(FlightTripFare trip)
+        private static List<Transit> MapTransitDetails(FlightTrip trip)
         {
             var segments = trip.FlightSegments;
             var result = new List<Transit>();
@@ -292,7 +292,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private static int CalculateTotalTransit(FlightTripFare trip)
+        private static int CalculateTotalTransit(FlightTrip trip)
         {
             var segments = trip.FlightSegments;
             var transit = segments.Count() - 1;

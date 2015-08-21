@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Config;
+using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -77,7 +78,7 @@ namespace Lunggo.ApCommon.Mystifly
             result.BookingId = FlightIdUtil.ConstructIntegratedId(response.TravelItinerary.UniqueID, FlightSupplier.Mystifly, fareType);
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
-            result.FlightItineraries = new FlightItineraryDetails
+            result.FlightItineraries = new FlightItinerary
             {
                 FlightTrips = MapDetailsFlightTrips(response, conditions),
             };
@@ -89,22 +90,22 @@ namespace Lunggo.ApCommon.Mystifly
             return result;
         }
 
-        private static List<FlightTripDetails> MapDetailsFlightTrips(AirTripDetailsRS response, ConditionsBase conditions)
+        private static List<FlightTrip> MapDetailsFlightTrips(AirTripDetailsRS response, ConditionsBase conditions)
         {
             try
             {
-                var flightTrips = new List<FlightTripDetails>();
+                var flightTrips = new List<FlightTrip>();
                 var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
                 var dict = DictionaryService.GetInstance();
                 var i = 0;
-                foreach (var tripInfo in conditions.TripInfos)
+                foreach (var tripInfo in conditions.Trips)
                 {
-                    var flightTrip = new FlightTripDetails
+                    var flightTrip = new FlightTrip
                     {
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
                         DepartureDate = tripInfo.DepartureDate,
-                        FlightSegments = new List<FlightSegmentDetails>(),
+                        FlightSegments = new List<FlightSegment>(),
                     };
                     do
                     {
@@ -120,16 +121,16 @@ namespace Lunggo.ApCommon.Mystifly
             }
             catch (IndexOutOfRangeException)
             {
-                var flightTrips = new List<FlightTripDetails>();
+                var flightTrips = new List<FlightTrip>();
                 var segments = response.TravelItinerary.ItineraryInfo.ReservationItems;
                 foreach (var segment in segments)
                 {
-                    var flightTrip = new FlightTripDetails
+                    var flightTrip = new FlightTrip
                     {
                         OriginAirport = segment.DepartureAirportLocationCode,
                         DestinationAirport = segment.ArrivalAirportLocationCode,
                         DepartureDate = segment.DepartureDateTime.Date,
-                        FlightSegments = new List<FlightSegmentDetails>(),
+                        FlightSegments = new List<FlightSegment>(),
                     };
                     flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segment));
                     flightTrips.Add(flightTrip);
@@ -138,7 +139,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static FlightSegmentDetails MapFlightSegmentDetails(ReservationItem item)
+        private static FlightSegment MapFlightSegmentDetails(ReservationItem item)
         {
             var dict = DictionaryService.GetInstance();
             item.OperatingAirlineCode =
@@ -146,9 +147,8 @@ namespace Lunggo.ApCommon.Mystifly
                  item.OperatingAirlineCode != "" && item.OperatingAirlineCode != null)
                     ? item.OperatingAirlineCode
                     : item.MarketingAirlineCode;
-            return new FlightSegmentDetails
+            return new FlightSegment
             {
-                Reference = item.ItemRPH,
                 DepartureAirport = item.DepartureAirportLocationCode,
                 DepartureAirportName = dict.GetAirportName(item.DepartureAirportLocationCode),
                 DepartureCity = dict.GetAirportCity(item.DepartureAirportLocationCode),

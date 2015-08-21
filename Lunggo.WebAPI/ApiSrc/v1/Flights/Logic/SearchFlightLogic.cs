@@ -53,12 +53,12 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 request.AdultCount + request.ChildCount + request.InfantCount <= 9 &&
                 request.InfantCount <= request.AdultCount &&
                 (
-                    (request.TripType == TripType.OneWay && request.TripInfos.Count == 1) ||
-                    (request.TripType == TripType.Return && request.TripInfos.Count == 2) ||
-                    (request.TripType == TripType.OpenJaw && request.TripInfos.Count > 1) ||
-                    (request.TripType == TripType.Circle && request.TripInfos.Count > 2)
+                    (request.TripType == TripType.OneWay && request.Trips.Count == 1) ||
+                    (request.TripType == TripType.Return && request.Trips.Count == 2) ||
+                    (request.TripType == TripType.OpenJaw && request.Trips.Count > 1) ||
+                    (request.TripType == TripType.Circle && request.Trips.Count > 2)
                 ) &&
-                request.TripInfos.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow);
+                request.Trips.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow);
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
@@ -81,7 +81,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 ChildCount = request.ChildCount,
                 InfantCount = request.InfantCount,
                 CabinClass = request.CabinClass,
-                TripInfos = request.TripInfos
+                Trips = request.Trips
             };
             var searchServiceRequest = new SearchFlightInput
             {

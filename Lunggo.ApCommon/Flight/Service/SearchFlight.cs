@@ -63,7 +63,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 ChildCount = input.Conditions.ChildCount,
                 InfantCount = input.Conditions.InfantCount,
                 CabinClass = input.Conditions.CabinClass,
-                TripInfos = input.Conditions.TripInfos
+                Trips = input.Conditions.Trips
             };
 
             var result = SearchFlightInternal(conditions);
