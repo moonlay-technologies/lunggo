@@ -63,6 +63,69 @@ function subscribeForm() {
 
 }
 
+//******************************************
+// modal notice pop up
+function modalNotice(noticeTitle) {
+    if (noticeTitle == 'close' || noticeTitle == '' || noticeTitle == undefined) {
+        $('.notice-wrapper').hide();
+    } else {
+        $('.notice-wrapper').show();
+        $('.notice-content').hide();
+        $('.notice-content.' + noticeTitle).show();
+    }
+}
+
+//******************************************
+// flight search timeout function
+function flightTimeout(endTime) {
+    var flightTimeoutReached = false;
+
+    // end time is only placeholder.
+    // please change it to actual value.
+    endTime = new Date();
+    endTime.setMinutes(  endTime.getMinutes() + 1  );
+    // endTime.setSeconds(endTime.getSeconds() + 5);
+
+    setInterval(function () {
+        checkTime();
+    }, 1000);
+
+    function checkTime() {
+        var currentTime = new Date() ;
+        if ( currentTime >= endTime && flightTimeoutReached == false) {
+            flightTimeoutReached = true;
+            modalNotice('search-expired');
+        }
+    }
+
+}
+
+
+//******************************************
+// booking timeout function
+function bookingTimeout(endTime) {
+    var flightTimeoutReached = false;
+
+    // end time is only placeholder.
+    // please change it to actual value.
+    endTime = new Date();
+    // endTime.setMinutes(endTime.getMinutes() + 1);
+    endTime.setSeconds(endTime.getSeconds() + 5);
+
+    setInterval(function () {
+        checkTime();
+    }, 1000);
+
+    function checkTime() {
+        var currentTime = new Date();
+        if (currentTime >= endTime && flightTimeoutReached == false) {
+            flightTimeoutReached = true;
+            modalNotice('booking-expired');
+        }
+    }
+
+}
+
 
 //******************************************
 // format number in thousand

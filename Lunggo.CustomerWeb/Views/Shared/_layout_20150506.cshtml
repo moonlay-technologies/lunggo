@@ -232,22 +232,9 @@
         </section><!-- .footer-copyright -->
     </footer><!-- .site-footer -->
     
-    <div class="site-feedback">
-        <a class="feedback-header">Feedback? klik disini</a>
-        <div class="feedback-form">
-            <form action="#" method="post" class="form form-horizontal">
-                <div class="form-group">
-                    <input type="type" name="name" value="" class="form-control" placeholder="Subject" />
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <a href="#" class="form-control">SUBMIT</a>
-                </div>
-            </form>
-        </div>
-    </div>
+    
+    @{ Html.RenderPartial("_Notice"); }
+
 
     <!-- ****************************** -->
     <!-- javascripts -->

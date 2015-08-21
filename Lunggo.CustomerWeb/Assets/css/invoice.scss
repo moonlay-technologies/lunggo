@@ -1,0 +1,40 @@
+﻿body {font-family:'calibri', 'myriad pro', sans-serif;}
+
+table {font-size:10px;}
+p {font-size:10px;}
+h3 {font-size:20px;}
+h4 {font-size:14px;}
+
+.page-header {border-bottom:0; margin-top:0; margin-bottom:0;
+    address {margin-top:15px; margin-bottom:0;
+        p {margin-bottom:0; font-size:9px;}
+    }
+}
+
+table {width:100%;
+    thead {font-weight:bold; border:2px solid #000;
+        th {padding:10px;}
+    }
+    tbody {
+        td {padding:10px;}
+    }
+    tfoot {border-top:1px solid #333;
+        td {padding:5px;}
+    }
+}
+
+.invoice-detail, .customer-detail {
+    td {padding:0;}
+    td + td {position:relative;
+        &:before {content:" : "; position:absolute; margin-left:-10px;}
+    }
+}
+
+.payment-detail, .purchase-detail {
+    th {text-align:center;}
+    td {text-align:center;}
+}
+.purchase-detail {
+    tfoot tr td:nth-child(2) {text-align:right;}
+}
+

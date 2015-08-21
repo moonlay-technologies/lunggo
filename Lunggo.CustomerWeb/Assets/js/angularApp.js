@@ -309,6 +309,12 @@
 
                 $('.onward-depart-slider, .onward-arrival-slider, .return-depart-slider, .return-arrival-slider').slider({ values : [0,24] });
 
+                // reset flight airlines
+                for (var i = 0; i < $scope.FlightSearchFilter.Airlines.length; i++) {
+                    $scope.FlightSearchFilter.Airlines[i].checked = true;
+                    $scope.checkAirline();
+                }
+
                 // reset flight price filter
                 $('.price-slider-min').val($scope.FlightSearchFilter.PriceFilter.min);
                 $('.price-slider-min').trigger('input');
@@ -441,6 +447,9 @@
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
                 }).success(function (data) {
+
+                    // start countdown
+                    flightTimeout();
 
                     document.title = "Travorama";
 
