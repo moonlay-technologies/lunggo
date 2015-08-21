@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
             });
         }
 
-        internal void AddPriceMargin(FlightItineraryFare fare)
+        internal void AddPriceMargin(FlightItinerary fare)
         {
             var rule = GetFirstMatchingRule(fare);
             ApplyMarginRule(fare, rule);
@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return MarginRules.Count(rule => rule.ConstraintCount == newRule.ConstraintCount) > 1;
         }
 
-        private static void ApplyMarginRule(FlightItineraryFare fare, MarginRule rule)
+        private static void ApplyMarginRule(FlightItinerary fare, MarginRule rule)
         {
             fare.MarginId = rule.RuleId;
             var modifiedFare = fare.OriginalIdrPrice*(1M + rule.Coefficient) + rule.Constant;
@@ -128,7 +128,7 @@ namespace Lunggo.ApCommon.Flight.Service
             fare.FinalIdrPrice = finalFare;
         }
 
-        private static MarginRule GetFirstMatchingRule(FlightItineraryFare fare)
+        private static MarginRule GetFirstMatchingRule(FlightItinerary fare)
         {
             var rule = new MarginRule();
             for (var i = 0; i < MarginRules.Count; i++)
@@ -157,14 +157,14 @@ namespace Lunggo.ApCommon.Flight.Service
             return dateSpanOk && dayOk && dateOk;
         }
 
-        private static bool FlightTimeMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool FlightTimeMatches(MarginRule rule, FlightItinerary fare)
         {
             var departureOk = DepartureTimeMatches(rule, fare);
             var returnOk = ReturnTimeMatches(rule, fare);
             return departureOk && returnOk;
         }
 
-        private static bool DepartureTimeMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool DepartureTimeMatches(MarginRule rule, FlightItinerary fare)
         {
             var dates = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.Date).ToList();
             var times = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
@@ -175,7 +175,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return dateSpanOk && dayOk && dateOk && timeSpanOk;
         }
 
-        private static bool ReturnTimeMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool ReturnTimeMatches(MarginRule rule, FlightItinerary fare)
         {
             if (fare.TripType != TripType.Return)
                 return true;
@@ -191,28 +191,28 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private static bool TripTypeMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool TripTypeMatches(MarginRule rule, FlightItinerary fare)
         {
             return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.TripType);
         }
 
-        private static bool FareTypeMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool FareTypeMatches(MarginRule rule, FlightItinerary fare)
         {
             return !rule.FareTypes.Any() || rule.FareTypes.Contains(fare.FareType);
         }
 
-        private static bool CabinClassMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool CabinClassMatches(MarginRule rule, FlightItinerary fare)
         {
             return !rule.CabinClasses.Any() || rule.CabinClasses.Contains(fare.CabinClass);
         }
 
-        private static bool PassengerCountMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool PassengerCountMatches(MarginRule rule, FlightItinerary fare)
         {
             var totalPassenger = fare.AdultCount + fare.ChildCount + fare.InfantCount;
             return totalPassenger >= rule.MinPassengers && totalPassenger <= rule.MaxPassengers;
         }
 
-        private static bool AirlineMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool AirlineMatches(MarginRule rule, FlightItinerary fare)
         {
             var airlines = fare.FlightTrips.SelectMany(trip => trip.FlightSegments)
                 .Select(segment => segment.AirlineCode);
@@ -225,7 +225,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool AirportPairMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool AirportPairMatches(MarginRule rule, FlightItinerary fare)
         {
             var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule
             {
@@ -253,7 +253,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool CityPairMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool CityPairMatches(MarginRule rule, FlightItinerary fare)
         {
             var dict = DictionaryService.GetInstance();
             var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule
@@ -282,7 +282,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
         }
 
-        private static bool CountryPairMatches(MarginRule rule, FlightItineraryFare fare)
+        private static bool CountryPairMatches(MarginRule rule, FlightItinerary fare)
         {
             var dict = DictionaryService.GetInstance();
             var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule

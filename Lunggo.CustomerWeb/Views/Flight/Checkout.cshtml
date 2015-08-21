@@ -50,12 +50,12 @@
 
     try
     {
-        adultCount = Model.Itinerary.AdultCount;
-        childCount = Model.Itinerary.ChildCount;
-        infantCount = Model.Itinerary.InfantCount;
+        adultCount = Model.ItineraryApi.AdultCount;
+        childCount = Model.ItineraryApi.ChildCount;
+        infantCount = Model.ItineraryApi.InfantCount;
         passengerCount = adultCount + childCount + infantCount;
-        needBirthDate = Model.Itinerary.RequireBirthDate;
-        needPassport = Model.Itinerary.RequirePassport;
+        needBirthDate = Model.ItineraryApi.RequireBirthDate;
+        needPassport = Model.ItineraryApi.RequirePassport;
         hashKey = Model.HashKey;
     }
     catch
@@ -239,46 +239,46 @@
                         <section class="flight-detail">
                             <h3 class="text-center">@Html.I18NString("CW00112")</h3>
                             <h5 class="airline-name">
-                                <img src="@Model.Itinerary.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                                <img src="@Model.ItineraryApi.FlightTrips.First().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.ItineraryApi.FlightTrips.First().Airlines[0].Name
                             </h5>
                             <div class="row flight-route">
                                 <div class="col-sm-6 text-right flight-origin">
-                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().OriginAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().OriginCity</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.ItineraryApi.FlightTrips.First().FlightSegments.First().DepartureAirport</strong></h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().OriginAirportName</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().OriginCity</h5>
                                 </div>
                                 <div class="separator">@Html.I18NString("CW00034")</div>
                                 <div class="col-sm-6 text-left flight-destination">
-                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                    <h5><strong>@Model.Itinerary.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationAirportName</h5>
-                                    <h5>@Model.Itinerary.FlightTrips.First().DestinationCity</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                    <h5><strong>@Model.ItineraryApi.FlightTrips.First().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().DestinationAirportName</h5>
+                                    <h5>@Model.ItineraryApi.FlightTrips.First().DestinationCity</h5>
                                 </div>
                             </div>
                         </section><!-- .flight-detail -->
-                        @if (@Model.Itinerary.TripType == TripType.Return)
+                        @if (@Model.ItineraryApi.TripType == TripType.Return)
                         {
                             <section class="flight-detail">
                                 <h3 class="text-center">@Html.I18NString("CW00113")</h3>
-                                <h5 class="airline-name"><img src="@Model.Itinerary.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.Last().Airlines[0].Name</h5>
+                                <h5 class="airline-name"><img src="@Model.ItineraryApi.FlightTrips.Last().Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.ItineraryApi.FlightTrips.Last().Airlines[0].Name</h5>
                                 <div class="row flight-route">
                                     <div class="col-sm-6 text-right flight-origin">
-                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginAirportName</h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().OriginCity</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.First().DepartureAirport</strong></h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().OriginAirportName</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().OriginCity</h5>
                                     </div>
                                     <div class="separator">@Html.I18NString("CW00034")</div>
                                     <div class="col-sm-6 text-left flight-destination">
-                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                        <h5><strong>@Model.Itinerary.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationAirportName</h5>
-                                        <h5>@Model.Itinerary.FlightTrips.Last().DestinationCity</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                        <h5><strong>@Model.ItineraryApi.FlightTrips.Last().FlightSegments.Last().ArrivalAirport</strong></h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().DestinationAirportName</h5>
+                                        <h5>@Model.ItineraryApi.FlightTrips.Last().DestinationCity</h5>
                                     </div>
                                 </div>
                             </section>
@@ -288,8 +288,8 @@
                             <h2><b>@Html.I18NString("CW00114")</b> @Html.I18NString("CW00115")</h2>
                             <div class="content-wrapper">
                                 <div class="row">
-                                    <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) @Html.I18NString("CW00116")</div>
-                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                    <div class="col-sm-6">@(Model.ItineraryApi.InfantCount + @Model.ItineraryApi.ChildCount + @Model.ItineraryApi.AdultCount) @Html.I18NString("CW00116")</div>
+                                    <div class="col-sm-6">Rp @Model.ItineraryApi.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">@Html.I18NString("CW00117")</div>
@@ -302,7 +302,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">@Html.I18NString("CW00119")</div>
-                                    <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                    <div class="col-sm-6">Rp @Model.ItineraryApi.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">Voucher Code</div>

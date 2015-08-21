@@ -3,6 +3,6 @@
     public class RevalidateFlightOutput : OutputBase
     {
         public bool IsValid { get; set; }
-        public FlightItineraryFare Itinerary { get; set; }
+        public FlightItinerary Itinerary { get; set; }
     }
 }

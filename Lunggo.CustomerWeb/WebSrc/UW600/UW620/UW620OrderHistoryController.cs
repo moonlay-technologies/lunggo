@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Logic;
@@ -20,7 +21,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             var flight = FlightService.GetInstance();
             var email = User.Identity.GetEmail();
             var reservations = flight.GetOverviewReservationsByContactEmail(email);
-            return View(reservations);
+            return View(reservations ?? new List<FlightReservation>());
         }
 
         public ActionResult OrderFlightHistoryDetail(string rsvNo)

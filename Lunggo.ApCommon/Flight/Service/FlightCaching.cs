@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
 
-        public void SaveItineraryToCache(FlightItineraryFare itin, string hash)
+        public void SaveItineraryToCache(FlightItinerary itin, string hash)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return hash;
         }
 
-        public FlightItineraryFare GetItineraryFromCache(string hash)
+        public FlightItinerary GetItineraryFromCache(string hash)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (!cacheObject.IsNullOrEmpty)
             {
-                var itinerary = cacheObject.DeconvertTo<FlightItineraryFare>();
+                var itinerary = cacheObject.DeconvertTo<FlightItinerary>();
                 return itinerary;
             }
             else
@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public void SaveItinerariesToCache(string searchId, List<FlightItineraryFare> itineraryList)
+        public void SaveItinerariesToCache(string searchId, List<FlightItinerary> itineraryList)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"))));
         }
 
-        public List<FlightItineraryFare> GetItinerariesFromCache(string searchId)
+        public List<FlightItinerary> GetItinerariesFromCache(string searchId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (!cacheObject.IsNullOrEmpty)
             {
-                var itineraryList = cacheObject.DeconvertTo<List<FlightItineraryFare>>();
+                var itineraryList = cacheObject.DeconvertTo<List<FlightItinerary>>();
                 return itineraryList;
             }
             else

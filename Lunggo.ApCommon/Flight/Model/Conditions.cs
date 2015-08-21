@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class SpecificSearchConditions : SearchFlightConditions
     {
-        public List<FlightSegmentFare> FlightSegments { get; set; }
+        public List<FlightSegment> FlightSegments { get; set; }
     }
 
     public class SearchFlightConditions : ConditionsBase
@@ -32,6 +32,6 @@ namespace Lunggo.ApCommon.Flight.Model
 
     public class ConditionsBase
     {
-        public List<FlightTripInfo> TripInfos { get; set; }
+        public List<FlightTrip> Trips { get; set; }
     }
 }

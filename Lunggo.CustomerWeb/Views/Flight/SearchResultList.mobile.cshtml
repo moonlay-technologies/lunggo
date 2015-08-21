@@ -60,7 +60,7 @@
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
             CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
-            TripInfos = tripInfos,
+            Trips = tripInfos,
             TripType = FlightSearchData.ParseTripType(tripInfos)
         };
 
@@ -83,10 +83,10 @@
 <section class="page flight-search-page" ng-controller="flightController" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
     <section class="flight-search-param">
         <div class="param">
-            <b>(@data.TripInfos[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.TripInfos[0].DestinationAirport) @destinationCityNames[0]</b> <br />
-            <span><b>Departure Date : </b>@data.TripInfos[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
+            <b>(@data.Trips[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.Trips[0].DestinationAirport) @destinationCityNames[0]</b> <br />
+            <span><b>Departure Date : </b>@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
             {
-                <span><b>Return Flight : </b>@data.TripInfos[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
+                <span><b>Return Flight : </b>@data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
             } <b>Passenger : </b> @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant
         </div>
         <a href="#" class="change-hotel-param" data-function="toggle" data-target=".flight-search-form-wrapper">CHANGE</a>

@@ -17,7 +17,7 @@ namespace Lunggo.CustomerWeb.Models
 
         public class Complete
         {
-            public List<FlightTripInfo> TripInfos { get; set; }
+            public List<FlightTrip> Trips { get; set; }
             public int AdultCount { get; set; }
             public int ChildCount { get; set; }
             public int InfantCount { get; set; }
@@ -25,25 +25,25 @@ namespace Lunggo.CustomerWeb.Models
             public CabinClass CabinClass { get; set; }
         }
 
-        public static TripType ParseTripType(List<FlightTripInfo> tripInfos)
+        public static TripType ParseTripType(List<FlightTrip> trips)
         {
-            switch (tripInfos.Count)
+            switch (trips.Count)
             {
                 case 0:
                     return TripType.Undefined;
                 case 1:
                     return TripType.OneWay;
                 case 2:
-                    return (tripInfos.First().DestinationAirport == tripInfos.Last().OriginAirport &&
-                            tripInfos.First().OriginAirport == tripInfos.Last().DestinationAirport)
+                    return (trips.First().DestinationAirport == trips.Last().OriginAirport &&
+                            trips.First().OriginAirport == trips.Last().DestinationAirport)
                         ? TripType.Return
                         : TripType.OpenJaw;
                 default:
                     var circling = true;
-                    for (var i = 1; i < tripInfos.Count; i++)
-                        if (tripInfos[i].OriginAirport != tripInfos[i - 1].DestinationAirport)
+                    for (var i = 1; i < trips.Count; i++)
+                        if (trips[i].OriginAirport != trips[i - 1].DestinationAirport)
                             circling = false;
-                    if (tripInfos.First().OriginAirport != tripInfos.Last().DestinationAirport)
+                    if (trips.First().OriginAirport != trips.Last().DestinationAirport)
                         circling = false;
                     return circling ? TripType.Circle : TripType.OpenJaw;
             }

@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (input.BookingId == null)
                     input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
                 var tripInfoRecords = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { input.BookingId });
-                var tripInfos = tripInfoRecords.Select(record => new FlightTripInfo
+                var tripInfos = tripInfoRecords.Select(record => new FlightTrip
                 {
                     OriginAirport = record.OriginAirportCd,
                     DestinationAirport = record.DestinationAirportCd,
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var request = new TripDetailsConditions
                 {   
                     BookingId = input.BookingId,
-                    TripInfos = tripInfos
+                    Trips = tripInfos
                 };
                 var details = GetTripDetailsInternal(request);
                 if (details.IsSuccess)
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 BookingId = details.BookingId,
                 BookingNotes = details.BookingNotes,
                 FlightSegmentCount = details.FlightSegmentCount,
-                FlightItineraryDetails = details.FlightItineraries,
+                FlightItinerary = details.FlightItineraries,
                 TotalFare = details.TotalFare,
                 AdultTotalFare = details.AdultTotalFare,
                 ChildTotalFare = details.ChildTotalFare,

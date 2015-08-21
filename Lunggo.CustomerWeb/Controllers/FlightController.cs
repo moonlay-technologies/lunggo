@@ -33,19 +33,19 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightSelectData select)
         {
             var service = FlightService.GetInstance();
-            var itineraryFare = service.GetItineraryFromCache(select.token);
-            var itinerary = service.ConvertToItineraryApi(itineraryFare);
+            var itinerary = service.GetItineraryFromCache(select.token);
+            var itineraryApi = service.ConvertToItineraryApi(itinerary);
             return View(new FlightCheckoutData
             {
                 HashKey = select.token,
-                Itinerary = itinerary,
+                ItineraryApi = itineraryApi,
             });
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.ItineraryFare = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
+            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
             var passengerInfo = data.Passengers.Select(passenger => new PassengerInfoFare
             {
                 Type = passenger.Type,
@@ -68,17 +68,17 @@ namespace Lunggo.CustomerWeb.Controllers
                     Email = data.Contact.Email
                 },
                 PassengerInfoFares = passengerInfo.ToList(),
-                Itinerary = data.ItineraryFare,
-                TripInfos = new List<FlightTripInfo>
+                Itinerary = data.Itinerary,
+                Trips = new List<FlightTrip>
                 {
-                    new FlightTripInfo
+                    new FlightTrip
                     {
-                        OriginAirport = data.ItineraryFare.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.ItineraryFare.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.ItineraryFare.FlightTrips[0].DepartureDate
+                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
+                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
+                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
                     }
                 },
-                OverallTripType = data.ItineraryFare.TripType,
+                OverallTripType = data.Itinerary.TripType,
                 DiscountCode = data.DiscountCode
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
@@ -95,12 +95,12 @@ namespace Lunggo.CustomerWeb.Controllers
                         {
                             Id = "1",
                             Name = 
-                                data.ItineraryFare.TripType + " " +
-                                data.ItineraryFare.FlightTrips[0].OriginAirport + "-" +
-                                data.ItineraryFare.FlightTrips[0].DestinationAirport + " " +
-                                data.ItineraryFare.FlightTrips[0].DepartureDate.ToString("d MMM yy") +
-                                (data.ItineraryFare.TripType == TripType.Return
-                                ? "-" + data.ItineraryFare.FlightTrips[1].DepartureDate.ToString("d MMM yy")
+                                data.Itinerary.TripType + " " +
+                                data.Itinerary.FlightTrips[0].OriginAirport + "-" +
+                                data.Itinerary.FlightTrips[0].DestinationAirport + " " +
+                                data.Itinerary.FlightTrips[0].DepartureDate.ToString("d MMM yy") +
+                                (data.Itinerary.TripType == TripType.Return
+                                ? "-" + data.Itinerary.FlightTrips[1].DepartureDate.ToString("d MMM yy")
                                 : ""),
                             Quantity = 1,
                             Price = bookResult.FinalPrice

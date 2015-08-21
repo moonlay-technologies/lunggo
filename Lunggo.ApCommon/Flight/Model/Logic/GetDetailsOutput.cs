@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
     {
         public string BookingId { get; set; }
         public int FlightSegmentCount { get; set; }
-        public FlightItineraryDetails FlightItineraryDetails { get; set; }
+        public FlightItinerary FlightItinerary { get; set; }
         public decimal TotalFare { get; set; }
         public decimal AdultTotalFare { get; set; }
         public decimal ChildTotalFare { get; set; }

@@ -3,45 +3,7 @@ using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightSegmentApi : FlightSegmentBase
-    {
-        public string DepartureCity { get; set; }
-        public string DepartureAirportName { get; set; }
-        public string ArrivalCity { get; set; }
-        public string ArrivalAirportName { get; set; }
-        public string AirlineName { get; set; }
-        public string AirlineLogoUrl { get; set; }
-        public string OperatingAirlineName { get; set; }
-        public string OperatingAirlineLogoUrl { get; set; }
-        public bool Meal { get; set; }
-        public int RemainingSeats { get; set; }
-        public List<FlightStop> FlightStops { get; set; }
-    }
-    public class FlightSegmentFare : FlightSegmentBase
-    {
-        public bool Meal { get; set; }
-        public int RemainingSeats { get; set; }
-        public List<FlightStop> FlightStops { get; set; }
-    }
-
-    public class FlightSegmentDetails : FlightSegmentBase
-    {
-        public int Reference { get; set; }
-        public string Pnr { get; set; }
-        public string DepartureTerminal { get; set; }
-        public string DepartureCity { get; set; }
-        public string DepartureAirportName { get; set; }
-        public string ArrivalTerminal { get; set; }
-        public string ArrivalCity { get; set; }
-        public string ArrivalAirportName { get; set; }
-        public string AirlineName { get; set; }
-        public string AirlineLogoUrl { get; set; }
-        public string OperatingAirlineName { get; set; }
-        public string OperatingAirlineLogoUrl { get; set; }
-        public string Baggage { get; set; }
-    }
-
-    public class FlightSegmentBase
+    public class FlightSegment
     {
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
@@ -54,6 +16,22 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OperatingAirlineCode { get; set; }
         public string AircraftCode { get; set; }
         public string Rbd { get; set; }
+        public string DepartureTerminal { get; set; }
+        public string DepartureCity { get; set; }
+        public string DepartureAirportName { get; set; }
+        public string ArrivalTerminal { get; set; }
+        public string ArrivalCity { get; set; }
+        public string ArrivalAirportName { get; set; }
+        public string AirlineName { get; set; }
+        public string AirlineLogoUrl { get; set; }
+        public string OperatingAirlineName { get; set; }
+        public string OperatingAirlineLogoUrl { get; set; }
+        public List<FlightStop> FlightStops { get; set; }
+        public bool Meal { get; set; }
+        public string Baggage { get; set; }
+        public string Pnr { get; set; }   
+        public int RemainingSeats { get; set; }
+        
     }
 
     public class FlightStop

@@ -16,14 +16,16 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class GetFlightDb
     {
-        internal static IEnumerable<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
+        internal static List<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail });
-                foreach (var rsvNo in rsvNos)
+                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail }).ToList();
+                if (!rsvNos.Any())
+                    return null;
+                else
                 {
-                    yield return OverviewReservation(rsvNo);
+                    return rsvNos.Select(OverviewReservation).ToList();
                 }
             }
         }
@@ -43,9 +45,9 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 FlightReservation reservation = null;
-                var itineraryLookup = new Dictionary<long, FlightItineraryDetails>();
-                var tripLookup = new Dictionary<long, FlightTripDetails>();
-                var segmentLookup = new Dictionary<long, FlightSegmentDetails>();
+                var itineraryLookup = new Dictionary<long, FlightItinerary>();
+                var tripLookup = new Dictionary<long, FlightTrip>();
+                var segmentLookup = new Dictionary<long, FlightSegment>();
                 var passengerLookup = new Dictionary<long, PassengerInfoDetails>();
                 var dict = DictionaryService.GetInstance();
                 reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
@@ -71,24 +73,24 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                     Time = reservationRecord.PaymentTime
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Itinerary = new FlightItineraryDetails(),
+                                Itinerary = new FlightItinerary(),
                                 Passengers = new List<PassengerInfoDetails>()
                             };
                         }
-                        FlightItineraryDetails itinerary;
+                        FlightItinerary itinerary;
                         if (!itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(), out itinerary))
                         {
-                            itinerary = new FlightItineraryDetails
+                            itinerary = new FlightItinerary
                             {
-                                FlightTrips = new List<FlightTripDetails>()
+                                FlightTrips = new List<FlightTrip>()
                             };
                             reservation.Itinerary = itinerary;
                             itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                         }
-                        FlightTripDetails trip;
+                        FlightTrip trip;
                         if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
                         {
-                            trip = new FlightTripDetails
+                            trip = new FlightTrip
                             {
                                 OriginAirport = tripRecord.OriginAirportCd,
                                 OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
@@ -97,15 +99,15 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                 DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                FlightSegments = new List<FlightSegmentDetails>()
+                                FlightSegments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
                             itinerary.FlightTrips.Add(trip);
                         }
-                        FlightSegmentDetails segment;
+                        FlightSegment segment;
                         if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
                         {
-                            segment = new FlightSegmentDetails
+                            segment = new FlightSegment
                             {
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
@@ -153,9 +155,9 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 FlightReservation reservation = null;
-                var itineraryLookup = new Dictionary<long, FlightItineraryDetails>();
-                var tripLookup = new Dictionary<long, FlightTripDetails>();
-                var segmentLookup = new Dictionary<long, FlightSegmentDetails>();
+                var itineraryLookup = new Dictionary<long, FlightItinerary>();
+                var tripLookup = new Dictionary<long, FlightTrip>();
+                var segmentLookup = new Dictionary<long, FlightSegment>();
                 var passengerLookup = new Dictionary<long, PassengerInfoDetails>();
                 var dict = DictionaryService.GetInstance();
                 reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
@@ -201,24 +203,24 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                     Refund = refundInfo
                                 },
                                 TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Itinerary = new FlightItineraryDetails(),
+                                Itinerary = new FlightItinerary(),
                                 Passengers = new List<PassengerInfoDetails>()
                             };
                         }
-                        FlightItineraryDetails itinerary;
+                        FlightItinerary itinerary;
                         if (!itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(), out itinerary))
                         {
-                            itinerary = new FlightItineraryDetails
+                            itinerary = new FlightItinerary
                             {
-                                FlightTrips = new List<FlightTripDetails>()
+                                FlightTrips = new List<FlightTrip>()
                             };
                             reservation.Itinerary = itinerary;
                             itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                         }
-                        FlightTripDetails trip;
+                        FlightTrip trip;
                         if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
                         {
-                            trip = new FlightTripDetails
+                            trip = new FlightTrip
                             {
                                 OriginAirport = tripRecord.OriginAirportCd,
                                 OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
@@ -227,15 +229,15 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                                 DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                 DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                 DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                FlightSegments = new List<FlightSegmentDetails>()
+                                FlightSegments = new List<FlightSegment>()
                             };
                             tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
                             itinerary.FlightTrips.Add(trip);
                         }
-                        FlightSegmentDetails segment;
+                        FlightSegment segment;
                         if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
                         {
-                            segment = new FlightSegmentDetails
+                            segment = new FlightSegment
                             {
                                 OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
                                 OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
