@@ -1027,6 +1027,9 @@ hr {
   margin: 0;
   font-size: 20px; }
 
+.hotel-checkout-page .passport-country {
+  padding-left: 40px; }
+
 .hotel-checkout-page .customer-detail .form-control.user-title {
   width: 100%; }
 
