@@ -82,9 +82,7 @@ function flightTimeout(endTime) {
 
     // end time is only placeholder.
     // please change it to actual value.
-    endTime = new Date();
-    endTime.setMinutes(  endTime.getMinutes() + 1  );
-    // endTime.setSeconds(endTime.getSeconds() + 5);
+    endTime = new Date(endTime);
 
     setInterval(function () {
         checkTime();
@@ -108,9 +106,7 @@ function bookingTimeout(endTime) {
 
     // end time is only placeholder.
     // please change it to actual value.
-    endTime = new Date();
-    // endTime.setMinutes(endTime.getMinutes() + 1);
-    endTime.setSeconds(endTime.getSeconds() + 5);
+    endTime = new Date(endTime);
 
     setInterval(function () {
         checkTime();
