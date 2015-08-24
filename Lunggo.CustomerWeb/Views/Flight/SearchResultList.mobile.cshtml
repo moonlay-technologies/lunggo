@@ -17,7 +17,7 @@
 @{
     bool isValid;
 
-    List<FlightTrip> tripInfos = null;
+    List<FlightTrip> trips = null;
     FlightSearchData.Complete data = null;
     var originAirportNames = new List<string>();
     var destinationAirportNames = new List<string>();
@@ -34,7 +34,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
 
-        tripInfos = tripPart.Split('.').Select(info => new FlightTrip
+        trips = tripPart.Split('.').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             DestinationAirport = info.Substring(3, 3),
@@ -44,14 +44,14 @@
                 int.Parse(info.Substring(6, 2)))
         }).ToList();
 
-        foreach (var tripInfo in tripInfos)
+        foreach (var trip in trips)
         {
-            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.OriginAirport));
-            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.DestinationAirport));
-            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.OriginAirport));
-            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.DestinationAirport));
-            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.OriginAirport));
-            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.DestinationAirport));
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
         }
 
         data = new FlightSearchData.Complete
@@ -60,8 +60,8 @@
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
             CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
-            Trips = tripInfos,
-            TripType = FlightSearchData.ParseTripType(tripInfos)
+            Trips = trips,
+            TripType = FlightSearchData.ParseTripType(trips)
         };
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";
@@ -80,7 +80,7 @@
     </script>
 }
 
-<section class="page flight-search-page" ng-controller="flightController" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
+<section class="page flight-search-page" ng-controller="flightController" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
     <section class="flight-search-param">
         <div class="param">
             <b>(@data.Trips[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.Trips[0].DestinationAirport) @destinationCityNames[0]</b> <br />
