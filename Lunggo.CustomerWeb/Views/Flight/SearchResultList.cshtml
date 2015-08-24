@@ -18,7 +18,7 @@
 @{
     bool isValid;
     
-    List<FlightTrip> tripInfos = null;
+    List<FlightTrip> trips = null;
     FlightSearchData.Complete data = null;
     var originAirportNames = new List<string>();
     var destinationAirportNames = new List<string>();
@@ -35,7 +35,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
         
-        tripInfos = tripPart.Split('.').Select(info => new FlightTrip
+        trips = tripPart.Split('.').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             DestinationAirport = info.Substring(3, 3),
@@ -45,14 +45,14 @@
                 int.Parse(info.Substring(6, 2)))
         }).ToList();
 
-        foreach (var tripInfo in tripInfos)
+        foreach (var trip in trips)
         {
-            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.OriginAirport));
-            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(tripInfo.DestinationAirport));
-            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.OriginAirport));
-            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(tripInfo.DestinationAirport));
-            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.OriginAirport));
-            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(tripInfo.DestinationAirport));
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
         }
 
         data = new FlightSearchData.Complete
@@ -61,8 +61,8 @@
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
             CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
-            Trips = tripInfos,
-            TripType = FlightSearchData.ParseTripType(tripInfos)
+            Trips = trips,
+            TripType = FlightSearchData.ParseTripType(trips)
         };
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";
@@ -91,7 +91,7 @@
 {
   
 
-    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "TripInfos" : @JsonConvert.SerializeObject(tripInfos), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
+    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
         
         <div class="container page-container flight-result active">
             <div class="page-aside">
@@ -160,7 +160,7 @@
                         <h5 ng-if="'@tripType' == 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Onward Flight" /></span>@Html.I18NString("CW00062")</h5>
                         <h5 ng-if="'@tripType' != 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Flight Time" /></span>@Html.I18NString("CW00010")</h5>
                         <div class="filter-content">
-                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
+                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.trips[0].OriginAirport}})</small>
                             <div class="onward-depart-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
@@ -169,7 +169,7 @@
                             <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
                             <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
                             <hr/>
-                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.TripInfos[0].DestinationAirport}})</small>
+                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.trips[0].DestinationAirport}})</small>
                             <div class="onward-arrival-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
@@ -182,7 +182,7 @@
                     <div class="flight-filter return-time" ng-if="'@tripType' == 'return'">
                         <h5><span><img src="/Assets/images/filter-return.png" alt="Filter by Return Flight" /></span>@Html.I18NString("CW00063")</h5>
                         <div class="filter-content">
-                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.TripInfos[1].OriginAirport}})</small>
+                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.trips[1].OriginAirport}})</small>
                             <div class="return-depart-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.ReturnDepart.CurrentMin}}:00 HRS</span>
@@ -191,7 +191,7 @@
                             <input class="return-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMin" />
                             <input class="return-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMax" />
                             <hr />
-                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.TripInfos[1].DestinationAirport}})</small>
+                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.trips[1].DestinationAirport}})</small>
                             <div class="return-arrival-slider"></div>
                             <div class="price-slider-text">
                                 <span>{{FlightSearchFilter.ReturnArrival.CurrentMin}}:00 HRS</span>
@@ -373,7 +373,7 @@
                         <div class="filter onward-filter">
                             <h3 class="filter-title"><span><img src="/Assets/images/filter-onward.png" alt="Filter Transit" /></span> Onward Time</h3>
                             <div class="filter-content">
-                                <small>Take-off from ({{FlightSearchParams.TripInfos[0].OriginAirport}})</small>
+                                <small>Take-off from ({{FlightSearchParams.trips[0].OriginAirport}})</small>
                                 <div class="onward-depart-slider"></div>
                                 <div class="price-slider-text">
                                     <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
@@ -382,7 +382,7 @@
                                 <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
                                 <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
                                 <hr />
-                                <small>Landing at ({{FlightSearchParams.TripInfos[0].DestinationAirport}})</small>
+                                <small>Landing at ({{FlightSearchParams.trips[0].DestinationAirport}})</small>
                                 <div class="onward-arrival-slider"></div>
                                 <div class="price-slider-text">
                                     <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
@@ -395,7 +395,7 @@
                         <div class="filter return-filter" ng-if="'@tripType' == 'return'">
                             <h3 class="filter-title"><span><img src="/Assets/images/filter-onward.png" alt="Filter Transit" /></span> Return Time</h3>
                             <div class="filter-content">
-                                <small>Take-off from ({{FlightSearchParams.TripInfos[1].OriginAirport}})</small>
+                                <small>Take-off from ({{FlightSearchParams.trips[1].OriginAirport}})</small>
                                 <div class="return-depart-slider"></div>
                                 <div class="price-slider-text">
                                     <span>{{FlightSearchFilter.ReturnDepart.CurrentMin}}:00 HRS</span>
@@ -404,7 +404,7 @@
                                 <input class="return-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMin" />
                                 <input class="return-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMax" />
                                 <hr />
-                                <small>Landing at ({{FlightSearchParams.TripInfos[1].DestinationAirport}})</small>
+                                <small>Landing at ({{FlightSearchParams.trips[1].DestinationAirport}})</small>
                                 <div class="return-arrival-slider"></div>
                                 <div class="price-slider-text">
                                     <span>{{FlightSearchFilter.ReturnArrival.CurrentMin}}:00 HRS</span>
