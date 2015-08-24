@@ -2818,6 +2818,44 @@ hr {
       display: block;
       font-weight: bold; }
 
+.feedback-button {
+  position: fixed;
+  bottom: 0%;
+  left: 80%;
+  z-index: 999; }
+  .feedback-button a {
+    color: inherit;
+    display: block;
+    background: #3face4;
+    padding: 10px 30px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 0;
+    color: #fff;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3face4+0,004ce5+100 */
+    background: #3face4;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #3face4 0%, #004ce5 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3face4), color-stop(100%, #004ce5));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #3face4 0%, #004ce5 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #3face4 0%, #004ce5 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #3face4 0%, #004ce5 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, #3face4 0%, #004ce5 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3face4', endColorstr='#004ce5',GradientType=0 );
+    /* IE6-9 */
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+
 .campaign-page {
   background-position: top center;
   background-repeat: no-repeat; }

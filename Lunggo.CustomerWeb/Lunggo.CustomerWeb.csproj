@@ -2189,6 +2189,7 @@
     <Content Include="Views\Shared\_Notice.cshtml" />
     <Content Include="Views\Template\invoice.cshtml" />
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
+    <Content Include="Views\Shared\_Feedback.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
