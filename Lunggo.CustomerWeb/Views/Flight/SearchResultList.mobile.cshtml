@@ -17,7 +17,7 @@
 @{
     bool isValid;
 
-    List<FlightTripInfo> tripInfos = null;
+    List<FlightTrip> tripInfos = null;
     FlightSearchData.Complete data = null;
     var originAirportNames = new List<string>();
     var destinationAirportNames = new List<string>();
@@ -34,7 +34,7 @@
         var infoPart = parts.Last();
         isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
 
-        tripInfos = tripPart.Split('.').Select(info => new FlightTripInfo
+        tripInfos = tripPart.Split('.').Select(info => new FlightTrip
         {
             OriginAirport = info.Substring(0, 3),
             DestinationAirport = info.Substring(3, 3),

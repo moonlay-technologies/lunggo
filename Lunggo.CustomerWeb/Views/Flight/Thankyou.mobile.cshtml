@@ -177,7 +177,7 @@
                             </div>
                             <div class="col-sm-4 receipt-payment">
                                 <h3>Informasi Pembayaran</h3>
-                                <h4><b>Harga total :</b> @Model.Itinerary.Currency @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
+                                <h4><b>Harga total :</b> Rp @Model.Itinerary.FinalIdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
                                 <h4><b>Metode Pembayaran :</b> @Model.Payment.Method</h4>
                             </div>
                         </div>

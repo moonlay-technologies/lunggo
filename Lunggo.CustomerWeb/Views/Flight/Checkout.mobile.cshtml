@@ -265,7 +265,7 @@
                     <div class="flight onward">
                         <h3 class="text-center">Onward Flight</h3>
                         <div class="trip">
-                            <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[0].Airlines[0].LogoUrl" alt="@Model.Itinerary.FlightTrips[0].Airlines[0].Name" src="@Model.Itinerary.FlightTrips[0].Airlines[0].LogoUrl"> @Model.Itinerary.FlightTrips[0].Airlines[0].Name</h5>
+                            <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
                             <div class="trip-wrapper">
                                 <div class="trip-origin">
                                     <span>Departure</span>
@@ -283,7 +283,7 @@
                                 </div>
                                 <div class="trip-duration">
                                     <span>Duration</span>
-                                    <span class="time ng-binding">@Model.Itinerary.FlightTrips[0].TotalDuration.ToString("g")</span>
+                                    <span class="time ng-binding">@TimeSpan.FromTicks(Model.Itinerary.FlightTrips[0].FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
                                     <span class="ng-binding"></span>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
                         <div class="flight return">
                             <h3 class="text-center">Return Flight</h3>
                             <div class="trip">
-                                <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[1].Airlines[0].LogoUrl" alt="@Model.Itinerary.FlightTrips[0].Airlines[0].Name" src="@Model.Itinerary.FlightTrips[0].Airlines[0].LogoUrl"> @Model.Itinerary.FlightTrips[0].Airlines[0].Name</h5>
+                                <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[1].FlightSegments[0].AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
                                 <div class="trip-wrapper">
                                     <div class="trip-origin">
                                         <span>Departure</span>
@@ -312,7 +312,7 @@
                                     </div>
                                     <div class="trip-duration">
                                         <span>Duration</span>
-                                        <span class="time ng-binding">@Model.Itinerary.FlightTrips[1].TotalDuration.ToString("g")</span>
+                                        <span class="time ng-binding">@TimeSpan.FromTicks(Model.Itinerary.FlightTrips[1].FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
                                         <span class="ng-binding"></span>
                                     </div>
                                 </div>
@@ -383,7 +383,7 @@
                         <tbody>
                             <tr>
                                 <td>Total Fare</td>
-                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>Rp @Model.Itinerary.FinalIdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                             <tr>
                                 <td>Tax and Service</td>
@@ -393,7 +393,7 @@
                         <tfoot>
                             <tr>
                                 <td>Total Price</td>
-                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>Rp @Model.Itinerary.FinalIdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                         </tfoot>
                     </table>
