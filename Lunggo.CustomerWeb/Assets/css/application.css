@@ -1330,6 +1330,24 @@ hr {
 .flight-search-page .sticky-wrapper {
   height: 0 !important; }
 
+.flight-search-page .back-to-top {
+  background: #fff;
+  position: fixed;
+  bottom: 30%;
+  left: 80%; }
+  .flight-search-page .back-to-top a {
+    display: block;
+    background: #fff;
+    color: #3face4;
+    padding: 10px;
+    border: 2px solid #3face4; }
+    .flight-search-page .back-to-top a img {
+      display: block;
+      margin-bottom: 19px; }
+    .flight-search-page .back-to-top a span {
+      display: block;
+      font-size: 14px; }
+
 .flight-search-page .flight-filter-mobile {
   float: right;
   display: none; }
@@ -2821,7 +2839,7 @@ hr {
 .feedback-button {
   position: fixed;
   bottom: 0%;
-  left: 80%;
+  right: 5%;
   z-index: 999; }
   .feedback-button a {
     color: inherit;
