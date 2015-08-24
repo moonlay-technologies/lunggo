@@ -89,10 +89,9 @@
 
 @if (isValid)
 {
-  
 
     <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
-        
+
         <div class="container page-container flight-result active">
             <div class="page-aside">
             
@@ -205,7 +204,7 @@
 
             </div><!-- .page-aside -->
             <div class="page-wrapper">
-
+            
                 <header class="page-header">
                     <div class="">
                         <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
@@ -850,6 +849,13 @@
 
                         </article><!-- .flight -->
                         <!-- loop end here -->
+                    
+                        <div class="back-to-top">
+                            <a href="#">
+                                <img src="/Assets/images/backtotop.jpg" alt="Back to Top" />
+                                <span>Back To Top</span>
+                            </a>
+                        </div>
 
                     </section><!-- .flght-list -->
 
