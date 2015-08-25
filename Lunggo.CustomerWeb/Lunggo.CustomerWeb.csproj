@@ -2200,6 +2200,7 @@
     <Content Include="Views\Template\HomePageCampaign.cshtml" />
     <Content Include="Views\Term\HowToBook.cshtml" />
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
+    <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
