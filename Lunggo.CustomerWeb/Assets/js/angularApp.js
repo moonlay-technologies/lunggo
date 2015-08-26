@@ -199,7 +199,7 @@
         }
     ]);
 
-    // fight controller
+    // flight controller
     app.controller('FlightController', [
         '$http', '$scope', function ($http, $scope) {
 
@@ -721,6 +721,138 @@
 
                 
             }
+
+        }
+    ]);
+
+    // flight return controller
+    app.controller('TripFlightController', [
+        '$http', '$scope', function($http, $scope) {
+
+            // ******************************
+            // on document ready
+            angular.element(document).ready(function () {
+                $scope.getFlights();
+            });
+
+            // ******************************
+            // general variables
+            $scope.departureFlightConfig = {
+                flightSearchParam: {},
+                searchId: {},
+                flightList: [],
+                flightFilter: {},
+                flightSort: {},
+                activeFlight: -1,
+                chosenFlight: -1
+            };
+            $scope.returnFlightConfig = {
+                flightSearchParam: {},
+                searchId: {},
+                flightList: [],
+                flightFilter: {},
+                flightSort: {},
+                activeFlight: -1,
+                chosenFlight: -1
+            };
+
+            // ******************************
+            // general functions
+
+            // get date time
+            $scope.getDateTime = function(dateTime) {
+                return new Date(dateTime);
+            }
+
+            // get time
+            $scope.getTime = function(dateTime) {
+                
+            }
+
+            // get hour
+            $scope.getDate = function(dateTime) {
+                
+            }
+
+            // get duration
+            $scope.getDuration = function(duration) {
+                
+            }
+
+            // set active flight
+            $scope.setActiveFlight = function(target, flightSequence) {
+                if (target == 'departure') {
+                    if ( $scope.departureFlightConfig.activeFlight == flightSequence ) {
+                        $scope.departureFlightConfig.activeFlight = -1;
+                    } else {
+                        $scope.departureFlightConfig.activeFlight = flightSequence;
+                    }
+                } else if(target == 'return') {
+                    if ($scope.returnFlightConfig.activeFlight == flightSequence) {
+                        $scope.returnFlightConfig.activeFlight = -1;
+                    } else {
+                        $scope.returnFlightConfig.activeFlight = flightSequence;
+                    }
+                }
+            }
+
+            // set chosen flight
+            $scope.setChosenFlight = function (target, flightSequence) {
+                if (target == 'departure') {
+                    if ($scope.departureFlightConfig.chosenFlight == flightSequence) {
+                        $scope.departureFlightConfig.chosenFlight = -1;
+                    } else {
+                        $scope.departureFlightConfig.chosenFlight = flightSequence;
+                    }
+                } else if (target == 'return') {
+                    if ($scope.returnFlightConfig.chosenFlight == flightSequence) {
+                        $scope.returnFlightConfig.chosenFlight = -1;
+                    } else {
+                        $scope.returnFlightConfig.chosenFlight = flightSequence;
+                    }
+                }
+            }
+
+            // ******************************
+            // get flights
+            $scope.getFlights = function () {
+                // get departure flight list
+                $http.get( '/Assets/js/sampleData/CGKHND201015-100y.js' , {
+                    params: {
+                        request: $('.flight-search-page').attr('data-flight-search-params')
+                    }
+                }).success(function (returnData) {
+                    $scope.arrangeFlightData($scope.departureFlightConfig, returnData);
+                }).error(function(returnData) {
+                    console.log('ERROR :' + returnData);
+                });
+                // get return flight list
+                $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', {
+                    params: {
+                        request: $('.flight-search-page').attr('data-flight-search-params')
+                    }
+                }).success(function (returnData) {
+                    $scope.arrangeFlightData($scope.returnFlightConfig, returnData);
+                }).error(function (returnData) {
+                    console.log('ERROR :' + returnData);
+                });
+            }
+
+            // arrange flight data
+            $scope.arrangeFlightData = function(target, flightData) {
+                target.searchId = flightData.SearchId;
+                target.flightList = flightData.FlightList;
+                console.log(flightData);
+            }
+
+
+            // ******************************
+            // flight filtering
+
+
+            // ******************************
+            // flight sorting
+
 
         }
     ]);

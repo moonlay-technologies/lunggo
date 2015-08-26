@@ -2386,12 +2386,20 @@ hr {
       width: 60%; }
     .trip-flight-list-wrapper .trip-return-wrapper.inactive {
       width: 38%; }
-  .trip-flight-list-wrapper .inactive .flight {
-    opacity: 0.5; }
-    .trip-flight-list-wrapper .inactive .flight .flight-info {
-      width: 100% !important; }
-    .trip-flight-list-wrapper .inactive .flight .flight-action {
+  .trip-flight-list-wrapper > .inactive {
+    cursor: pointer; }
+    .trip-flight-list-wrapper > .inactive .flight-sort {
       display: none; }
+    .trip-flight-list-wrapper > .inactive .flight-filter {
+      display: none; }
+    .trip-flight-list-wrapper > .inactive .flight {
+      opacity: 0.5; }
+      .trip-flight-list-wrapper > .inactive .flight .flight-info {
+        width: 100% !important; }
+      .trip-flight-list-wrapper > .inactive .flight .flight-action {
+        display: none; }
+      .trip-flight-list-wrapper > .inactive .flight .flight-detail {
+        display: none; }
   .trip-flight-list-wrapper .wrapper-header {
     background: #3face4;
     color: #fff;
@@ -2434,6 +2442,10 @@ hr {
   .trip-flight-list-wrapper .flight-list .flight {
     display: block;
     margin-bottom: 10px; }
+    .trip-flight-list-wrapper .flight-list .flight.active .flight-main, .trip-flight-list-wrapper .flight-list .flight.active .flight-detail {
+      border-color: #3face4; }
+    .trip-flight-list-wrapper .flight-list .flight.active .flight-detail {
+      height: auto; }
     .trip-flight-list-wrapper .flight-list .flight:before, .trip-flight-list-wrapper .flight-list .flight:after {
       content: "";
       clear: both;
@@ -2494,6 +2506,8 @@ hr {
             width: 100%; }
           .trip-flight-list-wrapper .flight-list .flight .flight-main .flight-info .flight-bottom .flight-detail-trigger {
             width: 30%; }
+            .trip-flight-list-wrapper .flight-list .flight .flight-main .flight-info .flight-bottom .flight-detail-trigger a {
+              cursor: pointer; }
           .trip-flight-list-wrapper .flight-list .flight .flight-main .flight-info .flight-bottom .flight-duration {
             width: 70%; }
       .trip-flight-list-wrapper .flight-list .flight .flight-main .flight-action {
@@ -2559,6 +2573,15 @@ hr {
         border-top: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
         font-style: italic; }
+      .trip-flight-list-wrapper .flight-list .flight .flight-detail .flight-operator {
+        display: block;
+        clear: both;
+        width: 100%;
+        margin-top: 20px; }
+        .trip-flight-list-wrapper .flight-list .flight .flight-detail .flight-operator p {
+          margin-bottom: 0; }
+        .trip-flight-list-wrapper .flight-list .flight .flight-detail .flight-operator img {
+          height: 30px; }
       .trip-flight-list-wrapper .flight-list .flight .flight-detail .segment-footer {
         padding: 10px;
         border-top: 1px solid #ddd; }

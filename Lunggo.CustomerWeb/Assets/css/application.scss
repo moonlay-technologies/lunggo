@@ -963,7 +963,7 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
-// return flight search page
+// trip flight search page
 .trip-flight-search-page {}
 
 .trip-flight-list-wrapper {padding-top:15px;
@@ -977,10 +977,13 @@ hr {border-color:#aaa;}
         &.active {width:60%;}
         &.inactive {width:38%;}
     }
-    .inactive {
+    &>.inactive {cursor:pointer;
+        .flight-sort {display:none;}
+        .flight-filter {display:none;}
         .flight {opacity:0.5;
             .flight-info {width:100% !important;}
             .flight-action {display:none;}
+            .flight-detail {display:none;}
         }
     }
     .wrapper-header {background:$blue-default; color:#fff; padding:10px;
@@ -1008,6 +1011,8 @@ hr {border-color:#aaa;}
     }
     .flight-list {
         .flight {display:block; margin-bottom:10px;
+            &.active .flight-main, &.active .flight-detail {border-color:$blue-default;}
+            &.active .flight-detail {height:auto;}
             &:before, &:after {@include clearfix();}
             .flight-main {background:#fff; border:$border-default;
                 &:before, &:after {@include clearfix();}
@@ -1029,7 +1034,9 @@ hr {border-color:#aaa;}
                         &>div {float:left;}
                         &:before, &:after {@include clearfix();}
                         /*-----*/
-                        .flight-detail-trigger {width:30%;}
+                        .flight-detail-trigger {width:30%;
+                            a {cursor:pointer;}
+                        }
                         .flight-duration {width:70%;}
                     }
                 }
@@ -1060,6 +1067,10 @@ hr {border-color:#aaa;}
                     .segment-arrival {width:27%;}
                 }
                 .transit {text-align:center; border-top:$border-default; border-bottom:$border-default; font-style:italic;}
+                .flight-operator {display:block; clear:both; width:100%; margin-top:20px;
+                    p {margin-bottom:0;}
+                    img {height:30px;}
+                }
                 .segment-footer {padding:10px; border-top:$border-default;
                     label {font-weight:bold;}
                     h4 {font-weight:bold; margin-top:0px; margin-bottom:0px; color:$blue-default;}
