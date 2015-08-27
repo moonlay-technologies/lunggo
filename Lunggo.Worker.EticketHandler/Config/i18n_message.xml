@@ -207,7 +207,7 @@
   <Message code="CW00103" lang="en_US" value="Passport Number" />
   <Message code="CW00103" lang="id_ID" value="Nomor Passport" />
   <Message code="CW00104" lang="en_US" value="Passport Expiry Date" />
-  <Message code="CW00104" lang="id_ID" value="Tanggal Passport Berakhir" />
+  <Message code="CW00104" lang="id_ID" value="Kadaluarsa Passport" />
   <Message code="CW00105" lang="en_US" value="While we are validating your flight of choice" />
   <Message code="CW00105" lang="id_ID" value="Kami sedang memvalidasi penerbangan pilihan Anda" />
   <Message code="CW00106" lang="en_US" value="PAYMENT" />

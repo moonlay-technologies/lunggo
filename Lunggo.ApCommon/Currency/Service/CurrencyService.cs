@@ -60,6 +60,7 @@ namespace Lunggo.ApCommon.Currency.Service
 
         public decimal GetSupplierExchangeRate(Supplier supplier)
         {
+            SetSupplierExchangeRate(supplier, 1, 14000);
             var supplierName = GetSupplierName(supplier);
             var deposit = GetSupplierDepositInCache(supplierName);
             return deposit.ExchangeRate;
@@ -78,7 +79,7 @@ namespace Lunggo.ApCommon.Currency.Service
         private static void SetSupplierDepositInCache(string supplier, Deposit deposit)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var redisKey = supplier + "Rate";
             var cacheObject = Serialize(deposit);
             redisDb.StringSet(redisKey, cacheObject);
@@ -87,7 +88,7 @@ namespace Lunggo.ApCommon.Currency.Service
         private static Deposit GetSupplierDepositInCache(string supplier)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var redisKey = supplier + "Rate";
             var cacheObject = redisDb.StringGet(redisKey);
             var deposit = Deserialize<Deposit>(cacheObject);
@@ -97,7 +98,7 @@ namespace Lunggo.ApCommon.Currency.Service
         private static void SetCurrencyRateInCache(string currency, decimal rate)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var redisKey = currency + "Rate";
             redisDb.StringSet(redisKey, (RedisValue)rate);
         }
@@ -105,7 +106,7 @@ namespace Lunggo.ApCommon.Currency.Service
         private static decimal GetCurrencyRateInCache(string currency)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var redisKey = currency + "Rate";
             var rate = (decimal)redisDb.StringGet(redisKey);
             return rate;

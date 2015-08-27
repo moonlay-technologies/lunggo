@@ -30,6 +30,20 @@
     </script>
 }
 
+
+<!-- facebook code start -->
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=185725818169727";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- facebook code end -->
+
+
 <div class="thankyou-page flight-receipt">
     
     <div class="container">
@@ -129,6 +143,8 @@
             </div>
         </div>
         
+        <div class="fb-share-button" data-layout="button"></div>
+
         @if (Model.Payment.Status == PaymentStatus.Settled)
         {
 
