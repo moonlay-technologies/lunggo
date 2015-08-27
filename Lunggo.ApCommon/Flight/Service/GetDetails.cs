@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public FlightReservation GetDetails(string rsvNo)
+        public FlightReservationApi GetDetails(string rsvNo)
         {
             return GetFlightDb.Reservation(rsvNo);
         }

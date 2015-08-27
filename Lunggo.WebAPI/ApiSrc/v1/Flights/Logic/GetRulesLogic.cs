@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 var service = FlightService.GetInstance();
                 if (request.HashKey == null)
-                    request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
+                    request.HashKey = service.SaveItineraryFromSearchToCache(request.SearchId, request.ItinIndex);
                 var rulesServiceRequest = PreprocessServiceRequest(request);
                 var rulesServiceResponse = service.GetRules(rulesServiceRequest);
                 var apiResponse = AssembleApiResponse(rulesServiceResponse, request);

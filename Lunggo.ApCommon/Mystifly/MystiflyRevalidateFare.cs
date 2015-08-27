@@ -37,9 +37,6 @@ namespace Lunggo.ApCommon.Mystifly
                     if (response.Success && !response.Errors.Any())
                     {
                         result = MapResult(response, conditions);
-                        result.IsSuccess = true;
-                        result.Errors = null;
-                        result.ErrorMessages = null;
                     }
                     else
                     {
@@ -75,15 +72,23 @@ namespace Lunggo.ApCommon.Mystifly
             var currency = CurrencyService.GetInstance();
             var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = new RevalidateFareResult();
-            CheckFareValidity(response, result);
             if (response.PricedItineraries.Any())
+            {
+                result.IsSuccess = true;
+                result.IsValid = response.IsValid;
                 result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions, rate);
+                result.Errors = null;
+                result.ErrorMessages = null;
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.IsValid = false;
+                result.Itinerary = null;
+                result.Errors = new List<FlightError> {FlightError.FareIdNoLongerValid};
+                result.ErrorMessages = null;
+            }
             return result;
-        }
-
-        private static void CheckFareValidity(AirRevalidateRS response, RevalidateFareResult result)
-        {
-            result.IsValid = response.IsValid;
         }
 
         private static void MapError(AirRevalidateRS response, ResultBase result)

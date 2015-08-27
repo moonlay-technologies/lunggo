@@ -20,6 +20,8 @@ namespace Lunggo.ApCommon.Flight.Model
     public class FlightItinerary : FlightItineraryBase
     {
         public string FareId { get; set; }
+        public string BookingId { get; set; }
+        public BookingStatus BookingStatus { get; set; }
         public List<FlightTrip> FlightTrips { get; set; }
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }

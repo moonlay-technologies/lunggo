@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Mystifly
             var fareType = FlightIdUtil.GetFareType(bookInfo.FareId);
             if (fareType != FareType.Lcc)
             {
-                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any() && response.Status.ToLower() == "confirmed")
                     {
-                        result = MapResult(response, fareType);
+                        result = MapResult(response, fareType, true);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -77,6 +77,7 @@ namespace Lunggo.ApCommon.Mystifly
                                 MapError(response, result);
                         }
                         result.IsSuccess = false;
+                        result = MapResult(response, fareType, false);
                     }
                 }
                 return result;
@@ -111,15 +112,15 @@ namespace Lunggo.ApCommon.Mystifly
             return bookingId;
         }
 
-        private static AirTraveler MapAirTraveler(PassengerInfoFare passengerInfoFare)
+        private static AirTraveler MapAirTraveler(FlightPassenger passenger)
         {
             var airTraveler = new AirTraveler
             {
-                PassengerName = MapPassengerName(passengerInfoFare),
-                PassengerType = MapPassengerType(passengerInfoFare),
-                Gender = MapGender(passengerInfoFare),
-                Passport = MapPassport(passengerInfoFare),
-                DateOfBirth = passengerInfoFare.DateOfBirth,
+                PassengerName = MapPassengerName(passenger),
+                PassengerType = MapPassengerType(passenger),
+                Gender = MapGender(passenger),
+                Passport = MapPassport(passenger),
+                DateOfBirth = passenger.DateOfBirth,
                 ExtraServices = null,
                 ExtraServices1_1 = null,
                 SpecialServiceRequest = null,
@@ -130,9 +131,9 @@ namespace Lunggo.ApCommon.Mystifly
             return airTraveler;
         }
 
-        private static OnePointService.Flight.PassengerType MapPassengerType(PassengerInfoFare passengerInfoFare)
+        private static OnePointService.Flight.PassengerType MapPassengerType(FlightPassenger passenger)
         {
-            switch (passengerInfoFare.Type)
+            switch (passenger.Type)
             {
                 case PassengerType.Adult:
                     return OnePointService.Flight.PassengerType.ADT;
@@ -145,9 +146,9 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static OnePointService.Flight.Gender MapGender(PassengerInfoFare passengerInfoFare)
+        private static OnePointService.Flight.Gender MapGender(FlightPassenger passenger)
         {
-            switch (passengerInfoFare.Gender)
+            switch (passenger.Gender)
             {
                 case Gender.Male:
                     return OnePointService.Flight.Gender.M;
@@ -158,24 +159,24 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static PassengerName MapPassengerName(PassengerInfoFare passengerInfoFare)
+        private static PassengerName MapPassengerName(FlightPassenger passenger)
         {
             var passengerName = new PassengerName
             {
-                PassengerTitle = MapPassengerTitle(passengerInfoFare),
-                PassengerFirstName = passengerInfoFare.FirstName,
-                PassengerLastName = passengerInfoFare.LastName,
+                PassengerTitle = MapPassengerTitle(passenger),
+                PassengerFirstName = passenger.FirstName,
+                PassengerLastName = passenger.LastName,
                 ExtensionData = null
             };
             return passengerName;
         }
 
-        private static PassengerTitle MapPassengerTitle(PassengerInfoFare passengerInfoFare)
+        private static PassengerTitle MapPassengerTitle(FlightPassenger passenger)
         {
-            switch (passengerInfoFare.Type)
+            switch (passenger.Type)
             {
                 case PassengerType.Adult:
-                    switch (passengerInfoFare.Title)
+                    switch (passenger.Title)
                     {
                         case Title.Mister:
                             return PassengerTitle.MR;
@@ -187,7 +188,7 @@ namespace Lunggo.ApCommon.Mystifly
                             return PassengerTitle.Default;
                     }
                 case PassengerType.Child:
-                    switch (passengerInfoFare.Title)
+                    switch (passenger.Title)
                     {
                         case Title.Mister:
                             return PassengerTitle.MSTR;
@@ -197,7 +198,7 @@ namespace Lunggo.ApCommon.Mystifly
                             return PassengerTitle.Default;
                     }
                 case PassengerType.Infant:
-                    switch (passengerInfoFare.Title)
+                    switch (passenger.Title)
                     {
                         case Title.Mister:
                         case Title.Miss:
@@ -210,15 +211,15 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static Passport MapPassport(PassengerInfoFare passengerInfoFare)
+        private static Passport MapPassport(FlightPassenger passenger)
         {
-            if (passengerInfoFare.PassportNumber != null)
+            if (passenger.PassportNumber != null)
             {
                 var passport = new Passport
                 {
-                    PassportNumber = passengerInfoFare.PassportNumber,
-                    ExpiryDate = passengerInfoFare.PassportExpiryDate.GetValueOrDefault(),
-                    Country = passengerInfoFare.PassportCountry,
+                    PassportNumber = passenger.PassportNumber,
+                    ExpiryDate = passenger.PassportExpiryDate.GetValueOrDefault(),
+                    Country = passenger.PassportCountry,
                     ExtensionData = null
                 };
                 return passport;
@@ -243,17 +244,27 @@ namespace Lunggo.ApCommon.Mystifly
             return travelerInfo;
         }
 
-        private static BookFlightResult MapResult(AirBookRS response, FareType fareType)
+        private static BookFlightResult MapResult(AirBookRS response, FareType fareType, bool isSuccess)
         {
-            return new BookFlightResult
-            {
-                Status = new BookingStatusInfo
+            if (isSuccess)
+                return new BookFlightResult
                 {
-                    BookingStatus = BookingStatus.Booked,
-                    BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
-                    TimeLimit = response.TktTimeLimit
-                }
-            };
+                    Status = new BookingStatusInfo
+                    {
+                        BookingStatus = BookingStatus.Booked,
+                        BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                        TimeLimit = response.TktTimeLimit
+                    }
+                };
+            else
+                return new BookFlightResult
+                {
+                    Status = new BookingStatusInfo
+                    {
+                        BookingStatus = BookingStatus.Failed,
+                        BookingId = FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                    }
+                };
         }
 
         private static void MapError(AirBookRS response, ResultBase result)

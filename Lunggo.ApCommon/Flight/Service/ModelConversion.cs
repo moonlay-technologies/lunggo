@@ -132,9 +132,9 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal PassengerInfoFare ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
+        internal FlightPassenger ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
         {
-            return new PassengerInfoFare
+            return new FlightPassenger
             {
                 Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
                 FirstName = summaryRecord.FirstName,
@@ -143,9 +143,9 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal PassengerInfoDetails ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
+        internal FlightPassenger ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
         {
-            return new PassengerInfoDetails
+            return new FlightPassenger
             {
                 Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
                 FirstName = summaryRecord.FirstName,

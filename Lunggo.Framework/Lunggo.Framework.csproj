@@ -165,6 +165,7 @@
     <Compile Include="Database\QueryRecord.cs" />
     <Compile Include="Database\TableDao.cs" />
     <Compile Include="Database\TableRecord.cs" />
+    <Compile Include="Encoder\Encoder.cs" />
     <Compile Include="Error\Error.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />

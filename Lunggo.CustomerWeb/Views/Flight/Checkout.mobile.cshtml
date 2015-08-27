@@ -54,7 +54,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
-    var hashKey = "";
+    var token = "";
 
     try
     {
@@ -64,7 +64,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
-        hashKey = Model.HashKey;
+        token = Model.Token;
     }
     catch
     {
@@ -108,7 +108,7 @@
 
 @using (Html.BeginForm("Checkout", "Flight", FormMethod.Post, new { @class="form-horizontal"}))
 {
-    <input type="hidden" name="HashKey" value="@Model.HashKey" />
+    <input type="hidden" name="Token" value="@Model.Token" />
     <section class="page group-checkout group-flight-checkout customer-detail-page" ng-controller="checkoutController" ng-init="passengersNumber = @passengerCount">
         <section class="checkout-progress">
             <div class="checkout-step">

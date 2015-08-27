@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Mystifly
             else
             {
                 var bookInfo = WebfareBooking(FlightIdUtil.GetCoreId(bookingId));
-                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {

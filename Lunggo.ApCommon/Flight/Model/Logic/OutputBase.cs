@@ -9,10 +9,35 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public List<FlightError> Errors { get; set; }
         public List<string> ErrorMessages { get; set; }
 
-        public OutputBase()
+        public void PartiallySucceed()
         {
-            Errors = new List<FlightError>();
-            ErrorMessages = new List<string>();
+            if (Errors == null)
+                Errors = new List<FlightError>();
+            Errors.Insert(0, FlightError.PartialSuccess);
+        }
+
+        public void AddError(FlightError error)
+        {
+            if (Errors == null)
+                Errors = new List<FlightError>();
+            Errors.Add(error);
+        }
+
+        public void AddError(string message)
+        {
+            if (ErrorMessages == null)
+                ErrorMessages = new List<string>();
+            ErrorMessages.Add(message);
+        }
+
+        public void AddError(FlightError error, string message)
+        {
+            if (Errors == null)
+                Errors = new List<FlightError>();
+            if (ErrorMessages == null)
+                ErrorMessages = new List<string>();
+            Errors.Add(error);
+            ErrorMessages.Add(message);
         }
     }
 }

@@ -19,22 +19,22 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public FlightReservation GetReservation(string rsvNo)
+        public FlightReservationApi GetReservation(string rsvNo)
         {
             return GetFlightDb.Reservation(rsvNo);
         }
 
-        public FlightReservation GetOverviewReservation(string rsvNo)
+        public FlightReservationApi GetOverviewReservation(string rsvNo)
         {
             return GetFlightDb.OverviewReservation(rsvNo);
         }
 
-        public List<FlightReservation> GetOverviewReservationsByContactEmail(string contactEmail)
+        public List<FlightReservationApi> GetOverviewReservationsByContactEmail(string contactEmail)
         {
             return GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
         }
 
-        public List<FlightReservation> SearchReservations(FlightReservationSearch search)
+        public List<FlightReservationApi> SearchReservations(FlightReservationSearch search)
         {
             return GetFlightDb.SearchReservations(search).ToList();
         }

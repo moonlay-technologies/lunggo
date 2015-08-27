@@ -21,7 +21,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             var flight = FlightService.GetInstance();
             var email = User.Identity.GetEmail();
             var reservations = flight.GetOverviewReservationsByContactEmail(email);
-            return View(reservations ?? new List<FlightReservation>());
+            return View(reservations ?? new List<FlightReservationApi>());
         }
 
         public ActionResult OrderFlightHistoryDetail(string rsvNo)

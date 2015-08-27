@@ -13,7 +13,8 @@ namespace Lunggo.ApCommon.Flight.Constant
         Ticketing = 2,
         Ticketed = 3,
         Cancelled = 4,
-        ScheduleChanged = 5
+        ScheduleChanged = 5,
+        Failed = 6
     }
     public class BookingStatusCd
     {
@@ -31,6 +32,8 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return "CANC";
                 case BookingStatus.ScheduleChanged:
                     return "CHGD";
+                case BookingStatus.Failed:
+                    return "FAIL";
                 default:
                     return "";
             }
@@ -50,6 +53,8 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return BookingStatus.Cancelled;
                 case "CHGD":
                     return BookingStatus.ScheduleChanged;
+                case "FAIL":
+                    return BookingStatus.Failed;
                 default:
                     return BookingStatus.Undefined;
             }

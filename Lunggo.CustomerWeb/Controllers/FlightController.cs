@@ -38,7 +38,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var itineraryApi = service.ConvertToItineraryApi(itinerary);
             return View(new FlightCheckoutData
             {
-                HashKey = select.token,
+                Token = select.token,
                 ItineraryApi = itineraryApi,
                 ExpiryTime = expiryTime
             });
@@ -47,8 +47,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
-            var passengerInfo = data.Passengers.Select(passenger => new PassengerInfoFare
+            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.Token);
+            var passengerInfo = data.Passengers.Select(passenger => new FlightPassenger
             {
                 Type = passenger.Type,
                 Title = passenger.Title,
@@ -62,29 +62,20 @@ namespace Lunggo.CustomerWeb.Controllers
             });
             var bookInfo = new BookFlightInput
             {
-                ContactData = new ContactData
+                ItinCacheId = data.Token,
+                Contact = new ContactData
                 {
                     Name = data.Contact.Name,
                     CountryCode = data.Contact.CountryCode,
                     Phone = data.Contact.Phone,
                     Email = data.Contact.Email
                 },
-                PassengerInfoFares = passengerInfo.ToList(),
-                Itinerary = data.Itinerary,
-                Trips = new List<FlightTrip>
-                {
-                    new FlightTrip
-                    {
-                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                    }
-                },
+                Passengers = passengerInfo.ToList(),
                 OverallTripType = data.Itinerary.TripType,
                 DiscountCode = data.DiscountCode
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
-            if (bookResult.IsSuccess && bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+            if (bookResult.IsSuccess)
             {
                 var transactionDetails = new TransactionDetails
                 {
@@ -119,7 +110,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Checkout", new FlightSelectData
                 {
-                    token = data.HashKey,
+                    token = data.Token,
                     error = bookResult.Errors[0]
                 });
             }

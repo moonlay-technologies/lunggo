@@ -86,7 +86,7 @@ namespace Lunggo.ApCommon.Mystifly
             result.TotalFare =
                 decimal.Parse(response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.Amount);
             result.Currency = response.TravelItinerary.ItineraryInfo.ItineraryPricing.TotalFare.CurrencyCode;
-            MapDetailsPTCFareBreakdowns(response, result);
+            MapDetailsPtcFareBreakdowns(response, result);
             return result;
         }
 
@@ -175,35 +175,23 @@ namespace Lunggo.ApCommon.Mystifly
             };
         }
 
-        private static List<PassengerInfoDetails> MapDetailsPassengerInfo(AirTripDetailsRS response)
+        private static List<FlightPassenger> MapDetailsPassengerInfo(AirTripDetailsRS response)
         {
-            var passengerInfoDetails = new List<PassengerInfoDetails>();
+            var passengerInfoDetails = new List<FlightPassenger>();
             foreach (var customerInfo in response.TravelItinerary.ItineraryInfo.CustomerInfos)
             {
-                var eTicket =
-                    MapETicket(customerInfo.ETickets);
-                var passengerInfo = new PassengerInfoDetails
+                var passengerInfo = new FlightPassenger
                 {
                     Title = MapDetailsPassengerTitle(customerInfo),
                     FirstName = customerInfo.Customer.PaxName.PassengerFirstName,
                     LastName = customerInfo.Customer.PaxName.PassengerLastName,
                     Type = MapDetailsPassengerType(customerInfo),
-                    ETicket = eTicket
                 };
                 if (customerInfo.Customer.PassportNumber != null)
                     passengerInfo.PassportNumber = customerInfo.Customer.PassportNumber;
                 passengerInfoDetails.Add(passengerInfo);
             }
             return passengerInfoDetails;
-        }
-
-        private static List<Eticket> MapETicket(IEnumerable<ETicket> eticket)
-        {
-            return eticket.Select(e => new Eticket
-            {
-                Reference = e.ItemRPH,
-                Number = e.eTicketNumber
-            }).ToList();
         }
 
         private static Title MapDetailsPassengerTitle(CustomerInfo customerInfo)
@@ -236,7 +224,7 @@ namespace Lunggo.ApCommon.Mystifly
             }
         }
 
-        private static void MapDetailsPTCFareBreakdowns(AirTripDetailsRS response, GetTripDetailsResult result)
+        private static void MapDetailsPtcFareBreakdowns(AirTripDetailsRS response, GetTripDetailsResult result)
         {
             foreach (var breakdown in response.TravelItinerary.ItineraryInfo.TripDetailsPTC_FareBreakdowns)
             {

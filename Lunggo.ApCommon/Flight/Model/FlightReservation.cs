@@ -10,15 +10,28 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightReservation
+    public class FlightReservationApi
     {
         public string RsvNo { get; set; }
         public DateTime RsvTime { get; set; }
-        public FlightItinerary Itinerary { get; set; }
-        public List<PassengerInfoDetails> Passengers { get; set; }
+        public FlightItineraryApi Itinerary { get; set; }
+        public List<FlightPassenger> Passengers { get; set; }
         public PaymentInfo Payment { get; set; }
         public ContactData Contact { get; set; }
         public string InvoiceNo { get; set; }
         public TripType TripType { get; set; }
+    }
+
+    public class FlightReservation
+    {
+        public string RsvNo { get; set; }
+        public DateTime RsvTime { get; set; }
+        public List<FlightItinerary> Itineraries { get; set; }
+        public List<FlightPassenger> Passengers { get; set; }
+        public PaymentInfo Payment { get; set; }
+        public ContactData Contact { get; set; }
+        public string InvoiceNo { get; set; }
+        public TripType TripType { get; set; }
+        public DiscountData Discount { get; set; }
     }
 }

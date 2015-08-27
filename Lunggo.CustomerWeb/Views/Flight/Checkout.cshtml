@@ -46,7 +46,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
-    var hashKey = "";
+    var token = "";
 
     try
     {
@@ -56,7 +56,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.ItineraryApi.RequireBirthDate;
         needPassport = Model.ItineraryApi.RequirePassport;
-        hashKey = Model.HashKey;
+        token = Model.Token;
     }
     catch
     {
@@ -84,7 +84,7 @@
 
                     <section class="customer-detail">
                         <section class="customer-form">
-                            <input type="text" class="hidden" name="HashKey" value="@Model.HashKey" />
+                            <input type="text" class="hidden" name="Token" value="@Model.Token" />
                             <div class="form-group">
                                 <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
                                 <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")">
@@ -227,7 +227,7 @@
                         <section class="payment-button">
                             <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
                             <small>@Html.I18NString("CW00109")</small>
-                        <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-hashkey="@hashKey">@Html.I18NString("CW00108")</button>
+                        <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-hashkey="@token">@Html.I18NString("CW00108")</button>
                         </section><!-- .payment-button -->
                     </section><!-- .customer-detail -->
 
