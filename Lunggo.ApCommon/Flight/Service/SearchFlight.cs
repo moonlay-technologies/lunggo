@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var cacheItin = GetItinerariesFromCache(input.SearchId);
+                var cacheItin = GetSearchedItinerariesFromCache(input.SearchId);
                 if (cacheItin == null)
                     result = SearchByThirdPartyService(input);
                 else
@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 output.Itineraries = result.FlightItineraries;
                 output.SearchId = result.SearchId;
-                output.ExpiryTime = GetItinerariesExpiryInCache(input.SearchId);
+                output.ExpiryTime = GetSearchedItinerariesExpiryInCache(input.SearchId);
             }
             else
             {
@@ -56,8 +56,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchByThirdPartyService(SearchFlightInput input)
         {
-            var searchId = input.SearchId ??
-                       FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var conditions = new SearchFlightConditions
             {
                 AdultCount = input.Conditions.AdultCount,
@@ -69,8 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             var result = SearchFlightInternal(conditions);
             if (result.FlightItineraries != null)
-                SaveItinerariesToCache(searchId, result.FlightItineraries);
-            result.SearchId = searchId;
+                result.SearchId = SaveSearchedItinerariesToCache(result.FlightItineraries);
             return result;
         }
     }

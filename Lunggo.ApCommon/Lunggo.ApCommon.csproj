@@ -161,6 +161,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
+    <Compile Include="Flight\Model\DiscountData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
@@ -178,7 +179,7 @@
     <Compile Include="Flight\Model\MarginRule.cs" />
     <Compile Include="Flight\Model\DiscountRule.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
-    <Compile Include="Flight\Model\PassengerInfo.cs" />
+    <Compile Include="Flight\Model\FlightPassenger.cs" />
     <Compile Include="Flight\Model\ResultBase.cs" />
     <Compile Include="Flight\Model\RevalidateFareResult.cs" />
     <Compile Include="Flight\Model\SearchFlightResult.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Flight\Database\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightPaymentQuery.cs" />
+    <Compile Include="Flight\Service\BundleItineraries.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
     <Compile Include="Flight\Service\SendToCustomer.cs" />
     <Compile Include="Flight\Service\Reservations.cs" />
@@ -319,6 +321,7 @@
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
     <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
+    <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs" />
     <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />

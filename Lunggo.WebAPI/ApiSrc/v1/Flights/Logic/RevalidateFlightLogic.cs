@@ -15,51 +15,32 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
     {
         public static FlightRevalidateApiResponse RevalidateFlight(FlightRevalidateApiRequest request)
         {
-            if (IsValid(request))
-            {
-                var service = FlightService.GetInstance();
-                if (request.HashKey == null)
-                    request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
-                var revalidateServiceRequest = PreprocessServiceRequest(request);
-                var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
-                if (!revalidateServiceResponse.IsValid && revalidateServiceResponse.Itinerary != null)
-                    UpdateItinerary(revalidateServiceResponse.Itinerary, request.HashKey);
-                var apiResponse = AssembleApiResponse(revalidateServiceResponse, request);
-                return apiResponse;
-            }
-            else
-            {
-                return new FlightRevalidateApiResponse
-                {
-                    HashKey = null,
-                    IsValid = false,
-                    IsOtherFareAvailable = false,
-                    NewFare = 0,
-                    OriginalRequest = request
-                };
-            }
+            var service = FlightService.GetInstance();
+            var revalidateServiceRequest = PreprocessServiceRequest(request);
+            var revalidateServiceResponse = service.RevalidateFlight(revalidateServiceRequest);
+            var apiResponse = AssembleApiResponse(revalidateServiceResponse, request);
+            return apiResponse;
         }
 
         private static RevalidateFlightInput PreprocessServiceRequest(FlightRevalidateApiRequest request)
         {
             var service = FlightService.GetInstance();
-            var itin = service.GetItineraryFromCache(request.HashKey);
+            List<FlightItinerary> itins;
+            if (request.Step == FlightRevalidateApiRequest.RevalidateStep.First)
+            {
+                request.ItinCacheId = service.SaveItineraryFromSearchToCache(request.SearchId, request.ItinIndex);
+                itins = new List<FlightItinerary>() {
+                    service.GetItineraryFromCache(request.ItinCacheId)
+                };
+            }
+            else
+            {
+                itins = service.GetItinerarySetFromCache(request.ItinCacheId);
+            }
             return new RevalidateFlightInput
             {
-                FareId = itin.FareId,
-                Trips = itin.FlightTrips.Select(trip => new FlightTrip
-                {
-                    OriginAirport = trip.OriginAirport,
-                    DestinationAirport = trip.DestinationAirport,
-                    DepartureDate = trip.DepartureDate,
-                }).ToList()
+                ItinCacheId = "a"
             };
-        }
-
-        private static void UpdateItinerary(FlightItinerary itin, string hash)
-        {
-            var service = FlightService.GetInstance();
-            service.SaveItineraryToCache(itin, hash);
         }
 
         private static FlightRevalidateApiResponse AssembleApiResponse(RevalidateFlightOutput revalidateServiceResponse, FlightRevalidateApiRequest request)
@@ -70,7 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightRevalidateApiResponse
                     {
-                        HashKey = request.HashKey,
+                        Token = request.ItinCacheId,
                         IsValid = true,
                         IsOtherFareAvailable = null,
                         NewFare = null,
@@ -79,14 +60,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 }
                 else
                 {
-                    if (revalidateServiceResponse.Itinerary == null)
+                    if (revalidateServiceResponse.NewFare != null)
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            HashKey = null,
+                            Token = request.ItinCacheId,
                             IsValid = false,
-                            IsOtherFareAvailable = false,
-                            NewFare = null,
+                            IsOtherFareAvailable = true,
+                            NewFare = revalidateServiceResponse.NewFare,
                             OriginalRequest = request
                         };
                     }
@@ -94,10 +75,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            HashKey = request.HashKey,
+                            Token = null,
                             IsValid = false,
-                            IsOtherFareAvailable = true,
-                            NewFare = revalidateServiceResponse.Itinerary.LocalPrice,
+                            IsOtherFareAvailable = false,
+                            NewFare = null,
                             OriginalRequest = request
                         };
                     }
@@ -107,7 +88,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRevalidateApiResponse
                 {
-                    HashKey = null,
+                    Token = null,
                     IsValid = false,
                     IsOtherFareAvailable = false,
                     NewFare = 0,
@@ -120,7 +101,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return
                 request != null &&
-                (request.SearchId != null || request.HashKey != null);
+                (request.SearchId != null || request.ItinCacheId != null);
         }
     }
 }
