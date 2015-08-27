@@ -2657,6 +2657,118 @@ hr {
           float: right;
           padding: 5px 40px; }
 
+.trip-flight-overview {
+  width: 700px;
+  height: 365px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto; }
+  .trip-flight-overview header {
+    padding: 15px;
+    background: #3face4;
+    color: #fff; }
+    .trip-flight-overview header h3 {
+      position: relative;
+      margin: 0; }
+    .trip-flight-overview header .close-overview {
+      position: absolute;
+      right: 0;
+      top: 0; }
+  .trip-flight-overview .flight-main {
+    background: #fff;
+    /*-----*/ }
+    .trip-flight-overview .flight-main h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 5px 10px; }
+    .trip-flight-overview .flight-main > div:before, .trip-flight-overview .flight-main > div:after {
+      content: "";
+      clear: both;
+      display: block;
+      width: 100%; }
+    .trip-flight-overview .flight-main > div > div {
+      float: left; }
+      .trip-flight-overview .flight-main > div > div h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold; }
+      .trip-flight-overview .flight-main > div > div h4 {
+        margin: 0;
+        font-size: 13px; }
+      .trip-flight-overview .flight-main > div > div h4 + h3 {
+        margin-top: 5px; }
+      .trip-flight-overview .flight-main > div > div h5 {
+        margin: 0; }
+    .trip-flight-overview .flight-main .flight-airline {
+      width: 20%;
+      padding: 10px; }
+      .trip-flight-overview .flight-main .flight-airline .airline-image {
+        height: 45px; }
+      .trip-flight-overview .flight-main .flight-airline .airline-name {
+        display: block; }
+    .trip-flight-overview .flight-main .flight-departure {
+      width: 30%;
+      text-align: right;
+      padding: 10px; }
+    .trip-flight-overview .flight-main .flight-duration {
+      width: 20%;
+      text-align: center;
+      padding: 10px 10px; }
+    .trip-flight-overview .flight-main .flight-arrival {
+      width: 30%;
+      padding: 10px; }
+    .trip-flight-overview .flight-main .flight-return-info {
+      border-top: 1px solid #ddd; }
+  .trip-flight-overview footer {
+    background: #ededed;
+    padding: 15px;
+    /*-----*/ }
+    .trip-flight-overview footer:before, .trip-flight-overview footer:after {
+      content: "";
+      clear: both;
+      display: block;
+      width: 100%; }
+    .trip-flight-overview footer > div {
+      float: left; }
+    .trip-flight-overview footer .flight-detail-trigger {
+      width: 30%; }
+      .trip-flight-overview footer .flight-detail-trigger a {
+        font-size: 16px;
+        display: block;
+        font-weight: bold;
+        padding: 12px 0;
+        cursor: pointer; }
+    .trip-flight-overview footer .flight-price {
+      width: 40%;
+      text-align: right; }
+      .trip-flight-overview footer .flight-price label {
+        font-weight: bold; }
+      .trip-flight-overview footer .flight-price h3 {
+        font-weight: bold;
+        margin: 0; }
+    .trip-flight-overview footer .flight-book {
+      width: 30%;
+      padding-left: 15px; }
+      .trip-flight-overview footer .flight-book a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-weight: bold;
+        padding: 12px 10px; }
+
+.page-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: rgba(50, 50, 50, 0.5);
+  top: 0;
+  left: 0; }
+
 .tab-pane#history .history-wrapper .history-list {
   padding: 0;
   margin: 0;
