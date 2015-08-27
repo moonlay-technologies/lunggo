@@ -67,7 +67,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 OriginalRequest = request,
                 SearchId = searchServiceResponse.SearchId,
-                FlightList = FlightService.GetInstance().ConvertToItinerariesApi(searchServiceResponse.Itineraries),
+                FlightList = searchServiceResponse.Itineraries,
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
                 ExpiryTime = searchServiceResponse.ExpiryTime
             };

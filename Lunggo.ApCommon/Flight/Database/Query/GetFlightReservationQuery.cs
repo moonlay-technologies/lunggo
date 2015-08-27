@@ -5,7 +5,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightReservationQuery : QueryBase<GetFlightReservationQuery, FlightReservationApi, FlightReservationTableRecord, FlightItineraryTableRecord, FlightTripTableRecord, FlightSegmentTableRecord, FlightPassengerTableRecord>
+    internal class GetFlightReservationQuery : QueryBase<GetFlightReservationQuery, FlightReservation, FlightReservationTableRecord, FlightItineraryTableRecord, FlightTripTableRecord, FlightSegmentTableRecord, FlightPassengerTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -2,6 +2,7 @@
 {
     public class GetRulesInput
     {
-        public string FareId { get; set; }
+        public string SearchId { get; set; }
+        public int ItinIndex { get; set; }
     }
 }

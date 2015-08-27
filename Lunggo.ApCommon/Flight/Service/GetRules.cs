@@ -7,7 +7,8 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public GetRulesOutput GetRules(GetRulesInput input)
         {
-            var rules = GetRulesInternal(input.FareId);
+            var itin = GetItineraryFromSearchCache(input.SearchId, input.ItinIndex);
+            var rules = GetRulesInternal(itin.FareId);
             var output = new GetRulesOutput
             {
                 IsSuccess = rules.IsSuccess,

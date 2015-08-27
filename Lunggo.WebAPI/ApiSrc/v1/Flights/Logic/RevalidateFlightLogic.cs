@@ -27,19 +27,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             var service = FlightService.GetInstance();
             List<FlightItinerary> itins;
             if (request.Step == FlightRevalidateApiRequest.RevalidateStep.First)
-            {
-                request.ItinCacheId = service.SaveItineraryFromSearchToCache(request.SearchId, request.ItinIndex);
-                itins = new List<FlightItinerary>() {
-                    service.GetItineraryFromCache(request.ItinCacheId)
-                };
-            }
-            else
-            {
-                itins = service.GetItinerarySetFromCache(request.ItinCacheId);
-            }
+                request.Token = service.SelectFlight(request.SearchId, request.ItinIndex);
             return new RevalidateFlightInput
             {
-                ItinCacheId = "a"
+                Token = request.Token
             };
         }
 
@@ -51,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightRevalidateApiResponse
                     {
-                        Token = request.ItinCacheId,
+                        Token = request.Token,
                         IsValid = true,
                         IsOtherFareAvailable = null,
                         NewFare = null,
@@ -64,7 +55,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Token = request.ItinCacheId,
+                            Token = request.Token,
                             IsValid = false,
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.NewFare,
@@ -101,7 +92,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return
                 request != null &&
-                (request.SearchId != null || request.ItinCacheId != null);
+                (request.SearchId != null || request.Token != null);
         }
     }
 }

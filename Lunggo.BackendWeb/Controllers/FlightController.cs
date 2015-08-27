@@ -28,7 +28,7 @@ namespace Lunggo.BackendWeb.Controllers
         public ActionResult Detail(string rsvNo)
         {
             var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservation(rsvNo);
+            var reservation = flight.GetReservationApi(rsvNo);
             return View(reservation);
         }
     }

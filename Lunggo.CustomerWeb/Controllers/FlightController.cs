@@ -30,16 +30,24 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(search);
         }
 
-        public ActionResult Checkout(FlightSelectData select)
+        [HttpPost]
+        public ActionResult Select(string token)
+        {
+            var tokens = token.Split('.').ToList();
+            var flightService = FlightService.GetInstance();
+            var newToken = flightService.BundleFlight(tokens);
+            return RedirectToAction("Checkout", newToken);
+        }
+
+        public ActionResult Checkout(string token)
         {
             var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryFromCache(select.token);
-            var expiryTime = service.GetItineraryExpiryInCache(select.token);
-            var itineraryApi = service.ConvertToItineraryApi(itinerary);
+            var itinerary = service.GetItineraryApi(token);
+            var expiryTime = service.GetItineraryExpiry(token);
             return View(new FlightCheckoutData
             {
-                Token = select.token,
-                ItineraryApi = itineraryApi,
+                Token = token,
+                Itinerary = itinerary,
                 ExpiryTime = expiryTime
             });
         }
@@ -47,7 +55,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.Token);
+            var service = FlightService.GetInstance();
+            data.Itinerary = service.GetItineraryApi(data.Token);
             var passengerInfo = data.Passengers.Select(passenger => new FlightPassenger
             {
                 Type = passenger.Type,
@@ -119,7 +128,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Thankyou(string rsvNo)
         {
             var service = FlightService.GetInstance();
-            var summary = service.GetReservation(rsvNo);
+            var summary = service.GetReservationApi(rsvNo);
             return View(summary);
         }
 

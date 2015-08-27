@@ -20,7 +20,8 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var bookingIds = GetFlightBookingIdQuery.GetInstance().Execute(conn, new {input.RsvNo});
+                var reservation = GetReservation(input.RsvNo);
+                var bookingIds = reservation.Itineraries.Select(itin => itin.BookingId);
                 var output = new IssueTicketOutput();
                 foreach (var bookingId in bookingIds)
                 {

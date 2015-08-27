@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private const string SingleItinKeyPrefix = "9284";
         private const string ItinBundleKeyPrefix = "3462";
 
-        public string SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList)
+        internal string SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList)
         {
             var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var redisService = RedisService.GetInstance();
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return searchId;
         }
 
-        public List<FlightItinerary> GetSearchedItinerariesFromCache(string searchId)
+        internal List<FlightItinerary> GetSearchedItinerariesFromCache(string searchId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public DateTime GetSearchedItinerariesExpiryInCache(string searchId)
+        public DateTime GetSearchedItinerariesExpiry(string searchId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return expiryTime;
         }
 
-        public string SaveItineraryFromSearchToCache(string searchId, int itinIndex)
+        internal string SaveItineraryFromSearchToCache(string searchId, int itinIndex)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itinCacheId = SingleItinKeyPrefix + plainItinCacheId;
@@ -72,8 +72,13 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
             return itinCacheId;
         }
+        internal FlightItinerary GetItineraryFromSearchCache(string searchId, int itinIndex)
+        {
+            var itins = GetSearchedItinerariesFromCache(searchId);
+            return itins[itinIndex];
+        }
 
-        public string SaveItineraryToCache(FlightItinerary itin)
+        internal string SaveItineraryToCache(FlightItinerary itin)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itinCacheId = SingleItinKeyPrefix + plainItinCacheId;
@@ -81,7 +86,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return itinCacheId;
         }
 
-        public void SaveItineraryToCache(FlightItinerary itin, string itinCacheId)
+        internal void SaveItineraryToCache(FlightItinerary itin, string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -91,7 +96,7 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
         }
 
-        public FlightItinerary GetItineraryFromCache(string itinCacheId)
+        internal FlightItinerary GetItineraryFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -109,7 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public DateTime GetItineraryExpiryInCache(string itinCacheId)
+        public DateTime GetItineraryExpiry(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -119,7 +124,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return expiryTime;
         }
 
-        public string SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle)
+        internal string SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itinCacheId = ItinBundleKeyPrefix + plainItinCacheId;
@@ -127,7 +132,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return itinCacheId;
         }
 
-        public void SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle, string itinCacheId)
+        internal void SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle, string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -140,7 +145,7 @@ namespace Lunggo.ApCommon.Flight.Service
             redisDb.StringSet(redisBundleKey, bundleCacheObject, TimeSpan.FromMinutes(timeout));
         }
 
-        public List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)
+        internal List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);

@@ -19,22 +19,36 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public FlightReservationApi GetReservation(string rsvNo)
+        public FlightItineraryApi GetItineraryApi(string token)
+        {
+            var itin = GetItineraryFromCache(token);
+            return ConvertToItineraryApi(itin);
+        }
+
+        public FlightReservationApi GetReservationApi(string rsvNo)
+        {
+            var rsv = GetReservation(rsvNo);
+            return ConvertToReservationApi(rsv);
+        }
+
+        internal FlightReservation GetReservation(string rsvNo)
         {
             return GetFlightDb.Reservation(rsvNo);
         }
 
         public FlightReservationApi GetOverviewReservation(string rsvNo)
         {
-            return GetFlightDb.OverviewReservation(rsvNo);
+            var rsv = GetFlightDb.OverviewReservation(rsvNo);
+            return ConvertToReservationApi(rsv);
         }
 
         public List<FlightReservationApi> GetOverviewReservationsByContactEmail(string contactEmail)
         {
-            return GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
+            var rsvs = GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
+            return rsvs.Select(ConvertToReservationApi).ToList();
         }
 
-        public List<FlightReservationApi> SearchReservations(FlightReservationSearch search)
+        public List<FlightReservation> SearchReservations(FlightReservationSearch search)
         {
             return GetFlightDb.SearchReservations(search).ToList();
         }
@@ -44,12 +58,12 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateFlightDb.ExpireReservations();
         }
 
-        public void CancelReservation(string rsvNo, CancellationType cancellationType)
+        internal void CancelReservation(string rsvNo, CancellationType cancellationType)
         {
             UpdateFlightDb.CancelReservation(rsvNo, cancellationType);
         }
 
-        public void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
+        internal void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
         {
             UpdateFlightDb.ConfirmRefund(rsvNo, refund);
         }

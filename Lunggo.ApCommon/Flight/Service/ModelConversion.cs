@@ -18,25 +18,29 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public List<FlightItineraryApi> ConvertToItinerariesApi(IEnumerable<FlightItinerary> itineraries)
+        internal FlightReservationApi ConvertToReservationApi(FlightReservation reservation)
         {
-            if (itineraries != null)
+            if (reservation != null)
             {
-                var list = itineraries.Select(ConvertToItineraryApi).ToList();
-                for (var i = 0; i < list.Count; i++)
+                return new FlightReservationApi
                 {
-                    list[i].SequenceNo = i;
-                }
-                var orderedList = list.OrderBy(itin => itin.SequenceNo);
-                return orderedList.ToList();
+                    RsvNo = reservation.RsvNo,
+                    RsvTime = reservation.RsvTime,
+                    TripType = reservation.TripType,
+                    InvoiceNo = reservation.InvoiceNo,
+                    Itinerary = ConvertToItineraryApi(BundleItineraries(reservation.Itineraries)),
+                    Contact = reservation.Contact,
+                    Passengers = reservation.Passengers,
+                    Payment = reservation.Payment
+                };
             }
             else
             {
-                return new List<FlightItineraryApi>();
+                return new FlightReservationApi();
             }
         }
 
-        public FlightItineraryApi ConvertToItineraryApi(FlightItinerary itinerary)
+        internal FlightItineraryApi ConvertToItineraryApi(FlightItinerary itinerary)
         {
             if (itinerary != null)
             {

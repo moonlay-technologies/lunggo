@@ -9,7 +9,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
     {
         public string SearchId { get; set; }
         public int ItinIndex { get; set; }
-        public string ItinCacheId { get; set; }
+        public string Token { get; set; }
         public RevalidateStep Step { get; set; }
 
         public enum RevalidateStep

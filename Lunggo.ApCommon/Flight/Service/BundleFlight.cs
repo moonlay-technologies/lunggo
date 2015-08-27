@@ -9,7 +9,15 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public FlightItinerary BundleItineraries(List<FlightItinerary> itins)
+        public string BundleFlight(List<string> tokens)
+        {
+            var itins = tokens.Select(GetItineraryFromCache).ToList();
+            var itinBundle = BundleItineraries(itins);
+            var newToken = SaveItinerarySetAndBundleToCache(itins, itinBundle);
+            return newToken;
+        }
+
+        internal FlightItinerary BundleItineraries(List<FlightItinerary> itins)
         {
             var itin = new FlightItinerary
             {

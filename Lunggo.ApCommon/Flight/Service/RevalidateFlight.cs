@@ -12,9 +12,9 @@ namespace Lunggo.ApCommon.Flight.Service
         public RevalidateFlightOutput RevalidateFlight(RevalidateFlightInput input)
         {
             var output = new RevalidateFlightOutput();
-            var itins = input.ItinCacheId.Substring(0, 4) == ItinBundleKeyPrefix 
-                ? GetItinerarySetFromCache(input.ItinCacheId) 
-                : new List<FlightItinerary>{GetItineraryFromCache(input.ItinCacheId)};
+            var itins = input.Token.Substring(0, 4) == ItinBundleKeyPrefix 
+                ? GetItinerarySetFromCache(input.Token) 
+                : new List<FlightItinerary>{GetItineraryFromCache(input.Token)};
             foreach (var itin in itins)
             {
                 var outputSet = new RevalidateFlightOutputSet();
@@ -45,10 +45,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.Sets.Add(outputSet);
             }
             var newItins = output.Sets.Select(set => set.Itinerary).ToList();
-            if (input.ItinCacheId.Substring(0, 4) == ItinBundleKeyPrefix)
-                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.ItinCacheId);
+            if (input.Token.Substring(0, 4) == ItinBundleKeyPrefix)
+                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
             else
-                SaveItineraryToCache(newItins.Single(), input.ItinCacheId);
+                SaveItineraryToCache(newItins.Single(), input.Token);
             if (output.Sets.TrueForAll(set => set.IsSuccess))
             {
                 output.IsSuccess = true;
