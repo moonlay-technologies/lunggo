@@ -76,7 +76,7 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 result.IsSuccess = true;
                 result.IsValid = response.IsValid;
-                result.Itinerary = MapFlightItineraryFare(response.PricedItineraries[0], conditions, rate);
+                result.Itinerary = MapFlightItinerary(response.PricedItineraries[0], conditions, rate);
                 result.Errors = null;
                 result.ErrorMessages = null;
             }

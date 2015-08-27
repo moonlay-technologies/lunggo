@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 AdultCount = itins[0].AdultCount,
                 ChildCount = itins[0].ChildCount,
                 InfantCount = itins[0].InfantCount,
-                CabinClass = itins[0].CabinClass,
+                RequestedCabinClass = itins[0].RequestedCabinClass,
                 CanHold = itins.TrueForAll(i => i.CanHold),
                 FinalIdrPrice = itins.Sum(i => i.FinalIdrPrice),
                 RequireBirthDate = itins.Any(i => i.RequireBirthDate),

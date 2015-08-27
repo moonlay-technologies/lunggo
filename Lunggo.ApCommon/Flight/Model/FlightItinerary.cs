@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public FareType FareType { get; set; }
-        public CabinClass CabinClass { get; set; }   
+        public CabinClass RequestedCabinClass { get; set; }   
         public FlightSupplier Supplier { get; set; }
     }
 }
