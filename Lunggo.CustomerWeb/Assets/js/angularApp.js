@@ -827,7 +827,7 @@
             // get flights
             $scope.getFlights = function () {
                 // get departure flight list
-                $http.get( '/Assets/js/sampleData/CGKHND201015-100y.js' , {
+                $http.get(FlightSearchConfig.Url, {
                     params: {
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }
@@ -837,7 +837,7 @@
                     console.log('ERROR :' + returnData);
                 });
                 // get return flight list
-                $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', {
+                $http.get(FlightSearchConfig.Url, {
                     params: {
                         request: $('.flight-search-page').attr('data-flight-search-params')
                     }

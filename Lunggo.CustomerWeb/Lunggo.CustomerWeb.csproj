@@ -2149,7 +2149,7 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Flight\SearchResultList.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Single.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
@@ -2177,7 +2177,7 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Single.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Template\LandingPage.cshtml" />
@@ -2193,6 +2193,7 @@
     <Content Include="Views\Template\invoice.cshtml" />
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

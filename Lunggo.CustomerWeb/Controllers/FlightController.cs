@@ -27,7 +27,35 @@ namespace Lunggo.CustomerWeb.Controllers
         [DeviceDetectionFilter]
         public ActionResult SearchResultList(FlightSearchData search)
         {
-            return View(search);
+            try
+            {
+                var parts = search.info.Split('-');
+                var tripPart = parts.First();
+
+                var trips = tripPart.Split('.').Select(info => new FlightTrip
+                {
+                    OriginAirport = info.Substring(0, 3),
+                    DestinationAirport = info.Substring(3, 3),
+                    DepartureDate = new DateTime(
+                        2000 + int.Parse(info.Substring(10, 2)),
+                        int.Parse(info.Substring(8, 2)),
+                        int.Parse(info.Substring(6, 2)))
+                }).ToList();
+                var tripType = FlightSearchData.ParseTripType(trips);
+                switch (tripType)
+                {
+                    case TripType.OneWay:
+                        return View(search);
+                    case TripType.Return:
+                        return View("SearchResultList-Return", search);
+                    default :
+                        return View("SearchResultList-Single", search);
+                }
+            }
+            catch
+            {
+                return View("SearchResultList-Single", search);
+            }
         }
 
         [HttpPost]
