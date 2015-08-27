@@ -921,6 +921,8 @@
     <Content Include="Assets\css\mobile-app.scss" />
     <Content Include="Config\Country.csv" />
     <Content Include="Assets\css\landingPage.scss" />
+    <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
+    <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />

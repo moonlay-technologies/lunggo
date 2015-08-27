@@ -47,6 +47,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult FlightSearchListReturn2()
+        {
+            return View();
+        }
+
         public ActionResult FlightSearchListOneway()
         {
             return View();
