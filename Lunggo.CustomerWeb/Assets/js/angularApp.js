@@ -737,6 +737,9 @@
 
             // ******************************
             // general variables
+            $scope.pageConfig = {
+                activeFlightSection : 'departure'
+            }
             $scope.departureFlightConfig = {
                 flightSearchParam: {},
                 searchId: {},
@@ -779,6 +782,19 @@
                 
             }
 
+            // set page active section
+            $scope.setPageActiveSection = function(target) {
+                if (target == 'departure') {
+                    if ($scope.departureFlightConfig.chosenFlight < 0) {
+                        $scope.pageConfig.activeFlightSection = 'departure';
+                    }
+                } else if (target == 'return') {
+                    if ($scope.returnFlightConfig.chosenFlight < 0) {
+                        $scope.pageConfig.activeFlightSection = 'return';
+                    }
+                }
+            }
+
             // set active flight
             $scope.setActiveFlight = function(target, flightSequence) {
                 if (target == 'departure') {
@@ -799,17 +815,11 @@
             // set chosen flight
             $scope.setChosenFlight = function (target, flightSequence) {
                 if (target == 'departure') {
-                    if ($scope.departureFlightConfig.chosenFlight == flightSequence) {
-                        $scope.departureFlightConfig.chosenFlight = -1;
-                    } else {
-                        $scope.departureFlightConfig.chosenFlight = flightSequence;
-                    }
+                    $scope.departureFlightConfig.chosenFlight = flightSequence;
+                    $scope.pageConfig.activeFlightSection = 'return';
                 } else if (target == 'return') {
-                    if ($scope.returnFlightConfig.chosenFlight == flightSequence) {
-                        $scope.returnFlightConfig.chosenFlight = -1;
-                    } else {
-                        $scope.returnFlightConfig.chosenFlight = flightSequence;
-                    }
+                    $scope.returnFlightConfig.chosenFlight = flightSequence;
+                    $scope.pageConfig.activeFlightSection = 'departure';
                 }
             }
 

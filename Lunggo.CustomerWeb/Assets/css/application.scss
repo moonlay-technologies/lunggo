@@ -991,7 +991,33 @@ hr {border-color:#aaa;}
         h5 {}
     }
     /*-----*/
-    .flight-chosen {}
+    .flight-chosen {
+        .flight-detail {border:$border-default; background:#fff;
+            &>div:before, &>div:after {@include clearfix();}
+            .detail-left {float:left; width:50%;}
+            .detail-right {float:left; width:50%;}
+            /*-----*/
+            .flight-info {
+                &>div {float:left;}
+                .flight-airline {width:30%; padding:10px;
+                    img {height:40px; display:block;}
+                    span {display:block; font-weight:bold; font-size:12px;}
+                }
+                .flight-departure {width:35%;}
+                .flight-arrival {width:35%;}
+                h4 {margin-bottom:0; margin-top:7px; font-weight:bold; font-size:22px;}
+                h5 {margin-bottom:0; margin-top:5px; font-size:12px;}
+            }
+            .flight-duration {padding:10px; border-top:$border-default;}
+            .flight-price {padding:10px; border-top:$border-default;
+                .flight-price-was {text-decoration:dashed;}
+                .flight-price-now {font-weight:bold; color:$blue-default;}
+            }
+            .flight-change {
+                a {display:block; width:100%; padding:10px 0; text-align:center; background:#ededed; cursor:pointer; font-weight:bold;}
+            }
+        }
+    }
     /*-----*/
     .flight-filter {
         .flight-filter-trigger {background:#eee; padding:10px 5px;
