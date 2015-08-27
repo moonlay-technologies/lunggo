@@ -784,7 +784,7 @@ function checkoutPageFunctions() {
     $('.validate-fare').click(function(evt) {
         evt.preventDefault();
 
-        var hashKey = $(this).attr('data-hashKey');
+        var token = $(this).attr('data-token');
 
         // show modal
         $('.flight-validate-loading').show();
@@ -796,7 +796,7 @@ function checkoutPageFunctions() {
             $.ajax({
                 method: 'GET',
                 url: RevalidateConfig.Url,
-                data: { HashKey: hashKey }
+                data: { Token: token }
             }).success(function(returnData) {
                 RevalidateConfig.working = false;
 
