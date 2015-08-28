@@ -21,11 +21,20 @@ namespace Lunggo.ApCommon.Flight.Service
                 UpdateFlightDb.UpdateBookingStatus(statusData);
             var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
             var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
-            ticketedRsvNos = ticketedBookingIds.Any()
-                ? GetFlightDb.RsvNoByBookingId(ticketedBookingIds)
+            var rsvNosWithTicketedBooking = ticketedBookingIds.Any()
+                ? GetFlightDb.RsvNoByBookingId(ticketedBookingIds).Distinct()
                 : new List<string>();
+            var rsvsWithTicketedBooking = rsvNosWithTicketedBooking.Select(GetReservation);
+            ticketedRsvNos =
+                rsvsWithTicketedBooking.Where(
+                    rsv =>
+                        rsv.Itineraries.TrueForAll(
+                            itin =>
+                                itin.BookingStatus == BookingStatus.Ticketed ||
+                                itin.BookingStatus == BookingStatus.ScheduleChanged))
+                    .Select(rsv => rsv.RsvNo).ToList();
             scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
-                ? GetFlightDb.RsvNoByBookingId(scheduleChangedBookingIds)
+                ? GetFlightDb.RsvNoByBookingId(scheduleChangedBookingIds).Distinct().ToList()
                 : new List<string>();
         }
     }
