@@ -2676,7 +2676,9 @@ hr {
     .trip-flight-overview header .close-overview {
       position: absolute;
       right: 0;
-      top: 0; }
+      top: 0;
+      color: #fff;
+      cursor: pointer; }
   .trip-flight-overview .flight-main {
     background: #fff;
     /*-----*/ }

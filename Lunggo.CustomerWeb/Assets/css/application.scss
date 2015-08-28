@@ -1114,7 +1114,7 @@ hr {border-color:#aaa;}
 .trip-flight-overview {width:700px; height:365px; position:absolute; top:0; right:0; bottom:0; left:0; margin:auto;
     header {padding:15px; background:$blue-default; color:#fff;
         h3 {position:relative; margin:0;}
-        .close-overview {position:absolute; right:0; top:0;}
+        .close-overview {position:absolute; right:0; top:0; color:#fff; cursor:pointer;}
     }
     .flight-main {background:#fff;
         h2 {margin:0; font-size:16px; font-weight:bold; padding:5px 10px}
