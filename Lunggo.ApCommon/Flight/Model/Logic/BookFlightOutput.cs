@@ -10,11 +10,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string RsvNo { get; set; }
         public decimal FinalPrice { get; set; }
         public DateTime? TimeLimit { get; set; }
-
-        public BookFlightOutput()
-        {
-            BookResults = new List<BookResult>();
-        }
     }
 
     public class BookResult

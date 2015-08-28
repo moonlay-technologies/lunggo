@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
@@ -14,6 +15,12 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
             if (Errors == null)
                 Errors = new List<FlightError>();
             Errors.Insert(0, FlightError.PartialSuccess);
+        }
+
+        public void DistinguishErrors()
+        {
+            Errors = Errors.Distinct().ToList();
+            ErrorMessages = ErrorMessages.Distinct().ToList();
         }
 
         public void AddError(FlightError error)

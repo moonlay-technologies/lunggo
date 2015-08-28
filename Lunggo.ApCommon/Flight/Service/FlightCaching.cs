@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service

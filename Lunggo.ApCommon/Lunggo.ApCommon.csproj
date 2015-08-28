@@ -232,7 +232,6 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\RevalidateFlight.cs" />
     <Compile Include="Flight\Service\SearchFlight.cs" />
-    <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
     <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Flight\Utility\FlightIdUtil.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />

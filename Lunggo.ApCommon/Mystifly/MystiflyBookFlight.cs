@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;

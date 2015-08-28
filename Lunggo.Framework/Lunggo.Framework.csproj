@@ -167,6 +167,7 @@
     <Compile Include="Database\TableRecord.cs" />
     <Compile Include="Encoder\Encoder.cs" />
     <Compile Include="Error\Error.cs" />
+    <Compile Include="Extension\JsonExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="Filter\DeviceDetectionFilterAttribute.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Queue\QueueClient.cs" />
     <Compile Include="Queue\QueueService.cs" />
     <Compile Include="Redis\RedisConnectionProperty.cs" />
+    <Compile Include="Extension\RedisExtension.cs" />
     <Compile Include="Redis\RedisService.cs" />
     <Compile Include="Sequence\SequenceBase.cs" />
     <Compile Include="Sequence\SequenceProperties.cs" />

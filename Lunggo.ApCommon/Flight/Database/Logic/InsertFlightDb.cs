@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
