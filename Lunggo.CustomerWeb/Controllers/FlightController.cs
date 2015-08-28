@@ -45,7 +45,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 switch (tripType)
                 {
                     case TripType.OneWay:
-                        return View(search);
+                        return View("SearchResultList-Single", search);
                     case TripType.Return:
                         return View("SearchResultList-Return", search);
                     default :

@@ -729,6 +729,8 @@
     app.controller('TripFlightController', [
         '$http', '$scope', function($http, $scope) {
 
+            FlightSearchConfig.params = jQuery.parseJSON($('.flight-search-page').attr('data-flight-search-params'));
+
             // ******************************
             // on document ready
             angular.element(document).ready(function () {
@@ -741,22 +743,26 @@
                 activeFlightSection : 'departure'
             }
             $scope.departureFlightConfig = {
-                flightSearchParam: {},
+                flightSearchParams: FlightSearchConfig.params.departureFlight,
+                loading: false,
                 searchId: {},
                 flightList: [],
                 flightFilter: {},
                 flightSort: {},
                 activeFlight: -1,
-                chosenFlight: -1
+                chosenFlight: -1,
+                chosenFlightData: {}
             };
             $scope.returnFlightConfig = {
-                flightSearchParam: {},
+                flightSearchParams: FlightSearchConfig.params.returnFlight,
+                loading: false,
                 searchId: {},
                 flightList: [],
                 flightFilter: {},
                 flightSort: {},
                 activeFlight: -1,
-                chosenFlight: -1
+                chosenFlight: -1,
+                chosenFlightData: {}
             };
 
             // ******************************
@@ -816,10 +822,25 @@
             $scope.setChosenFlight = function (target, flightSequence) {
                 if (target == 'departure') {
                     $scope.departureFlightConfig.chosenFlight = flightSequence;
-                    $scope.pageConfig.activeFlightSection = 'return';
+                    $scope.departureFlightConfig.chosenFlightData = $scope.departureFlightConfig.flightList[ flightSequence ];
+                    if ($scope.returnFlightConfig.chosenFlight < 0) {
+                        $scope.pageConfig.activeFlightSection = 'return';
+                    }
                 } else if (target == 'return') {
                     $scope.returnFlightConfig.chosenFlight = flightSequence;
-                    $scope.pageConfig.activeFlightSection = 'departure';
+                    $scope.returnFlightConfig.chosenFlightData = $scope.returnFlightConfig.flightList[flightSequence];
+                    if ($scope.departureFlightConfig.chosenFlight < 0) {
+                        $scope.pageConfig.activeFlightSection = 'departure';
+                    }
+                }
+            }
+
+            // close flight overview
+            $scope.closeOverview = function() {
+                if ($scope.pageConfig.activeFlightSection == 'return') {
+                    $scope.returnFlightConfig.chosenFlight = -1;
+                } else if($scope.pageConfig.activeFlightSection == 'departure') {
+                    $scope.departureFlightConfig.chosenFlight = -1;
                 }
             }
 
@@ -827,22 +848,28 @@
             // get flights
             $scope.getFlights = function () {
                 // get departure flight list
-                $http.get(FlightSearchConfig.Url, {
+                $scope.departureFlightConfig.loading = true;
+                $http.get(FlightSearchConfig.Url, { // production
+                // $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
                     params: {
-                        request: $('.flight-search-page').attr('data-flight-search-params')
+                        request: $scope.departureFlightConfig.flightSearchParams
                     }
                 }).success(function (returnData) {
                     $scope.arrangeFlightData($scope.departureFlightConfig, returnData);
+                    $scope.departureFlightConfig.loading = false;
                 }).error(function(returnData) {
                     console.log('ERROR :' + returnData);
                 });
                 // get return flight list
-                $http.get(FlightSearchConfig.Url, {
+                $scope.returnFlightConfig.loading = true;
+                $http.get(FlightSearchConfig.Url, { // production
+                // $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
                     params: {
-                        request: $('.flight-search-page').attr('data-flight-search-params')
+                        request: $scope.returnFlightConfig.flightSearchParams
                     }
                 }).success(function (returnData) {
                     $scope.arrangeFlightData($scope.returnFlightConfig, returnData);
+                    $scope.returnFlightConfig.loading = false;
                 }).error(function (returnData) {
                     console.log('ERROR :' + returnData);
                 });
