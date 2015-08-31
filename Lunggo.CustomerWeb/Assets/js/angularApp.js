@@ -740,7 +740,11 @@
             // ******************************
             // general variables
             $scope.pageConfig = {
-                activeFlightSection : 'departure'
+                activeFlightSection: 'departure',
+                showNotice: false,
+                fareChanged: false,
+                fareUnavailable: false,
+                fareToken: ''
             }
             $scope.departureFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.departureFlight,
@@ -751,7 +755,11 @@
                 flightSort: {},
                 activeFlight: -1,
                 chosenFlight: -1,
-                chosenFlightData: {}
+                chosenFlightData: {},
+                validatingFlight: false,
+                validateToken: '',
+                validateValid: false,
+                validateNewfare: false
             };
             $scope.returnFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.returnFlight,
@@ -762,7 +770,11 @@
                 flightSort: {},
                 activeFlight: -1,
                 chosenFlight: -1,
-                chosenFlightData: {}
+                chosenFlightData: {},
+                validatingFlight: false,
+                validateToken: '',
+                validateValid: false,
+                validateNewfare: false
             };
 
             // ******************************
@@ -842,6 +854,123 @@
                 } else if($scope.pageConfig.activeFlightSection == 'departure') {
                     $scope.departureFlightConfig.chosenFlight = -1;
                 }
+            }
+
+            // revalidate
+            $scope.revalidateFlight = function(departureFlightIndexNo, returnFlightIndexNo) {
+                
+                // revalidate departure flight
+                $scope.departureFlightConfig.validatingFlight = true;
+                $http.get(RevalidateConfig.Url, {
+                    params: {
+                        SearchId: $scope.departureFlightConfig.searchId,
+                        ItinIndex: departureFlightIndexNo
+                    }
+                }).success(function (returnData) {
+                    $scope.departureFlightConfig.validatingFlight = false;
+                    if (returnData.IsValid == true) {
+                        $scope.departureFlightConfig.validateValid = true;
+                        $scope.departureFlightConfig.validateToken = returnData.Token;
+                        if ($scope.returnFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                        $scope.departureFlightConfig.validateValid = false;
+                        $scope.departureFlightConfig.validateNewfare = true;
+                        // update the fare price for selected flight
+                        $scope.departureFlightConfig.flightList[departureFlightIndexNo].TotalFare = returnData.NewFare;
+                        $scope.departureFlightConfig.chosenFlightData.TotalFare = returnData.NewFare;
+                        if ($scope.returnFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                        $scope.departureFlightConfig.validateValid = false;
+                        $scope.departureFlightConfig.validateNewfare = false;
+                        // hide the chosen flight number
+                        $scope.departureFlightConfig.flightList[departureFlightIndexNo].available = false;
+                        if ($scope.returnFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    }
+                }).error(function (data) {
+                    console.log(data);
+                });
+
+                // revalidate return flight
+                $scope.returnFlightConfig.validatingFlight = true;
+                $http.get(RevalidateConfig.Url, {
+                    params: {
+                        SearchId: $scope.returnFlightConfig.searchId,
+                        ItinIndex: returnFlightIndexNo
+                    }
+                }).success(function (returnData) {
+                    $scope.returnFlightConfig.validatingFlight = false;
+                    if (returnData.IsValid == true) {
+                        $scope.returnFlightConfig.validateValid = true;
+                        $scope.returnFlightConfig.validateToken = returnData.Token;
+                        if ($scope.departureFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
+                        $scope.returnFlightConfig.validateValid = false;
+                        $scope.returnFlightConfig.validateNewfare = true;
+                        // update the fare price for selected flight
+                        $scope.returnFlightConfig.flightList[departureFlightIndexNo].TotalFare = returnData.NewFare;
+                        $scope.returnFlightConfig.chosenFlightData.TotalFare = returnData.NewFare;
+                        if ($scope.returnFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == false) {
+                        $scope.returnFlightConfig.validateValid = false;
+                        $scope.returnFlightConfig.validateNewfare = false;
+                        // hide the chosen flight number
+                        $scope.returnFlightConfig.flightList[departureFlightIndexNo].available = false;
+                        if ($scope.departureFlightConfig.validatingFlight == false) {
+                            flightsValidated();
+                        }
+                    }
+                }).error(function (data) {
+                    console.log(data);
+                });
+
+                /*-----------*/
+                // run after both flight validated
+                var flightsValidated = function() {
+                    // if flight is valid
+                    if ( $scope.departureFlightConfig.validateValid == true && $scope.returnFlightConfig.validateValid == true ) {
+
+                        var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
+                        $scope.pageConfig.fareToken = fareToken;
+
+                        console.log($scope.pageConfig.fareToken);
+
+                        $('#pushToken #fareToken').val( fareToken );
+                        $('#pushToken').submit();
+
+                        /*
+                        if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
+                            window.location.assign(location.origin + '/id/flight/Select?token=' + fareToken);
+                        } else if (SiteLanguage == 'en' || SiteLanguage == 'english') {
+                            window.location.assign(location.origin + '/en/flight/Select?token=' + fareToken);
+                        }
+                        */
+
+                    } else {
+                        $scope.pageConfig.showNotice = true;
+                        // if fare has changed
+                        if ( $scope.departureFlightConfig.validateNewfare == true || $scope.returnFlightConfig.validateValid == true ) {
+                            $scope.pageConfig.fareChanged = true;
+                        // if flight in unavailable
+                        } else {
+                            $scope.pageConfig.fareUnavailable = true;
+                            $scope.departureFlightConfig.chosenFlight = -1;
+                            $scope.returnFlightConfig.chosenFlight = -1;
+                        }
+                    }
+
+                }
+
+
             }
 
             // ******************************

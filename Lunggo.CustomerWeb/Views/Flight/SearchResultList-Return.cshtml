@@ -270,7 +270,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-repeat="flight in departureFlightConfig.flightList">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -443,7 +443,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-if="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-repeat="flight in returnFlightConfig.flightList">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -536,8 +536,50 @@
 
         </section><!-- .flight-list-wrapper -->
         <!-- ****************************** -->
+    
+        <!-- revalidating flight -->
+        <section class="page-overlay validate-overlay" ng-show="departureFlightConfig.validatingFlight == true && returnFlightConfig.validatingFlight == true">
 
-        <section class="page-overlay" ng-show="departureFlightConfig.chosenFlight >= 0 && returnFlightConfig.chosenFlight >= 0">
+            <div class="revalidate-flight-wrapper">
+                <header class="wrapper-header">
+                    <h3>Revalidating your flight</h3>
+                </header>
+                <section class="wrapper-content">
+                    <p>Revalidating your flight. Please Wait</p>
+                </section>
+                <footer class="wrapper-footer"></footer>
+            </div><!-- .revalidate-flight -->
+
+        </section>
+    
+        <!-- chosen flight notice -->
+        <section class="page-overlay notice-overlay" ng-show="pageConfig.showNotice == true">
+            <div class="page-notice-wrapper" ng-show="pageConfig.fareChanged == true">
+                <header class="wrapper-header">
+                    <h3>Harga Berubah</h3>
+                </header>
+                <section class="wrapper-content">
+                    Harga salah satu penerbangan terlah berubah. Mohon cek kembali penerbangan Anda.
+                </section>
+                <footer class="wrapper-footer">
+                    <a href="#" class="btn btn-yellow pull-right" ng-click="pageConfig.showNotice = false">Cek Kembali</a>
+                </footer>
+            </div>
+            <div class="page-notice-wrapper" ng-show="pageConfig.fareUnavailable == true">
+                <header class="wrapper-header">
+                    <h3>Penerbangan Tidak Tersedia</h3>
+                </header>
+                <section class="wrapper-content">
+                    Penerbangan Anda tidak tersedia. Mohon pilih kembali penerbangan Anda.
+                </section>
+                <footer class="wrapper-footer">
+                    <a href="#" class="btn btn-yellow pull-right" ng-click="pageConfig.showNotice = false">Cek Kembali</a>
+                </footer>
+            </div>
+        </section>
+
+        <!-- flight overview -->
+        <section class="page-overlay overview-overlay" ng-show="departureFlightConfig.chosenFlight >= 0 && returnFlightConfig.chosenFlight >= 0">
 
             <div class="trip-flight-overview">
                 <header>
@@ -613,13 +655,18 @@
                         <h3>Rp {{ departureFlightConfig.chosenFlightData.TotalFare + returnFlightConfig.chosenFlightData.TotalFare | number }}</h3>
                     </div>
                     <div class="flight-book">
-                        <a href="#" class="btn btn-yellow">Booking sekarang</a>
+                        <a class="btn btn-yellow" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)">Booking sekarang</a>
                     </div>
                 </footer>
                 <section class="flight-detail"></section>
             </div><!-- .trip-flight-overview -->
 
         </section><!-- .page-overlay -->
+    
+        <!-- form to post Token-->
+        <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
+            <input type="text" name="Token" id="fareToken" value=""/>
+        </form>
 
 
 
