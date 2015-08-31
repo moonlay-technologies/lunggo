@@ -42,7 +42,9 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 output.IsSuccess = true;
                 output.Itineraries = result.FlightItineraries.Select(ConvertToItineraryApi).ToList();
+                output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
                 output.SearchId = result.SearchId;
+                output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
                 output.ExpiryTime = GetSearchedItinerariesExpiry(input.SearchId);
             }
             else
@@ -67,7 +69,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
             var result = SearchFlightInternal(conditions);
             if (result.FlightItineraries != null)
+            {
                 result.SearchId = SaveSearchedItinerariesToCache(result.FlightItineraries);
+            }
             return result;
         }
     }

@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    FlightTrips = MapTrips(itinerary.FlightTrips),
+                    FlightTrips = MapTrips(itinerary.FlightTrips)
                 };
             }
             else
