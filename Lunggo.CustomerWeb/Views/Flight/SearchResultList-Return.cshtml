@@ -253,24 +253,24 @@
 
                 <section class="flight-filter" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
                     <div class="flight-filter-trigger">
-                        <a href="#" class="filter-transit">Filter transit</a>
-                        <a href="#" class="filter-airline">Filter maskapai</a>
-                        <a href="#" class="filter-time">Filter waktu</a>
-                        <a href="#" class="filter-price">Filter harga</a>
+                        <a class="filter-transit">Filter transit</a>
+                        <a class="filter-airline">Filter maskapai</a>
+                        <a class="filter-time">Filter waktu</a>
+                        <a class="filter-price">Filter harga</a>
                     </div>
                     <div class="flight-filter-content"></div>
                 </section><!-- .flight-filter -->
 
                 <section class="flight-sort" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
-                    <a href="#" class="sort-airline">airline</a>
-                    <a href="#" class="sort-departure">departure</a>
-                    <a href="#" class="sort-arrival">arrival</a>
-                    <a href="#" class="sort-price">price</a>
+                    <a class="sort-airline" ng-click="setSort('departure','airline')">airline</a>
+                    <a class="sort-departure" ng-click="setSort('departure','departure')">departure</a>
+                    <a class="sort-arrival" ng-click="setSort('departure','arrival')">arrival</a>
+                    <a class="sort-price" ng-click="setSort('departure','price')">price</a>
                 </section><!-- .flight-sort -->
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -426,24 +426,24 @@
 
                 <section class="flight-filter" ng-show="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
                     <div class="flight-filter-trigger">
-                        <a href="#" class="filter-transit">Filter transit</a>
-                        <a href="#" class="filter-airline">Filter maskapai</a>
-                        <a href="#" class="filter-time">Filter waktu</a>
-                        <a href="#" class="filter-price">Filter harga</a>
+                        <a class="filter-transit">Filter transit</a>
+                        <a class="filter-airline">Filter maskapai</a>
+                        <a class="filter-time">Filter waktu</a>
+                        <a class="filter-price">Filter harga</a>
                     </div>
                     <div class="flight-filter-content"></div>
                 </section><!-- .flight-filter -->
 
                 <section class="flight-sort" ng-show="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
-                    <a href="#" class="sort-airline">airline</a>
-                    <a href="#" class="sort-departure">departure</a>
-                    <a href="#" class="sort-arrival">arrival</a>
-                    <a href="#" class="sort-price">price</a>
+                    <a class="sort-airline" ng-click="setSort('return','airline')">airline</a>
+                    <a class="sort-departure" ng-click="setSort('return','departure')">departure</a>
+                    <a class="sort-arrival" ng-click="setSort('return','arrival')">arrival</a>
+                    <a class="sort-price" ng-click="setSort('return','price')">price</a>
                 </section><!-- .flight-sort -->
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-if="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -518,7 +518,7 @@
                                 </div>
                             </div>
                             <div class="segment-footer">
-                                <a href="#" class="btn btn-yellow">Pilih Pergi</a>
+                                <a ng-click="setActiveFlight('return',flight.SequenceNo)" class="btn btn-yellow">Pilih Pulang</a>
                                 <label>Harga Total</label>
                                 <h5 class="flight-price-was" ng-if="flight.TotalFareWas">Rp {{flight.TotalFareWas | number}}</h5>
                                 <h4 class="flight-price-now">Rp {{flight.TotalFare | number}}</h4>

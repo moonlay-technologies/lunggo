@@ -2385,8 +2385,7 @@ hr {
     .trip-flight-list-wrapper .trip-return-wrapper.active {
       width: 60%; }
     .trip-flight-list-wrapper .trip-return-wrapper.inactive {
-      width: 38%;
-      opacity: 0.5; }
+      width: 38%; }
   .trip-flight-list-wrapper > .inactive {
     cursor: pointer; }
     .trip-flight-list-wrapper > .inactive .flight-sort {

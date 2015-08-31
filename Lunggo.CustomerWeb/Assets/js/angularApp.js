@@ -752,7 +752,11 @@
                 searchId: {},
                 flightList: [],
                 flightFilter: {},
-                flightSort: {},
+                flightSort: {
+                    label: 'price',
+                    value: 'TotalFare',
+                    reverse: false
+                },
                 activeFlight: -1,
                 chosenFlight: -1,
                 chosenFlightData: {},
@@ -767,7 +771,11 @@
                 searchId: {},
                 flightList: [],
                 flightFilter: {},
-                flightSort: {},
+                flightSort: {
+                    label: 'price',
+                    value: 'TotalFare',
+                    reverse: false
+                },
                 activeFlight: -1,
                 chosenFlight: -1,
                 chosenFlightData: {},
@@ -832,6 +840,7 @@
 
             // set chosen flight
             $scope.setChosenFlight = function (target, flightSequence) {
+                console.log(flightSequence);
                 if (target == 'departure') {
                     $scope.departureFlightConfig.chosenFlight = flightSequence;
                     $scope.departureFlightConfig.chosenFlightData = $scope.departureFlightConfig.flightList[ flightSequence ];
@@ -1018,6 +1027,33 @@
 
             // ******************************
             // flight sorting
+            $scope.setSort = function(targetFlight, label) {
+                if (targetFlight == 'departure') {
+                    targetFlight = $scope.departureFlightConfig;
+                } else {
+                    targetFlight = $scope.returnFlightConfig;
+                }
+
+                targetFlight.flightSort.reverse = (targetFlight.flightSort.label === label) ? !targetFlight.flightSort.reverse : false;
+
+                targetFlight.flightSort.label = label;
+
+                switch (label) {
+                    case 'airline':
+                        targetFlight.flightSort.value = 'FlightTrips[0].Airlines[0].Name';
+                        break;
+                    case 'departure':
+                        targetFlight.flightSort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        break;
+                    case 'arrival':
+                        targetFlight.flightSort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        break;
+                    case 'price':
+                        targetFlight.flightSort.value = 'TotalFare';
+                        break;
+                }
+
+            }
 
 
         }
