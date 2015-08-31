@@ -2464,8 +2464,7 @@ hr {
       cursor: pointer;
       font-weight: bold; }
   .trip-flight-list-wrapper .flight-filter .flight-filter-trigger {
-    background: #eee;
-    padding: 10px 5px; }
+    background: #eee; }
     .trip-flight-list-wrapper .flight-filter .flight-filter-trigger:before, .trip-flight-list-wrapper .flight-filter .flight-filter-trigger:after {
       content: "";
       clear: both;
@@ -2475,9 +2474,16 @@ hr {
       float: left;
       width: 25%;
       text-align: center;
-      color: #666; }
+      color: #666;
+      cursor: pointer;
+      padding: 10px 0; }
+    .trip-flight-list-wrapper .flight-filter .flight-filter-trigger > a.active {
+      background: #fff; }
     .trip-flight-list-wrapper .flight-filter .flight-filter-trigger a + a {
       border-left: 1px solid #ddd; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content > div {
+    background: #fff;
+    padding: 10px; }
   .trip-flight-list-wrapper .flight-sort:before, .trip-flight-list-wrapper .flight-sort:after {
     content: "";
     clear: both;
@@ -2489,7 +2495,8 @@ hr {
     padding-left: 0 !important;
     margin: 0 !important;
     text-align: left !important;
-    font-weight: bold; }
+    font-weight: bold;
+    cursor: pointer; }
   .trip-flight-list-wrapper .flight-sort .sort-airline {
     width: 22%; }
   .trip-flight-list-wrapper .flight-sort .sort-departure {

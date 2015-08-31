@@ -20,7 +20,7 @@
         $('.passport-country').countrySelect({
             preferredCountries: ['id']
         });
-        bookingTimeout(@Model.ExpiryTime);
+        bookingTimeout('@Model.ExpiryTime.ToString("o")');
     </script>
 }
 
