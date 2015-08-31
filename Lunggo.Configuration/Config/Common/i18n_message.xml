@@ -222,8 +222,8 @@
   <Message code="CW00110" lang="id_ID" value="RINCIAN" />
   <Message code="CW00111" lang="en_US" value="DETAIL" />
   <Message code="CW00111" lang="id_ID" value="PEMESANAN" />
-  <Message code="CW00112" lang="en_US" value="DEPARTURE FLIGHT" />
-  <Message code="CW00112" lang="id_ID" value="PENERBANGAN PERGI" />
+  <Message code="CW00112" lang="en_US" value="TO" />
+  <Message code="CW00112" lang="id_ID" value="KE" />
   <Message code="CW00113" lang="en_US" value="RETURN FLIGHT" />
   <Message code="CW00113" lang="id_ID" value="PENERBANGAN PULANG" />
   <Message code="CW00114" lang="en_US" value="PRICE" />
