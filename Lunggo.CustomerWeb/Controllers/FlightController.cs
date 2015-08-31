@@ -64,7 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var tokens = token.Split('.').ToList();
             var flightService = FlightService.GetInstance();
             var newToken = flightService.BundleFlight(tokens);
-            return RedirectToAction("Checkout", newToken);
+            return RedirectToAction("Checkout", "Flight", new {token = newToken});
         }
 
         public ActionResult Checkout(string token)
