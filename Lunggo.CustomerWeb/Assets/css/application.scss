@@ -975,7 +975,7 @@ hr {border-color:#aaa;}
     }
     .trip-return-wrapper {float:right; width:45%;
         &.active {width:60%;}
-        &.inactive {width:38%; opacity:0.5}
+        &.inactive {width:38%;}
     }
     &>.inactive {cursor:pointer;
         .flight-sort {display:none;}
