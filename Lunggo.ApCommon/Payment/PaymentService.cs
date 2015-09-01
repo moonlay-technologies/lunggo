@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees;
+using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -10,8 +12,11 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans;
 using Lunggo.ApCommon.Veritrans.Model;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 using HttpRequest = System.Web.HttpRequest;
 
 namespace Lunggo.ApCommon.Payment
@@ -49,6 +54,41 @@ namespace Lunggo.ApCommon.Payment
                 : GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
         }
 
+        public List<TransferConfirmationReport> GetAllTransferConfirmationReports()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return
+                    TransferConfirmationReportTableRepo.GetInstance()
+                        .FindAll(conn)
+                        .Select(record => new TransferConfirmationReport
+                        {
+                            ReportId = record.ReportId.GetValueOrDefault(),
+                            RsvNo = record.RsvNo,
+                            Amount = record.Amount.GetValueOrDefault(),
+                            PaymentTime = record.PaymentTime.GetValueOrDefault(),
+                            RemitterName = record.RemitterName,
+                            RemitterBank = record.RemitterBank,
+                            RemitterAccount = record.RemitterAccount,
+                            BeneficiaryBank = record.BeneficiaryBank,
+                            BeneficiaryAccount = record.BeneficiaryAccount,
+                            Message = record.Message,
+                            Status = TransferConfirmationReportStatusCd.Mnemonic(record.Status)
+                        }).ToList();
+            }
+        }
+
+        public void UpdateTransferConfirmationReportStatus(long reportId, TransferConfirmationReportStatus status)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
+                {
+                    ReportId = reportId,
+                    Status = TransferConfirmationReportStatusCd.Mnemonic(status)
+                });
+            }
+        }
 
         private static string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
