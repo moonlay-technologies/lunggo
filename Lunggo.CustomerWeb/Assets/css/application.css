@@ -2484,6 +2484,9 @@ hr {
   .trip-flight-list-wrapper .flight-filter .flight-filter-content > div {
     background: #fff;
     padding: 10px; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content .slider-value {
+    font-weight: bold;
+    font-size: 16px; }
   .trip-flight-list-wrapper .flight-sort:before, .trip-flight-list-wrapper .flight-sort:after {
     content: "";
     clear: both;

@@ -751,6 +751,9 @@
                 loading: false,
                 searchId: {},
                 flightList: [],
+                flightFilterData: {
+                    price : []
+                },
                 flightFilter: {
                     label: '',
                     value: {
@@ -758,12 +761,12 @@
                         airline: {},
                         time: {
                             departure: {
-                                label: [-1, -1],
-                                value: [-1, -1]
+                                label: [0, 24],
+                                value: [0, 24]
                             },
                             arrival: {
-                                label: [-1, -1],
-                                value: [-1, -1]
+                                label: [0, 24],
+                                value: [0, 24]
                             }
                         },
                         price: {
@@ -790,6 +793,9 @@
                 loading: false,
                 searchId: {},
                 flightList: [],
+                flightFilterData: {
+                    price: []
+                },
                 flightFilter: {
                     label: '',
                     value: {
@@ -797,12 +803,12 @@
                         airline: {},
                         time: {
                             departure: {
-                                label: [-1, -1],
-                                value: [-1, -1]
+                                label: [0, 24],
+                                value: [0, 24]
                             },
                             arrival: {
-                                label: [-1, -1],
-                                value: [-1, -1]
+                                label: [0, 24],
+                                value: [0, 24]
                             }
                         },
                         price: {
@@ -1057,9 +1063,62 @@
             $scope.arrangeFlightData = function(target, flightData) {
                 target.searchId = flightData.SearchId;
                 target.flightList = flightData.FlightList;
-                console.log(flightData);
+
+                // set filter data
+                for (var i = 0; i < flightData.FlightList.length; i++) {
+                    // populate prices
+                    target.flightFilterData.price.push( flightData.FlightList[i].TotalFare );
+                }
+
+                // sort flight prices
+                function sortNumber(a, b) {
+                    return a - b;
+                }
+                target.flightFilterData.price.sort(sortNumber);
+                target.flightFilter.value.price.label[0] = target.flightFilterData.price[0];
+                target.flightFilter.value.price.label[1] = target.flightFilterData.price[target.flightFilterData.price.length - 1];
+                target.flightFilter.value.price.value[0] = target.flightFilterData.price[0];
+                target.flightFilter.value.price.value[1] = target.flightFilterData.price[target.flightFilterData.price.length - 1];
+
+                // initiate flight filtering
+                if (target == $scope.departureFlightConfig) {
+                    $scope.initiateFlightFiltering('departure');
+                } else {
+                    $scope.initiateFlightFiltering('return');
+                }
+
             }
 
+            // initiate flight filtering
+            $scope.initiateFlightFiltering = function(targetFlight) {
+
+                var targetScope = ( targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig );
+
+                console.log(targetFlight);
+                console.log(targetScope);
+
+                // price filtering
+                $('.'+ targetFlight +'-price-slider').slider({
+                    range: true,
+                    min: targetScope.flightFilter.value.price.value[0],
+                    max: targetScope.flightFilter.value.price.value[1],
+                    step: 100000,
+                    values: [targetScope.flightFilter.value.price.value[0], targetScope.flightFilter.value.price.value[1]],
+                    create: function (event, ui) {
+                        $('.' + targetFlight + '-price-slider-value-min').val( targetScope.flightFilter.value.price.value[0] );
+                        $('.' + targetFlight + '-price-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-price-slider-value-max').val( targetScope.flightFilter.value.price.value[1] );
+                        $('.' + targetFlight + '-price-slider-value-max').trigger('input');
+                    },
+                    slide: function (event, ui) {
+                        $('.' + targetFlight + '-price-slider-value-min').val(ui.values[0]);
+                        $('.' + targetFlight + '-price-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-price-slider-value-max').val(ui.values[1]);
+                        $('.' + targetFlight + '-price-slider-value-max').trigger('input');
+                    }
+                });
+
+            }
 
             // ******************************
             // flight filtering
@@ -1111,7 +1170,14 @@
             $scope.timeFilter = function(targetFlight) {}
 
             // price filter
-            $scope.priceFilter = function(targetFlight) {}
+            $scope.priceFilter = function(targetFlight) {
+                targetFlight = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+                return function(flight) {
+                    if ( flight.TotalFare >= targetFlight.flightFilter.value.price.value[0] && flight.TotalFare <= targetFlight.flightFilter.value.price.value[1] ) {
+                        return flight;
+                    }
+                }
+            }
 
 
             // ******************************
