@@ -282,6 +282,24 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
             }
         }
 
+        public static IEnumerable<FlightReservation> UnpaidReservations()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvRecords = GetUnpaidFlightReservationQuery.GetInstance().Execute(conn, null);
+                var reservations = rsvRecords.Select(record => new FlightReservation
+                {
+                    RsvNo = record.RsvNo,
+                    Payment = new PaymentInfo
+                    {
+                        FinalPrice = record.FinalPrice.GetValueOrDefault(),
+                        TimeLimit = record.PaymentTimeLimit
+                    }
+                });
+                return reservations;
+            }
+        }
+
         internal static List<MarginRule> PriceMarginRules()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

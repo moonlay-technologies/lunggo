@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using HttpRequest = System.Web.HttpRequest;
 
@@ -65,14 +66,27 @@ namespace Lunggo.ApCommon.Payment
                             ReportId = record.ReportId.GetValueOrDefault(),
                             RsvNo = record.RsvNo,
                             Amount = record.Amount.GetValueOrDefault(),
+                            PaymentTime = record.PaymentTime.GetValueOrDefault(),
                             RemitterName = record.RemitterName,
                             RemitterBank = record.RemitterBank,
                             RemitterAccount = record.RemitterAccount,
                             BeneficiaryBank = record.BeneficiaryBank,
                             BeneficiaryAccount = record.BeneficiaryAccount,
                             Message = record.Message,
-                            Status = (TransferConfirmationReportStatus) Enum.Parse(typeof(TransferConfirmationReportStatus), record.Status.GetValueOrDefault().ToString(CultureInfo.InvariantCulture))
+                            Status = TransferConfirmationReportStatusCd.Mnemonic(record.Status)
                         }).ToList();
+            }
+        }
+
+        public void UpdateTransferConfirmationReportStatus(long reportId, TransferConfirmationReportStatus status)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
+                {
+                    ReportId = reportId,
+                    Status = TransferConfirmationReportStatusCd.Mnemonic(status)
+                });
             }
         }
 

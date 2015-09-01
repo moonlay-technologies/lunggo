@@ -154,6 +154,7 @@
     <Compile Include="Flight\Database\Logic\UpdateFlightDb.cs" />
     <Compile Include="Flight\Database\Query\CancelReservationsQuery.cs" />
     <Compile Include="Flight\Database\Query\ExpireReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\GetUnpaidFlightReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />

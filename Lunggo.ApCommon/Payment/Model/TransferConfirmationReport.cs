@@ -1,3 +1,4 @@
+using System;
 using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.ApCommon.Payment.Model
@@ -7,6 +8,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public long ReportId { get; set; }
         public string RsvNo { get; set; }
         public decimal Amount { get; set; }
+        public DateTime PaymentTime { get; set; }
         public string RemitterName { get; set; }
         public string RemitterBank { get; set; }
         public string RemitterAccount { get; set; }

@@ -38,6 +38,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Amount");
 		    }
 		}
+		public DateTime? PaymentTime
+		{
+		    get { return _PaymentTime; }
+		    set
+		    {
+		        _PaymentTime = value;
+		        IncrementLog("PaymentTime");
+		    }
+		}
 		public String RemitterName
 		{
 		    get { return _RemitterName; }
@@ -92,7 +101,7 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Message");
 		    }
 		}
-		public int? Status
+		public String Status
 		{
 		    get { return _Status; }
 		    set
@@ -106,13 +115,14 @@ namespace Lunggo.Repository.TableRecord
 		private long? _ReportId;
 		private String _RsvNo;
 		private Decimal? _Amount;
+		private DateTime? _PaymentTime;
 		private String _RemitterName;
 		private String _RemitterBank;
 		private String _RemitterAccount;
 		private String _BeneficiaryBank;
 		private String _BeneficiaryAccount;
 		private String _Message;
-		private int? _Status;
+		private String _Status;
 
 
 		public static TransferConfirmationReportTableRecord CreateNewInstance()
@@ -144,9 +154,10 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ReportId", false),
+				new ColumnMetadata("ReportId", true),
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("Amount", false),
+				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("RemitterName", false),
 				new ColumnMetadata("RemitterBank", false),
 				new ColumnMetadata("RemitterAccount", false),

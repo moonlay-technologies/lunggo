@@ -53,6 +53,11 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetFlightDb.SearchReservations(search).ToList();
         }
 
+        public List<FlightReservation> GetUnpaidReservations()
+        {
+            return GetFlightDb.UnpaidReservations().ToList();
+        }
+
         public void ExpireReservations()
         {
             UpdateFlightDb.ExpireReservations();
