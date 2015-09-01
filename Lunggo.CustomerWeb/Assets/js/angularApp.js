@@ -751,7 +751,10 @@
                 loading: false,
                 searchId: {},
                 flightList: [],
-                flightFilter: {},
+                flightFilter: {
+                    label: '',
+                    value: {}
+                },
                 flightSort: {
                     label: 'price',
                     value: 'TotalFare',
@@ -770,7 +773,10 @@
                 loading: false,
                 searchId: {},
                 flightList: [],
-                flightFilter: {},
+                flightFilter: {
+                    label: '',
+                    value: {}
+                },
                 flightSort: {
                     label: 'price',
                     value: 'TotalFare',
@@ -987,8 +993,8 @@
             $scope.getFlights = function () {
                 // get departure flight list
                 $scope.departureFlightConfig.loading = true;
-                $http.get(FlightSearchConfig.Url, { // production
-                // $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
+                // $http.get(FlightSearchConfig.Url, { // production
+                $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
                     params: {
                         request: $scope.departureFlightConfig.flightSearchParams
                     }
@@ -1000,8 +1006,8 @@
                 });
                 // get return flight list
                 $scope.returnFlightConfig.loading = true;
-                $http.get(FlightSearchConfig.Url, { // production
-                // $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
+                // $http.get(FlightSearchConfig.Url, { // production
+                $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
                     params: {
                         request: $scope.returnFlightConfig.flightSearchParams
                     }
@@ -1023,6 +1029,22 @@
 
             // ******************************
             // flight filtering
+            $scope.showFilter = function(targetFlight, label) {
+                if (targetFlight == 'departure') {
+                    targetFlight = $scope.departureFlightConfig;
+                } else {
+                    targetFlight = $scope.returnFlightConfig;
+                }
+
+                if (targetFlight.flightFilter.label == label) {
+                    targetFlight.flightFilter.label = '';
+                } else {
+                    targetFlight.flightFilter.label = label;
+                }
+
+            }
+
+            $scope.setFilterValue = function() {}
 
 
             // ******************************
@@ -1033,11 +1055,8 @@
                 } else {
                     targetFlight = $scope.returnFlightConfig;
                 }
-
                 targetFlight.flightSort.reverse = (targetFlight.flightSort.label === label) ? !targetFlight.flightSort.reverse : false;
-
                 targetFlight.flightSort.label = label;
-
                 switch (label) {
                     case 'airline':
                         targetFlight.flightSort.value = 'FlightTrips[0].Airlines[0].Name';

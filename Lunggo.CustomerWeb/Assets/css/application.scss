@@ -1020,16 +1020,19 @@ hr {border-color:#aaa;}
     }
     /*-----*/
     .flight-filter {
-        .flight-filter-trigger {background:#eee; padding:10px 5px;
+        .flight-filter-trigger {background:#eee;
             &:before, &:after {@include clearfix();}
-            &>a {float:left; width:25%; text-align:center; color:#666;}
+            &>a {float:left; width:25%; text-align:center; color:#666; cursor:pointer; padding:10px 0;}
+            &>a.active {background:#fff;}
             a+a {border-left:$border-default;}
         }
-        .flight-filter-content {}
+        .flight-filter-content {
+            &>div {background:#fff; padding:10px;}
+        }
     }
     .flight-sort {
         &:before, &:after {@include clearfix();}
-        &>a {display:block; float:left; padding-left:0 !important; margin:0 !important; text-align:left !important; font-weight:bold;}
+        &>a {display:block; float:left; padding-left:0 !important; margin:0 !important; text-align:left !important; font-weight:bold; cursor:pointer;}
         .sort-airline {width:22%;}
         .sort-departure {width:23%;}
         .sort-arrival {width:27%;}

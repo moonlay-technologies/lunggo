@@ -253,12 +253,50 @@
 
                 <section class="flight-filter" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
                     <div class="flight-filter-trigger">
-                        <a class="filter-transit">Filter transit</a>
-                        <a class="filter-airline">Filter maskapai</a>
-                        <a class="filter-time">Filter waktu</a>
-                        <a class="filter-price">Filter harga</a>
+                        <a ng-click="showFilter('departure','transit')" class="filter-transit" ng-class="{ active : departureFlightConfig.flightFilter.label == 'transit' }">Filter transit</a>
+                        <a ng-click="showFilter('departure','airline')" class="filter-airline" ng-class="{ active : departureFlightConfig.flightFilter.label == 'airline' }">Filter maskapai</a>
+                        <a ng-click="showFilter('departure','time')" class="filter-time" ng-class="{ active : departureFlightConfig.flightFilter.label == 'time' }">Filter waktu</a>
+                        <a ng-click="showFilter('departure','price')" class="filter-price" ng-class="{ active : departureFlightConfig.flightFilter.label == 'price' }">Filter harga</a>
                     </div>
-                    <div class="flight-filter-content"></div>
+                    <div class="flight-filter-content">
+                        <div class="filter-transit" ng-show="departureFlightConfig.flightFilter.label == 'transit'">
+                            <h4>Jumlah Transit</h4>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="" value=" " /> Langsung
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="" value=" " /> 1 Transit
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="" value=" " /> Lebih dari 1 transit
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-airline" ng-show="departureFlightConfig.flightFilter.label == 'airline'">
+                            <h4>Maskapai</h4>
+                        </div>
+                        <div class="filter-time" ng-show="departureFlightConfig.flightFilter.label == 'time'">
+                            <h4>Waktu Keberangkatan dan Kedatangan</h4>
+                        </div>
+                        <div class="filter-time" ng-show="departureFlightConfig.flightFilter.label == 'price'">
+                            <h4>Harga</h4>
+                        </div>
+                    </div>
                 </section><!-- .flight-filter -->
 
                 <section class="flight-sort" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
@@ -482,7 +520,7 @@
                                 <h5>Harga Total :</h5>
                                 <h5 class="flight-price-was" ng-if="flight.TotalFareWas">Rp {{flight.TotalFareWas}}</h5>
                                 <h4 class="flight-price-now">Rp {{flight.TotalFare | number}}</h4>
-                                <a class="btn btn-yellow flight-choose" ng-click="setChosenFlight('return', flight.SequenceNo)">Pilih Pergi</a>
+                                <a class="btn btn-yellow flight-choose" ng-click="setChosenFlight('return', flight.SequenceNo)">Pilih Pulang</a>
                             </div>
                         </div><!-- .flight-main -->
                         <div class="flight-detail">
