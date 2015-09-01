@@ -839,9 +839,10 @@
                 return new Date(dateTime);
             }
 
-            // get time
-            $scope.getTime = function(dateTime) {
-                
+            // get hour
+            $scope.getHour = function (datetime) {
+                datetime = datetime.substr(11, 2);
+                return parseInt(datetime);
             }
 
             // get hour
@@ -1118,6 +1119,43 @@
                     }
                 });
 
+                // time filtering
+                $('.' + targetFlight + '-departure-slider').slider({
+                    range: true,
+                    min: 0, max: 24, step: 1,
+                    values: [targetScope.flightFilter.value.time.departure.value[0], targetScope.flightFilter.value.time.departure.value[1]],
+                    create: function (event, ui) {
+                        $('.' + targetFlight + '-departure-slider-value-min').val(0);
+                        $('.' + targetFlight + '-departure-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-departure-slider-value-max').val(24);
+                        $('.' + targetFlight + '-departure-slider-value-max').trigger('input');
+                    },
+                    slide: function (event, ui) {
+                        $('.' + targetFlight + '-departure-slider-value-min').val(ui.values[0]);
+                        $('.' + targetFlight + '-departure-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-departure-slider-value-max').val(ui.values[1]);
+                        $('.' + targetFlight + '-departure-slider-value-max').trigger('input');
+                    }
+                });
+
+                $('.' + targetFlight + '-arrival-slider').slider({
+                    range: true,
+                    min: 0, max: 24, step: 1,
+                    values: [targetScope.flightFilter.value.time.arrival.value[0], targetScope.flightFilter.value.time.arrival.value[1]],
+                    create: function (event, ui) {
+                        $('.' + targetFlight + '-arrival-slider-value-min').val(0);
+                        $('.' + targetFlight + '-arrival-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-arrival-slider-value-max').val(24);
+                        $('.' + targetFlight + '-arrival-slider-value-max').trigger('input');
+                    },
+                    slide: function (event, ui) {
+                        $('.' + targetFlight + '-arrival-slider-value-min').val(ui.values[0]);
+                        $('.' + targetFlight + '-arrival-slider-value-min').trigger('input');
+                        $('.' + targetFlight + '-arrival-slider-value-max').val(ui.values[1]);
+                        $('.' + targetFlight + '-arrival-slider-value-max').trigger('input');
+                    }
+                });
+
             }
 
             // ******************************
@@ -1141,20 +1179,20 @@
 
             // transit filter
             $scope.transitFilter = function(targetFlight) {
-                targetFlight = ( targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig );
+                var targetScope = ( targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig );
 
                 return function(flight) {
-                    if (targetFlight.flightFilter.value.transit[0]) {
+                    if (targetScope.flightFilter.value.transit[0]) {
                         if (flight.FlightTrips[0].TotalTransit == 0) {
                             return flight;
                         }
                     }
-                    if (targetFlight.flightFilter.value.transit[1]) {
+                    if (targetScope.flightFilter.value.transit[1]) {
                         if (flight.FlightTrips[0].TotalTransit == 1) {
                             return flight;
                         }
                     }
-                    if (targetFlight.flightFilter.value.transit[2]) {
+                    if (targetScope.flightFilter.value.transit[2]) {
                         if (flight.FlightTrips[0].TotalTransit > 1) {
                             return flight;
                         }
@@ -1167,13 +1205,23 @@
             $scope.airlineFilter = function(targetFlight) {}
 
             // time filter
-            $scope.timeFilter = function(targetFlight) {}
+            $scope.timeFilter = function (targetFlight) {
+                var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+                return function (flight) {
+                    if ($scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) >= targetScope.flightFilter.value.time.departure.value[0] &&
+                        $scope.getHour(flight.FlightTrips[0].FlightSegments[( flight.FlightTrips[0].FlightSegments.length - 1 )].DepartureTime) <= targetScope.flightFilter.value.time.departure.value[1] &&
+                        $scope.getHour(flight.FlightTrips[0].FlightSegments[0].ArrivalTime) >= targetScope.flightFilter.value.time.arrival.value[0] &&
+                        $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) <= targetScope.flightFilter.value.time.arrival.value[1]){
+                        return flight;
+                    }
+                }
+            }
 
             // price filter
             $scope.priceFilter = function(targetFlight) {
-                targetFlight = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+                var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
                 return function(flight) {
-                    if ( flight.TotalFare >= targetFlight.flightFilter.value.price.value[0] && flight.TotalFare <= targetFlight.flightFilter.value.price.value[1] ) {
+                    if ( flight.TotalFare >= targetScope.flightFilter.value.price.value[0] && flight.TotalFare <= targetScope.flightFilter.value.price.value[1] ) {
                         return flight;
                     }
                 }
