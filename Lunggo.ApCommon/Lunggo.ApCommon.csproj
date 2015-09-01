@@ -307,12 +307,14 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\PaymentExpiry.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
     <Compile Include="Payment\Model\RefundInfo.cs" />

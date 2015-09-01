@@ -27,7 +27,7 @@
     <header class="site-header">
         <a href="#" class="site-menu"></a>
         <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
-        <a href="#" class="user-menu hidden"></a>
+        <a href="#" class="user-menu"></a>
     </header><!-- .site-header -->
     
     <section class="site-menu-content">
@@ -45,8 +45,8 @@
     <section class="user-menu-content">
         <h3 class="section-title">MY ACCOUNT</h3>
         <div class="menu">
-            <a href="#"> <span class="fa fa-sign-in"></span> <span>LOGIN</span> </a>
-            <a href="#"> <span class="fa fa-pencil-square-o"></span> <span>REGISTER</span> </a>
+            <a href="@Url.Action("Login", "Account")"> <span class="fa fa-sign-in"></span> <span>LOGIN</span> </a>
+            <a href="@Url.Action("Register", "Account")"> <span class="fa fa-pencil-square-o"></span> <span>REGISTER</span> </a>
         </div>
     </section><!-- .user-menu -->
 

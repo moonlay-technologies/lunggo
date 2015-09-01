@@ -191,6 +191,7 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <None Include="Properties\PublishProfiles\dv1-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
