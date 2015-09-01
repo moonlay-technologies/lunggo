@@ -753,7 +753,24 @@
                 flightList: [],
                 flightFilter: {
                     label: '',
-                    value: {}
+                    value: {
+                        transit: [true, true, true],
+                        airline: {},
+                        time: {
+                            departure: {
+                                label: [-1, -1],
+                                value: [-1, -1]
+                            },
+                            arrival: {
+                                label: [-1, -1],
+                                value: [-1, -1]
+                            }
+                        },
+                        price: {
+                            label: [-1, -1],
+                            value: [-1, -1]
+                        }
+                    }
                 },
                 flightSort: {
                     label: 'price',
@@ -775,7 +792,24 @@
                 flightList: [],
                 flightFilter: {
                     label: '',
-                    value: {}
+                    value: {
+                        transit: [true, true, true],
+                        airline: {},
+                        time: {
+                            departure: {
+                                label: [-1, -1],
+                                value: [-1, -1]
+                            },
+                            arrival: {
+                                label: [-1, -1],
+                                value: [-1, -1]
+                            }
+                        },
+                        price: {
+                            label: [-1, -1],
+                            value: [-1, -1]
+                        }
+                    }
                 },
                 flightSort: {
                     label: 'price',
@@ -1045,6 +1079,39 @@
             }
 
             $scope.setFilterValue = function() {}
+
+            // transit filter
+            $scope.transitFilter = function(targetFlight) {
+                targetFlight = ( targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig );
+
+                return function(flight) {
+                    if (targetFlight.flightFilter.value.transit[0]) {
+                        if (flight.FlightTrips[0].TotalTransit == 0) {
+                            return flight;
+                        }
+                    }
+                    if (targetFlight.flightFilter.value.transit[1]) {
+                        if (flight.FlightTrips[0].TotalTransit == 1) {
+                            return flight;
+                        }
+                    }
+                    if (targetFlight.flightFilter.value.transit[2]) {
+                        if (flight.FlightTrips[0].TotalTransit > 1) {
+                            return flight;
+                        }
+                    }
+                }
+
+            }
+
+            // airline filter
+            $scope.airlineFilter = function(targetFlight) {}
+
+            // time filter
+            $scope.timeFilter = function(targetFlight) {}
+
+            // price filter
+            $scope.priceFilter = function(targetFlight) {}
 
 
             // ******************************
