@@ -1091,16 +1091,6 @@
                     }
                 }
 
-                // remove duplicate from airline list
-                var dupes = {};
-                $.each(targetScope.flightFilterData.airline, function (i, el) {
-                    if (!dupes[el.Code]) {
-                        dupes[el.Code] = true;
-                        targetScope.flightFilter.value.airline.list.push(el);
-                    }
-                });
-                targetScope.flightFilterData.airline = [];
-
                 // sort flight prices
                 function sortNumber(a, b) {
                     return a - b;
@@ -1125,6 +1115,19 @@
 
                 var targetScope = ( targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig );
 
+                // -----
+                // airline filtering
+                // remove duplicate from airline list
+                var dupes = {};
+                $.each(targetScope.flightFilterData.airline, function (i, el) {
+                    if (!dupes[el.Code]) {
+                        dupes[el.Code] = true;
+                        targetScope.flightFilter.value.airline.list.push(el);
+                    }
+                });
+                targetScope.flightFilterData.airline = [];
+
+                // -----
                 // price filtering
                 $('.'+ targetFlight +'-price-slider').slider({
                     range: true,
@@ -1146,6 +1149,7 @@
                     }
                 });
 
+                // -----
                 // time filtering
                 $('.' + targetFlight + '-departure-slider').slider({
                     range: true,
