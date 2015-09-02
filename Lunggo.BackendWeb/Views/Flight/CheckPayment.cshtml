@@ -1,0 +1,109 @@
+﻿@model Lunggo.BackendWeb.Models.CheckPaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Check Payment";
+}
+
+
+<h2>Check Payment</h2>
+<div>
+    <button class='flip'>Switch Table</button>
+</div>
+
+<div class='panel1 col-md-offset-1 col-md-10'>
+    <table>
+        <tr>
+            <td width="100px">Amount</td>
+            <td width="100px">Beneficiary Account</td>
+            <td width="100px">Beneficiary Bank</td>
+            <td width="100px">Message</td>
+            <td width="100px">Remitter Account</td>
+            <td width="100px">Remitter Bank</td>
+            <td width="100px">Remitter Name</td>
+            <td width="100px">Report ID</td>
+            <td width="100px">Rsv No</td>
+            <td width="100px">Status</td>
+        </tr>
+        <tr>
+            @foreach (var x in Model.Reports)
+            {
+                <td>
+                    @Html.DisplayFor(isi => x.Amount, "Amount")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.BeneficiaryAccount, "BeneficiaryAccount")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.BeneficiaryBank, "BeneficiaryBank")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.Message, "Message")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.RemitterAccount, "RemitterAccount")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.RemitterBank, "RemitterBank")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.RemitterName, "RemitterName")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.ReportId, "ReportId")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.Status, "Status")
+                </td>
+            }
+        </tr>
+    </table>
+</div>
+<div class='panel2 col-md-offset-1 col-md-10'>
+    <table>
+        <tr>
+            <td width="100px">RsvNo</td>
+            <td width="100px">RsvTime</td>
+            <td width="100px">InvoiceNo</td>
+            <td width="100px">Iteneraries</td>
+            <td width="100px">Passenger</td>
+            <td width="100px">Payment</td>
+            <td width="100px">TripType</td>
+        </tr>
+        <tr>
+            @foreach (var x in Model.Reservation)
+            {
+                <td>
+                    @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.RsvTime, "RsvTime")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.InvoiceNo, "InvoiceNo")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.Itineraries, "Itineraries")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.Passengers, "Passenger")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.Payment, "Payment")
+                </td>
+                <td>
+                    @Html.DisplayFor(isi => x.TripType, "TripType")
+                </td>
+            }
+        </tr>
+    </table>
+</div>
+        
+  
+
