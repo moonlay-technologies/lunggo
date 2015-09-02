@@ -275,7 +275,6 @@
     <Compile Include="Models\FlightThankyouData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PaymentConfirmationData.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -921,6 +920,9 @@
     <Content Include="Assets\css\mobile-app.scss" />
     <Content Include="Config\Country.csv" />
     <Content Include="Assets\css\landingPage.scss" />
+    <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
+    <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
+    <None Include="Properties\PublishProfiles\dv1-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
@@ -2147,7 +2149,7 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Flight\SearchResultList.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Single.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
@@ -2175,7 +2177,7 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\SearchResultList.mobile.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Single.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Template\LandingPage.cshtml" />
@@ -2191,6 +2193,7 @@
     <Content Include="Views\Template\invoice.cshtml" />
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

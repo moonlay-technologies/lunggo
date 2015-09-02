@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Subscriber.Query;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;

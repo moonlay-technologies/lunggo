@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Utility;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using StackExchange.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
@@ -78,7 +79,7 @@ namespace Lunggo.ApCommon.Mystifly
             else
             {
                 var bookInfo = WebfareBooking(FlightIdUtil.GetCoreId(bookingId));
-                var airTravelers = bookInfo.PassengerInfoFares.Select(MapAirTraveler).ToList();
+                var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {

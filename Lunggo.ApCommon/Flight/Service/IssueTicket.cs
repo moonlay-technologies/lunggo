@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
@@ -18,42 +20,73 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (input.BookingId == null)
-                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
+                var reservation = GetReservation(input.RsvNo);
+                var bookingIds = reservation.Itineraries.Select(itin => itin.BookingId);
                 var output = new IssueTicketOutput();
-                var orderResult = OrderTicketInternal(input.BookingId);
-                if (orderResult.IsSuccess)
+                foreach (var bookingId in bookingIds)
                 {
-                    output.IsSuccess = true;
-                    output.BookingStatus = BookingStatus.Ticketing;
-                    output.BookingId = orderResult.BookingId;
-
-                    var bookingStatus = orderResult.IsInstantIssuance ? BookingStatus.Ticketed : BookingStatus.Ticketing;
-                    var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
+                    var response = OrderTicketInternal(bookingId);
+                    var orderResult = new OrderResult();
+                    if (response.IsSuccess)
+                    {
+                        orderResult.IsSuccess = true;
+                        orderResult.BookingId = response.BookingId;
+                        orderResult.BookingStatus = response.IsInstantIssuance
+                            ? BookingStatus.Ticketed
+                            : BookingStatus.Ticketing;
+                        orderResult.IsInstantIssuance = response.IsInstantIssuance;
+                    }
+                    else
+                    {
+                        orderResult.IsSuccess = false;
+                        orderResult.BookingId = response.BookingId;
+                        orderResult.BookingStatus = BookingStatus.Failed;
+                        foreach (var error in response.Errors)
+                        {
+                            output.AddError(error);
+                        }
+                        foreach (var errorMessage in response.ErrorMessages)
+                        {
+                            output.AddError(errorMessage);
+                        }
+                    }
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
-                        input.BookingId,
+                        BookingId = bookingId,
                         NewBookingId = orderResult.BookingId,
-                        BookingStatusCd = bookingStatusCd
+                        BookingStatusCd = BookingStatusCd.Mnemonic(orderResult.BookingStatus)
                     });
-
-                    if (orderResult.IsInstantIssuance)
+                    output.OrderResults.Add(orderResult);
+                }
+                if (output.OrderResults.TrueForAll(result => result.IsSuccess))
+                {
+                    output.IsSuccess = true;
+                    //TODO voucher code di sini? no.
+                    //TODO rapiin juga ini biar ga ada akses query lgsg
+                    var usedVoucherCode =
+                        GetVoucherCodeQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
+                    VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
+                    if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
                     {
-                        var detailsInput = new GetDetailsInput {RsvNo = input.RsvNo};
+                        var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
                     }
-
-                    //TODO voucher code di sini? no.
-                    //TODO rapiin juga ini biar ga ada akses query lgsg
-                    var usedVoucherCode = GetVoucherCodeQuery.GetInstance().Execute(conn, new {input.RsvNo}).Single();
-                    VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
                 }
                 else
                 {
+                    if (output.OrderResults.Any(set => set.IsSuccess))
+                    {
+                        output.PartiallySucceed();
+                        //TODO voucher code di sini? no.
+                        //TODO rapiin juga ini biar ga ada akses query lgsg
+                        var usedVoucherCode =
+                            GetVoucherCodeQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
+                        VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
+                    }
                     output.IsSuccess = false;
-                    output.Errors = orderResult.Errors;
-                    output.ErrorMessages = orderResult.ErrorMessages;
+                    output.Errors = output.Errors.Distinct().ToList();
+                    output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
                 }
                 return output;
             }

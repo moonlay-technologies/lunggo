@@ -157,14 +157,11 @@
     <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRules.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\ExpireReservations.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Logic\FilterFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetRulesLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\SearchFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\RevalidateFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightCancelApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightCancelApiResponse.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Model\FlightFilterApiRequest.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Model\FlightFilterApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightRulesApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightRulesApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightRevalidateApiRequest.cs" />
@@ -194,6 +191,7 @@
     <Content Include="Config\Airport.csv" />
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
+    <None Include="Properties\PublishProfiles\dv1-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />

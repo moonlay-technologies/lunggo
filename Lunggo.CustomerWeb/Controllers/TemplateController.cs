@@ -47,6 +47,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult FlightSearchListReturn2()
+        {
+            return View();
+        }
+
         public ActionResult FlightSearchListOneway()
         {
             return View();
@@ -114,7 +119,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult eticket2(string rsvNo)
         {
-            var rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            var rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
             return View(rsv);
         }
 

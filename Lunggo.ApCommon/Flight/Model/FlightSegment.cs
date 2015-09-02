@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
@@ -27,6 +28,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OperatingAirlineName { get; set; }
         public string OperatingAirlineLogoUrl { get; set; }
         public List<FlightStop> FlightStops { get; set; }
+        public CabinClass CabinClass { get; set; }
         public bool Meal { get; set; }
         public string Baggage { get; set; }
         public string Pnr { get; set; }   

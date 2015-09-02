@@ -17,8 +17,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             if (IsValid(request))
             {
                 var service = FlightService.GetInstance();
-                if (request.HashKey == null)
-                    request.HashKey = service.SaveItineraryToCache(request.SearchId, request.ItinIndex);
                 var rulesServiceRequest = PreprocessServiceRequest(request);
                 var rulesServiceResponse = service.GetRules(rulesServiceRequest);
                 var apiResponse = AssembleApiResponse(rulesServiceResponse, request);
@@ -28,7 +26,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRulesApiResponse
                 {
-                    HashKey = null,
                     AirlineRules = new List<AirlineRules>(),
                     BaggageRules = new List<BaggageRules>(),
                     OriginalRequest = request
@@ -39,8 +36,11 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         private static GetRulesInput PreprocessServiceRequest(FlightRulesApiRequest request)
         {
             var service = FlightService.GetInstance();
-            var itin = service.GetItineraryFromCache(request.HashKey);
-            return new GetRulesInput { FareId = itin.FareId };
+            return new GetRulesInput
+            {
+                SearchId = request.SearchId,
+                ItinIndex = request.ItinIndex
+            };
         }
 
         private static FlightRulesApiResponse AssembleApiResponse(GetRulesOutput rulesServiceResponse, FlightRulesApiRequest request)
@@ -49,7 +49,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRulesApiResponse
                 {
-                    HashKey = request.HashKey,
                     AirlineRules = rulesServiceResponse.AirlineRules,
                     BaggageRules = rulesServiceResponse.BaggageRules,
                     OriginalRequest = request
@@ -59,7 +58,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 return new FlightRulesApiResponse
                 {
-                    HashKey = null,
                     AirlineRules = null,
                     BaggageRules = null,
                     OriginalRequest = request
@@ -71,7 +69,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             return
                 request != null &&
-                (request.SearchId != null || request.HashKey != null);
+                request.SearchId != null;
         }
     }
 }

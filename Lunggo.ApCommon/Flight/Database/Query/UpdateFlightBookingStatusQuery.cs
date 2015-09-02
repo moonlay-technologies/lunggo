@@ -37,6 +37,16 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(
                     @"END ");
             clauseBuilder.Append(
+                @"WHEN @BookingStatusCd = 'FAIL' THEN ");
+            clauseBuilder.Append(
+                    @"CASE WHEN (BookingStatusCd = 'BOOK') ");
+            clauseBuilder.Append(
+                        @"THEN @BookingStatusCd ");
+            clauseBuilder.Append(
+                        @"ELSE BookingStatusCd ");
+            clauseBuilder.Append(
+                    @"END ");
+            clauseBuilder.Append(
                 @"WHEN @BookingStatusCd = 'TKTD' THEN ");
             clauseBuilder.Append(
                     @"CASE WHEN ((BookingStatusCd = 'BOOK') OR (BookingStatusCd = 'TKTG')) ");

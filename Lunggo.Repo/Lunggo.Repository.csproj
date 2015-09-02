@@ -50,6 +50,7 @@
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
     <Compile Include="TableRecord\FlightTripTableRecord.cs" />
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
+    <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="TableRepository\FlightStopRepository.cs" />
     <Compile Include="TableRepository\FlightTripRepository.cs" />
     <Compile Include="TableRepository\SubscriberRepository.cs" />
+    <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
     <Compile Include="TableRepository\HotelReservationsRepository.cs" />

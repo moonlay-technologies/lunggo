@@ -18,29 +18,33 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public List<FlightItineraryApi> ConvertToItinerariesApi(IEnumerable<FlightItinerary> itineraries)
+        internal FlightReservationForDisplay ConvertToReservationApi(FlightReservation reservation)
         {
-            if (itineraries != null)
+            if (reservation != null)
             {
-                var list = itineraries.Select(ConvertToItineraryApi).ToList();
-                for (var i = 0; i < list.Count; i++)
+                return new FlightReservationForDisplay
                 {
-                    list[i].SequenceNo = i;
-                }
-                var orderedList = list.OrderBy(itin => itin.SequenceNo);
-                return orderedList.ToList();
+                    RsvNo = reservation.RsvNo,
+                    RsvTime = reservation.RsvTime,
+                    TripType = reservation.TripType,
+                    InvoiceNo = reservation.InvoiceNo,
+                    Itinerary = ConvertToItineraryApi(BundleItineraries(reservation.Itineraries)),
+                    Contact = reservation.Contact,
+                    Passengers = reservation.Passengers,
+                    Payment = reservation.Payment
+                };
             }
             else
             {
-                return new List<FlightItineraryApi>();
+                return new FlightReservationForDisplay();
             }
         }
 
-        public FlightItineraryApi ConvertToItineraryApi(FlightItinerary itinerary)
+        internal FlightItineraryForDisplay ConvertToItineraryApi(FlightItinerary itinerary)
         {
             if (itinerary != null)
             {
-                return new FlightItineraryApi
+                return new FlightItineraryForDisplay
                 {
                     AdultCount = itinerary.AdultCount,
                     ChildCount = itinerary.ChildCount,
@@ -50,21 +54,21 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequireSameCheckIn = itinerary.RequireSameCheckIn,
                     CanHold = itinerary.CanHold,
                     TripType = itinerary.TripType,
-                    CabinClass = itinerary.CabinClass,
+                    RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    FlightTrips = MapTrips(itinerary.FlightTrips),
+                    FlightTrips = MapTrips(itinerary.FlightTrips)
                 };
             }
             else
             {
-                return new FlightItineraryApi();
+                return new FlightItineraryForDisplay();
             }
         }
 
-        internal FlightTripApi ConvertToTripApi(FlightTripTableRecord summaryRecord)
+        internal FlightTripForDisplay ConvertToTripApi(FlightTripTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            return new FlightTripApi
+            return new FlightTripForDisplay
             {
                 OriginAirport = summaryRecord.OriginAirportCd,
                 OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
@@ -132,9 +136,9 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal PassengerInfoFare ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
+        internal FlightPassenger ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
         {
-            return new PassengerInfoFare
+            return new FlightPassenger
             {
                 Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
                 FirstName = summaryRecord.FirstName,
@@ -143,9 +147,9 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        internal PassengerInfoDetails ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
+        internal FlightPassenger ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
         {
-            return new PassengerInfoDetails
+            return new FlightPassenger
             {
                 Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
                 FirstName = summaryRecord.FirstName,
@@ -182,10 +186,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private static List<FlightTripApi> MapTrips(IEnumerable<FlightTrip> trips)
+        private static List<FlightTripForDisplay> MapTrips(IEnumerable<FlightTrip> trips)
         {
             var dict = DictionaryService.GetInstance();
-            return trips.Select(trip => new FlightTripApi
+            return trips.Select(trip => new FlightTripForDisplay
             {
                 FlightSegments = MapSegments(trip.FlightSegments),
                 OriginAirport = trip.OriginAirport,

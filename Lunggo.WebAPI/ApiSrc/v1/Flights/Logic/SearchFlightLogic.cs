@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     SearchId = null,
                     OriginalRequest = request,
                     TotalFlightCount = 0,
-                    FlightList = new List<FlightItineraryApi>()
+                    FlightList = new List<FlightItineraryForDisplay>()
                 };
             }
         }
@@ -58,7 +58,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     (request.TripType == TripType.OpenJaw && request.Trips.Count > 1) ||
                     (request.TripType == TripType.Circle && request.Trips.Count > 2)
                 ) &&
-                request.Trips.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow);
+                request.Trips.TrueForAll(data => data.DepartureDate >= DateTime.UtcNow.Date);
         }
 
         private static FlightSearchApiResponse AssembleApiResponse(SearchFlightOutput searchServiceResponse, FlightSearchApiRequest request)
@@ -67,7 +67,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 OriginalRequest = request,
                 SearchId = searchServiceResponse.SearchId,
-                FlightList = FlightService.GetInstance().ConvertToItinerariesApi(searchServiceResponse.Itineraries),
+                FlightList = searchServiceResponse.Itineraries,
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
                 ExpiryTime = searchServiceResponse.ExpiryTime
             };

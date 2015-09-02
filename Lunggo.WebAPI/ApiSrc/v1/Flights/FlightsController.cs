@@ -52,35 +52,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Route("api/v1/flights/filter")]
-        public FlightFilterApiResponse FilterFlights(HttpRequestMessage httpRequest, [FromUri] string request)
-        {
-            try
-            {
-                var apiRequest = JsonConvert.DeserializeObject<FlightFilterApiRequest>(request);
-                var apiResponse = FlightLogic.FilterFlights(apiRequest);
-                return apiResponse;
-            }
-            catch (Exception e)
-            {
-                if (e.Source == "Newtonsoft.Json")
-                {
-                    return new FlightFilterApiResponse
-                    {
-                        FlightList = null,
-                        TotalFlightCount = 0,
-                        OriginalRequest = null
-                    };
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-        [HttpGet]
-        [LunggoCorsPolicy]
         [Route("api/v1/flights/revalidate")]
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {

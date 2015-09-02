@@ -9,17 +9,20 @@ using Lunggo.Framework.Error;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightItineraryApi : FlightItineraryBase
+    public class FlightItineraryForDisplay : FlightItineraryBase
     {
+        public string SearchId { get; set; }
         public int SequenceNo { get; set; }
         public decimal TotalFare { get; set; }
         public string Currency { get; set; }
-        public List<FlightTripApi> FlightTrips { get; set; }
+        public List<FlightTripForDisplay> FlightTrips { get; set; }
     }
 
     public class FlightItinerary : FlightItineraryBase
     {
         public string FareId { get; set; }
+        public string BookingId { get; set; }
+        public BookingStatus BookingStatus { get; set; }
         public List<FlightTrip> FlightTrips { get; set; }
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }
@@ -46,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public FareType FareType { get; set; }
-        public CabinClass CabinClass { get; set; }   
+        public CabinClass RequestedCabinClass { get; set; }   
         public FlightSupplier Supplier { get; set; }
     }
 }

@@ -54,7 +54,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
-    var hashKey = "";
+    var token = "";
 
     try
     {
@@ -64,7 +64,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
-        hashKey = Model.HashKey;
+        token = Model.Token;
     }
     catch
     {
@@ -108,7 +108,7 @@
 
 @using (Html.BeginForm("Checkout", "Flight", FormMethod.Post, new { @class="form-horizontal"}))
 {
-    <input type="hidden" name="HashKey" value="@Model.HashKey" />
+    <input type="hidden" name="Token" value="@Model.Token" />
     <section class="page group-checkout group-flight-checkout customer-detail-page" ng-controller="checkoutController" ng-init="passengersNumber = @passengerCount">
         <section class="checkout-progress">
             <div class="checkout-step">
@@ -261,65 +261,36 @@
             <section class="flight-detail">
                 <h2 class="section-title">Flight Detail</h2>
                 <div class="section-content container">
-
-                    <div class="flight onward">
-                        <h3 class="text-center">Onward Flight</h3>
-                        <div class="trip">
-                            <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
-                            <div class="trip-wrapper">
-                                <div class="trip-origin">
-                                    <span>Departure</span>
-                                    <span class="time ng-binding">@Model.Itinerary.FlightTrips[0].FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
-                                    <span class="date ng-binding">@Model.Itinerary.FlightTrips[0].FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
-                                    <span class="airport ng-binding">@Model.Itinerary.FlightTrips[0].OriginAirport</span>
-                                    <span class="city ng-binding">@Model.Itinerary.FlightTrips[0].OriginCity</span>
-                                </div>
-                                <div class="trip-destination">
-                                    <span>Arrival</span>
-                                    <span class="time ng-binding">@Model.Itinerary.FlightTrips[0].FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
-                                    <span class="date ng-binding">@Model.Itinerary.FlightTrips[0].FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
-                                    <span class="airport ng-binding">@Model.Itinerary.FlightTrips[0].DestinationAirport</span>
-                                    <span class="city ng-binding">@Model.Itinerary.FlightTrips[0].DestinationCity</span>
-                                </div>
-                                <div class="trip-duration">
-                                    <span>Duration</span>
-                                    <span class="time ng-binding">@TimeSpan.FromTicks(Model.Itinerary.FlightTrips[0].FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
-                                    <span class="ng-binding"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @if (Model.Itinerary.TripType == TripType.Return)
+                    @foreach (var trip in Model.Itinerary.FlightTrips)
                     {
-                        <div class="flight return">
-                            <h3 class="text-center">Return Flight</h3>
+                        <div class="flight onward">
+                            <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
                             <div class="trip">
-                                <h5 class="airline-name"><img ng-src="@Model.Itinerary.FlightTrips[1].FlightSegments[0].AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
+                                <h5 class="airline-name"><img ng-src="@trip.FlightSegments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
                                 <div class="trip-wrapper">
                                     <div class="trip-origin">
                                         <span>Departure</span>
-                                        <span class="time ng-binding">@Model.Itinerary.FlightTrips[1].FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
-                                        <span class="date ng-binding">@Model.Itinerary.FlightTrips[1].FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
-                                        <span class="airport ng-binding">@Model.Itinerary.FlightTrips[1].OriginAirport</span>
-                                        <span class="city ng-binding">@Model.Itinerary.FlightTrips[1].OriginCity</span>
+                                        <span class="time ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
+                                        <span class="date ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
+                                        <span class="airport ng-binding">@trip.OriginAirport</span>
+                                        <span class="city ng-binding">@trip.OriginCity</span>
                                     </div>
                                     <div class="trip-destination">
                                         <span>Arrival</span>
-                                        <span class="time ng-binding">@Model.Itinerary.FlightTrips[1].FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
-                                        <span class="date ng-binding">@Model.Itinerary.FlightTrips[1].FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
-                                        <span class="airport ng-binding">@Model.Itinerary.FlightTrips[1].DestinationAirport</span>
-                                        <span class="city ng-binding">@Model.Itinerary.FlightTrips[1].DestinationCity</span>
+                                        <span class="time ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
+                                        <span class="date ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
+                                        <span class="airport ng-binding">@trip.DestinationAirport</span>
+                                        <span class="city ng-binding">@trip.DestinationCity</span>
                                     </div>
                                     <div class="trip-duration">
                                         <span>Duration</span>
-                                        <span class="time ng-binding">@TimeSpan.FromTicks(Model.Itinerary.FlightTrips[1].FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
+                                        <span class="time ng-binding">@TimeSpan.FromTicks(trip.FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
                                         <span class="ng-binding"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-
                 </div>
             </section><!-- .flight-details -->
     
@@ -383,7 +354,7 @@
                         <tbody>
                             <tr>
                                 <td>Total Fare</td>
-                                <td>Rp @Model.Itinerary.FinalIdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                             <tr>
                                 <td>Tax and Service</td>
@@ -393,7 +364,7 @@
                         <tfoot>
                             <tr>
                                 <td>Total Price</td>
-                                <td>Rp @Model.Itinerary.FinalIdrPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                         </tfoot>
                     </table>

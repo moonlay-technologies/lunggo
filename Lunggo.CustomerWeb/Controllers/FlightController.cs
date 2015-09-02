@@ -27,19 +27,55 @@ namespace Lunggo.CustomerWeb.Controllers
         [DeviceDetectionFilter]
         public ActionResult SearchResultList(FlightSearchData search)
         {
-            return View(search);
+            try
+            {
+                var parts = search.info.Split('-');
+                var tripPart = parts.First();
+
+                var trips = tripPart.Split('.').Select(info => new FlightTrip
+                {
+                    OriginAirport = info.Substring(0, 3),
+                    DestinationAirport = info.Substring(3, 3),
+                    DepartureDate = new DateTime(
+                        2000 + int.Parse(info.Substring(10, 2)),
+                        int.Parse(info.Substring(8, 2)),
+                        int.Parse(info.Substring(6, 2)))
+                }).ToList();
+                var tripType = FlightSearchData.ParseTripType(trips);
+                switch (tripType)
+                {
+                    case TripType.OneWay:
+                        return View("SearchResultList-Single", search);
+                    case TripType.Return:
+                        return View("SearchResultList-Return", search);
+                    default :
+                        return View("SearchResultList-Single", search);
+                }
+            }
+            catch
+            {
+                return View("SearchResultList-Single", search);
+            }
         }
 
-        public ActionResult Checkout(FlightSelectData select)
+        [HttpPost]
+        public ActionResult Select(string token)
+        {
+            var tokens = token.Split('.').ToList();
+            var flightService = FlightService.GetInstance();
+            var newToken = flightService.BundleFlight(tokens);
+            return RedirectToAction("Checkout", "Flight", new {token = newToken});
+        }
+
+        public ActionResult Checkout(string token)
         {
             var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryFromCache(select.token);
-            var expiryTime = service.GetItineraryExpiryInCache(select.token);
-            var itineraryApi = service.ConvertToItineraryApi(itinerary);
+            var itinerary = service.GetItineraryForDisplay(token);
+            var expiryTime = service.GetItineraryExpiry(token);
             return View(new FlightCheckoutData
             {
-                HashKey = select.token,
-                ItineraryApi = itineraryApi,
+                Token = token,
+                Itinerary = itinerary,
                 ExpiryTime = expiryTime
             });
         }
@@ -47,8 +83,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Itinerary = FlightService.GetInstance().GetItineraryFromCache(data.HashKey);
-            var passengerInfo = data.Passengers.Select(passenger => new PassengerInfoFare
+            var service = FlightService.GetInstance();
+            data.Itinerary = service.GetItineraryForDisplay(data.Token);
+            var passengerInfo = data.Passengers.Select(passenger => new FlightPassenger
             {
                 Type = passenger.Type,
                 Title = passenger.Title,
@@ -62,29 +99,21 @@ namespace Lunggo.CustomerWeb.Controllers
             });
             var bookInfo = new BookFlightInput
             {
-                ContactData = new ContactData
+                ItinCacheId = data.Token,
+                Contact = new ContactData
                 {
                     Name = data.Contact.Name,
                     CountryCode = data.Contact.CountryCode,
                     Phone = data.Contact.Phone,
                     Email = data.Contact.Email
                 },
-                PassengerInfoFares = passengerInfo.ToList(),
-                Itinerary = data.Itinerary,
-                Trips = new List<FlightTrip>
-                {
-                    new FlightTrip
-                    {
-                        OriginAirport = data.Itinerary.FlightTrips[0].OriginAirport,
-                        DestinationAirport = data.Itinerary.FlightTrips[0].DestinationAirport,
-                        DepartureDate = data.Itinerary.FlightTrips[0].DepartureDate
-                    }
-                },
+                Passengers = passengerInfo.ToList(),
+                Payment = data.Payment,
                 OverallTripType = data.Itinerary.TripType,
                 DiscountCode = data.DiscountCode
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
-            if (bookResult.IsSuccess && bookResult.BookResult.BookingStatus == BookingStatus.Booked)
+            if (bookResult.IsSuccess)
             {
                 var transactionDetails = new TransactionDetails
                 {
@@ -119,7 +148,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Checkout", new FlightSelectData
                 {
-                    token = data.HashKey,
+                    token = data.Token,
                     error = bookResult.Errors[0]
                 });
             }
@@ -128,13 +157,21 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Thankyou(string rsvNo)
         {
             var service = FlightService.GetInstance();
-            var summary = service.GetReservation(rsvNo);
+            var summary = service.GetReservationForDisplay(rsvNo);
             return View(summary);
         }
 
-        public ActionResult Confirmation()
+        public ActionResult Confirmation(string rsvNo)
         {
-            return View();
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay(rsvNo);
+            var viewModel = new FlightPaymentConfirmationData
+            {
+                RsvNo = rsvNo,
+                TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
+                FinalPrice = reservation.Payment.FinalPrice
+            };
+            return View(viewModel);
         }
     }
 }

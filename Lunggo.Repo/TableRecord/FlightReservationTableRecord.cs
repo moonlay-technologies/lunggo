@@ -146,6 +146,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentTime");
 		    }
 		}
+        public DateTime? PaymentTimeLimit
+        {
+            get { return _PaymentTimeLimit; }
+            set
+            {
+                _PaymentTimeLimit = value;
+                IncrementLog("PaymentTimeLimit");
+            }
+        }
 		public String PaymentStatusCd
 		{
 		    get { return _PaymentStatusCd; }
@@ -415,6 +424,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _PaymentMediumCd;
 		private String _PaymentMethodCd;
 		private DateTime? _PaymentTime;
+        private DateTime? _PaymentTimeLimit;
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
 		private Decimal? _PaidAmount;

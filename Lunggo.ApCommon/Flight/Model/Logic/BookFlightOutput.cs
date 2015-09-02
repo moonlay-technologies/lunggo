@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class BookFlightOutput : OutputBase
     {
-        public BookResult BookResult { get; set; }
+        public List<BookResult> BookResults { get; set; }
         public string RsvNo { get; set; }
         public decimal FinalPrice { get; set; }
+        public DateTime? TimeLimit { get; set; }
     }
 
     public class BookResult
     {
-        public BookingStatus BookingStatus { get; set; }
-        public string BookingId { get; set; }
+        public bool IsSuccess { get; set; }
         public DateTime? TimeLimit { get; set; }
     }
 }

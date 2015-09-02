@@ -963,6 +963,228 @@ hr {border-color:#aaa;}
 }
 
 // ----------------------------------------------
+// trip flight search page
+.trip-flight-search-page {}
+
+.trip-flight-list-wrapper {padding-top:15px;
+    &:before, &:after {@include clearfix();}
+    /*-----*/
+    .trip-departure-wrapper {float:left; width:45%;
+        &.active {width:60%;}
+        &.inactive {width:38%;}
+    }
+    .trip-return-wrapper {float:right; width:45%;
+        &.active {width:60%;}
+        &.inactive {width:38%;}
+    }
+    &>.inactive {cursor:pointer;
+        .flight-sort {display:none;}
+        .flight-filter {display:none;}
+        .flight {opacity:0.5;
+            .flight-info {width:100% !important;}
+            .flight-action {display:none;}
+            .flight-detail {display:none;}
+        }
+    }
+    .wrapper-header {background:$blue-default; color:#fff; padding:10px;
+        h3 {}
+        h5 {}
+    }
+    /*-----*/
+    .flight-chosen {
+        .flight-detail {border:$border-default; background:#fff;
+            &>div:before, &>div:after {@include clearfix();}
+            .detail-left {float:left; width:50%;}
+            .detail-right {float:left; width:50%;}
+            /*-----*/
+            .flight-info {
+                &>div {float:left;}
+                .flight-airline {width:30%; padding:10px;
+                    img {height:40px; display:block;}
+                    span {display:block; font-weight:bold; font-size:12px;}
+                }
+                .flight-departure {width:35%;}
+                .flight-arrival {width:35%;}
+                h4 {margin-bottom:0; margin-top:7px; font-weight:bold; font-size:22px;}
+                h5 {margin-bottom:0; margin-top:5px; font-size:12px;}
+            }
+            .flight-duration {padding:10px; border-top:$border-default;}
+            .flight-price {padding:10px; border-top:$border-default;
+                .flight-price-was {text-decoration:dashed;}
+                .flight-price-now {font-weight:bold; color:$blue-default;}
+            }
+            .flight-change {
+                a {display:block; width:100%; padding:10px 0; text-align:center; background:#ededed; cursor:pointer; font-weight:bold;}
+            }
+        }
+    }
+    /*-----*/
+    .flight-filter {
+        .flight-filter-trigger {background:#eee;
+            &:before, &:after {@include clearfix();}
+            &>a {float:left; width:25%; text-align:center; color:#666; cursor:pointer; padding:10px 0;}
+            &>a.active {background:#fff;}
+            a+a {border-left:$border-default;}
+        }
+        .flight-filter-content {
+            &>div {background:#fff; padding:10px;}
+            .slider-value {font-weight:bold; font-size:16px;}
+            // airline filter
+            .filter-airline {
+                img {display:block; width:30px; margin-left:auto; margin-right:auto;}
+                span {font-size:12px;}
+            }
+        }
+    }
+    .flight-sort {
+        &:before, &:after {@include clearfix();}
+        &>a {display:block; float:left; padding-left:0 !important; margin:0 !important; text-align:left !important; font-weight:bold; cursor:pointer;}
+        .sort-airline {width:22%;}
+        .sort-departure {width:23%;}
+        .sort-arrival {width:27%;}
+        .sort-price {width:10%;}
+    }
+    .flight-list {
+        .flight {display:block; margin-bottom:10px;
+            &.active .flight-main, &.active .flight-detail {border-color:$blue-default;}
+            &.active .flight-detail {height:auto;}
+            &:before, &:after {@include clearfix();}
+            .flight-main {background:#fff; border:$border-default;
+                &:before, &:after {@include clearfix();}
+                .flight-info {float:left; width:70%;
+                    .flight-top {border-bottom:1px solid #ddd; padding:10px;
+                        &>div {float:left;}
+                        &:before, &:after {@include clearfix();}
+                        h4 {margin-bottom:0; margin-top:7px; font-weight:bold; font-size:22px;}
+                        h5 {margin-bottom:0; margin-top:5px; font-size:12px;}
+                        /*-----*/
+                        .flight-airline {width:30%; text-align:left;
+                            img {height:50px; display:block;}
+                            span {font-size:12px;}
+                        }
+                        .flight-departure {width:35%;}
+                        .flight-arrival {width:35%;}
+                    }
+                    .flight-bottom {padding:10px;
+                        &>div {float:left;}
+                        &:before, &:after {@include clearfix();}
+                        /*-----*/
+                        .flight-detail-trigger {width:30%;
+                            a {cursor:pointer;}
+                        }
+                        .flight-duration {width:70%;}
+                    }
+                }
+                .flight-action {float:left; width:30%; padding:10px;
+                    .flight-price-was {text-decoration:line-through;}
+                    .flight-price-now {font-weight:bold;}
+                    .flight-choose {display:block; width:100%; text-align:center;}
+                }
+            }// flight-main
+            .flight-detail {background:#eee; border:$border-default; border-top:0; height:0; overflow:hidden;
+                &.active {height:auto;}
+                .segment {padding:10px;
+                    &:before, &:after {@include clearfix();}
+                    &>div {float:left;}
+                    .segment-time {font-weight:bold; margin-bottom:0;}
+                    .segment-date {margin-top:5px;}
+                    .segment-city {font-weight:bold; margin-bottom:0;}
+                    .segment-airport {margin-top:5px;}
+                    .segment-airline {width:20%;
+                        img {height:50px; display:block;}
+                        span {display:block;}
+                        .airline-number {font-weight:bold;}
+                    }
+                    .segment-departure {width:27%;}
+                    .segment-duration {width:26%; text-align:center; padding-top:30px;
+                        span {display:block;}
+                    }
+                    .segment-arrival {width:27%;}
+                }
+                .transit {text-align:center; border-top:$border-default; border-bottom:$border-default; font-style:italic;}
+                .flight-operator {display:block; clear:both; width:100%; margin-top:20px;
+                    p {margin-bottom:0;}
+                    img {height:30px;}
+                }
+                .segment-footer {padding:10px; border-top:$border-default;
+                    label {font-weight:bold;}
+                    h4 {font-weight:bold; margin-top:0px; margin-bottom:0px; color:$blue-default;}
+                    small {font-style:italic;}
+                    .btn {float:right; padding:5px 40px;}
+                }
+
+            }// flight-detail
+        }
+    }
+
+}
+
+// ----------
+// flight overview
+.trip-flight-overview {width:700px; height:365px; position:absolute; top:0; right:0; bottom:0; left:0; margin:auto;
+    header {padding:15px; background:$blue-default; color:#fff;
+        h3 {position:relative; margin:0;}
+        .close-overview {position:absolute; right:0; top:0; color:#fff; cursor:pointer;}
+    }
+    .flight-main {background:#fff;
+        h2 {margin:0; font-size:16px; font-weight:bold; padding:5px 10px}
+        &>div:before, &>div:after {@include clearfix();}
+        &>div>div {float:left;
+            h3 {margin:0; font-size:16px; font-weight:bold;}
+            h4 {margin:0; font-size:13px;}
+            h4+h3 {margin-top:5px;}
+            h5 {margin:0;}
+        }
+        .flight-airline {width:20%; padding:10px;
+            .airline-image {height:45px;}
+            .airline-name {display:block;}
+        }
+        .flight-departure {width:30%; text-align:right; padding:10px;}
+        .flight-duration {width:20%; text-align:center; padding:10px 10px;}
+        .flight-arrival {width:30%; padding:10px;}
+        /*-----*/
+        .flight-departure-info {}
+        .flight-return-info {border-top:1px solid #ddd;}
+    }
+    footer {background:#ededed; padding:15px;
+        &:before,&:after {@include clearfix();}
+        &>div {float:left;}
+        /*-----*/
+        .flight-detail-trigger {width:30%;
+            a {font-size:16px; display:block; font-weight:bold; padding:12px 0; cursor:pointer;}
+        }
+        .flight-price {width:40%; text-align:right;
+            label {font-weight:bold;}
+            h3 {font-weight:bold; margin:0;}
+        }
+        .flight-book {width:30%; padding-left:15px;
+            a {display:block; width:100%; height:100%; font-weight:bold; padding:12px 10px;}
+        }
+    }
+    .flight-detail {}
+}
+
+// ----------
+// revalidate flight
+.validate-overlay {z-index:10000 !important;}
+.revalidate-flight-wrapper {position:absolute; width:450px; height:300px; top:0; right:0; bottom:0; left:0; margin:auto; background:#fff;
+    .wrapper-header {background:$blue-default; color:#fff; padding:10px;}
+    .wrapper-content {padding:10px;}
+    .wrapper-footer {padding:10px; position:absolute; bottom:0; left:0; width:100%;}
+}
+
+.notice-overlay {z-index:10000 !important;}
+.page-notice-wrapper {position:absolute; width:450px; height:300px; top:0; right:0; bottom:0; left:0; margin:auto; background:#fff;
+    .wrapper-header {background:$blue-default; color:#fff; padding:10px;}
+    .wrapper-content {padding:10px;}
+    .wrapper-footer {padding:10px; position:absolute; bottom:0; left:0; width:100%;}
+}
+
+// ----------------------------------------------
+// page overlay
+.page-overlay {position:fixed; width:100%; height:100%; z-index:9998; background:rgba(50,50,50,0.5); top:0; left:0;}
+
+// ----------------------------------------------
 // user account
 
 // history

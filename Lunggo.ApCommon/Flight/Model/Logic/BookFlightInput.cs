@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Payment.Data;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class BookFlightInput
     {
-        public FlightItinerary Itinerary { get; set; }
-        public List<FlightTrip> Trips { get; set; }
+        public string ItinCacheId { get; set; }
         public TripType OverallTripType { get; set; }
-        public List<PassengerInfoFare> PassengerInfoFares { get; set; }
-        public ContactData ContactData { get; set; }
+        public List<FlightPassenger> Passengers { get; set; }
+        public ContactData Contact { get; set; }
+        public PaymentInfo Payment { get; set; }
         public string DiscountCode { get; set; }
     }
 }

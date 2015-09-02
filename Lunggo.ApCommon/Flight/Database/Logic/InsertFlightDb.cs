@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Database.Model;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -12,6 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
@@ -19,87 +19,77 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
 {
     internal class InsertFlightDb
     {
-        internal static void Booking(FlightBookingRecord bookingRecord, out string rsvNo, out decimal finalPrice)
+        internal static void Reservation(FlightReservation reservation)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                //TODO diskon ga seharusnya di sini. konstruk reservasinya sebelum masuk sini.
-                var discountRuleIds = VoucherService.GetInstance()
-                    .GetFlightDiscountRules(bookingRecord.DiscountCode, bookingRecord.ContactData.Email);
-                var discountRule = FlightService.GetInstance().GetMatchingDiscountRule(discountRuleIds) ??
-                                   new DiscountRule
-                {
-                    Coefficient = 0,
-                    Constant = 0
-                };
-                var discountNominal = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice*discountRule.Coefficient +
-                                      discountRule.Constant;
-                finalPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice - discountNominal;
-                rsvNo = FlightReservationSequence.GetInstance().GetFlightReservationId(EnumReservationType.ReservationType.NonMember);
                 var reservationRecord = new FlightReservationTableRecord
                 {
-                    RsvNo = rsvNo,
-                    RsvTime = DateTime.UtcNow,
-                    ContactName = bookingRecord.ContactData.Name,
-                    ContactEmail = bookingRecord.ContactData.Email,
-                    ContactCountryCd = bookingRecord.ContactData.CountryCode,
-                    ContactPhone = bookingRecord.ContactData.Phone,
+                    RsvNo = reservation.RsvNo,
+                    RsvTime = reservation.RsvTime,
+                    ContactName = reservation.Contact.Name,
+                    ContactEmail = reservation.Contact.Email,
+                    ContactCountryCd = reservation.Contact.CountryCode,
+                    ContactPhone = reservation.Contact.Phone,
                     LangCd = "xxx",
                     MemberCd = "xxx",
                     CancellationTypeCd = "xxx",
+                    PaymentMediumCd = PaymentMediumCd.Mnemonic(reservation.Payment.Medium),
                     PaymentStatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
-                    OverallTripTypeCd = TripTypeCd.Mnemonic(bookingRecord.OverallTripType),
-                    TotalSupplierPrice = bookingRecord.ItineraryRecords[0].Itinerary.FinalIdrPrice,
+                    PaymentMethodCd = PaymentMethodCd.Mnemonic(reservation.Payment.Method),
+                    PaymentTimeLimit = reservation.Payment.TimeLimit,
+                    OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.TripType),
+                    TotalSupplierPrice = reservation.Itineraries.Sum(itin => itin.FinalIdrPrice),
                     PaymentFeeForCust = 0,
                     PaymentFeeForUs = 0,
-                    VoucherCode = bookingRecord.DiscountCode,
-                    DiscountId = discountRule.RuleId,
-                    DiscountCoefficient = discountRule.Coefficient,
-                    DiscountConstant = discountRule.Constant,
-                    DiscountNominal = discountNominal,
-                    FinalPrice = finalPrice,
+                    VoucherCode = reservation.Discount.Code,
+                    DiscountId = reservation.Discount.Id,
+                    DiscountCoefficient = reservation.Discount.Coefficient,
+                    DiscountConstant = reservation.Discount.Constant,
+                    DiscountNominal = reservation.Discount.Nominal,
+                    FinalPrice = reservation.Payment.FinalPrice,
                     GrossProfit = 0,
                     InsertBy = "xxx",
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "xxx",
-                    AdultCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Adult),
-                    ChildCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Child),
-                    InfantCount = bookingRecord.Passengers.Count(p => p.Type == PassengerType.Infant)
+                    AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
+                    ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
+                    InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant)
                 };
 
                 FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
 
-                foreach (var record in bookingRecord.ItineraryRecords)
+                foreach (var itin in reservation.Itineraries)
                 {
                     var itineraryId = FlightItineraryIdSequence.GetInstance().GetNext();
                     var itineraryRecord = new FlightItineraryTableRecord
                     {
                         ItineraryId = itineraryId,
-                        RsvNo = rsvNo,
-                        BookingId = record.BookResult.BookingId,
+                        RsvNo = reservation.RsvNo,
+                        BookingId = itin.BookingId,
                         BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
-                        FareTypeCd = FareTypeCd.Mnemonic(FlightIdUtil.GetFareType(record.BookResult.BookingId)),
-                        SupplierCd = FlightSupplierCd.Mnemonic(FlightIdUtil.GetSupplier(record.BookResult.BookingId)),
-                        SupplierPrice = record.Itinerary.SupplierPrice,
-                        SupplierCurrencyCd = record.Itinerary.SupplierCurrency,
-                        SupplierExchangeRate = record.Itinerary.SupplierRate,
-                        OriginalIdrPrice = record.Itinerary.OriginalIdrPrice,
-                        MarginId = record.Itinerary.MarginId,
-                        MarginCoefficient = record.Itinerary.MarginCoefficient,
-                        MarginConstant = record.Itinerary.MarginConstant,
-                        MarginNominal = record.Itinerary.MarginNominal,
-                        FinalIdrPrice = record.Itinerary.FinalIdrPrice,
-                        LocalPrice = record.Itinerary.LocalPrice,
-                        LocalCurrencyCd = record.Itinerary.LocalCurrency,
-                        LocalExchangeRate = record.Itinerary.LocalRate,
-                        TripTypeCd = TripTypeCd.Mnemonic(record.Itinerary.TripType),
+                        FareTypeCd = FareTypeCd.Mnemonic(FlightIdUtil.GetFareType(itin.BookingId)),
+                        SupplierCd = FlightSupplierCd.Mnemonic(FlightIdUtil.GetSupplier(itin.BookingId)),
+                        SupplierPrice = itin.SupplierPrice,
+                        SupplierCurrencyCd = itin.SupplierCurrency,
+                        SupplierExchangeRate = itin.SupplierRate,
+                        OriginalIdrPrice = itin.OriginalIdrPrice,
+                        MarginId = itin.MarginId,
+                        MarginCoefficient = itin.MarginCoefficient,
+                        MarginConstant = itin.MarginConstant,
+                        MarginNominal = itin.MarginNominal,
+                        FinalIdrPrice = itin.FinalIdrPrice,
+                        LocalPrice = itin.LocalPrice,
+                        LocalCurrencyCd = itin.LocalCurrency,
+                        LocalExchangeRate = itin.LocalRate,
+                        TripTypeCd = TripTypeCd.Mnemonic(itin.TripType),
                         InsertBy = "xxx",
                         InsertDate = DateTime.UtcNow,
                         InsertPgId = "xxx"
                     };
                     FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
-                    foreach (var trip in record.Itinerary.FlightTrips)
+                    foreach (var trip in itin.FlightTrips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord
@@ -161,30 +151,30 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             }
                         }
                     }
-
-                    foreach (var passenger in bookingRecord.Passengers)
-                    {
-
-                        var passengerRecord = new FlightPassengerTableRecord
-                        {
-                            PassengerId = FlightPassengerIdSequence.GetInstance().GetNext(),
-                            RsvNo = rsvNo,
-                            PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
-                            GenderCd = GenderCd.Mnemonic(passenger.Gender),
-                            TitleCd = TitleCd.Mnemonic(passenger.Title),
-                            FirstName = passenger.FirstName,
-                            LastName = passenger.LastName,
-                            BirthDate = passenger.DateOfBirth,
-                            CountryCd = passenger.PassportCountry,
-                            IdNumber = passenger.PassportNumber,
-                            PassportExpiryDate = passenger.PassportExpiryDate,
-                            InsertBy = "xxx",
-                            InsertDate = DateTime.UtcNow,
-                            InsertPgId = "xxx"
-                        }; ;
-                        FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
-                    }
                 }
+                foreach (var passenger in reservation.Passengers)
+                {
+
+                    var passengerRecord = new FlightPassengerTableRecord
+                    {
+                        PassengerId = FlightPassengerIdSequence.GetInstance().GetNext(),
+                        RsvNo = reservation.RsvNo,
+                        PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
+                        GenderCd = GenderCd.Mnemonic(passenger.Gender),
+                        TitleCd = TitleCd.Mnemonic(passenger.Title),
+                        FirstName = passenger.FirstName,
+                        LastName = passenger.LastName,
+                        BirthDate = passenger.DateOfBirth,
+                        CountryCd = passenger.PassportCountry,
+                        IdNumber = passenger.PassportNumber,
+                        PassportExpiryDate = passenger.PassportExpiryDate,
+                        InsertBy = "xxx",
+                        InsertDate = DateTime.UtcNow,
+                        InsertPgId = "xxx"
+                    }; ;
+                    FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
+                }
+
             }
         }
 
@@ -192,7 +182,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
+                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, new { details.BookingId }).Single();
 
                 foreach (var trip in details.FlightItineraries.FlightTrips)
                 {

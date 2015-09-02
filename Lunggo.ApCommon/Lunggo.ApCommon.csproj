@@ -154,6 +154,7 @@
     <Compile Include="Flight\Database\Logic\UpdateFlightDb.cs" />
     <Compile Include="Flight\Database\Query\CancelReservationsQuery.cs" />
     <Compile Include="Flight\Database\Query\ExpireReservationsQuery.cs" />
+    <Compile Include="Flight\Database\Query\GetUnpaidFlightReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchFlightReservationQuery.cs" />
     <Compile Include="Flight\Interface\WrapperBase.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
     <Compile Include="Flight\Model\ContactData.cs" />
+    <Compile Include="Flight\Model\DiscountData.cs" />
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
@@ -178,7 +180,7 @@
     <Compile Include="Flight\Model\MarginRule.cs" />
     <Compile Include="Flight\Model\DiscountRule.cs" />
     <Compile Include="Flight\Model\OrderTicketResult.cs" />
-    <Compile Include="Flight\Model\PassengerInfo.cs" />
+    <Compile Include="Flight\Model\FlightPassenger.cs" />
     <Compile Include="Flight\Model\ResultBase.cs" />
     <Compile Include="Flight\Model\RevalidateFareResult.cs" />
     <Compile Include="Flight\Model\SearchFlightResult.cs" />
@@ -211,11 +213,12 @@
     <Compile Include="Flight\Database\Query\UpdateFlightBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateFlightPaymentQuery.cs" />
+    <Compile Include="Flight\Service\SelectFlight.cs" />
+    <Compile Include="Flight\Service\BundleFlight.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
     <Compile Include="Flight\Service\SendToCustomer.cs" />
     <Compile Include="Flight\Service\Reservations.cs" />
     <Compile Include="Flight\Database\Logic\InsertFlightDb.cs" />
-    <Compile Include="Flight\Database\Model\FlightBookingRecord.cs" />
     <Compile Include="Flight\Service\BookFlight.cs" />
     <Compile Include="Flight\Service\CancelBooking.cs" />
     <Compile Include="Flight\Service\FlightCaching.cs" />
@@ -230,7 +233,6 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\RevalidateFlight.cs" />
     <Compile Include="Flight\Service\SearchFlight.cs" />
-    <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
     <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Flight\Utility\FlightIdUtil.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
@@ -306,12 +308,14 @@
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
     <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
+    <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\PaymentExpiry.cs" />
     <Compile Include="Payment\Model\PaymentInfo.cs" />
     <Compile Include="Payment\Model\RefundInfo.cs" />
@@ -319,11 +323,13 @@
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
     <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
+    <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs" />
     <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
     <Compile Include="Sequence\FlightStopIdSequence.cs" />
     <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
+    <Compile Include="Sequence\TransferConfirmationReportIdSequence.cs" />
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />

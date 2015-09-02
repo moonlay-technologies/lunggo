@@ -1,8 +1,13 @@
-﻿@model Lunggo.CustomerWeb.Models.PaymentConfirmationData
+﻿@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
 
 @{
     Layout = "/Views/shared/_layout_20150506.cshtml";
     ViewBag.Title = "Confirmation";
+    var beneficiaryBankList = new List<SelectListItem>
+    {
+        new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
+        new SelectListItem {Text = "BCA", Value = "BCA"},
+    };
 }
 
 @section AdditionalPageJavascript {
@@ -12,10 +17,7 @@
 @section PageJavascript {
     <script>
 
-        var deadline = new Date;
-        deadline.setMinutes(deadline.getMinutes() + 20);
-
-        $('.payment-countdown').countdown(deadline, function (event) {
+        $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
             $(this).html(event.strftime('%M:%S'));
         });
 
@@ -44,28 +46,28 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Nama Pengirim</label>
-                                @Html.TextBoxFor(model => model.Remitter, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.Report.RemitterName, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Bank Pengirim</label>
-                                @Html.TextBoxFor(model => model.RemitterBank, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.Report.RemitterBank, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Jumlah Pembayaran</label>
-                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.Report.Amount, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Bank Tujuan</label>
-                                @Html.TextBoxFor(model => model.BeneficiaryBank, new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.Report.BeneficiaryBank, beneficiaryBankList, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <label class="control-label">Keterangan Tambahan</label>
-                            @Html.TextAreaFor(model => model.Message, new {@class = "form-control"})
+                            @Html.TextAreaFor(model => model.Report.Message, new {@class = "form-control"})
                         </div>
                     </div>
                     <br/>

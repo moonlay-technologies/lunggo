@@ -203,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool CabinClassMatches(MarginRule rule, FlightItinerary fare)
         {
-            return !rule.CabinClasses.Any() || rule.CabinClasses.Contains(fare.CabinClass);
+            return !rule.CabinClasses.Any() || rule.CabinClasses.Contains(fare.RequestedCabinClass);
         }
 
         private static bool PassengerCountMatches(MarginRule rule, FlightItinerary fare)
