@@ -185,12 +185,10 @@
                             <h2><b>@Html.I18NString("CW00106")</b> @Html.I18NString("CW00107")</h2>
 
                             <section class="payment-option">
-                                @*
-                                    <label class="payment-transfer" for="payment-transfer">
-                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
-                                        <span>Bank Transfer</span>
-                                    </label>
-                                *@
+                                <label class="payment-transfer" for="payment-transfer">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
+                                    <span>Bank Transfer</span>
+                                </label>
                                 <label class="payment-veritrans active" for="payment-virtual">
                                     <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual" checked>
                                     <span>ATM</span>

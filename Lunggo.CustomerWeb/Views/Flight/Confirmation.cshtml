@@ -14,15 +14,13 @@
     <script src="/Assets/js/jquery.countdown.min.js"></script>
 }
 
-@section PageJavascript {
-    <script>
+<script>
 
-        $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
-            $(this).html(event.strftime('%M:%S'));
-        });
+    $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
+        $(this).html(event.strftime('%M:%S'));
+    });
 
-    </script>
-}
+</script>
 
 <div class="confirmation-page">
     
