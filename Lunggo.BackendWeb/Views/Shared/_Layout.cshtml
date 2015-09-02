@@ -98,6 +98,13 @@
                             <span>Flight Reservation</span>
                         </a>
                     </li>
+                    
+                    <li class="sub-menu" id="menu-cekpayment">
+                        <a href="@Url.Action("CheckPayment", "Flight")">
+                            <i class="fa fa-plane"></i>
+                            <span>Payment Check</span>
+                        </a>
+                    </li>
 
                 </ul>
                 <!-- sidebar menu end-->
@@ -162,5 +169,17 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/scripts/CustomAutoComplete.js")
     @Scripts.Render("~/scripts/Flip.js")
+    
+    
+    <script>
+    $(document).ready(function () {
+        $(".panel2").hide();
+        $(".flip").click(function () {
+            $(".panel2").toggle("slow");
+            $(".panel1").toggle("slow");
+        });
+    });
+    </script>
+
 </body>
 </html>

@@ -19,6 +19,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"SELECT RsvNo, PaymentTimeLimit, FinalPrice ");
+            clauseBuilder.Append(@"FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 
