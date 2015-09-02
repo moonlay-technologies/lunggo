@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightReservationApi
+    public class FlightReservationForDisplay
     {
         public string RsvNo { get; set; }
         public DateTime RsvTime { get; set; }
-        public FlightItineraryApi Itinerary { get; set; }
+        public FlightItineraryForDisplay Itinerary { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public PaymentInfo Payment { get; set; }
         public ContactData Contact { get; set; }

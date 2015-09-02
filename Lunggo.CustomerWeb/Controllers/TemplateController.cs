@@ -119,7 +119,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult eticket2(string rsvNo)
         {
-            var rsv = FlightService.GetInstance().GetReservationApi(rsvNo);
+            var rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
             return View(rsv);
         }
 

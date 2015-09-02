@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {
@@ -19,8 +20,10 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
 
         public void DistinguishErrors()
         {
-            Errors = Errors.Distinct().ToList();
-            ErrorMessages = ErrorMessages.Distinct().ToList();
+            if (Errors != null)
+                Errors = Errors.Distinct().ToList();
+            if (ErrorMessages != null)
+                ErrorMessages = ErrorMessages.Distinct().ToList();
         }
 
         public void AddError(FlightError error)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class FlightTripApi : FlightTripBase
+    public class FlightTripForDisplay : FlightTripBase
     {
         public int TotalTransit { get; set; }
         public List<Transit> Transits { get; set; }

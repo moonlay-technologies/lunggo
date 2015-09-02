@@ -70,7 +70,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(string token)
         {
             var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryApi(token);
+            var itinerary = service.GetItineraryForDisplay(token);
             var expiryTime = service.GetItineraryExpiry(token);
             return View(new FlightCheckoutData
             {
@@ -84,7 +84,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Checkout(FlightCheckoutData data)
         {
             var service = FlightService.GetInstance();
-            data.Itinerary = service.GetItineraryApi(data.Token);
+            data.Itinerary = service.GetItineraryForDisplay(data.Token);
             var passengerInfo = data.Passengers.Select(passenger => new FlightPassenger
             {
                 Type = passenger.Type,
@@ -108,6 +108,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     Email = data.Contact.Email
                 },
                 Passengers = passengerInfo.ToList(),
+                Payment = data.Payment,
                 OverallTripType = data.Itinerary.TripType,
                 DiscountCode = data.DiscountCode
             };
@@ -156,13 +157,21 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Thankyou(string rsvNo)
         {
             var service = FlightService.GetInstance();
-            var summary = service.GetReservationApi(rsvNo);
+            var summary = service.GetReservationForDisplay(rsvNo);
             return View(summary);
         }
 
-        public ActionResult Confirmation()
+        public ActionResult Confirmation(string rsvNo)
         {
-            return View();
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetReservationForDisplay(rsvNo);
+            var viewModel = new FlightPaymentConfirmationData
+            {
+                RsvNo = rsvNo,
+                TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
+                FinalPrice = reservation.Payment.FinalPrice
+            };
+            return View(viewModel);
         }
     }
 }

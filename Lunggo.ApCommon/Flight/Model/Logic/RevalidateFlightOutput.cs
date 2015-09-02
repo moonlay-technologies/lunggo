@@ -7,6 +7,7 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public List<RevalidateFlightOutputSet> Sets { get; set; }
         public bool IsValid { get; set; }
         public decimal? NewFare { get; set; }
+        public string Token { get; set; }
 
         public RevalidateFlightOutput()
         {
