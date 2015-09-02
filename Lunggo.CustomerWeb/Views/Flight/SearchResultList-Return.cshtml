@@ -290,7 +290,15 @@
                         <div class="filter-airline" ng-show="departureFlightConfig.flightFilter.label == 'airline'">
                             <h4>Maskapai</h4>
                             <div class="content">
-                                qweqewqe
+                                <div class="row">
+                                    <div class="col-sm-3" ng-repeat="airline in departureFlightConfig.flightFilter.value.airline.list">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="{{airline.Name}}" ng-init="airline.checked = true" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline('departure')" /> <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" /><span>{{airline.Name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="filter-time" ng-show="departureFlightConfig.flightFilter.label == 'time'">
@@ -362,7 +370,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList | filter:transitFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList | filter:transitFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | filter:airlineFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -552,6 +560,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="filter-airline" ng-show="returnFlightConfig.flightFilter.label == 'airline'">
+                            <h4>Maskapai</h4>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-sm-3" ng-repeat="airline in returnFlightConfig.flightFilter.value.airline.list">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="{{airline.Name}}" ng-init="airline.checked = true" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline('return')" /> <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" /><span>{{airline.Name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="filter-time" ng-show="returnFlightConfig.flightFilter.label == 'time'">
                             <h4>Waktu Keberangkatan dan Kedatangan</h4>
                             <div class="content">
@@ -621,7 +643,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-if="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList | filter:transitFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList | filter:transitFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | filter:airlineFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse">
 
                         <div class="flight-main">
                             <div class="flight-info">
