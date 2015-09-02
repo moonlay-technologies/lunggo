@@ -24,12 +24,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static RevalidateFlightInput PreprocessServiceRequest(FlightRevalidateApiRequest request)
         {
-            var service = FlightService.GetInstance();
-            List<FlightItinerary> itins;
-            if (request.Step == FlightRevalidateApiRequest.RevalidateStep.First)
-                request.Token = service.SelectFlight(request.SearchId, request.ItinIndex);
             return new RevalidateFlightInput
             {
+                SearchId = request.SearchId,
+                ItinIndex = request.ItinIndex,
                 Token = request.Token
             };
         }
@@ -42,7 +40,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     return new FlightRevalidateApiResponse
                     {
-                        Token = request.Token,
+                        Token = revalidateServiceResponse.Token,
                         IsValid = true,
                         IsOtherFareAvailable = null,
                         NewFare = null,
@@ -55,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     {
                         return new FlightRevalidateApiResponse
                         {
-                            Token = request.Token,
+                            Token = revalidateServiceResponse.Token,
                             IsValid = false,
                             IsOtherFareAvailable = true,
                             NewFare = revalidateServiceResponse.NewFare,

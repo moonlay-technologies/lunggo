@@ -27,6 +27,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, output);
                 InsertFlightDb.Reservation(reservation);
+                output.RsvNo = reservation.RsvNo;
+                output.FinalPrice = reservation.Payment.FinalPrice;
             }
             else
             {

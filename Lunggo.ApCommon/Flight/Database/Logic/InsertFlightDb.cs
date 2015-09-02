@@ -151,30 +151,30 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
                             }
                         }
                     }
-
-                    foreach (var passenger in reservation.Passengers)
-                    {
-
-                        var passengerRecord = new FlightPassengerTableRecord
-                        {
-                            PassengerId = FlightPassengerIdSequence.GetInstance().GetNext(),
-                            RsvNo = reservation.RsvNo,
-                            PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
-                            GenderCd = GenderCd.Mnemonic(passenger.Gender),
-                            TitleCd = TitleCd.Mnemonic(passenger.Title),
-                            FirstName = passenger.FirstName,
-                            LastName = passenger.LastName,
-                            BirthDate = passenger.DateOfBirth,
-                            CountryCd = passenger.PassportCountry,
-                            IdNumber = passenger.PassportNumber,
-                            PassportExpiryDate = passenger.PassportExpiryDate,
-                            InsertBy = "xxx",
-                            InsertDate = DateTime.UtcNow,
-                            InsertPgId = "xxx"
-                        }; ;
-                        FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
-                    }
                 }
+                foreach (var passenger in reservation.Passengers)
+                {
+
+                    var passengerRecord = new FlightPassengerTableRecord
+                    {
+                        PassengerId = FlightPassengerIdSequence.GetInstance().GetNext(),
+                        RsvNo = reservation.RsvNo,
+                        PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
+                        GenderCd = GenderCd.Mnemonic(passenger.Gender),
+                        TitleCd = TitleCd.Mnemonic(passenger.Title),
+                        FirstName = passenger.FirstName,
+                        LastName = passenger.LastName,
+                        BirthDate = passenger.DateOfBirth,
+                        CountryCd = passenger.PassportCountry,
+                        IdNumber = passenger.PassportNumber,
+                        PassportExpiryDate = passenger.PassportExpiryDate,
+                        InsertBy = "xxx",
+                        InsertDate = DateTime.UtcNow,
+                        InsertPgId = "xxx"
+                    }; ;
+                    FlightPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
+                }
+
             }
         }
 
@@ -182,7 +182,7 @@ namespace Lunggo.ApCommon.Flight.Database.Logic
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
+                var itineraryId = GetFlightItineraryIdQuery.GetInstance().Execute(conn, new { details.BookingId }).Single();
 
                 foreach (var trip in details.FlightItineraries.FlightTrips)
                 {

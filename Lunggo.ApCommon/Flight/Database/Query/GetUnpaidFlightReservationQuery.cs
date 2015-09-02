@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE PaymentStatusCd = 'TRF'");
+            clauseBuilder.Append(@"WHERE PaymentMethodCd = 'TRF' AND PaymentStatusCd = 'PEN'");
             return clauseBuilder.ToString();
         }
     }

@@ -121,7 +121,7 @@ namespace Lunggo.BackendWeb.Models
 
     public class AccountViewModel
     {
-        public List<FlightReservationApi> FlightReservations { get; set; }
+        public List<FlightReservationForDisplay> FlightReservations { get; set; }
         public CustomUser User { get; set; }
     }
 }

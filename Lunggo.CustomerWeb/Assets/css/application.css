@@ -2487,6 +2487,13 @@ hr {
   .trip-flight-list-wrapper .flight-filter .flight-filter-content .slider-value {
     font-weight: bold;
     font-size: 16px; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content .filter-airline img {
+    display: block;
+    width: 30px;
+    margin-left: auto;
+    margin-right: auto; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content .filter-airline span {
+    font-size: 12px; }
   .trip-flight-list-wrapper .flight-sort:before, .trip-flight-list-wrapper .flight-sort:after {
     content: "";
     clear: both;

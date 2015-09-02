@@ -19,13 +19,13 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public FlightItineraryApi GetItineraryApi(string token)
+        public FlightItineraryForDisplay GetItineraryForDisplay(string token)
         {
             var itin = GetItineraryFromCache(token);
             return ConvertToItineraryApi(itin);
         }
 
-        public FlightReservationApi GetReservationApi(string rsvNo)
+        public FlightReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
             var rsv = GetReservation(rsvNo);
             return ConvertToReservationApi(rsv);
@@ -36,13 +36,13 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetFlightDb.Reservation(rsvNo);
         }
 
-        public FlightReservationApi GetOverviewReservation(string rsvNo)
+        internal FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
             var rsv = GetFlightDb.OverviewReservation(rsvNo);
             return ConvertToReservationApi(rsv);
         }
 
-        public List<FlightReservationApi> GetOverviewReservationsByContactEmail(string contactEmail)
+        public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
         {
             var rsvs = GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
             return rsvs.Select(ConvertToReservationApi).ToList();

@@ -329,6 +329,7 @@
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />
     <Compile Include="Sequence\FlightStopIdSequence.cs" />
     <Compile Include="Sequence\FlightSegmentIdSequence.cs" />
+    <Compile Include="Sequence\TransferConfirmationReportIdSequence.cs" />
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />

@@ -12,6 +12,8 @@ namespace Lunggo.ApCommon.Flight.Service
         public RevalidateFlightOutput RevalidateFlight(RevalidateFlightInput input)
         {
             var output = new RevalidateFlightOutput();
+            if (input.Token == null)
+                input.Token = SelectFlight(input.SearchId, input.ItinIndex);
             var itins = input.Token.Substring(0, 4) == ItinBundleKeyPrefix 
                 ? GetItinerarySetFromCache(input.Token) 
                 : new List<FlightItinerary>{GetItineraryFromCache(input.Token)};
@@ -57,14 +59,14 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.NewFare = null;
                 else
                     output.NewFare = output.Sets.Sum(set => set.Itinerary.LocalPrice);
+                output.Token = input.Token;
             }
             else
             {
                 if (output.Sets.Any(set => set.IsSuccess))
                     output.PartiallySucceed();
                 output.IsSuccess = false;
-                output.Errors = output.Errors.Distinct().ToList();
-                output.ErrorMessages = output.ErrorMessages.Distinct().ToList();
+                output.DistinguishErrors();
             }
             return output;
         }

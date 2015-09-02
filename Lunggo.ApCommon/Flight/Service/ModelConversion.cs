@@ -18,11 +18,11 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal FlightReservationApi ConvertToReservationApi(FlightReservation reservation)
+        internal FlightReservationForDisplay ConvertToReservationApi(FlightReservation reservation)
         {
             if (reservation != null)
             {
-                return new FlightReservationApi
+                return new FlightReservationForDisplay
                 {
                     RsvNo = reservation.RsvNo,
                     RsvTime = reservation.RsvTime,
@@ -36,15 +36,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                return new FlightReservationApi();
+                return new FlightReservationForDisplay();
             }
         }
 
-        internal FlightItineraryApi ConvertToItineraryApi(FlightItinerary itinerary)
+        internal FlightItineraryForDisplay ConvertToItineraryApi(FlightItinerary itinerary)
         {
             if (itinerary != null)
             {
-                return new FlightItineraryApi
+                return new FlightItineraryForDisplay
                 {
                     AdultCount = itinerary.AdultCount,
                     ChildCount = itinerary.ChildCount,
@@ -61,14 +61,14 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                return new FlightItineraryApi();
+                return new FlightItineraryForDisplay();
             }
         }
 
-        internal FlightTripApi ConvertToTripApi(FlightTripTableRecord summaryRecord)
+        internal FlightTripForDisplay ConvertToTripApi(FlightTripTableRecord summaryRecord)
         {
             var dict = DictionaryService.GetInstance();
-            return new FlightTripApi
+            return new FlightTripForDisplay
             {
                 OriginAirport = summaryRecord.OriginAirportCd,
                 OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
@@ -186,10 +186,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
         }
 
-        private static List<FlightTripApi> MapTrips(IEnumerable<FlightTrip> trips)
+        private static List<FlightTripForDisplay> MapTrips(IEnumerable<FlightTrip> trips)
         {
             var dict = DictionaryService.GetInstance();
-            return trips.Select(trip => new FlightTripApi
+            return trips.Select(trip => new FlightTripForDisplay
             {
                 FlightSegments = MapSegments(trip.FlightSegments),
                 OriginAirport = trip.OriginAirport,
