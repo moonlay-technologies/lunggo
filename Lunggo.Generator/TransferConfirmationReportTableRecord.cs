@@ -101,13 +101,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Message");
 		    }
 		}
-		public String Status
+		public String StatusCd
 		{
-		    get { return _Status; }
+		    get { return _StatusCd; }
 		    set
 		    {
-		        _Status = value;
-		        IncrementLog("Status");
+		        _StatusCd = value;
+		        IncrementLog("StatusCd");
 		    }
 		}
 
@@ -122,7 +122,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _BeneficiaryBank;
 		private String _BeneficiaryAccount;
 		private String _Message;
-		private String _Status;
+		private String _StatusCd;
 
 
 		public static TransferConfirmationReportTableRecord CreateNewInstance()
@@ -164,7 +164,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BeneficiaryBank", false),
 				new ColumnMetadata("BeneficiaryAccount", false),
 				new ColumnMetadata("Message", false),
-				new ColumnMetadata("Status", false),
+				new ColumnMetadata("StatusCd", false),
 
             };
         }
