@@ -25,11 +25,12 @@ namespace Lunggo.CustomerWeb
 
         protected void Application_Start()
         {
+            AppInitializer.Init();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AppInitializer.Init();
+            
         }
 
         void Session_Start(object sender, EventArgs e)
