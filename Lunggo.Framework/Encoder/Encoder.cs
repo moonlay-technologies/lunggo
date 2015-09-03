@@ -19,5 +19,17 @@ namespace Lunggo.Framework.Encoder
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
         }
+
+        internal static string Hash(this string plain)
+        {
+            var hash = plain;
+            return hash;
+        }
+
+        internal static string Unhash(this string hash)
+        {
+            var plain = hash;
+            return plain;
+        }
     }
 }

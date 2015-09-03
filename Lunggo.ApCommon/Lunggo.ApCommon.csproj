@@ -233,7 +233,6 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\RevalidateFlight.cs" />
     <Compile Include="Flight\Service\SearchFlight.cs" />
-    <Compile Include="Flight\Utility\FlightHashUtil.cs" />
     <Compile Include="Flight\Utility\FlightIdUtil.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
@@ -307,7 +306,7 @@
     <Compile Include="Mystifly\MystiflySearchFlight.cs" />
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
-    <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Mystifly\MystiflyWrapper.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />

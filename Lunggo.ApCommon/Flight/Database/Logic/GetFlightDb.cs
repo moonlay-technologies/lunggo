@@ -7,358 +7,372 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Flight.Utility;
+
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 
-namespace Lunggo.ApCommon.Flight.Database.Logic
+namespace Lunggo.ApCommon.Flight.Service
 {
-    internal class GetFlightDb
+    public partial class FlightService
     {
-        internal static List<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
+        internal class GetFlightDb
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static List<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
             {
-                var rsvNos = GetFlightRsvNosByContactEmailQuery.GetInstance().Execute(conn, new { ContactEmail = contactEmail }).ToList();
-                if (!rsvNos.Any())
-                    return null;
-                else
+                using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    return rsvNos.Select(OverviewReservation).ToList();
+                    var rsvNos =
+                        GetFlightRsvNosByContactEmailQuery.GetInstance()
+                            .Execute(conn, new {ContactEmail = contactEmail})
+                            .ToList();
+                    if (!rsvNos.Any())
+                        return null;
+                    else
+                    {
+                        return rsvNos.Select(OverviewReservation).ToList();
+                    }
                 }
             }
-        }
 
-        internal static IEnumerable<FlightReservation> SearchReservations(FlightReservationSearch search)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static IEnumerable<FlightReservation> SearchReservations(FlightReservationSearch search)
             {
-                var rsvNos = SearchFlightReservationQuery.GetInstance().Execute(conn, search, search);
-                var reservations = rsvNos.Select(Reservation);
-                return reservations;
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var rsvNos = SearchFlightReservationQuery.GetInstance().Execute(conn, search, search);
+                    var reservations = rsvNos.Select(Reservation);
+                    return reservations;
+                }
             }
-        }
 
-        internal static FlightReservation OverviewReservation(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static FlightReservation OverviewReservation(string rsvNo)
             {
-                FlightReservation reservation = null;
-                var itineraryLookup = new Dictionary<long, FlightItinerary>();
-                var tripLookup = new Dictionary<long, FlightTrip>();
-                var segmentLookup = new Dictionary<long, FlightSegment>();
-                var passengerLookup = new Dictionary<long, FlightPassenger>();
-                var dict = DictionaryService.GetInstance();
-                reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
-                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
-                    {
-                        if (reservation == null)
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    FlightReservation reservation = null;
+                    var itineraryLookup = new Dictionary<long, FlightItinerary>();
+                    var tripLookup = new Dictionary<long, FlightTrip>();
+                    var segmentLookup = new Dictionary<long, FlightSegment>();
+                    var passengerLookup = new Dictionary<long, FlightPassenger>();
+                    var dict = DictionaryService.GetInstance();
+                    reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
+                        (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
                         {
-                            reservation = new FlightReservation
+                            if (reservation == null)
                             {
-                                RsvNo = rsvNo,
-                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
-                                InvoiceNo = reservationRecord.InvoiceNo,
-                                Contact = new ContactData
+                                reservation = new FlightReservation
                                 {
-                                    Name = reservationRecord.ContactName,
-                                    Email = reservationRecord.ContactEmail,
-                                    CountryCode = reservationRecord.ContactCountryCd,
-                                    Phone = reservationRecord.ContactPhone
-                                },
-                                Payment = new PaymentInfo
-                                {
-                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
-                                    Time = reservationRecord.PaymentTime
-                                },
-                                TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Itineraries = new List<FlightItinerary>(),
-                                Passengers = new List<FlightPassenger>()
-                            };
-                        }
-                        FlightItinerary itinerary;
-                        if (!itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(), out itinerary))
-                        {
-                            itinerary = new FlightItinerary
-                            {
-                                FlightTrips = new List<FlightTrip>()
-                            };
-                            itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
-                            reservation.Itineraries.Add(itinerary);
-                        }
-                        FlightTrip trip;
-                        if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
-                        {
-                            trip = new FlightTrip
-                            {
-                                OriginAirport = tripRecord.OriginAirportCd,
-                                OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
-                                OriginCity = dict.GetAirportCity(tripRecord.OriginAirportCd),
-                                DestinationAirport = tripRecord.DestinationAirportCd,
-                                DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
-                                DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                FlightSegments = new List<FlightSegment>()
-                            };
-                            tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                            itinerary.FlightTrips.Add(trip);
-                        }
-                        FlightSegment segment;
-                        if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
-                        {
-                            segment = new FlightSegment
-                            {
-                                OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
-                                OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
-                                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
-                                AirlineCode = segmentRecord.AirlineCd,
-                                AirlineName = dict.GetAirlineName(segmentRecord.AirlineCd),
-                                AirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.AirlineCd),
-                                FlightNumber = segmentRecord.FlightNumber,
-                                DepartureAirport = segmentRecord.DepartureAirportCd,
-                                DepartureAirportName = dict.GetAirportName(segmentRecord.DepartureAirportCd),
-                                DepartureCity = dict.GetAirportCity(segmentRecord.DepartureAirportCd),
-                                DepartureTerminal = segmentRecord.DepartureTerminal,
-                                DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault(),
-                                ArrivalAirport = segmentRecord.ArrivalAirportCd,
-                                ArrivalAirportName = dict.GetAirportName(segmentRecord.ArrivalAirportCd),
-                                ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
-                                ArrivalTerminal = segmentRecord.ArrivalTerminal,
-                                ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
-                                Baggage = segmentRecord.Baggage
-                            };
-                            segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                            trip.FlightSegments.Add(segment);
-                        }
-                        FlightPassenger passenger;
-                        if (!passengerLookup.TryGetValue(passengerRecord.PassengerId.GetValueOrDefault(), out passenger))
-                        {
-                            passenger = new FlightPassenger
-                            {
-                                Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
-                                FirstName = passengerRecord.FirstName,
-                                LastName = passengerRecord.LastName,
-                                Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd)
-                            };
-                            reservation.Passengers.Add(passenger);
-                            passengerLookup.Add(passengerRecord.PassengerId.GetValueOrDefault(), passenger);
-                        }
-                        return reservation;
-                    }, "ItineraryId,TripId,SegmentId,PassengerId").Distinct().Single();
-                return reservation;
-            }
-        }
-
-        internal static FlightReservation Reservation(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                FlightReservation reservation = null;
-                var itineraryLookup = new Dictionary<long, FlightItinerary>();
-                var tripLookup = new Dictionary<long, FlightTrip>();
-                var segmentLookup = new Dictionary<long, FlightSegment>();
-                var passengerLookup = new Dictionary<long, FlightPassenger>();
-                var dict = DictionaryService.GetInstance();
-                reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = rsvNo },
-                    (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
-                    {
-                        if (reservationRecord == null)
-                            return reservation;
-                        if (reservation == null)
-                        {
-                            RefundInfo refundInfo = null;
-                            if (reservationRecord.RefundTime != null)
-                            {
-                                refundInfo = new RefundInfo
-                                {
-                                    Amount = reservationRecord.RefundAmount.GetValueOrDefault(),
-                                    Time = reservationRecord.RefundTime.GetValueOrDefault(),
-                                    TargetBank = reservationRecord.RefundTargetBank,
-                                    TargetAccount = reservationRecord.RefundTargetAccount
+                                    RsvNo = rsvNo,
+                                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                                    InvoiceNo = reservationRecord.InvoiceNo,
+                                    Contact = new ContactData
+                                    {
+                                        Name = reservationRecord.ContactName,
+                                        Email = reservationRecord.ContactEmail,
+                                        CountryCode = reservationRecord.ContactCountryCd,
+                                        Phone = reservationRecord.ContactPhone
+                                    },
+                                    Payment = new PaymentInfo
+                                    {
+                                        Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
+                                        Time = reservationRecord.PaymentTime
+                                    },
+                                    TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
+                                    Itineraries = new List<FlightItinerary>(),
+                                    Passengers = new List<FlightPassenger>()
                                 };
                             }
-                            reservation = new FlightReservation
+                            FlightItinerary itinerary;
+                            if (
+                                !itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(),
+                                    out itinerary))
                             {
-                                RsvNo = rsvNo,
-                                RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
-                                InvoiceNo = reservationRecord.InvoiceNo,
-                                Contact = new ContactData
+                                itinerary = new FlightItinerary
                                 {
-                                    Name = reservationRecord.ContactName,
-                                    Email = reservationRecord.ContactEmail,
-                                    CountryCode = reservationRecord.ContactCountryCd,
-                                    Phone = reservationRecord.ContactPhone
-                                },
-                                Payment = new PaymentInfo
+                                    FlightTrips = new List<FlightTrip>()
+                                };
+                                itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
+                                reservation.Itineraries.Add(itinerary);
+                            }
+                            FlightTrip trip;
+                            if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
+                            {
+                                trip = new FlightTrip
                                 {
-                                    Id = reservationRecord.PaymentId,
-                                    Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
-                                    Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
-                                    TimeLimit = reservationRecord.PaymentTimeLimit.GetValueOrDefault(),
-                                    Time = reservationRecord.PaymentTime,
-                                    Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
-                                    TargetAccount = reservationRecord.PaymentTargetAccount,
-                                    FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
-                                    PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
-                                    Refund = refundInfo
-                                },
-                                TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
-                                Itineraries = new List<FlightItinerary>(),
-                                Passengers = new List<FlightPassenger>()
-                            };
-                        }
-                        FlightItinerary itinerary;
-                        if (!itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(), out itinerary))
-                        {
-                            itinerary = new FlightItinerary
+                                    OriginAirport = tripRecord.OriginAirportCd,
+                                    OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
+                                    OriginCity = dict.GetAirportCity(tripRecord.OriginAirportCd),
+                                    DestinationAirport = tripRecord.DestinationAirportCd,
+                                    DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
+                                    DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                    DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
+                                    FlightSegments = new List<FlightSegment>()
+                                };
+                                tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
+                                itinerary.FlightTrips.Add(trip);
+                            }
+                            FlightSegment segment;
+                            if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
                             {
-                                FlightTrips = new List<FlightTrip>()
-                            };
-                            itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
-                            reservation.Itineraries.Add(itinerary);
-                        }
-                        FlightTrip trip;
-                        if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
-                        {
-                            trip = new FlightTrip
+                                segment = new FlightSegment
+                                {
+                                    OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
+                                    OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
+                                    OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
+                                    AirlineCode = segmentRecord.AirlineCd,
+                                    AirlineName = dict.GetAirlineName(segmentRecord.AirlineCd),
+                                    AirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.AirlineCd),
+                                    FlightNumber = segmentRecord.FlightNumber,
+                                    DepartureAirport = segmentRecord.DepartureAirportCd,
+                                    DepartureAirportName = dict.GetAirportName(segmentRecord.DepartureAirportCd),
+                                    DepartureCity = dict.GetAirportCity(segmentRecord.DepartureAirportCd),
+                                    DepartureTerminal = segmentRecord.DepartureTerminal,
+                                    DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault(),
+                                    ArrivalAirport = segmentRecord.ArrivalAirportCd,
+                                    ArrivalAirportName = dict.GetAirportName(segmentRecord.ArrivalAirportCd),
+                                    ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
+                                    ArrivalTerminal = segmentRecord.ArrivalTerminal,
+                                    ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
+                                    Baggage = segmentRecord.Baggage
+                                };
+                                segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
+                                trip.FlightSegments.Add(segment);
+                            }
+                            FlightPassenger passenger;
+                            if (
+                                !passengerLookup.TryGetValue(passengerRecord.PassengerId.GetValueOrDefault(),
+                                    out passenger))
                             {
-                                OriginAirport = tripRecord.OriginAirportCd,
-                                OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
-                                OriginCity = dict.GetAirportCity(tripRecord.OriginAirportCd),
-                                DestinationAirport = tripRecord.DestinationAirportCd,
-                                DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
-                                DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
-                                DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                FlightSegments = new List<FlightSegment>()
-                            };
-                            tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                            itinerary.FlightTrips.Add(trip);
-                        }
-                        FlightSegment segment;
-                        if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
-                        {
-                            segment = new FlightSegment
-                            {
-                                OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
-                                OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
-                                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
-                                AirlineCode = segmentRecord.AirlineCd,
-                                AirlineName = dict.GetAirlineName(segmentRecord.AirlineCd),
-                                AirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.AirlineCd),
-                                FlightNumber = segmentRecord.FlightNumber,
-                                DepartureAirport = segmentRecord.DepartureAirportCd,
-                                DepartureAirportName = dict.GetAirportName(segmentRecord.DepartureAirportCd),
-                                DepartureCity = dict.GetAirportCity(segmentRecord.DepartureAirportCd),
-                                DepartureTerminal = segmentRecord.DepartureTerminal,
-                                DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault(),
-                                ArrivalAirport = segmentRecord.ArrivalAirportCd,
-                                ArrivalAirportName = dict.GetAirportName(segmentRecord.ArrivalAirportCd),
-                                ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
-                                ArrivalTerminal = segmentRecord.ArrivalTerminal,
-                                ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
-                                Baggage = segmentRecord.Baggage,
-                                Pnr = segmentRecord.Pnr
-                            };
-                            segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                            trip.FlightSegments.Add(segment);
-                        }
-                        FlightPassenger passenger;
-                        if (!passengerLookup.TryGetValue(passengerRecord.PassengerId.GetValueOrDefault(), out passenger))
-                        {
-                            passenger = new FlightPassenger
-                            {
-                                Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
-                                FirstName = passengerRecord.FirstName,
-                                LastName = passengerRecord.LastName,
-                                Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd)
-                            };
-                            reservation.Passengers.Add(passenger);
-                            passengerLookup.Add(passengerRecord.PassengerId.GetValueOrDefault(), passenger);
-                        }
-                        return reservation;
-                    }, "ItineraryId,TripId,SegmentId,PassengerId").Distinct().Single();
-                return reservation;
+                                passenger = new FlightPassenger
+                                {
+                                    Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                                    FirstName = passengerRecord.FirstName,
+                                    LastName = passengerRecord.LastName,
+                                    Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd)
+                                };
+                                reservation.Passengers.Add(passenger);
+                                passengerLookup.Add(passengerRecord.PassengerId.GetValueOrDefault(), passenger);
+                            }
+                            return reservation;
+                        }, "ItineraryId,TripId,SegmentId,PassengerId").Distinct().Single();
+                    return reservation;
+                }
             }
-        }
 
-        public static IEnumerable<FlightReservation> UnpaidReservations()
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static FlightReservation Reservation(string rsvNo)
             {
-                var rsvRecords = GetUnpaidFlightReservationQuery.GetInstance().Execute(conn, null);
-                var reservations = rsvRecords.Select(record => new FlightReservation
+                using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    RsvNo = record.RsvNo,
-                    Payment = new PaymentInfo
+                    FlightReservation reservation = null;
+                    var itineraryLookup = new Dictionary<long, FlightItinerary>();
+                    var tripLookup = new Dictionary<long, FlightTrip>();
+                    var segmentLookup = new Dictionary<long, FlightSegment>();
+                    var passengerLookup = new Dictionary<long, FlightPassenger>();
+                    var dict = DictionaryService.GetInstance();
+                    reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
+                        (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
+                        {
+                            if (reservationRecord == null)
+                                return reservation;
+                            if (reservation == null)
+                            {
+                                RefundInfo refundInfo = null;
+                                if (reservationRecord.RefundTime != null)
+                                {
+                                    refundInfo = new RefundInfo
+                                    {
+                                        Amount = reservationRecord.RefundAmount.GetValueOrDefault(),
+                                        Time = reservationRecord.RefundTime.GetValueOrDefault(),
+                                        TargetBank = reservationRecord.RefundTargetBank,
+                                        TargetAccount = reservationRecord.RefundTargetAccount
+                                    };
+                                }
+                                reservation = new FlightReservation
+                                {
+                                    RsvNo = rsvNo,
+                                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                                    InvoiceNo = reservationRecord.InvoiceNo,
+                                    Contact = new ContactData
+                                    {
+                                        Name = reservationRecord.ContactName,
+                                        Email = reservationRecord.ContactEmail,
+                                        CountryCode = reservationRecord.ContactCountryCd,
+                                        Phone = reservationRecord.ContactPhone
+                                    },
+                                    Payment = new PaymentInfo
+                                    {
+                                        Id = reservationRecord.PaymentId,
+                                        Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
+                                        Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
+                                        TimeLimit = reservationRecord.PaymentTimeLimit.GetValueOrDefault(),
+                                        Time = reservationRecord.PaymentTime,
+                                        Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
+                                        TargetAccount = reservationRecord.PaymentTargetAccount,
+                                        FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
+                                        PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
+                                        Refund = refundInfo
+                                    },
+                                    TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
+                                    Itineraries = new List<FlightItinerary>(),
+                                    Passengers = new List<FlightPassenger>()
+                                };
+                            }
+                            FlightItinerary itinerary;
+                            if (
+                                !itineraryLookup.TryGetValue(itineraryRecord.ItineraryId.GetValueOrDefault(),
+                                    out itinerary))
+                            {
+                                itinerary = new FlightItinerary
+                                {
+                                    FlightTrips = new List<FlightTrip>()
+                                };
+                                itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
+                                reservation.Itineraries.Add(itinerary);
+                            }
+                            FlightTrip trip;
+                            if (!tripLookup.TryGetValue(tripRecord.TripId.GetValueOrDefault(), out trip))
+                            {
+                                trip = new FlightTrip
+                                {
+                                    OriginAirport = tripRecord.OriginAirportCd,
+                                    OriginAirportName = dict.GetAirportName(tripRecord.OriginAirportCd),
+                                    OriginCity = dict.GetAirportCity(tripRecord.OriginAirportCd),
+                                    DestinationAirport = tripRecord.DestinationAirportCd,
+                                    DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
+                                    DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
+                                    DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
+                                    FlightSegments = new List<FlightSegment>()
+                                };
+                                tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
+                                itinerary.FlightTrips.Add(trip);
+                            }
+                            FlightSegment segment;
+                            if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
+                            {
+                                segment = new FlightSegment
+                                {
+                                    OperatingAirlineCode = segmentRecord.OperatingAirlineCd,
+                                    OperatingAirlineName = dict.GetAirlineName(segmentRecord.OperatingAirlineCd),
+                                    OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.OperatingAirlineCd),
+                                    AirlineCode = segmentRecord.AirlineCd,
+                                    AirlineName = dict.GetAirlineName(segmentRecord.AirlineCd),
+                                    AirlineLogoUrl = dict.GetAirlineLogoUrl(segmentRecord.AirlineCd),
+                                    FlightNumber = segmentRecord.FlightNumber,
+                                    DepartureAirport = segmentRecord.DepartureAirportCd,
+                                    DepartureAirportName = dict.GetAirportName(segmentRecord.DepartureAirportCd),
+                                    DepartureCity = dict.GetAirportCity(segmentRecord.DepartureAirportCd),
+                                    DepartureTerminal = segmentRecord.DepartureTerminal,
+                                    DepartureTime = segmentRecord.DepartureTime.GetValueOrDefault(),
+                                    ArrivalAirport = segmentRecord.ArrivalAirportCd,
+                                    ArrivalAirportName = dict.GetAirportName(segmentRecord.ArrivalAirportCd),
+                                    ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
+                                    ArrivalTerminal = segmentRecord.ArrivalTerminal,
+                                    ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
+                                    Baggage = segmentRecord.Baggage,
+                                    Pnr = segmentRecord.Pnr
+                                };
+                                segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
+                                trip.FlightSegments.Add(segment);
+                            }
+                            FlightPassenger passenger;
+                            if (
+                                !passengerLookup.TryGetValue(passengerRecord.PassengerId.GetValueOrDefault(),
+                                    out passenger))
+                            {
+                                passenger = new FlightPassenger
+                                {
+                                    Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                                    FirstName = passengerRecord.FirstName,
+                                    LastName = passengerRecord.LastName,
+                                    Type = PassengerTypeCd.Mnemonic(passengerRecord.PassengerTypeCd)
+                                };
+                                reservation.Passengers.Add(passenger);
+                                passengerLookup.Add(passengerRecord.PassengerId.GetValueOrDefault(), passenger);
+                            }
+                            return reservation;
+                        }, "ItineraryId,TripId,SegmentId,PassengerId").Distinct().Single();
+                    return reservation;
+                }
+            }
+
+            public static IEnumerable<FlightReservation> UnpaidReservations()
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var rsvRecords = GetUnpaidFlightReservationQuery.GetInstance().Execute(conn, null);
+                    var reservations = rsvRecords.Select(record => new FlightReservation
                     {
-                        FinalPrice = record.FinalPrice.GetValueOrDefault(),
-                        TimeLimit = record.PaymentTimeLimit
-                    }
-                });
-                return reservations;
+                        RsvNo = record.RsvNo,
+                        Payment = new PaymentInfo
+                        {
+                            FinalPrice = record.FinalPrice.GetValueOrDefault(),
+                            TimeLimit = record.PaymentTimeLimit
+                        }
+                    });
+                    return reservations;
+                }
             }
-        }
 
-        internal static List<MarginRule> PriceMarginRules()
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static List<MarginRule> PriceMarginRules()
             {
-                var activeRuleRecords = GetFlightActivePriceMarginRuleQuery.GetInstance().Execute(conn, null);
-                var activeRules = activeRuleRecords.Select(record => new MarginRule
+                using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    RuleId = record.RuleId.GetValueOrDefault(),
-                    Name = record.Name,
-                    Description = record.Description,
-                    BookingDateSpans = record.BookingDateSpans.Deserialize<List<DateSpanRule>>(),
-                    BookingDays = record.BookingDays.Deserialize<List<DayOfWeek>>(),
-                    BookingDates = record.BookingDates.Deserialize<List<DateTime>>(),
-                    FareTypes = record.FareTypes.Deserialize<List<FareType>>(),
-                    CabinClasses = record.CabinClasses.Deserialize<List<CabinClass>>(),
-                    TripTypes = record.TripTypes.Deserialize<List<TripType>>(),
-                    DepartureDateSpans = record.DepartureDateSpans.Deserialize<List<DateSpanRule>>(),
-                    DepartureDays = record.DepartureDays.Deserialize<List<DayOfWeek>>(),
-                    DepartureDates = record.DepartureDates.Deserialize<List<DateTime>>(),
-                    DepartureTimeSpans = record.DepartureTimeSpans.Deserialize<List<TimeSpanRule>>(),
-                    ReturnDateSpans = record.ReturnDateSpans.Deserialize<List<DateSpanRule>>(),
-                    ReturnDays = record.ReturnDays.Deserialize<List<DayOfWeek>>(),
-                    ReturnDates = record.ReturnDates.Deserialize<List<DateTime>>(),
-                    ReturnTimeSpans = record.ReturnTimeSpans.Deserialize<List<TimeSpanRule>>(),
-                    MaxPassengers = record.MaxPassengers.GetValueOrDefault(),
-                    MinPassengers = record.MinPassengers.GetValueOrDefault(),
-                    Airlines = record.Airlines.Deserialize<List<string>>(),
-                    AirlinesIsExclusion = record.AirlinesIsExclusion.GetValueOrDefault(),
-                    AirportPairs = record.AirportPairs.Deserialize<List<AirportPairRule>>(),
-                    AirportPairsIsExclusion = record.AirportPairsIsExclusion.GetValueOrDefault(),
-                    CityPairs = record.CityPairs.Deserialize<List<AirportPairRule>>(),
-                    CityPairsIsExclusion = record.CityPairsIsExclusion.GetValueOrDefault(),
-                    CountryPairs = record.CountryPairs.Deserialize<List<AirportPairRule>>(),
-                    CountryPairsIsExclusion = record.CountryPairsIsExclusion.GetValueOrDefault(),
-                    Coefficient = record.Coefficient.GetValueOrDefault(),
-                    Constant = record.ConstraintCount.GetValueOrDefault(),
-                    ConstraintCount = record.ConstraintCount.GetValueOrDefault(),
-                    Priority = record.Priority.GetValueOrDefault(),
-                });
-                return activeRules.ToList();
+                    var activeRuleRecords = GetFlightActivePriceMarginRuleQuery.GetInstance().Execute(conn, null);
+                    var activeRules = activeRuleRecords.Select(record => new MarginRule
+                    {
+                        RuleId = record.RuleId.GetValueOrDefault(),
+                        Name = record.Name,
+                        Description = record.Description,
+                        BookingDateSpans = record.BookingDateSpans.Deserialize<List<DateSpanRule>>(),
+                        BookingDays = record.BookingDays.Deserialize<List<DayOfWeek>>(),
+                        BookingDates = record.BookingDates.Deserialize<List<DateTime>>(),
+                        FareTypes = record.FareTypes.Deserialize<List<FareType>>(),
+                        CabinClasses = record.CabinClasses.Deserialize<List<CabinClass>>(),
+                        TripTypes = record.TripTypes.Deserialize<List<TripType>>(),
+                        DepartureDateSpans = record.DepartureDateSpans.Deserialize<List<DateSpanRule>>(),
+                        DepartureDays = record.DepartureDays.Deserialize<List<DayOfWeek>>(),
+                        DepartureDates = record.DepartureDates.Deserialize<List<DateTime>>(),
+                        DepartureTimeSpans = record.DepartureTimeSpans.Deserialize<List<TimeSpanRule>>(),
+                        ReturnDateSpans = record.ReturnDateSpans.Deserialize<List<DateSpanRule>>(),
+                        ReturnDays = record.ReturnDays.Deserialize<List<DayOfWeek>>(),
+                        ReturnDates = record.ReturnDates.Deserialize<List<DateTime>>(),
+                        ReturnTimeSpans = record.ReturnTimeSpans.Deserialize<List<TimeSpanRule>>(),
+                        MaxPassengers = record.MaxPassengers.GetValueOrDefault(),
+                        MinPassengers = record.MinPassengers.GetValueOrDefault(),
+                        Airlines = record.Airlines.Deserialize<List<string>>(),
+                        AirlinesIsExclusion = record.AirlinesIsExclusion.GetValueOrDefault(),
+                        AirportPairs = record.AirportPairs.Deserialize<List<AirportPairRule>>(),
+                        AirportPairsIsExclusion = record.AirportPairsIsExclusion.GetValueOrDefault(),
+                        CityPairs = record.CityPairs.Deserialize<List<AirportPairRule>>(),
+                        CityPairsIsExclusion = record.CityPairsIsExclusion.GetValueOrDefault(),
+                        CountryPairs = record.CountryPairs.Deserialize<List<AirportPairRule>>(),
+                        CountryPairsIsExclusion = record.CountryPairsIsExclusion.GetValueOrDefault(),
+                        Coefficient = record.Coefficient.GetValueOrDefault(),
+                        Constant = record.ConstraintCount.GetValueOrDefault(),
+                        ConstraintCount = record.ConstraintCount.GetValueOrDefault(),
+                        Priority = record.Priority.GetValueOrDefault(),
+                    });
+                    return activeRules.ToList();
+                }
             }
-        }
 
-        internal static List<string> RsvNoByBookingId(List<string> bookingIds)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static List<string> RsvNoByBookingId(List<string> bookingIds)
             {
-                return GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    return GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+                }
             }
-        }
 
-        internal static PaymentStatus PaymentStatus(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            internal static PaymentStatus PaymentStatus(string rsvNo)
             {
-                var statusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).Single();
-                var status = PaymentStatusCd.Mnemonic(statusCd);
-                return status;
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var statusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).Single();
+                    var status = PaymentStatusCd.Mnemonic(statusCd);
+                    return status;
+                }
             }
         }
     }

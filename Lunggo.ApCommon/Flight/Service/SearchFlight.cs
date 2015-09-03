@@ -5,7 +5,7 @@ using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-using Lunggo.ApCommon.Flight.Utility;
+
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;

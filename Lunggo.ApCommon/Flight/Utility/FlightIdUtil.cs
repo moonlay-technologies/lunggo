@@ -5,28 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 
-namespace Lunggo.ApCommon.Flight.Utility
+namespace Lunggo.ApCommon.Flight.Service
 {
-    internal class FlightIdUtil
+    public partial class FlightService
     {
-        internal static string GetCoreId(string id)
+        internal class FlightIdUtil
         {
-            return id.Substring(7);
-        }
+            internal static string GetCoreId(string id)
+            {
+                return id.Substring(7);
+            }
 
-        internal static FlightSupplier GetSupplier(string id)
-        {
-            return FlightSupplierCd.Mnemonic(id.Substring(0, 4));
-        }
+            internal static FlightSupplier GetSupplier(string id)
+            {
+                return FlightSupplierCd.Mnemonic(id.Substring(0, 4));
+            }
 
-        internal static FareType GetFareType(string id)
-        {
-            return FareTypeCd.Mnemonic(id.Substring(4, 3));
-        }
+            internal static FareType GetFareType(string id)
+            {
+                return FareTypeCd.Mnemonic(id.Substring(4, 3));
+            }
 
-        internal static string ConstructIntegratedId(string coreId, FlightSupplier supplier, FareType fareType)
-        {
-            return FlightSupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
+            internal static string ConstructIntegratedId(string coreId, FlightSupplier supplier, FareType fareType)
+            {
+                return FlightSupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
+            }
         }
     }
 }

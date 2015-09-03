@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Database.Logic;
+
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirCancelRQ
             {
-                UniqueID = FlightIdUtil.GetCoreId(bookingId),
+                UniqueID = FlightService.FlightIdUtil.GetCoreId(bookingId),
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null

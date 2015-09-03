@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Web.UI;
-using Lunggo.ApCommon.Flight.Database.Logic;
+
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;

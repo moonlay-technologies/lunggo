@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.UI.WebControls.WebParts;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Database.Logic;
+
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Model;

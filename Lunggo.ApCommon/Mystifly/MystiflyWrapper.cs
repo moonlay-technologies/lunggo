@@ -10,7 +10,7 @@ using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Mystifly
@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = FlightIdUtil.GetCoreId(conditions.FareId),
+                    FareSourceCode = FlightService.FlightIdUtil.GetCoreId(conditions.FareId),
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null

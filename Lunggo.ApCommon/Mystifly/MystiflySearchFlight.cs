@@ -12,7 +12,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Flight.Utility;
+
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
@@ -233,7 +233,7 @@ namespace Lunggo.ApCommon.Mystifly
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
                 MapPassengerCount(pricedItinerary, flightItinerary);
                 flightItinerary.FareId =
-                    FlightIdUtil.ConstructIntegratedId(
+                    FlightService.FlightIdUtil.ConstructIntegratedId(
                         pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
                         FlightSupplier.Mystifly,
                         MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));

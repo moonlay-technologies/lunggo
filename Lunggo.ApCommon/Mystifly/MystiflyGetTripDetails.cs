@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Utility;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Config;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new AirTripDetailsRQ
             {
-                UniqueID = FlightIdUtil.GetCoreId(conditions.BookingId),
+                UniqueID = FlightService.FlightIdUtil.GetCoreId(conditions.BookingId),
                 SendOnlyTicketed = false,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
@@ -73,9 +73,9 @@ namespace Lunggo.ApCommon.Mystifly
 
         private static GetTripDetailsResult MapResult(AirTripDetailsRS response, TripDetailsConditions conditions)
         {
-            var fareType = FlightIdUtil.GetFareType(conditions.BookingId);
+            var fareType = FlightService.FlightIdUtil.GetFareType(conditions.BookingId);
             var result = new GetTripDetailsResult();
-            result.BookingId = FlightIdUtil.ConstructIntegratedId(response.TravelItinerary.UniqueID, FlightSupplier.Mystifly, fareType);
+            result.BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(response.TravelItinerary.UniqueID, FlightSupplier.Mystifly, fareType);
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
             result.FlightItineraries = new FlightItinerary
