@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Citilink = 3
     }
 
-    public class FlightSupplierCd
+    internal class FlightSupplierCd
     {
-        public static string Mnemonic(FlightSupplier supplier)
+        internal static string Mnemonic(FlightSupplier supplier)
         {
             switch (supplier)
             {
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static FlightSupplier Mnemonic(string supplier)
+        internal static FlightSupplier Mnemonic(string supplier)
         {
             switch (supplier)
             {

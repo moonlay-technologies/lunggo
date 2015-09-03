@@ -16,9 +16,9 @@ namespace Lunggo.ApCommon.Payment.Constant
         Expired = 5
     }
 
-    public class PaymentStatusCd
+    internal class PaymentStatusCd
     {
-        public static string Mnemonic(PaymentStatus paymentStatus)
+        internal static string Mnemonic(PaymentStatus paymentStatus)
         {
             switch (paymentStatus)
             {
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "";
             }
         }
-        public static PaymentStatus Mnemonic(string paymentStatus)
+        internal static PaymentStatus Mnemonic(string paymentStatus)
         {
             switch (paymentStatus)
             {

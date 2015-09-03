@@ -1,4 +1,5 @@
-﻿@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
+﻿@using System.Globalization
+@model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
 
 @{
     Layout = "/Views/shared/_layout_20150506.cshtml";
@@ -14,15 +15,15 @@
     <script src="/Assets/js/jquery.countdown.min.js"></script>
 }
 
-@section PageJavascript {
-    <script>
+<script>
 
-        $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
-            $(this).html(event.strftime('%M:%S'));
-        });
+    $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
+        $(this).html(event.strftime('%M:%S'));
+    });
 
-    </script>
-}
+</script>
+
+
 
 <div class="confirmation-page">
     
@@ -30,56 +31,66 @@
         <h1>Konfirmasi Pembayaran</h1>
         
         <div class="row">
-            <div class="col-sm-8 confirmation-left">
+            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post))
+            {
+                @Html.Hidden("Report.RsvNo", Model.RsvNo)
+                <div class="col-sm-8 confirmation-left">
                 
-                <div class="alert alert-warning">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
+                    <div class="alert alert-warning">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
+                    </div>
+
+                    <form class="confirmation-form">
+                    
+                        <h2>Konfirmasikan Pembayaran Anda</h2>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
+                    
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nama Pengirim</label>
+                                    @Html.TextBoxFor(model => model.Report.RemitterName, new {@class = "form-control"})
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Bank Pengirim</label>
+                                    @Html.TextBoxFor(model => model.Report.RemitterBank, new {@class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Jumlah Pembayaran</label>
+                                    @Html.TextBoxFor(model => model.Report.Amount, new {@class = "form-control"})
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Bank Tujuan</label>
+                                    @Html.DropDownListFor(model => model.Report.BeneficiaryBank, beneficiaryBankList, new {@class = "form-control"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Tanggal Bayar</label>
+                                <input type="date" name="Report.PaymentTime" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Keterangan Tambahan</label>
+                                @Html.TextAreaFor(model => model.Report.Message, new {@class = "form-control"})
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button class="btn btn-lg btn-yellow"><b>Konfirmasikan Pembayaran</b></button>
+                            </div>
+                        </div>
+
+                    </form>
+
                 </div>
-
-                <form class="confirmation-form">
-                    
-                    <h2>Konfirmasikan Pembayaran Anda</h2>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis suscipit odio. Pellentesque magna sapien, venenatis ac neque eget, porttitor bibendum quam. Etiam eu elit eu dui malesuada sollicitudin.</p>
-                    
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Nama Pengirim</label>
-                                @Html.TextBoxFor(model => model.Report.RemitterName, new { @class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Bank Pengirim</label>
-                                @Html.TextBoxFor(model => model.Report.RemitterBank, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Jumlah Pembayaran</label>
-                                @Html.TextBoxFor(model => model.Report.Amount, new { @class = "form-control" })
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Bank Tujuan</label>
-                                @Html.DropDownListFor(model => model.Report.BeneficiaryBank, beneficiaryBankList, new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <label class="control-label">Keterangan Tambahan</label>
-                            @Html.TextAreaFor(model => model.Report.Message, new {@class = "form-control"})
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-sm-12 text-right">
-                            <button class="btn btn-lg btn-yellow"><b>Konfirmasikan Pembayaran</b></button>
-                        </div>
-                    </div>
-
-                </form>
-
-            </div>
+            }
             <div class="col-sm-4 confirmation-right">
                 
                 <div class="countdown">
@@ -87,14 +98,14 @@
                     <h2 class="payment-countdown"></h2>
                 </div><!-- .countdown -->
                 
-                <h4 class="order-number">Nomor Pesanan: 1234567890</h4>
+                <h4 class="order-number">Nomor Pesanan: @Model.RsvNo</h4>
                 
                 <section class="price-detail">
                     <h3><b>PRICE</b> DETAIL</h3>
                     <div class="content-wrapper">
                         <div class="row">
                             <div class="col-sm-6">Tiket</div>
-                            <div class="col-sm-6"><b>IDR 123.456</b></div>
+                            <div class="col-sm-6"><b>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b></div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">Tax</div>
@@ -107,7 +118,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-6">TOTAL</div>
-                            <div class="col-sm-6"><b>IDR 123.456</b></div>
+                            <div class="col-sm-6"><b>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b></div>
                         </div>
                     </div>
                 </section><!-- .price-detail -->
@@ -116,13 +127,13 @@
                     <h3><b>FLIGHT</b> DETAIL</h3>
                     <div class="content-wrapper">
                         <h4><b>Berangkat</b></h4>
-                        <h5>Maskapai : Air Asia</h5>
-                        <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
-                        <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                        <h5>Maskapai : Dummy</h5>
+                        <h5>Tujuan : Dummy</h5>
+                        <h5>Tanggal : Dummy</h5>
                         <h4><b>Kembali</b></h4>
-                        <h5>Maskapai : Air Asia</h5>
-                        <h5>Tujuan : Jakarta (CGK) ke Denpasar (DPS)</h5>
-                        <h5>Tanggal : Senin, 15 Juli 2015, Pukul 16.00</h5>
+                        <h5>Maskapai : Dummy</h5>
+                        <h5>Tujuan : Dummy</h5>
+                        <h5>Tanggal : Dummy</h5>
                     </div>
                 </section><!-- .order-detail -->
 

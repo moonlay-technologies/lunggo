@@ -83,6 +83,10 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
+            data.Payment.Medium = data.Payment.Method == PaymentMethod.BankTransfer 
+                ? PaymentMedium.Direct 
+                : PaymentMedium.Veritrans;
+
             var service = FlightService.GetInstance();
             data.Itinerary = service.GetItineraryForDisplay(data.Token);
             var passengerInfo = data.Passengers.Select(passenger => new FlightPassenger
@@ -172,6 +176,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 FinalPrice = reservation.Payment.FinalPrice
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Confirmation(TransferConfirmationReport report)
+        {
+            var paymentService = PaymentService.GetInstance();
+            paymentService.SubmitTransferConfirmationReport(report);
+            return RedirectToAction("Thankyou", "Flight", new {rsvNo = report.RsvNo});
         }
     }
 }

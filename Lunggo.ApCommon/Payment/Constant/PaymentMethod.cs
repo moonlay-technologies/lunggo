@@ -16,9 +16,9 @@ namespace Lunggo.ApCommon.Payment.Constant
         VirtualAccount = 5
     }
 
-    public class PaymentMethodCd
+    internal class PaymentMethodCd
     {
-        public static string Mnemonic(PaymentMethod paymentMedium)
+        internal static string Mnemonic(PaymentMethod paymentMedium)
         {
             switch (paymentMedium)
             {
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "";
             }
         }
-        public static PaymentMethod Mnemonic(string paymentMedium)
+        internal static PaymentMethod Mnemonic(string paymentMedium)
         {
             switch (paymentMedium)
             {

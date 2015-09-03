@@ -14,8 +14,23 @@ $(document).ready(function () {
     checkoutPageFunctions();
     modalFunctions();
     toggleFilterMobile();
+    feedbackButton();
 
 });
+
+//******************************************
+// feedback button
+function feedbackButton() {
+    $('.feedback-button').hover(function() {
+        $(this).stop().animate({
+            right: 0
+        });
+    }, function() {
+        $(this).stop().animate({
+            right: -340
+        });
+    });
+}
 
 //******************************************
 // subscribe form

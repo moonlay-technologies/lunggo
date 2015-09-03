@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Supplier = 3
     }
 
-    public class CancellationTypeCd
+    internal class CancellationTypeCd
     {
-        public static string Mnemonic(CancellationType type)
+        internal static string Mnemonic(CancellationType type)
         {
             switch (type)
             {
@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return "";
             }
         }
-        public static CancellationType Mnemonic(string type)
+        internal static CancellationType Mnemonic(string type)
         {
             switch (type)
             {

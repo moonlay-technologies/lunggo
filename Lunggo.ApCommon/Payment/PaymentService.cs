@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Payment
                 BeneficiaryBank = report.BeneficiaryBank,
                 BeneficiaryAccount = report.BeneficiaryAccount,
                 Message = report.Message,
-                Status = TransferConfirmationReportStatusCd.Mnemonic(TransferConfirmationReportStatus.Unchecked)
+                StatusCd = TransferConfirmationReportStatusCd.Mnemonic(TransferConfirmationReportStatus.Unchecked)
             };
             using (var conn = DbService.GetInstance().GetOpenConnection())
                 TransferConfirmationReportTableRepo.GetInstance().Insert(conn, reportRecord);
@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Payment
                             BeneficiaryBank = record.BeneficiaryBank,
                             BeneficiaryAccount = record.BeneficiaryAccount,
                             Message = record.Message,
-                            Status = TransferConfirmationReportStatusCd.Mnemonic(record.Status)
+                            Status = TransferConfirmationReportStatusCd.Mnemonic(record.StatusCd)
                         }).ToList();
             }
         }
@@ -108,7 +108,7 @@ namespace Lunggo.ApCommon.Payment
                 TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
                 {
                     ReportId = reportId,
-                    Status = TransferConfirmationReportStatusCd.Mnemonic(status)
+                    StatusCd = TransferConfirmationReportStatusCd.Mnemonic(status)
                 });
             }
         }

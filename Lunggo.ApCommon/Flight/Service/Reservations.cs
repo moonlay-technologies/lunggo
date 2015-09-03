@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetFlightDb.Reservation(rsvNo);
         }
 
-        internal FlightReservationForDisplay GetOverviewReservation(string rsvNo)
+        public FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
             var rsv = GetFlightDb.OverviewReservation(rsvNo);
             return ConvertToReservationApi(rsv);

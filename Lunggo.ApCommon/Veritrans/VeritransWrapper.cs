@@ -51,13 +51,9 @@ namespace Lunggo.ApCommon.Veritrans
         {
             if (!_isInitialized)
             {
-                var langCode = @"/" + OnlineContext.GetActiveLanguageCode();
                 _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
                 _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
                 _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
-                _finishedRedirectUrl = _rootUrl + langCode + FinishRedirectPath;
-                _unfinishedRedirectUrl = _rootUrl + langCode + UnfinishRedirectPath;
-                _errorRedirectUrl = _rootUrl + langCode + ErrorRedirectPath;
                 _isInitialized = true;
             }
         }
@@ -91,6 +87,11 @@ namespace Lunggo.ApCommon.Veritrans
 
         private static void ProcessRequestParams(WebRequest request, TransactionDetails transactionDetail, List<ItemDetails> itemDetails, PaymentMethod method)
         {
+            var langCode = @"/" + OnlineContext.GetActiveLanguageCode();
+            _finishedRedirectUrl = _rootUrl + langCode + FinishRedirectPath;
+            _unfinishedRedirectUrl = _rootUrl + langCode + UnfinishRedirectPath;
+            _errorRedirectUrl = _rootUrl + langCode + ErrorRedirectPath;
+
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
             var requestParams = new Request
             {

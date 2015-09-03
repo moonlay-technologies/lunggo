@@ -16,9 +16,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         ScheduleChanged = 5,
         Failed = 6
     }
-    public class BookingStatusCd
+    internal class BookingStatusCd
     {
-        public static string Mnemonic(BookingStatus bookingStatus)
+        internal static string Mnemonic(BookingStatus bookingStatus)
         {
             switch (bookingStatus)
             {
@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static BookingStatus Mnemonic(string bookingStatus)
+        internal static BookingStatus Mnemonic(string bookingStatus)
         {
             switch (bookingStatus)
             {

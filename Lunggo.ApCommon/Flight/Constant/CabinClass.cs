@@ -13,9 +13,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Business = 2,
         First = 3
     }
-    public class CabinClassCd
+    internal class CabinClassCd
     {
-        public static string Mnemonic(CabinClass cabin)
+        internal static string Mnemonic(CabinClass cabin)
         {
             switch (cabin)
             {
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return "";
             }
         }
-        public static CabinClass Mnemonic(string cabin)
+        internal static CabinClass Mnemonic(string cabin)
         {
             switch (cabin)
             {

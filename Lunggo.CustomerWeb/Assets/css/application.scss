@@ -21,12 +21,16 @@
     width:100%;
 }
 
+// variables
+$border-default :1px solid #ddd;
+$blue-default: #3face4;
+
+// imports
 @import '_font_face.scss';
 @import '_header.scss';
 @import '_footer.scss';
 
-$border-default :1px solid #ddd;
-$blue-default: #3face4;
+@import '_feedback.scss';
 
 html {height:100%;}
 
@@ -532,9 +536,10 @@ hr {border-color:#aaa;}
 
     .sticky-wrapper {height:0 !important;}
     
-    .back-to-top {background:#fff; position:fixed; bottom:30%; left:80%;
-        a {display:block; background:#fff; color:$blue-default; padding:10px; border:2px solid $blue-default;
-            img {display:block; margin-bottom:19px;}
+    .back-to-top {background:#fff; position:fixed; bottom:0; right:5%;
+        a {display:block; background:#fff; color:$blue-default; padding:10px; border:2px solid $blue-default; border-bottom:0;
+            -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; border-top-left-radius: 3px; border-top-right-radius: 3px;
+            img {display:block; margin-bottom:19px; margin-left:auto; margin-right:auto;}
             span {display:block; font-size:14px;}
         }
     }
@@ -1432,14 +1437,6 @@ hr {border-color:#aaa;}
         .notice-content {display:none;}
         .notice-footer {position:absolute; bottom:0; left:0; padding:15px; width:100%;}
         .btn {display:block; font-weight:bold;}
-    }
-}
-
-// ----------------------------------------------
-// feedback button
-.feedback-button {position:fixed; bottom:0%; right:5%; z-index:999;
-    a {color:inherit; display:block; background:$blue-default; padding:10px 30px; font-weight:bold; font-size:16px; border-bottom:0; color:#fff; /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3face4+0,004ce5+100 */ background: #3face4; /* Old browsers */ background: -moz-linear-gradient(top,  #3face4 0%, #004ce5 100%); /* FF3.6+ */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3face4), color-stop(100%,#004ce5)); /* Chrome,Safari4+ */ background: -webkit-linear-gradient(top,  #3face4 0%,#004ce5 100%); /* Chrome10+,Safari5.1+ */ background: -o-linear-gradient(top,  #3face4 0%,#004ce5 100%); /* Opera 11.10+ */ background: -ms-linear-gradient(top,  #3face4 0%,#004ce5 100%); /* IE10+ */ background: linear-gradient(to bottom,  #3face4 0%,#004ce5 100%); /* W3C */ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3face4', endColorstr='#004ce5',GradientType=0 ); /* IE6-9 */
-        -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px;border-top-left-radius: 5px; border-top-right-radius: 5px;
     }
 }
 
