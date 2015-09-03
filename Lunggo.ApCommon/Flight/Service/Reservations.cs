@@ -22,13 +22,13 @@ namespace Lunggo.ApCommon.Flight.Service
         public FlightItineraryForDisplay GetItineraryForDisplay(string token)
         {
             var itin = GetItineraryFromCache(token);
-            return ConvertToItineraryApi(itin);
+            return ConvertToItineraryForDisplay(itin);
         }
 
         public FlightReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
             var rsv = GetReservation(rsvNo);
-            return ConvertToReservationApi(rsv);
+            return ConvertToReservationForDisplay(rsv);
         }
 
         internal FlightReservation GetReservation(string rsvNo)
@@ -39,13 +39,13 @@ namespace Lunggo.ApCommon.Flight.Service
         public FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
             var rsv = GetFlightDb.OverviewReservation(rsvNo);
-            return ConvertToReservationApi(rsv);
+            return ConvertToReservationForDisplay(rsv);
         }
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
         {
             var rsvs = GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
-            return rsvs.Select(ConvertToReservationApi).ToList();
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
         public List<FlightReservation> SearchReservations(FlightReservationSearch search)

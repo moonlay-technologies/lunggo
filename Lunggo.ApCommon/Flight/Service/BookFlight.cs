@@ -54,6 +54,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
+            var trips =
+                itins.SelectMany(itin => itin.FlightTrips).OrderBy(trip => trip.FlightSegments.First().DepartureTime).ToList();
             var reservation = new FlightReservation
             {
                 RsvNo =
@@ -64,7 +66,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = input.Contact,
                 Passengers = input.Passengers,
                 Payment = input.Payment,
-                TripType = input.OverallTripType
+                TripType = ParseTripType(trips)
             };
             reservation.Payment.FinalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);

@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (result.IsSuccess)
             {
                 output.IsSuccess = true;
-                output.Itineraries = result.FlightItineraries.Select(ConvertToItineraryApi).ToList();
+                output.Itineraries = result.FlightItineraries.Select(ConvertToItineraryForDisplay).ToList();
                 output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
                 output.SearchId = result.SearchId;
                 output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);

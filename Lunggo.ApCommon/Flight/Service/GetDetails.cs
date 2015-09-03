@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Service
         public FlightReservationForDisplay GetDetails(string rsvNo)
         {
             var rsv = GetFlightDb.Reservation(rsvNo);
-            return ConvertToReservationApi(rsv);
+            return ConvertToReservationForDisplay(rsv);
         }
 
         private static GetDetailsOutput MapDetails(GetTripDetailsResult details)

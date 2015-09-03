@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Flight.Service
 @using Lunggo.ApCommon.Trie
 @using Lunggo.CustomerWeb.Models
 @using Newtonsoft.Json
@@ -60,9 +61,9 @@
             AdultCount = int.Parse(infoPart.Substring(0, 1)),
             ChildCount = int.Parse(infoPart.Substring(1, 1)),
             InfantCount = int.Parse(infoPart.Substring(2, 1)),
-            CabinClass = FlightSearchData.ParseCabinClass(infoPart.Substring(3, 1)),
+            CabinClass = FlightService.ParseCabinClass(infoPart.Substring(3, 1)),
             Trips = trips,
-            TripType = FlightSearchData.ParseTripType(trips)
+            TripType = FlightService.ParseTripType(trips)
         };
 
         tripType = data.TripType == TripType.OneWay ? "single" : "return";

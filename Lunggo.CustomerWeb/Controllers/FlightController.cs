@@ -41,7 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         int.Parse(info.Substring(8, 2)),
                         int.Parse(info.Substring(6, 2)))
                 }).ToList();
-                var tripType = FlightSearchData.ParseTripType(trips);
+                var tripType = FlightService.ParseTripType(trips);
                 switch (tripType)
                 {
                     case TripType.OneWay:
@@ -113,7 +113,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 },
                 Passengers = passengerInfo.ToList(),
                 Payment = data.Payment,
-                OverallTripType = data.Itinerary.TripType,
                 DiscountCode = data.DiscountCode
             };
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);

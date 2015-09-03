@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal FlightReservationForDisplay ConvertToReservationApi(FlightReservation reservation)
+        internal FlightReservationForDisplay ConvertToReservationForDisplay(FlightReservation reservation)
         {
             if (reservation != null)
             {
@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     RsvTime = reservation.RsvTime,
                     TripType = reservation.TripType,
                     InvoiceNo = reservation.InvoiceNo,
-                    Itinerary = ConvertToItineraryApi(BundleItineraries(reservation.Itineraries)),
+                    Itinerary = ConvertToItineraryForDisplay(BundleItineraries(reservation.Itineraries)),
                     Contact = reservation.Contact,
                     Passengers = reservation.Passengers,
                     Payment = reservation.Payment
@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        internal FlightItineraryForDisplay ConvertToItineraryApi(FlightItinerary itinerary)
+        internal FlightItineraryForDisplay ConvertToItineraryForDisplay(FlightItinerary itinerary)
         {
             if (itinerary != null)
             {
@@ -63,127 +63,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return new FlightItineraryForDisplay();
             }
-        }
-
-        internal FlightTripForDisplay ConvertToTripApi(FlightTripTableRecord summaryRecord)
-        {
-            var dict = DictionaryService.GetInstance();
-            return new FlightTripForDisplay
-            {
-                OriginAirport = summaryRecord.OriginAirportCd,
-                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
-                DestinationAirport = summaryRecord.DestinationAirportCd,
-                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
-            };
-        }
-
-        internal FlightTrip ConvertToTripDetails(FlightTripTableRecord summaryRecord)
-        {
-            var dict = DictionaryService.GetInstance();
-            return new FlightTrip
-            {
-                OriginAirport = summaryRecord.OriginAirportCd,
-                OriginAirportName = dict.GetAirportName(summaryRecord.OriginAirportCd),
-                OriginCity = dict.GetAirportCity(summaryRecord.OriginAirportCd),
-                DestinationAirport = summaryRecord.DestinationAirportCd,
-                DestinationAirportName = dict.GetAirportName(summaryRecord.DestinationAirportCd),
-                DestinationCity = dict.GetAirportCity(summaryRecord.DestinationAirportCd),
-                DepartureDate = summaryRecord.DepartureDate.GetValueOrDefault().ToUniversalTime(),
-            };
-        }
-
-        internal FlightSegment ConvertToSegmentApi(FlightSegmentTableRecord summaryRecord)
-        {
-            var dict = DictionaryService.GetInstance();
-            return new FlightSegment
-            {
-                DepartureAirport = summaryRecord.DepartureAirportCd,
-                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
-                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault().ToUniversalTime(),
-                ArrivalAirport = summaryRecord.ArrivalAirportCd,
-                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
-                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault().ToUniversalTime(),
-                AirlineCode = summaryRecord.AirlineCd,
-                FlightNumber = summaryRecord.FlightNumber
-            };
-        }
-
-        internal FlightSegment ConvertToSegmentDetails(FlightSegmentTableRecord summaryRecord)
-        {
-            var dict = DictionaryService.GetInstance();
-            return new FlightSegment
-            {
-                DepartureAirport = summaryRecord.DepartureAirportCd,
-                DepartureAirportName = dict.GetAirportName(summaryRecord.DepartureAirportCd),
-                DepartureCity = dict.GetAirportCity(summaryRecord.DepartureAirportCd),
-                DepartureTerminal = summaryRecord.DepartureTerminal,
-                DepartureTime = summaryRecord.DepartureTime.GetValueOrDefault().ToUniversalTime(),
-                ArrivalAirport = summaryRecord.ArrivalAirportCd,
-                ArrivalAirportName = dict.GetAirportName(summaryRecord.ArrivalAirportCd),
-                ArrivalCity = dict.GetAirportCity(summaryRecord.ArrivalAirportCd),
-                ArrivalTerminal = summaryRecord.ArrivalTerminal,
-                ArrivalTime = summaryRecord.ArrivalTime.GetValueOrDefault().ToUniversalTime(),
-                AirlineCode = summaryRecord.AirlineCd,
-                AirlineName = dict.GetAirlineName(summaryRecord.AirlineCd),
-                AirlineLogoUrl = dict.GetAirlineLogoUrl(summaryRecord.AirlineCd),
-                OperatingAirlineCode = summaryRecord.OperatingAirlineCd,
-                OperatingAirlineName = dict.GetAirlineName(summaryRecord.OperatingAirlineCd),
-                OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(summaryRecord.OperatingAirlineCd),
-                AircraftCode = summaryRecord.AircraftCd,
-                FlightNumber = summaryRecord.FlightNumber,
-                Baggage = summaryRecord.Baggage,
-                Duration = summaryRecord.Duration.GetValueOrDefault(),
-            };
-        }
-
-        internal FlightPassenger ConvertToPassengerApi(FlightPassengerTableRecord summaryRecord)
-        {
-            return new FlightPassenger
-            {
-                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
-                FirstName = summaryRecord.FirstName,
-                LastName = summaryRecord.LastName,
-                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
-            };
-        }
-
-        internal FlightPassenger ConvertToPassengerDetails(FlightPassengerTableRecord summaryRecord)
-        {
-            return new FlightPassenger
-            {
-                Title = TitleCd.Mnemonic(summaryRecord.TitleCd),
-                FirstName = summaryRecord.FirstName,
-                LastName = summaryRecord.LastName,
-                Type = PassengerTypeCd.Mnemonic(summaryRecord.PassengerTypeCd)
-            };
-        }
-
-        internal PaymentInfo ConvertFlightPaymentInfo(FlightReservationTableRecord record)
-        {
-            DateTime? paymentTime = null;
-            if (record.PaymentTime.HasValue)
-                paymentTime = record.PaymentTime.Value.ToUniversalTime();
-            RefundInfo refund = null;
-            if (record.RefundTime != null)
-                refund = new RefundInfo
-                {
-                    Time = record.RefundTime.GetValueOrDefault(),
-                    Amount = record.RefundAmount.GetValueOrDefault(),
-                    TargetBank = record.RefundTargetBank,
-                    TargetAccount = record.RefundTargetAccount
-                };
-            return new PaymentInfo
-            {
-                Id = record.PaymentId,
-                Medium = PaymentMediumCd.Mnemonic(record.PaymentMediumCd),
-                Method = PaymentMethodCd.Mnemonic(record.PaymentMethodCd),
-                Status = PaymentStatusCd.Mnemonic(record.PaymentStatusCd),
-                Time = paymentTime,
-                TargetAccount = record.PaymentTargetAccount,
-                FinalPrice = record.FinalPrice.GetValueOrDefault(),
-                PaidAmount = record.PaidAmount.GetValueOrDefault(),
-                Refund = refund
-            };
         }
 
         private static List<FlightTripForDisplay> MapTrips(IEnumerable<FlightTrip> trips)

@@ -226,8 +226,7 @@ namespace Lunggo.ApCommon.Mystifly
                 flightItinerary.LocalCurrency = "IDR";
                 flightItinerary.LocalRate = 1;
                 flightItinerary.LocalPrice = flightItinerary.FinalIdrPrice * flightItinerary.LocalRate;
-                if (pricedItinerary.RequiredFieldsToBook != null)
-                    MapRequiredFields(pricedItinerary, flightItinerary);
+                MapRequiredFields(pricedItinerary, flightItinerary);
                 flightItinerary.Supplier = FlightSupplier.Mystifly;
                 flightItinerary.FareType = MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType);
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
@@ -337,19 +336,22 @@ namespace Lunggo.ApCommon.Mystifly
         }
         private static void MapRequiredFields(PricedItinerary pricedItinerary, FlightItinerary flightItinerary)
         {
-            foreach (var field in pricedItinerary.RequiredFieldsToBook)
+            if (pricedItinerary.RequiredFieldsToBook != null)
             {
-                switch (field.ToLower())
+                foreach (var field in pricedItinerary.RequiredFieldsToBook)
                 {
-                    case "passport":
-                        flightItinerary.RequirePassport = true;
-                        break;
-                    case "dob":
-                        flightItinerary.RequireBirthDate = true;
-                        break;
-                    case "samecheck-inforallpassengers":
-                        flightItinerary.RequireSameCheckIn = true;
-                        break;
+                    switch (field.ToLower())
+                    {
+                        case "passport":
+                            flightItinerary.RequirePassport = true;
+                            break;
+                        case "dob":
+                            flightItinerary.RequireBirthDate = true;
+                            break;
+                        case "samecheck-inforallpassengers":
+                            flightItinerary.RequireSameCheckIn = true;
+                            break;
+                    }
                 }
             }
             var dict = DictionaryService.GetInstance();
