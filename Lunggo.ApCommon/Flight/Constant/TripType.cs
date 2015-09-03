@@ -17,9 +17,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Other = 6
     }
 
-    public class TripTypeCd
+    internal class TripTypeCd
     {
-        public static string Mnemonic(TripType type)
+        internal static string Mnemonic(TripType type)
         {
             switch (type)
             {
@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static TripType Mnemonic(string type)
+        internal static TripType Mnemonic(string type)
         {
             switch (type)
             {

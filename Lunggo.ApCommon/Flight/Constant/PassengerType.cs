@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Infant = 3
     }
 
-    public class PassengerTypeCd
+    internal class PassengerTypeCd
     {
-        public static string Mnemonic(PassengerType type)
+        internal static string Mnemonic(PassengerType type)
         {
             switch (type)
             {
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static PassengerType Mnemonic(string type)
+        internal static PassengerType Mnemonic(string type)
         {
             switch (type)
             {

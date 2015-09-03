@@ -13,9 +13,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Female = 2
     }
 
-    public class GenderCd
+    internal class GenderCd
     {
-        public static string Mnemonic(Gender gender)
+        internal static string Mnemonic(Gender gender)
         {
             switch (gender)
             {
@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static Gender Mnemonic(string gender)
+        internal static Gender Mnemonic(string gender)
         {
             switch (gender)
             {
