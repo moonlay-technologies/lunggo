@@ -646,6 +646,7 @@
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
+    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit\check.png" />

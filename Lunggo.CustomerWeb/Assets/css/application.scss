@@ -536,9 +536,10 @@ hr {border-color:#aaa;}
 
     .sticky-wrapper {height:0 !important;}
     
-    .back-to-top {background:#fff; position:fixed; bottom:30%; left:80%;
-        a {display:block; background:#fff; color:$blue-default; padding:10px; border:2px solid $blue-default;
-            img {display:block; margin-bottom:19px;}
+    .back-to-top {background:#fff; position:fixed; bottom:0; right:5%;
+        a {display:block; background:#fff; color:$blue-default; padding:10px; border:2px solid $blue-default; border-bottom:0;
+            -webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; border-top-left-radius: 3px; border-top-right-radius: 3px;
+            img {display:block; margin-bottom:19px; margin-left:auto; margin-right:auto;}
             span {display:block; font-size:14px;}
         }
     }
