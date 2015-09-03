@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Miss = 3
     }
 
-    public class TitleCd
+    internal class TitleCd
     {
-        public static string Mnemonic(Title title)
+        internal static string Mnemonic(Title title)
         {
             switch (title)
             {
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Constant
             }
         }
 
-        public static Title Mnemonic(string title)
+        internal static Title Mnemonic(string title)
         {
             switch (title)
             {

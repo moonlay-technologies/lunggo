@@ -13,9 +13,9 @@ namespace Lunggo.ApCommon.Payment.Constant
         Invalid = 2
     }
 
-    public class TransferConfirmationReportStatusCd
+    internal class TransferConfirmationReportStatusCd
     {
-        public static string Mnemonic(TransferConfirmationReportStatus transferConfirmationReportStatus)
+        internal static string Mnemonic(TransferConfirmationReportStatus transferConfirmationReportStatus)
         {
             switch (transferConfirmationReportStatus)
             {
@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Payment.Constant
             }
         }
 
-        public static TransferConfirmationReportStatus Mnemonic(string transferConfirmationReportStatus)
+        internal static TransferConfirmationReportStatus Mnemonic(string transferConfirmationReportStatus)
         {
             switch (transferConfirmationReportStatus)
             {

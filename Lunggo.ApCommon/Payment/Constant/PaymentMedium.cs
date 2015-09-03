@@ -13,9 +13,9 @@ namespace Lunggo.ApCommon.Payment.Constant
         Veritrans = 2
     }
 
-    public class PaymentMediumCd
+    internal class PaymentMediumCd
     {
-        public static string Mnemonic(PaymentMedium paymentMedium)
+        internal static string Mnemonic(PaymentMedium paymentMedium)
         {
             switch (paymentMedium)
             {
@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "";
             }
         }
-        public static PaymentMedium Mnemonic(string paymentMedium)
+        internal static PaymentMedium Mnemonic(string paymentMedium)
         {
             switch (paymentMedium)
             {

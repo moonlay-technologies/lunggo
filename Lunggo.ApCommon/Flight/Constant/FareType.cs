@@ -15,9 +15,9 @@ namespace Lunggo.ApCommon.Flight.Constant
         Consolidated = 3,
     }
 
-    public class FareTypeCd
+    internal class FareTypeCd
     {
-        public static string Mnemonic(FareType fareType)
+        internal static string Mnemonic(FareType fareType)
         {
             switch (fareType)
             {
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return "";
             }
         }
-        public static FareType Mnemonic(string fareType)
+        internal static FareType Mnemonic(string fareType)
         {
             switch (fareType)
             {
