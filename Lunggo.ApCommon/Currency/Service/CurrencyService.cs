@@ -68,12 +68,12 @@ namespace Lunggo.ApCommon.Currency.Service
 
         public void SetCurrencyExchangeRate(string currency, decimal rate)
         {
-            SetCurrencyRateInCache(currency, rate);
+            SetCurrencyRateInCache(currency.ToUpper(), rate);
         }
 
         public decimal GetCurrencyExchangeRate(string currency)
         {
-            return GetCurrencyRateInCache(currency);
+            return GetCurrencyRateInCache(currency.ToUpper());
         }
 
         private static void SetSupplierDepositInCache(string supplier, Deposit deposit)
