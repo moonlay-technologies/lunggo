@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -17,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var itins = input.Token.Substring(0, 4) == ItinBundleKeyPrefix 
                 ? GetItinerarySetFromCache(input.Token) 
                 : new List<FlightItinerary>{GetItineraryFromCache(input.Token)};
-            foreach (var itin in itins)
+            Parallel.ForEach(itins, itin =>
             {
                 var outputSet = new RevalidateFlightOutputSet();
                 var request = new RevalidateConditions
@@ -35,11 +36,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 else
                 {
                     outputSet.IsSuccess = false;
-                    output.Errors = response.Errors;
-                    output.ErrorMessages = response.ErrorMessages;
+                    if (response.Errors != null)
+                        response.Errors.ForEach(output.AddError);
+                    if (response.ErrorMessages != null)
+                        response.ErrorMessages.ForEach(output.AddError);
                 }
                 output.Sets.Add(outputSet);
-            }
+            });
             var newItins = output.Sets.Select(set => set.Itinerary).ToList();
             if (input.Token.Substring(0, 4) == ItinBundleKeyPrefix)
                 SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);

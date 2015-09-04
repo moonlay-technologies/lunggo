@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.UI;
 
 using Lunggo.ApCommon.Flight.Database.Query;
@@ -15,9 +16,9 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (input.BookingId == null)
-                    input.BookingId = GetFlightBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
-                var tripInfoRecords = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { input.BookingId });
+                if (input.BookingIds == null)
+                    input.BookingIds = GetFlightBookingIdQuery.GetInstance().Execute(conn, new { input.RsvNo }).ToList();
+                var tripInfoRecords = GetFlightTripInfoQuery.GetInstance().Execute(conn, new { BookingId = input.BookingIds });
                 var tripInfos = tripInfoRecords.Select(record => new FlightTrip
                 {
                     OriginAirport = record.OriginAirportCd,
@@ -26,25 +27,43 @@ namespace Lunggo.ApCommon.Flight.Service
                 }).ToList();
 
                 var output = new GetDetailsOutput();
-                var request = new TripDetailsConditions
-                {   
-                    BookingId = input.BookingId,
-                    Trips = tripInfos
-                };
-                var details = GetTripDetailsInternal(request);
-                if (details.IsSuccess)
+                Parallel.ForEach(input.BookingIds, bookingId =>
                 {
-                    output = MapDetails(details);
-                    output.IsSuccess = true;
+                    var detailsResult = new DetailsResult();
+                    var request = new TripDetailsConditions
+                    {
+                        BookingId = bookingId,
+                        Trips = tripInfos
+                    };
+                    var response = GetTripDetailsInternal(request);
+                    if (response.IsSuccess)
+                    {
+                        detailsResult = MapDetails(response);
+                        detailsResult.IsSuccess = true;
 
-                    DeleteFlightTripPerItineraryQuery.GetInstance().Execute(conn, new {details.BookingId});
-                    InsertFlightDb.Details(details);
+                        DeleteFlightTripPerItineraryQuery.GetInstance().Execute(conn, new {response.BookingId});
+                        InsertFlightDb.Details(response);
+                    }
+                    else
+                    {
+                        detailsResult.IsSuccess = false;
+                        if (response.Errors != null)
+                            response.Errors.ForEach(output.AddError);
+                        if (response.ErrorMessages != null)
+                            response.ErrorMessages.ForEach(output.AddError);
+                    }
+                    output.DetailsResults.Add(detailsResult);
+                });
+                if (output.DetailsResults.TrueForAll(result => result.IsSuccess))
+                {
+                    output.IsSuccess = true;
                 }
                 else
                 {
                     output.IsSuccess = false;
-                    output.Errors = details.Errors;
-                    output.ErrorMessages = details.ErrorMessages;
+                    if (output.DetailsResults.Any(result => result.IsSuccess))
+                        output.PartiallySucceed();
+                    output.DistinguishErrors();
                 }
                 return output;
             }
@@ -56,9 +75,9 @@ namespace Lunggo.ApCommon.Flight.Service
             return ConvertToReservationForDisplay(rsv);
         }
 
-        private static GetDetailsOutput MapDetails(GetTripDetailsResult details)
+        private static DetailsResult MapDetails(GetTripDetailsResult details)
         {
-            return new GetDetailsOutput
+            return new DetailsResult
             {
                 BookingId = details.BookingId,
                 BookingNotes = details.BookingNotes,

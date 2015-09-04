@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 
@@ -94,7 +95,13 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
-            return itins.Select(itin => BookItinerary(itin, input, output)).ToList();
+            var bookResults = new List<BookResult>();
+            Parallel.ForEach(itins, itin =>
+            {
+                var bookResult = BookItinerary(itin, input, output);
+                bookResults.Add(bookResult);
+            });
+            return bookResults;
         }
 
         private BookResult BookItinerary(FlightItinerary itin, BookFlightInput input, BookFlightOutput output)
@@ -119,14 +126,10 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 bookResult.IsSuccess = false;
                 itin.BookingId = response.Status.BookingId;
-                foreach (var error in response.Errors)
-                {
-                    output.AddError(error);
-                }
-                foreach (var errorMessage in response.ErrorMessages)
-                {
-                    output.AddError(errorMessage);
-                }
+                if (response.Errors != null)
+                    response.Errors.ForEach(output.AddError);
+                if (response.ErrorMessages != null)
+                    response.ErrorMessages.ForEach(output.AddError);
             }
             return bookResult;
         }

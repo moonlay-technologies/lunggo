@@ -4,6 +4,17 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
 {
     public class GetDetailsOutput : OutputBase
     {
+        public List<DetailsResult> DetailsResults { get; set; }
+
+        public GetDetailsOutput()
+        {
+            DetailsResults = new List<DetailsResult>();
+        }
+    }
+
+    public class DetailsResult
+    {
+        public bool IsSuccess { get; set; }
         public string BookingId { get; set; }
         public int FlightSegmentCount { get; set; }
         public FlightItinerary FlightItinerary { get; set; }
