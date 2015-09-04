@@ -28,6 +28,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public CabinClass CabinClass { get; set; }
+        public List<string> AirlinePreferences { get; set; }
+        public List<string> AirlineExcludes { get; set; }
     }
 
     public class ConditionsBase

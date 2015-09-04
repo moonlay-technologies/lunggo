@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
@@ -73,6 +74,10 @@
             <hr>
             <h1><b>@Model.Message</b></h1>
             <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090")</h1>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a href="@Url.Action("Login", "Account", new { ReturnUrl = Context.Request.Url })" class="btn btn-primary btn-yellow">Login</a>
+            }
         </div>
     </header>
 
@@ -87,7 +92,7 @@
                             <input type="text" class="hidden" name="Token" value="@Model.Token" />
                             <div class="form-group">
                                 <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
-                                <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")">
+                                <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")" value="@User.Identity.GetFirstName() @User.Identity.GetLastName()">
                                 @Html.ValidationMessageFor(data => data.Contact.Name)
                             </div>
                             <div class="row">
@@ -104,7 +109,7 @@
                                     <div class="form-inline">
                                         <div class="form-group" style="width:100%;">
                                             <label for="">@Html.I18NString("CW00093") :</label>
-                                            <input type="tel" class="form-control control-phone control-check" style="width:100%;" name="Contact.Phone" placeholder="ex: 81521807096" />
+                                            <input type="tel" class="form-control control-phone control-check" style="width:100%;" name="Contact.Phone" placeholder="ex: 81521807096" value="@User.Identity.GetPhoneNumber()"/>
                                             @Html.ValidationMessageFor(data => data.Contact.Phone)
                                         </div>
                                     </div>
@@ -112,7 +117,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="" class="control-label">@Html.I18NString("CW00094") :</label>
-                                        <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com">
+                                        <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com" value="@User.Identity.GetEmail()">
                                         @Html.ValidationMessageFor(data => data.Contact.Email)
                                     </div>
                                 </div>

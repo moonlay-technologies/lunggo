@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.Framework.Database;
@@ -24,26 +25,55 @@ namespace Lunggo.ApCommon.Identity.User
 
         public static string GetFirstName(this IIdentity identity)
         {
-            var customUser = GetCustomUser(identity);
-            return customUser.FirstName;
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.FirstName;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         public static string GetLastName(this IIdentity identity)
         {
-            var customUser = GetCustomUser(identity);
-            return customUser.LastName;
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.LastName;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static string GetEmail(this IIdentity identity)
         {
-            var customUser = GetCustomUser(identity);
-            return customUser.Email;
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.Email;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static string GetPhoneNumber(this IIdentity identity)
         {
-            var customUser = GetCustomUser(identity);
-            return customUser.PhoneNumber;
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.PhoneNumber;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static CustomUser ToCustomUser(GetUserByAnyQueryRecord userRecord)

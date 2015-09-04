@@ -140,8 +140,8 @@ namespace Lunggo.ApCommon.Mystifly
                 AirTripType = airTripType,
                 CabinPreference = cabinType,
                 MaxStopsQuantity = MaxStopsQuantity.All,
-                VendorExcludeCodes = null,
-                VendorPreferenceCodes = null,
+                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : null,
+                VendorPreferenceCodes = conditions.AirlinePreferences != null ? conditions.AirlinePreferences.ToArray() : null,
                 ExtensionData = null
             };
         }

@@ -41,14 +41,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         orderResult.IsSuccess = false;
                         orderResult.BookingId = response.BookingId;
                         orderResult.BookingStatus = BookingStatus.Failed;
-                        foreach (var error in response.Errors)
-                        {
-                            output.AddError(error);
-                        }
-                        foreach (var errorMessage in response.ErrorMessages)
-                        {
-                            output.AddError(errorMessage);
-                        }
+                        output.Errors = response.Errors;
+                        output.ErrorMessages = response.ErrorMessages;
                     }
                     UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
                     {
