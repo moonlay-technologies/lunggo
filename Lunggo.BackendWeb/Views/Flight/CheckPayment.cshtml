@@ -1,4 +1,6 @@
-﻿@model Lunggo.BackendWeb.Models.CheckPaymentViewModel
+﻿@using System.ComponentModel
+@using Lunggo.ApCommon.Payment.Constant
+@model Lunggo.BackendWeb.Models.CheckPaymentViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,100 +12,126 @@
 
 
 <h2>Check Payment</h2>
-<div>
+<div class="row">
     <button class='flip'>Switch Table</button>
 </div>
+@using (Html.BeginForm("CheckPayment", "Flight", FormMethod.Post))
+{
+    int i = 0;
+    <div class='panel1 rowMarginTop30px'>
+        <table>
+            <tr>
+                <td width="100px" align="center">Amount</td>
+                <td width="100px" align="center">Beneficiary Account</td>
+                <td width="100px" align="center">Beneficiary Bank</td>
+                <td width="100px" align="center">Message</td>
+                <td width="100px" align="center">Remitter Account</td>
+                <td width="100px" align="center">Remitter Bank</td>
+                <td width="100px" align="center">Remitter Name</td>
+                <td width="100px" align="center">Report ID</td>
+                <td width="100px" align="center">Rsv No</td>
+                <td width="100px" align="center">Status</td>
 
-<div class='panel1 col-md-offset-1 col-md-10'>
-    <table>
-        <tr>
-            <td width="100px">Amount</td>
-            <td width="100px">Beneficiary Account</td>
-            <td width="100px">Beneficiary Bank</td>
-            <td width="100px">Message</td>
-            <td width="100px">Remitter Account</td>
-            <td width="100px">Remitter Bank</td>
-            <td width="100px">Remitter Name</td>
-            <td width="100px">Report ID</td>
-            <td width="100px">Rsv No</td>
-            <td width="100px">Status</td>
-        </tr>
-        <tr>
+            </tr>
+
             @foreach (var x in Model.Reports)
             {
-                <td>
-                    @Html.DisplayFor(isi => x.Amount, "Amount")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.BeneficiaryAccount, "BeneficiaryAccount")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.BeneficiaryBank, "BeneficiaryBank")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.Message, "Message")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.RemitterAccount, "RemitterAccount")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.RemitterBank, "RemitterBank")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.RemitterName, "RemitterName")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.ReportId, "ReportId")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.Status, "Status")
-                </td>
+                <tr>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.Amount, "Amount")
+                    </td>
+                    <td width='100px' align="center">
+                        @Html.DisplayFor(isi => x.BeneficiaryAccount, "BeneficiaryAccount")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.BeneficiaryBank, "BeneficiaryBank")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.Message, "Message")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.RemitterAccount, "RemitterAccount")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.RemitterBank, "RemitterBank")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.RemitterName, "RemitterName")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.ReportId, "ReportId")
+                        @Html.Hidden("["+i+"].ReportId", ""+ x.ReportId +"")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
+                    </td>
+                    <td width="100px" align="center">
+                        @Html.DropDownList("["+ i +"].Status", new List<SelectListItem>
+                    {
+                        new SelectListItem {Text = "Uncheck", Value = TransferConfirmationReportStatus.Unchecked.ToString()},
+                        new SelectListItem {Text = "Confirmed", Value = TransferConfirmationReportStatus.Confirmed.ToString()},
+                        new SelectListItem {Text = "Invalid", Value = TransferConfirmationReportStatus.Invalid.ToString()},
+                    }
+                        )
+                    </td>
+                </tr>
             }
-        </tr>
-    </table>
-</div>
-<div class='panel2 col-md-offset-1 col-md-10'>
-    <table>
-        <tr>
-            <td width="100px">RsvNo</td>
-            <td width="100px">RsvTime</td>
-            <td width="100px">InvoiceNo</td>
-            <td width="100px">Iteneraries</td>
-            <td width="100px">Passenger</td>
-            <td width="100px">Payment</td>
-            <td width="100px">TripType</td>
-        </tr>
-        <tr>
+        </table>
+        <div class="panel1 row">
+            <div class="col-md-offset-11 col-md-1">
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("CheckReservation", "Flight", FormMethod.Post))
+{
+    int i = 0;
+    <div class='panel2 rowMarginTop30px col-md-8 col-md-offset-2'>
+        <table>
+            <tr>
+                <td width="100px" align="center">RsvNo</td>
+                <td width="100px" align="center">RsvTime</td>
+                <td width="100px" align="center">Payment</td>
+                <td width="100px" align="center">Paid Amount</td>
+                <td width="100px" align="center">Status</td>
+            </tr>
+           
             @foreach (var x in Model.Reservation)
             {
-                <td>
-                    @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.RsvTime, "RsvTime")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.InvoiceNo, "InvoiceNo")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.Itineraries, "Itineraries")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.Passengers, "Passenger")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.Payment, "Payment")
-                </td>
-                <td>
-                    @Html.DisplayFor(isi => x.TripType, "TripType")
-                </td>
+                <tr>
+                    <td width="100px">
+                        @Html.DisplayFor(isi => x.RsvNo)
+                        @Html.Hidden("["+ i +"].NoRsv", "" + x.RsvNo + "")
+                    </td>
+                    <td width="150px">
+                        @Html.DisplayFor(isi => x.RsvTime, "RsvTime")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(isi => x.Payment.FinalPrice, "Payment")
+                        @Html.Hidden("[" + i + "].PaymentInfo.FinalPrice", "" + x.Payment.FinalPrice + "")
+                    </td>
+                    <td>
+                        @Html.Editor("[" + i + "].PaymentInfo.PaidAmount")
+                    </td>
+                    <td align="center">
+                        <input id="status" type="checkbox" value="@PaymentStatus.Settled" name="[@i].Status" />
+                        <input type="hidden" value="@PaymentStatus.Pending" name="[@i].Status" />
+                    </td>
+                </tr>
+                i++;
             }
-        </tr>
-    </table>
-</div>
+        </table>
+    </div>
+    
+    <div class="panel2 row">
+        <div class="col-md-offset-10 col-md-1">
+            <input type="submit" value="Submit" />
+        </div>
+    </div>
+}
+
         
   
 

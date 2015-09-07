@@ -105,7 +105,12 @@
                             <span>Payment Check</span>
                         </a>
                     </li>
-
+                    <li class="sub-menu" id="menu-exchangerate">
+                        <a href="@Url.Action("ExchangeRate", "Flight")">
+                            <i class="fa fa-plane"></i>
+                            <span>Payment Check</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -175,8 +180,8 @@
     $(document).ready(function () {
         $(".panel2").hide();
         $(".flip").click(function () {
-            $(".panel2").toggle("slow");
-            $(".panel1").toggle("slow");
+            $(".panel2").toggle();
+            $(".panel1").toggle();
         });
     });
     </script>

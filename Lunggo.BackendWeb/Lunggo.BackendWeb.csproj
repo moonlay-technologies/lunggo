@@ -204,7 +204,10 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\CheckPaymentControllerModel.cs" />
     <Compile Include="Models\CheckPaymentViewModel.cs" />
+    <Compile Include="Models\CheckReservationControllerModel.cs" />
+    <Compile Include="Models\ExchangeRateViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -479,10 +482,13 @@
     <Content Include="Views\Home\RenderFlightTrip.cshtml" />
     <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
     <Content Include="Views\Flight\CheckPayment.cshtml" />
+    <Content Include="Views\Flight\ExchangeRate.cshtml" />
+    <Content Include="Views\Flight\InsertExchangeRatePost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Views\CheckPaymentViewModel\" />
+    <Folder Include="Views\ExchangeRateViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -169,6 +169,7 @@
     <Compile Include="Error\Error.cs" />
     <Compile Include="Extension\JsonExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="Filter\BasicAuthenticationFilterAttribute.cs" />
     <Compile Include="Filter\LanguageFilterAttribute.cs" />
     <Compile Include="Filter\DeviceDetectionFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />

@@ -910,7 +910,14 @@
         <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
             <input type="text" name="Token" id="fareToken" value=""/>
         </form>
-
+    
+        <!-- back to top button -->
+        <div class="back-to-top" ng-show="departureFlightConfig.loading == false || returnFlightConfig.loading == false">
+            <a href="#">
+                <img src="/Assets/images/backtotop.jpg" alt="Back to Top" />
+                <span>Back To Top</span>
+            </a>
+        </div>
 
 
     </div><!-- .container -->

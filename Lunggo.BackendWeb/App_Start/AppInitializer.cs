@@ -22,6 +22,7 @@ namespace Lunggo.BackendWeb
             InitConfigurationManager();
             InitI18NMessageManager();
             InitDatabaseService();
+            InitRedisService();
             //InitQueueService();
             //InitLogger();
             InitDictionaryService();
@@ -51,6 +52,26 @@ namespace Lunggo.BackendWeb
         {
             var queue = QueueService.GetInstance();
             queue.Init();
+        }
+
+        private static void InitRedisService()
+        {
+            var redisService = RedisService.GetInstance();
+            redisService.Init(new RedisConnectionProperty[]
+            {
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                },
+                
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.MasterDataCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                }, 
+                 
+            });
         }
 
         private static void InitDictionaryService()
