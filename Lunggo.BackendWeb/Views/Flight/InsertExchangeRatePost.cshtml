@@ -1,0 +1,52 @@
+﻿@model Lunggo.BackendWeb.Models.ExchangeRateViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exchange Rate</h2>
+
+@using (Html.BeginForm("InsertExchangeRatePost", "Flight", FormMethod.Post))
+{
+    if (Model.Hidden == 0)
+    {
+        <div class='row rowMarginTop30px'>
+            <div class="col-md-2">
+                Currency Not Found
+            </div>
+        </div>
+    }
+    if (Model.Hidden == 1)
+    {
+        <div class='row rowMarginTop30px'>
+            <div class="col-md-2">
+                Change Currency Rate
+            </div>
+        </div>
+    }
+    <div class="row rowMarginTop30px">
+        <div class="col-md-2">
+            Enter the curency Code
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col-md-1">
+            @Html.TextBox("currencyCode", null, new { @maxlength = "3", @minlength = "3" })
+        </div>
+    </div>
+    <div class="row rowMarginTop15px">
+        <div class="col-md-2">
+            Enter currency rate
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Editor("rate")
+        </div>
+    </div>
+    <div class="row rowMarginTop30px">
+        <div class="col-md-2">
+            <input type="submit" value="Submit" />
+        </div>
+    </div>
+}

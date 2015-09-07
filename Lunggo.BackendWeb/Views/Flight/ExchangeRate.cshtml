@@ -1,0 +1,35 @@
+﻿@using HtmlAgilityPack
+@model Lunggo.BackendWeb.Models.ExchangeRateViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exchange Rate</h2>
+
+@using (Html.BeginForm("ExchangeRate", "Flight", FormMethod.Post))
+{
+    <div class='row rowMarginTop30px'>
+        <div class="col-md-1">
+            @Html.TextBox("currencyCode", null, new { @maxlength = "3", @minlength = "3"})
+        </div>
+        <div class="col-md-offset-1 col-md-2">
+            Rp @Html.Display("rate")
+        </div>
+    </div>
+    <div class="row rowMarginTop15px">
+        <div class="col-md-1">
+            <input type="submit" value="Check" />
+        </div>
+    </div>
+}
+@using (Html.BeginForm("InsertExchangeRatePost", "Flight", FormMethod.Get))
+{
+    @Html.Hidden("hidden")
+    <div class="row rowMarginTop15px">
+        <div class="col-md-1">
+            <input type="submit" value="Change" />
+        </div>
+    </div>
+}
+        
