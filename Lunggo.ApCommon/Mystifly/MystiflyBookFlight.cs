@@ -56,6 +56,8 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     else
                     {
+                        result.IsSuccess = false;
+                        result = MapResult(response, fareType, false);
                         if (response.Errors.Any())
                         {
                             result.Errors = new List<FlightError>();
@@ -77,8 +79,6 @@ namespace Lunggo.ApCommon.Mystifly
                             if (done)
                                 MapError(response, result);
                         }
-                        result.IsSuccess = false;
-                        result = MapResult(response, fareType, false);
                     }
                 }
                 return result;
