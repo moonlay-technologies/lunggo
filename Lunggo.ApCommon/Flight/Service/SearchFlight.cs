@@ -18,24 +18,18 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             SearchFlightResult result;
             var output = new SearchFlightOutput();
-            if (input.SearchId == null)
-            {
-                result = SearchByThirdPartyService(input);
-            }
+            var searchId = HashEncodeConditions(input.Conditions);
+            var cacheItin = GetSearchedItinerariesFromCache(searchId);
+            if (cacheItin == null)
+                result = SearchByThirdPartyService(input, searchId);
             else
             {
-                var cacheItin = GetSearchedItinerariesFromCache(input.SearchId);
-                if (cacheItin == null)
-                    result = SearchByThirdPartyService(input);
-                else
+                result = new SearchFlightResult
                 {
-                    result = new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        FlightItineraries = cacheItin,
-                        SearchId = input.SearchId
-                    };
-                }
+                    IsSuccess = true,
+                    FlightItineraries = cacheItin,
+                    SearchId = searchId
+                };
             }
 
             if (result.IsSuccess)
@@ -45,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
                 output.SearchId = result.SearchId;
                 output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
-                output.ExpiryTime = GetSearchedItinerariesExpiry(input.SearchId);
+                output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
             }
             else
             {
@@ -56,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return output;
         }
 
-        private SearchFlightResult SearchByThirdPartyService(SearchFlightInput input)
+        private SearchFlightResult SearchByThirdPartyService(SearchFlightInput input, string searchId)
         {
             var conditions = new SearchFlightConditions
             {
@@ -70,7 +64,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = SearchFlightInternal(conditions);
             if (result.FlightItineraries != null)
             {
-                result.SearchId = SaveSearchedItinerariesToCache(result.FlightItineraries);
+                SaveSearchedItinerariesToCache(result.FlightItineraries, searchId);
             }
             return result;
         }

@@ -20,16 +20,14 @@ namespace Lunggo.ApCommon.Flight.Service
         private const string SingleItinKeyPrefix = "9284";
         private const string ItinBundleKeyPrefix = "3462";
 
-        internal string SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList)
+        internal void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, string searchId)
         {
-            var searchId = FlightSearchIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "searchedFlightItineraries:" + searchId;
             var cacheObject = itineraryList.ToCacheObject();
             var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
-            return searchId;
         }
 
         internal List<FlightItinerary> GetSearchedItinerariesFromCache(string searchId)

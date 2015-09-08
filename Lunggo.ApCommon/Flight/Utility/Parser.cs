@@ -48,5 +48,20 @@ namespace Lunggo.ApCommon.Flight.Service
                     return CabinClass.Undefined;
             }
         }
+
+        public static string ParseCabinClass(CabinClass cabinClass)
+        {
+            switch (cabinClass)
+            {
+                case CabinClass.Economy:
+                    return "y";
+                case CabinClass.Business:
+                    return "c";
+                case CabinClass.First:
+                    return "f";
+                default:
+                    return "";
+            }
+        }
     }
 }
