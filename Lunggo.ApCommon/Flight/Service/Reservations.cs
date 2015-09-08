@@ -48,9 +48,10 @@ namespace Lunggo.ApCommon.Flight.Service
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
-        public List<FlightReservation> SearchReservations(FlightReservationSearch search)
+        public List<FlightReservationForDisplay> SearchReservations(FlightReservationSearch search)
         {
-            return GetFlightDb.SearchReservations(search).ToList();
+            var rsvs = GetFlightDb.SearchReservations(search);
+            return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
         public List<FlightReservation> GetUnpaidReservations()
