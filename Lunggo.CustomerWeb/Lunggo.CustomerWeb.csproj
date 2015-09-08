@@ -2197,6 +2197,7 @@
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
+    <Content Include="Views\Home\Dummy.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

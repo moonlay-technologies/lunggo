@@ -483,7 +483,7 @@
     <Content Include="Views\Home\RenderFlightTripDetail.cshtml" />
     <Content Include="Views\Flight\CheckPayment.cshtml" />
     <Content Include="Views\Flight\ExchangeRate.cshtml" />
-    <Content Include="Views\Flight\InsertExchangeRatePost.cshtml" />
+    <Content Include="Views\Flight\InsertExchangeRate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />

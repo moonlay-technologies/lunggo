@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Diagnostics;
 using log4net;
 using log4net.Repository.Hierarchy;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.HtmlTemplate;
@@ -74,6 +77,57 @@ namespace Lunggo.CustomerWeb.Controllers
             };
             mailService.SendEmail(address, mailModel, HtmlTemplateType.Newsletter);
             return null;
+        }
+
+        public ActionResult Dummy()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Dummy(string rsvNo, string lastName)
+        {
+            var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
+            var displayReservation = flightService.GetReservationForDisplay(rsvNo);
+            //Check lastName
+            foreach (var displayPassenger in displayReservation.Passengers)
+            {
+                if (lastName == displayPassenger.LastName)
+                {
+                    switch (displayReservation.Payment.Status)
+                    {
+                            case PaymentStatus.Settled:
+                            var rsvNoSet = new
+                            {
+                                RsvNo = displayReservation.RsvNo
+                            };
+                                return RedirectToAction("Thankyou", "Flight", rsvNoSet);
+                            break;
+
+                            case PaymentStatus.Pending:
+                            if (displayReservation.Payment.Method == PaymentMethod.BankTransfer)
+                            {
+                                var rsvNoPen = new
+                                {
+                                    RsvNo = displayReservation.RsvNo
+                                };
+                            return RedirectToAction("Confirmation", "Flight", rsvNoPen);
+                                }
+                            else
+                                {
+                                    //Veritrans
+                                    return null;
+                                }
+                            break;
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("DummyCheckStatus", "Flight");
+                }
+            }
+
+            return View("Index", "Home");
         }
     }
 }
