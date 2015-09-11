@@ -446,6 +446,22 @@
         </footer><!-- .flight-detail-footer -->
 
     </div><!-- .flight-detail -->
+    
+    <!-- ******************** -->
+    <!-- search result expiry -->
+    <div class="expiry-wrapper" ng-show="pageExpired">
+        <div class="expiry-content">
+            <header>
+                <h3>Hasil Pencarian Kadaluarsa</h3>
+            </header>
+            <section>
+                Hasil pencarian anda sudah kadaluarsa. Silahkan refresh halaman ini.
+            </section>
+            <footer>
+                <a ng-click="refreshPage()" class="btn btn-yellow">REFRESH PAGE</a>
+            </footer>
+        </div>
+    </div>
 
 </section><!-- .flight-search-page -->
 

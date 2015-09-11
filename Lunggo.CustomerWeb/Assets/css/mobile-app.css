@@ -1424,3 +1424,36 @@ h1 {
     width: 100%;
     font-weight: bold;
     color: #fff; }
+
+.expiry-wrapper {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(100, 100, 100, 0.5); }
+  .expiry-wrapper .expiry-content {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #fff; }
+    .expiry-wrapper .expiry-content > header {
+      padding: 15px;
+      background: #2eb4e7;
+      color: #fff; }
+    .expiry-wrapper .expiry-content > section {
+      padding: 15px; }
+    .expiry-wrapper .expiry-content > footer {
+      padding: 15px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0; }
+      .expiry-wrapper .expiry-content > footer .btn {
+        display: block; }
