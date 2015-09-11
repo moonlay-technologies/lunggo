@@ -735,6 +735,15 @@ h1 {
         display: block; }
         .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline label img {
           height: 30px; }
+      .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline .option {
+        margin-top: 10px;
+        margin-bottom: 10px; }
+      .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline .select-all, .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline .select-none {
+        text-align: center;
+        border: 1px solid #ddd;
+        padding: 5px; }
+        .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline .select-all a, .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group.filter-airline .select-none a {
+          color: #fff; }
     .flight-search-page .flight-search-filter .flight-search-content .flight-filter-wrapper .filter-group + .filter-group {
       border-top: 1px solid #ccc; }
   .flight-search-page .flight-search-filter .flight-search-content .flight-sort-wrapper {

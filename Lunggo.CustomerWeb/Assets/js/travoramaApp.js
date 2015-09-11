@@ -308,6 +308,18 @@
                 }
             }
 
+            $scope.selectAirline = function (selection) {
+                console.log('JEMPING');
+                for (var i = 0; i < $scope.flightSearchFilter.airlines.length; i++) {
+                    if (selection == 'all') {
+                        $scope.flightSearchFilter.airlines[i].checked = true;
+                    } else if (selection == 'none') {
+                        $scope.flightSearchFilter.airlines[i].checked = false;
+                    }
+                }
+                $scope.checkAirline();
+            }
+
             // airline filter
             $scope.airlineFilter = function(flight) {
                 if ($scope.flightSearchFilter.airlinesFilter.length > 0) {

@@ -351,6 +351,11 @@ h1 {font-size:30px;}
                             img {height:30px;}
                             span {}
                         }
+                        // option
+                        .option {margin-top:10px; margin-bottom:10px;}
+                        .select-all, .select-none {text-align:center; border:$border-default; padding:5px;
+                            a {color:#fff;}
+                        }
                     }
                     // filter by onward flight
                     &.filter-onward {}

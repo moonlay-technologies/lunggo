@@ -207,6 +207,18 @@
                 </div>
                 <div class="filter-group filter-airline">
                     <h4 class="filter-title">by Airline:</h4>
+                    <div class="option row">
+                        <div class="col-xs-6">
+                            <div class="select-all">
+                                <a ng-click="selectAirline('all')">PILIH SEMUA</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="select-none">
+                                <a ng-click="selectAirline('none')">PILIH NIHIL</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="filter-content">
                         <div>
                             <label class="airline" ng-repeat="airline in flightSearchFilter.airlines">
