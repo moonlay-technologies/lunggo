@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public SearchFlightConditions UnhashDeocdeConditions(string hashedConditionString)
+        public SearchFlightConditions UnhashDecodeConditions(string hashedConditionString)
         {
             var conditionString = hashedConditionString.Base64Decode();
             return DecodeConditions(conditionString);

@@ -1,28 +1,28 @@
 ﻿@using System.Globalization
-@model Lunggo.ApCommon.Flight.Model.FlightReservation
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
-Dear @Model.ContactData.Name,
+Dear @Model.Contact.Name,
 
 Jadwal Penerbangan Anda Berubah!!!
 
 Ringkasan penerbangan Anda:
 @foreach (var segment in Model.Itinerary.FlightTrips.SelectMany(trip => trip.FlightSegments))
 {
-<div>
-    =============================|===============================
-    Maskapai                     : @segment.AirlineName (@segment.AirlineCode@segment.FlightNumber)
-    Rute                         : @segment.DepartureAirport - @segment.ArrivalAirport
-    Waktu penerbangan            : @segment.DepartureTime.ToString("d MMMM yyyy, hh:mm (dddd)", CultureInfo.CreateSpecificCulture("id-ID"))
-    Kode booking maskapai (PNR)  : @segment.Pnr
+    <div>
+        =============================|===============================
+        Maskapai                     : @segment.AirlineName (@segment.AirlineCode@segment.FlightNumber)
+        Rute                         : @segment.DepartureAirport - @segment.ArrivalAirport
+        Waktu penerbangan            : @segment.DepartureTime.ToString("d MMMM yyyy, hh:mm (dddd)", CultureInfo.CreateSpecificCulture("id-ID"))
+        Kode booking maskapai (PNR)  : @segment.Pnr
 
-</div>
+    </div>
 }
 =============================|===============================
 Penumpang yang terdaftar di tiket:
 <ol>
     @foreach (var passenger in Model.Passengers)
     {
-    <li>@passenger.Title.ToString() @passenger.FirstName @passenger.LastName (Jenis tiket: @passenger.Type.ToString())</li>
+        <li>@passenger.Title.ToString() @passenger.FirstName @passenger.LastName (Jenis tiket: @passenger.Type.ToString())</li>
     }
 </ol>
 Sertakan juga dokumen yang diperlukan maupun kartu identitas Anda berupa KTP/SIM (rute domestik), Paspor (rute internasional).
@@ -32,6 +32,6 @@ Terima kasih.
 
 ==================================|==================================
 
-Email ini ditujukan untuk @Model.ContactData.Name, karena Anda telah melakukan
+Email ini ditujukan untuk @Model.Contact.Name, karena Anda telah melakukan
 pemesanan dari PT Travel Madezy Internasional melalui Travorama.com.
 © 2015, PT Travel Madezy Internasional.

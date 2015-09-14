@@ -128,8 +128,8 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 OriginLocationCode = item.DepartureAirport,
                 DestinationLocationCode = item.ArrivalAirport,
-                DepartureDateTime = item.DepartureTime,
-                ArrivalDateTime = item.ArrivalTime,
+                DepartureDateTime = item.DepartureTime.ToUniversalTime(),
+                ArrivalDateTime = item.ArrivalTime.ToUniversalTime(),
                 AirlineCode = item.AirlineCode,
                 FlightNumber = item.FlightNumber,
                 BookingClass = item.Rbd,

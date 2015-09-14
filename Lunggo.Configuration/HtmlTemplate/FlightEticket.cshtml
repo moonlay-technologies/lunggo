@@ -1,8 +1,8 @@
 ﻿@using Lunggo.ApCommon.Flight.Model
-@model Lunggo.ApCommon.Flight.Model.FlightReservation
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
-    FlightSegmentDetails prevSegment = null;
+    FlightSegment prevSegment = null;
 }
 
 <!DOCTYPE html>
@@ -69,7 +69,7 @@
                             }
                             <div class="flight">
                                 <div class="flight-icon">
-                                    <img src="@("http://travorama.com/" + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
+                                    <img src="@("http://travorama.com" + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
                                     <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
                                 </div><!-- .flight-icon -->
                                 <div class="flight-detail">

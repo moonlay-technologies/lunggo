@@ -76,7 +76,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 Token = token,
                 Itinerary = itinerary,
-                ExpiryTime = expiryTime
+                ExpiryTime = expiryTime.GetValueOrDefault()
             });
         }
 

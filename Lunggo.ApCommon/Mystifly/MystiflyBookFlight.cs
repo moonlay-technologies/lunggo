@@ -254,7 +254,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         BookingStatus = BookingStatus.Booked,
                         BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
-                        TimeLimit = response.TktTimeLimit
+                        TimeLimit = response.TktTimeLimit.HasValue ? response.TktTimeLimit.Value.ToUniversalTime() : (DateTime?) null
                     }
                 };
             else

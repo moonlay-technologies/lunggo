@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\FlightCrawlTargetTableRecord.cs" />
     <Compile Include="TableRecord\FlightEticketTableRecord.cs" />
     <Compile Include="TableRecord\FlightItineraryTableRecord.cs" />
     <Compile Include="TableRecord\FlightPassengerTableRecord.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\FlightCrawlTargetRepository.cs" />
     <Compile Include="TableRepository\FlightEticketRepository.cs" />
     <Compile Include="TableRepository\FlightItineraryRepository.cs" />
     <Compile Include="TableRepository\FlightPassengerRepository.cs" />

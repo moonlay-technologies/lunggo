@@ -41,7 +41,7 @@ namespace Lunggo.Framework.HtmlTemplate
             var razorConfig = new TemplateServiceConfiguration
             {
                 DisableTempFileLocking = true,
-                CachingProvider = new DefaultCachingProvider(t => { })
+                CachingProvider = new DefaultCachingProvider(t => { }),
             };
             var razorService = RazorEngineService.Create(razorConfig);
             razorService.AddTemplate(type.ToString(), template);

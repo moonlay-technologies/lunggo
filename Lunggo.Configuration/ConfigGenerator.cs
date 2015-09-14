@@ -53,7 +53,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "Worker.EticketHandler" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.FlightCrawlScheduler", "WebJob.FlightCrawler", "Worker.EticketHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
