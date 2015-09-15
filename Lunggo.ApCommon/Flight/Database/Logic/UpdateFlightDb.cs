@@ -55,6 +55,10 @@ namespace Lunggo.ApCommon.Flight.Service
                             PaymentTime = payment.Time.HasValue ? payment.Time.Value.ToUniversalTime() : (DateTime?) null,
                             PaymentId = payment.Id,
                             PaymentTargetAccount = payment.TargetAccount,
+                            PaymentTimeLimit = payment.TimeLimit.HasValue ? payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
+                            PaymentUrl = payment.Url,
+                            PaymentReceiptUrl = payment.ReceiptUrl,
+                            PaidAmount = payment.PaidAmount,
                             FinalPrice = payment.FinalPrice,
                         };
                         UpdateFlightPaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);

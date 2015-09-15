@@ -48,9 +48,24 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
+        public PaymentMedium GetPaymentMedium(PaymentMethod method)
+        {
+            switch (method)
+            {
+                case PaymentMethod.BankTransfer:
+                    return PaymentMedium.Direct;
+                case PaymentMethod.CreditCard:
+                case PaymentMethod.MandiriClickPay:
+                case PaymentMethod.CimbClicks:
+                case PaymentMethod.VirtualAccount:
+                    return PaymentMedium.Veritrans;
+                default:
+                    return PaymentMedium.Undefined;
+            }
+        }
+
         public string GetPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
-            var url = new UrlHelper();
             return method == PaymentMethod.BankTransfer 
                 ? null
                 : GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);

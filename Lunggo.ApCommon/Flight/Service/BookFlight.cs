@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
@@ -29,7 +34,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 var reservation = CreateReservation(itins, input, output);
                 InsertFlightDb.Reservation(reservation);
                 output.RsvNo = reservation.RsvNo;
-                output.FinalPrice = reservation.Payment.FinalPrice;
+                output.PaymentUrl = reservation.Payment.Url;
+                output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
             }
             else
             {
@@ -69,8 +75,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 Payment = input.Payment,
                 TripType = ParseTripType(trips)
             };
-            reservation.Payment.FinalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
+            reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
             reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
+            var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
             var discountRuleIds = VoucherService.GetInstance()
                 .GetFlightDiscountRules(input.DiscountCode, input.Contact.Email);
             var discountRule = GetMatchingDiscountRule(discountRuleIds) ??
@@ -79,9 +86,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                    Coefficient = 0,
                                    Constant = 0
                                };
-            var discountNominal = reservation.Payment.FinalPrice*discountRule.Coefficient +
-                                  discountRule.Constant;
-            reservation.Payment.FinalPrice -= discountNominal;
+            var discountNominal = originalPrice*discountRule.Coefficient + discountRule.Constant;
+            reservation.Payment.FinalPrice = originalPrice - discountNominal;
             reservation.Discount = new DiscountData
             {
                 Code = input.DiscountCode,
@@ -90,7 +96,52 @@ namespace Lunggo.ApCommon.Flight.Service
                 Constant = discountRule.Constant,
                 Nominal = discountNominal
             };
+            var transactionDetails = ConstructTransactionDetails(reservation);
+            var itemDetails = ConstructItemDetails(reservation);
+            reservation.Payment.Url = PaymentService.GetInstance()
+                .GetPaymentUrl(transactionDetails, itemDetails, reservation.Payment.Method);
             return reservation;
+        }
+
+        private List<ItemDetails> ConstructItemDetails(FlightReservation reservation)
+        {
+            var itemDetails = new List<ItemDetails>();
+            var trips = reservation.Itineraries.SelectMany(itin => itin.FlightTrips).ToList();
+            var itemNameBuilder = new StringBuilder();
+            foreach (var trip in trips)
+            {
+                itemNameBuilder.Append(trip.OriginAirport + "-" + trip.DestinationAirport);
+                itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
+                if (trip != trips.Last())
+                {
+                    itemNameBuilder.Append("\n");
+                }
+            }
+            var itemName = itemNameBuilder.ToString();
+            itemDetails.Add(new ItemDetails
+            {
+                Id = "1",
+                Name = itemName,
+                Price = reservation.Itineraries.Sum(itin => itin.LocalPrice),
+                Quantity = 1
+            });
+            itemDetails.Add(new ItemDetails
+            {
+               Id = "2",
+               Name = "Discount",
+               Price = -reservation.Discount.Nominal,
+               Quantity = 1
+            });
+            return itemDetails;
+        }
+
+        private TransactionDetails ConstructTransactionDetails(FlightReservation reservation)
+        {
+            return new TransactionDetails
+            {
+                OrderId = reservation.RsvNo,
+                Amount = reservation.Payment.FinalPrice
+            };
         }
 
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)

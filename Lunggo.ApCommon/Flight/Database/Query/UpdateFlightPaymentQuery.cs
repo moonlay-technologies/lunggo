@@ -36,8 +36,16 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(@"PaymentMethodCd = @PaymentMethodCd, ");
             if (condition.PaymentTime != null)
                 clauseBuilder.Append(@"PaymentTime = @PaymentTime, ");
+            if (condition.PaymentTimeLimit != null)
+                clauseBuilder.Append(@"PaymentTimeLimit = @PaymentTimeLimit, ");
             if (condition.PaymentTargetAccount != null)
                 clauseBuilder.Append(@"PaymentTargetAccount = @PaymentTargetAccount, ");
+            if (condition.PaymentUrl != null)
+                clauseBuilder.Append(@"PaymentUrl = @PaymentUrl, ");
+            if (condition.PaymentReceiptUrl != null)
+                clauseBuilder.Append(@"PaymentReceiptUrl = @PaymentReceiptUrl, ");
+            if (condition.PaidAmount != null)
+                clauseBuilder.Append(@"PaidAmount = @PaidAmount, ");
             if (condition.PaymentStatusCd != null)
             {
                 clauseBuilder.Append(

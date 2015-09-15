@@ -8,7 +8,8 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
     {
         public List<BookResult> BookResults { get; set; }
         public string RsvNo { get; set; }
-        public decimal FinalPrice { get; set; }
+        public bool IsPaymentThroughThirdPartyUrl { get; set; }
+        public string PaymentUrl { get; set; }
         public DateTime? TimeLimit { get; set; }
     }
 

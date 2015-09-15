@@ -36,10 +36,15 @@ namespace Lunggo.ApCommon.Flight.Service
                         LangCd = "xxx",
                         MemberCd = "xxx",
                         CancellationTypeCd = "xxx",
+                        AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
+                        ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
+                        InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant),
                         PaymentMediumCd = PaymentMediumCd.Mnemonic(reservation.Payment.Medium),
                         PaymentStatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
                         PaymentMethodCd = PaymentMethodCd.Mnemonic(reservation.Payment.Method),
                         PaymentTimeLimit = reservation.Payment.TimeLimit.HasValue ? reservation.Payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
+                        PaymentTargetAccount = reservation.Payment.TargetAccount,
+                        PaymentUrl = reservation.Payment.Url,
                         OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.TripType),
                         TotalSupplierPrice = reservation.Itineraries.Sum(itin => itin.FinalIdrPrice),
                         PaymentFeeForCust = 0,
@@ -53,10 +58,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         GrossProfit = 0,
                         InsertBy = "xxx",
                         InsertDate = DateTime.UtcNow,
-                        InsertPgId = "xxx",
-                        AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
-                        ChildCount = reservation.Passengers.Count(p => p.Type == PassengerType.Child),
-                        InfantCount = reservation.Passengers.Count(p => p.Type == PassengerType.Infant)
+                        InsertPgId = "xxx"
                     };
 
                     FlightReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
