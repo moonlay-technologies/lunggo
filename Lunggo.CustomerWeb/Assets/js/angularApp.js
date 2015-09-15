@@ -1090,8 +1090,8 @@
             $scope.getFlights = function () {
                 // get departure flight list
                 $scope.departureFlightConfig.loading = true;
-                //$http.get(FlightSearchConfig.Url, { // production
-                $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
+                $http.get(FlightSearchConfig.Url, { // production
+                // $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
                     params: {
                         request: $scope.departureFlightConfig.flightSearchParams
                     }
@@ -1105,8 +1105,8 @@
                 });
                 // get return flight list
                 $scope.returnFlightConfig.loading = true;
-                //$http.get(FlightSearchConfig.Url, { // production
-                $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
+                $http.get(FlightSearchConfig.Url, { // production
+                // $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
                     params: {
                         request: $scope.returnFlightConfig.flightSearchParams
                     }
