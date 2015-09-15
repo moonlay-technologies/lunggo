@@ -653,11 +653,19 @@ function flightFilter() {
     $('.flight-search-filter').css('top', (70 + $('.flight-search-param').height()));
     $('.flight-wrapper').css('padding-top', (40 + $('.flight-search-param').height()));
 
+    $('.flight-filter-wrapper .close-search-filter').click(function() {
+        $('.flight-filter-trigger').click();
+    });
+    $('.flight-sort-wrapper .close-search-filter').click(function () {
+        $('.flight-sort-trigger').click();
+    });
+
     $('.flight-filter-trigger, .flight-sort-trigger, .change-hotel-param').click(function () {
 
         var windowHeight = $(window).height();
 
-        $('.flight-filter-wrapper, .flight-sort-wrapper').height( windowHeight - 150 );
+        $('.flight-filter-wrapper, .flight-sort-wrapper').height(windowHeight - 150);
+        $('.flight-filter-wrapper, .flight-sort-wrapper').css('padding-bottom',70);
         $('.flight-search-form-wrapper').height( windowHeight - 70 );
 
         if ($(this).attr('data-active') == 'false') {
