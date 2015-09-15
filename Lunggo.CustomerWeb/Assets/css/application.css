@@ -2450,7 +2450,8 @@ hr {
       width: 50%; }
     .trip-flight-list-wrapper .flight-chosen .flight-detail .detail-right {
       float: left;
-      width: 50%; }
+      width: 50%;
+      text-align: center; }
     .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-info > div {
       float: left; }
     .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-info .flight-airline {
@@ -2495,6 +2496,86 @@ hr {
       background: #ededed;
       cursor: pointer;
       font-weight: bold; }
+    .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment {
+      background: #eee;
+      border: 1px solid #ddd;
+      border-top: 0;
+      height: auto;
+      overflow: hidden;
+      font-size: 12px; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment h4 {
+        font-size: 14px; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment h5 {
+        font-size: 15px; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment.active {
+        height: auto; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment {
+        padding: 10px; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment:before, .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment:after {
+          content: "";
+          clear: both;
+          display: block;
+          width: 100%; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment > div {
+          float: left; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-time {
+          font-weight: bold;
+          margin-bottom: 0; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-date {
+          margin-top: 5px; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-city {
+          font-weight: bold;
+          margin-bottom: 0; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-airport {
+          margin-top: 5px; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-airline {
+          width: 20%; }
+          .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-airline img {
+            height: 50px;
+            display: block; }
+          .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-airline span {
+            display: block; }
+          .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-airline .airline-number {
+            font-weight: bold; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-departure {
+          width: 27%; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-duration {
+          width: 26%;
+          text-align: center;
+          padding-top: 30px; }
+          .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-duration span {
+            display: block; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment .segment-arrival {
+          width: 27%; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .transit {
+        text-align: center;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        font-style: italic; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .flight-operator {
+        display: block;
+        clear: both;
+        width: 100%;
+        margin-top: 20px; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .flight-operator p {
+          margin-bottom: 0; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .flight-operator img {
+          height: 30px; }
+      .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment-footer {
+        padding: 10px;
+        border-top: 1px solid #ddd; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment-footer label {
+          font-weight: bold; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment-footer h4 {
+          font-weight: bold;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          color: #3face4; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment-footer small {
+          font-style: italic; }
+        .trip-flight-list-wrapper .flight-chosen .flight-detail .flight-segment .segment-footer .btn {
+          float: right;
+          padding: 5px 40px; }
   .trip-flight-list-wrapper .flight-filter .flight-filter-trigger {
     background: #eee; }
     .trip-flight-list-wrapper .flight-filter .flight-filter-trigger:before, .trip-flight-list-wrapper .flight-filter .flight-filter-trigger:after {
@@ -2708,13 +2789,15 @@ hr {
 
 .trip-flight-overview {
   width: 700px;
-  height: 365px;
+  height: 370px;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   margin: auto; }
+  .trip-flight-overview.detail-shown {
+    height: 700px; }
   .trip-flight-overview header {
     padding: 15px;
     background: #3face4;
@@ -2810,6 +2893,92 @@ hr {
         height: 100%;
         font-weight: bold;
         padding: 12px 10px; }
+  .trip-flight-overview .flight-detail {
+    background: #eee;
+    border: 1px solid #ddd;
+    border-top: 0;
+    height: 330px;
+    overflow: auto;
+    font-size: 12px;
+    border-top: 1px solid #ddd; }
+    .trip-flight-overview .flight-detail > .return-flight {
+      border-top: 1px solid #ddd; }
+    .trip-flight-overview .flight-detail h2 {
+      padding: 10px;
+      margin: 0; }
+    .trip-flight-overview .flight-detail h4 {
+      font-size: 14px; }
+    .trip-flight-overview .flight-detail h5 {
+      font-size: 15px; }
+    .trip-flight-overview .flight-detail.active {
+      height: auto; }
+    .trip-flight-overview .flight-detail .segment {
+      padding: 10px; }
+      .trip-flight-overview .flight-detail .segment:before, .trip-flight-overview .flight-detail .segment:after {
+        content: "";
+        clear: both;
+        display: block;
+        width: 100%; }
+      .trip-flight-overview .flight-detail .segment > div {
+        float: left; }
+      .trip-flight-overview .flight-detail .segment .segment-time {
+        font-weight: bold;
+        margin-bottom: 0; }
+      .trip-flight-overview .flight-detail .segment .segment-date {
+        margin-top: 5px; }
+      .trip-flight-overview .flight-detail .segment .segment-city {
+        font-weight: bold;
+        margin-bottom: 0; }
+      .trip-flight-overview .flight-detail .segment .segment-airport {
+        margin-top: 5px; }
+      .trip-flight-overview .flight-detail .segment .segment-airline {
+        width: 20%; }
+        .trip-flight-overview .flight-detail .segment .segment-airline img {
+          height: 50px;
+          display: block; }
+        .trip-flight-overview .flight-detail .segment .segment-airline span {
+          display: block; }
+        .trip-flight-overview .flight-detail .segment .segment-airline .airline-number {
+          font-weight: bold; }
+      .trip-flight-overview .flight-detail .segment .segment-departure {
+        width: 27%; }
+      .trip-flight-overview .flight-detail .segment .segment-duration {
+        width: 26%;
+        text-align: center;
+        padding-top: 30px; }
+        .trip-flight-overview .flight-detail .segment .segment-duration span {
+          display: block; }
+      .trip-flight-overview .flight-detail .segment .segment-arrival {
+        width: 27%; }
+    .trip-flight-overview .flight-detail .transit {
+      text-align: center;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      font-style: italic; }
+    .trip-flight-overview .flight-detail .flight-operator {
+      display: block;
+      clear: both;
+      width: 100%;
+      margin-top: 20px; }
+      .trip-flight-overview .flight-detail .flight-operator p {
+        margin-bottom: 0; }
+      .trip-flight-overview .flight-detail .flight-operator img {
+        height: 30px; }
+    .trip-flight-overview .flight-detail .segment-footer {
+      padding: 10px;
+      border-top: 1px solid #ddd; }
+      .trip-flight-overview .flight-detail .segment-footer label {
+        font-weight: bold; }
+      .trip-flight-overview .flight-detail .segment-footer h4 {
+        font-weight: bold;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: #3face4; }
+      .trip-flight-overview .flight-detail .segment-footer small {
+        font-style: italic; }
+      .trip-flight-overview .flight-detail .segment-footer .btn {
+        float: right;
+        padding: 5px 40px; }
 
 .validate-overlay {
   z-index: 10000 !important; }

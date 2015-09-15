@@ -233,7 +233,41 @@
                                 </p>
                             </div>
                             <div class="detail-right">
-                                <a href="#" class="flightDetail">Lihat Detail</a>
+                                <a class="flightDetail" ng-click="toggleChosenDetail('departure')" ng-if="!departureFlightConfig.chosenFlightShown">Lihat Detail</a>
+                                <a class="flightDetail" ng-click="toggleChosenDetail('departure')" ng-if="departureFlightConfig.chosenFlightShown">Tutup Detail</a>
+                            </div>
+                        </div>
+                        <div class="flight-segment" ng-show="departureFlightConfig.chosenFlightShown">
+                            <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                                <div class="transit" ng-if="$index > 0">
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                </div>
+                                <div class="segment">
+                                    <div class="segment-airline">
+                                        <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="airline-image" />
+                                        <span class="airline-name">{{segment.AirlineName}}</span>
+                                        <span class="airline-number">{{segment.AirlineCode}} {{segment.FlightNumber}}</span>
+                                    </div>
+                                    <div class="segment-departure">
+                                        <h4 class="segment-time">{{getDateTime(segment.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                        <h5 class="segment-date">{{getDateTime(segment.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                        <h4 class="segment-city">{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                        <h5 class="segment-airport">{{segment.DepartureAirportName}}</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <span>Duration</span>
+                                        <span>{{segment.Duration}}</span>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h4 class="segment-time">{{getDateTime(segment.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                        <h5 class="segment-date">{{getDateTime(segment.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                        <h4 class="segment-city">{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                        <h5 class="segment-airport">{{segment.ArrivalAirportName}}</h5>
+                                    </div>
+                                    <div class="flight-operator" ng-if="segment.OperatingAirlineCode != segment.AirlineCode">
+                                        <p>This flight if operated by <img ng-src="{{segment.OperatingAirlineLogoUrl}}" alt="{{segment.OperatingAirlineName}}" /> {{segment.OperatingAirlineName}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flight-price">
@@ -527,7 +561,41 @@
                                 </p>
                             </div>
                             <div class="detail-right">
-                                <a href="#" class="flightDetail">Lihat Detail</a>
+                                <a class="flightDetail" ng-click="toggleChosenDetail('return')" ng-if="!returnFlightConfig.chosenFlightShown">Lihat Detail</a>
+                                <a class="flightDetail" ng-click="toggleChosenDetail('return')" ng-if="returnFlightConfig.chosenFlightShown">Tutup Detail</a>
+                            </div>
+                        </div>
+                        <div class="flight-segment" ng-show="returnFlightConfig.chosenFlightShown">
+                            <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                                <div class="transit" ng-if="$index > 0">
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                </div>
+                                <div class="segment">
+                                    <div class="segment-airline">
+                                        <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="airline-image" />
+                                        <span class="airline-name">{{segment.AirlineName}}</span>
+                                        <span class="airline-number">{{segment.AirlineCode}} {{segment.FlightNumber}}</span>
+                                    </div>
+                                    <div class="segment-departure">
+                                        <h4 class="segment-time">{{getDateTime(segment.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                        <h5 class="segment-date">{{getDateTime(segment.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                        <h4 class="segment-city">{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                        <h5 class="segment-airport">{{segment.DepartureAirportName}}</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <span>Duration</span>
+                                        <span>{{segment.Duration}}</span>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h4 class="segment-time">{{getDateTime(segment.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                        <h5 class="segment-date">{{getDateTime(segment.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                        <h4 class="segment-city">{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                        <h5 class="segment-airport">{{segment.ArrivalAirportName}}</h5>
+                                    </div>
+                                    <div class="flight-operator" ng-if="segment.OperatingAirlineCode != segment.AirlineCode">
+                                        <p>This flight if operated by <img ng-src="{{segment.OperatingAirlineLogoUrl}}" alt="{{segment.OperatingAirlineName}}" /> {{segment.OperatingAirlineName}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flight-price">
@@ -822,7 +890,7 @@
         <!-- flight overview -->
         <section class="page-overlay overview-overlay" ng-show="departureFlightConfig.chosenFlight >= 0 && returnFlightConfig.chosenFlight >= 0">
 
-            <div class="trip-flight-overview">
+            <div class="trip-flight-overview" ng-class=" pageConfig.overviewDetailShown ? 'detail-shown' : 'detail-hidden' ">
                 <header>
                     <h3>
                         Rincian Penerbangan Pulang Pergi
@@ -889,7 +957,7 @@
                 </section>
                 <footer>
                     <div class="flight-detail-trigger">
-                        <a>Detail Penerbangan</a>
+                        <a ng-click="toggleOverviewDetail()">Detail Penerbangan</a>
                     </div>
                     <div class="flight-price">
                         <label>Harga Total</label>
@@ -899,7 +967,76 @@
                         <a class="btn btn-yellow" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)">Booking sekarang</a>
                     </div>
                 </footer>
-                <section class="flight-detail"></section>
+                <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">
+                    <div class="departure-flight">
+                        <h2>Penerbangan Pergi</h2>
+                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                            <div class="transit" ng-if="$index > 0">
+                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                            </div>
+                            <div class="segment">
+                                <div class="segment-airline">
+                                    <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="airline-image" />
+                                    <span class="airline-name">{{segment.AirlineName}}</span>
+                                    <span class="airline-number">{{segment.AirlineCode}} {{segment.FlightNumber}}</span>
+                                </div>
+                                <div class="segment-departure">
+                                    <h4 class="segment-time">{{getDateTime(segment.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                    <h5 class="segment-date">{{getDateTime(segment.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                    <h4 class="segment-city">{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                    <h5 class="segment-airport">{{segment.DepartureAirportName}}</h5>
+                                </div>
+                                <div class="segment-duration">
+                                    <span>Duration</span>
+                                    <span>{{segment.Duration}}</span>
+                                </div>
+                                <div class="segment-arrival">
+                                    <h4 class="segment-time">{{getDateTime(segment.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                    <h5 class="segment-date">{{getDateTime(segment.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                    <h4 class="segment-city">{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                    <h5 class="segment-airport">{{segment.ArrivalAirportName}}</h5>
+                                </div>
+                                <div class="flight-operator" ng-if="segment.OperatingAirlineCode != segment.AirlineCode">
+                                    <p>This flight if operated by <img ng-src="{{segment.OperatingAirlineLogoUrl}}" alt="{{segment.OperatingAirlineName}}" /> {{segment.OperatingAirlineName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="return-flight">
+                        <h2>Penerbangan Pulang</h2>
+                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                            <div class="transit" ng-if="$index > 0">
+                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                            </div>
+                            <div class="segment">
+                                <div class="segment-airline">
+                                    <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="airline-image" />
+                                    <span class="airline-name">{{segment.AirlineName}}</span>
+                                    <span class="airline-number">{{segment.AirlineCode}} {{segment.FlightNumber}}</span>
+                                </div>
+                                <div class="segment-departure">
+                                    <h4 class="segment-time">{{getDateTime(segment.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                    <h5 class="segment-date">{{getDateTime(segment.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                    <h4 class="segment-city">{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                    <h5 class="segment-airport">{{segment.DepartureAirportName}}</h5>
+                                </div>
+                                <div class="segment-duration">
+                                    <span>Duration</span>
+                                    <span>{{segment.Duration}}</span>
+                                </div>
+                                <div class="segment-arrival">
+                                    <h4 class="segment-time">{{getDateTime(segment.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                    <h5 class="segment-date">{{getDateTime(segment.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                    <h4 class="segment-city">{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                    <h5 class="segment-airport">{{segment.ArrivalAirportName}}</h5>
+                                </div>
+                                <div class="flight-operator" ng-if="segment.OperatingAirlineCode != segment.AirlineCode">
+                                    <p>This flight if operated by <img ng-src="{{segment.OperatingAirlineLogoUrl}}" alt="{{segment.OperatingAirlineName}}" /> {{segment.OperatingAirlineName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div><!-- .trip-flight-overview -->
 
         </section><!-- .page-overlay -->
