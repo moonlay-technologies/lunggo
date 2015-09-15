@@ -781,17 +781,15 @@
         <!-- ****************************** -->
     
         <!-- revalidating flight -->
-        <section class="page-overlay validate-overlay" ng-show="departureFlightConfig.validatingFlight == true && returnFlightConfig.validatingFlight == true">
+        <section class="search-flight-loading" ng-show="departureFlightConfig.validatingFlight == true && returnFlightConfig.validatingFlight == true">
 
-            <div class="revalidate-flight-wrapper">
-                <header class="wrapper-header">
-                    <h3>Revalidating your flight</h3>
-                </header>
-                <section class="wrapper-content">
-                    <p>Revalidating your flight. Please Wait</p>
-                </section>
-                <footer class="wrapper-footer"></footer>
-            </div><!-- .revalidate-flight -->
+            <div class="loading-image-wrapper">
+                <img src="/Assets/images/loading-sample.png" alt="Loading" />
+                <div class="loading-text">
+                    <h2>@Html.I18NString("CW00041")</h2>
+                    <h4>@Html.I18NString("CW00042")</h4>
+                </div>
+            </div>
 
         </section>
     
