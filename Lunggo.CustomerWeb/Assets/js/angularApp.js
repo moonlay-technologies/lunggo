@@ -744,7 +744,8 @@
                 showNotice: false,
                 fareChanged: false,
                 fareUnavailable: false,
-                fareToken: ''
+                fareToken: '',
+                overviewDetailShown: false
             }
             $scope.departureFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.departureFlight,
@@ -788,6 +789,7 @@
                 activeFlight: -1,
                 chosenFlight: -1,
                 chosenFlightData: {},
+                chosenFlightShown : false,
                 validatingFlight: false,
                 validateToken: '',
                 validateValid: false,
@@ -810,7 +812,7 @@
                             changed: false,
                             list: [],
                             value: []
-                },
+                        },
                         time: {
                             departure: {
                                 label: [0, 24],
@@ -835,6 +837,7 @@
                 activeFlight: -1,
                 chosenFlight: -1,
                 chosenFlightData: {},
+                chosenFlightShown: false,
                 validatingFlight: false,
                 validateToken: '',
                 validateValid: false,
@@ -920,6 +923,30 @@
                     $scope.returnFlightConfig.chosenFlight = -1;
                 } else if($scope.pageConfig.activeFlightSection == 'departure') {
                     $scope.departureFlightConfig.chosenFlight = -1;
+                }
+            }
+
+            // toggle overview detail
+            $scope.toggleOverviewDetail = function() {
+                if ($scope.pageConfig.overviewDetailShown == true) {
+                    $scope.pageConfig.overviewDetailShown = false;
+                } else {
+                    $scope.pageConfig.overviewDetailShown = true;
+                }
+            }
+
+            // show chosen flight detail
+            $scope.toggleChosenDetail = function(selector) {
+                if (selector == 'departure') {
+                    selector = $scope.departureFlightConfig;
+                } else {
+                    selector = $scope.returnFlightConfig;
+                }
+
+                if (selector.chosenFlightShown == true) {
+                    selector.chosenFlightShown = false;
+                } else {
+                    selector.chosenFlightShown = true;
                 }
             }
 
@@ -1064,7 +1091,7 @@
                 // get departure flight list
                 $scope.departureFlightConfig.loading = true;
                 $http.get(FlightSearchConfig.Url, { // production
-                //$http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
+                // $http.get('/Assets/js/sampleData/CGKHND201015-100y.js', { //development
                     params: {
                         request: $scope.departureFlightConfig.flightSearchParams
                     }
@@ -1079,7 +1106,7 @@
                 // get return flight list
                 $scope.returnFlightConfig.loading = true;
                 $http.get(FlightSearchConfig.Url, { // production
-                //$http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
+                // $http.get('/Assets/js/sampleData/HNDCGK231015-100y.js', { // development
                     params: {
                         request: $scope.returnFlightConfig.flightSearchParams
                     }

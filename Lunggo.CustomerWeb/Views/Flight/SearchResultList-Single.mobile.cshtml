@@ -158,6 +158,9 @@
         </div><!-- .flight-search-filter-trigger -->
         <div class="flight-search-content">
             <div class="flight-filter-wrapper">
+                <div class="close-search-filter">
+                    <a href="#" class="close-filter">CLOSE</a>
+                </div>
                 <div class="filter-group filter-transit">
                     <h4 class="filter-title">Filter by Transit:</h4>
                     <h3 ng-if="flightSearchParams.TripType == 'Return'">Onward Flight</h3>
@@ -282,6 +285,9 @@
                 </div>
             </div><!-- .flight-filter-wrapper -->
             <div class="flight-sort-wrapper">
+                <div class="close-search-filter">
+                    <a href="#" class="close-filter">CLOSE</a>
+                </div>
                 <a ng-click="order('price', false)">by Price - Lowest to Highest</a>
                 <a ng-click="order('price', true)">by Price - Highest to Lowest</a>
                 <a ng-click="order('departDuration', false)" >by Duration - Shortest to Longest</a>

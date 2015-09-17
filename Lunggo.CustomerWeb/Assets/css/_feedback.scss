@@ -1,5 +1,5 @@
-﻿.feedback-button {position:fixed; z-index:9999; right:-340px; top:45%; background:darken($blue-default, 10%); color:#fff; width:400px;
-    &>span {display:inline-block; padding:10px; background:$blue-default; width:60px;}
+﻿.feedback-button {position:fixed; z-index:9999; right:-350px; top:45%; background:darken($blue-default, 10%); color:#fff; width:400px;
+    &>span {display:inline-block; padding:10px; background:$blue-default; width:50px;}
     .feedback-content {display:inline-block; padding:0 20px; width:320px;
         h4 {font-weight:bold;}
         a {color:#fff; text-decoration:underline;}

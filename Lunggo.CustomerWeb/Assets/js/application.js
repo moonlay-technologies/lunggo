@@ -27,7 +27,7 @@ function feedbackButton() {
         });
     }, function() {
         $(this).stop().animate({
-            right: -340
+            right: -350
         });
     });
 }
