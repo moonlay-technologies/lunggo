@@ -36,8 +36,8 @@ namespace Lunggo.ApCommon.Sequence
             var currentYear = DateTime.UtcNow.Year;
             var relativeYear = currentYear - 2015;
             var currentDay = DateTime.UtcNow.DayOfYear;
-            var encodedDate = 27*(currentDay-1)+relativeYear;
-            var nextRawId = GetNextNumber(_properties);
+            var encodedDate = (27*(currentDay-1)+relativeYear);
+            var nextRawId = GetNextNumber(_properties)%10000000L;
             var nextId = encodedDate + nextRawId;
             return nextId;
         }

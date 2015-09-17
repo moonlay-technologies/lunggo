@@ -353,7 +353,6 @@
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailByIdQuery.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
-    <Compile Include="Sequence\HotelReservationSequence.cs" />
     <Compile Include="Sequence\SampleSequence.cs" />
     <Compile Include="Sequence\RoleIdSequence.cs" />
     <Compile Include="Sequence\HotelSearchIdSequence.cs" />
