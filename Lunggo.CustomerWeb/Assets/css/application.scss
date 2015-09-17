@@ -1190,6 +1190,14 @@ hr {border-color:#aaa;}
 .page-overlay {position:fixed; width:100%; height:100%; z-index:9998; background:rgba(50,50,50,0.5); top:0; left:0;}
 
 // ----------------------------------------------
+// check order
+.page-check-order {
+    .check-order-wrapper {border:$border-default; padding:15px; margin-top:50px; background:#fff;}
+    h2 {margin-top:0;}
+    .form {border-left:$border-default; padding-left:15px;}
+}
+
+// ----------------------------------------------
 // user account
 
 // history
