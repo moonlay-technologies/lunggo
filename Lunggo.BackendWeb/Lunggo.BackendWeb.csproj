@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -484,6 +485,7 @@
     <Content Include="Views\Flight\CheckPayment.cshtml" />
     <Content Include="Views\Flight\ExchangeRate.cshtml" />
     <Content Include="Views\Flight\InsertExchangeRate.cshtml" />
+    <Content Include="Views\Activity\AddActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />

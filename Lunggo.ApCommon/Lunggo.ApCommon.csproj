@@ -133,6 +133,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
+    <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
+    <Compile Include="Activity\Database\Query\GetCityActivitesQuery.cs" />
+    <Compile Include="Activity\Database\Query\CreateCityActivityQuery.cs" />
+    <Compile Include="Activity\Database\Query\SelectActivityByDateQuery.cs" />
+    <Compile Include="Activity\Database\Query\SelectActivityByCityQuery.cs" />
+    <Compile Include="Activity\Database\Query\ThingsToDoQuery.cs" />
+    <Compile Include="Activity\Model\ActivityModel.cs" />
+    <Compile Include="Activity\Model\ActivityByType.cs" />
+    <Compile Include="Activity\Model\ActivityType.cs" />
+    <Compile Include="Activity\Model\QueryByCityModel.cs" />
+    <Compile Include="Activity\Model\QueryByDateModel.cs" />
+    <Compile Include="Activity\Service\CreateCityActivity.cs" />
+    <Compile Include="Activity\Service\SearchCityActivity.cs" />
+    <Compile Include="Activity\Service\SelectActivityByType.cs" />
+    <Compile Include="Activity\Service\ThingsToDo.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
@@ -321,6 +337,7 @@
     <Compile Include="Payment\Model\RefundInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
+    <Compile Include="Sequence\ActivityIdSequence.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
     <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs" />

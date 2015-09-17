@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Diagnostics;
@@ -90,9 +91,9 @@ namespace Lunggo.CustomerWeb.Controllers
             var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
             var displayReservation = flightService.GetReservationForDisplay(rsvNo);
             //Check lastName
-            foreach (var displayPassenger in displayReservation.Passengers)
-            {
-                if (lastName == displayPassenger.LastName)
+
+            var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
+                if (passengerLastName.Any())
                 {
                     switch (displayReservation.Payment.Status)
                     {
@@ -121,13 +122,7 @@ namespace Lunggo.CustomerWeb.Controllers
                             break;
                     }
                 }
-                else
-                {
-                    return RedirectToAction("DummyCheckStatus", "Flight");
-                }
-            }
-
-            return View("Index", "Home");
+            return RedirectToAction("Dummy", "Home");
         }
     }
 }
