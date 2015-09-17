@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Web\Microsoft.Web.Publishing.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.targets" Condition="false" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -26,6 +28,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+	<ProjectConfigFileName>App.Config</ProjectConfigFileName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,9 +99,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+	<None Include="App.Release.config">
+		<DependentUpon>App.Config</DependentUpon>
+	</None>
+	<None Include="App.Debug.config">
+		<DependentUpon>App.Config</DependentUpon>
+	</None>
     <Content Include="Config\application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
@@ -150,4 +161,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" /><Target Name="AfterCompile" Condition="exists('app.$(Configuration).config')">  <TransformXml Source="app.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="app.$(Configuration).config" />  <ItemGroup>    <AppConfigWithTargetPath Remove="app.config" />    <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">      <TargetPath>$(TargetFileName).config</TargetPath>    </AppConfigWithTargetPath>    <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">      <TargetPath>$(TargetName).vshost$(TargetExt).config</TargetPath>    </AppConfigWithTargetPath>  </ItemGroup></Target>
 </Project>

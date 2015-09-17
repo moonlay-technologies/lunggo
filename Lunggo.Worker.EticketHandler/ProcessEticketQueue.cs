@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using NReco.PdfGenerator;
+using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Worker.EticketHandler
@@ -39,7 +41,7 @@ namespace Lunggo.Worker.EticketHandler
                 var flightService = FlightService.GetInstance();
                 var templateService = HtmlTemplateService.GetInstance();
                 var blobService = BlobStorageService.GetInstance();
-                var converter = new NReco.PdfGenerator.HtmlToPdfConverter();
+                var converter = new SelectPdf.HtmlToPdf();
                 var reservation = flightService.GetDetails(rsvNo);
 
                 Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
@@ -51,7 +53,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var eticketFile = converter.GeneratePdf(eticketTemplate);
+                var eticketFile = converter.ConvertHtmlString(eticketTemplate).Save();
                 sw.Stop();
                 Trace.WriteLine("Done Generating Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
@@ -84,15 +86,15 @@ namespace Lunggo.Worker.EticketHandler
                 sw.Reset();
 
                 Trace.WriteLine("Generating Invoice File for RsvNo " + rsvNo + "...");
-                sw.Start();
+                sw.Start();/*
                 converter.Margins = new PageMargins
                 {
                     Top = 0,
                     Bottom = 0,
                     Left = 0,
                     Right = 0
-                };
-                var invoiceFile = converter.GeneratePdf(invoiceTemplate);
+                };*/
+                var invoiceFile = converter.ConvertHtmlString(invoiceTemplate).Save();
                 sw.Stop();
                 Trace.WriteLine("Done Generating Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();

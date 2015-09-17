@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Messages>
+  <Message code="CW00001" lang="en_US" value="Filter" />
+  <Message code="CW00001" lang="id_ID" value="Filter" />
+  <Message code="CW00002" lang="en_US" value="Stops" />
+  <Message code="CW00002" lang="id_ID" value="Pemberhentian" />
+  <Message code="CW00003" lang="en_US" value="Direct Flight" />
+  <Message code="CW00003" lang="id_ID" value="Penerbangan Langsung" />
+  <Message code="CW00004" lang="en_US" value="1 Stop" />
+  <Message code="CW00004" lang="id_ID" value="1 Transit" />
+  <Message code="CW00005" lang="en_US" value="More than 1 Stop" />
+  <Message code="CW00005" lang="id_ID" value="Lebih dari 1 Transit" />
+  <Message code="CW00006" lang="en_US" value="Price Range" />
+  <Message code="CW00006" lang="id_ID" value="Harga" />
+  <Message code="CW00007" lang="en_US" value="Min Price" />
+  <Message code="CW00007" lang="id_ID" value="Harga Min" />
+  <Message code="CW00008" lang="en_US" value="Max Price" />
+  <Message code="CW00008" lang="id_ID" value="Harga Max" />
+  <Message code="CW00009" lang="en_US" value="Airlines" />
+  <Message code="CW00009" lang="id_ID" value="Maskapai" />
+  <Message code="CW00010" lang="en_US" value="Flight Time" />
+  <Message code="CW00010" lang="id_ID" value="Waktu Penerbangan" />
+  <Message code="CW00011" lang="en_US" value="Take-off from" />
+  <Message code="CW00011" lang="id_ID" value="Berangkat dari" />
+  <Message code="CW00012" lang="en_US" value="Landing at" />
+  <Message code="CW00012" lang="id_ID" value="Tiba di" />
+  <Message code="CW00013" lang="en_US" value="Home" />
+  <Message code="CW00013" lang="id_ID" value="Beranda" />
+  <Message code="CW00014" lang="en_US" value="Search" />
+  <Message code="CW00014" lang="id_ID" value="Cari Tiket" />
+  <Message code="CW00015" lang="en_US" value="Flight Search Result" />
+  <Message code="CW00015" lang="id_ID" value="Hasil Pencarian" />
+  <Message code="CW00016" lang="en_US" value="Departure Date" />
+  <Message code="CW00016" lang="id_ID" value="Tanggal Keberangkatan" />
+  <Message code="CW00017" lang="en_US" value="Passenger" />
+  <Message code="CW00017" lang="id_ID" value="Penumpang" />
+  <Message code="CW00018" lang="en_US" value="Adult" />
+  <Message code="CW00018" lang="id_ID" value="Dewasa" />
+  <Message code="CW00019" lang="en_US" value="Children" />
+  <Message code="CW00019" lang="id_ID" value="Anak" />
+  <Message code="CW00020" lang="en_US" value="Infant" />
+  <Message code="CW00020" lang="id_ID" value="Bayi" />
+  <Message code="CW00021" lang="en_US" value="Airline" />
+  <Message code="CW00021" lang="id_ID" value="Maskapai" />
+  <Message code="CW00022" lang="en_US" value="Departure" />
+  <Message code="CW00022" lang="id_ID" value="Berangkat" />
+  <Message code="CW00023" lang="en_US" value="Duration" />
+  <Message code="CW00023" lang="id_ID" value="Durasi" />
+  <Message code="CW00024" lang="en_US" value="Arrival" />
+  <Message code="CW00024" lang="id_ID" value="Tiba" />
+  <Message code="CW00025" lang="en_US" value="Price" />
+  <Message code="CW00025" lang="id_ID" value="Harga" />
+  <Message code="CW00026" lang="en_US" value="Flight Details" />
+  <Message code="CW00026" lang="id_ID" value="Detail Penerbangan" />
+  <Message code="CW00027" lang="en_US" value="Fares Rules" />
+  <Message code="CW00027" lang="id_ID" value="Syarat dan Ketentuan" />
+  <Message code="CW00028" lang="en_US" value="Duration" />
+  <Message code="CW00028" lang="id_ID" value="Durasi" />
+  <Message code="CW00029" lang="en_US" value="Stop" />
+  <Message code="CW00029" lang="id_ID" value="Transit" />
+  <Message code="CW00030" lang="en_US" value="Total Fare" />
+  <Message code="CW00030" lang="id_ID" value="Harga Total" />
+  <Message code="CW00031" lang="en_US" value="No Hidden Fees !" />
+  <Message code="CW00031" lang="id_ID" value="Termasuk Pajak dan Service Charge" />
+  <Message code="CW00032" lang="en_US" value="Book Now" />
+  <Message code="CW00032" lang="id_ID" value="Pesan" />
+  <Message code="CW00033" lang="en_US" value="This flight is operated by" />
+  <Message code="CW00033" lang="id_ID" value="Penerbangan ini dioperasikan oleh" />
+  <Message code="CW00034" lang="en_US" value="to" />
+  <Message code="CW00034" lang="id_ID" value="ke" />
+  <Message code="CW00035" lang="en_US" value="FLIGHT" />
+  <Message code="CW00035" lang="id_ID" value="PENERBANGAN" />
+  <Message code="CW00036" lang="en_US" value="DETAILS" />
+  <Message code="CW00036" lang="id_ID" value="DETAIL" />
+  <Message code="CW00037" lang="en_US" value="DEPARTURE" />
+  <Message code="CW00037" lang="id_ID" value="KEBERANGKATAN" />
+  <Message code="CW00038" lang="en_US" value="FLIGHTS" />
+  <Message code="CW00038" lang="id_ID" value="PENERBANGAN" />
+  <Message code="CW00039" lang="en_US" value="onward" />
+  <Message code="CW00039" lang="id_ID" value="berangkat" />
+  <Message code="CW00040" lang="en_US" value="return" />
+  <Message code="CW00040" lang="id_ID" value="kembali" />
+  <Message code="CW00041" lang="en_US" value="Please Wait" />
+  <Message code="CW00041" lang="id_ID" value="Mohon Tunggu" />
+  <Message code="CW00042" lang="en_US" value="While we are searching for the best fare deal for you" />
+  <Message code="CW00042" lang="id_ID" value="Kami sedang mencari harga terbaik hanya untuk Anda" />
+  <Message code="CW00043" lang="en_US" value="While we are validating your flight of choice" />
+  <Message code="CW00043" lang="id_ID" value="Kami sedang memvalidasi pilihan penerbangan Anda" />
+  <Message code="CW00044" lang="en_US" value="DEPARTURE" />
+  <Message code="CW00044" lang="id_ID" value="PENERBANGAN" />
+  <Message code="CW00045" lang="en_US" value="RETURN" />
+  <Message code="CW00045" lang="id_ID" value="PENERBANGAN" />
+  <Message code="CW00046" lang="en_US" value="FLIGHTS" />
+  <Message code="CW00046" lang="id_ID" value="PERGI" />
+  <Message code="CW00047" lang="en_US" value="FLIGHTS" />
+  <Message code="CW00047" lang="id_ID" value="PULANG" />
+  <Message code="CW00048" lang="en_US" value="DETAILS" />
+  <Message code="CW00048" lang="id_ID" value="PENERBANGAN" />
+  <Message code="CW00049" lang="en_US" value="FLIGHT" />
+  <Message code="CW00049" lang="id_ID" value="DETAIL" />
+  <Message code="CW00050" lang="en_US" value="SEARCH" />
+  <Message code="CW00050" lang="id_ID" value="HASIL" />
+  <Message code="CW00051" lang="en_US" value="RESULT" />
+  <Message code="CW00051" lang="id_ID" value="PENCARIAN" />
+  <Message code="CW00052" lang="en_US" value="Round-Trip" />
+  <Message code="CW00052" lang="id_ID" value="Pulang-Pergi" />
+  <Message code="CW00053" lang="en_US" value="One-Way" />
+  <Message code="CW00053" lang="id_ID" value="Sekali Jalan" />
+  <Message code="CW00054" lang="en_US" value="Economy Class" />
+  <Message code="CW00054" lang="id_ID" value="Kelas Ekonomi" />
+  <Message code="CW00055" lang="en_US" value="Business Class" />
+  <Message code="CW00055" lang="id_ID" value="Kelas Bisnis" />
+  <Message code="CW00056" lang="en_US" value="First Class" />
+  <Message code="CW00056" lang="id_ID" value="Kelas Utama" />
+  <Message code="CW00057" lang="en_US" value="Departure Date" />
+  <Message code="CW00057" lang="id_ID" value="Tanggal Pergi" />
+  <Message code="CW00058" lang="en_US" value="Return Date" />
+  <Message code="CW00058" lang="id_ID" value="Tanggal Pulang" />
+  <Message code="CW00059" lang="en_US" value="Adults" />
+  <Message code="CW00059" lang="id_ID" value="Dewasa" />
+  <Message code="CW00060" lang="en_US" value="Child" />
+  <Message code="CW00060" lang="id_ID" value="Anak" />
+  <Message code="CW00061" lang="en_US" value="Infants" />
+  <Message code="CW00061" lang="id_ID" value="Bayi" />
+  <Message code="CW00062" lang="en_US" value="Onward Flight" />
+  <Message code="CW00062" lang="id_ID" value="Penerbangan Pergi" />
+  <Message code="CW00063" lang="en_US" value="Return Flight" />
+  <Message code="CW00063" lang="id_ID" value="Penerbangan Pulang" />
+  <Message code="CW00064" lang="en_US" value="reset filter" />
+  <Message code="CW00064" lang="id_ID" value="reset filter" />
+  <Message code="CW00065" lang="en_US" value="Select All" />
+  <Message code="CW00065" lang="id_ID" value="Pilih Semua" />
+  <Message code="CW00066" lang="en_US" value="Select None" />
+  <Message code="CW00066" lang="id_ID" value="Nihil" />
+  <Message code="CW00067" lang="en_US" value="FIND THE BEST FLIGHT DESTINATION AROUND THE WORLD" />
+  <Message code="CW00067" lang="id_ID" value="TUJUAN PENERBANGAN TERPOPULER" />
+  <Message code="CW00068" lang="en_US" value="Wherever you like to travel, we have domestic and international flight from over 900 airlines" />
+  <Message code="CW00068" lang="id_ID" value="Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan domestik dan internasional dari 900 maskapai" />
+  <Message code="CW00069" lang="en_US" value="Initial Airport" />
+  <Message code="CW00069" lang="id_ID" value="Bandara Asal" />
+  <Message code="CW00070" lang="en_US" value="Destination Airport" />
+  <Message code="CW00070" lang="id_ID" value="Bandara Tujuan" />
+  <Message code="CW00071" lang="en_US" value="LOGIN" />
+  <Message code="CW00071" lang="id_ID" value="LOGIN" />
+  <Message code="CW00072" lang="en_US" value="REGISTER" />
+  <Message code="CW00072" lang="id_ID" value="REGISTER" />
+  <Message code="CW00073" lang="en_US" value="MY ACCOUNT" />
+  <Message code="CW00073" lang="id_ID" value="AKUN SAYA" />
+  <Message code="CW00074" lang="en_US" value="LOGOUT" />
+  <Message code="CW00074" lang="id_ID" value="LOGOUT" />
+  <Message code="CW00075" lang="en_US" value="SUBSCRIBE" />
+  <Message code="CW00075" lang="id_ID" value="DAFTAR" />
+  <Message code="CW00076" lang="en_US" value="TO GET UPDATES AND PROMOTIONS FROM TRAVORAMA" />
+  <Message code="CW00076" lang="id_ID" value="DAN DAPATKAN INFO PROMO DAN TRAVEL TERKINI DARI TRAVORAMA" />
+  <Message code="CW00077" lang="en_US" value="Your Name" />
+  <Message code="CW00077" lang="id_ID" value="Nama Anda" />
+  <Message code="CW00078" lang="en_US" value="Your Email Address" />
+  <Message code="CW00078" lang="id_ID" value="Alamat Email Anda" />
+  <Message code="CW00079" lang="en_US" value="SUBSCRIBE" />
+  <Message code="CW00079" lang="id_ID" value="DAFTAR" />
+  <Message code="CW00080" lang="en_US" value="SEARCH" />
+  <Message code="CW00080" lang="id_ID" value="CARI" />
+  <Message code="CW00081" lang="en_US" value="Flight Booking" />
+  <Message code="CW00081" lang="id_ID" value="Cari Tiket Pesawat" />
+  <Message code="CW00082" lang="en_US" value="Flight" />
+  <Message code="CW00082" lang="id_ID" value="Tiket Pesawat" />
+  <Message code="CW00083" lang="en_US" value="WE ACCEPT" />
+  <Message code="CW00083" lang="id_ID" value="KAMI MENERIMA" />
+  <Message code="CW00084" lang="en_US" value="PAYMENT" />
+  <Message code="CW00084" lang="id_ID" value="PEMBAYARAN" />
+  <Message code="CW00085" lang="en_US" value="FROM" />
+  <Message code="CW00085" lang="id_ID" value="DARI" />
+  <Message code="CW00086" lang="en_US" value="Transit at" />
+  <Message code="CW00086" lang="id_ID" value="Transit di" />
+  <Message code="CW00087" lang="en_US" value="for" />
+  <Message code="CW00087" lang="id_ID" value="selama" />
+  <Message code="CW00088" lang="en_US" value="Contact and Payment Information" />
+  <Message code="CW00088" lang="id_ID" value="Informasi Pelanggan dan Penumpang" />
+  <Message code="CW00089" lang="en_US" value="Customer" />
+  <Message code="CW00089" lang="id_ID" value="Data" />
+  <Message code="CW00090" lang="en_US" value="Detail" />
+  <Message code="CW00090" lang="id_ID" value="Pelanggan" />
+  <Message code="CW00091" lang="en_US" value="Name (Customer)" />
+  <Message code="CW00091" lang="id_ID" value="Nama (Pelanggan)" />
+  <Message code="CW00092" lang="en_US" value="Name according to your ID card" />
+  <Message code="CW00092" lang="id_ID" value="Nama sesuai KTP / SIM" />
+  <Message code="CW00093" lang="en_US" value="Phone Number" />
+  <Message code="CW00093" lang="id_ID" value="Nomor Telepon" />
+  <Message code="CW00094" lang="en_US" value="Email Address" />
+  <Message code="CW00094" lang="id_ID" value="Alamat Email" />
+  <Message code="CW00095" lang="en_US" value="Adult Passenger" />
+  <Message code="CW00095" lang="id_ID" value="Penumpang Dewasa" />
+  <Message code="CW00096" lang="en_US" value="years old" />
+  <Message code="CW00096" lang="id_ID" value="tahun" />
+  <Message code="CW00097" lang="en_US" value="Child Passenger" />
+  <Message code="CW00097" lang="id_ID" value="Penumpang Anak-Anak" />
+  <Message code="CW00098" lang="en_US" value="Infant Passenger" />
+  <Message code="CW00098" lang="id_ID" value="Penumpang Bayi" />
+  <Message code="CW00099" lang="en_US" value="Title" />
+  <Message code="CW00099" lang="id_ID" value="Title" />
+  <Message code="CW00100" lang="en_US" value="First Name" />
+  <Message code="CW00100" lang="id_ID" value="Nama Depan" />
+  <Message code="CW00101" lang="en_US" value="Last Name" />
+  <Message code="CW00101" lang="id_ID" value="Nama Belakang" />
+  <Message code="CW00102" lang="en_US" value="Birth Date" />
+  <Message code="CW00102" lang="id_ID" value="Tanggal Lahir" />
+  <Message code="CW00103" lang="en_US" value="Passport Number" />
+  <Message code="CW00103" lang="id_ID" value="Nomor Passport" />
+  <Message code="CW00104" lang="en_US" value="Passport Expiry Date" />
+  <Message code="CW00104" lang="id_ID" value="Kadaluarsa Passport" />
+  <Message code="CW00105" lang="en_US" value="While we are validating your flight of choice" />
+  <Message code="CW00105" lang="id_ID" value="Kami sedang memvalidasi penerbangan pilihan Anda" />
+  <Message code="CW00106" lang="en_US" value="PAYMENT" />
+  <Message code="CW00106" lang="id_ID" value="METODE" />
+  <Message code="CW00107" lang="en_US" value="METHOD" />
+  <Message code="CW00107" lang="id_ID" value="PEMBAYARAN" />
+  <Message code="CW00108" lang="en_US" value="PAY" />
+  <Message code="CW00108" lang="id_ID" value="BAYAR" />
+  <Message code="CW00109" lang="en_US" value="By clicking the PAY button below, you agree to all applicable terms and conditions and privacy policy" />
+  <Message code="CW00109" lang="id_ID" value="Dengan mengklik tombol BAYAR di bawah ini, Anda telah setuju dengan semua syarat dan ketentuan serta kebijakan privasi yang berlaku" />
+  <Message code="CW00110" lang="en_US" value="ORDER" />
+  <Message code="CW00110" lang="id_ID" value="RINCIAN" />
+  <Message code="CW00111" lang="en_US" value="DETAIL" />
+  <Message code="CW00111" lang="id_ID" value="PEMESANAN" />
+  <Message code="CW00112" lang="en_US" value="TO" />
+  <Message code="CW00112" lang="id_ID" value="KE" />
+  <Message code="CW00113" lang="en_US" value="RETURN FLIGHT" />
+  <Message code="CW00113" lang="id_ID" value="PENERBANGAN PULANG" />
+  <Message code="CW00114" lang="en_US" value="PRICE" />
+  <Message code="CW00114" lang="id_ID" value="RINCIAN" />
+  <Message code="CW00115" lang="en_US" value="DETAIL" />
+  <Message code="CW00115" lang="id_ID" value="HARGA" />
+  <Message code="CW00116" lang="en_US" value="Passenger" />
+  <Message code="CW00116" lang="id_ID" value="Penumpang" />
+  <Message code="CW00117" lang="en_US" value="Tax" />
+  <Message code="CW00117" lang="id_ID" value="Pajak" />
+  <Message code="CW00118" lang="en_US" value="Travorama Fee" />
+  <Message code="CW00118" lang="id_ID" value="Biaya Travorama" />
+  <Message code="CW00119" lang="en_US" value="TOTAL" />
+  <Message code="CW00119" lang="id_ID" value="TOTAL" />
+  <Message code="CW00120" lang="en_US" value="INCLUDED" />
+  <Message code="CW00120" lang="id_ID" value="INCLUDED" />
+  <Message code="CW00121" lang="en_US" value="FREE" />
+  <Message code="CW00121" lang="id_ID" value="GRATIS" />
+  <Message code="CW00122" lang="en_US" value="WITH TRAVORAMA ACCOUNT" />
+  <Message code="CW00122" lang="id_ID" value="DENGAN AKUN TRAVORAMA" />
+  <Message code="CW00123" lang="en_US" value="Your email address" />
+  <Message code="CW00123" lang="id_ID" value="Alamat email Anda" />
+  <Message code="CW00124" lang="en_US" value="Your account password" />
+  <Message code="CW00124" lang="id_ID" value="Akun password anda" />
+  <Message code="CW00125" lang="en_US" value="Remember Me" />
+  <Message code="CW00125" lang="id_ID" value="Ingat Saya" />
+  <Message code="CW00126" lang="en_US" value="Forgot password" />
+  <Message code="CW00126" lang="id_ID" value="Lupa password" />
+  <Message code="CW00127" lang="en_US" value="Register" />
+  <Message code="CW00127" lang="id_ID" value="Register" />
+  <Message code="CW00128" lang="en_US" value="OR" />
+  <Message code="CW00128" lang="id_ID" value="ATAU" />
+  <Message code="CW00129" lang="en_US" value="LOG IN" />
+  <Message code="CW00129" lang="id_ID" value="LOG IN" />
+  <Message code="CW00130" lang="en_US" value="LOGIN" />
+  <Message code="CW00130" lang="id_ID" value="LOGIN" />
+  <Message code="CW00131" lang="en_US" value="Log In with Facebook" />
+  <Message code="CW00131" lang="id_ID" value="Log In dengan Facebook" />
+  <Message code="CW00132" lang="en_US" value="BENEFIT OF" />
+  <Message code="CW00132" lang="id_ID" value="MANFAAT" />
+  <Message code="CW00133" lang="en_US" value="TRAVORAMA MEMBERSHIP" />
+  <Message code="CW00133" lang="id_ID" value="KEANGGOTAAN TRAVORAMA" />
+  <Message code="CW00134" lang="en_US" value="PROMO UPDATES" />
+  <Message code="CW00134" lang="id_ID" value="INFO PROMO" />
+  <Message code="CW00135" lang="en_US" value="Get promo updates and travel information directly delivered to your email address by Travorama" />
+  <Message code="CW00135" lang="id_ID" value="Dapatkan update promo dan informasi travel langsung dikirimkan ke alamat email anda oleh Travorama" />
+  <Message code="CW00136" lang="en_US" value="Exclusive Discount" />
+  <Message code="CW00136" lang="id_ID" value="Diskon Eksklusif" />
+  <Message code="CW00137" lang="en_US" value="We always strive to give our member nice surprises. Get exclusive discount only for Travorama member" />
+  <Message code="CW00137" lang="id_ID" value="Kami selalu berusaha untuk memberikan surprise menyenangkan untuk Anda. Dapatkan diskon eksklusif hanya untuk member Travorama" />
+  <Message code="CW00138" lang="en_US" value="Manage My Booking " />
+  <Message code="CW00138" lang="id_ID" value="Atur Pemesanan" />
+  <Message code="CW00139" lang="en_US" value="Check and view your reservation detail. Download e-ticket and enjoy hassle free travelling with Travorama" />
+  <Message code="CW00139" lang="id_ID" value="Cek pemesanan Anda secara detail. Download e-tiket dan nikmati kemudahan bepergian dengan Travorama" />
+  <Message code="CW00140" lang="en_US" value="JOIN TRAVORAMA" />
+  <Message code="CW00140" lang="id_ID" value="JOIN TRAVORAMA" />
+  <Message code="CW00141" lang="en_US" value="First Name" />
+  <Message code="CW00141" lang="id_ID" value="Nama Depan" />
+  <Message code="CW00142" lang="en_US" value="Last Name" />
+  <Message code="CW00142" lang="id_ID" value="Nama Belakang" />
+  <Message code="CW00143" lang="en_US" value="Phone Number" />
+  <Message code="CW00143" lang="id_ID" value="Nomor Telepon" />
+  <Message code="CW00144" lang="en_US" value="Password" />
+  <Message code="CW00144" lang="id_ID" value="Password" />
+  <Message code="CW00145" lang="en_US" value="Password Confirmation" />
+  <Message code="CW00145" lang="id_ID" value="Konfirmasi Password" />
+  <Message code="CW00146" lang="en_US" value="Your Email Address" />
+  <Message code="CW00146" lang="id_ID" value="Alamat Email Anda" />
+  <Message code="CW00147" lang="en_US" value="REGISTER" />
+  <Message code="CW00147" lang="id_ID" value="REGISTER" />
+  <Message code="CW00148" lang="en_US" value="Sign Up with Facebook" />
+  <Message code="CW00148" lang="id_ID" value="Daftar dengan Facebook" />
+  <Message code="CW00149" lang="en_US" value="Forgot Your Password?" />
+  <Message code="CW00149" lang="id_ID" value="Lupa Password Anda?" />
+  <Message code="CW00150" lang="en_US" value="Send Link" />
+  <Message code="CW00150" lang="id_ID" value="Kirim" />
+  <Message code="CW00151" lang="en_US" value="How to Book" />
+  <Message code="CW00151" lang="id_ID" value="Cara Pesan" />
+  <Message code="CW00152" lang="en_US" value="Privacy Policy" />
+  <Message code="CW00152" lang="id_ID" value="Kebijakan Privasi" />
+  <Message code="CW00153" lang="en_US" value="CALL CENTER : 1500 650" />
+  <Message code="CW00153" lang="id_ID" value="CALL CENTER : 1500 650" />
+  <Message code="CW00154" lang="en_US" value="User Account" />
+  <Message code="CW00154" lang="id_ID" value="Akun Pengguna" />
+  <Message code="CW00155" lang="en_US" value="My" />
+  <Message code="CW00155" lang="id_ID" value="Akun" />
+  <Message code="CW00156" lang="en_US" value="Account" />
+  <Message code="CW00156" lang="id_ID" value="Saya" />
+  <Message code="CW00157" lang="en_US" value="User Account" />
+  <Message code="CW00157" lang="id_ID" value="Akun Pengguna" />
+  <Message code="CW00158" lang="en_US" value="Profile" />
+  <Message code="CW00158" lang="id_ID" value="Profil" />
+  <Message code="CW00159" lang="en_US" value="User" />
+  <Message code="CW00159" lang="id_ID" value="Profil" />
+  <Message code="CW00160" lang="en_US" value="Profile" />
+  <Message code="CW00160" lang="id_ID" value="Pengguna" />
+  <Message code="CW00161" lang="en_US" value="Phone" />
+  <Message code="CW00161" lang="id_ID" value="Telepon" />
+  <Message code="CW00162" lang="en_US" value="UPDATE" />
+  <Message code="CW00162" lang="id_ID" value="UPDATE" />
+  <Message code="CW00163" lang="en_US" value="CHANGE" />
+  <Message code="CW00163" lang="id_ID" value="GANTI" />
+  <Message code="CW00164" lang="en_US" value="PASSWORD" />
+  <Message code="CW00164" lang="id_ID" value="PASSWORD" />
+  <Message code="CW00165" lang="en_US" value="Current Password" />
+  <Message code="CW00165" lang="id_ID" value="Password Saat Ini" />
+  <Message code="CW00166" lang="en_US" value="New Password" />
+  <Message code="CW00166" lang="id_ID" value="Password Baru" />
+  <Message code="CW00167" lang="en_US" value="Confirm New Password" />
+  <Message code="CW00167" lang="id_ID" value="Konfirmasi Password Baru" />
+  <Message code="CW00168" lang="en_US" value="CHANGE" />
+  <Message code="CW00168" lang="id_ID" value="UBAH" />
+  <Message code="CW00169" lang="en_US" value="Order History" />
+  <Message code="CW00169" lang="id_ID" value="Daftar Reservasi" />
+  <Message code="CW00170" lang="en_US" value="ORDER" />
+  <Message code="CW00170" lang="id_ID" value="DAFTAR"/>
+  <Message code="CW00171" lang="en_US" value="HISTORY" />
+  <Message code="CW00171" lang="id_ID" value="RESERVASI" />
+  <Message code="CW00172" lang="en_US" value="Destination" />
+  <Message code="CW00172" lang="id_ID" value="Tujuan" />
+  <Message code="CW00173" lang="en_US" value="Reservation No" />
+  <Message code="CW00173" lang="id_ID" value="Nomor Reservasi"/>
+  <Message code="CW00174" lang="en_US" value="Payment Status" />
+  <Message code="CW00174" lang="id_ID" value="Status Pembayaran" />
+  <Message code="CW00175" lang="en_US" value="DETAIL" />
+  <Message code="CW00175" lang="id_ID" value="DETAIL" />
+  <Message code="CW00176" lang="en_US" value="Flight to" />
+  <Message code="CW00176" lang="id_ID" value="Penerbangan ke" />
+</Messages>

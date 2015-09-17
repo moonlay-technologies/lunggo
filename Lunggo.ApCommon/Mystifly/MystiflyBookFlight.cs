@@ -56,6 +56,8 @@ namespace Lunggo.ApCommon.Mystifly
                     }
                     else
                     {
+                        result.IsSuccess = false;
+                        result = MapResult(response, fareType, false);
                         if (response.Errors.Any())
                         {
                             result.Errors = new List<FlightError>();
@@ -77,8 +79,6 @@ namespace Lunggo.ApCommon.Mystifly
                             if (done)
                                 MapError(response, result);
                         }
-                        result.IsSuccess = false;
-                        result = MapResult(response, fareType, false);
                     }
                 }
                 return result;
@@ -254,7 +254,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         BookingStatus = BookingStatus.Booked,
                         BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
-                        TimeLimit = response.TktTimeLimit
+                        TimeLimit = response.TktTimeLimit.HasValue ? response.TktTimeLimit.Value.ToUniversalTime() : (DateTime?) null
                     }
                 };
             else

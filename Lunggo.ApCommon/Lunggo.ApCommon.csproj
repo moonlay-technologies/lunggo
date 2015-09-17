@@ -251,6 +251,7 @@
     <Compile Include="Flight\Service\SearchFlight.cs" />
     <Compile Include="Flight\Utility\FlightIdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
+    <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />

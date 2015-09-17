@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -18,24 +19,18 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             SearchFlightResult result;
             var output = new SearchFlightOutput();
-            if (input.SearchId == null)
-            {
-                result = SearchByThirdPartyService(input);
-            }
+            var searchId = HashEncodeConditions(input.Conditions);
+            var cacheItin = GetSearchedItinerariesFromCache(searchId);
+            if (cacheItin == null)
+                result = SearchByThirdPartyService(input.Conditions);
             else
             {
-                var cacheItin = GetSearchedItinerariesFromCache(input.SearchId);
-                if (cacheItin == null)
-                    result = SearchByThirdPartyService(input);
-                else
+                result = new SearchFlightResult
                 {
-                    result = new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        FlightItineraries = cacheItin,
-                        SearchId = input.SearchId
-                    };
-                }
+                    IsSuccess = true,
+                    FlightItineraries = cacheItin,
+                    SearchId = searchId
+                };
             }
 
             if (result.IsSuccess)
@@ -45,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
                 output.SearchId = result.SearchId;
                 output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
-                output.ExpiryTime = GetSearchedItinerariesExpiry(input.SearchId);
+                output.ExpiryTime = GetSearchedItinerariesExpiry(searchId).GetValueOrDefault();
             }
             else
             {
@@ -56,21 +51,28 @@ namespace Lunggo.ApCommon.Flight.Service
             return output;
         }
 
-        private SearchFlightResult SearchByThirdPartyService(SearchFlightInput input)
+        public void SearchFlightAndFillInSearchCache(string searchId, int timeout)
+        {
+            var condition = UnhashDecodeConditions(searchId);
+            SearchByThirdPartyService(condition, timeout);
+        }
+
+        private SearchFlightResult SearchByThirdPartyService(SearchFlightConditions condition, int timeout = 0)
         {
             var conditions = new SearchFlightConditions
             {
-                AdultCount = input.Conditions.AdultCount,
-                ChildCount = input.Conditions.ChildCount,
-                InfantCount = input.Conditions.InfantCount,
-                CabinClass = input.Conditions.CabinClass,
-                Trips = input.Conditions.Trips
+                AdultCount = condition.AdultCount,
+                ChildCount = condition.ChildCount,
+                InfantCount = condition.InfantCount,
+                CabinClass = condition.CabinClass,
+                Trips = condition.Trips
             };
 
             var result = SearchFlightInternal(conditions);
             if (result.FlightItineraries != null)
             {
-                result.SearchId = SaveSearchedItinerariesToCache(result.FlightItineraries);
+                var searchId = HashEncodeConditions(condition);
+                SaveSearchedItinerariesToCache(result.FlightItineraries, searchId, timeout);
             }
             return result;
         }

@@ -37,6 +37,8 @@ namespace Lunggo.Configuration
         private const string JsConfigTemplatePath = (@"Template\JsConfig.js");
         private const string WebConfigDebugTemplatePath = (@"Template\Web.Debug.config");
         private const string WebConfigReleaseTemplatePath = (@"Template\Web.Release.config");
+        private const string AppConfigDebugTemplatePath = (@"Template\App.Debug.config");
+        private const string AppConfigReleaseTemplatePath = (@"Template\App.Release.config");
         
         private static readonly string ParentPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         private static readonly string WorkspacePath = Directory.GetParent(ParentPath).FullName;
@@ -51,7 +53,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "Worker.EticketHandler" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.FlightCrawlScheduler", "WebJob.FlightCrawler", "Worker.EticketHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -290,6 +292,8 @@ namespace Lunggo.Configuration
             GenerateJsConfigFile();
             GenerateWebConfigDebugFile();
             GenerateWebConfigReleaseFile();
+            GenerateAppConfigDebugFile();
+            GenerateAppConfigReleaseFile();
         }
 
         private void GenerateJsConfigFile()
@@ -345,6 +349,32 @@ namespace Lunggo.Configuration
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI" };
             SaveRootFile("Web.Release.config", fileContent, projectList);
+        }
+
+        private void GenerateAppConfigDebugFile()
+        {
+            var mystiflyApiEndPoint = _configDictionary["@@.*.mystifly.apiEndPoint@@"];
+
+            var fileTemplate = new StringTemplate(ReadFileToEnd(AppConfigDebugTemplatePath));
+            fileTemplate.Reset();
+            fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
+
+            var fileContent = fileTemplate.ToString();
+            string[] projectList = { "WebJob.MystiflyQueueHandler" };
+            SaveRootFile("App.Debug.config", fileContent, projectList);
+        }
+
+        private void GenerateAppConfigReleaseFile()
+        {
+            var mystiflyApiEndPoint = _configDictionary["@@.*.mystifly.apiEndPoint@@"];
+
+            var fileTemplate = new StringTemplate(ReadFileToEnd(AppConfigReleaseTemplatePath));
+            fileTemplate.Reset();
+            fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
+
+            var fileContent = fileTemplate.ToString();
+            string[] projectList = { "WebJob.MystiflyQueueHandler" };
+            SaveRootFile("App.Release.config", fileContent, projectList);
         }
 
         private static String ReadFileToEnd(String fileName)

@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model Lunggo.ApCommon.Flight.Model.FlightReservation
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,7 +45,7 @@
                         =============================|===============================
                         Maskapai                     : @segment.AirlineName (@segment.AirlineCode@segment.FlightNumber)
                         Rute                         : @segment.DepartureAirport - @segment.ArrivalAirport
-                        Waktu penerbangan            : @segment.DepartureTime.ToString("d MMMM yyyy, hh:mm (dddd)", CultureInfo.CreateSpecificCulture("id-ID"))
+                        Waktu penerbangan            : @segment.DepartureTime.ToString("d MMMM yyyy, hh:mm (dddd)")
                         Kode booking maskapai (PNR)  : @segment.Pnr
 
                     </div>

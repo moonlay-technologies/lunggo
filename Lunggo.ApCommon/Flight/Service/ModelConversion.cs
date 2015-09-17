@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationAirport = trip.DestinationAirport,
                 DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
                 DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
-                DepartureDate = trip.DepartureDate.ToUniversalTime(),
+                DepartureDate = trip.DepartureDate,
                 TotalDuration = CalculateTotalDuration(trip),
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
@@ -93,11 +93,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 DepartureAirport = segment.DepartureAirport,
                 DepartureCity = dict.GetAirportCity(segment.DepartureAirport),
                 DepartureAirportName = dict.GetAirportName(segment.DepartureAirport),
-                DepartureTime = segment.DepartureTime.ToUniversalTime(),
+                DepartureTime = segment.DepartureTime,
                 ArrivalAirport = segment.ArrivalAirport,
                 ArrivalCity = dict.GetAirportCity(segment.ArrivalAirport),
                 ArrivalAirportName = dict.GetAirportName(segment.ArrivalAirport),
-                ArrivalTime = segment.ArrivalTime.ToUniversalTime(),
+                ArrivalTime = segment.ArrivalTime,
                 Duration = segment.Duration,
                 AirlineCode = segment.AirlineCode,
                 AirlineName = dict.GetAirlineName(segment.AirlineCode),
@@ -109,6 +109,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 AircraftCode = segment.AircraftCode,
                 StopQuantity = segment.StopQuantity,
                 FlightStops = segment.FlightStops,
+                Pnr = segment.Pnr,
                 Rbd = segment.Rbd,
                 Meal = segment.Meal,
                 RemainingSeats = segment.RemainingSeats
@@ -155,8 +156,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         IsStop = true,
                         Airport = stop.Airport,
-                        ArrivalTime = stop.ArrivalTime.ToUniversalTime(),
-                        DepartureTime = stop.DepartureTime.ToUniversalTime(),
+                        ArrivalTime = stop.ArrivalTime,
+                        DepartureTime = stop.DepartureTime,
                         Duration = stop.DepartureTime - stop.ArrivalTime
                     }));
                 }
@@ -166,8 +167,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         IsStop = false,
                         Airport = segments[i].DepartureAirport,
-                        ArrivalTime = segments[i - 1].ArrivalTime.ToUniversalTime(),
-                        DepartureTime = segments[i].DepartureTime.ToUniversalTime(),
+                        ArrivalTime = segments[i - 1].ArrivalTime,
+                        DepartureTime = segments[i].DepartureTime,
                         Duration = segments[i].DepartureTime - segments[i - 1].ArrivalTime
                     });
                 }

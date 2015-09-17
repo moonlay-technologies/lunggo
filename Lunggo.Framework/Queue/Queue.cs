@@ -10,6 +10,7 @@
         FlightPendingPaymentNotif,
         FlightPendingPaymentConfirmedNotif,
         FlightPendingPaymentExpiredNotif,
+        FlightCrawl,
         UserConfirmationEmail,
         ForgotPasswordEmail,
         InitialSubscriberEmail,

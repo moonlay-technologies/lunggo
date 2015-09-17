@@ -104,7 +104,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
-                        DepartureDate = tripInfo.DepartureDate,
+                        DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
                         FlightSegments = new List<FlightSegment>(),
                     };
                     do
@@ -129,7 +129,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         OriginAirport = segment.DepartureAirportLocationCode,
                         DestinationAirport = segment.ArrivalAirportLocationCode,
-                        DepartureDate = segment.DepartureDateTime.Date,
+                        DepartureDate = segment.DepartureDateTime.Date.ToUniversalTime(),
                         FlightSegments = new List<FlightSegment>(),
                     };
                     flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segment));
@@ -153,11 +153,11 @@ namespace Lunggo.ApCommon.Mystifly
                 DepartureAirportName = dict.GetAirportName(item.DepartureAirportLocationCode),
                 DepartureCity = dict.GetAirportCity(item.DepartureAirportLocationCode),
                 DepartureTerminal = item.DepartureTerminal,
-                DepartureTime = item.DepartureDateTime,
+                DepartureTime = item.DepartureDateTime.ToUniversalTime(),
                 ArrivalAirport = item.ArrivalAirportLocationCode,
                 ArrivalAirportName = dict.GetAirportName(item.ArrivalAirportLocationCode),
                 ArrivalCity = dict.GetAirportCity(item.ArrivalAirportLocationCode),
-                ArrivalTime = item.ArrivalDateTime,
+                ArrivalTime = item.ArrivalDateTime.ToUniversalTime(),
                 ArrivalTerminal = item.ArrivalTerminal,
                 Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
                 AirlineCode = item.MarketingAirlineCode,

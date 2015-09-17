@@ -146,15 +146,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentTime");
 		    }
 		}
-        public DateTime? PaymentTimeLimit
-        {
-            get { return _PaymentTimeLimit; }
-            set
-            {
-                _PaymentTimeLimit = value;
-                IncrementLog("PaymentTimeLimit");
-            }
-        }
+		public DateTime? PaymentTimeLimit
+		{
+		    get { return _PaymentTimeLimit; }
+		    set
+		    {
+		        _PaymentTimeLimit = value;
+		        IncrementLog("PaymentTimeLimit");
+		    }
+		}
 		public String PaymentStatusCd
 		{
 		    get { return _PaymentStatusCd; }
@@ -171,6 +171,24 @@ namespace Lunggo.Repository.TableRecord
 		    {
 		        _PaymentTargetAccount = value;
 		        IncrementLog("PaymentTargetAccount");
+		    }
+		}
+		public String PaymentUrl
+		{
+		    get { return _PaymentUrl; }
+		    set
+		    {
+		        _PaymentUrl = value;
+		        IncrementLog("PaymentUrl");
+		    }
+		}
+		public String PaymentReceiptUrl
+		{
+		    get { return _PaymentReceiptUrl; }
+		    set
+		    {
+		        _PaymentReceiptUrl = value;
+		        IncrementLog("PaymentReceiptUrl");
 		    }
 		}
 		public Decimal? PaidAmount
@@ -424,9 +442,11 @@ namespace Lunggo.Repository.TableRecord
 		private String _PaymentMediumCd;
 		private String _PaymentMethodCd;
 		private DateTime? _PaymentTime;
-        private DateTime? _PaymentTimeLimit;
+		private DateTime? _PaymentTimeLimit;
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
+		private String _PaymentUrl;
+		private String _PaymentReceiptUrl;
 		private Decimal? _PaidAmount;
 		private DateTime? _RefundTime;
 		private Decimal? _RefundAmount;
@@ -499,8 +519,11 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentMediumCd", false),
 				new ColumnMetadata("PaymentMethodCd", false),
 				new ColumnMetadata("PaymentTime", false),
+				new ColumnMetadata("PaymentTimeLimit", false),
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("PaymentTargetAccount", false),
+				new ColumnMetadata("PaymentUrl", false),
+				new ColumnMetadata("PaymentReceiptUrl", false),
 				new ColumnMetadata("PaidAmount", false),
 				new ColumnMetadata("RefundTime", false),
 				new ColumnMetadata("RefundAmount", false),

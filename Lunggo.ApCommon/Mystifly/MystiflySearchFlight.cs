@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             return conditions.Trips.Select(info => new OriginDestinationInformation()
             {
-                DepartureDateTime = info.DepartureDate,
+                DepartureDateTime = info.DepartureDate.ToUniversalTime(),
                 DestinationLocationCode = info.DestinationAirport,
                 OriginLocationCode = info.OriginAirport,
                 ArrivalWindow = null,
@@ -385,7 +385,7 @@ namespace Lunggo.ApCommon.Mystifly
                     {
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
-                        DepartureDate = tripInfo.DepartureDate,
+                        DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
                         FlightSegments = new List<FlightSegment>()
                     };
                     do
@@ -415,8 +415,8 @@ namespace Lunggo.ApCommon.Mystifly
                         new FlightStop
                         {
                             Airport = flightSegment.StopQuantityInfo.LocationCode,
-                            ArrivalTime = flightSegment.StopQuantityInfo.ArrivalDateTime,
-                            DepartureTime = flightSegment.StopQuantityInfo.DepartureDateTime,
+                            ArrivalTime = flightSegment.StopQuantityInfo.ArrivalDateTime.ToUniversalTime(),
+                            DepartureTime = flightSegment.StopQuantityInfo.DepartureDateTime.ToUniversalTime(),
                             Duration = TimeSpan.FromMinutes(flightSegment.StopQuantityInfo.Duration)
                         }
                     };
@@ -425,8 +425,8 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 DepartureAirport = flightSegment.DepartureAirportLocationCode,
                 ArrivalAirport = flightSegment.ArrivalAirportLocationCode,
-                DepartureTime = flightSegment.DepartureDateTime,
-                ArrivalTime = flightSegment.ArrivalDateTime,
+                DepartureTime = flightSegment.DepartureDateTime.ToUniversalTime(),
+                ArrivalTime = flightSegment.ArrivalDateTime.ToUniversalTime(),
                 Duration = TimeSpan.FromMinutes(flightSegment.JourneyDuration),
                 AirlineCode = flightSegment.MarketingAirlineCode,
                 FlightNumber = flightSegment.FlightNumber,

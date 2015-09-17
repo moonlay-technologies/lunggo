@@ -76,7 +76,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Payment = new PaymentInfo
                                     {
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
-                                        Time = reservationRecord.PaymentTime
+                                        Time = reservationRecord.PaymentTime,
+                                        Url = reservationRecord.PaymentUrl
                                     },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                     Itineraries = new List<FlightItinerary>(),
@@ -209,6 +210,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Time = reservationRecord.PaymentTime,
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                         TargetAccount = reservationRecord.PaymentTargetAccount,
+                                        Url = reservationRecord.PaymentUrl,
+                                        ReceiptUrl = reservationRecord.PaymentReceiptUrl,
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
                                         PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
                                         Refund = refundInfo

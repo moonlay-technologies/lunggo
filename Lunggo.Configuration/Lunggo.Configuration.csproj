@@ -127,6 +127,38 @@
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightCrawler\Airline.csv" />
+    <None Include="Config\WebJob.FlightCrawler\Airport.csv" />
+    <None Include="Config\WebJob.FlightCrawler\azureStorage.properties" />
+    <None Include="Config\WebJob.FlightCrawler\Country.csv" />
+    <None Include="Config\WebJob.FlightCrawler\db.properties" />
+    <None Include="Config\WebJob.FlightCrawler\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\HotelLocation.csv" />
+    <None Include="Config\WebJob.FlightCrawler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\azureStorage.properties" />
+    <None Include="Config\WebJob.FlightCrawlScheduler\db.properties" />
+    <None Include="Config\WebJob.FlightCrawlScheduler\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
     <None Include="Config\Worker.EticketHandler\Airline.csv" />
@@ -246,6 +278,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Web.Release.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\App.Debug.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\App.Release.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

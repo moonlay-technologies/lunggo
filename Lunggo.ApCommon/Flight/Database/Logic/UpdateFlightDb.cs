@@ -52,9 +52,13 @@ namespace Lunggo.ApCommon.Flight.Service
                             PaymentMediumCd = PaymentMediumCd.Mnemonic(payment.Medium),
                             PaymentMethodCd = PaymentMethodCd.Mnemonic(payment.Method),
                             PaymentStatusCd = PaymentStatusCd.Mnemonic(payment.Status),
-                            PaymentTime = payment.Time,
+                            PaymentTime = payment.Time.HasValue ? payment.Time.Value.ToUniversalTime() : (DateTime?) null,
                             PaymentId = payment.Id,
                             PaymentTargetAccount = payment.TargetAccount,
+                            PaymentTimeLimit = payment.TimeLimit.HasValue ? payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
+                            PaymentUrl = payment.Url,
+                            PaymentReceiptUrl = payment.ReceiptUrl,
+                            PaidAmount = payment.PaidAmount,
                             FinalPrice = payment.FinalPrice,
                         };
                         UpdateFlightPaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
@@ -88,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         RefundAmount = refund.Amount,
                         RefundTargetBank = refund.TargetBank,
                         RefundTargetAccount = refund.TargetAccount,
-                        RefundTime = refund.Time,
+                        RefundTime = refund.Time.ToUniversalTime(),
                         RsvNo = rsvNo
                     });
                 }

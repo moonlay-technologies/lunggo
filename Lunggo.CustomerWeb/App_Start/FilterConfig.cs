@@ -30,7 +30,7 @@ namespace Lunggo.CustomerWeb
         {
             var basicAuthEnvList = new List<String>
             {
-                "dv1"
+                
             };
             var environment = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             if (basicAuthEnvList.Any(p => p == environment))

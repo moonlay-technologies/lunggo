@@ -18,6 +18,7 @@ using Lunggo.Framework.Filter;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Redis;
+using Microsoft.Data.OData.Query;
 using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -76,7 +77,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 Token = token,
                 Itinerary = itinerary,
-                ExpiryTime = expiryTime
+                ExpiryTime = expiryTime.GetValueOrDefault()
             });
         }
 
@@ -118,34 +119,11 @@ namespace Lunggo.CustomerWeb.Controllers
             var bookResult = FlightService.GetInstance().BookFlight(bookInfo);
             if (bookResult.IsSuccess)
             {
-                var transactionDetails = new TransactionDetails
-                {
-                    OrderId = bookResult.RsvNo,
-                    Amount = bookResult.FinalPrice
-                };
-                var itemDetails = new List<ItemDetails>
-                    {
-                        new ItemDetails
-                        {
-                            Id = "1",
-                            Name = 
-                                data.Itinerary.TripType + " " +
-                                data.Itinerary.FlightTrips[0].OriginAirport + "-" +
-                                data.Itinerary.FlightTrips[0].DestinationAirport + " " +
-                                data.Itinerary.FlightTrips[0].DepartureDate.ToString("d MMM yy") +
-                                (data.Itinerary.TripType == TripType.Return
-                                ? "-" + data.Itinerary.FlightTrips[1].DepartureDate.ToString("d MMM yy")
-                                : ""),
-                            Quantity = 1,
-                            Price = bookResult.FinalPrice
-                        }
-                    };
-
-                var url = PaymentService.GetInstance().GetPaymentUrl(transactionDetails, itemDetails, data.Payment.Method);
-                if (url == null && data.Payment.Method == PaymentMethod.BankTransfer)
-                    return RedirectToAction("Confirmation", "Flight", new {RsvNo = bookResult.RsvNo});
+                if (bookResult.IsPaymentThroughThirdPartyUrl)
+                    return Redirect(bookResult.PaymentUrl);
                 else
-                    return Redirect(url);
+                    return RedirectToAction("Confirmation", "Flight", new { bookResult.RsvNo });
+                    
             }
             else
             {

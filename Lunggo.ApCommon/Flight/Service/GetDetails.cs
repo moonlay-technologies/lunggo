@@ -47,10 +47,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     else
                     {
                         detailsResult.IsSuccess = false;
-                        if (response.Errors != null)
-                            response.Errors.ForEach(output.AddError);
-                        if (response.ErrorMessages != null)
-                            response.ErrorMessages.ForEach(output.AddError);
+                        response.Errors.ForEach(output.AddError);
+                        response.ErrorMessages.ForEach(output.AddError);
                     }
                     output.DetailsResults.Add(detailsResult);
                 });

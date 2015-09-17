@@ -29,6 +29,7 @@ namespace Lunggo.Worker.EticketHandler
             InitHtmlTemplateService();
             InitMailService();
             InitBlobStorageService();
+
         }
 
         private static void InitConfigurationManager()

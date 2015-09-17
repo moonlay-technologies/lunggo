@@ -14,6 +14,7 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         public string RsvNo { get; set; }
         public DateTime RsvTime { get; set; }
+
         public FlightItineraryForDisplay Itinerary { get; set; }
         public List<FlightPassenger> Passengers { get; set; }
         public PaymentInfo Payment { get; set; }

@@ -925,8 +925,6 @@
     <Content Include="Assets\css\landingPage.scss" />
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
-    <None Include="Properties\PublishProfiles\dv1-cw %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2197,6 +2195,7 @@
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
+    <Content Include="Views\Template\CheckOrder.cshtml" />
     <Content Include="Views\Home\Dummy.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
