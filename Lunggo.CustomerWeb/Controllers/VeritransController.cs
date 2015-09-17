@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Database;
 using Lunggo.ApCommon.Flight.Service;
@@ -46,7 +47,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FinalPrice = notif.gross_amount
                 };
 
-                if (notif.order_id.First() == 'F')
+                if (notif.order_id.IsFlightRsvNo())
                 {
                     var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
                     if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)

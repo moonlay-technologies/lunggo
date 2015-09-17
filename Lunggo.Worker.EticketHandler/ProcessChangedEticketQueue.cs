@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.HtmlTemplate;
@@ -32,7 +33,7 @@ namespace Lunggo.Worker.EticketHandler
             var rsvNo = message.AsString;
 
             Trace.WriteLine("Processing Changed Eticket for RsvNo " + rsvNo + "...");
-            if (rsvNo.First() == 'F')
+            if (rsvNo.IsFlightRsvNo())
             {
                 var sw = new Stopwatch();
                 var flightService = FlightService.GetInstance();

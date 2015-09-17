@@ -384,7 +384,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var passengerRecords =
-                        GetSavedPassengersByContactEmailQuery.GetInstance().Execute(conn, contactEmail).ToList();
+                        GetSavedPassengersByContactEmailQuery.GetInstance().Execute(conn, new {ContactEmail = contactEmail}).ToList();
                     return passengerRecords.Select(record => new FlightPassenger
                     {
                         Type = PassengerTypeCd.Mnemonic(record.PassengerTypeCd),
