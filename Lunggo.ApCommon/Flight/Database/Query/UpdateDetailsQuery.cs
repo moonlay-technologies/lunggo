@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class UpdateFlightDetailsQuery : NoReturnQueryBase<UpdateFlightDetailsQuery>
+    internal class UpdateDetailsQuery : NoReturnQueryBase<UpdateDetailsQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal class UpdateFlightDb
+        internal class UpdateDb
         {
             internal static void CancelReservation(string rsvNo, CancellationType type)
             {
@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var prevStatus = GetFlightDb.PaymentStatus(rsvNo);
+                    var prevStatus = GetDb.PaymentStatus(rsvNo);
                     if (payment.Status != prevStatus)
                     {
                         var queryParam = new FlightReservationTableRecord
@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             PaidAmount = payment.PaidAmount,
                             FinalPrice = payment.FinalPrice,
                         };
-                        UpdateFlightPaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
+                        UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                         return true;
                     }
                     else
@@ -98,11 +98,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static void UpdateBookingStatus(List<BookingStatusInfo> statusData)
+            internal static void BookingStatus(List<BookingStatusInfo> statusData)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var query = UpdateFlightBookingStatusQuery.GetInstance();
+                    var query = UpdateBookingStatusQuery.GetInstance();
                     var dbBookingStatusInfo = statusData.Select(info => new
                     {
                         info.BookingId,

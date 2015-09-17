@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal class FlightIdUtil
+        internal class IdUtil
         {
             internal static string GetCoreId(string id)
             {

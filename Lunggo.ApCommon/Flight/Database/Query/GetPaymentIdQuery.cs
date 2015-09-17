@@ -3,30 +3,28 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class DeleteFlightTripPerItineraryQuery : NoReturnQueryBase<DeleteFlightTripPerItineraryQuery>
+    internal class GetPaymentIdQuery : QueryBase<GetPaymentIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append(CreateDeleteClause());
+            queryBuilder.Append(CreateSelectClause());
             queryBuilder.Append(CreateWhereClause());
             return queryBuilder.ToString();
         }
 
-        private static string CreateDeleteClause()
+        private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"DELETE t ");
-            clauseBuilder.Append(@"FROM FlightTrip AS t ");
-            clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON t.ItineraryId = i.ItineraryId ");
+            clauseBuilder.Append("SELECT PaymentId ");
+            clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"i.BookingId = @BookingId");
+            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
     }

@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, output);
-                InsertFlightDb.Reservation(reservation);
+                InsertDb.Reservation(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.PaymentUrl = reservation.Payment.Url;
                 output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
@@ -114,7 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 itemNameBuilder.Append(" " + trip.DepartureDate.ToString("dd-MM-yyyy"));
                 if (trip != trips.Last())
                 {
-                    itemNameBuilder.Append("\n");
+                    itemNameBuilder.Append(", ");
                 }
             }
             var itemName = itemNameBuilder.ToString();
@@ -125,13 +125,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 Price = reservation.Itineraries.Sum(itin => itin.LocalPrice),
                 Quantity = 1
             });
-            itemDetails.Add(new ItemDetails
-            {
-               Id = "2",
-               Name = "Discount",
-               Price = -reservation.Discount.Nominal,
-               Quantity = 1
-            });
+            if (reservation.Discount.Nominal != 0)
+                itemDetails.Add(new ItemDetails
+                {
+                   Id = "2",
+                   Name = "Discount",
+                   Price = -reservation.Discount.Nominal,
+                   Quantity = 1
+                });
             return itemDetails;
         }
 

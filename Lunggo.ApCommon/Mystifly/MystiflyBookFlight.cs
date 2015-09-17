@@ -24,14 +24,14 @@ namespace Lunggo.ApCommon.Mystifly
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            var fareType = FlightService.FlightIdUtil.GetFareType(bookInfo.FareId);
+            var fareType = FlightService.IdUtil.GetFareType(bookInfo.FareId);
             if (fareType != FareType.Lcc)
             {
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = FlightService.FlightIdUtil.GetCoreId(bookInfo.FareId),
+                    FareSourceCode = FlightService.IdUtil.GetCoreId(bookInfo.FareId),
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Mystifly
                     IsSuccess = true,
                     Status = new BookingStatusInfo
                     { 
-                        BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(bookingId, FlightSupplier.Mystifly, fareType),
+                        BookingId = FlightService.IdUtil.ConstructIntegratedId(bookingId, FlightSupplier.Mystifly, fareType),
                         BookingStatus = BookingStatus.Booked,
                         TimeLimit = DateTime.UtcNow.AddHours(2)
                     }
@@ -253,7 +253,7 @@ namespace Lunggo.ApCommon.Mystifly
                     Status = new BookingStatusInfo
                     {
                         BookingStatus = BookingStatus.Booked,
-                        BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                        BookingId = FlightService.IdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
                         TimeLimit = response.TktTimeLimit.HasValue ? response.TktTimeLimit.Value.ToUniversalTime() : (DateTime?) null
                     }
                 };
@@ -263,7 +263,7 @@ namespace Lunggo.ApCommon.Mystifly
                     Status = new BookingStatusInfo
                     {
                         BookingStatus = BookingStatus.Failed,
-                        BookingId = FlightService.FlightIdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                        BookingId = FlightService.IdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
                     }
                 };
         }

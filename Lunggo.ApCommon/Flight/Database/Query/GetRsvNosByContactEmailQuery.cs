@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightPaymentStatusQuery : QueryBase<GetFlightPaymentStatusQuery, string>
+    class GetRsvNosByContactEmailQuery : QueryBase<GetRsvNosByContactEmailQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT PaymentStatusCd ");
+            clauseBuilder.Append("SELECT RsvNo ");
             clauseBuilder.Append("FROM FlightReservation ");
             return clauseBuilder.ToString();
         }
@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
+            clauseBuilder.Append("WHERE ContactEmail = @ContactEmail");
             return clauseBuilder.ToString();
         }
     }

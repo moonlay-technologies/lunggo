@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Pattern;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 
@@ -19,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal class InsertFlightDb
+        internal class InsertDb
         {
             internal static void Reservation(FlightReservation reservation)
             {
@@ -72,8 +73,8 @@ namespace Lunggo.ApCommon.Flight.Service
                             RsvNo = reservation.RsvNo,
                             BookingId = itin.BookingId,
                             BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
-                            FareTypeCd = FareTypeCd.Mnemonic(FlightIdUtil.GetFareType(itin.BookingId)),
-                            SupplierCd = FlightSupplierCd.Mnemonic(FlightIdUtil.GetSupplier(itin.BookingId)),
+                            FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
+                            SupplierCd = FlightSupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
                             SupplierPrice = itin.SupplierPrice,
                             SupplierCurrencyCd = itin.SupplierCurrency,
                             SupplierExchangeRate = itin.SupplierRate,
@@ -187,7 +188,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var itineraryId =
-                        GetFlightItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
+                        SingletonBase<GetItineraryIdQuery>.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
                     foreach (var trip in details.FlightItineraries.FlightTrips)
                     {
@@ -229,6 +230,40 @@ namespace Lunggo.ApCommon.Flight.Service
                                 InsertPgId = "xxx"
                             };
                             FlightSegmentTableRepo.GetInstance().Insert(conn, segmentRecord);
+                        }
+                    }
+                }
+            }
+
+            internal static void SavedPassengers(string contactEmail, List<FlightPassenger> passengers)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var savedPassengers = GetSavedPassengersByContactEmailQuery.GetInstance()
+                        .Execute(conn, new {ContactEmail = contactEmail}).ToList();
+                    foreach (var passenger in passengers)
+                    {
+                        var passengerRecord = new FlightSavedPassengerTableRecord
+                        {
+                            ContactEmail = contactEmail,
+                            PassengerTypeCd = PassengerTypeCd.Mnemonic(passenger.Type),
+                            TitleCd = TitleCd.Mnemonic(passenger.Title),
+                            FirstName = passenger.FirstName,
+                            LastName = passenger.LastName,
+                            BirthDate = passenger.DateOfBirth,
+                            GenderCd = GenderCd.Mnemonic(passenger.Title == Title.Mister ? Gender.Male : Gender.Female),
+                            IdNumber = passenger.PassportNumber,
+                            PassportExpiryDate = passenger.PassportExpiryDate,
+                            CountryCd = passenger.PassportCountry
+                        };
+                        if (savedPassengers.Any(
+                            saved => saved.FirstName == passenger.FirstName && saved.LastName == passenger.LastName))
+                        {
+                            FlightSavedPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
+                        }
+                        else
+                        {
+                            FlightSavedPassengerTableRepo.GetInstance().Update(conn, passengerRecord);
                         }
                     }
                 }

@@ -33,45 +33,45 @@ namespace Lunggo.ApCommon.Flight.Service
 
         internal FlightReservation GetReservation(string rsvNo)
         {
-            return GetFlightDb.Reservation(rsvNo);
+            return GetDb.Reservation(rsvNo);
         }
 
         public FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
-            var rsv = GetFlightDb.OverviewReservation(rsvNo);
+            var rsv = GetDb.OverviewReservation(rsvNo);
             return ConvertToReservationForDisplay(rsv);
         }
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
         {
-            var rsvs = GetFlightDb.OverviewReservationsByContactEmail(contactEmail);
+            var rsvs = GetDb.OverviewReservationsByContactEmail(contactEmail);
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
         public List<FlightReservationForDisplay> SearchReservations(FlightReservationSearch search)
         {
-            var rsvs = GetFlightDb.SearchReservations(search);
+            var rsvs = GetDb.SearchReservations(search);
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 
         public List<FlightReservation> GetUnpaidReservations()
         {
-            return GetFlightDb.UnpaidReservations().ToList();
+            return GetDb.UnpaidReservations().ToList();
         }
 
         public void ExpireReservations()
         {
-            UpdateFlightDb.ExpireReservations();
+            UpdateDb.ExpireReservations();
         }
 
         internal void CancelReservation(string rsvNo, CancellationType cancellationType)
         {
-            UpdateFlightDb.CancelReservation(rsvNo, cancellationType);
+            UpdateDb.CancelReservation(rsvNo, cancellationType);
         }
 
         internal void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
         {
-            UpdateFlightDb.ConfirmRefund(rsvNo, refund);
+            UpdateDb.ConfirmRefund(rsvNo, refund);
         }
     }
 }

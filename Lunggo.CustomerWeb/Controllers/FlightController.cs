@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Database;
+using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -49,7 +50,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         return View("SearchResultList-Single", search);
                     case TripType.Return:
                         return View("SearchResultList-Return", search);
-                    default :
+                    default:
                         return View("SearchResultList-Single", search);
                 }
             }
@@ -65,7 +66,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var tokens = token.Split('.').ToList();
             var flightService = FlightService.GetInstance();
             var newToken = flightService.BundleFlight(tokens);
-            return RedirectToAction("Checkout", "Flight", new {token = newToken});
+            return RedirectToAction("Checkout", "Flight", new { token = newToken });
         }
 
         public ActionResult Checkout(string token)
@@ -73,19 +74,21 @@ namespace Lunggo.CustomerWeb.Controllers
             var service = FlightService.GetInstance();
             var itinerary = service.GetItineraryForDisplay(token);
             var expiryTime = service.GetItineraryExpiry(token);
+            var savedPassengers = service.GetSavedPassengers(User.Identity.GetEmail());
             return View(new FlightCheckoutData
             {
                 Token = token,
                 Itinerary = itinerary,
-                ExpiryTime = expiryTime.GetValueOrDefault()
+                ExpiryTime = expiryTime.GetValueOrDefault(),
+                SavedPassengers = savedPassengers
             });
         }
 
         [HttpPost]
         public ActionResult Checkout(FlightCheckoutData data)
         {
-            data.Payment.Medium = data.Payment.Method == PaymentMethod.BankTransfer 
-                ? PaymentMedium.Direct 
+            data.Payment.Medium = data.Payment.Method == PaymentMethod.BankTransfer
+                ? PaymentMedium.Direct
                 : PaymentMedium.Veritrans;
 
             var service = FlightService.GetInstance();
@@ -123,7 +126,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     return Redirect(bookResult.PaymentUrl);
                 else
                     return RedirectToAction("Confirmation", "Flight", new { bookResult.RsvNo });
-                    
+
             }
             else
             {
@@ -160,7 +163,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var paymentService = PaymentService.GetInstance();
             paymentService.SubmitTransferConfirmationReport(report);
-            return RedirectToAction("Thankyou", "Flight", new {rsvNo = report.RsvNo});
+            return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
         }
     }
 }

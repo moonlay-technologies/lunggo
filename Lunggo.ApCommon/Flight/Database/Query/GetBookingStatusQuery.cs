@@ -3,32 +3,27 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightPassengerPrimKeyQuery : QueryBase<GetFlightPassengerPrimKeyQuery, long>
+    internal class GetBookingStatusQuery : QueryBase<GetBookingStatusQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            queryBuilder.Append(CreateWhereClause());
+            queryBuilder.Append(CreateWhereClauser());
             return queryBuilder.ToString();
         }
 
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT PassengerId ");
-            clauseBuilder.Append(@"FROM FlightPassenger ");
+            clauseBuilder.Append("SELECT BookingStatus FROM FlightItinerary ");
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause()
+        private static string CreateWhereClauser()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"FirstName = @FirstName AND ");
-            clauseBuilder.Append(@"LastName = @LastName AND ");
-            clauseBuilder.Append(@"BirthDate = @DateOfBirth AND ");
-            clauseBuilder.Append(@"IdNumber = IdNumber");
+            clauseBuilder.Append("WHERE BookingId = @BookingId");
             return clauseBuilder.ToString();
         }
     }

@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         public RevalidateFlightOutput RevalidateFlight(RevalidateFlightInput input)
-        {
+        {   
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
                 input.Token = SelectFlight(input.SearchId, input.ItinIndex);

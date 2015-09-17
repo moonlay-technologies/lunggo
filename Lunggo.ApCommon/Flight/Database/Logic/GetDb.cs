@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.AccessControl;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
@@ -17,14 +18,14 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        internal class GetFlightDb
+        internal class GetDb
         {
             internal static List<FlightReservation> OverviewReservationsByContactEmail(string contactEmail)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
                     var rsvNos =
-                        GetFlightRsvNosByContactEmailQuery.GetInstance()
+                        GetRsvNosByContactEmailQuery.GetInstance()
                             .Execute(conn, new {ContactEmail = contactEmail})
                             .ToList();
                     if (!rsvNos.Any())
@@ -40,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var rsvNos = SearchFlightReservationQuery.GetInstance().Execute(conn, search, search);
+                    var rsvNos = SearchReservationQuery.GetInstance().Execute(conn, search, search);
                     var reservations = rsvNos.Select(Reservation);
                     return reservations;
                 }
@@ -56,7 +57,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var segmentLookup = new Dictionary<long, FlightSegment>();
                     var passengerLookup = new Dictionary<long, FlightPassenger>();
                     var dict = DictionaryService.GetInstance();
-                    reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
+                    reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
                         (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
                         {
                             if (reservation == null)
@@ -171,7 +172,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var segmentLookup = new Dictionary<long, FlightSegment>();
                     var passengerLookup = new Dictionary<long, FlightPassenger>();
                     var dict = DictionaryService.GetInstance();
-                    reservation = GetFlightReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
+                    reservation = GetReservationQuery.GetInstance().ExecuteMultiMap(conn, new {RsvNo = rsvNo},
                         (reservationRecord, itineraryRecord, tripRecord, segmentRecord, passengerRecord) =>
                         {
                             if (reservationRecord == null)
@@ -299,11 +300,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            public static IEnumerable<FlightReservation> UnpaidReservations()
+            internal static IEnumerable<FlightReservation> UnpaidReservations()
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var rsvRecords = GetUnpaidFlightReservationQuery.GetInstance().Execute(conn, null);
+                    var rsvRecords = GetUnpaidReservationQuery.GetInstance().Execute(conn, null);
                     var reservations = rsvRecords.Select(record => new FlightReservation
                     {
                         RsvNo = record.RsvNo,
@@ -321,7 +322,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var activeRuleRecords = GetFlightActivePriceMarginRuleQuery.GetInstance().Execute(conn, null);
+                    var activeRuleRecords = GetActivePriceMarginRuleQuery.GetInstance().Execute(conn, null);
                     var activeRules = activeRuleRecords.Select(record => new MarginRule
                     {
                         RuleId = record.RuleId.GetValueOrDefault(),
@@ -364,7 +365,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    return GetFlightRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+                    return GetRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
                 }
             }
 
@@ -372,9 +373,30 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var statusCd = GetFlightPaymentStatusQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).Single();
+                    var statusCd = GetPaymentStatusQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).Single();
                     var status = PaymentStatusCd.Mnemonic(statusCd);
                     return status;
+                }
+            }
+
+            internal static List<FlightPassenger> SavedPassengers(string contactEmail)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var passengerRecords =
+                        GetSavedPassengersByContactEmailQuery.GetInstance().Execute(conn, contactEmail).ToList();
+                    return passengerRecords.Select(record => new FlightPassenger
+                    {
+                        Type = PassengerTypeCd.Mnemonic(record.PassengerTypeCd),
+                        Title = TitleCd.Mnemonic(record.TitleCd),
+                        FirstName = record.FirstName,
+                        LastName = record.LastName,
+                        Gender = GenderCd.Mnemonic(record.GenderCd),
+                        DateOfBirth = record.BirthDate,
+                        PassportNumber = record.IdNumber,
+                        PassportExpiryDate = record.PassportExpiryDate,
+                        PassportCountry = record.CountryCd
+                    }).ToList();
                 }
             }
         }

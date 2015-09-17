@@ -20,6 +20,11 @@ namespace Lunggo.ApCommon.Flight.Service
         private const string SingleItinKeyPrefix = "9284";
         private const string ItinBundleKeyPrefix = "3462";
 
+        public List<FlightPassenger> GetSavedPassengers(string contactEmail)
+        {
+            return GetDb.SavedPassengers(contactEmail);
+        }
+
         public void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, string searchId, int timeout)
         {
             if (timeout == 0)

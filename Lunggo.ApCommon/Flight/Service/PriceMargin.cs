@@ -75,12 +75,12 @@ namespace Lunggo.ApCommon.Flight.Service
         public void PullRemotePriceMarginRules()
         {
             MarginRules.Clear();
-            MarginRules.AddRange(GetFlightDb.PriceMarginRules());
+            MarginRules.AddRange(GetDb.PriceMarginRules());
         }
 
         public void PushRemotePriceMarginRules()
         {
-            InsertFlightDb.PriceMarginRules(MarginRules, DeletedMarginRules);
+            InsertDb.PriceMarginRules(MarginRules, DeletedMarginRules);
         }
 
         #region HelperMethods

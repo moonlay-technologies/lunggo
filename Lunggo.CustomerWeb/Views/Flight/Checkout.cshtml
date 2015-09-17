@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Service
 @using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
@@ -48,6 +49,7 @@
     var needBirthDate = false;
     var needPassport = false;
     var token = "";
+    var savedPassengers = Model.SavedPassengers;
 
     try
     {
@@ -202,11 +204,11 @@
                                     <input type="radio" name="Payment.Method" value="@PaymentMethod.CreditCard" id="payment-creditcard">
                                     <span>Credit Card</span>
                                 </label>
+                                <label class="payment-veritrans" for="payment-mandiri">
+                                    <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
+                                    <span>Mandiri ClickPay</span>
+                                </label>
                                 @*
-                                    <label class="payment-veritrans" for="payment-mandiri">
-                                        <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
-                                        <span>Mandiri ClickPay</span>
-                                    </label>
                                     <label class="payment-veritrans" for="payment-cimb">
                                         <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
                                         <span>CIMB Clicks</span>

@@ -1,10 +1,9 @@
 ﻿using System.Text;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetFlightPaymentInfoQuery : QueryBase<GetFlightPaymentInfoQuery, FlightReservationTableRecord>
+    class GetRsvNoByBookingIdQuery : QueryBase<GetRsvNoByBookingIdQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -17,15 +16,15 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT PaymentId, PaymentMediumCd, PaymentMethodCd, PaymentStatusCd, PaymentTime, PaymentTargetAccount ");
-            clauseBuilder.Append("FROM FlightReservation ");
+            clauseBuilder.Append("SELECT RsvNo ");
+            clauseBuilder.Append("FROM FlightItinerary ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE RsvNo = @RsvNo");
+            clauseBuilder.Append("WHERE BookingId = @BookingId");
             return clauseBuilder.ToString();
         }
     }

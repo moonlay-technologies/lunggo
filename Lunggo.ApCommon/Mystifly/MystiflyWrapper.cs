@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = FlightService.FlightIdUtil.GetCoreId(conditions.FareId),
+                    FareSourceCode = FlightService.IdUtil.GetCoreId(conditions.FareId),
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null

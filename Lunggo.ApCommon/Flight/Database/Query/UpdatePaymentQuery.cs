@@ -3,7 +3,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    public class UpdateFlightPaymentQuery : NoReturnQueryBase<UpdateFlightPaymentQuery>
+    public class UpdatePaymentQuery : NoReturnQueryBase<UpdatePaymentQuery>
     {
         protected override string GetQuery(dynamic condition = null)
         {

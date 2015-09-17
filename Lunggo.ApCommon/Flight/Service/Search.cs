@@ -73,6 +73,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var searchId = HashEncodeConditions(condition);
                 SaveSearchedItinerariesToCache(result.FlightItineraries, searchId, timeout);
+                result.SearchId = searchId;
             }
             return result;
         }

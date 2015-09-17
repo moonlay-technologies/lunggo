@@ -1,32 +1,34 @@
 ﻿using System.Text;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Flight.Database.Query
 {
-    internal class GetUnpaidFlightReservationQuery : QueryBase<GetUnpaidFlightReservationQuery, FlightReservationTableRecord>
+    internal class GetPassengerPrimKeyQuery : QueryBase<GetPassengerPrimKeyQuery, long>
     {
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
-            queryBuilder.Append(CreateWhereClause(condition));
+            queryBuilder.Append(CreateWhereClause());
             return queryBuilder.ToString();
         }
 
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"SELECT RsvNo, PaymentTimeLimit, FinalPrice ");
-            clauseBuilder.Append(@"FROM FlightReservation ");
+            clauseBuilder.Append(@"SELECT PassengerId ");
+            clauseBuilder.Append(@"FROM FlightPassenger ");
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause(dynamic condition)
+        private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"WHERE PaymentMethodCd = 'TRF' AND PaymentStatusCd = 'PEN'");
+            clauseBuilder.Append(@"WHERE ");
+            clauseBuilder.Append(@"FirstName = @FirstName AND ");
+            clauseBuilder.Append(@"LastName = @LastName AND ");
+            clauseBuilder.Append(@"BirthDate = @DateOfBirth AND ");
+            clauseBuilder.Append(@"IdNumber = IdNumber");
             return clauseBuilder.ToString();
         }
     }

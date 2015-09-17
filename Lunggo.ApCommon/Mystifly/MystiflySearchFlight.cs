@@ -232,7 +232,7 @@ namespace Lunggo.ApCommon.Mystifly
                 flightItinerary.CanHold = pricedItinerary.AirItineraryPricingInfo.FareType != FareType.WebFare;
                 MapPassengerCount(pricedItinerary, flightItinerary);
                 flightItinerary.FareId =
-                    FlightService.FlightIdUtil.ConstructIntegratedId(
+                    FlightService.IdUtil.ConstructIntegratedId(
                         pricedItinerary.AirItineraryPricingInfo.FareSourceCode,
                         FlightSupplier.Mystifly,
                         MapFareType(pricedItinerary.AirItineraryPricingInfo.FareType));

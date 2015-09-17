@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
                     }
-                    UpdateFlightBookingStatusQuery.GetInstance().Execute(conn, new
+                    UpdateBookingStatusQuery.GetInstance().Execute(conn, new
                     {
                         BookingId = bookingId,
                         NewBookingId = orderResult.BookingId,
@@ -65,6 +65,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
+                        InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
                     }
                 }
                 else

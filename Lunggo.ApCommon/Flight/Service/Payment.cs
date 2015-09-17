@@ -15,12 +15,12 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public bool UpdateFlightPayment(string rsvNo, PaymentInfo payment)
         {
-            return UpdateFlightDb.Payment(rsvNo, payment);
+            return UpdateDb.Payment(rsvNo, payment);
         }
 
         public void ConfirmReservationPayment(string rsvNo, decimal paidAmount)
         {
-            UpdateFlightDb.ConfirmPayment(rsvNo, paidAmount);
+            UpdateDb.ConfirmPayment(rsvNo, paidAmount);
         }
     }
 }

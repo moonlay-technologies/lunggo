@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var supplier = FlightIdUtil.GetSupplier(bookInfo.FareId);
+            var supplier = IdUtil.GetSupplier(bookInfo.FareId);
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private OrderTicketResult OrderTicketInternal(string bookingId)
         {
-            var supplier = FlightIdUtil.GetSupplier(bookingId);
+            var supplier = IdUtil.GetSupplier(bookingId);
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:

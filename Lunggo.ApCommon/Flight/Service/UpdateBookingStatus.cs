@@ -18,11 +18,11 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var statusData = GetBookingStatusInternal();
             if (statusData.Any())
-                UpdateFlightDb.UpdateBookingStatus(statusData);
+                UpdateDb.BookingStatus(statusData);
             var ticketedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.Ticketed).Select(data => data.BookingId).ToList();
             var scheduleChangedBookingIds = statusData.Where(data => data.BookingStatus == BookingStatus.ScheduleChanged).Select(data => data.BookingId).ToList();
             var rsvNosWithTicketedBooking = ticketedBookingIds.Any()
-                ? GetFlightDb.RsvNoByBookingId(ticketedBookingIds).Distinct()
+                ? GetDb.RsvNoByBookingId(ticketedBookingIds).Distinct()
                 : new List<string>();
             var rsvsWithTicketedBooking = rsvNosWithTicketedBooking.Select(GetReservation);
             ticketedRsvNos =
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 itin.BookingStatus == BookingStatus.ScheduleChanged))
                     .Select(rsv => rsv.RsvNo).ToList();
             scheduleChangedRsvNos = scheduleChangedBookingIds.Any()
-                ? GetFlightDb.RsvNoByBookingId(scheduleChangedBookingIds).Distinct().ToList()
+                ? GetDb.RsvNoByBookingId(scheduleChangedBookingIds).Distinct().ToList()
                 : new List<string>();
         }
     }
