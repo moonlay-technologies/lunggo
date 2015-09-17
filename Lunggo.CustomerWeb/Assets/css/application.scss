@@ -1186,6 +1186,13 @@ hr {border-color:#aaa;}
         /*-----*/
         .flight-departure-info {}
         .flight-return-info {border-top:1px solid #ddd;}
+        .flight-notice {padding:10px; background:#fcf8e3; width:100%; margin-bottom:10px;
+            h3 {margin:0;
+                &:before, &:after {content:""; display:block; width:100%; clear:both;}
+                .new-price {}
+                .btn.btn-yellow {padding:0 10px;}
+            }
+        }
     }
     footer {background:#ededed; padding:15px;
         &:before,&:after {@include clearfix();}

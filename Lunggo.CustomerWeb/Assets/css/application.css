@@ -2857,6 +2857,20 @@ hr {
       padding: 10px; }
     .trip-flight-overview .flight-main .flight-return-info {
       border-top: 1px solid #ddd; }
+    .trip-flight-overview .flight-main .flight-notice {
+      padding: 10px;
+      background: #fcf8e3;
+      width: 100%;
+      margin-bottom: 10px; }
+      .trip-flight-overview .flight-main .flight-notice h3 {
+        margin: 0; }
+        .trip-flight-overview .flight-main .flight-notice h3:before, .trip-flight-overview .flight-main .flight-notice h3:after {
+          content: "";
+          display: block;
+          width: 100%;
+          clear: both; }
+        .trip-flight-overview .flight-main .flight-notice h3 .btn.btn-yellow {
+          padding: 0 10px; }
   .trip-flight-overview footer {
     background: #ededed;
     padding: 15px;
