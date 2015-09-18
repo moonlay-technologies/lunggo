@@ -86,7 +86,7 @@ namespace Lunggo.ApCommon.Mystifly
                 result.IsValid = false;
                 result.Itinerary = null;
                 result.Errors = new List<FlightError> {FlightError.FareIdNoLongerValid};
-                result.ErrorMessages = null;
+                result.ErrorMessages = new List<string>();
             }
             return result;
         }

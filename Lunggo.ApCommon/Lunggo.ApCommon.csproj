@@ -311,7 +311,7 @@
     <Compile Include="Mystifly\MystiflySearchFlight.cs" />
     <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
-    <Compile Include="Mystifly\MystiflyWrapper.cs" />
+    <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
