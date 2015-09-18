@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 itins.SelectMany(itin => itin.FlightTrips).OrderBy(trip => trip.FlightSegments.First().DepartureTime).ToList();
             var reservation = new FlightReservation
             {
-                RsvNo = RsvNoSequence.GetInstance().GetNextFlightRsvNo(),
+                RsvNo = FlightRsvNoSequence.GetInstance().GetNextFlightRsvNo(),
                 RsvTime = DateTime.UtcNow,
                 Itineraries = itins,
                 Contact = input.Contact,

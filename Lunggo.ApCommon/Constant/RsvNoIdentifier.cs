@@ -14,17 +14,17 @@ namespace Lunggo.ApCommon.Constant
 
         public static bool IsFlightRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(1, 1) == Flight;
+            return rsvNo.Substring(0, 1) == Flight;
         }
 
         public static bool IsHotelRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(1, 1) == Hotel;
+            return rsvNo.Substring(0, 1) == Hotel;
         }
 
-        public static bool IsActiviryRsvNo(this string rsvNo)
+        public static bool IsActivityRsvNo(this string rsvNo)
         {
-            return rsvNo.Substring(1, 1) == Activity;
+            return rsvNo.Substring(0, 1) == Activity;
         }
     }
 }

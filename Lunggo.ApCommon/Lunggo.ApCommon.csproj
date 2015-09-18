@@ -137,6 +137,7 @@
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
+    <Compile Include="Constant\CacheIdentifier.cs" />
     <Compile Include="Constant\RsvNoIdentifier.cs" />
     <Compile Include="Currency\Service\CurrencyService.cs" />
     <Compile Include="Currency\Model\Deposit.cs" />
@@ -327,7 +328,9 @@
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
     <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryCacheIdSequence.cs" />
-    <Compile Include="Sequence\RsvNoSequence.cs" />
+    <Compile Include="Sequence\ActivityRsvNoSequence.cs" />
+    <Compile Include="Sequence\HotelRsvNoSequence.cs" />
+    <Compile Include="Sequence\FlightRsvNoSequence.cs" />
     <Compile Include="Sequence\FlightSearchIdSequence.cs" />
     <Compile Include="Sequence\FlightEticketIdSequence.cs" />
     <Compile Include="Sequence\FlightPassengerIdSequence.cs" />

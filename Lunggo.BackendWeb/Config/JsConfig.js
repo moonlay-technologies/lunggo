@@ -38,3 +38,7 @@ var FlightAutocompleteConfig = {
 var AirlineAutocompleteConfig = {
     Url: 'http://localhost:1147/api/v1/autocomplete/airline/'
 };
+
+var CheckVoucherConfig = {
+    Url: 'http://localhost:1147/api/v1/voucher/check'
+};

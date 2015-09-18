@@ -10,23 +10,23 @@ using Lunggo.Framework.SnowMaker;
 
 namespace Lunggo.ApCommon.Sequence
 {
-    public class RsvNoSequence : SequenceBase
+    public class ActivityRsvNoSequence : SequenceBase
     {
-        private static readonly RsvNoSequence Instance = new RsvNoSequence();
+        private static readonly ActivityRsvNoSequence Instance = new ActivityRsvNoSequence();
         private readonly SequenceProperties _properties;
 
 
-        private RsvNoSequence()
+        private ActivityRsvNoSequence()
         {
             _properties = new SequenceProperties
             {
-                Name = "FlightReservationSequence",
+                Name = "ActivityRsvNoSequence",
                 InitialValue = 6532679
             };
             Init(_properties);
         }
 
-        public static RsvNoSequence GetInstance()
+        public static ActivityRsvNoSequence GetInstance()
         {
             return Instance;
         }
@@ -40,20 +40,6 @@ namespace Lunggo.ApCommon.Sequence
             var nextRawId = GetNextNumber(_properties)%10000000L;
             var nextId = encodedDate + nextRawId;
             return nextId;
-        }
-
-        public string GetNextFlightRsvNo()
-        {
-            var id = GetNext();
-            var rsvNo = RsvNoIdentifier.Flight + id;
-            return rsvNo;
-        }
-
-        public string GetNextHotelRsvNo()
-        {
-            var id = GetNext();
-            var rsvNo = RsvNoIdentifier.Hotel + id;
-            return rsvNo;
         }
 
         public string GetNextActivityRsvNo()

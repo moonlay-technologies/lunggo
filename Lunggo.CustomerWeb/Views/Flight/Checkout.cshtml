@@ -92,6 +92,7 @@
                     <section class="customer-detail">
                         <section class="customer-form">
                             <input type="text" class="hidden" name="Token" value="@Model.Token" />
+                            <input type="text" class="hidden" name="Payment.Currency" value="IDR" />
                             <div class="form-group">
                                 <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
                                 <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")" value="@User.Identity.GetFirstName() @User.Identity.GetLastName()">

@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Service
         internal string SaveItineraryFromSearchToCache(string searchId, int itinIndex)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = SingleItinKeyPrefix + plainItinCacheId;
+            var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
             var itins = GetSearchedItinerariesFromCache(searchId);
             var redisService = RedisService.GetInstance();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -86,7 +86,7 @@ namespace Lunggo.ApCommon.Flight.Service
         internal string SaveItineraryToCache(FlightItinerary itin)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = SingleItinKeyPrefix + plainItinCacheId;
+            var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
             SaveItineraryToCache(itin, itinCacheId);
             return itinCacheId;
         }
@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Flight.Service
         internal string SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-            var itinCacheId = ItinBundleKeyPrefix + plainItinCacheId;
+            var itinCacheId = CacheIdentifier.Flight + ItinBundleKeyPrefix + plainItinCacheId;
             SaveItinerarySetAndBundleToCache(itinSet, itinBundle, itinCacheId);
             return itinCacheId;
         }
@@ -166,6 +166,11 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return null;
             }
+        }
+
+        private bool IsItinBundleCacheId(string cacheId)
+        {
+            return cacheId.Substring(0, 4) == ItinBundleKeyPrefix;
         }
     }
 }

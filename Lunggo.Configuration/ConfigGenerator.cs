@@ -22,6 +22,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -64,7 +65,7 @@ namespace Lunggo.Configuration
             Console.WriteLine();
 
             var generator = ConfigGenerator.GetInstance();
-            generator.StartConfig(DeploymentEnvironment.Local, projectList);
+            generator.StartConfig(Environment, projectList);
             HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
@@ -307,6 +308,7 @@ namespace Lunggo.Configuration
             const string autocompleteHotelLocationPath = @"/api/v1/autocomplete/hotellocation/";
             const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
+            const string checkVoucherPath = @"/api/v1/voucher/check";
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
             fileTemplate.Reset();
@@ -319,6 +321,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteHotelLocationPath", autocompleteHotelLocationPath);
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
+            fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

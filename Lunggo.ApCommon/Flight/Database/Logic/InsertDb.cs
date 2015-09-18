@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         PaymentTimeLimit = reservation.Payment.TimeLimit.HasValue ? reservation.Payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
                         PaymentTargetAccount = reservation.Payment.TargetAccount,
                         PaymentUrl = reservation.Payment.Url,
+                        CurrencyCd = reservation.Payment.Currency,
                         OverallTripTypeCd = TripTypeCd.Mnemonic(reservation.TripType),
                         TotalSupplierPrice = reservation.Itineraries.Sum(itin => itin.FinalIdrPrice),
                         PaymentFeeForCust = 0,

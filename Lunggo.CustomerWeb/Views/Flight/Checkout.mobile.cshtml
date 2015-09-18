@@ -110,6 +110,7 @@
 @using (Html.BeginForm("Checkout", "Flight", FormMethod.Post, new { @class="form-horizontal"}))
 {
     <input type="hidden" name="Token" value="@Model.Token" />
+    <input type="text" class="hidden" name="Payment.Currency" value="IDR" />
     <section class="page group-checkout group-flight-checkout customer-detail-page" ng-controller="checkoutController" ng-init="passengersNumber = @passengerCount">
         <section class="checkout-progress">
             <div class="checkout-step">

@@ -154,8 +154,8 @@
   <ItemGroup>
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRules.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Logic\ExpireReservations.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRulesLogic.cs" />
+    <Compile Include="ApiSrc\v1\Flights\Logic\ExpireReservationsLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetRulesLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\SearchFlightLogic.cs" />
@@ -172,6 +172,10 @@
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Rooms\RoomsController.cs" />
+    <Compile Include="ApiSrc\v1\Voucher\Logic\CheckVoucherLogic.cs" />
+    <Compile Include="ApiSrc\v1\Voucher\Model\CheckVoucherApiRequest.cs" />
+    <Compile Include="ApiSrc\v1\Voucher\Model\CheckVoucherApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Voucher\VoucherController.cs" />
     <Compile Include="App_Start\AppInitializer.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ApiSrc\v1\Hotels\Object\HotelSearchApiRequest.cs" />

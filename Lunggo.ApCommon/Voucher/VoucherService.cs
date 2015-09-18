@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher.Query;
 using Lunggo.Framework.Database;
@@ -104,5 +105,18 @@ namespace Lunggo.ApCommon.Voucher
             };
             queue.AddMessage(new CloudQueueMessage(model.Serialize()));
         }
+
+        public decimal CheckVoucherDiscount(string token, string code)
+        {
+            if (token.IsFlightCache())
+            {
+                var flight = FlightService.GetInstance();
+                var itinerary = flight.GetItineraryForDisplay(token);
+                var rule = flight.GetMatchingDiscountRule(new List<long> {0});
+                return (itinerary.TotalFare*rule.Coefficient) + rule.Constant;
+            }
+            else return 0;
+        }
+
     }
 }
