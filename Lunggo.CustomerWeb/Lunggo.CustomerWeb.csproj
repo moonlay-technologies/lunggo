@@ -2195,6 +2195,7 @@
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
+    <Content Include="Views\Flight\SearchResultList-Return.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2205,6 +2206,7 @@
     <Content Include="Views\Term\HowToBook.cshtml" />
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
+    <Content Include="Views\Template\UserForgot.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
