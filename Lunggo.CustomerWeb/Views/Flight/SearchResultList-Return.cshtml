@@ -900,7 +900,7 @@
                 <section class="flight-main">
                     <div class="flight-departure-info">
                         <div class="flight-notice" ng-show="pageConfig.flightsValidated && departureFlightConfig.validateValid == false">
-                            <h3 ng-show="departureFlightConfig.validateNewfare">Harga Pulang berubah <span class="new-price">- Harga baru RP {{departureFlightConfig.chosenFlightData.TotalFare | number}}</span> <a class="btn btn-yellow pull-right" ng-click="departureFlightConfig.chosenFlight = -1; setPageActiveSection('departure')">ganti penerbangan</a> </h3>
+                            <h3 ng-show="departureFlightConfig.validateNewfare">Harga Pergi berubah <span class="new-price">- Harga baru RP {{departureFlightConfig.chosenFlightData.TotalFare | number}}</span> <a class="btn btn-yellow pull-right" ng-click="departureFlightConfig.chosenFlight = -1; setPageActiveSection('departure')">ganti penerbangan</a> </h3>
                             <h3 ng-show="departureFlightConfig.validateNewfare == false">Penerbangan tidak tersedia</h3>
                         </div>
                         <h2>Penerbangan Pergi</h2>
