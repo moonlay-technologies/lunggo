@@ -931,10 +931,18 @@
                     } else if ($scope.departureFlightConfig.validateValid == false && $scope.returnFlightConfig.validateValid == true) {
                         $scope.pageConfig.activeFlightSection = 'departure';
                         $scope.departureFlightConfig.chosenFlight = -1;
-                    } else if ($scope.departureFlightConfig.validateValid == true && $scope.returnFlightConfig.validateValid == false) {
-                        $scope.pageConfig.activeFlightSection = 'departure';
-                        $scope.departureFlightConfig.chosenFlight = -1;
-                        $scope.returnFlightConfig.chosenFlight = -1;
+                    } else if ($scope.departureFlightConfig.validateValid == false && $scope.returnFlightConfig.validateValid == false) {
+                        if ( $scope.departureFlightConfig.validateNewfare == false && $scope.returnFlightConfig.validateNewfare == false ) {
+                            $scope.pageConfig.activeFlightSection = 'departure';
+                            $scope.departureFlightConfig.chosenFlight = -1;
+                            $scope.returnFlightConfig.chosenFlight = -1;
+                        } else if( $scope.departureFlightConfig.validateNewfare == false && $scope.returnFlightConfig.validateNewfare == true ) {
+                            $scope.pageConfig.activeFlightSection = 'departure';
+                            $scope.departureFlightConfig.chosenFlight = -1;
+                        } else if ($scope.departureFlightConfig.validateNewfare == true && $scope.returnFlightConfig.validateNewfare == false) {
+                            $scope.pageConfig.activeFlightSection = 'return';
+                            $scope.returnFlightConfig.chosenFlight = -1;
+                        }
                     }
                 } else {
                     if ($scope.pageConfig.activeFlightSection == 'return') {

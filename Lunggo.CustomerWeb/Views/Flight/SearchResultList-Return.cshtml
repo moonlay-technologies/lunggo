@@ -900,7 +900,7 @@
                 <section class="flight-main">
                     <div class="flight-departure-info">
                         <div class="flight-notice" ng-show="pageConfig.flightsValidated && departureFlightConfig.validateValid == false">
-                            <h3 ng-show="departureFlightConfig.validateNewfare">Harga Pulang berubah <span class="new-price">- Harga baru RP {{departureFlightConfig.chosenFlightDate.TotalFare}}</span> <a class="btn btn-yellow pull-right" ng-click="departureFlightConfig.chosenFlight = -1; setPageActiveSection('departure')">ganti penerbangan</a> </h3>
+                            <h3 ng-show="departureFlightConfig.validateNewfare">Harga Pulang berubah <span class="new-price">- Harga baru RP {{departureFlightConfig.chosenFlightData.TotalFare | number}}</span> <a class="btn btn-yellow pull-right" ng-click="departureFlightConfig.chosenFlight = -1; setPageActiveSection('departure')">ganti penerbangan</a> </h3>
                             <h3 ng-show="departureFlightConfig.validateNewfare == false">Penerbangan tidak tersedia</h3>
                         </div>
                         <h2>Penerbangan Pergi</h2>
@@ -932,7 +932,7 @@
                     </div>
                     <div class="flight-return-info">
                         <div class="flight-notice" ng-show="pageConfig.flightsValidated && returnFlightConfig.validateValid == false">
-                            <h3 ng-show="returnFlightConfig.validateNewfare">Harga Pergi berubah <span class="new-price">- Harga baru RP {{returnFlightConfig.chosenFlightDate.TotalFare}}</span> <a class="btn btn-yellow pull-right" ng-click="returnFlightConfig.chosenFlight = -1; setPageActiveSection('return')">ganti penerbangan</a> </h3>
+                            <h3 ng-show="returnFlightConfig.validateNewfare">Harga Pergi berubah <span class="new-price">- Harga baru RP {{returnFlightConfig.chosenFlightData.TotalFare | number}}</span> <a class="btn btn-yellow pull-right" ng-click="returnFlightConfig.chosenFlight = -1; setPageActiveSection('return')">ganti penerbangan</a> </h3>
                             <h3 ng-show="returnFlightConfig.validateNewfare == false">Penerbangan tidak tersedia</h3>
                         </div>
                         <h2>Penerbangan Pulang</h2>
@@ -969,11 +969,11 @@
                     </div>
                     <div class="flight-price">
                         <label>Harga Total</label>
-                        <h3 ng-hide="pageConfig.flightsValidated == true && ((departureFlightConfig.validateValid == false && departureFlightConfig.validateNewfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false))">Rp {{ departureFlightConfig.chosenFlightData.TotalFare + returnFlightConfig.chosenFlightData.TotalFare | number }}</h3>
-                        <h3 ng-show="pageConfig.flightsValidated == true && ((departureFlightConfig.validateValid == false && departureFlightConfig.validateNewfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false))">Rp -</h3>
+                        <h3 ng-class="{ 'price-red' : pageConfig.flightsValidated && ( departureFlightConfig.validateValid == false || returnFlightConfig.validateValid == false ) }">Rp {{ departureFlightConfig.chosenFlightData.TotalFare + returnFlightConfig.chosenFlightData.TotalFare | number }}</h3>
                     </div>
                     <div class="flight-book">
-                        <a class="btn btn-yellow" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.flightsValidated == true && ((departureFlightConfig.validateValid == false && departureFlightConfig.validateNewfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false))">Booking sekarang</a>
+                        <a class="btn btn-yellow" ng-hide="pageConfig.flightsValidated == true && ((departureFlightConfig.validateValid == false && departureFlightConfig.validateNewfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false))" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" >Booking sekarang</a>
+                        <a class="btn btn-yellow" ng-show="pageConfig.flightsValidated && ( (departureFlightConfig.validateValid == false && departureFlightConfig.Newfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false) )" ng-click="closeOverview()">Ganti penerbangan</a>
                     </div>
                 </footer>
                 <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">
