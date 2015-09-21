@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Adress = user.Address
+                Address = user.Address
             };
             return record;
         }
