@@ -352,4 +352,8 @@
   <Message code="CW00175" lang="id_ID" value="DETAIL" />
   <Message code="CW00176" lang="en_US" value="Flight to" />
   <Message code="CW00176" lang="id_ID" value="Penerbangan ke" />
+  <Message code="CW00177" lang="en_US" value="Address" />
+  <Message code="CW00177" lang="id_ID" value="Alamat" />
+  <Message code="CW00178" lang="en_US" value="Country Code" />
+  <Message code="CW00178" lang="id_ID" value="Kode Negara" />
 </Messages>
