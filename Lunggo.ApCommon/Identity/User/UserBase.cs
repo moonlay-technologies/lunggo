@@ -33,6 +33,12 @@ namespace Lunggo.ApCommon.Identity.User
         public virtual string SecurityStamp { get; set; }
 
         /// <summary>
+        /// CountryCd for the user
+        /// 
+        /// </summary>
+        public virtual string CountryCd { get; set; }
+
+        /// <summary>
         /// PhoneNumber for the user
         /// 
         /// </summary>
@@ -43,6 +49,24 @@ namespace Lunggo.ApCommon.Identity.User
         /// 
         /// </summary>
         public virtual bool PhoneNumberConfirmed { get; set; }
+
+        /// <summary>
+        /// FirstName of the user
+        /// 
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// LastName of the user
+        /// 
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        /// Address of the user
+        /// 
+        /// </summary>
+        public string Address { get; set; }
 
         /// <summary>
         /// Is two factor enabled for the user

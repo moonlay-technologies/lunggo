@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Sequence
             var currentDay = DateTime.UtcNow.DayOfYear;
             var encodedDate = (27*(currentDay-1)+relativeYear);
             var nextRawId = GetNextNumber(_properties)%10000000L;
-            var nextId = encodedDate + nextRawId;
+            var nextId = encodedDate*10000000L + nextRawId;
             return nextId;
         }
 

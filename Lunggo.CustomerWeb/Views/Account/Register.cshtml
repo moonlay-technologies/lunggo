@@ -1,4 +1,4 @@
-﻿@{
+﻿    @{
     Layout = "/Views/Shared/_Layout_account.cshtml";
     ViewBag.Title = "Hotel Detail";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
@@ -29,6 +29,25 @@
             <header id="site-header" class="site-header">
                 @{ Html.RenderPartial("_Mainmenu"); }
             </header>
+        
+        @switch ((string) ViewBag.Error)
+        {
+            case "InvalidInputData":
+                <div class="bg-danger">Email format invalid!</div>
+                break;
+            case "ConfirmationEmailSent":
+            <div class="bg-warning">Confirmation email has been sent. Please confirm your email through link on that email.</div>
+                break;
+            case "AlreadyRegistered":
+                <div class="bg-warning">Email already registered.</div>
+                break;
+            case "AlreadyRegisteredButUnconfirmed":
+                <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
+                break;
+            case "Failed":
+                <div class="bg-danger">There is an error. Please try again later.</div>
+                break;
+        }
 
             <div class="container">
                 <section class="user-form">
@@ -36,39 +55,6 @@
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="FirstName" placeholder="@Html.I18NString("CW00141")">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="LastName" placeholder="@Html.I18NString("CW00142")">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="PhoneNumber" placeholder="@Html.I18NString("CW00143")">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control" name="Password" placeholder="@Html.I18NString("CW00144")">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control" name="ConfirmPassword" placeholder="@Html.I18NString("CW00145")">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="row">

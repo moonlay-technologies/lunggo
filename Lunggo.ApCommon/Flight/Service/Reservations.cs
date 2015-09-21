@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByContactEmail(string contactEmail)
         {
-            var rsvs = GetDb.OverviewReservationsByContactEmail(contactEmail);
+            var rsvs = GetDb.OverviewReservationsByContactEmail(contactEmail) ?? new List<FlightReservation>();
             return rsvs.Select(ConvertToReservationForDisplay).ToList();
         }
 

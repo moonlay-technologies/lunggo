@@ -63,12 +63,38 @@ namespace Lunggo.ApCommon.Identity.User
             }
         }
 
+        public static string GetCountryCd(this IIdentity identity)
+        {
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.CountryCd;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static string GetPhoneNumber(this IIdentity identity)
         {
             if (identity.IsAuthenticated)
             {
                 var customUser = GetCustomUser(identity);
                 return customUser.PhoneNumber;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string GetAddress(this IIdentity identity)
+        {
+            if (identity.IsAuthenticated)
+            {
+                var customUser = GetCustomUser(identity);
+                return customUser.Address;
             }
             else
             {

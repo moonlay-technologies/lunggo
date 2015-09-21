@@ -63,25 +63,40 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult Select(string token)
         {
-            var tokens = token.Split('.').ToList();
-            var flightService = FlightService.GetInstance();
-            var newToken = flightService.BundleFlight(tokens);
-            return RedirectToAction("Checkout", "Flight", new { token = newToken });
+            try
+            {
+                var tokens = token.Split('.').ToList();
+                var flightService = FlightService.GetInstance();
+                var newToken = flightService.BundleFlight(tokens);
+                return RedirectToAction("Checkout", "Flight", new {token = newToken});
+            }
+            catch
+            {
+                return RedirectToAction("Checkout", "Flight");
+            }
         }
 
         public ActionResult Checkout(string token)
         {
-            var service = FlightService.GetInstance();
-            var itinerary = service.GetItineraryForDisplay(token);
-            var expiryTime = service.GetItineraryExpiry(token);
-            var savedPassengers = service.GetSavedPassengers(User.Identity.GetEmail());
-            return View(new FlightCheckoutData
+            try
             {
-                Token = token,
-                Itinerary = itinerary,
-                ExpiryTime = expiryTime.GetValueOrDefault(),
-                SavedPassengers = savedPassengers
-            });
+                var service = FlightService.GetInstance();
+                var itinerary = service.GetItineraryForDisplay(token);
+                var expiryTime = service.GetItineraryExpiry(token);
+                var savedPassengers = service.GetSavedPassengers(User.Identity.GetEmail());
+                return View(new FlightCheckoutData
+                {
+                    Token = token,
+                    Itinerary = itinerary,
+                    ExpiryTime = expiryTime.GetValueOrDefault(),
+                    SavedPassengers = savedPassengers,
+                });
+            }
+            catch
+            {
+                ViewBag.Error = "BookExpired";
+                return View();
+            }
         }
 
         [HttpPost]

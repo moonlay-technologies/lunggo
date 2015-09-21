@@ -6,9 +6,13 @@ using log4net;
 using log4net.Repository.Hierarchy;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.ApCommon.Subscriber;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -73,6 +77,12 @@ namespace Lunggo.CustomerWeb.Controllers
                 Subject = address
             };
             mailService.SendEmail(address, mailModel, HtmlTemplateType.Newsletter);
+            var queue = QueueService.GetInstance().GetQueueByReference(Queue.InitialSubscriberEmail);
+            var message = new SubscriberEmailModel
+            {
+                Email = address
+            };
+            queue.AddMessage(new CloudQueueMessage(message.Serialize()));
             return null;
         }
     }

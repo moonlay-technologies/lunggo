@@ -18,7 +18,6 @@ namespace Lunggo.CustomerWeb.Models
         public string DiscountCode { get; set; }
         public DateTime ExpiryTime { get; set; }
         public List<FlightPassenger> SavedPassengers { get; set; }
-        public string Message { get; set; }
     }
 
     public class PassengerData

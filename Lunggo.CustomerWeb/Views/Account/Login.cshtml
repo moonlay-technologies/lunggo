@@ -26,18 +26,26 @@
 <body>
     <!-- page start -->
     <div class="page user-page user-page-login">
-
-        @if (ViewBag.Message != null)
-        {
-            <div class="container">
-                <h2>Thank you for verifying your email. Please login.</h2>
-            </div>
-        }
-
         <section class="user-login">
             <header id="site-header" class="site-header">
                 @{ Html.RenderPartial("_Mainmenu"); }
             </header>
+        
+        @switch ((string)ViewBag.Error)
+        {
+            case "InvalidInputData":
+                <div class="bg-danger">Email format or password invalid!</div>
+                break;
+            case "NotRegistered":
+                <div class="bg-warning">Email not yet registered. Please<a href="@Url.Action("Register", "Account")">register</a>.</div>
+                break;
+            case "AlreadyRegisteredButUnconfirmed":
+            <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
+                break;
+            case "Failed":
+            <div class="bg-danger">There is an error. Please try again later.</div>
+                break;
+        }
 
             <div class="container">
                 <section class="user-form">

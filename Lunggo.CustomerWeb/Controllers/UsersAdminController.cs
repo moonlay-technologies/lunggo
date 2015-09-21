@@ -92,7 +92,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (ModelState.IsValid)
             {
                 var user = new CustomUser { UserName = userViewModel.Email, Email = userViewModel.Email };
-                var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
+                var adminresult = await UserManager.CreateAsync(user);
 
                 //Add User to the selected Roles 
                 if (adminresult.Succeeded)

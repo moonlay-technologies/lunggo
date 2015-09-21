@@ -12,7 +12,5 @@ namespace Lunggo.ApCommon.Identity.User
         public virtual TKey Id { get; set; }
 
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     }
 }

@@ -170,7 +170,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private bool IsItinBundleCacheId(string cacheId)
         {
-            return cacheId.Substring(0, 4) == ItinBundleKeyPrefix;
+            return cacheId.Substring(1, 4) == ItinBundleKeyPrefix;
         }
     }
 }

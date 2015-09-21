@@ -56,6 +56,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("SecurityStamp");
 		    }
 		}
+		public String CountryCd
+		{
+		    get { return _CountryCd; }
+		    set
+		    {
+		        _CountryCd = value;
+		        IncrementLog("CountryCd");
+		    }
+		}
 		public String PhoneNumber
 		{
 		    get { return _PhoneNumber; }
@@ -137,6 +146,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("LastName");
 		    }
 		}
+		public String Address
+		{
+		    get { return _Address; }
+		    set
+		    {
+		        _Address = value;
+		        IncrementLog("Address");
+		    }
+		}
 
 		
 		private String _Id;
@@ -144,6 +162,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _EmailConfirmed;
 		private String _PasswordHash;
 		private String _SecurityStamp;
+		private String _CountryCd;
 		private String _PhoneNumber;
 		private Boolean? _PhoneNumberConfirmed;
 		private Boolean? _TwoFactorEnabled;
@@ -153,6 +172,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _UserName;
 		private String _FirstName;
 		private String _LastName;
+		private String _Address;
 
 
 		public static UsersTableRecord CreateNewInstance()
@@ -189,6 +209,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("EmailConfirmed", false),
 				new ColumnMetadata("PasswordHash", false),
 				new ColumnMetadata("SecurityStamp", false),
+				new ColumnMetadata("CountryCd", false),
 				new ColumnMetadata("PhoneNumber", false),
 				new ColumnMetadata("PhoneNumberConfirmed", false),
 				new ColumnMetadata("TwoFactorEnabled", false),
@@ -198,6 +219,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UserName", false),
 				new ColumnMetadata("FirstName", false),
 				new ColumnMetadata("LastName", false),
+				new ColumnMetadata("Address", false),
 
             };
         }

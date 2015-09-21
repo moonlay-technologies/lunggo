@@ -103,13 +103,15 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 LockoutEnabled = user.LockoutEnabled,
                 LockoutEndDateUtc = user.LockoutEndDateUtc,
                 PasswordHash = user.PasswordHash,
+                CountryCd = user.CountryCd,
                 PhoneNumber = user.PhoneNumber,
                 PhoneNumberConfirmed = user.PhoneNumberConfirmed,
                 SecurityStamp = user.SecurityStamp,
                 TwoFactorEnabled = user.TwoFactorEnabled,
                 UserName = user.UserName,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Adress = user.Address
             };
             return record;
         }

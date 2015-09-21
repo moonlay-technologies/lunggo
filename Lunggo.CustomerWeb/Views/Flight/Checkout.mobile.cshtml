@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Models
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -17,15 +18,15 @@
 
     for (var i = 1; i <= 31; i++)
     {
-        dateList.Add(new {Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
+        dateList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
 
     for (var i = 1; i <= 12; i++)
     {
-        monthList.Add(new { Value = i, Text = new DateTime(2000,i,1).ToString("MMMM") });
+        monthList.Add(new { Value = i, Text = new DateTime(2000, i, 1).ToString("MMMM") });
     }
 
-    for (var i = DateTime.UtcNow.Year-120; i <= DateTime.UtcNow.Year; i++)
+    for (var i = DateTime.UtcNow.Year - 120; i <= DateTime.UtcNow.Year; i++)
     {
         birthYearList.Add(new { Value = i, Text = i.ToString(CultureInfo.InvariantCulture) });
     }
@@ -50,7 +51,6 @@
 
     var adultCount = 0;
     var childCount = 0;
-    var infantCount = 0;
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
@@ -61,7 +61,7 @@
     {
         adultCount = Model.Itinerary.AdultCount;
         childCount = Model.Itinerary.ChildCount;
-        infantCount = Model.Itinerary.InfantCount;
+        var infantCount = Model.Itinerary.InfantCount;
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
@@ -69,382 +69,396 @@
     }
     catch
     {
-
+        ViewBag.Error = "BookExpired";
     }
 }
 
-@section PageJavascript{
-    <script>
-        // goto page (pageNumber)
-        var gotoPage = function(pageNumber) {
-            // show and hide page
-            $('.checkout-page').hide();
-            $('.checkout-page.step-' + pageNumber).show();
-            // animate scrolltop to 0
-            $('html, body').stop().animate({
-                scrollTop: 0
-            });
-            // update checkout bar progress
-            $('.checkout-bar .checkout-current-progress').attr('class', 'checkout-current-progress step-' + pageNumber);
-            $('.checkout-bar [class^="bar"]').each(function() {
-                $(this).removeClass('active');
-                if ($(this).attr('data-step') <= pageNumber) {
-                    $(this).addClass('active');
-                }
-            });
-
-
-        }
-        // disabled enter key
-        $('body').on('keyup keypress', function (e) {
-            var code = e.keyCode || e.which;
-            if (code == 13) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-    </script>
-}
-
-@using (Html.BeginForm("Checkout", "Flight", FormMethod.Post, new { @class="form-horizontal"}))
+@switch ((string) ViewBag.Error)
 {
-    <input type="hidden" name="Token" value="@Model.Token" />
-    <input type="text" class="hidden" name="Payment.Currency" value="IDR" />
-    <section class="page group-checkout group-flight-checkout customer-detail-page" ng-controller="checkoutController" ng-init="passengersNumber = @passengerCount">
-        <section class="checkout-progress">
-            <div class="checkout-step">
-                <div>Customer Detail</div>
-                <div>Passenger Detail</div>
-                <div>Review</div>
-                <div>Payment</div>
-                <div>Ticket</div>
-            </div>
-            <div class="checkout-bar">
-                <div class="checkout-current-progress"></div>
-                <div data-step="1" class="bar-1 active"></div>
-                <div data-step="2" class="bar-2"></div>
-                <div data-step="3" class="bar-3"></div>
-                <div data-step="4" class="bar-4"></div>
-                <div data-step="5" class="bar-5"></div>
-            </div>
-        </section><!-- .checkout-progress -->
-        <section class="customer-detail step-1 checkout-page">
-            <h1 class="section-title">CUSTOMER DETAIL</h1>
-            <div class="section-content container">
-                <form class="form form-horizontal">
-                    <div class="form-group">
-                        <label class="col-xs-12">Name (Buyer):</label>
-                        <div class="col-xs-12">
-                            <input type="text" name="Contact.Name" value="" class="form-control" placeholder="Enter your full name" ng-model="userContact.name" />
-                        </div>
+    default:
+        @section PageJavascript{
+            <script>
+                // goto page (pageNumber)
+                var gotoPage = function (pageNumber) {
+                    // show and hide page
+                    $('.checkout-page').hide();
+                    $('.checkout-page.step-' + pageNumber).show();
+                    // animate scrolltop to 0
+                    $('html, body').stop().animate({
+                        scrollTop: 0
+                    });
+                    // update checkout bar progress
+                    $('.checkout-bar .checkout-current-progress').attr('class', 'checkout-current-progress step-' + pageNumber);
+                    $('.checkout-bar [class^="bar"]').each(function () {
+                        $(this).removeClass('active');
+                        if ($(this).attr('data-step') <= pageNumber) {
+                            $(this).addClass('active');
+                        }
+                    });
+
+
+                }
+                // disabled enter key
+                $('body').on('keyup keypress', function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+
+            </script>
+        }
+
+        @using (Html.BeginForm("Checkout", "Flight", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <input type="hidden" name="Token" value="@token" />
+            <input type="hidden" name="Payment.Currency" value="IDR" />
+            <section class="page group-checkout group-flight-checkout customer-detail-page" ng-controller="checkoutController" ng-init="passengersNumber = @passengerCount">
+                <section class="checkout-progress">
+                    <div class="checkout-step">
+                        <div>Customer Detail</div>
+                        <div>Passenger Detail</div>
+                        <div>Review</div>
+                        <div>Payment</div>
+                        <div>Ticket</div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4">Country code:</label>
-                        <label class="col-xs-8">Phone number:</label>
-                        <div class="col-xs-4">
-                            <input type="number" name="Contact.CountryCode" value="" class="form-control" placeholder="ex: 62" ng-model="userContact.countrycode" />
-                        </div>
-                        <div class="col-xs-8">
-                            <input type="number" name="Contact.Phone" value="" class="form-control" placeholder="ex: 8212345678" ng-model="userContact.phone" />
-                        </div>
+                    <div class="checkout-bar">
+                        <div class="checkout-current-progress"></div>
+                        <div data-step="1" class="bar-1 active"></div>
+                        <div data-step="2" class="bar-2"></div>
+                        <div data-step="3" class="bar-3"></div>
+                        <div data-step="4" class="bar-4"></div>
+                        <div data-step="5" class="bar-5"></div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-12">Email address:</label>
-                        <div class="col-xs-12">
-                            <input type="email" name="Contact.Email" value="" class="form-control" placeholder="ex: your_mail@domain.com" ng-model="userContact.email" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(2) " ng-disabled="!(userContact.name && userContact.phone && userContact.email)" >CONTINUE</a>
-                        </div>
-                    </div>
-                </form>
-            </div><!-- .section-content -->
-        </section><!-- .checkout-page.step-1 -->
-        <section class="passenger-detail step-2 checkout-page">
-            <h1 class="section-title">PASSENGER DETAIL</h1>
-            <div class="section-content container">
-                    @for (var i = 0; i < passengerCount; i++)
-                    {
-                        <div class="passenger">
-                            @if (i < adultCount)
-                            {
-                                titleList = adultTitleList;
-                                <h2 class="passenger-detail-title">Adult Passenger @(i + 1 - adultCount) ( > 12 years old)</h2>
-                                <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
-                            }
-                            else
-                            {
-                                titleList = childTitleList;
-                                if ((i - adultCount) < childCount)
+                </section><!-- .checkout-progress -->
+                <section class="customer-detail step-1 checkout-page">
+                    <h1 class="section-title">CUSTOMER DETAIL</h1>
+                    <div class="section-content container">
+                        <form class="form form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-12">Name (Buyer):</label>
+                                <div class="col-xs-12">
+                                    <input type="text" name="Contact.Name" value="" class="form-control" placeholder="Enter your full name" ng-model="userContact.name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4">Country code:</label>
+                                <label class="col-xs-8">Phone number:</label>
+                                <div class="col-xs-4">
+                                    <input type="number" name="Contact.CountryCode" value="" class="form-control" placeholder="ex: 62" ng-model="userContact.countrycode" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <input type="number" name="Contact.Phone" value="" class="form-control" placeholder="ex: 8212345678" ng-model="userContact.phone" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-12">Email address:</label>
+                                <div class="col-xs-12">
+                                    <input type="email" name="Contact.Email" value="" class="form-control" placeholder="ex: your_mail@domain.com" ng-model="userContact.email" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(2) " ng-disabled="!(userContact.name && userContact.phone && userContact.email)">CONTINUE</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- .section-content -->
+                </section><!-- .checkout-page.step-1 -->
+                <section class="passenger-detail step-2 checkout-page">
+                    <h1 class="section-title">PASSENGER DETAIL</h1>
+                    <div class="section-content container">
+                        @for (var i = 0; i < passengerCount; i++)
+                        {
+                            <div class="passenger">
+                                @if (i < adultCount)
                                 {
-                                    <h2 class="passenger-detail-title">Child Passenger @(i + 1 - adultCount) ( 2-12 years old )</h2>
-                                    <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
+                                    titleList = adultTitleList;
+                                    <h2 class="passenger-detail-title">Adult Passenger @(i + 1 - adultCount) ( > 12 years old)</h2>
+                                    <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
                                 }
                                 else
                                 {
-                                    <h2 class="passenger-detail-title">Infant Passenger @(i + 1 - adultCount - childCount) ( < 2 years old )</h2>
-                                    <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
+                                    titleList = childTitleList;
+                                    if ((i - adultCount) < childCount)
+                                    {
+                                        <h2 class="passenger-detail-title">Child Passenger @(i + 1 - adultCount) ( 2-12 years old )</h2>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
+                                    }
+                                    else
+                                    {
+                                        <h2 class="passenger-detail-title">Infant Passenger @(i + 1 - adultCount - childCount) ( < 2 years old )</h2>
+                                        <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
+                                    }
                                 }
-                            }   
-                            <div class="form-group">
-                                <label class="control-label col-xs-12">Title</label>
-                                <div class="col-xs-12">
-                                    @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].title", ng_init = "flightPassengers[" + i + "].title = '" + Title.Mister + "'", ng_change = "passengersValidation()"})
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-xs-12">First Name</label>
-                                <div class="col-xs-12">
-                                    <input type="text" name="Passengers[@i].FirstName" value="" placeholder="First Name" class="form-control" ng-model="flightPassengers[@i].firstname" ng-change="passengersValidation()" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-xs-12">Last Name</label>
-                                <div class="col-xs-12">
-                                    <input type="text" name="Passengers[@i].LastName" value="" placeholder="Last Name" class="form-control" ng-model="flightPassengers[@i].lastname" ng-change="passengersValidation()" />
-                                </div>
-                            </div>
-                            @if (needBirthDate)
-                            {
                                 <div class="form-group">
-                                    <label class="control-label col-xs-12">Birthday</label>
-                                    <div class="col-xs-3">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Date, new SelectList(dateList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.date", ng_init = "flightPassengers[" + i + "].birthday.date = '" + 1 + "'", ng_change = "passengersValidation()"})
-                                    </div>
-                                    <div class="col-xs-5">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Month, new SelectList(monthList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.month", ng_init = "flightPassengers[" + i + "].birthday.month = '" + 1 + "'", ng_change = "passengersValidation()"})
-                                    </div>
-                                    <div class="col-xs-4">
-                                        @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new {@class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.UtcNow.Year - 120) + "'", ng_change = "passengersValidation()"})
-                                    </div>
-                                </div>
-                            }
-                            @if (needPassport)
-                            {
-                                <div class="form-group">
-                                    <label class="control-label col-xs-12">Passport Number</label>
+                                    <label class="control-label col-xs-12">Title</label>
                                     <div class="col-xs-12">
-                                        <input type="text" name="Passengers[@i].PassportNumber" value="" class="form-control" placeholder="Passport Number" ng-model="flightPassengers[@i].passport" ng-change="passengersValidation()" />
+                                        @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[" + i + "].title", ng_init = "flightPassengers[" + i + "].title = '" + Title.Mister + "'", ng_change = "passengersValidation()" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-xs-12">Passport Expiry Date</label>
-                                    <div class="col-xs-3">
-                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Date, new SelectList(dateList, "Value", "Text"), new { @class = "form-control", ng_model="flightPassengers[@i].passportexpiry.date", ng_init="flightPassengers[" + i + "].passportexpiry.date = '" + 1 + "'", ng_change="passengersValidation()" })
-                                    </div>
-                                    <div class="col-xs-5">
-                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Month, new SelectList(monthList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.month", ng_init = "flightPassengers[" + i + "].passportexpiry.month = '" + 1 + "'", ng_change = "passengersValidation()" })
-                                    </div>
-                                    <div class="col-xs-4">
-                                        @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.year", ng_init = "flightPassengers[" + i + "].passportexpiry.year = '" + DateTime.UtcNow.Year + "'", ng_change = "passengersValidation()" })
+                                    <label class="control-label col-xs-12">First Name</label>
+                                    <div class="col-xs-12">
+                                        <input type="text" name="Passengers[@i].FirstName" value="" placeholder="First Name" class="form-control" ng-model="flightPassengers[@i].firstname" ng-change="passengersValidation()" />
                                     </div>
                                 </div>
-                                <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
-                            }
-                        </div>
-                        <!-- .passenger -->
-                    }
-                    <!-- continue -->
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(3) " ng-disabled="validTotal != passengersNumber">REVIEW ORDER</a>
-                            <a class="btn btn-back" onclick=" gotoPage(1) ">BACK</a>
-                        </div>
-                    </div>
-            </div><!-- .section-content -->
-        </section><!-- .checkout-page.step-3 -->
-        <section class="review-detail step-3 checkout-page">
-
-            <p class="container">Please review your order before make a payment</p>
-
-            <section class="flight-detail">
-                <h2 class="section-title">Flight Detail</h2>
-                <div class="section-content container">
-                    @foreach (var trip in Model.Itinerary.FlightTrips)
-                    {
-                        <div class="flight onward">
-                            <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
-                            <div class="trip">
-                                <h5 class="airline-name"><img ng-src="@trip.FlightSegments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
-                                <div class="trip-wrapper">
-                                    <div class="trip-origin">
-                                        <span>Departure</span>
-                                        <span class="time ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
-                                        <span class="date ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
-                                        <span class="airport ng-binding">@trip.OriginAirport</span>
-                                        <span class="city ng-binding">@trip.OriginCity</span>
-                                    </div>
-                                    <div class="trip-destination">
-                                        <span>Arrival</span>
-                                        <span class="time ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
-                                        <span class="date ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
-                                        <span class="airport ng-binding">@trip.DestinationAirport</span>
-                                        <span class="city ng-binding">@trip.DestinationCity</span>
-                                    </div>
-                                    <div class="trip-duration">
-                                        <span>Duration</span>
-                                        <span class="time ng-binding">@TimeSpan.FromTicks(trip.FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
-                                        <span class="ng-binding"></span>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12">Last Name</label>
+                                    <div class="col-xs-12">
+                                        <input type="text" name="Passengers[@i].LastName" value="" placeholder="Last Name" class="form-control" ng-model="flightPassengers[@i].lastname" ng-change="passengersValidation()" />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </section><!-- .flight-details -->
-    
-            <section class="flight-contact">
-                <h2 class="section-title">Contact Detail</h2>
-                <div class="section-content container">
-                    <ul>
-                        <li>
-                            <p>{{userContact.name}}</p>
-                            <table>
-                                <tr>
-                                    <td>Phone Number</td>
-                                    <td>+{{userContact.countrycode}}{{userContact.phone}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Email Address</td>
-                                    <td>{{userContact.email}}</td>
-                                </tr>
-                            </table>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="flight-passenger">
-                <h2 class="section-title">Passenger Detail</h2>
-                <div class="section-content container">
-                    <ol>
-                        <li ng-repeat="passenger in flightPassengers">
-                            <p>{{passenger.title}} {{passenger.firstname}} {{passenger.lastname}}</p>
-                            <table>
                                 @if (needBirthDate)
                                 {
-                                    <tr ng-if="passenger.birthday.date && passenger.birthday.month && passenger.birthday.year">
-                                        <td>Birth Date</td>
-                                        <td>{{passenger.birthday.date}}/{{passenger.birthday.month}}/{{passenger.birthday.year}}</td>
-                                    </tr>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-12">Birthday</label>
+                                        <div class="col-xs-3">
+                                            @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Date, new SelectList(dateList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.date", ng_init = "flightPassengers[" + i + "].birthday.date = '" + 1 + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                        <div class="col-xs-5">
+                                            @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Month, new SelectList(monthList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.month", ng_init = "flightPassengers[" + i + "].birthday.month = '" + 1 + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                        <div class="col-xs-4">
+                                            @Html.DropDownListFor(model => model.Passengers[i].BirthDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[" + i + "].birthday.year", ng_init = "flightPassengers[" + i + "].birthday.year = '" + (DateTime.UtcNow.Year - 120) + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                    </div>
                                 }
                                 @if (needPassport)
                                 {
-                                    <tr ng-if="passenger.passport">
-                                        <td>Passport No</td>
-                                        <td>{{passenger.passport}}</td>
-                                    </tr>
-                                    <tr ng-if="passenger.passportexpiry.date && passenger.passportexpiry.month && passenger.passportexpiry.year">
-                                        <td>Passport Expiry Date</td>
-                                        <td>{{passenger.passportexpiry.date}} {{passenger.passportexpiry.month}} {{passenger.passportexpiry.year}}</td>
-                                    </tr>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-12">Passport Number</label>
+                                        <div class="col-xs-12">
+                                            <input type="text" name="Passengers[@i].PassportNumber" value="" class="form-control" placeholder="Passport Number" ng-model="flightPassengers[@i].passport" ng-change="passengersValidation()" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-12">Passport Expiry Date</label>
+                                        <div class="col-xs-3">
+                                            @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Date, new SelectList(dateList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.date", ng_init = "flightPassengers[" + i + "].passportexpiry.date = '" + 1 + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                        <div class="col-xs-5">
+                                            @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Month, new SelectList(monthList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.month", ng_init = "flightPassengers[" + i + "].passportexpiry.month = '" + 1 + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                        <div class="col-xs-4">
+                                            @Html.DropDownListFor(model => model.Passengers[i].PassportExpiryDate.Value.Year, new SelectList(birthYearList, "Value", "Text"), new { @class = "form-control", ng_model = "flightPassengers[@i].passportexpiry.year", ng_init = "flightPassengers[" + i + "].passportexpiry.year = '" + DateTime.UtcNow.Year + "'", ng_change = "passengersValidation()" })
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                                 }
+                            </div>
+                     <!-- .passenger -->
+                        }
+                        <!-- continue -->
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(3) " ng-disabled="validTotal != passengersNumber">REVIEW ORDER</a>
+                                <a class="btn btn-back" onclick=" gotoPage(1) ">BACK</a>
+                            </div>
+                        </div>
+                    </div><!-- .section-content -->
+                </section><!-- .checkout-page.step-3 -->
+                <section class="review-detail step-3 checkout-page">
+
+                    <p class="container">Please review your order before make a payment</p>
+
+                    <section class="flight-detail">
+                        <h2 class="section-title">Flight Detail</h2>
+                        <div class="section-content container">
+                            @foreach (var trip in Model.Itinerary.FlightTrips)
+                            {
+                                <div class="flight onward">
+                                    <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
+                                    <div class="trip">
+                                        <h5 class="airline-name"><img ng-src="@trip.FlightSegments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
+                                        <div class="trip-wrapper">
+                                            <div class="trip-origin">
+                                                <span>Departure</span>
+                                                <span class="time ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
+                                                <span class="date ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
+                                                <span class="airport ng-binding">@trip.OriginAirport</span>
+                                                <span class="city ng-binding">@trip.OriginCity</span>
+                                            </div>
+                                            <div class="trip-destination">
+                                                <span>Arrival</span>
+                                                <span class="time ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
+                                                <span class="date ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
+                                                <span class="airport ng-binding">@trip.DestinationAirport</span>
+                                                <span class="city ng-binding">@trip.DestinationCity</span>
+                                            </div>
+                                            <div class="trip-duration">
+                                                <span>Duration</span>
+                                                <span class="time ng-binding">@TimeSpan.FromTicks(trip.FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
+                                                <span class="ng-binding"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </section><!-- .flight-details -->
+
+                    <section class="flight-contact">
+                        <h2 class="section-title">Contact Detail</h2>
+                        <div class="section-content container">
+                            <ul>
+                                <li>
+                                    <p>{{userContact.name}}</p>
+                                    <table>
+                                        <tr>
+                                            <td>Phone Number</td>
+                                            <td>+{{userContact.countrycode}}{{userContact.phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Address</td>
+                                            <td>{{userContact.email}}</td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="flight-passenger">
+                        <h2 class="section-title">Passenger Detail</h2>
+                        <div class="section-content container">
+                            <ol>
+                                <li ng-repeat="passenger in flightPassengers">
+                                    <p>{{passenger.title}} {{passenger.firstname}} {{passenger.lastname}}</p>
+                                    <table>
+                                        @if (needBirthDate)
+                                        {
+                                            <tr ng-if="passenger.birthday.date && passenger.birthday.month && passenger.birthday.year">
+                                                <td>Birth Date</td>
+                                                <td>{{passenger.birthday.date}}/{{passenger.birthday.month}}/{{passenger.birthday.year}}</td>
+                                            </tr>
+                                        }
+                                        @if (needPassport)
+                                        {
+                                            <tr ng-if="passenger.passport">
+                                                <td>Passport No</td>
+                                                <td>{{passenger.passport}}</td>
+                                            </tr>
+                                            <tr ng-if="passenger.passportexpiry.date && passenger.passportexpiry.month && passenger.passportexpiry.year">
+                                                <td>Passport Expiry Date</td>
+                                                <td>{{passenger.passportexpiry.date}} {{passenger.passportexpiry.month}} {{passenger.passportexpiry.year}}</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </li>
+                            </ol>
+                        </div>
+                    </section><!-- .flight-passenger -->
+
+                    <section class="flight-price">
+                        <h2 class="section-title">Price Detail</h2>
+                        <div class="section-content container">
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Fare</td>
+                                        <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax and Service</td>
+                                        <td>Included</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total Price</td>
+                                        <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    </tr>
+                                </tfoot>
                             </table>
-                        </li>
-                    </ol>
-                </div>
-            </section><!-- .flight-passenger -->
 
-            <section class="flight-price">
-                <h2 class="section-title">Price Detail</h2>
-                <div class="section-content container">
+                        </div>
+                    </section><!-- .flight-price -->
 
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Total Fare</td>
-                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                            </tr>
-                            <tr>
-                                <td>Tax and Service</td>
-                                <td>Included</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Total Price</td>
-                                <td>Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <section class="container">
+                        <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(4) ">CHOOSE PAYMENT METHOD</a>
+                        <a class="btn btn-back" onclick=" gotoPage(2) ">BACK</a>
+                    </section>
 
-                </div>
-            </section><!-- .flight-price -->
+                </section><!-- .checkout-page.step-3 -->
+                <section class="payment-option step-4 checkout-page">
 
-            <section class="container">
-                <a class="btn btn-yellow btn-block-lg" onclick=" gotoPage(4) ">CHOOSE PAYMENT METHOD</a>
-                <a class="btn btn-back" onclick=" gotoPage(2) ">BACK</a>
+                    <h1 class="section-title">Payment Method</h1>
+
+                    <div class="section-content container">
+
+                        @*
+                            <div class="payment row">
+                                <div class="payment-name col-xs-7">
+                                    <h2>Bank Transfer</h2>
+                                    <img src="//placehold.it/120x40" alt="Alternate Text" />
+                                </div>
+                                <div class="payment-button col-xs-5">
+                                    <button name="Payment.Method" value="@PaymentMethod.BankTransfer" class="btn btn-yellow">Pay Now</button>
+                                </div>
+                            </div>
+                        *@
+
+                        <div class="payment row">
+                            <div class="payment-name col-xs-7">
+                                <h2>ATM</h2>
+                                <img src="//placehold.it/120x40" alt="Alternate Text" />
+                            </div>
+                            <div class="payment-button col-xs-5">
+                                <button name="Payment.Method" value="@PaymentMethod.VirtualAccount" class="btn btn-yellow">Pay Now</button>
+                            </div>
+                        </div>
+
+                        <div class="payment row">
+                            <div class="payment-name col-xs-7">
+                                <h2>Credit Card</h2>
+                                <img src="//placehold.it/120x40" alt="Alternate Text" />
+                            </div>
+                            <div class="payment-button col-xs-5">
+                                <button name="Payment.Method" value="@PaymentMethod.CreditCard" class="btn btn-yellow">Pay Now</button>
+                            </div>
+                        </div>
+                        @*
+                            <div class="payment row">
+                                <div class="payment-name col-xs-7">
+                                    <h2>CIMB Click</h2>
+                                    <img src="//placehold.it/120x40" alt="Alternate Text" />
+                                </div>
+                                <div class="payment-button col-xs-5">
+                                    <button name="Payment.Method" value="@PaymentMethod.CimbClicks" class="btn btn-yellow">Pay Now</button>
+                                </div>
+                            </div>
+
+                            <div class="payment row">
+                                <div class="payment-name col-xs-7">
+                                    <h2>Mandiri Clickpay</h2>
+                                    <img src="//placehold.it/120x40" alt="Alternate Text" />
+                                </div>
+                                <div class="payment-button col-xs-5">
+                                    <button name="Payment.Method" value="@PaymentMethod.MandiriClickPay" class="btn btn-yellow">Pay Now</button>
+                                </div>
+                            </div>
+                        *@
+                    </div><!-- .section-content -->
+
+                    <div class="container">
+                        <a class="btn btn-back" onclick=" gotoPage(3) ">BACK</a>
+                    </div>
+
+                </section><!-- .checkout-page.step-4 -->
             </section>
-
-        </section><!-- .checkout-page.step-3 -->
-        <section class="payment-option step-4 checkout-page">
-
-            <h1 class="section-title">Payment Method</h1>
-
-            <div class="section-content container">
-            
-@*
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>Bank Transfer</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button name="Payment.Method" value="@PaymentMethod.BankTransfer" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-*@
-            
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>ATM</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button name="Payment.Method" value="@PaymentMethod.VirtualAccount" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>Credit Card</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button name="Payment.Method" value="@PaymentMethod.CreditCard" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-@*
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>CIMB Click</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button name="Payment.Method" value="@PaymentMethod.CimbClicks" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-
-                <div class="payment row">
-                    <div class="payment-name col-xs-7">
-                        <h2>Mandiri Clickpay</h2>
-                        <img src="//placehold.it/120x40" alt="Alternate Text" />
-                    </div>
-                    <div class="payment-button col-xs-5">
-                        <button name="Payment.Method" value="@PaymentMethod.MandiriClickPay" class="btn btn-yellow">Pay Now</button>
-                    </div>
-                </div>
-*@
-            </div><!-- .section-content -->
-    
-            <div class="container">
-                <a class="btn btn-back" onclick=" gotoPage(3) ">BACK</a>
-            </div>
-
-        </section><!-- .checkout-page.step-4 -->
-    </section>
-    <!-- .checkout-page -->
+     <!-- .checkout-page -->
+        }
+        break;
+    case "BookExpired":
+    @:[Ini ceritanya page booking expired]
+        break;
+    case "NoLongerAvailable":
+    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
+        break;
+    case "InvalidInputData":
+    @:[Ini ceritanya page kalo input datanya ga bener]
+        break;
 }
