@@ -1,0 +1,112 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Autocomplete
+@using Lunggo.ApCommon.Dictionary
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Flight.Service
+@using Lunggo.ApCommon.Trie
+@using Lunggo.CustomerWeb.Models
+@using Newtonsoft.Json
+@model FlightSearchData
+
+@{
+    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    ViewBag.Title = "Flight Search Page";
+}
+
+@{
+    bool isValid;
+
+    List<FlightTrip> trips = null;
+    List<FlightTrip> departTrip = null;
+    List<FlightTrip> returnTrip = null;
+    FlightSearchData.Complete data = null;
+    var originAirportNames = new List<string>();
+    var destinationAirportNames = new List<string>();
+    var originCityNames = new List<string>();
+    var destinationCityNames = new List<string>();
+    var originCountryNames = new List<string>();
+    var destinationCountryNames = new List<string>();
+
+    String tripType = "aaa";
+    try
+    {
+        var parts = Model.info.Split('-');
+        var tripPart = parts.First();
+        var infoPart = parts.Last();
+        isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
+
+        trips = tripPart.Split('.').Select(info => new FlightTrip
+        {
+            OriginAirport = info.Substring(0, 3),
+            DestinationAirport = info.Substring(3, 3),
+            DepartureDate = new DateTime(
+                2000 + int.Parse(info.Substring(10, 2)),
+                int.Parse(info.Substring(8, 2)),
+                int.Parse(info.Substring(6, 2)))
+        }).ToList();
+
+        foreach (var trip in trips)
+        {
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
+        }
+
+        data = new FlightSearchData.Complete
+        {
+            AdultCount = int.Parse(infoPart.Substring(0, 1)),
+            ChildCount = int.Parse(infoPart.Substring(1, 1)),
+            InfantCount = int.Parse(infoPart.Substring(2, 1)),
+            CabinClass = FlightService.ParseCabinClass(infoPart.Substring(3, 1)),
+            Trips = trips,
+            TripType = FlightService.ParseTripType(trips)
+        };
+
+        tripType = data.TripType == TripType.OneWay ? "single" : "return";
+
+        departTrip = new List<FlightTrip> { trips[0] };
+        returnTrip = new List<FlightTrip> { trips[1] };
+    }
+    catch
+    {
+        isValid = false;
+    }
+
+}
+
+
+@section AdditionalPageJavascript{
+    <script>
+        var langCode = 'en';
+    </script>
+}
+
+@section PageJavascript {
+    <script>
+    var SiteLanguage = 'en';
+    </script>
+}
+
+<div class="flight-search-return-page">
+    
+    <!-- .departure-flight start -->
+    <section class="departure-flight">
+        
+    </section><!-- .departure-flight -->
+    
+    <!-- .return-flight start -->
+    <section class="return-flight">
+        
+    </section><!-- .return-flight -->
+    
+    <!-- ******************** -->
+    <!-- popup screens -->
+
+
+
+</div><!-- .flight-search-page -->
+   

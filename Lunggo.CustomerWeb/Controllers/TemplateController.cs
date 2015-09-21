@@ -147,5 +147,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult UserForgot()
+        {
+            return View();
+        }
     }
 }
