@@ -2600,6 +2600,10 @@ hr {
   .trip-flight-list-wrapper .flight-filter .flight-filter-content .slider-value {
     font-weight: bold;
     font-size: 16px; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content h4 > a {
+    cursor: pointer; }
+  .trip-flight-list-wrapper .flight-filter .flight-filter-content h4 > a, .trip-flight-list-wrapper .flight-filter .flight-filter-content h4 > span {
+    font-size: 12px; }
   .trip-flight-list-wrapper .flight-filter .flight-filter-content .filter-airline img {
     display: block;
     width: 30px;
@@ -2898,6 +2902,8 @@ hr {
       .trip-flight-overview footer .flight-price h3 {
         font-weight: bold;
         margin: 0; }
+      .trip-flight-overview footer .flight-price .price-red {
+        color: red; }
     .trip-flight-overview footer .flight-book {
       width: 30%;
       padding-left: 15px; }
