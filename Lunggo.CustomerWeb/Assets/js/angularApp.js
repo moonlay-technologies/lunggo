@@ -1326,6 +1326,20 @@
                 }
             }
 
+            $scope.filterAirlineSelect = function(targetFlight, selection) {
+                var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+                if (selection == 'all') {
+                    for (var i = 0; i < targetScope.flightFilter.value.airline.list.length; i++) {
+                        targetScope.flightFilter.value.airline.list[i].checked = true;
+                    }
+                } else {
+                    for (var i = 0; i < targetScope.flightFilter.value.airline.list.length; i++) {
+                        targetScope.flightFilter.value.airline.list[i].checked = false;
+                    }
+                }
+                $scope.checkAirline(targetFlight);
+            }
+
             // time filter
             $scope.timeFilter = function (targetFlight) {
                 var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);

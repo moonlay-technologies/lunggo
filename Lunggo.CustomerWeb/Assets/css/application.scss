@@ -1069,6 +1069,8 @@ hr {border-color:#aaa;}
         .flight-filter-content {
             &>div {background:#fff; padding:10px;}
             .slider-value {font-weight:bold; font-size:16px;}
+            h4>a {cursor:pointer;}
+            h4>a , h4>span {font-size:12px;}
             // airline filter
             .filter-airline {
                 img {display:block; width:30px; margin-left:auto; margin-right:auto;}

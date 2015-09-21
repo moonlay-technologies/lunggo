@@ -323,7 +323,7 @@
                             </div>
                         </div>
                         <div class="filter-airline departure-filter-airline" ng-show="departureFlightConfig.flightFilter.label == 'airline'">
-                            <h4>Maskapai</h4>
+                            <h4>Maskapai - <a ng-click="filterAirlineSelect('departure','all')">Select All</a> <span>|</span> <a ng-click="filterAirlineSelect('departure','none')">Select None</a></h4>
                             <div class="content">
                                 <div class="row" ng-repeat="airline in departureFlightConfig.flightFilter.value.airline.list" ng-if="$index % 4 == 0">
                                     <div class="col-sm-3">
@@ -651,7 +651,7 @@
                             </div>
                         </div>
                         <div class="filter-airline return-filter-airline" ng-show="returnFlightConfig.flightFilter.label == 'airline'">
-                            <h4>Maskapai</h4>
+                            <h4>Maskapai - <a ng-click="filterAirlineSelect('return','all')">Select All</a> <span>|</span> <a ng-click="filterAirlineSelect('return','none')">Select None</a></h4>
                             <div class="content">
                                 <div class="row" ng-repeat="airline in returnFlightConfig.flightFilter.value.airline.list" ng-if="$index % 4 == 0">
                                     <div class="col-sm-3">
