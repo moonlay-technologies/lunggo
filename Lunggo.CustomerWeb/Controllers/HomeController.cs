@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Diagnostics;
 using log4net;
 using log4net.Repository.Hierarchy;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Subscriber;
 using Lunggo.Framework.Core;
@@ -84,6 +88,51 @@ namespace Lunggo.CustomerWeb.Controllers
             };
             queue.AddMessage(new CloudQueueMessage(message.Serialize()));
             return null;
+        }
+
+        public ActionResult CekPemesanan()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CekPemesanan(string rsvNo, string lastName)
+        {
+            var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
+            var displayReservation = flightService.GetReservationForDisplay(rsvNo);
+            //Check lastName
+
+            var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
+                if (passengerLastName.Any())
+                {
+                    switch (displayReservation.Payment.Status)
+                    {
+                            case PaymentStatus.Settled:
+                            var rsvNoSet = new
+                            {
+                                RsvNo = displayReservation.RsvNo
+                            };
+                                return RedirectToAction("Thankyou", "Flight", rsvNoSet);
+                            break;
+
+                            case PaymentStatus.Pending:
+                            if (displayReservation.Payment.Method == PaymentMethod.BankTransfer)
+                            {
+                                var rsvNoPen = new
+                                {
+                                    RsvNo = displayReservation.RsvNo
+                                };
+                            return RedirectToAction("Confirmation", "Flight", rsvNoPen);
+                                }
+                            else
+                                {
+                                    //Veritrans
+                                    return null;
+                                }
+                            break;
+                    }
+                }
+            return RedirectToAction("Dummy", "Home");
         }
     }
 }

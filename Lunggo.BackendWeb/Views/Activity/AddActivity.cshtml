@@ -1,0 +1,134 @@
+﻿@using Lunggo.ApCommon.Activity.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Model
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.BackendWeb.Controllers
+@using RestSharp.Extensions
+@model Lunggo.ApCommon.Activity.Model.ActivityModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Create Activity";
+}
+
+<h2>Flight Reservation Search</h2>
+
+<div class="panel1">
+    @using (Html.BeginForm("AddActivity", "Activity", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-2">
+                SupplierId
+                @Html.TextBox("SupplierId")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                AreaCd
+                @Html.TextBox("AreaCd")
+            </div>
+        </div>
+        <div class='row'>
+            <div class="col-md-2">
+                Activity Name
+                @Html.TextBox("ActivityName")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Activity Tipe
+                @Html.DropDownList("ActivityType", new List<SelectListItem>
+                {
+                    new SelectListItem {Text = "Undefined", Value = ActivityTypeEnum.Undefined.ToString()},
+                    new SelectListItem {Text = "Water Activity", Value = ActivityTypeEnum.WaterActifity.ToString()},
+                    new SelectListItem {Text = "Sight Seeing", Value = ActivityTypeEnum.SightSeeing.ToString()},
+                    new SelectListItem {Text = "Food", Value = ActivityTypeEnum.Food.ToString()},
+                    new SelectListItem {Text = "History Cultural", Value = ActivityTypeEnum.HistoryCultural.ToString()}
+                }
+                    )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Short Desc
+                @Html.TextBox("ActivityShortDesc")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Hotel / Meet Location
+                @Html.TextBox("HotelMeetLocation")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                ToKnow
+                @Html.TextBox("ToKnow")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                MaxGuest
+                @Html.TextBox("MaxGuest")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                MinGuest
+                @Html.TextBox("MinGuest")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Location Meet Up lat
+                @Html.TextBox("LocationMeetUpLat")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Location Meet Up lang
+                @Html.TextBox("LocationMeetUpLang")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Other
+                @Html.TextBox("OtherRules")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Weather Policy
+                @Html.TextBox("WeatherPolicy")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Venue Address
+                @Html.TextBox("VenueAddress")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Publish
+                @Html.DropDownList("Publish", new List<SelectListItem>
+                {
+                    new SelectListItem {Text = "Yes", Value = "1"},
+                    new SelectListItem {Text = "No", Value = "2"},
+                }
+                    )
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-11 col-md-2">
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    }
+</div>
+<div class="panel2">
+    
+</div>

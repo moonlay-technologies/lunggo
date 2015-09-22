@@ -27,6 +27,20 @@ namespace Lunggo.BackendWeb
             //InitLogger();
             InitDictionaryService();
             InitFlightService();
+            InitUniqueIdGenerator();
+        }
+
+        private static void InitUniqueIdGenerator()
+        {
+            var generator = UniqueIdGenerator.GetInstance();
+            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            {
+                SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
+            };
+            generator.Init(optimisticData);
+            generator.BatchSize = 100;
         }
 
         private static void InitConfigurationManager()
