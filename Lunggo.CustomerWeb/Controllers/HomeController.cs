@@ -125,9 +125,8 @@ namespace Lunggo.CustomerWeb.Controllers
                             return RedirectToAction("Confirmation", "Flight", rsvNoPen);
                                 }
                             else
-                                {
-                                    //Veritrans
-                                    return null;
+                            {
+                                return Redirect(displayReservation.Payment.Url);
                                 }
                             break;
                     }

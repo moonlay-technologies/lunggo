@@ -91,7 +91,7 @@
 @if (isValid)
 {
 
-    <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
+    <form class="hidden" id="pushToken" action="@Url.Action("Select", "Flight")" method="post">
         <input type="text" name="Token" id="fareToken" value="" />
     </form>
 
