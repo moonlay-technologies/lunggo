@@ -650,16 +650,20 @@
 
                         if (returnData.IsValid == true) {
                             if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
-                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.Token);
+                                window.location.assign(location.origin + '/id/flight/Select?token=' + returnData.Token);
                             } else if(SiteLanguage == 'en' || SiteLanguage == 'english') {
-                                window.location.assign(location.origin + '/en/flight/Checkout?token=' + returnData.Token);
+                                window.location.assign(location.origin + '/en/flight/Select?token=' + returnData.Token);
                             }
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                             flightList.list[indexNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
                                 $scope.validating = false;
-                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.Token);
+                                if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
+                                    window.location.assign(location.origin + '/id/flight/Select?token=' + returnData.Token);
+                                } else if (SiteLanguage == 'en' || SiteLanguage == 'english') {
+                                    window.location.assign(location.origin + '/en/flight/Select?token=' + returnData.Token);
+                                }
                             } else {
                                 $scope.validating = false;
                             }
