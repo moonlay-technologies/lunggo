@@ -981,7 +981,13 @@
                 
                 if ($scope.pageConfig.flightsValidated) {
 
-                    flightsValidated();
+                    console.log('flight available. Will be redirected within');
+                    $scope.pageConfig.redirectingPage = true;
+                    var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
+                    $scope.pageConfig.fareToken = fareToken;
+                    console.log($scope.pageConfig.fareToken);
+                    $('#pushToken #fareToken').val(fareToken);
+                    $('#pushToken').submit();
 
                 } else {
 
@@ -1004,6 +1010,7 @@
                         }
                     } else if (returnData.IsValid == false) {
                         console.log('departure flight unavailable');
+                        $scope.departureFlightConfig.validateToken = returnData.Token;
                         $scope.departureFlightConfig.validateValid = false;
                         if (returnData.IsOtherFareAvailable == true) {
                             console.log('departure flight has new price');
@@ -1047,6 +1054,7 @@
                         }
                     } else if (returnData.IsValid == false) {
                         console.log('return flight unavailable');
+                        $scope.returnFlightConfig.validateToken = returnData.Token;
                         $scope.returnFlightConfig.validateValid = false;
                         if (returnData.IsOtherFareAvailable == true) {
                             console.log('return flight has new price');
