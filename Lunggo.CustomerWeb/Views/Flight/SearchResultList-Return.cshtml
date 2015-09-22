@@ -80,14 +80,34 @@
 
 
 @section AdditionalPageJavascript{
-    <script>
+    <script type="text/javascript">
         var langCode = 'en';
     </script>
 }
 
 @section PageJavascript {
-    <script>
+    <script type="text/javascript">
     var SiteLanguage = 'en';
+    var searchParameter = {
+        departureFlight: {
+            TripType: "@TripType.OneWay",
+            trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
+            AdultCount: "@data.AdultCount",
+            ChildCount: "@data.ChildCount",
+            InfantCount: "@data.InfantCount",
+            CabinClass: "@data.CabinClass",
+            Currency: "IDR"
+        },
+        returnFlight: {
+            TripType: "@TripType.OneWay",
+            trips: @Html.Raw(JsonConvert.SerializeObject(returnTrip)),
+            AdultCount: "@data.AdultCount",
+            ChildCount: "@data.ChildCount",
+            InfantCount: "@data.InfantCount",
+            CabinClass: "@data.CabinClass",
+            Currency: "IDR"
+        }
+    };
     </script>
 }
 

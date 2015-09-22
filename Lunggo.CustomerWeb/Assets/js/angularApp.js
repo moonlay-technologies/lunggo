@@ -745,7 +745,8 @@
                 fareToken: '',
                 overviewDetailShown: false,
                 flightsValidated: false,
-                redirectingPage: false
+                redirectingPage: false,
+                searchParameter : searchParameter
             }
             $scope.departureFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.departureFlight,
