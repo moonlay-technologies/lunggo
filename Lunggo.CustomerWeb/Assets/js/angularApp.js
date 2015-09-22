@@ -987,7 +987,7 @@
                 
                 if ($scope.pageConfig.flightsValidated) {
 
-                    $('#pushToken').submit();
+                    flightsValidated();
 
                 } else {
 
