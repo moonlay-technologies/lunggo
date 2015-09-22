@@ -210,7 +210,7 @@
                                         <input type="text" name="Passengers[@i].LastName" value="" placeholder="Last Name" class="form-control" ng-model="flightPassengers[@i].lastname" ng-change="passengersValidation()" />
                                     </div>
                                 </div>
-                                @if (needBirthDate)
+                                @if (needBirthDate || i >= adultCount)
                                 {
                                     <div class="form-group">
                                         <label class="control-label col-xs-12">Birthday</label>

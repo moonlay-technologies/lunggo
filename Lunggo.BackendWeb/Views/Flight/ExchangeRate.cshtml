@@ -7,6 +7,7 @@
 
 <h2>Exchange Rate</h2>
 
+
 @using (Html.BeginForm("ExchangeRate", "Flight", FormMethod.Post))
 {
     <div class='row rowMarginTop30px'>
@@ -23,9 +24,11 @@
         </div>
     </div>
 }
-@using (Html.BeginForm("InsertExchangeRatePost", "Flight", FormMethod.Get))
+@using (Html.BeginForm("InsertExchangeRate", "Flight", FormMethod.Get))
 {
     @Html.Hidden("hidden")
+    @Html.Hidden("currencyCode")
+    @Html.Hidden("rate")
     <div class="row rowMarginTop15px">
         <div class="col-md-1">
             <input type="submit" value="Change" />

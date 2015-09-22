@@ -1,0 +1,45 @@
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+@{
+    Layout = "/Views/Shared/_layout_20150506.cshtml";
+}
+
+
+@using (Html.BeginForm("CekPemesanan", "Home", FormMethod.Post))
+{
+    <div class="page page-check-order">
+
+        <div class="container">
+            <div class="check-order-wrapper">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Cek pemesanan</h2>
+                        <p>Semakin mudah mengetahui status pemesanan Anda di Traveloka.com. Masukkan data pemesanan Anda di formulir di bagian kanan.</p>
+                        <p>Jika Anda memiliki pemesanan belum terbayarkan, pemesanan tersebut juga dapat dilanjutkan*</p>
+                        <p>*Hingga 2 jam setelah pemesanan awal dilakukan.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <form action="/" method="post" class="form">
+                            <div class="form-group">
+                                <label class="control-label">Nomor Pesanan</label>
+                                <input type="text" name="rsvNo" value="" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Nama Belakang</label>
+                                <input type="text" name="lastName" value="" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-yellow" value="Cek Pesanan">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- .page-check-order -->
+}    
+
+
+

@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Lunggo.ApCommon.Actifity.Service;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Service;
@@ -27,6 +29,8 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
+            SearchCityActivity.SearchCityActivitesByCity("Bali");
+            SearchCityActivity.SearchCityActivitesByDate("BAli", new DateTime (2015,9,1), new DateTime(2015,9,6));
         }
     }
 }
