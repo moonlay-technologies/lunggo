@@ -795,6 +795,11 @@ function modalFunctions() {
 // Checkout Page functions
 function checkoutPageFunctions() {
 
+    // show login form
+    $('.toggle-login-field').click(function() {
+        $('.login-field').stop().slideToggle();
+    });
+
     // revalidate flight
     $('.validate-fare').click(function(evt) {
         evt.preventDefault();

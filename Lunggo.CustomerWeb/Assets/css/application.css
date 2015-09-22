@@ -1050,6 +1050,18 @@ hr {
   margin: 0;
   font-size: 20px; }
 
+.hotel-checkout-page .login-field {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #eee;
+  border: 1px solid #ddd;
+  display: none; }
+  .hotel-checkout-page .login-field:after {
+    content: "";
+    display: block;
+    width: 100%;
+    clear: both; }
+
 .hotel-checkout-page .passport-country {
   padding-left: 40px; }
 

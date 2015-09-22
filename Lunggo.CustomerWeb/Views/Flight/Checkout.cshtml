@@ -24,6 +24,11 @@
             preferredCountries: ['id']
         });
         bookingTimeout('@Model.ExpiryTime.ToString("o")');
+        $('.control-expiry').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date()
+        });
     </script>
 }
 
@@ -78,11 +83,10 @@
                 <div class="container">
                     <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00088")</strong></div>
                     <hr>
-                    <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090")</h1>
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})" class="btn btn-primary btn-yellow">Login</a>
-                    }
+                    <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
+                                                                                       {
+                                                                                           <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
+                                                                                       }</h1>
                 </div>
             </header>
 
@@ -91,6 +95,27 @@
                     <div class="row">
 
                         <div class="col-sm-8">
+                        
+                            <section class="login-field">
+                                <form class="form form-inline">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" class="form-control" placeholder="username" />
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label">Password</label>
+                                                <input type="password" class="form-control" placeholder="password" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="control-label">&nbsp; </label>
+                                            <input type="submit" value="Login" class="btn btn-yellow btn-block" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </section><!-- .login-field -->
 
                             <section class="customer-detail">
                                 <section class="customer-form">
@@ -186,7 +211,7 @@
                                                 </div>
                                                 <div class="form-group" style="width: 25%;">
                                                     <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
-                                                    <input type="date" class="form-control control-expiry control-check date-picker" name="Passengers[@i].PassportExpiryDate" placeholder="" style="width: 100%;">
+                                                    <input type="text" class="form-control control-expiry control-check" name="Passengers[@i].PassportExpiryDate" placeholder="" style="width: 100%;">
                                                 </div>
                                             </div>
                                         }

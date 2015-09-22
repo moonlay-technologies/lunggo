@@ -973,7 +973,7 @@
                     </div>
                     <div class="flight-book">
                         <a class="btn btn-yellow" ng-hide="pageConfig.flightsValidated == true && ((departureFlightConfig.validateValid == false && departureFlightConfig.validateNewfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false))" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" >Booking sekarang</a>
-                        <a class="btn btn-yellow" ng-show="pageConfig.flightsValidated && ( (departureFlightConfig.validateValid == false && departureFlightConfig.Newfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false) )" ng-click="closeOverview()">Ganti penerbangan</a>
+                        <a class="btn btn-yellow" ng-show="pageConfig.flightsValidated && ( (departureFlightConfig.validateValid == false && departureFlightConfig.Newfare == false) || (returnFlightConfig.validateValid == false && returnFlightConfig.validateNewfare == false) )" ng-disabled="pageConfig.redirectingPage" ng-click="closeOverview()">Ganti penerbangan</a>
                     </div>
                 </footer>
                 <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">

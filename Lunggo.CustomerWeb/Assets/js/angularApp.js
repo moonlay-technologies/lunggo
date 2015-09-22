@@ -746,7 +746,8 @@
                 fareUnavailable: false,
                 fareToken: '',
                 overviewDetailShown: false,
-                flightsValidated: false
+                flightsValidated: false,
+                redirectingPage: false
             }
             $scope.departureFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.departureFlight,
@@ -980,7 +981,7 @@
             // revalidate
             $scope.revalidateFlight = function(departureFlightIndexNo, returnFlightIndexNo) {
                 
-                if ($scope.departureFlightConfig.validateActive == true && $scope.returnFlightConfig.validateActive == true) {
+                if ($scope.pageConfig.flightsValidated) {
 
                     $('#pushToken').submit();
 
@@ -1080,6 +1081,7 @@
                     // if flight is valid
                     if ($scope.departureFlightConfig.validateValid == true && $scope.returnFlightConfig.validateValid == true) {
                         console.log('flight available. Will be redirected within');
+                        $scope.pageConfig.redirectingPage = true;
                         var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
                         $scope.pageConfig.fareToken = fareToken;
                         console.log($scope.pageConfig.fareToken);
