@@ -91,6 +91,10 @@
 @if (isValid)
 {
 
+    <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
+        <input type="text" name="Token" id="fareToken" value="" />
+    </form>
+
     <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
 
         <div class="container page-container flight-result active">

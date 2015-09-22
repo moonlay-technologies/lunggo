@@ -649,21 +649,15 @@
                         RevalidateConfig.value = returnData;
 
                         if (returnData.IsValid == true) {
-                            if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
-                                window.location.assign(location.origin + '/id/flight/Select?token=' + returnData.Token);
-                            } else if(SiteLanguage == 'en' || SiteLanguage == 'english') {
-                                window.location.assign(location.origin + '/en/flight/Select?token=' + returnData.Token);
-                            }
+                            $('#pushToken #fareToken').val(returnData.Token);
+                            $('#pushToken').submit();
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                             flightList.list[indexNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
                                 $scope.validating = false;
-                                if (SiteLanguage == 'id' || SiteLanguage == 'indonesia') {
-                                    window.location.assign(location.origin + '/id/flight/Select?token=' + returnData.Token);
-                                } else if (SiteLanguage == 'en' || SiteLanguage == 'english') {
-                                    window.location.assign(location.origin + '/en/flight/Select?token=' + returnData.Token);
-                                }
+                                $('#pushToken #fareToken').val(returnData.Token);
+                                $('#pushToken').submit();
                             } else {
                                 $scope.validating = false;
                             }
@@ -987,7 +981,7 @@
                 
                 if ($scope.pageConfig.flightsValidated) {
 
-                    $('#pushToken').submit();
+                    flightsValidated();
 
                 } else {
 
