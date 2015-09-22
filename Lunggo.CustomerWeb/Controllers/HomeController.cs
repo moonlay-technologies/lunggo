@@ -80,13 +80,13 @@ namespace Lunggo.CustomerWeb.Controllers
             return null;
         }
 
-        public ActionResult Dummy()
+        public ActionResult CekPemesanan()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Dummy(string rsvNo, string lastName)
+        public ActionResult CekPemesanan(string rsvNo, string lastName)
         {
             var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
             var displayReservation = flightService.GetReservationForDisplay(rsvNo);
