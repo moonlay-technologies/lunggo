@@ -1012,9 +1012,9 @@
                 <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">
                     <div class="departure-flight">
                         <h2>Penerbangan Pergi</h2>
-                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">
@@ -1046,9 +1046,9 @@
                     </div>
                     <div class="return-flight">
                         <h2>Penerbangan Pulang</h2>
-                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">
