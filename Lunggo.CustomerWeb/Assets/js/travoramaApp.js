@@ -354,14 +354,16 @@
                         RevalidateConfig.value = returnData;
 
                         if (returnData.IsValid == true) {
-                            window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                            $('#pushToken #fareToken').val(returnData.HashKey);
+                            $('#pushToken').submit();
                         } else if (returnData.IsValid == false && returnData.IsOtherFareAvailable == true) {
                             $scope.flightSearchResult.FlightList[resultNo].TotalFare = returnData.NewFare;
                             var userConfirmation = confirm("The price for the flight has been updated. The new price is : " + returnData.NewFare + ". Do you want to continue ?");
                             if (userConfirmation) {
                                 $scope.validating = false;
                                 loadingOverlay(false);
-                                window.location.assign(location.origin + '/id/flight/Checkout?token=' + returnData.HashKey);
+                                $('#pushToken #fareToken').val(returnData.HashKey);
+                                $('#pushToken').submit();
                             } else {
                                 $scope.validating = false;
                                 loadingOverlay(false);

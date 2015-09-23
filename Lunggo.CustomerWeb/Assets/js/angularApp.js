@@ -745,7 +745,8 @@
                 fareToken: '',
                 overviewDetailShown: false,
                 flightsValidated: false,
-                redirectingPage: false
+                redirectingPage: false,
+                searchParameter : searchParameter
             }
             $scope.departureFlightConfig = {
                 flightSearchParams: FlightSearchConfig.params.departureFlight,
@@ -918,10 +919,17 @@
                         $scope.pageConfig.activeFlightSection = 'departure';
                     }
                 }
+                if ($scope.departureFlightConfig.chosenFlight >= 0 && $scope.returnFlightConfig.chosenFlight >= 0) {
+                    $('body').addClass('no-scroll');
+                } else {
+                    $('body').removeClass('no-scroll');
+                }
             }
 
             // close flight overview
             $scope.closeOverview = function () {
+                $scope.pageConfig.overviewDetailShown = false;
+                $('body').removeClass('no-scroll');
                 if ($scope.pageConfig.flightsValidated == true) {
                     $scope.pageConfig.flightsValidated = false;
                     if ($scope.departureFlightConfig.validateValid == true && $scope.returnFlightConfig.validateValid == false) {
@@ -981,7 +989,13 @@
                 
                 if ($scope.pageConfig.flightsValidated) {
 
-                    flightsValidated();
+                    console.log('flight available. Will be redirected within');
+                    $scope.pageConfig.redirectingPage = true;
+                    var fareToken = $scope.departureFlightConfig.validateToken + '.' + $scope.returnFlightConfig.validateToken;
+                    $scope.pageConfig.fareToken = fareToken;
+                    console.log($scope.pageConfig.fareToken);
+                    $('#pushToken #fareToken').val(fareToken);
+                    $('#pushToken').submit();
 
                 } else {
 
@@ -1004,6 +1018,7 @@
                         }
                     } else if (returnData.IsValid == false) {
                         console.log('departure flight unavailable');
+                        $scope.departureFlightConfig.validateToken = returnData.Token;
                         $scope.departureFlightConfig.validateValid = false;
                         if (returnData.IsOtherFareAvailable == true) {
                             console.log('departure flight has new price');
@@ -1047,6 +1062,7 @@
                         }
                     } else if (returnData.IsValid == false) {
                         console.log('return flight unavailable');
+                        $scope.returnFlightConfig.validateToken = returnData.Token;
                         $scope.returnFlightConfig.validateValid = false;
                         if (returnData.IsOtherFareAvailable == true) {
                             console.log('return flight has new price');

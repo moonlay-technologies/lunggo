@@ -337,7 +337,19 @@ function hotelSearchFormFunctions() {
 function flightSearchFormFunctions() {
 
     // activate functions
-    $(document).ready(function () {});
+    $(document).ready(function() {
+        // set default value for search form on top of the page
+        $('.flight-search-form .flight-adult').val(FlightSearchConfig.params.departureFlight.AdultCount);
+        $('.flight-search-form .flight-child').val(FlightSearchConfig.params.departureFlight.ChildCount);
+        $('.flight-search-form .flight-infant').val(FlightSearchConfig.params.departureFlight.InfantCount);
+        if (FlightSearchConfig.params.departureFlight.CabinClass == 'Economy') {
+            $('.flight-search-form .flight-cabin').val('y');
+        } else if (FlightSearchConfig.params.departureFlight.CabinClass == 'Business' || FlightSearchConfig.params.departureFlight.CabinClass == 'business') {
+            $('.flight-search-form .flight-cabin').val('c');
+        } else {
+            $('.flight-search-form .flight-cabin').val('f');
+        }
+    });
 
     // ******************************
     // validate form

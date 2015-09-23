@@ -300,7 +300,7 @@
 
 .feedback-button {
   position: fixed;
-  z-index: 9999;
+  z-index: 2;
   right: -350px;
   top: 45%;
   background: #1e95d2;
@@ -437,6 +437,9 @@ hr {
   margin: 0;
   font-size: 20px;
   margin-bottom: 20px; }
+
+.no-scroll {
+  overflow: hidden; }
 
 .hexagon {
   position: relative;
@@ -2803,9 +2806,12 @@ hr {
           float: right;
           padding: 5px 40px; }
 
+.page-overlay.overview-overlay {
+  overflow: auto; }
+
 .trip-flight-overview {
   width: 700px;
-  height: 370px;
+  height: 400px;
   position: absolute;
   top: 0;
   right: 0;
@@ -2813,7 +2819,7 @@ hr {
   left: 0;
   margin: auto; }
   .trip-flight-overview.detail-shown {
-    height: 700px; }
+    height: auto; }
   .trip-flight-overview header {
     padding: 15px;
     background: #3face4;
@@ -2929,7 +2935,7 @@ hr {
     background: #eee;
     border: 1px solid #ddd;
     border-top: 0;
-    height: 330px;
+    height: auto;
     overflow: auto;
     font-size: 12px;
     border-top: 1px solid #ddd; }

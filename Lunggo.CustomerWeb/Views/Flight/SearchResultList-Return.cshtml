@@ -80,14 +80,37 @@
 
 
 @section AdditionalPageJavascript{
-    <script>
+    <script type="text/javascript">
         var langCode = 'en';
     </script>
 }
 
 @section PageJavascript {
-    <script>
-    var SiteLanguage = 'en';
+    <script type="text/javascript">
+        var SiteLanguage = 'en';
+        var searchParameter = {
+            departureFlight: {
+                TripType: "@TripType.OneWay",
+                trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
+                AdultCount: "@data.AdultCount",
+                ChildCount: "@data.ChildCount",
+                InfantCount: "@data.InfantCount",
+                CabinClass: "@data.CabinClass",
+                Currency: "IDR"
+            },
+            returnFlight: {
+                TripType: "@TripType.OneWay",
+                trips: @Html.Raw(JsonConvert.SerializeObject(returnTrip)),
+                AdultCount: "@data.AdultCount",
+                ChildCount: "@data.ChildCount",
+                InfantCount: "@data.InfantCount",
+                CabinClass: "@data.CabinClass",
+                Currency: "IDR"
+            }
+        };
+        $(document).ready(function() {
+            $('.flight-return-date.date-picker').datepicker('option', 'minDate', new Date(searchParameter.departureFlight.trips[0].DepartureDate));
+        });
     </script>
 }
 
@@ -426,7 +449,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-show="departureFlightConfig.chosenFlight < 0 && departureFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | filter:airlineFilter('departure') | filter:flightAvailable() | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == departureFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | filter:airlineFilter('departure') | filter:flightAvailable() | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -511,6 +534,11 @@
 
                     </div>
                     <!-- .flight -->
+                
+                    <!-- if no flight available -->
+                    <div class="no-flight" ng-show="!departureFlight.length">
+                        <h3>No flight available. Please recheck your filter or change you flight destination.</h3>
+                    </div>
 
 
                 </section><!-- .flight-list-wrapper -->
@@ -754,7 +782,7 @@
                 <!-- flight list loop start here -->
                 <section class="flight-list" ng-if="returnFlightConfig.chosenFlight < 0 && returnFlightConfig.loading == false">
 
-                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | filter:airlineFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse">
+                    <div class="flight" id="departure-{{flight.SequenceNo}}" ng-class="{active: flight.SequenceNo == returnFlightConfig.activeFlight}" ng-hide="flight.available == false" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | filter:airlineFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)">
 
                         <div class="flight-main">
                             <div class="flight-info">
@@ -839,6 +867,11 @@
 
                     </div>
                     <!-- .flight -->
+                
+                    <!-- if no flight available -->
+                    <div class="no-flight" ng-show="!returnFlight.length">
+                        <h3>No flight available. Please recheck your filter or change you flight destination.</h3>
+                    </div>
 
                 </section><!-- .flight-list-wrapper -->
                 <!-- flight list loop end here -->
@@ -979,9 +1012,9 @@
                 <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">
                     <div class="departure-flight">
                         <h2>Penerbangan Pergi</h2>
-                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">
@@ -1013,9 +1046,9 @@
                     </div>
                     <div class="return-flight">
                         <h2>Penerbangan Pulang</h2>
-                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">
