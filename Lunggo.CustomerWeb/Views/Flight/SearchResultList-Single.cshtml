@@ -76,15 +76,19 @@
 }
 
 @section AdditionalPageJavascript{
-    <script>
+    <script type="text/javascript">
         var langCode = 'en';
     </script>
 }
 
 @section PageJavascript {
-    <script>
-        $('.flight-search-filter').sticky({ topSpacing: 20 });
+    <script type="text/javascript">
         var SiteLanguage = 'en';
+        $(document).ready(function () {
+            console.log('JEMPING OKE');
+            console.log($('.flight-departure-date').val());
+            $('.flight-return-date.date-picker').datepicker('option', 'minDate', new Date( $('.flight-departure-date').val() ));
+        });
     </script>
 }
 

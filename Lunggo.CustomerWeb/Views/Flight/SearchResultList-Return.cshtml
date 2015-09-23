@@ -87,27 +87,30 @@
 
 @section PageJavascript {
     <script type="text/javascript">
-    var SiteLanguage = 'en';
-    var searchParameter = {
-        departureFlight: {
-            TripType: "@TripType.OneWay",
-            trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
-            AdultCount: "@data.AdultCount",
-            ChildCount: "@data.ChildCount",
-            InfantCount: "@data.InfantCount",
-            CabinClass: "@data.CabinClass",
-            Currency: "IDR"
-        },
-        returnFlight: {
-            TripType: "@TripType.OneWay",
-            trips: @Html.Raw(JsonConvert.SerializeObject(returnTrip)),
-            AdultCount: "@data.AdultCount",
-            ChildCount: "@data.ChildCount",
-            InfantCount: "@data.InfantCount",
-            CabinClass: "@data.CabinClass",
-            Currency: "IDR"
-        }
-    };
+        var SiteLanguage = 'en';
+        var searchParameter = {
+            departureFlight: {
+                TripType: "@TripType.OneWay",
+                trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
+                AdultCount: "@data.AdultCount",
+                ChildCount: "@data.ChildCount",
+                InfantCount: "@data.InfantCount",
+                CabinClass: "@data.CabinClass",
+                Currency: "IDR"
+            },
+            returnFlight: {
+                TripType: "@TripType.OneWay",
+                trips: @Html.Raw(JsonConvert.SerializeObject(returnTrip)),
+                AdultCount: "@data.AdultCount",
+                ChildCount: "@data.ChildCount",
+                InfantCount: "@data.InfantCount",
+                CabinClass: "@data.CabinClass",
+                Currency: "IDR"
+            }
+        };
+        $(document).ready(function() {
+            $('.flight-return-date.date-picker').datepicker('option', 'minDate', new Date(searchParameter.departureFlight.trips[0].DepartureDate));
+        });
     </script>
 }
 
