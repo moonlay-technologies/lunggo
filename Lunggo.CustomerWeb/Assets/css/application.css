@@ -300,7 +300,7 @@
 
 .feedback-button {
   position: fixed;
-  z-index: 9999;
+  z-index: 2;
   right: -350px;
   top: 45%;
   background: #1e95d2;
