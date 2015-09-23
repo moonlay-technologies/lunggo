@@ -919,10 +919,17 @@
                         $scope.pageConfig.activeFlightSection = 'departure';
                     }
                 }
+                if ($scope.departureFlightConfig.chosenFlight >= 0 && $scope.returnFlightConfig.chosenFlight >= 0) {
+                    $('body').addClass('no-scroll');
+                } else {
+                    $('body').removeClass('no-scroll');
+                }
             }
 
             // close flight overview
             $scope.closeOverview = function () {
+                $scope.pageConfig.overviewDetailShown = false;
+                $('body').removeClass('no-scroll');
                 if ($scope.pageConfig.flightsValidated == true) {
                     $scope.pageConfig.flightsValidated = false;
                     if ($scope.departureFlightConfig.validateValid == true && $scope.returnFlightConfig.validateValid == false) {

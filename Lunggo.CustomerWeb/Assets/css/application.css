@@ -438,6 +438,9 @@ hr {
   font-size: 20px;
   margin-bottom: 20px; }
 
+.no-scroll {
+  overflow: hidden; }
+
 .hexagon {
   position: relative;
   width: 190px;
