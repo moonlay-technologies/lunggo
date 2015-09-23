@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case FareType.Consolidated:
                     return "CON";
                 default:
-                    return "";
+                    return null;
             }
         }
         internal static FareType Mnemonic(string fareType)

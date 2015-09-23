@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case Gender.Female:
                     return "F";
                 default:
-                    return "";
+                    return null;
             }
         }
 

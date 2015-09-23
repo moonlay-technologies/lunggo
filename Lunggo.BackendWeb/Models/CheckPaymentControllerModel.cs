@@ -10,7 +10,7 @@ namespace Lunggo.BackendWeb.Models
 {
     public class CheckPaymentControllerModel
     {
-        public long ReportId { get; set; }
+        public string RsvNo { get; set; }
         public TransferConfirmationReportStatus Status { get; set; }
     }
 }

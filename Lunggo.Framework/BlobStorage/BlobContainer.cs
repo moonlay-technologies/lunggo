@@ -4,6 +4,7 @@
     {
         Reservation,
         Eticket,
-        Invoice
+        Invoice,
+        TransferReceipt
     }
 }

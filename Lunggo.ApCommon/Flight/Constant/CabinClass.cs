@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case CabinClass.First:
                     return "FST";
                 default:
-                    return "";
+                    return null;
             }
         }
         internal static CabinClass Mnemonic(string cabin)

@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Payment.Constant
 {
-    public enum PaymentStatus 
+    public enum PaymentStatus
     {
         Undefined = 0,
         Cancelled = 1,
         Pending = 2,
         Settled = 3,
         Denied = 4,
-        Expired = 5
+        Expired = 5,
+        TransferConfirmed = 6,
+        Challenged = 7,
+        ReceiptSubmitted = 8
     }
 
     internal class PaymentStatusCd
@@ -32,8 +35,14 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "DEN";
                 case PaymentStatus.Expired:
                     return "EXP";
+                case PaymentStatus.TransferConfirmed:
+                    return "TRC";
+                case PaymentStatus.Challenged:
+                    return "CHA";
+                case PaymentStatus.ReceiptSubmitted:
+                    return "RCP";
                 default:
-                    return "";
+                    return null;
             }
         }
         internal static PaymentStatus Mnemonic(string paymentStatus)
@@ -50,6 +59,12 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return PaymentStatus.Denied;
                 case "EXP":
                     return PaymentStatus.Expired;
+                case "TRC":
+                    return PaymentStatus.TransferConfirmed;
+                case "CHA":
+                    return PaymentStatus.Challenged;
+                case "RCP":
+                    return PaymentStatus.ReceiptSubmitted;
                 default:
                     return PaymentStatus.Undefined;
             }

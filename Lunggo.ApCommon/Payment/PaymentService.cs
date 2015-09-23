@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Veritrans;
 using Lunggo.ApCommon.Veritrans.Model;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Payment.Data;
+using Lunggo.Framework.SharedModel;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using HttpRequest = System.Web.HttpRequest;
@@ -76,7 +79,6 @@ namespace Lunggo.ApCommon.Payment
             report.Status = TransferConfirmationReportStatus.Unchecked;
             var reportRecord = new TransferConfirmationReportTableRecord
             {
-                ReportId = TransferConfirmationReportIdSequence.GetInstance().GetNext(),
                 RsvNo = report.RsvNo,
                 Amount = report.Amount,
                 PaymentTime = report.PaymentTime,
@@ -92,6 +94,33 @@ namespace Lunggo.ApCommon.Payment
                 TransferConfirmationReportTableRepo.GetInstance().Insert(conn, reportRecord);
         }
 
+        public void SubmitTransferReceipt(string rsvNo, FileInfo file)
+        {
+            file.FileName = rsvNo;
+            var fileDto = new BlobWriteDto
+            {
+                FileBlobModel = new FileBlobModel
+                {
+                    Container = BlobContainer.TransferReceipt,
+                    FileInfo = file
+                },
+                SaveMethod = SaveMethod.Force
+            };
+            BlobStorageService.GetInstance().WriteFileToBlob(fileDto);
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
+                {
+                    RsvNo = rsvNo,
+                    HasReceipt = true
+                });
+                FlightService.GetInstance().UpdateFlightPayment(rsvNo, new PaymentInfo
+                {
+                    Status = PaymentStatus.ReceiptSubmitted
+                });
+            }
+        }
+
         public List<TransferConfirmationReport> GetAllTransferConfirmationReports()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -101,7 +130,6 @@ namespace Lunggo.ApCommon.Payment
                         .FindAll(conn)
                         .Select(record => new TransferConfirmationReport
                         {
-                            ReportId = record.ReportId.GetValueOrDefault(),
                             RsvNo = record.RsvNo,
                             Amount = record.Amount.GetValueOrDefault(),
                             PaymentTime = record.PaymentTime.GetValueOrDefault(),
@@ -116,13 +144,13 @@ namespace Lunggo.ApCommon.Payment
             }
         }
 
-        public void UpdateTransferConfirmationReportStatus(long reportId, TransferConfirmationReportStatus status)
+        public void UpdateTransferConfirmationReportStatus(string rsvNo, TransferConfirmationReportStatus status)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
                 {
-                    ReportId = reportId,
+                    RsvNo = rsvNo,
                     StatusCd = TransferConfirmationReportStatusCd.Mnemonic(status)
                 });
             }

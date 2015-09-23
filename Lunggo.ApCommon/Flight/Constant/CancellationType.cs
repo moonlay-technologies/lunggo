@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case CancellationType.Supplier:
                     return "SUP";
                 default:
-                    return "";
+                    return null;
             }
         }
         internal static CancellationType Mnemonic(string type)

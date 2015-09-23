@@ -51,23 +51,15 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                     @"PaymentStatusCd = CASE ");
                 clauseBuilder.Append(
-                        @"WHEN @PaymentStatusCd = 'CAN' THEN ");
+                        @"WHEN @PaymentStatusCd = 'CAN' THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
-                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'SET') OR (PaymentStatusCd = 'DEN') OR (PaymentStatusCd IS NULL)) ");
+                        @"WHEN @PaymentStatusCd = 'PEN' THEN PaymentStatusCd ");
                 clauseBuilder.Append(
-                                @"THEN @PaymentStatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE PaymentStatusCd ");
-                clauseBuilder.Append(
-                            @"END ");                
-                clauseBuilder.Append(
-                        @"WHEN ((@PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) THEN @PaymentStatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN ((@PaymentStatusCd = 'DEN') OR (PaymentStatusCd IS NULL)) THEN @PaymentStatusCd ");
+                        @"WHEN @PaymentStatusCd = 'DEN' THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'SET' THEN ");
                 clauseBuilder.Append(
-                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) ");
+                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'TRC') OR (PaymentStatusCd = 'CHA') OR (PaymentStatusCd = 'RCP')) ");
                 clauseBuilder.Append(
                                 @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(
@@ -77,7 +69,43 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'EXP' THEN ");
                 clauseBuilder.Append(
-                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd IS NULL)) ");
+                            @"CASE WHEN PaymentStatusCd = 'PEN' ");
+                clauseBuilder.Append(
+                                @"THEN @PaymentStatusCd ");
+                clauseBuilder.Append(
+                                @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                            @"END ");
+                clauseBuilder.Append(
+                        @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                        @"WHEN @PaymentStatusCd = 'TRC' THEN ");
+                clauseBuilder.Append(
+                            @"CASE WHEN PaymentStatusCd = 'PEN' ");
+                clauseBuilder.Append(
+                                @"THEN @PaymentStatusCd ");
+                clauseBuilder.Append(
+                                @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                            @"END ");
+                clauseBuilder.Append(
+                        @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                        @"WHEN @PaymentStatusCd = 'CHA' THEN ");
+                clauseBuilder.Append(
+                            @"CASE WHEN PaymentStatusCd = 'TRC' ");
+                clauseBuilder.Append(
+                                @"THEN @PaymentStatusCd ");
+                clauseBuilder.Append(
+                                @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                            @"END ");
+                clauseBuilder.Append(
+                        @"ELSE PaymentStatusCd ");
+                clauseBuilder.Append(
+                        @"WHEN @PaymentStatusCd = 'RCP' THEN ");
+                clauseBuilder.Append(
+                            @"CASE WHEN PaymentStatusCd = 'CHA' ");
                 clauseBuilder.Append(
                                 @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(

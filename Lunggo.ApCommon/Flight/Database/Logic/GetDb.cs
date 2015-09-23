@@ -214,7 +214,6 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Status = PaymentStatusCd.Mnemonic(reservationRecord.PaymentStatusCd),
                                         TargetAccount = reservationRecord.PaymentTargetAccount,
                                         Url = reservationRecord.PaymentUrl,
-                                        ReceiptUrl = reservationRecord.PaymentReceiptUrl,
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
                                         PaidAmount = reservationRecord.PaidAmount.GetValueOrDefault(),
                                         Currency = reservationRecord.CurrencyCd,

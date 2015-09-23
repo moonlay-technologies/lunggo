@@ -140,7 +140,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (bookResult.IsPaymentThroughThirdPartyUrl)
                     return Redirect(bookResult.PaymentUrl);
                 else
-                    return RedirectToAction("Confirmation", "Flight", new { bookResult.RsvNo });
+                    return RedirectToAction("Thankyou", "Flight", new { bookResult.RsvNo });
 
             }
             else

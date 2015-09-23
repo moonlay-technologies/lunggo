@@ -11,15 +11,6 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? ReportId
-		{
-		    get { return _ReportId; }
-		    set
-		    {
-		        _ReportId = value;
-		        IncrementLog("ReportId");
-		    }
-		}
 		public String RsvNo
 		{
 		    get { return _RsvNo; }
@@ -101,6 +92,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Message");
 		    }
 		}
+		public Boolean? HasReceipt
+		{
+		    get { return _HasReceipt; }
+		    set
+		    {
+		        _HasReceipt = value;
+		        IncrementLog("HasReceipt");
+		    }
+		}
 		public String StatusCd
 		{
 		    get { return _StatusCd; }
@@ -112,7 +112,6 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _ReportId;
 		private String _RsvNo;
 		private Decimal? _Amount;
 		private DateTime? _PaymentTime;
@@ -122,6 +121,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _BeneficiaryBank;
 		private String _BeneficiaryAccount;
 		private String _Message;
+		private Boolean? _HasReceipt;
 		private String _StatusCd;
 
 
@@ -154,8 +154,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ReportId", true),
-				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("RsvNo", true),
 				new ColumnMetadata("Amount", false),
 				new ColumnMetadata("PaymentTime", false),
 				new ColumnMetadata("RemitterName", false),
@@ -164,6 +163,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BeneficiaryBank", false),
 				new ColumnMetadata("BeneficiaryAccount", false),
 				new ColumnMetadata("Message", false),
+				new ColumnMetadata("HasReceipt", false),
 				new ColumnMetadata("StatusCd", false),
 
             };

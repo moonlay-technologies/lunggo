@@ -72,7 +72,7 @@ namespace Lunggo.BackendWeb.Controllers
             var usePayment = PaymentService.GetInstance();
             foreach (var listPayment in payments)
             {
-                usePayment.UpdateTransferConfirmationReportStatus(listPayment.ReportId, listPayment.Status);
+                usePayment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
             }
             return RedirectToAction("Index", "Home");
         }
