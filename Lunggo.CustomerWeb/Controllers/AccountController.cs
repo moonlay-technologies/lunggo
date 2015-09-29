@@ -92,7 +92,8 @@ namespace Lunggo.CustomerWeb.Controllers
                             case SignInStatus.LockedOut:
                                 return View("Lockout");
                             case SignInStatus.RequiresVerification:
-                                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                                ViewBag.Error = "AlreadyRegisteredButUnconfirmed";
+                                return View(model);
                             case SignInStatus.Failure:
                             default:
                                 ViewBag.Error = "Failed";
@@ -166,6 +167,7 @@ namespace Lunggo.CustomerWeb.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
+
         {
             return View();
         }
@@ -182,7 +184,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var foundUser = await UserManager.FindByEmailAsync(model.Email);
                 if (foundUser == null)
                 {
-                    var user = new CustomUser()
+                    var user = new CustomUser
                     {
                         UserName = model.Email,
                         Email = model.Email
@@ -240,7 +242,11 @@ namespace Lunggo.CustomerWeb.Controllers
                 UserManager.AddToRole(userId, "Customer");
                 var voucherCode = VoucherService.GetInstance().GenerateVoucherCode(email);
                 VoucherService.GetInstance().SendVoucherEmailToCustomer(email, voucherCode);
-                return RedirectToAction("Login", "Account");
+                var model = new ResetPasswordViewModel
+                {
+                    Email = await UserManager.GetEmailAsync(userId)
+                };
+                return RedirectToAction("ResetPassword", "Account", model);
             }
             else
             {
@@ -274,7 +280,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                 {
                     var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
-                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = foundUser.Id, code = code },
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email =  model.Email},
                         protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(foundUser.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
                     return View(model);
@@ -298,14 +304,13 @@ namespace Lunggo.CustomerWeb.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string code, string email)
         {
-            if (code == null)
-                return RedirectToAction("Index", "UW000TopPage");
-            else
+            var model = new ResetPasswordViewModel
             {
-                return View();
-            }
+                Email = email
+            };
+            return View(model);
         }
 
         //
@@ -323,7 +328,9 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.Error = "NotRegistered";
                     return View(model);
                 }
-                var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+                var result = model.Code == null 
+                    ? await UserManager.AddPasswordAsync(user.Id, model.Password) 
+                    : await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
                 if (result.Succeeded)
                 {
                     var returnUrl = Url.Action("Index", "UW000TopPage");
@@ -345,7 +352,11 @@ namespace Lunggo.CustomerWeb.Controllers
                             return View(model);
                     }
                 }
-                return View();
+                else
+                {
+                    ViewBag.Error = "Failed";
+                    return View();
+                }
             }
             else
             {

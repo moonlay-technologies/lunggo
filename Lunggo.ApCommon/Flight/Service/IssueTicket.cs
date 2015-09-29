@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
@@ -65,6 +66,10 @@ namespace Lunggo.ApCommon.Flight.Service
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
+                        if (reservation.Payment.Method != PaymentMethod.BankTransfer)
+                            SendInstantPaymentNotifToCustomer(input.RsvNo);
+                        else
+                            SendPendingPaymentConfirmedNotifToCustomer(input.RsvNo);
                         InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
                     }
                 }

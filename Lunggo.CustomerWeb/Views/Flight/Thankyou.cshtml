@@ -34,29 +34,28 @@
 <!-- facebook code start -->
 <div id="fb-root"></div>
 <script>
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=185725818169727";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=185725818169727";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 <!-- facebook code end -->
 
 
 <div class="thankyou-page flight-receipt">
-    
+
     <div class="container">
 
         <div class="row">
             <div class="col-sm-12">
-                
+
                 @switch (Model.Payment.Status)
                 {
                     case PaymentStatus.Undefined:
-                    case PaymentStatus.Cancelled:
                     case PaymentStatus.Expired:
-                        
+
                         <div class="no-reservation">
                             <h1 class="text-center">Belum Ada Reservasi</h1>
                             <div class="row">
@@ -70,79 +69,134 @@
                                 </div>
                             </div>
                         </div>
-                
+
                         break;
-                        
+
                     case PaymentStatus.Denied:
 
-                        <div class="transaction-denied">
-                            <h1 class="text-center">Transaksi Ditolak</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
-                        </div>
+                    <div class="transaction-denied">
+                        <h1 class="text-center">Transaksi Ditolak</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non vestibulum justo. Nullam nec magna eros. Suspendisse pretium, libero ac mattis fringilla, mauris ante tristique quam, id pharetra turpis turpis sed dui.</p>
+                    </div>
 
 
-                        <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
-                
+                    <h1 class="text-center">Terima kasih atas pesanan Anda</h1>
+
                         break;
-                        
+
                     case PaymentStatus.Pending:
 
-                        <div class="payment-timer">
-                    
-                            <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+                    <div class="payment-timer">
+
+                        <h2 class="text-center payment-title">Selesaikan pembayaran Anda</h2>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda sebelum habis waktu tenggang. Bila tidak, pemesanan Anda akan di cancel.</p>
+                                @switch (Model.Payment.Method)
+                                {
+                                    case PaymentMethod.VirtualAccount:
+                                        <p>[Ceritanya instruksi pembayaran]</p>
+                                        <p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
+                                        break;
+                                    case PaymentMethod.BankTransfer:
+                                    <p>[Ceritanya instruksi pembayaran]</p>
+                                    <a href="@Url.Action("Confirmation", "Flight", new { Model.RsvNo })"><but><button>Saya sudah bayar</button></a>
+                                        break;
+                                }
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="payment-countdown text-center"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                        <!-- .payment-timer -->
+
+                                break;
+
+                    case PaymentStatus.Settled:
+
+                    <div class="ticket-wrapper">
+                        <h1 class="text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank you" /></h1>
+                        <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
+
+                        <div class="print-ticket-wrapper">
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <p>Proses pemesanan pembayaran Anda belum selesai. Mohon selesaikan pembayaran Anda dalam waktu 10 menit. Bila tidak, pemesanan Anda akan di cancel.</p>
-                                    <p>Nomor Virtual Account : @Model.Payment.TargetAccount</p>
+                                <div class="col-sm-7 text-right">
+                                    <div class="payment-countdown-new text-center">
+                                        <img src="/Assets/images/sand-clock.png" alt="Printing" /><span class="countdown-timer"></span>
+                                        <p>
+                                            <span>Menit</span>
+                                            <span>Detik</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="payment-countdown text-center"></div>
+                                <div class="col-sm-5">
+                                    <a class="btn btn-yellow print-ticket-button"><span class="fa fa-print"></span> Cetak e-Ticket</a>
                                 </div>
                             </div>
 
-                        </div>
-                        <!-- .payment-timer -->
-                
-                        break;
-                        
-                    case PaymentStatus.Settled:
+                            <p class="text-center">Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
 
-                        <div class="ticket-wrapper">
-                            <h1 class="text-center"><img src="/Assets/images/terima-kasih.png" alt="Thank you" /></h1>
-                            <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
-                            
-                            <div class="print-ticket-wrapper">
-                            
-                                <div class="row">
-                                    <div class="col-sm-7 text-right">
-                                        <div class="payment-countdown-new text-center">
-                                            <img src="/Assets/images/sand-clock.png" alt="Printing" /><span class="countdown-timer"></span>
-                                            <p>
-                                                <span>Menit</span>
-                                                <span>Detik</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <a class="btn btn-yellow print-ticket-button"><span class="fa fa-print"></span> Cetak e-Ticket</a>
-                                    </div>
-                                </div>
+                        </div><!-- .print-ticket-wrapper -->
 
-                                <p class="text-center">Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>    
-
-                            </div><!-- .print-ticket-wrapper -->
-
-                        </div>
+                    </div>
                         <!-- .ticket-wrapper -->
 
-                        break;
+                                break;
 
+                    case PaymentStatus.Cancelled:
+
+                    <div class="no-reservation">
+                        <h1 class="text-center">Reservasi Dibatalkan</h1>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Reservasi Anda telah dibatalkan.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                                break;
+
+                    case PaymentStatus.TransferConfirmed:
+                    case PaymentStatus.ReceiptSubmitted:
+
+                    <div class="no-reservation">
+                        <h1 class="text-center">Pembayaran Anda sedang diverifikasi oleh tim kami.</h1>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Kami akan mengabari Anda ketika sudah terverifikasi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                                break;
+
+                    case PaymentStatus.Challenged:
+
+                    <div class="no-reservation">
+                        <h1 class="text-center">Kami tidak berhasil memverifikasikan pembayaran Anda.</h1>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Silakan upload bukti transfer Anda.</p>
+                                @using (Html.BeginForm("Receipt", "Upload", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                                {
+                                    <input type="file" name="file" />
+                                    <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
+                                    <input type="submit" value="Upload" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                                break;
                 }
 
             </div>
         </div>
-        
+
         <div class="fb-share-button" data-layout="button"></div>
 
         @if (Model.Payment.Status == PaymentStatus.Settled)
@@ -185,7 +239,7 @@
                                         <div class="flight-detail col-sm-10">
                                             <h5>Maskapai : @segment.AirlineName</h5>
                                             <h5>Tujuan : @segment.DepartureCity (@segment.DepartureAirport) ke @segment.ArrivalCity (@segment.ArrivalAirport)</h5>
-                                            <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>  
+                                            <h5>Tanggal : @segment.DepartureTime.ToString("dddd, d MMM yyyy, Pukul hh.mm")</h5>
                                         </div>
                                     </div>
                                 }
@@ -209,14 +263,14 @@
 
                             </div>
                         </div>
-                    
+
                         <div class="receipt-payment">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h4><b>Harga Total:</b> Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>  
+                                    <h4><b>Harga Total:</b> Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</h4>
                                 </div>
                                 <div class="col-sm-6">
-                                    <h4><b>Metode Pembayaran:</b> @Model.Payment.Method</h4>  
+                                    <h4><b>Metode Pembayaran:</b> @Model.Payment.Method</h4>
                                 </div>
                             </div>
                         </div>

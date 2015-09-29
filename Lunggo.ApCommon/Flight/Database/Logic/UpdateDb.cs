@@ -57,7 +57,6 @@ namespace Lunggo.ApCommon.Flight.Service
                             PaymentTargetAccount = payment.TargetAccount,
                             PaymentTimeLimit = payment.TimeLimit.HasValue ? payment.TimeLimit.Value.ToUniversalTime() : (DateTime?) null,
                             PaymentUrl = payment.Url,
-                            PaymentReceiptUrl = payment.ReceiptUrl,
                             PaidAmount = payment.PaidAmount,
                             FinalPrice = payment.FinalPrice,
                         };

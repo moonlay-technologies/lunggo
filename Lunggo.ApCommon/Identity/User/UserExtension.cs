@@ -8,6 +8,7 @@ using System.Web.UI;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Identity.User
 {
@@ -114,7 +115,9 @@ namespace Lunggo.ApCommon.Identity.User
                 UserName = userRecord.UserName,
                 AccessFailedCount = userRecord.AccessFailedCount,
                 EmailConfirmed = userRecord.EmailConfirmed,
+                CountryCd = userRecord.CountryCd,
                 PhoneNumber = userRecord.PhoneNumber,
+                Address = userRecord.Address,
                 LockoutEnabled = userRecord.LockoutEnabled,
                 LockoutEndDateUtc = userRecord.LockoutEndDateUtc,
                 PhoneNumberConfirmed = userRecord.PhoneNumberConfirmed,

@@ -22,12 +22,12 @@ namespace Lunggo.ApCommon.Flight.Constant
             {
                 case PassengerType.Adult:
                     return "ADT";
-                    case PassengerType.Child:
+                case PassengerType.Child:
                     return "CHD";
-                    case PassengerType.Infant:
+                case PassengerType.Infant:
                     return "INF";
                 default:
-                    return "";
+                    return null;
             }
         }
 

@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case Title.Miss:
                     return "MS";
                 default:
-                    return "";
+                    return null;
             }
         }
 

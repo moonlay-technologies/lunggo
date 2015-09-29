@@ -131,7 +131,7 @@
                                             <div class="form-inline">
                                                 <div class="form-group" style="width: 100%;">
                                                     <label for="">Country :</label>
-                                                    <input type="text" class="form-control control-countrycode control-check" style="width: 100%;" name="Contact.CountryCode" placeholder="ex:62" />
+                                                    <input type="text" class="form-control control-countrycode control-check" style="width: 100%;" name="Contact.CountryCode" placeholder="ex:62" value="@User.Identity.GetCountryCd()" />
                                                     @Html.ValidationMessageFor(data => data.Contact.CountryCode)
                                                 </div>
                                             </div>

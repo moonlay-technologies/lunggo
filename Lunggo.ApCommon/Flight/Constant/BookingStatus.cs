@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case BookingStatus.Failed:
                     return "FAIL";
                 default:
-                    return "";
+                    return null;
             }
         }
 

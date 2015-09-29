@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                 case TripType.Other:
                     return "OTH";
                 default:
-                    return "";
+                    return null;
             }
         }
 

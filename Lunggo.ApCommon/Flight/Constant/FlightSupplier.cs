@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Constant
                     case FlightSupplier.Citilink:
                     return "CITI";
                 default:
-                    return "";
+                    return null;
             }
         }
 

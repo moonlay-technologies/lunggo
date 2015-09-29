@@ -182,15 +182,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PaymentUrl");
 		    }
 		}
-		public String PaymentReceiptUrl
-		{
-		    get { return _PaymentReceiptUrl; }
-		    set
-		    {
-		        _PaymentReceiptUrl = value;
-		        IncrementLog("PaymentReceiptUrl");
-		    }
-		}
 		public Decimal? PaidAmount
 		{
 		    get { return _PaidAmount; }
@@ -455,7 +446,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _PaymentStatusCd;
 		private String _PaymentTargetAccount;
 		private String _PaymentUrl;
-		private String _PaymentReceiptUrl;
 		private Decimal? _PaidAmount;
 		private DateTime? _RefundTime;
 		private Decimal? _RefundAmount;
@@ -533,7 +523,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PaymentStatusCd", false),
 				new ColumnMetadata("PaymentTargetAccount", false),
 				new ColumnMetadata("PaymentUrl", false),
-				new ColumnMetadata("PaymentReceiptUrl", false),
 				new ColumnMetadata("PaidAmount", false),
 				new ColumnMetadata("RefundTime", false),
 				new ColumnMetadata("RefundAmount", false),

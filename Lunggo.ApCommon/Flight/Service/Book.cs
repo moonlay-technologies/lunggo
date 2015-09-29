@@ -33,6 +33,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, output);
                 InsertDb.Reservation(reservation);
+                if (reservation.Payment.Method == PaymentMethod.BankTransfer)
+                    SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
                 output.RsvNo = reservation.RsvNo;
                 output.PaymentUrl = reservation.Payment.Url;
                 output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
