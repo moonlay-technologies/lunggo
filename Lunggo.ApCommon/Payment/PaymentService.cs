@@ -74,8 +74,9 @@ namespace Lunggo.ApCommon.Payment
                 : GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
         }
 
-        public void SubmitTransferConfirmationReport(TransferConfirmationReport report)
+        public void SubmitTransferConfirmationReport(TransferConfirmationReport report, FileInfo file)
         {
+            var receiptUrl = SaveTransferReceipt(report.RsvNo, file);
             report.Status = TransferConfirmationReportStatus.Unchecked;
             var reportRecord = new TransferConfirmationReportTableRecord
             {
@@ -88,13 +89,14 @@ namespace Lunggo.ApCommon.Payment
                 BeneficiaryBank = report.BeneficiaryBank,
                 BeneficiaryAccount = report.BeneficiaryAccount,
                 Message = report.Message,
+                ReceiptUrl = receiptUrl,
                 StatusCd = TransferConfirmationReportStatusCd.Mnemonic(TransferConfirmationReportStatus.Unchecked)
             };
             using (var conn = DbService.GetInstance().GetOpenConnection())
                 TransferConfirmationReportTableRepo.GetInstance().Insert(conn, reportRecord);
         }
 
-        public void SubmitTransferReceipt(string rsvNo, FileInfo file)
+        private static string SaveTransferReceipt(string rsvNo, FileInfo file)
         {
             file.FileName = rsvNo;
             var fileDto = new BlobWriteDto
@@ -106,19 +108,7 @@ namespace Lunggo.ApCommon.Payment
                 },
                 SaveMethod = SaveMethod.Force
             };
-            BlobStorageService.GetInstance().WriteFileToBlob(fileDto);
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                TransferConfirmationReportTableRepo.GetInstance().Update(conn, new TransferConfirmationReportTableRecord
-                {
-                    RsvNo = rsvNo,
-                    HasReceipt = true
-                });
-                FlightService.GetInstance().UpdateFlightPayment(rsvNo, new PaymentInfo
-                {
-                    Status = PaymentStatus.ReceiptSubmitted
-                });
-            }
+            return BlobStorageService.GetInstance().WriteFileToBlob(fileDto);
         }
 
         public List<TransferConfirmationReport> GetAllTransferConfirmationReports()

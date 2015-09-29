@@ -101,12 +101,12 @@
                                         break;
                                     case PaymentMethod.BankTransfer:
                                     <p>[Ceritanya instruksi pembayaran]</p>
-                                    <a href="@Url.Action("Confirmation", "Flight", new { Model.RsvNo })"><but><button>Saya sudah bayar</button></a>
+                                <a href="@Url.Action("Confirmation", "Flight", new { Model.RsvNo })">Saya sudah bayar</a>
                                         break;
                                 }
                             </div>
                             <div class="col-sm-6">
-                                <div class="payment-countdown text-center"></div>
+                                <div class="payment-countdown text-center">[Ceritanya countdown timer di sini]</div>
                             </div>
                         </div>
 
@@ -122,20 +122,25 @@
                         <p class="text-center">Telah memesan penerbangan di Travorama. Anda dapat mencetak e-Ticket Anda melalui tombol berikut atau mengunduhnya di email Anda @Model.Contact.Email setelah :</p>
 
                         <div class="print-ticket-wrapper">
-
                             <div class="row">
-                                <div class="col-sm-7 text-right">
-                                    <div class="payment-countdown-new text-center">
-                                        <img src="/Assets/images/sand-clock.png" alt="Printing" /><span class="countdown-timer"></span>
-                                        <p>
-                                            <span>Menit</span>
-                                            <span>Detik</span>
-                                        </p>
+                                @if (!Model.IsIssued)
+                                {
+                                    <div class="col-sm-7 text-right">
+                                        <div class="payment-countdown-new text-center">
+                                            <img src="/Assets/images/sand-clock.png" alt="Printing" /><span class="countdown-timer"></span>
+                                            <p>
+                                                <span>Menit</span>
+                                                <span>Detik</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <a class="btn btn-yellow print-ticket-button"><span class="fa fa-print"></span> Cetak e-Ticket</a>
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-5">
+                                        <a class="btn btn-yellow print-ticket-button"><span class="fa fa-print"></span> Cetak e-Ticket</a>
+                                    </div>
+                                }
                             </div>
 
                             <p class="text-center">Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</p>
@@ -160,8 +165,7 @@
 
                                 break;
 
-                    case PaymentStatus.TransferConfirmed:
-                    case PaymentStatus.ReceiptSubmitted:
+                    case PaymentStatus.Verifying:
 
                     <div class="no-reservation">
                         <h1 class="text-center">Pembayaran Anda sedang diverifikasi oleh tim kami.</h1>

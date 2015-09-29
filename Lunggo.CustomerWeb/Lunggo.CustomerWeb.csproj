@@ -261,7 +261,6 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2087,9 +2086,7 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -2200,6 +2197,8 @@
     <Content Include="Views\Home\Dummy.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.mobile.cshtml" />
     <Content Include="Views\Home\CekPemesanan.cshtml" />
+    <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

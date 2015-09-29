@@ -69,11 +69,11 @@
     }
     catch
     {
-        ViewBag.Error = "BookExpired";
+        ViewBag.Message = "BookExpired";
     }
 }
 
-@switch ((string) ViewBag.Error)
+@switch ((string) ViewBag.Message)
 {
     default:
         @section PageJavascript{

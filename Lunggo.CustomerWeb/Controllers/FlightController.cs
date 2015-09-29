@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
@@ -19,7 +20,9 @@ using Lunggo.Framework.Filter;
 using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Redis;
+using Lunggo.Framework.SharedModel;
 using Microsoft.Data.OData.Query;
+using RestSharp.Extensions;
 using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -68,7 +71,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var tokens = token.Split('.').ToList();
                 var flightService = FlightService.GetInstance();
                 var newToken = flightService.BundleFlight(tokens);
-                return RedirectToAction("Checkout", "Flight", new {token = newToken});
+                return RedirectToAction("Checkout", "Flight", new { token = newToken });
             }
             catch
             {
@@ -94,7 +97,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             catch
             {
-                ViewBag.Error = "BookExpired";
+                ViewBag.Message = "BookExpired";
                 return View();
             }
         }
@@ -162,6 +165,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Confirmation(string rsvNo)
         {
+            if (rsvNo == null)
+                return RedirectToAction("Index", "UW100TopPage");
             var flightService = FlightService.GetInstance();
             var reservation = flightService.GetReservationForDisplay(rsvNo);
             var viewModel = new FlightPaymentConfirmationData
@@ -174,10 +179,20 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Confirmation(TransferConfirmationReport report)
+        public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Confirmation", "Flight", report.RsvNo);
+            var fileInfo = file.ContentLength > 0
+                ? new FileInfo
+                {
+                    FileData = file.InputStream.ReadAsBytes(),
+                    ContentType = file.ContentType,
+                    FileName = file.FileName
+                }
+                : null;
             var paymentService = PaymentService.GetInstance();
-            paymentService.SubmitTransferConfirmationReport(report);
+            paymentService.SubmitTransferConfirmationReport(report, fileInfo);
             return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
         }
     }

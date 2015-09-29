@@ -5,6 +5,22 @@
     var facebookProvider = loginProviders.First();
 }
 
+@switch ((string)ViewBag.Message)
+{
+    case "InvalidInputData":
+        <div class="bg-danger">Email format or password invalid!</div>
+        break;
+    case "NotRegistered":
+    <div class="bg-warning">Email not yet registered. Please<a href="@Url.Action("Register", "Account")">register</a>.</div>
+        break;
+    case "AlreadyRegisteredButUnconfirmed":
+    <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
+        break;
+    case "Failed":
+    <div class="bg-danger">Wrong password!</div>
+        break;
+}
+
 <section class="page login-page auth-page">
 
     <h1 class="text-center page-title"><b>LOG</b> IN</h1>
@@ -12,7 +28,7 @@
 
     <section class="login-form-section container">
 
-        @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form-horizontal" }))
+        @using (Html.BeginForm("Login", "Account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form form-horizontal"}))
         {
             @Html.AntiForgeryToken()
             <div class="form-group">
@@ -35,15 +51,17 @@
             <div class="form-group">
                 <div class="col-xs-10 col-xs-offset-1">
                     <a href="@Url.Action("Register", "Account")" class="pull-right">Sign up</a>
-                    <a href="@Url.Action("ForgotPassword", "Account")">forgot password</a>
+                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot password</a>
                 </div>
             </div>
+        }
+@*
             <div class="form-group">
                 <div class="col-xs-10 col-xs-offset-1">
                     <p class="text-center or-border">OR</p>
                 </div>
             </div>
-        }
+        
         @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -53,6 +71,7 @@
                 </div>
             </div>
         }
+*@
 
 
     </section>
