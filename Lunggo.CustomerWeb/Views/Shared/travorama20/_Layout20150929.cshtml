@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+        
+        <title>@ViewBag.Title</title>
+
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.min.css">
+
+    </head>
+<body>
+    
+    <!--********************-->
+    @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
+    
+    <!--********************-->
+    <section class="site-content">
+        
+        @RenderBody();
+
+    </section><!-- .site-content -->
+    
+    <!--********************-->
+    <!-- footer group start -->
+    @Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
+   
+    <!--********************-->
+    <!-- Javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+
+
+</body>
+</html>

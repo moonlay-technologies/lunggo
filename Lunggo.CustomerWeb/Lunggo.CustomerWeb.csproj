@@ -261,6 +261,7 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
+    <Compile Include="Controllers\Travorama20Controller.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
@@ -842,6 +843,12 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
+    <Content Include="Assets\travorama20\css\travorama20.css">
+      <DependentUpon>travorama20.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\travorama20\css\travorama20.min.css">
+      <DependentUpon>travorama20.css</DependentUpon>
+    </Content>
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
     <Content Include="Assets\vendor\countrySelect\js\countrySelect.min.js" />
     <Content Include="Assets\vendor\countrySelect\img\flags.png" />
@@ -927,6 +934,12 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <Content Include="Assets\travorama20\css\travorama20.scss" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenMedium.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2200,6 +2213,14 @@
     <Content Include="Views\Home\Dummy.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.mobile.cshtml" />
     <Content Include="Views\Home\CekPemesanan.cshtml" />
+    <Content Include="Views\Index.cshtml" />
+    <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2211,6 +2232,7 @@
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
     <Content Include="Views\Template\UserForgot.cshtml" />
+    <Content Include="Views\Travorama20\Index.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
@@ -2228,6 +2250,8 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Assets\travorama20\fonts\" />
+    <Folder Include="Assets\travorama20\js\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />

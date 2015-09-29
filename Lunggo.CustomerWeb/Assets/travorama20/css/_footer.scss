@@ -1,0 +1,43 @@
+﻿/*
+
+FOOTER part
+
+include :
+- section subscribe
+- section payment
+- section feedback
+- site footer menu
+- site footer
+
+*/
+
+/* section subscribe */
+.section-subscribe {color:#18a5db;}
+
+/* section payment */
+.section-payment {
+    span {color:#1eafe4;}
+}
+
+/* section feedback */
+.section-feedback {}
+
+/* site footer menu */
+.site-footer-menu {background:#303030; color:#fff; padding:20px 0;
+    a {color:#fff;}
+
+    .menu-left {}
+    .menu-right {
+
+        .menu-flight {}
+        .menu-hotel {width:21.66666667%;}
+        .menu-about {width:20%;}
+        .menu-other {}
+
+        .list-title {font-weight:bold;}
+        ul {padding:0; margin:0; list-style:none;}
+    }
+}
+
+/* site-footer */
+.site-footer {background:#111; color:#fff; padding:20px 0;}
