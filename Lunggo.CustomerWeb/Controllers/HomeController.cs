@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Diagnostics;
+using System.Web.WebPages;
 using log4net;
 using log4net.Repository.Hierarchy;
 using Lunggo.ApCommon.Constant;
@@ -98,6 +100,8 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult CekPemesanan(string rsvNo, string lastName)
         {
+            if (rsvNo.IsEmpty() || lastName.IsEmpty())
+                return Redirect("/");
             var flightService = ApCommon.Flight.Service.FlightService.GetInstance();
             var displayReservation = flightService.GetReservationForDisplay(rsvNo);
             //Check lastName
@@ -122,7 +126,7 @@ namespace Lunggo.CustomerWeb.Controllers
                                 {
                                     RsvNo = displayReservation.RsvNo
                                 };
-                            return RedirectToAction("Confirmation", "Flight", rsvNoPen);
+                            return RedirectToAction("Thankyou", "Flight", rsvNoPen);
                                 }
                             else
                             {
@@ -131,7 +135,7 @@ namespace Lunggo.CustomerWeb.Controllers
                             break;
                     }
                 }
-            return RedirectToAction("Dummy", "Home");
+            return RedirectToAction("CekPemesanan", "Home");
         }
     }
 }

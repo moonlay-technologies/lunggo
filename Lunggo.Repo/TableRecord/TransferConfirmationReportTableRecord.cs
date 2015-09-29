@@ -92,13 +92,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Message");
 		    }
 		}
-		public Boolean? HasReceipt
+		public String ReceiptUrl
 		{
-		    get { return _HasReceipt; }
+		    get { return _ReceiptUrl; }
 		    set
 		    {
-		        _HasReceipt = value;
-		        IncrementLog("HasReceipt");
+		        _ReceiptUrl = value;
+		        IncrementLog("ReceiptUrl");
 		    }
 		}
 		public String StatusCd
@@ -121,7 +121,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _BeneficiaryBank;
 		private String _BeneficiaryAccount;
 		private String _Message;
-		private Boolean? _HasReceipt;
+		private String _ReceiptUrl;
 		private String _StatusCd;
 
 
@@ -163,7 +163,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BeneficiaryBank", false),
 				new ColumnMetadata("BeneficiaryAccount", false),
 				new ColumnMetadata("Message", false),
-				new ColumnMetadata("HasReceipt", false),
+				new ColumnMetadata("ReceiptUrl", false),
 				new ColumnMetadata("StatusCd", false),
 
             };

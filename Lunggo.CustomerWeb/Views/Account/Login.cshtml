@@ -31,7 +31,7 @@
                 @{ Html.RenderPartial("_Mainmenu"); }
             </header>
         
-        @switch ((string)ViewBag.Error)
+        @switch ((string)ViewBag.Message)
         {
             case "InvalidInputData":
                 <div class="bg-danger">Email format or password invalid!</div>
@@ -43,7 +43,7 @@
             <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
                 break;
             case "Failed":
-            <div class="bg-danger">There is an error. Please try again later.</div>
+            <div class="bg-danger">Wrong password!</div>
                 break;
         }
 

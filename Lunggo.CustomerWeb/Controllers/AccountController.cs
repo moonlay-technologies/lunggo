@@ -34,16 +34,11 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         private ApplicationUserManager _userManager;
+
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -59,10 +54,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
         }
 
@@ -73,50 +65,45 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var foundUser = await UserManager.FindByEmailAsync(model.Email);
-                if (foundUser != null)
-                {
-                    if (foundUser.EmailConfirmed)
-                    {
-                        var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
-                        var result =
-                            await
-                                SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                                    shouldLockout: true);
-                        switch (result)
-                        {
-                            case SignInStatus.Success:
-                                return Redirect(String.IsNullOrEmpty(returnUrl) ? defaultReturnUrl : returnUrl);
-                            case SignInStatus.LockedOut:
-                                return View("Lockout");
-                            case SignInStatus.RequiresVerification:
-                                ViewBag.Error = "AlreadyRegisteredButUnconfirmed";
-                                return View(model);
-                            case SignInStatus.Failure:
-                            default:
-                                ViewBag.Error = "Failed";
-                                return View(model);
-                        }
-                    }
-                    else
-                    {
-                        ViewBag.Error = "AlreadyRegisteredButUnconfirmed";
-                        return View(model);
-                    }
-                }
-                else
-                {
-                    ViewBag.Error = "NotRegistered";
-                    return View(model);
-                }
-            }
-            else
-            {
-                ViewBag.Error = "InvalidInputData";
+                ViewBag.Message = "InvalidInputData";
                 return View(model);
             }
+
+            var foundUser = await UserManager.FindByEmailAsync(model.Email);
+            if (foundUser == null)
+            {
+                ViewBag.Message = "NotRegistered";
+                return View(model);
+            }
+
+            if (!foundUser.EmailConfirmed)
+            {
+                ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
+                return View(model);
+            }
+
+            var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
+            var result =
+                await
+                    SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                        shouldLockout: true);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return Redirect(String.IsNullOrEmpty(returnUrl) ? defaultReturnUrl : returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
+                    return View(model);
+                case SignInStatus.Failure:
+                default:
+                    ViewBag.Message = "Failed";
+                    return View(model);
+            }
+
         }
 
         //
@@ -167,7 +154,6 @@ namespace Lunggo.CustomerWeb.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-
         {
             return View();
         }
@@ -179,51 +165,40 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var foundUser = await UserManager.FindByEmailAsync(model.Email);
-                if (foundUser == null)
-                {
-                    var user = new CustomUser
-                    {
-                        UserName = model.Email,
-                        Email = model.Email
-                    };
-                    var result = await UserManager.CreateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                            protocol: Request.Url.Scheme);
-                        await UserManager.SendEmailAsync(user.Id, Queue.UserConfirmationEmail.ToString(), callbackUrl);
-                        ViewBag.Error = "ConfirmationEmailSent";
-                        return View();
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Failed";
-                        return View(model);
-                    }
-                }
-                else
-                {
-                    if (foundUser.EmailConfirmed)
-                    {
-                        ViewBag.Error = "AlreadyRegistered";
-                        return View(model);
-                    }
-                    else
-                    {
-                        ViewBag.Error = "AlreadyRegisteredButUnconfirmed";
-                        return View(model);
-                    }
-                }
+                ViewBag.Message = "InvalidInputData";
+                return View(model);
+            }
+
+            var foundUser = await UserManager.FindByEmailAsync(model.Email);
+            if (foundUser != null)
+            {
+                ViewBag.Message = foundUser.EmailConfirmed ? "AlreadyRegistered" : "AlreadyRegisteredButUnconfirmed";
+                return View(model);
+            }
+
+            var user = new CustomUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+            var result = await UserManager.CreateAsync(user);
+            if (result.Succeeded)
+            {
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                    protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, Queue.UserConfirmationEmail.ToString(), callbackUrl);
+                ViewBag.Message = "ConfirmationEmailSent";
+                return View();
             }
             else
             {
-                ViewBag.Error = "InvalidInputData";
+                ViewBag.Message = "Failed";
                 return View(model);
             }
+
         }
 
         //
@@ -269,28 +244,30 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var foundUser = await UserManager.FindByNameAsync(model.Email);
-                if (foundUser == null || !(await UserManager.IsEmailConfirmedAsync(foundUser.Id)))
-                {
-                    ViewBag.Error = "NotRegistered";
-                    return View(model);
-                }
-                else
-                {
-                    var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
-                    var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email =  model.Email},
-                        protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(foundUser.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
-                    return View(model);
-                }
-            }
-            else
-            {
-                ViewBag.Error = "InvalidInputData";
+                ViewBag.Message = "InvalidInputData";
                 return View(model);
             }
+
+            var foundUser = await UserManager.FindByNameAsync(model.Email);
+            if (foundUser == null)
+            {
+                ViewBag.Message = "NotRegistered";
+                return View(model);
+            }
+            if (!await UserManager.IsEmailConfirmedAsync(foundUser.Id))
+            {
+                ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
+                return View(model);
+            }
+
+            var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = model.Email },
+                protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(foundUser.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
+            ViewBag.Message = "Success";
+            return View(model);
         }
 
         //
@@ -306,10 +283,9 @@ namespace Lunggo.CustomerWeb.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code, string email)
         {
-            var model = new ResetPasswordViewModel
-            {
-                Email = email
-            };
+            if (email == null)
+                return Redirect("/");
+            var model = new ResetPasswordViewModel { Email = email };
             return View(model);
         }
 
@@ -320,48 +296,47 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null)
+                ViewBag.Message = "InvalidInputData";
+                return View(model);
+            }
+
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                ViewBag.Message = "NotRegistered";
+                return View(model);
+            }
+
+            var result = model.Code == null
+                ? await UserManager.AddPasswordAsync(user.Id, model.Password)
+                : await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                var returnUrl = Url.Action("Index", "UW000TopPage");
+                var loginResult =
+                    await
+                        SignInManager.PasswordSignInAsync(model.Email, model.Password, false,
+                            shouldLockout: true);
+                switch (loginResult)
                 {
-                    ViewBag.Error = "NotRegistered";
-                    return View(model);
-                }
-                var result = model.Code == null 
-                    ? await UserManager.AddPasswordAsync(user.Id, model.Password) 
-                    : await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-                if (result.Succeeded)
-                {
-                    var returnUrl = Url.Action("Index", "UW000TopPage");
-                    var loginResult =
-                        await
-                            SignInManager.PasswordSignInAsync(model.Email, model.Password, false,
-                                shouldLockout: true);
-                    switch (loginResult)
-                    {
-                        case SignInStatus.Success:
-                            return Redirect(returnUrl);
-                        case SignInStatus.RequiresVerification:
-                            ViewBag.Error = "AlreadyRegisteredButUnconfirmed";
-                            return View(model);
-                        case SignInStatus.LockedOut:
-                        case SignInStatus.Failure:
-                        default:
-                            ViewBag.Error = "Failed";
-                            return View(model);
-                    }
-                }
-                else
-                {
-                    ViewBag.Error = "Failed";
-                    return View();
+                    case SignInStatus.Success:
+                        return Redirect(returnUrl);
+                    case SignInStatus.RequiresVerification:
+                        ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
+                        return View(model);
+                    case SignInStatus.LockedOut:
+                    case SignInStatus.Failure:
+                    default:
+                        ViewBag.Message = "Failed";
+                        return View(model);
                 }
             }
             else
             {
-                ViewBag.Error = "InvalidInputData";
-                return View(model);
+                ViewBag.Message = "Failed";
+                return View();
             }
         }
 
@@ -385,12 +360,10 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login", "Account");
-            }
-            AddErrors(result);
-            return View(model);
+                ViewBag.Message = "ChangePasswordSucceed";
+            else
+                ViewBag.Message = "ChangePasswordFailed";
+            return View();
         }
 
         [HttpPost]

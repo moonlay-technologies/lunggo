@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                         @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
-                        @"WHEN @PaymentStatusCd = 'TRC' THEN ");
+                        @"WHEN @PaymentStatusCd = 'VER' THEN ");
                 clauseBuilder.Append(
                             @"CASE WHEN PaymentStatusCd = 'PEN' ");
                 clauseBuilder.Append(
@@ -93,19 +93,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'CHA' THEN ");
                 clauseBuilder.Append(
-                            @"CASE WHEN PaymentStatusCd = 'TRC' ");
-                clauseBuilder.Append(
-                                @"THEN @PaymentStatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE PaymentStatusCd ");
-                clauseBuilder.Append(
-                            @"END ");
-                clauseBuilder.Append(
-                        @"ELSE PaymentStatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN @PaymentStatusCd = 'RCP' THEN ");
-                clauseBuilder.Append(
-                            @"CASE WHEN PaymentStatusCd = 'CHA' ");
+                            @"CASE WHEN PaymentStatusCd = 'VER' ");
                 clauseBuilder.Append(
                                 @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(

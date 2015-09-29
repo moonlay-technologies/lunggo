@@ -41,8 +41,9 @@
         <h1>Konfirmasi Pembayaran</h1>
         
         <div class="row">
-            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post))
+            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                @Html.AntiForgeryToken()
                 @Html.Hidden("Report.RsvNo", Model.RsvNo)
                 <div class="col-sm-8 confirmation-left">
                 
@@ -61,20 +62,24 @@
                                 <div class="form-group">
                                     <label class="control-label">Nama Pengirim</label>
                                     @Html.TextBoxFor(model => model.Report.RemitterName, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Report.RemitterName)
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Bank Pengirim</label>
                                     @Html.TextBoxFor(model => model.Report.RemitterBank, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Report.RemitterBank)
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Jumlah Pembayaran</label>
                                     @Html.TextBoxFor(model => model.Report.Amount, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Report.Amount)
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Bank Tujuan</label>
                                     @Html.DropDownListFor(model => model.Report.BeneficiaryBank, beneficiaryBankList, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Report.BeneficiaryBank)
                                 </div>
                             </div>
                         </div>
@@ -82,6 +87,13 @@
                             <div class="col-sm-12">
                                 <label class="control-label">Tanggal Bayar</label>
                                 <input type="text" name="Report.PaymentTime" class="form-control date-picker"/>
+                                @Html.ValidationMessageFor(model => model.Report.PaymentTime)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Bukti Transfer</label>
+                                <input type="file" name="file" class="form-control" />
                             </div>
                         </div>
                         <div class="row">

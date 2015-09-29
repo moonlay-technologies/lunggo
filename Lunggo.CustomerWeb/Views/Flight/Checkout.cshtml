@@ -118,11 +118,11 @@
     }
     catch
     {
-        ViewBag.Error = "BookExpired";
+        ViewBag.Message = "BookExpired";
     }
 }
 
-@switch ((string) ViewBag.Error)
+@switch ((string) ViewBag.Message)
 {
     default:
 
@@ -326,7 +326,7 @@
                                     <section class="flight-detail">
                                         <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
                                         <h5 class="airline-name">
-                                            <img src="@trip.Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @Model.Itinerary.FlightTrips.First().Airlines[0].Name
+                                            <img src="@trip.Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @trip.Airlines[0].Name
                                         </h5>
                                         <div class="row flight-route">
                                             <div class="col-sm-6 text-right flight-origin">

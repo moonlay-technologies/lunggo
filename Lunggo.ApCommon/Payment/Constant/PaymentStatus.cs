@@ -14,9 +14,8 @@ namespace Lunggo.ApCommon.Payment.Constant
         Settled = 3,
         Denied = 4,
         Expired = 5,
-        TransferConfirmed = 6,
-        Challenged = 7,
-        ReceiptSubmitted = 8
+        Verifying = 6,
+        Challenged = 7
     }
 
     internal class PaymentStatusCd
@@ -35,12 +34,10 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return "DEN";
                 case PaymentStatus.Expired:
                     return "EXP";
-                case PaymentStatus.TransferConfirmed:
-                    return "TRC";
+                case PaymentStatus.Verifying:
+                    return "VER";
                 case PaymentStatus.Challenged:
                     return "CHA";
-                case PaymentStatus.ReceiptSubmitted:
-                    return "RCP";
                 default:
                     return null;
             }
@@ -59,12 +56,10 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return PaymentStatus.Denied;
                 case "EXP":
                     return PaymentStatus.Expired;
-                case "TRC":
-                    return PaymentStatus.TransferConfirmed;
+                case "VER":
+                    return PaymentStatus.Verifying;
                 case "CHA":
                     return PaymentStatus.Challenged;
-                case "RCP":
-                    return PaymentStatus.ReceiptSubmitted;
                 default:
                     return PaymentStatus.Undefined;
             }
