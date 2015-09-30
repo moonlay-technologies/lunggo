@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Voucher
             queue.AddMessage(new CloudQueueMessage(model.Serialize()));
         }
 
-        public decimal CheckVoucherDiscount(string token, string code)
+        public decimal CheckVoucherDiscount(string token, string code, string email)
         {
             if (token.IsFlightCache())
             {
