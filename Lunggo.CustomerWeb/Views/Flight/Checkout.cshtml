@@ -29,6 +29,56 @@
             changeYear: true,
             minDate: new Date()
         });
+
+        // validate voucher code
+        var voucherPriceBefore = @Model.Itinerary.TotalFare;
+        var voucherPriceAfter = @Model.Itinerary.TotalFare;
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        $('#validateVoucher').click(function(evt) {
+            evt.preventDefault();
+
+            var voucherCode = $('#voucherCode').val();
+            var voucherEmail = $('#voucherEmail').val();
+
+            if (voucherCode.length == 0) {
+                $('#voucherCode').attr('placeholder', 'cannot null');
+                $('#voucherCode').css('background', '#ffefef')
+            } else {
+
+                $('#voucherCode').css('background', '#ffffff');
+                $('#voucherCode').prop('readonly', true);
+                $('#voucherCode').val('checking');
+
+                $.ajax({
+                    method: 'GET',
+                    url: CheckVoucherConfig.Url,
+                    data: {
+                        token: @Model.Token,
+                        code: voucherCode,
+                        email: voucherEmail
+                    }
+                }).done(function(returnData) {
+
+                    if (returnData.Discount > 0) {
+                        
+                        $('.voucher-value span').html(numberWithCommas(returnData.Discount));
+                        voucherPriceAfter = voucherPriceBefore - returnData.Discount;
+                        $('.voucher-price-after span').html(numberWithCommas(voucherPriceAfter));
+                        $('.voucher-form').hide();
+                        $('.voucher-value').show();
+
+
+                    } else {
+
+                    }
+
+                });
+            }
+
+
+        });
     </script>
 }
 
@@ -148,7 +198,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="" class="control-label">@Html.I18NString("CW00094") :</label>
-                                                <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com" value="@User.Identity.GetEmail()">
+                                                <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com" id="voucherEmail" value="@User.Identity.GetEmail()">
                                                 @Html.ValidationMessageFor(data => data.Contact.Email)
                                             </div>
                                         </div>
@@ -303,7 +353,7 @@
                                     <div class="content-wrapper">
                                         <div class="row">
                                             <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) @Html.I18NString("CW00116")</div>
-                                            <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                            <div class="col-sm-6 voucher-price-before">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">@Html.I18NString("CW00117")</div>
@@ -321,14 +371,19 @@
                                         <div class="row">
                                             <div class="col-sm-6">Voucher Code</div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="DiscountCode" placeholder="">
-                                                <a href="#" class="btn btn-yellow btn-block">Cek Voucher</a>
+                                                <div class="voucher-form form-group">
+                                                    <input type="text" class="form-control" id="voucherCode" name="DiscountCode" placeholder="">
+                                                    <a href="#" class="btn btn-yellow btn-block" id="validateVoucher">Cek Voucher</a>
+                                                </div>
+                                                <div class="voucher-value" style="display:none;">
+                                                    Rp <span></span>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr/>
                                         <div class="row">
                                             <div class="col-sm-6">Final price</div>
-                                            <div class="col-sm-6">Rp 123,456,789</div>
+                                            <div class="col-sm-6 voucher-price-after">Rp <span>123,456,789</span></div>
                                         </div>
                                     </div>
                                 </section><!-- .price-detail -->
