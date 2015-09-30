@@ -176,7 +176,6 @@
     <Compile Include="Flight\Database\Query\GetUnpaidReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchReservationQuery.cs" />
-    <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
@@ -255,6 +254,18 @@
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetRules.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflySearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflySpecificSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\WrapperBase.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />
@@ -277,8 +288,6 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
-    <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
-    <Compile Include="Mystifly\MystiflyClientHandler.cs" />
     <Compile Include="Flight\Service\ServiceSingleton.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
@@ -319,15 +328,6 @@
     <Compile Include="Identity\User\CustomUser.cs" />
     <Compile Include="Identity\User\IdentityUserBase.cs" />
     <Compile Include="Identity\User\UserBase.cs" />
-    <Compile Include="Mystifly\MystiflyBookFlight.cs" />
-    <Compile Include="Mystifly\MystiflyGetBookingStatus.cs" />
-    <Compile Include="Mystifly\MystiflyGetRules.cs" />
-    <Compile Include="Mystifly\MystiflyGetTripDetails.cs" />
-    <Compile Include="Mystifly\MystiflyOrderTicket.cs" />
-    <Compile Include="Mystifly\MystiflySearchFlight.cs" />
-    <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
-    <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
-    <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
@@ -604,6 +604,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Flight\Interface\" />
     <Folder Include="Identity\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

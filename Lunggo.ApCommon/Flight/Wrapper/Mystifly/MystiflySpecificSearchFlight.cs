@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override SearchFlightResult SpecificSearchFlight(SpecificSearchConditions conditions)
+        internal SearchFlightResult SpecificSearchFlight(SpecificSearchConditions conditions)
         {
             var request = new IntelliBestBuyRQ
             {

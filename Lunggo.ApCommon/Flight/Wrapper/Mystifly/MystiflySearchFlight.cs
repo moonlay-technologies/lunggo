@@ -1,27 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Web.UI.WebControls;
-using Lunggo.ApCommon.Currency;
 using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-
-using Lunggo.ApCommon.Hotel.Object;
-using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using CabinClass = Lunggo.ApCommon.Mystifly.OnePointService.Flight.CabinClass;
 using FareType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
 using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
@@ -405,7 +396,7 @@ namespace Lunggo.ApCommon.Mystifly
             return flightTrips;
         }
 
-        private static FlightSegment MapFlightSegment(OnePointService.Flight.FlightSegment flightSegment)
+        private static FlightSegment MapFlightSegment(ApCommon.Mystifly.OnePointService.Flight.FlightSegment flightSegment)
         {
             List<FlightStop> stops = null;
             if (flightSegment.StopQuantity > 0)

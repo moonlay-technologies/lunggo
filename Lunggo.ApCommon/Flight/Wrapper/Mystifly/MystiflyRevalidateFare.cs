@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {

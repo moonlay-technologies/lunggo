@@ -2,23 +2,19 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
 using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
@@ -132,31 +128,31 @@ namespace Lunggo.ApCommon.Mystifly
             return airTraveler;
         }
 
-        private static OnePointService.Flight.PassengerType MapPassengerType(FlightPassenger passenger)
+        private static ApCommon.Mystifly.OnePointService.Flight.PassengerType MapPassengerType(FlightPassenger passenger)
         {
             switch (passenger.Type)
             {
                 case PassengerType.Adult:
-                    return OnePointService.Flight.PassengerType.ADT;
+                    return ApCommon.Mystifly.OnePointService.Flight.PassengerType.ADT;
                 case PassengerType.Child:
-                    return OnePointService.Flight.PassengerType.CHD;
+                    return ApCommon.Mystifly.OnePointService.Flight.PassengerType.CHD;
                 case PassengerType.Infant:
-                    return OnePointService.Flight.PassengerType.INF;
+                    return ApCommon.Mystifly.OnePointService.Flight.PassengerType.INF;
                 default:
-                    return OnePointService.Flight.PassengerType.Default;
+                    return ApCommon.Mystifly.OnePointService.Flight.PassengerType.Default;
             }
         }
 
-        private static OnePointService.Flight.Gender MapGender(FlightPassenger passenger)
+        private static ApCommon.Mystifly.OnePointService.Flight.Gender MapGender(FlightPassenger passenger)
         {
             switch (passenger.Gender)
             {
                 case Gender.Male:
-                    return OnePointService.Flight.Gender.M;
+                    return ApCommon.Mystifly.OnePointService.Flight.Gender.M;
                 case Gender.Female:
-                    return OnePointService.Flight.Gender.F;
+                    return ApCommon.Mystifly.OnePointService.Flight.Gender.F;
                 default:
-                    return OnePointService.Flight.Gender.Default;
+                    return ApCommon.Mystifly.OnePointService.Flight.Gender.Default;
             }
         }
 

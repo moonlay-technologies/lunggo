@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Interface;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
-using StackExchange.Redis;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {

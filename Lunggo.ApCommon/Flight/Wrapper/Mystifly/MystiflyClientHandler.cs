@@ -1,11 +1,7 @@
-﻿using System;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Interface;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+﻿using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Config;
 
-namespace Lunggo.ApCommon.Mystifly
+namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
