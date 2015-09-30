@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
@@ -18,6 +19,7 @@ namespace Lunggo.WebAPI
         {
             InitConfigurationManager();
             //InitI18NMessageManager();
+            InitDatabaseService();
             InitUniqueIdGenerator();
             InitRedisService();
             InitAutocompleteManager();
@@ -36,6 +38,12 @@ namespace Lunggo.WebAPI
             var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
             var messageManager = MessageManager.GetInstance();
             messageManager.Init(configDirectoryPath);
+        }
+
+        private static void InitDatabaseService()
+        {
+            var database = DbService.GetInstance();
+            database.Init();
         }
 
         private static void InitUniqueIdGenerator()

@@ -112,10 +112,15 @@ namespace Lunggo.ApCommon.Voucher
             {
                 var flight = FlightService.GetInstance();
                 var itinerary = flight.GetItineraryForDisplay(token);
-                var rule = flight.GetMatchingDiscountRule(new List<long> {0});
-                return (itinerary.TotalFare*rule.Coefficient) + rule.Constant;
+                var rules = GetFlightDiscountRules(code, email);
+                var rule = flight.GetMatchingDiscountRule(rules);
+                if (rule != null)
+                    return (itinerary.TotalFare*rule.Coefficient) + rule.Constant;
+                else
+                    return 0;
             }
-            else return 0;
+            else 
+                return 0;
         }
 
     }

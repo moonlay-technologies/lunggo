@@ -29,8 +29,6 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            SearchCityActivity.SearchCityActivitesByCity("Bali");
-            SearchCityActivity.SearchCityActivitesByDate("BAli", new DateTime (2015,9,1), new DateTime(2015,9,6));
         }
     }
 }

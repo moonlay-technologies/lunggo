@@ -66,12 +66,12 @@
                         $('.voucher-value span').html(numberWithCommas(returnData.Discount));
                         voucherPriceAfter = voucherPriceBefore - returnData.Discount;
                         $('.voucher-price-after span').html(numberWithCommas(voucherPriceAfter));
+                        $('.voucher-form-label').html('Discount');
                         $('.voucher-form').hide();
                         $('.voucher-value').show();
-
-
                     } else {
-
+                        $('#voucherCode').prop('readonly', false);
+                        $('#voucherCode').val('');
                     }
 
                 });
@@ -369,7 +369,7 @@
                                             <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">Voucher Code</div>
+                                            <div class="col-sm-6 voucher-form-label">Voucher Code</div>
                                             <div class="col-sm-6">
                                                 <div class="voucher-form form-group">
                                                     <input type="text" class="form-control" id="voucherCode" name="DiscountCode" placeholder="">
@@ -383,7 +383,7 @@
                                         <hr/>
                                         <div class="row">
                                             <div class="col-sm-6">Final price</div>
-                                            <div class="col-sm-6 voucher-price-after">Rp <span>123,456,789</span></div>
+                                            <div class="col-sm-6 voucher-price-after">Rp <span>@Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span></div>
                                         </div>
                                     </div>
                                 </section><!-- .price-detail -->

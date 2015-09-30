@@ -17,12 +17,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
             return apiResponse;
         }
 
-        private static decimal PreprocessServiceRequest(CheckVoucherApiRequest request)
-        {
-            var voucher = VoucherService.GetInstance();
-            return voucher.CheckVoucherDiscount(request.Token, request.Code, request.Email);
-        }
-
         private static CheckVoucherApiResponse AssembleApiResponse(decimal discount, CheckVoucherApiRequest request)
         {
             return new CheckVoucherApiResponse

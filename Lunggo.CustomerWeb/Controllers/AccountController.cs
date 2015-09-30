@@ -363,7 +363,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.Message = "ChangePasswordSucceed";
             else
                 ViewBag.Message = "ChangePasswordFailed";
-            return View();
+            return RedirectToAction("OrderHistory", "UW620OrderHistory");
         }
 
         [HttpPost]
