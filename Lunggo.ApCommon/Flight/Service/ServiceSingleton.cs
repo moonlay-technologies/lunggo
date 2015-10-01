@@ -9,8 +9,10 @@ using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
+using Lunggo.Flight.Crawler;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -46,8 +48,12 @@ namespace Lunggo.ApCommon.Flight.Service
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             //_sriwijayaWrapper.SearchFlight(conditions);
-            return MystiflyWrapper.SearchFlight(conditions);
+            var jimbet = MystiflyWrapper.SearchFlight(conditions);
+            var citilink = new CitilinkCrawler();
+            var hasil = citilink.Try();
+            return jimbet;
         }
+
 
         private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
         {

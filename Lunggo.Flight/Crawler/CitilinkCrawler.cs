@@ -1,5 +1,10 @@
-﻿using CsQuery;
+﻿using System.IO;
+using System.Security.Policy;
+using CsQuery;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Flight.Model;
+using Lunggo.Framework.Http;
+using Lunggo.Framework.TicketSupport.ZendeskClass;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -41,9 +46,37 @@ namespace Lunggo.Flight.Crawler
                 throw ex;
             }
         }
+
+        public List<string> Try()
+        {
+            var myRequest = (HttpWebRequest)WebRequest.Create("http://book.citilink.co.id/Search.aspx?Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID");
+            //myRequest.Method = "post";
+
+            //using (TextWriter body = new StreamWriter(myRequest.GetRequestStream()))
+            //{
+            //    body.Write("Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID");
+            //}
+            myRequest.AllowAutoRedirect = true;
+            WebResponse theResponse = myRequest.GetResponse();
+            var a = theResponse.GetResponseStream();
+            var list = new List<string>();
+            using (var reader = new StreamReader(a))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    list.Add(line); // Add to list.
+                }
+            }
+            CQ dom = theResponse.ResponseUri.ToString();
+            CQ flight = dom[".w99.availabilityTable"];
+            return list;
+        }
+
         CQ CsQueryGetTbodyFromTableFlightIdCitilink(TicketSearch SearchParam)
         {
             CQ CsQueryContentPencarianCitilink = GetCsQueryHTMLContentPencarianCitilink(SearchParam);
+            //CQ CsQueryTable = CsQueryContentPencarianCitilink["div>.w99.availabilityTable>tbody"];
             CQ CsQueryTable = CsQueryContentPencarianCitilink["div>.w99.availabilityTable>tbody"];
             return CsQueryTable;
         }
