@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 RequireSameCheckIn = itins.Any(i => i.RequireSameCheckIn),
                 LocalPrice = itins.Sum(i => i.LocalPrice),
                 FlightTrips =
-                    itins.SelectMany(i => i.FlightTrips).OrderBy(t => t.FlightSegments[0].DepartureTime).ToList()
+                    itins.SelectMany(i => i.FlightTrips).OrderBy(t => t.Segments[0].DepartureTime).ToList()
             };
             return itin;
         }

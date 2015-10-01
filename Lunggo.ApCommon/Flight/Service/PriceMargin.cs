@@ -166,8 +166,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool DepartureTimeMatches(MarginRule rule, FlightItinerary fare)
         {
-            var dates = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.Date).ToList();
-            var times = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
+            var dates = fare.FlightTrips.First().Segments.Select(segment => segment.DepartureTime.Date).ToList();
+            var times = fare.FlightTrips.First().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
             var dateSpanOk = !rule.DepartureDateSpans.Any() || dates.All(date => rule.DepartureDateSpans.Any(dateSpan => dateSpan.Includes(date)));
             var dayOk = !rule.DepartureDays.Any() || dates.All(date => rule.DepartureDays.Contains(date.DayOfWeek));
             var dateOk = !rule.DepartureDates.Any() || dates.All(date => rule.DepartureDates.Contains(date));
@@ -181,8 +181,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
             else
             {
-                var dates = fare.FlightTrips.Last().FlightSegments.Select(segment => segment.DepartureTime.Date).ToList();
-                var times = fare.FlightTrips.Last().FlightSegments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
+                var dates = fare.FlightTrips.Last().Segments.Select(segment => segment.DepartureTime.Date).ToList();
+                var times = fare.FlightTrips.Last().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
                 var dateSpanOk = !rule.ReturnDateSpans.Any() || dates.All(date => rule.ReturnDateSpans.Any(dateSpan => dateSpan.Includes(date)));
                 var dayOk = !rule.ReturnDays.Any() || dates.All(date => rule.ReturnDays.Contains(date.DayOfWeek));
                 var dateOk = !rule.ReturnDates.Any() || dates.All(date => rule.ReturnDates.Contains(date));
@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool AirlineMatches(MarginRule rule, FlightItinerary fare)
         {
-            var airlines = fare.FlightTrips.SelectMany(trip => trip.FlightSegments)
+            var airlines = fare.FlightTrips.SelectMany(trip => trip.Segments)
                 .Select(segment => segment.AirlineCode);
 
             if (rule.Airlines.Any())

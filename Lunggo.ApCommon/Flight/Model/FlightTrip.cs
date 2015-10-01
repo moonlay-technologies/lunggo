@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string OriginCity { get; set; }
         public string OriginAirportName { get; set; }
         public DateTime DepartureDate { get; set; }
-        public List<FlightSegment> FlightSegments { get; set; }
+        public List<FlightSegment> Segments { get; set; }
     }
 
     public class Airline

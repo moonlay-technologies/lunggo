@@ -8,9 +8,25 @@ using System.Web;
 
 namespace Lunggo.Framework.Util
 {
-    public class StreamUtil
+    public static class StreamUtil
     {
-        public byte[] StreamToByteArray(Stream inputStream)
+        public static void WriteIntoStream(this Stream stream, string message)
+        {
+            using (var writer = new StreamWriter(stream))
+            {
+                writer.Write(message);
+            }
+        }
+
+        public static string ReadStream(this Stream stream)
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public static byte[] StreamToByteArray(this Stream inputStream)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -18,7 +34,8 @@ namespace Lunggo.Framework.Util
                 return ms.ToArray();
             }
         }
-        public byte[] HttpPostedFileBaseToArray(HttpPostedFileBase file)
+
+        public static byte[] HttpPostedFileBaseToArray(this HttpPostedFileBase file)
         {
             MemoryStream target = new MemoryStream();
             file.InputStream.CopyTo(target);

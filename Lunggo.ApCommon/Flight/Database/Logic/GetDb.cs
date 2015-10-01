@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                     DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                     DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                    FlightSegments = new List<FlightSegment>()
+                                    Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
                                 itinerary.FlightTrips.Add(trip);
@@ -141,7 +141,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Baggage = segmentRecord.Baggage
                                 };
                                 segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                                trip.FlightSegments.Add(segment);
+                                trip.Segments.Add(segment);
                             }
                             FlightPassenger passenger;
                             if (
@@ -248,7 +248,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                     DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                     DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                    FlightSegments = new List<FlightSegment>()
+                                    Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
                                 itinerary.FlightTrips.Add(trip);
@@ -279,7 +279,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Pnr = segmentRecord.Pnr
                                 };
                                 segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                                trip.FlightSegments.Add(segment);
+                                trip.Segments.Add(segment);
                             }
                             FlightPassenger passenger;
                             if (
