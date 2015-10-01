@@ -11,10 +11,11 @@
 
         <!-- stylesheets -->
         <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.min.css">
 
     </head>
-<body>
+<body class="@ViewBag.BodyClass">
     
     <!--********************-->
     @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
@@ -28,9 +29,18 @@
     
     <!--********************-->
     <!-- footer group start -->
-    @Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
-    @Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
-    @Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
+    @if ( ViewBag.FooterSubscribe == true )
+    {   
+        @Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
+    }
+    @if ( ViewBag.FooterPayment == true )
+    {
+        @Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
+    }
+    @if ( ViewBag.FooterFeedback == true )
+    {
+        @Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
+    }
     @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
     @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
    

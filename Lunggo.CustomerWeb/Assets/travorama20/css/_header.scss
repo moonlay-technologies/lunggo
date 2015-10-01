@@ -1,2 +1,54 @@
-﻿body {
+﻿/*
+
+HEADER styling
+file : /Assets/travorama20/css/_header.scss
+
+
+*/
+
+.site-header {position:fixed; top:0; left:0; z-index:10; width:100%; height:100px; background:#fff; @include box-shadow(0 0 10px #ccc); letter-spacing:0.1px;
+    .site-logo {padding-top:20px; display:block;}
+    .menu-top {margin-bottom:3px;
+        &:before, &:after {@include clearfix();}
+        nav {float:right; background:$color-main-blue; padding:10px; -webkit-border-bottom-right-radius: 3px; -webkit-border-bottom-left-radius: 3px; -moz-border-radius-bottomright: 3px; -moz-border-radius-bottomleft: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;
+            ul {padding:0; margin:0;
+                li {display:inline; padding:0 10px;
+                    a {color:#fff;}
+                }
+                li+li {border-left:1px solid #fff;}
+                .check-order {}
+                .currency-select {}
+                .language-select {
+                    img {width:30px;}
+                }
+            }
+        }
+    }
+    .menu-bottom {
+        .menu-main {float:right;
+            nav {
+                ul {margin:0; padding:0;
+                    li {display:inline;
+                        a {color:$color-main-blue; font-weight:bold; font-size:17px; padding:12px 20px; display:inline-block;}
+                    }
+                    li+li {
+                        a {border-left:1px solid #ddd;}
+                    }
+                }
+            }
+        }
+        .menu-side {float:right; margin-left:30px;
+            nav {
+                ul {margin:0; padding:0;
+                    li {display:inline;
+                        a {color:$color-main-blue; font-weight:600; font-size:17px; padding:12px 20px; display:inline-block;}
+                    }
+                    li+li {border-left:2px solid $color-main-blue;
+                        a {padding-right:0;}
+                    }
+                }
+            }
+        }
+    }
 }
+body {padding-top:100px;}
