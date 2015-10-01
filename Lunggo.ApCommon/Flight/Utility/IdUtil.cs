@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -29,6 +32,16 @@ namespace Lunggo.ApCommon.Flight.Service
             internal static string ConstructIntegratedId(string coreId, FlightSupplier supplier, FareType fareType)
             {
                 return FlightSupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
+            }
+
+            internal static string GenerateCoreFareId(SearchFlightConditions conditions)
+            {
+                return conditions.Serialize().Base64Encode();
+            }
+
+            internal static SearchFlightConditions ParseCoreFareId(string fareId)
+            {
+                return fareId.Base64Decode().Deserialize<SearchFlightConditions>();
             }
         }
     }

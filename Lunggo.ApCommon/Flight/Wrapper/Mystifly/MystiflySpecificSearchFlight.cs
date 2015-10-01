@@ -10,11 +10,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal SearchFlightResult SpecificSearchFlight(SpecificSearchConditions conditions)
+        internal SearchFlightResult SpecificSearchFlight(SearchFlightConditions conditions)
         {
             var request = new IntelliBestBuyRQ
             {
-                IntelliFareInformations = MapItineraryInformations(conditions.FlightSegments),
+                IntelliFareInformations = MapItineraryInformations(conditions.Trips.SelectMany(trip => trip.Segments)),
                 CabinPreference = MapCabinType(conditions.CabinClass),
                 BookingClassPreference = BookingClassPreference.Any,
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
@@ -75,33 +75,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
             }
             return result;
-        }
-
-        private static PassengerTypeQuantity[] MapPassengerTypes(SpecificSearchConditions conditions)
-        {
-            var passengerTypeQuantities = new List<PassengerTypeQuantity>
-            {
-                new PassengerTypeQuantity()
-                {
-                    Code = PassengerType.ADT,
-                    Quantity = conditions.AdultCount
-                }
-            };
-            if (conditions.ChildCount > 0)
-                passengerTypeQuantities.Add(
-                    new PassengerTypeQuantity()
-                    {
-                        Code = PassengerType.CHD,
-                        Quantity = conditions.ChildCount
-                    });
-            if (conditions.InfantCount > 0)
-                passengerTypeQuantities.Add(
-                    new PassengerTypeQuantity()
-                    {
-                        Code = PassengerType.INF,
-                        Quantity = conditions.InfantCount
-                    });
-            return passengerTypeQuantities.ToArray();
         }
 
         private static CabinType MapCabinType(Flight.Constant.CabinClass cabinClass)

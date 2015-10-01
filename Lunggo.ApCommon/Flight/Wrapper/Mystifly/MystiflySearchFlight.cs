@@ -377,11 +377,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
                         DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>()
+                        Segments = new List<FlightSegment>()
                     };
                     do
                     {
-                        fareTrip.FlightSegments.Add(MapFlightSegment(segments[i]));
+                        fareTrip.Segments.Add(MapFlightSegment(segments[i]));
                         i++;
                     } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
                              dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
@@ -428,7 +428,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 Meal = !string.IsNullOrEmpty(flightSegment.MealCode),
                 RemainingSeats = flightSegment.SeatsRemaining.Number,
                 StopQuantity = flightSegment.StopQuantity,
-                FlightStops = stops
+                Stops = stops
             };
             return segment;
         }

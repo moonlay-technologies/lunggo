@@ -11,7 +11,8 @@ namespace Lunggo.ApCommon.Flight.Constant
         Undefined = 0,
         Mystifly = 1,
         Sriwijaya = 2,
-        Citilink = 3
+        Citilink = 3,
+        AirAsia = 4
     }
 
     internal class FlightSupplierCd
@@ -22,10 +23,12 @@ namespace Lunggo.ApCommon.Flight.Constant
             {
                 case FlightSupplier.Mystifly:
                     return "MYST";
-                    case FlightSupplier.Sriwijaya:
+                case FlightSupplier.Sriwijaya:
                     return "SRIW";
-                    case FlightSupplier.Citilink:
+                case FlightSupplier.Citilink:
                     return "CITI";
+                case FlightSupplier.AirAsia:
+                    return "AIRA";
                 default:
                     return null;
             }
@@ -41,6 +44,8 @@ namespace Lunggo.ApCommon.Flight.Constant
                     return FlightSupplier.Sriwijaya;
                 case "CITI":
                     return FlightSupplier.Citilink;
+                case "AIRA":
+                    return FlightSupplier.AirAsia;
                 default:
                     return FlightSupplier.Undefined;
             }

@@ -114,7 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             };
                             FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
-                            var segments = trip.FlightSegments;
+                            var segments = trip.Segments;
                             foreach (var segment in segments)
                             {
                                 var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
                                 if (segment.StopQuantity > 0)
                                 {
-                                    foreach (var stop in segment.FlightStops)
+                                    foreach (var stop in segment.Stops)
                                     {
                                         var stopId = FlightStopIdSequence.GetInstance().GetNext();
                                         var stopRecord = new FlightStopTableRecord
@@ -210,7 +210,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         };
                         FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
-                        var segments = trip.FlightSegments;
+                        var segments = trip.Segments;
                         foreach (var segment in segments)
                         {
                             var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();

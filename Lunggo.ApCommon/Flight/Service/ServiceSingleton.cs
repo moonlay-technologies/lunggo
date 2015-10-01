@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
@@ -18,11 +19,12 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         private static readonly FlightService Instance = new FlightService();
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
+        private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
         {
-            
+
         }
 
         public static FlightService GetInstance()
@@ -49,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return MystiflyWrapper.SearchFlight(conditions);
         }
 
-        private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
+        private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
         {
             return MystiflyWrapper.SpecificSearchFlight(conditions);
         }
@@ -59,17 +61,19 @@ namespace Lunggo.ApCommon.Flight.Service
             return MystiflyWrapper.RevalidateFare(conditions);
         }
 
-        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
             var supplier = IdUtil.GetSupplier(bookInfo.FareId);
             switch (supplier)
             {
                 case FlightSupplier.Mystifly:
                     return MystiflyWrapper.BookFlight(bookInfo);
+                case FlightSupplier.AirAsia:
+                    return AirAsiaWrapper.BookFlight(bookInfo);
                 default:
                     return null;
             }
-            
+
         }
 
         private OrderTicketResult OrderTicketInternal(string bookingId)

@@ -285,6 +285,9 @@
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />
     <Compile Include="Util\TypeUtil.cs" />
+    <Compile Include="Web\ExtendedWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

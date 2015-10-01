@@ -100,11 +100,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
                         DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>(),
+                        Segments = new List<FlightSegment>(),
                     };
                     do
                     {
-                        flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segments[i]));
+                        flightTrip.Segments.Add(MapFlightSegmentDetails(segments[i]));
                         i++;
                     } while (i < segments.Count() &&
                              segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
@@ -125,9 +125,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         OriginAirport = segment.DepartureAirportLocationCode,
                         DestinationAirport = segment.ArrivalAirportLocationCode,
                         DepartureDate = segment.DepartureDateTime.Date.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>(),
+                        Segments = new List<FlightSegment>(),
                     };
-                    flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segment));
+                    flightTrip.Segments.Add(MapFlightSegmentDetails(segment));
                     flightTrips.Add(flightTrip);
                 }
                 return flightTrips;
