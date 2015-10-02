@@ -271,25 +271,25 @@
                                 <div class="flight onward">
                                     <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
                                     <div class="trip">
-                                        <h5 class="airline-name"><img ng-src="@trip.FlightSegments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</h5>
+                                        <h5 class="airline-name"><img ng-src="@trip.Segments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].Segments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].Segments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].Segments[0].AirlineName</h5>
                                         <div class="trip-wrapper">
                                             <div class="trip-origin">
                                                 <span>Departure</span>
-                                                <span class="time ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("hh:mm")</span>
-                                                <span class="date ng-binding">@trip.FlightSegments.First().DepartureTime.ToString("dd MMM yyyy")</span>
+                                                <span class="time ng-binding">@trip.Segments.First().DepartureTime.ToString("hh:mm")</span>
+                                                <span class="date ng-binding">@trip.Segments.First().DepartureTime.ToString("dd MMM yyyy")</span>
                                                 <span class="airport ng-binding">@trip.OriginAirport</span>
                                                 <span class="city ng-binding">@trip.OriginCity</span>
                                             </div>
                                             <div class="trip-destination">
                                                 <span>Arrival</span>
-                                                <span class="time ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("hh:mm")</span>
-                                                <span class="date ng-binding">@trip.FlightSegments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
+                                                <span class="time ng-binding">@trip.Segments.Last().ArrivalTime.ToString("hh:mm")</span>
+                                                <span class="date ng-binding">@trip.Segments.Last().ArrivalTime.ToString("dd MMM yyyy")</span>
                                                 <span class="airport ng-binding">@trip.DestinationAirport</span>
                                                 <span class="city ng-binding">@trip.DestinationCity</span>
                                             </div>
                                             <div class="trip-duration">
                                                 <span>Duration</span>
-                                                <span class="time ng-binding">@TimeSpan.FromTicks(trip.FlightSegments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
+                                                <span class="time ng-binding">@TimeSpan.FromTicks(trip.Segments.Sum(s => s.Duration.Ticks)).ToString("g")</span>
                                                 <span class="ng-binding"></span>
                                             </div>
                                         </div>

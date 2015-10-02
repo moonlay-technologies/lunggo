@@ -330,17 +330,17 @@
                                         </h5>
                                         <div class="row flight-route">
                                             <div class="col-sm-6 text-right flight-origin">
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.First().DepartureAirport</strong></h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.First().DepartureAirport</strong></h5>
                                                 <h5>@trip.OriginAirportName</h5>
                                                 <h5>@trip.OriginCity</h5>
                                             </div>
                                             <div class="separator">@Html.I18NString("CW00034")</div>
                                             <div class="col-sm-6 text-left flight-destination">
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.Last().ArrivalAirport</strong></h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.Last().ArrivalAirport</strong></h5>
                                                 <h5>@trip.DestinationAirportName</h5>
                                                 <h5>@trip.DestinationCity</h5>
                                             </div>

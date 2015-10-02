@@ -39,9 +39,9 @@
                     <h2 class="flight-title"><span>PENERBANGAN KEMBALI</span></h2>
                 }
                 <div class="flight-list">
-                    @foreach (var segment in trip.FlightSegments)
+                    @foreach (var segment in trip.Segments)
                     {
-                        if (segment != trip.FlightSegments.First())
+                        if (segment != trip.Segments.First())
                         {
                             var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
                             <div class="transit">
@@ -82,7 +82,7 @@
                             </div><!-- .flight-detail -->
                         </div>
                         <!-- .flight -->
-                        if (segment != trip.FlightSegments.Last())
+                        if (segment != trip.Segments.Last())
                         {
                             prevSegment = segment;
                         }
