@@ -367,7 +367,8 @@ file : /Assets/travorama20/css/_page_index.scss
         width: 41px;
         height: 41px;
         display: inline-block;
-        margin: 10px 0 5px; }
+        margin: 10px 0 5px;
+        cursor: pointer; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-origin, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-destination {
         text-align: center;
         font-size: 17px;
@@ -378,7 +379,7 @@ file : /Assets/travorama20/css/_page_index.scss
           padding-right: 7.5px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date > div:last-child {
           padding-left: 7.5px; }
-      .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return {
+      .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
         background: #fff;
         color: #6a6a6a;
         padding: 10px 15px 0;
@@ -386,36 +387,69 @@ file : /Assets/travorama20/css/_page_index.scss
         -moz-border-radius: 4px;
         border-radius: 4px;
         border: 1px solid #ccc;
-        font-weight: 600; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:after {
+        font-weight: 600;
+        cursor: pointer;
+        height: 93px; }
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:after {
           display: block;
           width: 100%;
           content: "";
           clear: both; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure small, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return small {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure small, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return small, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway small {
           display: block;
           font-weight: normal;
           margin-bottom: -10px; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .date, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .date {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .date, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .date, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .date {
           float: left;
           font-size: 52px;
           margin-right: 10px;
           width: 60px; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .month, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .month {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .month, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .month, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .month {
           display: block;
           margin-top: 15px;
           margin-bottom: -5px;
           font-size: 19px; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .year, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .year {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .year, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .year, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .year {
           display: block;
           font-size: 19px; }
+      .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
+        display: none; }
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway h5 {
+          font-size: 24px;
+          font-weight: bold; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-class {
-        margin-bottom: 10px; }
+        margin-bottom: 10px;
+        position: relative; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class {
         display: block;
         padding: 10px 15px;
         height: auto;
-        text-decoration: none; }
+        text-decoration: none;
+        cursor: pointer;
+        position: relative; }
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class:after {
+          content: url(/Assets/images/select-arrow.png);
+          position: absolute;
+          right: 15px;
+          top: 12px; }
+      .page-index .section-search .search-form .tab-content .tab-flight .option {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: block;
+        width: 100%;
+        padding: 0 15px;
+        z-index: 2;
+        display: none; }
+        .page-index .section-search .search-form .tab-content .tab-flight .option > span {
+          display: block;
+          color: #000;
+          padding: 10px;
+          background: #ddd; }
+          .page-index .section-search .search-form .tab-content .tab-flight .option > span + span {
+            border-top: 1px solid #ccc; }
+          .page-index .section-search .search-form .tab-content .tab-flight .option > span:hover {
+            background: #fff; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger {
         margin-bottom: 10px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div {
@@ -603,15 +637,30 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-location .location-header .close-location {
         float: right;
         cursor: pointer; }
-    .page-index .section-search .search-location .location-body .location-search {
+    .page-index .section-search .search-location .location-body .location-recommend {
       display: none; }
+    .page-index .section-search .search-location .location-body .location-search {
+      padding: 20px;
+      height: 595px;
+      overflow: auto; }
+      .page-index .section-search .search-location .location-body .location-search .autocomplete-result ul {
+        margin: 0;
+        padding: 0; }
+        .page-index .section-search .search-location .location-body .location-search .autocomplete-result ul li {
+          padding: 10px;
+          list-style: none;
+          cursor: default; }
+          .page-index .section-search .search-location .location-body .location-search .autocomplete-result ul li:hover {
+            background: #1daee4; }
+        .page-index .section-search .search-location .location-body .location-search .autocomplete-result ul li + li {
+          border-top: 1px solid #ccc; }
   .page-index .section-search .slider {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background: url(/Assets/images/_sample/main-slider.jpg) center center;
+    background: url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom;
     background-size: cover; }
     .page-index .section-search .slider .slider-text {
       font-size: 17px;
@@ -622,6 +671,10 @@ file : /Assets/travorama20/css/_page_index.scss
       top: 50%;
       margin-top: -200px;
       position: relative; }
+
+.page-index .section-reason > img {
+  max-width: 100%;
+  height: auto; }
 
 .page-index .section-reason:before, .page-index .section-reason:after {
   display: block;
@@ -741,6 +794,64 @@ file : /Assets/travorama20/css/_page_index.scss
     .page-index .section-popular .destination.half {
       height: 542.5px; }
 
+.date-picker {
+  padding: 30px; }
+  .date-picker .ui-datepicker {
+    width: 100% !important;
+    position: relative; }
+    .date-picker .ui-datepicker .ui-datepicker-group {
+      width: 100%;
+      padding: 15px; }
+      .date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group {
+        border-top: 1px solid #ccc; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
+        color: #fff;
+        color: #1daee4;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar {
+        width: 100%;
+        color: #fff; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th {
+          text-align: center;
+          padding-bottom: 10px; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th span {
+            color: #fff !important; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr {
+          margin-bottom: 5px; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td {
+            text-align: center; }
+            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a {
+              color: #fff;
+              display: inline-block;
+              width: 35px;
+              height: 35px;
+              font-size: 17px;
+              padding-top: 4px; }
+            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a:hover {
+              background: #fff;
+              color: #252525;
+              text-decoration: none; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled {
+          cursor: not-allowed; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span {
+            color: #666; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end f
+span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
+          color: #fed83e; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
+          background: #fed83e; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        cursor: pointer;
+        color: #1daee4; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+        left: auto;
+        right: 15px; }
+
 body {
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 0.5px;
@@ -755,7 +866,8 @@ body {
   font-weight: bold; }
 
 .btn.block {
-  display: block; }
+  display: block;
+  width: 100%; }
 
 .section-title.stripe {
   font-weight: 600;
@@ -765,3 +877,39 @@ body {
   .section-title.stripe span {
     color: #1eafe4;
     font-weight: bold; }
+
+.dropdown-wrapper {
+  position: relative; }
+
+.dropdown-content {
+  background: #ddd;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  z-index: 2; }
+  .dropdown-content ul {
+    margin: 0;
+    padding: 0; }
+    .dropdown-content ul li {
+      list-style: none;
+      display: block;
+      width: 100%;
+      border: none !important; }
+      .dropdown-content ul li a {
+        display: block;
+        width: 100%;
+        text-align: center; }
+        .dropdown-content ul li a:hover {
+          background: #1daee4;
+          color: #fff !important;
+          text-decoration: none; }
+
+.dropdown-content.flag-select {
+  width: 150%;
+  left: auto;
+  right: 0; }
+  .dropdown-content.flag-select li {
+    padding: 0 !important; }
+  .dropdown-content.flag-select a {
+    padding: 10px; }

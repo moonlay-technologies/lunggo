@@ -679,6 +679,7 @@
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
     <Content Include="Assets\images\child-icon.png" />
+    <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email\facebook-icon.png" />
@@ -780,8 +781,10 @@
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
+    <Content Include="Assets\images\select-arrow.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
+    <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
     <Content Include="Assets\images\social-facebook.png" />
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
@@ -872,6 +875,8 @@
     <Content Include="Assets\travorama20\css\travorama20.min.css">
       <DependentUpon>travorama20.css</DependentUpon>
     </Content>
+    <Content Include="Assets\travorama20\js\bootstrap.min.js" />
+    <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
     <Content Include="Assets\vendor\countrySelect\js\countrySelect.min.js" />
     <Content Include="Assets\vendor\countrySelect\img\flags.png" />
@@ -2275,7 +2280,6 @@
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
     <Folder Include="Assets\travorama20\fonts\" />
-    <Folder Include="Assets\travorama20\js\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />

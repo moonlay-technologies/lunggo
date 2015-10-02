@@ -47,7 +47,21 @@
     <!--********************-->
     <!-- Javascripts -->
     <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Config/JsConfig.js"></script>
 
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+    
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
 
 </body>
 </html>

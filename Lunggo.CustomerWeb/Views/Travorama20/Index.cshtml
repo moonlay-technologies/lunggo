@@ -6,6 +6,12 @@
     ViewBag.FooterFeedback = true;
 }
 
+@section PageJS{
+    <script>
+        indexPageFunctions();
+    </script>
+}
+
 <section class="section-search">
     <div class="search-form">
         
@@ -13,21 +19,21 @@
             <nav>
                 <ul>
                     <li class="flight active"><a href="#">Pesawat</a></li>
-                    <li class="hotel"><a href="#">Hotel</a></li>
-                    <li class="activity"><a href="#">Activity</a></li>
+                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
+                    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
                 </ul>
             </nav>
         </header>
         
         <section class="tab-content">
             <div class="tab-flight active">
-                <form class="form form-horizontal form-flight">
+                <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList">
                     <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
                     
                     <div class="form-group flight-type">
                         <div class="col-sm-6">
                             <label>
-                                <input type="radio" name="flightType" class="form-flight-type" value="return" />
+                                <input type="radio" name="flightType" class="form-flight-type" value="return" checked />
                                 <span>Pulang Pergi</span>
                             </label>
                         </div>
@@ -41,13 +47,13 @@
                     
                     <div class="form-group flight-destination">
                         <div class="col-sm-12">
-                            <input type="text" name="flightOrigin" class="form-flight-origin form-control" value="" placeholder="Bandara Asal" />
+                            <input type="text" class="form-flight-origin form-flight-location form-control" value="" placeholder="Bandara Asal" />
                         </div>
                         <div class="text-center col-sm-12">
                             <span class="switch-destination"></span>
                         </div>
                         <div class="col-sm-12">
-                            <input type="text" name="flightDestination" class="form-flight-destination form-control" value="" placeholder="Bandara Tujuan" />
+                            <input type="text" class="form-flight-destination form-flight-location form-control" value="" placeholder="Bandara Tujuan" />
                         </div>
                     </div>
                     
@@ -67,35 +73,44 @@
                                 <span class="month">Jul</span>
                                 <span class="year">2015</span>
                             </div>
+                            <div class="form-flight-oneway">
+                                <small>Tanggal Pulang</small>
+                                <h5>SEKALI JALAN</h5>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="form-group flight-class">
                         <div class="col-sm-12">
-                            <a class="form-control text-center form-flight-class">Kelas Penerbangan</a>
+                            <div class="form-control text-center form-flight-class">Kelas Penerbangan</div>
+                            <div class="option">
+                                <span class="economy" data-value="y">Kelas Ekonomi</span>
+                                <span class="business" data-value="c">Kelas Bisnis</span>
+                                <span class="first" data-value="f">Kelas Utama</span>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="form-group flight-passenger">
                         <div class="col-sm-4">
-                            <div class="form-flight-passenger adult">
-                                <input type="text" name="flightPassengerAdult" value="1" maxlength="2" />
+                            <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="bottom" title="Tidak boleh kosong">
+                                <input type="text" value="1" maxlength="1" class="passenger-input adult" />
                                 <small>
-                                    Dewasa<br/>(&gt;12th)
+                                    Dewasa<br />(&gt;12th)
                                 </small>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-flight-passenger child">
-                                <input type="text" name="flightPassengerChild" value="0" maxlength="2" />
+                                <input type="text" value="0" maxlength="1" class="passenger-input child" />
                                 <small>
                                     Anak<br />(2-12th)
                                 </small>
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="form-flight-passenger infant">
-                                <input type="text" name="flightPassengerInfant" value="0" maxlength="2" />
+                            <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="bottom" title="Tidak boleh lebih dari jumlah penumpang dewasa">
+                                <input type="text" value="0" maxlength="1" class="passenger-input infant" />
                                 <small>
                                     Bayi<br />(&lt;2th)
                                 </small>
@@ -105,7 +120,8 @@
                     
                     <div class="form-group flight-submit">
                         <div class="col-sm-12">
-                            <a href="#" class="btn btn-yellow block">SEARCH</a>
+                            <input type="text" name="info" value="" class="hidden"/>
+                            <input type="submit" class="btn btn-yellow block flight-submit-button"  value="SEARCH" />
                         </div>
                     </div>
 
@@ -181,15 +197,17 @@
     </div><!-- .search-form -->
     <div class="search-calendar">
         <header class="calendar-header">
-            <p>Tanggal Keberangkatan <span class="close-calendar">X</span></p>
+            <p class="departure">Tanggal Keberangkatan <span class="close-calendar">X</span></p>
+            <p class="return hidden">Tanggal Kepulangan <span class="close-calendar">X</span></p>
         </header>
         <section class="calendar-body">
-            
+            <div class="date-picker"></div>
         </section>
     </div><!-- .search-calendar -->
     <div class="search-location">
         <header class="location-header">
-            <p>Pilih Kota Tujuan Penerbangan Anda <span class="close-location">X</span></p>
+            <p class="origin">Pilih Kota Asal Penerbangan Anda <span class="close-location">X</span></p>
+            <p class="destination hidden">Pilih Kota Tujuan Penerbangan Anda <span class="close-location">X</span></p>
         </header>
         <section class="location-body">
             
@@ -203,19 +221,36 @@
             </section><!-- .location-recommend -->
             
             <section class="location-search">
-                
+            
+                <div class="autocomplete-pre">
+                    <h2 class="text-center">Masukan Kata Kunci Anda</h2>
+                </div>
+            
+                <div class="autocomplete-no-result hidden">
+                    <h2 class="text-center">Hasil tidak ditemukan</h2>
+                </div>
+
+                <div class="autocomplete-result">
+                    <ul></ul>
+                </div>
+
             </section><!-- .location-search -->
 
         </section>
     </div><!-- .search-location -->
     <div class="slider">
-        <div class="slider-text">
+        <div class="slider-text hidden">
             <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
             <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br/> domestik dan internasional dari 900 maskapai</p>
         </div>
     </div><!-- .slider -->
 </section><!-- .section-search -->
 
+<section class="section-reason">
+    <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
+</section>
+
+<!--
 <section class="section-reason">
     <div class="reason reason-1">
         <h3>Mengapa Memilih <b>Travorama?</b></h3>

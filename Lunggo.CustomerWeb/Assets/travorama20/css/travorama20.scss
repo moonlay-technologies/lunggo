@@ -8,6 +8,7 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /* variables */
 $color-main-blue:#1daee4;
+$border-default:1px solid #ccc;
 
 /*--------------------*/
 /* mixins */
@@ -47,8 +48,23 @@ body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-sm
 /*--------------------*/
 /* general class */
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4b4b4b; font-weight:bold;}
-.btn.block {display:block;}
+.btn.block {display:block; width:100%;}
 
 .section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
     span {color:#1eafe4; font-weight:bold;}
+}
+
+.dropdown-wrapper {position:relative;}
+.dropdown-content {background:#ddd; position:absolute; top:100%; left:0; display:none; z-index:2;
+    ul {margin:0; padding:0;
+        li {list-style:none; display:block; width:100%; border:none !important;
+            a {display:block; width:100%; text-align:center;
+                &:hover {background:$color-main-blue; color:#fff !important; text-decoration:none;}
+            }
+        }
+    }
+}
+.dropdown-content.flag-select {width:150%; left:auto; right:0;
+    li {padding:0 !important;}
+    a {padding:10px;}
 }

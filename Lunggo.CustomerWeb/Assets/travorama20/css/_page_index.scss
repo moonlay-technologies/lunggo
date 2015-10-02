@@ -59,14 +59,14 @@ file : /Assets/travorama20/css/_page_index.scss
                     .form-group.flight-type {}
                     // flight destination
                     .form-group.flight-destination {margin-bottom:10px;}
-                    .switch-destination {background:url(/Assets/images/switch-destination.png) center center no-repeat; width:41px; height:41px; display:inline-block; margin:10px 0 5px;}
+                    .switch-destination {background:url(/Assets/images/switch-destination.png) center center no-repeat; width:41px; height:41px; display:inline-block; margin:10px 0 5px; cursor:pointer;}
                     .form-flight-origin, .form-flight-destination {text-align:center; font-size:17px; padding:20px 15px;}
                     // flight date
                     .form-group.flight-date {margin-bottom:10px;
                         &>div:first-child {padding-right:7.5px;}
                         &>div:last-child {padding-left:7.5px;}
                     }
-                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:1px solid #ccc; font-weight:600;
+                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:$border-default; font-weight:600; cursor:pointer; height:93px;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal; margin-bottom:-10px;}
                         .date {float:left; font-size:52px; margin-right:10px; width:60px;}
@@ -74,16 +74,27 @@ file : /Assets/travorama20/css/_page_index.scss
                         .year {display:block; font-size:19px;}
                     }
                     .form-flight-return {@extend .form-flight-departure;}
+                    .form-flight-oneway {@extend .form-flight-departure; display:none;
+                        h5 {font-size:24px; font-weight:bold;}
+                    }
                     // flight class
-                    .form-group.flight-class {margin-bottom:10px;}
-                    .form-flight-class {display:block; padding:10px 15px; height:auto; text-decoration:none;}
+                    .form-group.flight-class {margin-bottom:10px; position:relative;}
+                    .form-flight-class {display:block; padding:10px 15px; height:auto; text-decoration:none; cursor:pointer; position:relative;
+                        &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:12px;}
+                    }
+                    .option {position:absolute; top:100%; left:0; display:block; width:100%; padding:0 15px; z-index:2; display:none;
+                        &>span {display:block; color:#000; padding:10px; background:#ddd;
+                            &+span {border-top:$border-default;}
+                            &:hover {background:#fff;}
+                        }
+                    }
                     // flight passenger
                     .form-group.flight-passenger {margin-bottom:10px;
                         &>div {padding-left:7.5px; padding-right:7.5px;}
                         &>div:first-child {padding-right:7.5px; padding-left:15px;}
                         &>div:last-child {padding-left:7.5px; padding-right:15px;}
                     }
-                    .form-flight-passenger {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:1px solid #ccc; position:relative; height:80px;
+                    .form-flight-passenger {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:80px;
                         small {font-sizE:12px; line-height:0;
                             br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                         }
@@ -103,7 +114,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right:7.5px;}
                         &>div:last-child {padding-left:7.5px;}
                     }
-                    .form-hotel-checkin {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:1px solid #ccc; font-weight:600;
+                    .form-hotel-checkin {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:$border-default; font-weight:600;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal; margin-bottom:-10px;}
                         .date {float:left; font-size:52px; margin-right:10px; width:60px;}
@@ -116,7 +127,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right:7.5px;}
                         &>div:last-child {padding-left:7.5px;}
                         //
-                        .form-hotel-night {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:1px solid #ccc; position:relative; height:80px;
+                        .form-hotel-night {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:80px;
                             small {font-sizE:12px; line-height:0;
                                 br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                             }
@@ -153,12 +164,22 @@ file : /Assets/travorama20/css/_page_index.scss
                 .close-location {float:right; cursor:pointer;}
             }
             .location-body {
-                .location-recommend {}
-                .location-search {display:none;}
+                .location-recommend {display:none;}
+                .location-search {padding:20px; height:595px; overflow:auto;
+                    .autocomplete-no-result {}
+                    .autocomplete-result {
+                        ul {margin:0; padding:0;
+                            li {padding:10px; list-style:none; cursor:default;
+                                &:hover {background:$color-main-blue;}
+                            }
+                            li+li {border-top:$border-default;}
+                        }
+                    }
+                }
             }
         }
         // slider
-        .slider {position:absolute; width:100%; height:100%; top:0; left:0; background:url(/Assets/images/_sample/main-slider.jpg) center center; background-size:cover;
+        .slider {position:absolute; width:100%; height:100%; top:0; left:0; background:url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom; background-size:cover;
             .slider-text {font-size:17px; color:#fff; font-weight:600; text-align:center; height:250px; top:50%; margin-top:-200px; position:relative;}
         }
 
@@ -167,6 +188,7 @@ file : /Assets/travorama20/css/_page_index.scss
     //*****
     // section reason
     .section-reason {
+        &>img {max-width:100%; height:auto;}
         &:before, &:after {@include clearfix();}
         .reason {color:#fff; float:left; width:25%; padding:30px; height:170px;
             h3 {margin:0; position:relative; margin-bottom:15px; letter-spacing:0; line-height:120%;
@@ -222,6 +244,40 @@ file : /Assets/travorama20/css/_page_index.scss
             &.medium {height:435px;}
             &.large {height:375px;}
             &.half {height:542.5px;}
+        }
+    }
+}
+
+// datepicker
+.date-picker {padding:30px;
+    .ui-datepicker {width:100% !important; position:relative;
+        .ui-datepicker-group {width:100%; padding:15px;
+            & + .ui-datepicker-group {border-top:$border-default;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:18px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-calendar {width:100%; color:#fff;
+                thead {
+                    th {text-align:center; padding-bottom:10px;
+                        span {color:#fff !important;}
+                    }
+                }
+                tbody {
+                    tr {margin-bottom:5px;
+                        td {text-align:center;
+                            span, a {color:#fff; display:inline-block; width:35px; height:35px; font-size:17px; padding-top:4px;}
+                            a:hover {background:#fff; color:#252525; text-decoration:none;}
+                        }
+                    }
+                }
+                .ui-state-disabled {cursor:not-allowed;
+                    span {color:#666;}
+                }
+                .ui-datepicker-week-end {f
+                    span, a {color:#fed83e;}
+                    a:hover {background:#fed83e;}
+                }
+            }
+            .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue;}
+            .ui-datepicker-next {@extend .ui-datepicker-prev; left:auto; right:15px;}
         }
     }
 }
