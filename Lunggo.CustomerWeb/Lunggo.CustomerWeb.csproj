@@ -262,7 +262,6 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Travorama20Controller.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -640,11 +639,15 @@
     <Content Include="Assets\images\airlines\ZH.png" />
     <Content Include="Assets\images\airlines\ZI.png" />
     <Content Include="Assets\images\airlines\ZL.png" />
+    <Content Include="Assets\images\airline\airasia.png" />
+    <Content Include="Assets\images\airline\citilink.png" />
+    <Content Include="Assets\images\airline\garuda.png" />
+    <Content Include="Assets\images\airline\lionair.png" />
+    <Content Include="Assets\images\airline\sriwijaya.png" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <None Include="Assets\images\backtotop.jpg.bak" />
-    <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit\check.png" />
@@ -679,8 +682,6 @@
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
     <Content Include="Assets\images\child-icon.png" />
-    <Content Include="Assets\images\choose-travorama.png" />
-    <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
@@ -693,12 +694,10 @@
     <Content Include="Assets\images\email\travorama-logo.jpg" />
     <Content Include="Assets\images\email\twitter-icon.png" />
     <Content Include="Assets\images\enjoy.png" />
-    <Content Include="Assets\images\enjoyyoureverymoment.png" />
     <Content Include="Assets\images\eticket-background.png" />
     <Content Include="Assets\images\exclamation-mark.png" />
     <Content Include="Assets\images\facebook-icon.png" />
     <Content Include="Assets\images\favico.ico" />
-    <Content Include="Assets\images\feedback-bg.jpg" />
     <Content Include="Assets\images\feedback-title.png" />
     <Content Include="Assets\images\filter-airline.png" />
     <Content Include="Assets\images\filter-close.png" />
@@ -758,40 +757,21 @@
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
-    <Content Include="Assets\images\permatabank.jpg" />
-    <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
     <Content Include="Assets\images\plane-down.png" />
     <Content Include="Assets\images\plane-up.png" />
-    <Content Include="Assets\images\popular-destination-bg-yellow.png" />
-    <Content Include="Assets\images\popular-destination-bg.png" />
-    <Content Include="Assets\images\quote-close.png" />
-    <Content Include="Assets\images\quote-open.png" />
-    <Content Include="Assets\images\rapidSsl.jpg" />
-    <Content Include="Assets\images\reason-2-icon.png" />
-    <Content Include="Assets\images\reason-3-icon.png" />
-    <Content Include="Assets\images\reason-4-icon.png" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
     <Content Include="Assets\images\search-hotel-bg.png" />
-    <Content Include="Assets\images\search-tab-sprite.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
-    <Content Include="Assets\images\select-arrow.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
-    <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
-    <Content Include="Assets\images\social-facebook.png" />
-    <Content Include="Assets\images\social-googlePlus.png" />
-    <Content Include="Assets\images\social-instagram.png" />
-    <Content Include="Assets\images\social-twitter.png" />
     <Content Include="Assets\images\stop.png" />
-    <Content Include="Assets\images\subscribe-bg.jpg" />
-    <Content Include="Assets\images\switch-destination.png" />
     <Content Include="Assets\images\tag-green.png" />
     <Content Include="Assets\images\tag-orange.png" />
     <Content Include="Assets\images\tag-purple.png" />
@@ -800,9 +780,7 @@
     <Content Include="Assets\images\terms-icon.png" />
     <Content Include="Assets\images\travelmadezy-logo.jpg" />
     <Content Include="Assets\images\travorama-logo-color.png" />
-    <Content Include="Assets\images\travorama-logo.png" />
     <Content Include="Assets\images\travorama-og.jpg" />
-    <Content Include="Assets\images\travorama20\travorama-logo.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -821,11 +799,7 @@
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
     <Content Include="Assets\images\payment-veritrans.png" />
-    <Content Include="Assets\images\verisign-bg.jpg" />
-    <Content Include="Assets\images\verisign-pin.png" />
-    <Content Include="Assets\images\verisign.jpg" />
     <Content Include="Assets\images\white-bg.png" />
-    <Content Include="Assets\images\yellow-stripe.png" />
     <Content Include="Assets\images\youtube-icon.png" />
     <Content Include="Assets\images\_sample\bar-1.png" />
     <Content Include="Assets\images\_sample\bar-2.png" />
@@ -836,7 +810,6 @@
     <Content Include="Assets\images\_sample\hot-deal.png" />
     <Content Include="Assets\images\_sample\hotel-image.jpg" />
     <Content Include="Assets\images\_sample\hotel-thumb.jpg" />
-    <Content Include="Assets\images\_sample\main-slider.jpg" />
     <Content Include="Assets\images\_sample\room-thumb.jpg" />
     <Content Include="Assets\images\_sample\sample-tab.jpg" />
     <Content Include="Assets\images\_sample\save.png" />
@@ -869,14 +842,6 @@
     <Content Include="Assets\script\jquery.ui.dialog.min-300004.js" />
     <Content Include="Assets\script\monitordesktop-12.js" />
     <Content Include="Assets\script\tv-common-300004.js" />
-    <Content Include="Assets\travorama20\css\travorama20.css">
-      <DependentUpon>travorama20.scss</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\css\travorama20.min.css">
-      <DependentUpon>travorama20.css</DependentUpon>
-    </Content>
-    <Content Include="Assets\travorama20\js\bootstrap.min.js" />
-    <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
     <Content Include="Assets\vendor\countrySelect\js\countrySelect.min.js" />
     <Content Include="Assets\vendor\countrySelect\img\flags.png" />
@@ -962,13 +927,6 @@
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <Content Include="Assets\travorama20\css\travorama20.scss" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenMedium.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2129,9 +2087,7 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -2172,7 +2128,15 @@
     <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
-    <Content Include="Views\UW000TopPage\Index.cshtml" />
+    <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
+    <Content Include="Views\Travorama20\Index.cshtml" />
+    <None Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
@@ -2242,14 +2206,8 @@
     <Content Include="Views\Home\Dummy.cshtml" />
     <Content Include="Views\Flight\SearchResultList-Return.mobile.cshtml" />
     <Content Include="Views\Home\CekPemesanan.cshtml" />
-    <Content Include="Views\Index.cshtml" />
-    <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2261,7 +2219,6 @@
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
     <Content Include="Views\Template\UserForgot.cshtml" />
-    <Content Include="Views\Travorama20\Index.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
@@ -2279,7 +2236,6 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
-    <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="WebSrc\UW300\Logic\" />
@@ -2336,7 +2292,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
