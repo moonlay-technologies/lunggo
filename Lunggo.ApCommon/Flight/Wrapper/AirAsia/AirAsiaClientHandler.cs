@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        private class AirAsiaClientHandler : ExtendedWebClient
+        private partial class AirAsiaClientHandler : ExtendedWebClient
         {
             private static readonly AirAsiaClientHandler ClientInstance = new AirAsiaClientHandler();
             private bool _isInitialized;

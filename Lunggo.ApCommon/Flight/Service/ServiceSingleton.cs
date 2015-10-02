@@ -37,6 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (!_isInitialized)
             {
                 MystiflyWrapper.Init();
+                AirAsiaWrapper.Init();
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
@@ -45,10 +46,11 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             //_sriwijayaWrapper.SearchFlight(conditions);
-            return MystiflyWrapper.SearchFlight(conditions);
+            //return MystiflyWrapper.SearchFlight(conditions);
+            return AirAsiaWrapper.SearchFlight(conditions);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
