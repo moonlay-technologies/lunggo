@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+        
+        <title>@ViewBag.Title</title>
+
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.min.css">
+
+    </head>
+<body class="@ViewBag.BodyClass">
+    
+    <!--********************-->
+    @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
+    
+    <!--********************-->
+    <section class="site-content">
+        
+        @RenderBody();
+
+    </section><!-- .site-content -->
+    
+    <!--********************-->
+    <!-- footer group start -->
+    @if ( ViewBag.FooterSubscribe == true )
+    {   
+        @Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
+    }
+    @if ( ViewBag.FooterPayment == true )
+    {
+        @Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
+    }
+    @if ( ViewBag.FooterFeedback == true )
+    {
+        @Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
+    }
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
+   
+    <!--********************-->
+    <!-- Javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Config/JsConfig.js"></script>
+
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+    
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
+
+</body>
+</html>

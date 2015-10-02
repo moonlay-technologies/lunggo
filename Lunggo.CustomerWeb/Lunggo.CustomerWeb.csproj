@@ -261,6 +261,7 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
+    <Compile Include="Controllers\Travorama20Controller.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2127,7 +2128,15 @@
     <Content Include="Views\Template\FlightSearchListOneway.cshtml" />
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
-    <Content Include="Views\UW000TopPage\Index.cshtml" />
+    <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
+    <Content Include="Views\Travorama20\Index.cshtml" />
+    <None Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
