@@ -33,16 +33,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return FlightSupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
             }
-
-            internal static string GenerateCoreFareId(SearchFlightConditions conditions)
-            {
-                return conditions.Serialize().Base64Encode();
-            }
-
-            internal static SearchFlightConditions ParseCoreFareId(string fareId)
-            {
-                return fareId.Base64Decode().Deserialize<SearchFlightConditions>();
-            }
         }
     }
 }

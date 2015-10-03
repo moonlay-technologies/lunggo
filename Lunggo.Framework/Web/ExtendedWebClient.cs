@@ -11,6 +11,8 @@ namespace Lunggo.Framework.Web
     {
         private readonly CookieContainer _cookieContainer = new CookieContainer();
 
+        public Uri ResponseUri { get; private set; }
+
         protected override WebRequest GetWebRequest(Uri address)
         {
             var request = (HttpWebRequest) base.GetWebRequest(address);
@@ -21,48 +23,13 @@ namespace Lunggo.Framework.Web
             return request;
         }
 
-        Uri _responseUri;
-        public Uri ResponseUri
-        {
-            get { return _responseUri; }
-        }
-
-        protected override WebResponse GetWebResponse(WebRequest request)
-        {
-            WebResponse response = base.GetWebResponse(request);
-            _responseUri = response.ResponseUri;
-            return response;
-        }
-        /*
         protected override WebResponse GetWebResponse(WebRequest request)
         {
             var response = base.GetWebResponse(request);
             if (response != null)
             {
-                var cookieStrings = response.Headers["Set-Cookie"].Split(new []{';', ' '}).Where(s => s.Length > 0 && s.Contains('='));
-                var cookieKeyValuePair = cookieStrings.Select(s => s.Split('='));
-                var cookies = cookieKeyValuePair.Select(cookie => new Cookie(cookie.First(), cookie.Last()));
-                foreach (var cookie in cookies)
-                {
-                    if (_cookieContainer.Add())
-                }
+                ResponseUri = response.ResponseUri;
             }
-        }
-        */
-    }
-    public class MyWebClient : WebClient
-    {
-        Uri _responseUri;
-
-        public Uri ResponseUri
-        {
-            get { return _responseUri; }
-        }
-
-        protected override WebResponse GetWebResponse(WebRequest request)
-        {
-            WebResponse response = base.GetWebResponse(request);
-            _responseUri = response.ResponseUri;
             return response;
         }
     }
