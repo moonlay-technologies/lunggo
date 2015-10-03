@@ -10,14 +10,14 @@
                 <div class="menu-top">
                     <nav>
                         <ul>
-                            <li class="check-order"><a href="#">Cek Pemesanan</a></li>
+                            <li class="check-order"><a href="@Url.Action("CekPemesanan", "Home")">Cek Pemesanan</a></li>
                             <li class="currency-select"><a href="#">IDR <span class="caret"></span></a></li>
                             <li class="language-select dropdown-wrapper">
                                 <a href="#" data-trigger="dropdown"><img src="/Assets/images/flag-indonesia.png" alt="Indonesia" /> <span class="caret"></span></a>
                                 <div class="dropdown-content flag-select">
                                     <ul>
-                                        <li><a href="#"><img src="/Assets/images/flag-indonesia.png" alt="Bahasa" /></a></li>
-                                        <li><a href="#"><img src="/Assets/images/flag-britain.png" alt="English" /></a></li>
+                                        <li><a href="@Html.IdLangSwitcherUrl()"><img src="/Assets/images/flag-indonesia.png" alt="Bahasa" /></a></li>
+                                        <li><a href="@Html.EnLangSwitcherUrl()"><img src="/Assets/images/flag-britain.png" alt="English" /></a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -33,8 +33,8 @@
                                     <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
                                     <div class="dropdown-content my-account">
                                         <ul>
-                                            <li><a href="#">Log In</a></li>
-                                            <li><a href="#">Sign Up</a></li>
+                                            <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
+                                            <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
                                         </ul>
                                     </div>
                                 </li>

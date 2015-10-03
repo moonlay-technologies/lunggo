@@ -30,7 +30,6 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            FlightService.GetInstance().SearchFlightInternal(null);
         }
     }
 }
