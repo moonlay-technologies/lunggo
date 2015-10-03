@@ -1,10 +1,12 @@
 ﻿using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Policy;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
+using Lunggo.Framework.Web;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -47,30 +49,96 @@ namespace Lunggo.Flight.Crawler
             }
         }
 
-        public List<string> Try()
+        public string Try()
         {
-            var myRequest = (HttpWebRequest)WebRequest.Create("http://book.citilink.co.id/Search.aspx?Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID");
+            //var myRequest = (HttpWebRequest)WebRequest.Create("https://book.citilink.co.id/LoginAgent.aspx?");
+            //myRequest.Method = "post";
+            var client = new ExtendedWebClient();
+            client.Headers["Host"]="book.citilink.co.id";
+            //client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0";
+            client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+            //client.Headers["Accept-Language"] = "en-US,en;q=0.5";
+            //client.Headers["Accept-Encoding"] = "gzip, deflate";
+            client.Headers["Referer"] = "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID";
+            //client.Headers["Cookie"] = "ASP.NET_SessionId=lgot3s45a2sbd055mmo1vm55; skysales=2954093066.20480.0000; devDetctd=true; pShown=yes; __hstc=241762525.4ddee9778b4a8a1e38ff600920441ba5.1443669801349.1443695076894.1443697352117.6; __hssrc=1; hsfirstvisit=https%3A%2F%2Fwww.citilink.co.id%2Fwelcome||1443669801348; hubspotutk=4ddee9778b4a8a1e38ff600920441ba5; _ga=GA1.3.453394201.1443669810; DateDeparture=2015-12-19; DateReturn=2015-12-26; FlightType=OneWay; FlightRoute=HLP-JOG; PaxAdult=1; PaxChild=0; PaxInfant=0; ajs_user_id=%22%7B%7B%20user.id%20%7D%7D%22; ajs_group_id=null; ajs_anonymous_id=%2204774b34-669b-4c09-b2bd-362b6f394a14%22; _gat=1; __hssc=241762525.1.1443697352117";
+            //client.Headers["Connection"] = "keep-alive";
+            client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+            //client.Headers["Content-Length"] = "319";
+
+            //var myRequest2 = client.UploadString(""," __EVENTTARGET" +
+            //        "&__EVENTARGUMENT" +
+            //        "&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk=" +
+            //        "&pageToken" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=Travelmadezy" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=Standar1234" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In");
+
+            string URI = "https://book.citilink.co.id/LoginAgent.aspx";
+            //string myParameters = "__EVENTTARGET&__EVENTARGUMENT&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk=&pageToken&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=Travelmadezy&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=Standar1234&ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In";
+            string myParameters = "__EVENTTARGET"+
+                "&__EVENTARGUMENT"+
+                "&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk="+
+                "&pageToken"+
+                "&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=Travelmadezy"+
+                "&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=Standar1234"+
+                "&ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In";
+
+
+            using (var wc = new ExtendedWebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                wc.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+                wc.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
+                wc.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID";
+                wc.Headers[HttpRequestHeader.AcceptLanguage] = "en-US,en;q=0.5";
+                //wc.Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
+                wc.Headers[HttpRequestHeader.Cookie] = "devDetctd=true; pShown=yes; __hstc=241762525.4ddee9778b4a8a1e38ff600920441ba5.1443669801349.1443881375791.1443882285825.11; hsfirstvisit=https%3A%2F%2Fwww.citilink.co.id%2Fwelcome||1443669801348; hubspotutk=4ddee9778b4a8a1e38ff600920441ba5; _ga=GA1.3.453394201.1443669810; ajs_user_id=%22%7B%7B%20user.id%20%7D%7D%22; ajs_group_id=null; ajs_anonymous_id=%2204774b34-669b-4c09-b2bd-362b6f394a14%22; DateDeparture=2015-12-19; FlightType=OneWay; FlightRoute=HLP-JOG; PaxAdult=1; PaxChild=0; PaxInfant=0; __hssc=241762525.4.1443882285825; __hssrc=1; ASP.NET_SessionId=ewrt5x55ktbql4bl1v3fan55; skysales=2131943946.20480.0000; _gat=1";
+                //wc.Headers[HttpRequestHeader.Connection] = "keep-alive";
+                //wc.Headers[HttpRequestHeader.ContentLength] = "319";
+                string htmlResult = wc.UploadString(URI, myParameters);
+                var a = wc.ResponseUri.OriginalString;
+                return htmlResult;
+            }
+
+
+            
+            //using (TextWriter body = new StreamWriter(myRequest.GetRequestStream()))
+            //{
+            //    body.Write(" __EVENTTARGET" +
+            //        "&__EVENTARGUMENT" +
+            //        "&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk=" +
+            //        "&pageToken" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=Travelmadezy" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=Standar1234" +
+            //        "&ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In");
+            //}
+            //
+            //WebResponse theResponse = myRequest.GetResponse();
+            //
+            //var client = new ExtendedWebClient();
+            //client.Headers.Add();
+            //var myRequest = client.UploadString("http://book.citilink.co.id/Search.aspx?Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID","");
+            //var myRequest = (HttpWebRequest)WebRequest.Create("http://book.citilink.co.id/Search.aspx?Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID");
             //myRequest.Method = "post";
 
             //using (TextWriter body = new StreamWriter(myRequest.GetRequestStream()))
             //{
             //    body.Write("Page=Select&RadioButtonMarketStructure=OneWay&TextBoxMarketOrigin1=HLP&TextBoxMarketDestination1=JOG&DropDownListMarketMonth1=2015-12&DropDownListMarketDay1=19&DropDownListMarketMonth2&DropDownListMarketDay2&DropDownListPassengerType_ADT=1&DropDownListPassengerType_INFANT=0&DropDownListCurrency=IDR&OrganizationCode=QG&DropDownListPassengerType_CHD=0&culture=id-ID");
             //}
-            myRequest.AllowAutoRedirect = true;
-            WebResponse theResponse = myRequest.GetResponse();
-            var a = theResponse.GetResponseStream();
-            var list = new List<string>();
-            using (var reader = new StreamReader(a))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    list.Add(line); // Add to list.
-                }
-            }
-            CQ dom = theResponse.ResponseUri.ToString();
-            CQ flight = dom[".w99.availabilityTable"];
-            return list;
+            ////WebResponse theResponse = myRequest.GetResponse();
+            //var a = theResponse.GetResponseStream();
+            //var list = new List<string>();
+            //using (var reader = new StreamReader(a))
+            //{
+            //    string line;
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        list.Add(line); // Add to list.
+            //    }
+            //}
+            //CQ dom = myRequest2;
+            //CQ flight = dom[".w99.availabilityTable"];
+            //return myRequest;
         }
 
         CQ CsQueryGetTbodyFromTableFlightIdCitilink(TicketSearch SearchParam)

@@ -55,10 +55,10 @@ namespace Lunggo.ApCommon.Flight.Service
         }
 
 
-        private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
-        {
-            return MystiflyWrapper.SpecificSearchFlight(conditions);
-        }
+        //private SearchFlightResult SpecificSearchFlightInternal(SpecificSearchConditions conditions)
+        //{
+        //    return MystiflyWrapper.SpecificSearchFlight(conditions);
+        //}
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
