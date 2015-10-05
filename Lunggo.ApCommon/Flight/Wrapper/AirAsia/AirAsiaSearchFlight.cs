@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsQuery;
 using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
@@ -45,14 +46,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                           @"&culture=id-ID" +
                           @"&cc=IDR";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
                 Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                DownloadString(url);
-
+                var html = DownloadString(url);
+                CQ dom = html;
+                var sel = dom["#trip_0_date_0_flight_0_fare_0"];
                 return null;
             }
         }

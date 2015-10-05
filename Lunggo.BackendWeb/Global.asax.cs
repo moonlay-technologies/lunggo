@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Actifity.Service;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
@@ -29,6 +30,7 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
+            FlightService.GetInstance().SearchFlightInternal(new SearchFlightConditions());
         }
     }
 }
