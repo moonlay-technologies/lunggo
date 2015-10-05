@@ -3,7 +3,7 @@
     ViewBag.BodyClass = "page-index";
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
-    ViewBag.FooterFeedback = true;
+    ViewBag.FooterFeedback = false;
 }
 
 @section PageJS{
@@ -13,241 +13,491 @@
 }
 
 <section class="section-search">
-    <div class="search-form">
-        
-        <header class="tab-header">
-            <nav>
-                <ul>
-                    <li class="flight active"><a href="#">Pesawat</a></li>
-                    <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
-                    <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <section class="tab-content">
-            <div class="tab-flight active">
-                <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList">
-                    <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
-                    
-                    <div class="form-group flight-type">
-                        <div class="col-sm-6">
-                            <label>
-                                <input type="radio" name="flightType" class="form-flight-type" value="return" checked />
-                                <span>Pulang Pergi</span>
-                            </label>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>
-                                <input type="radio" name="flightType" class="form-flight-type" value="oneway" />
-                                <span>Sekali Jalan</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group flight-destination">
-                        <div class="col-sm-12">
-                            <input type="text" class="form-flight-origin form-flight-location form-control" value="" placeholder="Bandara Asal" />
-                        </div>
-                        <div class="text-center col-sm-12">
-                            <span class="switch-destination"></span>
-                        </div>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-flight-destination form-flight-location form-control" value="" placeholder="Bandara Tujuan" />
-                        </div>
-                    </div>
-                    
-                    <div class="form-group flight-date">
-                        <div class="col-sm-6">
-                            <div class="form-flight-departure">
-                                <small>Tanggal Keberangkatan</small>
-                                <span class="date">28</span>
-                                <span class="month">Jul</span>
-                                <span class="year">2015</span>
+    <div class="container">
+        <div class="search-form">
+
+            <header class="tab-header">
+                <nav>
+                    <ul>
+                        <li class="flight active"><a href="#">Pesawat</a></li>
+                        <li class="hotel" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Hotel</a></li>
+                        <li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="tab-content">
+                <div class="tab-flight active">
+                    <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList">
+                        <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
+
+                        <div class="form-group flight-type">
+                            <div class="col-sm-6">
+                                <label>
+                                    <input type="radio" name="flightType" class="form-flight-type" value="return" checked />
+                                    <span>Pulang Pergi</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>
+                                    <input type="radio" name="flightType" class="form-flight-type" value="oneway" />
+                                    <span>Sekali Jalan</span>
+                                </label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-flight-return">
-                                <small>Tanggal Pulang</small>
-                                <span class="date">28</span>
-                                <span class="month">Jul</span>
-                                <span class="year">2015</span>
+
+                        <div class="form-group flight-destination">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-flight-origin form-flight-location form-control" value="" placeholder="Bandara Asal" />
                             </div>
-                            <div class="form-flight-oneway">
-                                <small>Tanggal Pulang</small>
-                                <h5>SEKALI JALAN</h5>
+                            <div class="text-center col-sm-12">
+                                <span class="switch-destination"></span>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group flight-class">
-                        <div class="col-sm-12">
-                            <div class="form-control text-center form-flight-class">Kelas Penerbangan</div>
-                            <div class="option">
-                                <span class="economy" data-value="y">Kelas Ekonomi</span>
-                                <span class="business" data-value="c">Kelas Bisnis</span>
-                                <span class="first" data-value="f">Kelas Utama</span>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-flight-destination form-flight-location form-control" value="" placeholder="Bandara Tujuan" />
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group flight-passenger">
-                        <div class="col-sm-4">
-                            <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="bottom" title="Tidak boleh kosong">
-                                <input type="text" value="1" maxlength="1" class="passenger-input adult" />
-                                <small>
-                                    Dewasa<br />(&gt;12th)
-                                </small>
+
+                        <div class="form-group flight-date">
+                            <div class="col-sm-6">
+                                <div class="form-flight-departure">
+                                    <small>Tanggal Keberangkatan</small>
+                                    <span class="date">28</span>
+                                    <span class="month">Jul</span>
+                                    <span class="year">2015</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-flight-return">
+                                    <small>Tanggal Pulang</small>
+                                    <span class="date">28</span>
+                                    <span class="month">Jul</span>
+                                    <span class="year">2015</span>
+                                </div>
+                                <div class="form-flight-oneway">
+                                    <small>Tanggal Pulang</small>
+                                    <h5>SEKALI JALAN</h5>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-flight-passenger child">
-                                <input type="text" value="0" maxlength="1" class="passenger-input child" />
-                                <small>
-                                    Anak<br />(2-12th)
-                                </small>
+
+                        <div class="form-group flight-class">
+                            <div class="col-sm-12">
+                                <div class="form-control text-center form-flight-class">Kelas Penerbangan</div>
+                                <div class="option">
+                                    <span class="economy" data-value="y">Kelas Ekonomi</span>
+                                    <span class="business" data-value="c">Kelas Bisnis</span>
+                                    <span class="first" data-value="f">Kelas Utama</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="bottom" title="Tidak boleh lebih dari jumlah penumpang dewasa">
-                                <input type="text" value="0" maxlength="1" class="passenger-input infant" />
-                                <small>
-                                    Bayi<br />(&lt;2th)
-                                </small>
+
+                        <div class="form-group flight-passenger">
+                            <div class="col-sm-4">
+                                <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
+                                    <h5 class="passenger-input adult">1</h5>
+                                    <small>
+                                        Dewasa<br />(&gt;12th)
+                                    </small>
+                                    <div class="option">
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                        <span>6</span>
+                                        <span>7</span>
+                                        <span>8</span>
+                                        <span>9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-flight-passenger child">
+                                    <h5 class="passenger-input child">0</h5>
+                                    <small>
+                                        Anak<br />(2-12th)
+                                    </small>
+                                    <div class="option">
+                                        <span>0</span>
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                        <span>6</span>
+                                        <span>7</span>
+                                        <span>8</span>
+                                        <span>9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="right" title="Tidak boleh lebih dari jumlah penumpang dewasa">
+                                    <h5 class="passenger-input infant">0</h5>
+                                    <small>
+                                        Bayi<br />(&lt;2th)
+                                    </small>
+                                    <div class="option">
+                                        <span>0</span>
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group flight-submit">
-                        <div class="col-sm-12">
-                            <input type="text" name="info" value="" class="hidden"/>
-                            <input type="submit" class="btn btn-yellow block flight-submit-button"  value="SEARCH" />
+
+                        <div class="form-group flight-submit">
+                            <div class="col-sm-12">
+                                <input type="text" name="info" value="" class="hidden" />
+                                <input type="submit" class="btn btn-yellow block flight-submit-button" value="SEARCH" />
+                            </div>
                         </div>
+
+                    </form>
+                </div><!-- .tab-flight -->
+                <div class="tab-hotel">
+                    <h3 class="text-center">Cari <b>Kamar Hotel</b><br />(Domestik &amp; Internasional)</h3>
+                    <form class="form form-horizontal form-hotel">
+
+                        <div class="form-group hotel-location">
+                            <div class="col-sm-12">
+                                <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" />
+                            </div>
+                        </div>
+                        <div class="form-group hotel-date">
+                            <div class="col-sm-6">
+                                <div class="form-hotel-checkin">
+                                    <small>Tanggal Keberangkatan</small>
+                                    <span class="date">28</span>
+                                    <span class="month">Jul</span>
+                                    <span class="year">2015</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-hotel-checkout">
+                                    <small>Tanggal Keberangkatan</small>
+                                    <span class="date">28</span>
+                                    <span class="month">Jul</span>
+                                    <span class="year">2015</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group hotel-room">
+                            <div class="col-sm-6">
+                                <div class="form-hotel-night">
+                                    <small>Malam</small>
+                                    <input type="text" name="hotelNight" value="1" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-hotel-room">
+                                    <small>Kamar</small>
+                                    <input type="text" name="hotelNight" value="1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group hotel-submit">
+                            <div class="col-sm-12">
+                                <input type="submit" name="hotelSubmit" value="SEARCH" class="btn btn-yellow block form-control" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div><!-- .tab-hotel -->
+                <div class="tab-activity">
+                    <hgroup>
+                        <h2>Temukan Banyak<br /><b>Aktifitas Menarik</b><br />Yang Bisa Anda<br />Lakukan</h2>
+                        <h4>Ribuan Aktifitas di 20+ Tempat Tujuan<br />(Domestik &amp; Internasional)</h4>
+                    </hgroup>
+                    <hr />
+                    <h3><b>Tour &amp; Activity</b> Booking</h3>
+                    <form class="form form-activity">
+                        <div class="form-group">
+                            <input type="text" name="activityLocation" value="" placeholder="Kota, Wilayah atau Aktifitas" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="activitySubmit" value="SEARCH" class="btn btn-yellow block form-control" />
+                        </div>
+                    </form>
+                </div><!-- .tab-activity -->
+            </section>
+
+        </div><!-- .search-form -->
+        <div class="search-calendar">
+            <header class="calendar-header">
+                <p class="departure">Tanggal Keberangkatan <span class="close-calendar">X</span></p>
+                <p class="return hidden">Tanggal Kepulangan <span class="close-calendar">X</span></p>
+            </header>
+            <section class="calendar-body">
+                <div class="date-picker"></div>
+            </section>
+        </div><!-- .search-calendar -->
+        <div class="search-location">
+            <header class="location-header">
+                <p class="origin">Pilih Kota Asal Penerbangan Anda <span class="close-location">X</span></p>
+                <p class="destination hidden">Pilih Kota Tujuan Penerbangan Anda <span class="close-location">X</span></p>
+            </header>
+            <section class="location-body">
+
+                <section class="location-recommend">
+                    <header class="tab-header">
+                        <a href="#" class="nav-click prev"></a>
+                        <a href="#" class="nav-click next"></a>
+                        <nav>
+                            <ul>
+                                <li class="active" data-show="popular"><span>Destinasi Populer</span></li>
+                                <li data-show="indonesia"><span>Indonesia</span></li>
+                                <li data-show="sea"><span>Asia<br/>Tenggara</span></li>
+                                <li data-show="australia"><span>Australia<br/>Selandia Baru</span></li>
+                                <li data-show="east-asia"><span>Asia<br/>Timur</span></li>
+                                <li data-show="other"><span>Destinasi<br/>Lainnya</span></li>
+                            </ul>
+                        </nav>
+                    </header>
+                    <section class="tab-content">
+                        <div class="popular active">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h3>Indonesia</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="DPS">Bali / Denpasar</a></li>
+                                            <li><a href="#" data-code="JKT">Jakarta</a></li>
+                                            <li><a href="#">Makassar</a></li>
+                                            <li><a href="#" data-code="KNO">Medan</a></li>
+                                            <li><a href="#" data-code="SUB">Surabaya</a></li>
+                                            <li><a href="#" data-code="JOG">Yogyakarta</a></li>
+                                        </ul>
+                                        <h3>Singapore</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="SIN">Singapore</a></li>
+                                        </ul>
+                                        <h3>Thailand</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BKK">Bangkok</a></li>
+                                            <li><a href="#" data-code="HDY">Hat Yai</a></li>
+                                            <li><a href="#" data-code="HKT">Phuket</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Malaysia</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="JHB">Johor Baru</a></li>
+                                            <li><a href="#" data-code="ZWR">Kota Kinabalu</a></li>
+                                            <li><a href="#" data-code="KUL">Kuala Lumpur</a></li>
+                                            <li><a href="#" data-code="KCH">Kuching</a></li>
+                                            <li><a href="#" data-code="PEN">Penang</a></li>
+                                        </ul>
+                                        <h3>Hong Kong, makau, &amp; China</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="CAN">Guangzhou</a></li>
+                                            <li><a href="#" data-code="HKG">Hong Kong</a></li>
+                                            <li><a href="#" data-code="MFM">Macau</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Filipina</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="MNL">Manila</a></li>
+                                        </ul>
+                                        <h3>Australia</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="MLB">Melbourne</a></li>
+                                            <li><a href="#" data-code="PER">Perth</a></li>
+                                        </ul>
+                                        <h3>Kamboja</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="PNH">Phnom Penh</a></li>
+                                        </ul>
+                                        <h3>Vietnam</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="HAN">Hanoi</a></li>
+                                            <li><a href="#" data-code="SGN">Ho Chi Minh City</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .popular -->
+                        <div class="indonesia">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h3>Jawa</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="JKT">Jakarta</a></li>
+                                            <li><a href="#" data-code="BDO">Bandung</a></li>
+                                            <li><a href="#" data-code="MLG">Malang</a></li>
+                                            <li><a href="#" data-code="SOC">Solo</a></li>
+                                            <li><a href="#" data-code="SRG">Semarang</a></li>
+                                            <li><a href="#" data-code="SUB">Surabaya</a></li>
+                                            <li><a href="#" data-code="YOG">Yogyakarta</a></li>
+                                        </ul>
+                                        <h3>Sumatera</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BTJ">Banda Aceh</a></li>
+                                            <li><a href="#" data-code="TKG">Bandar Lampung</a></li>
+                                            <li><a href="#" data-code="BTH">Batam</a></li>
+                                            <li><a href="#" data-code="BKS">Bengkulu</a></li>
+                                            <li><a href="#" data-code="DUM">Dumai</a></li>
+                                            <li><a href="#" data-code="GNS">Gunung Sitoli</a></li>
+                                            <li><a href="#" data-code="DJB">Jambi</a></li>
+                                            <li><a href="#" data-code="KNO">Medan</a></li>
+                                            <li><a href="#" data-code="PDG">Padang</a></li>
+                                            <li><a href="#" data-code="PKU">Pekanbaru</a></li>
+                                            <li><a href="#" data-code="PGK">Pangkal Pinang</a></li>
+                                            <li><a href="#" data-code="SBG">Sabang</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Kalimantan</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BPN">Balikpapan</a></li>
+                                            <li><a href="#" data-code="BDJ">Banjarmasin</a></li>
+                                            <li><a href="#" data-code="KTG">Ketapang</a></li>
+                                            <li><a href="#" data-code="PNK">Pontianak</a></li>
+                                            <li><a href="#" data-code="PKY">Palangkaraya</a></li>
+                                            <li><a href="#" data-code="SMQ">Sampit</a></li>
+                                            <li><a href="#" data-code="SRI">Samarinda</a></li>
+                                        </ul>
+                                        <h3>Sulawesi</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BUW">Bau-bau</a></li>
+                                            <li><a href="#" data-code="GTO">Gorontalo</a></li>
+                                            <li><a href="#" data-code="KDI">Kendari</a></li>
+                                            <li><a href="#" data-code="UPG">Makassar</a></li>
+                                            <li><a href="#" data-code="MDC">Manado</a></li>
+                                            <li><a href="#" data-code="PLW">Palu</a></li>
+                                            <li><a href="#" data-code="PSJ">Poso</a></li>
+                                            <li><a href="#" data-code="TTR">Tana Toraja</a></li>
+                                            <li><a href="#" data-code="TLI">Toli Toli</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Bali &amp; Nusa Tenggara</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="DPS">Bali / Denpasar</a></li>
+                                            <li><a href="#" data-code="ABU">Atambua</a></li>
+                                            <li><a href="#" data-code="BMU">Bima</a></li>
+                                            <li><a href="#" data-code="ENE">Ende</a></li>
+                                            <li><a href="#" data-code="KOE">Kupang</a></li>
+                                            <li><a href="#" data-code="LBJ">Labuan Bajo</a></li>
+                                            <li><a href="#" data-code="LOP">Lombok</a></li>
+                                            <li><a href="#" data-code="SWQ">Sumbawa Besar</a></li>
+                                        </ul>
+                                        <h3>Maluku &amp; Papua</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="AMQ">Ambon</a></li>
+                                            <li><a href="#" data-code="BIK">Biak</a></li>
+                                            <li><a href="#" data-code="DJJ">Jayapura</a></li>
+                                            <li><a href="#" data-code="FKQ">Fak Fak</a></li>
+                                            <li><a href="#" data-code="MKW">Manokwari</a></li>
+                                            <li><a href="#" data-code="MKQ">Merauke</a></li>
+                                            <li><a href="#" data-code="OTI">Morotai Island</a></li>
+                                            <li><a href="#" data-code="SOQ">Sorong</a></li>
+                                            <li><a href="#" data-code="TTE">Ternate</a></li>
+                                            <li><a href="#" data-code="TIM">Timika</a></li>
+                                            <li><a href="#" data-code="WMX">Wamena</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .indonesia -->
+                        <div class="sea">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h3>Singapore</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="SIN">Singapore</a></li>
+                                        </ul>
+                                        <h3>Brunei</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BWN">Brunei</a></li>
+                                        </ul>
+                                        <h3>Malaysia</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="JHB">Johor Baru</a></li>
+                                            <li><a href="#" data-code="ZWR">Kota Kinabalu</a></li>
+                                            <li><a href="#" data-code="KUL">Kuala Lumpur</a></li>
+                                            <li><a href="#" data-code="KCH">Kuching</a></li>
+                                            <li><a href="#" data-code="PEN">Penang</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Thailand</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="BKK">Bangkok</a></li>
+                                            <li><a href="#" data-code="HDY">Hat Yai</a></li>
+                                            <li><a href="#" data-code="HKT">Phuket</a></li>
+                                        </ul>
+                                        <h3>Kamboja</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="PNH">Phnom Penh</a></li>
+                                        </ul>
+                                        <h3>Vietnam</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="HAN">Hanoi</a></li>
+                                            <li><a href="#" data-code="SGN">Ho Chi Minh City</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h3>Laos</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="VTE">Vientiane</a></li>
+                                        </ul>
+                                        <h3>Filipina</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="MNL">Manila</a></li>
+                                        </ul>
+                                        <h3>Myanmar</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="RGN">Yangon</a></li>
+                                        </ul>
+                                        <h3>Timor Timur</h3>
+                                        <ul>
+                                            <li><a href="#" data-code="DIL">Dili</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .sea -->
+                    </section>
+                </section><!-- .location-recommend -->
+
+                <section class="location-search">
+
+                    <div class="autocomplete-pre">
+                        <h3 class="text-center">Masukan Kata Kunci Anda</h3>
                     </div>
 
-                </form>
-            </div><!-- .tab-flight -->
-            <div class="tab-hotel">
-                <h3 class="text-center">Cari <b>Kamar Hotel</b><br/>(Domestik &amp; Internasional)</h3>
-                <form class="form form-horizontal form-hotel">
-                    
-                    <div class="form-group hotel-location">
-                        <div class="col-sm-12">
-                            <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" />
-                        </div>
-                    </div>
-                    <div class="form-group hotel-date">
-                        <div class="col-sm-6">
-                            <div class="form-hotel-checkin">
-                                <small>Tanggal Keberangkatan</small>
-                                <span class="date">28</span>
-                                <span class="month">Jul</span>
-                                <span class="year">2015</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-hotel-checkout">
-                                <small>Tanggal Keberangkatan</small>
-                                <span class="date">28</span>
-                                <span class="month">Jul</span>
-                                <span class="year">2015</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group hotel-room">
-                        <div class="col-sm-6">
-                            <div class="form-hotel-night">
-                                <small>Malam</small>
-                                <input type="text" name="hotelNight" value="1" />
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-hotel-room">
-                                <small>Kamar</small>
-                                <input type="text" name="hotelNight" value="1" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group hotel-submit">
-                        <div class="col-sm-12">
-                            <input type="submit" name="hotelSubmit" value="SEARCH" class="btn btn-yellow block form-control" />
-                        </div>
+                    <div class="autocomplete-no-result hidden">
+                        <h2 class="text-center">Hasil tidak ditemukan</h2>
                     </div>
 
-                </form>
-            </div><!-- .tab-hotel -->
-            <div class="tab-activity">
-                <hgroup>
-                    <h2>Temukan Banyak<br /><b>Aktifitas Menarik</b><br />Yang Bisa Anda<br />Lakukan</h2>
-                    <h4>Ribuan Aktifitas di 20+ Tempat Tujuan<br />(Domestik &amp; Internasional)</h4>
-                </hgroup>
-                <hr />
-                <h3><b>Tour &amp; Activity</b> Booking</h3>
-                <form class="form form-activity">
-                    <div class="form-group">
-                        <input type="text" name="activityLocation" value="" placeholder="Kota, Wilayah atau Aktifitas" class="form-control" />
+                    <div class="autocomplete-result">
+                        <ul></ul>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" name="activitySubmit" value="SEARCH" class="btn btn-yellow block form-control" />
-                    </div>
-                </form>
-            </div><!-- .tab-activity -->
-        </section>
-        
-    </div><!-- .search-form -->
-    <div class="search-calendar">
-        <header class="calendar-header">
-            <p class="departure">Tanggal Keberangkatan <span class="close-calendar">X</span></p>
-            <p class="return hidden">Tanggal Kepulangan <span class="close-calendar">X</span></p>
-        </header>
-        <section class="calendar-body">
-            <div class="date-picker"></div>
-        </section>
-    </div><!-- .search-calendar -->
-    <div class="search-location">
-        <header class="location-header">
-            <p class="origin">Pilih Kota Asal Penerbangan Anda <span class="close-location">X</span></p>
-            <p class="destination hidden">Pilih Kota Tujuan Penerbangan Anda <span class="close-location">X</span></p>
-        </header>
-        <section class="location-body">
-            
-            <section class="location-recommend">
-                <header>
-                    
-                </header>
-                <section>
-                    
-                </section>
-            </section><!-- .location-recommend -->
-            
-            <section class="location-search">
-            
-                <div class="autocomplete-pre">
-                    <h2 class="text-center">Masukan Kata Kunci Anda</h2>
-                </div>
-            
-                <div class="autocomplete-no-result hidden">
-                    <h2 class="text-center">Hasil tidak ditemukan</h2>
-                </div>
 
-                <div class="autocomplete-result">
-                    <ul></ul>
-                </div>
+                </section><!-- .location-search -->
 
-            </section><!-- .location-search -->
-
-        </section>
-    </div><!-- .search-location -->
+            </section>
+        </div><!-- .search-location -->
+    </div><!-- .container -->
     <div class="slider">
         <div class="slider-text hidden">
             <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
-            <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br/> domestik dan internasional dari 900 maskapai</p>
+            <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
         </div>
     </div><!-- .slider -->
 </section><!-- .section-search -->
 
 <section class="section-reason">
-    <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
+    <div class="container">
+        <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
+    </div>
 </section>
 
 <!--
@@ -278,78 +528,78 @@
                 <div class="destination small">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Jakarta</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
                 </div>
                 <div class="destination medium yellow">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Bali</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
                 </div>
                 <div class="destination large">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Malaysia</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
                 </div>
             </div>
             <div class="col-sm-4 popular-middle">
                 <div class="destination half yellow">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Yogyakarta</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
                 </div>
                 <div class="destination half yellow">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Singapore</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
                 </div>
             </div>
             <div class="col-sm-4 popular-right">
                 <div class="destination large">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Bandung</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                 </div>
                 <div class="destination medium yellow">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Surabaya</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
                 </div>
                 <div class="destination small">
                     <a href="#">
                         <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b> - Indonesia
+                            <small>Penerbangan ke</small> <b>Hongkong</b>
                         </h3>
                         <span>See Review</span>
                     </a>
-                    <img src="/Assets/images/_sample/hotel-image.jpg" alt="Bali Indonesia" />
+                    <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
                 </div>
             </div>
         </div>

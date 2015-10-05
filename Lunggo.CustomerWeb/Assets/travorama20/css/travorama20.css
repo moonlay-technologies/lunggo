@@ -12,7 +12,8 @@ file : /Assets/travorama20/css/travorama20.scss
 /* imports */
 @media (min-width: 1200px) {
   .container {
-    width: 1200px; } }
+    width: 1200px;
+    max-width: 100%; } }
 
 /*
 
@@ -27,15 +28,17 @@ file : /Assets/travorama20/css/_header.scss
   left: 0;
   z-index: 10;
   width: 100%;
-  height: 100px;
+  height: 70px;
   background: #fff;
   -webkit-box-shadow: 0 0 10px #ccc;
   -moz-box-shadow: 0 0 10px #ccc;
   box-shadow: 0 0 10px #ccc;
   letter-spacing: 0.1px; }
   .site-header .site-logo {
-    padding-top: 20px;
+    padding-top: 10px;
     display: block; }
+    .site-header .site-logo img {
+      height: 50px; }
   .site-header .menu-top {
     margin-bottom: 3px; }
     .site-header .menu-top:before, .site-header .menu-top:after {
@@ -46,25 +49,26 @@ file : /Assets/travorama20/css/_header.scss
     .site-header .menu-top nav {
       float: right;
       background: #1daee4;
-      padding: 10px;
-      -webkit-border-bottom-right-radius: 3px;
-      -webkit-border-bottom-left-radius: 3px;
-      -moz-border-radius-bottomright: 3px;
-      -moz-border-radius-bottomleft: 3px;
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px; }
+      padding: 5px;
+      -webkit-border-bottom-right-radius: 4px;
+      -webkit-border-bottom-left-radius: 4px;
+      -moz-border-radius-bottomright: 4px;
+      -moz-border-radius-bottomleft: 4px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px; }
       .site-header .menu-top nav ul {
         padding: 0;
         margin: 0; }
         .site-header .menu-top nav ul li {
           display: inline;
-          padding: 0 10px; }
+          padding: 0 5px;
+          font-size: 12px; }
           .site-header .menu-top nav ul li a {
             color: #fff; }
         .site-header .menu-top nav ul li + li {
           border-left: 1px solid #fff; }
         .site-header .menu-top nav ul .language-select img {
-          width: 30px; }
+          width: 20px; }
   .site-header .menu-bottom .menu-main {
     float: right; }
     .site-header .menu-bottom .menu-main nav ul {
@@ -75,8 +79,8 @@ file : /Assets/travorama20/css/_header.scss
         .site-header .menu-bottom .menu-main nav ul li a {
           color: #1daee4;
           font-weight: bold;
-          font-size: 17px;
-          padding: 12px 20px;
+          font-size: 14px;
+          padding: 5px 10px;
           display: inline-block; }
       .site-header .menu-bottom .menu-main nav ul li + li a {
         border-left: 1px solid #ddd; }
@@ -91,16 +95,12 @@ file : /Assets/travorama20/css/_header.scss
         .site-header .menu-bottom .menu-side nav ul li a {
           color: #1daee4;
           font-weight: 600;
-          font-size: 17px;
-          padding: 12px 20px;
+          font-size: 14px;
+          padding: 5px 10px;
           display: inline-block; }
-      .site-header .menu-bottom .menu-side nav ul li + li {
-        border-left: 2px solid #1daee4; }
-        .site-header .menu-bottom .menu-side nav ul li + li a {
-          padding-right: 0; }
 
 body {
-  padding-top: 100px; }
+  padding-top: 70px; }
 
 /*
 
@@ -271,23 +271,23 @@ file : /Assets/travorama20/css/_page_index.scss
 
 */
 .page-index .section-search {
-  height: 665px;
-  overflow: hidden;
+  height: 520px;
   position: relative; }
+  .page-index .section-search > .container {
+    position: relative; }
   .page-index .section-search:before, .page-index .section-search:after {
     display: block;
     width: 100%;
     content: "";
     clear: both; }
   .page-index .section-search .search-form {
-    width: 450px;
-    height: 665px;
+    width: 320px;
+    height: 520px;
     background: rgba(37, 37, 37, 0.8);
     position: relative;
     z-index: 2; }
     .page-index .section-search .search-form .tab-header {
-      height: 70px;
-      overflow: hidden; }
+      height: 50px; }
       .page-index .section-search .search-form .tab-header:before, .page-index .section-search .search-form .tab-header:after {
         display: block;
         width: 100%;
@@ -299,43 +299,44 @@ file : /Assets/travorama20/css/_page_index.scss
         .page-index .section-search .search-form .tab-header nav ul li {
           float: left;
           width: 33.333333334%;
-          list-style: none; }
+          list-style: none;
+          border-right: 2px solid #bdbdbd; }
           .page-index .section-search .search-form .tab-header nav ul li a {
             color: #4f4f4f;
             background: #d2d2d2;
             display: block;
-            padding: 20px 15px;
+            padding: 10px 10px;
             font-weight: 600;
             text-decoration: none;
-            font-size: 20px; }
+            font-size: 14px; }
             .page-index .section-search .search-form .tab-header nav ul li a:before {
               content: "";
-              width: 30px;
-              height: 30px;
+              width: 20px;
+              height: 20px;
               display: inline-block;
               background-image: url(/Assets/images/search-tab-sprite.png);
               margin-bottom: -5px;
               margin-right: 5px; }
-          .page-index .section-search .search-form .tab-header nav ul li.active a {
-            color: #ffe932;
-            background: #4e4e4e; }
+          .page-index .section-search .search-form .tab-header nav ul li.active {
+            border-right: 0; }
+            .page-index .section-search .search-form .tab-header nav ul li.active a {
+              color: #ffe932;
+              background: #4e4e4e; }
           .page-index .section-search .search-form .tab-header nav ul li.flight a:before {
             background-position: 0 0; }
           .page-index .section-search .search-form .tab-header nav ul li.flight.active a:before {
-            background-position: 0px 30px; }
+            background-position: 0px 20px; }
           .page-index .section-search .search-form .tab-header nav ul li.hotel a:before {
-            background-position: 60px 0; }
+            background-position: 40px 0; }
           .page-index .section-search .search-form .tab-header nav ul li.hotel.active a:before {
-            background-position: 60px 30px; }
+            background-position: 30px 20px; }
           .page-index .section-search .search-form .tab-header nav ul li.activity a:before {
-            background-position: 30px 0; }
+            background-position: 20px 0; }
           .page-index .section-search .search-form .tab-header nav ul li.activity.active a:before {
-            background-position: 30px 30px; }
-        .page-index .section-search .search-form .tab-header nav ul li + li {
-          border-left: 2px solid #bdbdbd; }
+            background-position: 20px 20px; }
     .page-index .section-search .search-form .tab-content {
       color: #fff;
-      padding: 30px; }
+      padding: 5px 20px 5px; }
       .page-index .section-search .search-form .tab-content > div {
         display: none; }
       .page-index .section-search .search-form .tab-content > div.active {
@@ -350,46 +351,47 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-form .tab-content .tab-flight .form-group {
         margin-bottom: 5px; }
       .page-index .section-search .search-form .tab-content .tab-flight h3 {
-        margin-bottom: 15px;
-        margin-top: 0; }
+        margin-bottom: 20px;
+        font-size: 17px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-type {
-        margin-bottom: 10px; }
+        margin-bottom: 5px; }
       .page-index .section-search .search-form .tab-content .tab-flight label {
         font-weight: normal; }
       .page-index .section-search .search-form .tab-content .tab-flight .btn.btn-yellow {
-        font-size: 20px;
+        font-size: 14px;
         letter-spacing: 0.1px;
         padding: 10px 0; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-destination {
-        margin-bottom: 10px; }
+        margin-bottom: 5px; }
       .page-index .section-search .search-form .tab-content .tab-flight .switch-destination {
         background: url(/Assets/images/switch-destination.png) center center no-repeat;
-        width: 41px;
-        height: 41px;
+        background-size: cover;
+        width: 25px;
+        height: 25px;
         display: inline-block;
         margin: 10px 0 5px;
         cursor: pointer; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-origin, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-destination {
         text-align: center;
-        font-size: 17px;
-        padding: 20px 15px; }
+        font-size: 12px;
+        padding: 5px 5px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date {
-        margin-bottom: 10px; }
+        margin-bottom: 5px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date > div:first-child {
-          padding-right: 7.5px; }
+          padding-right: 3px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date > div:last-child {
-          padding-left: 7.5px; }
+          padding-left: 3px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
         background: #fff;
         color: #6a6a6a;
-        padding: 10px 15px 0;
+        padding: 7px 10px 0px;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
         border: 1px solid #ccc;
         font-weight: 600;
         cursor: pointer;
-        height: 93px; }
+        height: 75px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:after {
           display: block;
           width: 100%;
@@ -398,40 +400,45 @@ file : /Assets/travorama20/css/_page_index.scss
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure small, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return small, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway small {
           display: block;
           font-weight: normal;
-          margin-bottom: -10px; }
+          margin-bottom: -10px;
+          font-size: 9px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .date, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .date, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .date {
           float: left;
-          font-size: 52px;
-          margin-right: 10px;
-          width: 60px; }
+          font-size: 42px;
+          margin-right: 0px;
+          width: 60px;
+          margin-top: 5px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .month, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .month, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .month {
           display: block;
-          margin-top: 15px;
+          margin-top: 13px;
           margin-bottom: -5px;
-          font-size: 19px; }
+          font-size: 17px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure .year, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return .year, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway .year {
           display: block;
-          font-size: 19px; }
+          font-size: 17px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway {
-        display: none; }
+        display: none;
+        cursor: not-allowed; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway h5 {
-          font-size: 24px;
-          font-weight: bold; }
+          font-size: 21px;
+          font-weight: bold;
+          margin-top: 14px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-class {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         position: relative; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class {
         display: block;
-        padding: 10px 15px;
+        padding: 7px 15px;
         height: auto;
         text-decoration: none;
         cursor: pointer;
-        position: relative; }
+        position: relative;
+        font-size: 12px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class:after {
           content: url(/Assets/images/select-arrow.png);
           position: absolute;
           right: 15px;
-          top: 12px; }
+          top: 7px; }
       .page-index .section-search .search-form .tab-content .tab-flight .option {
         position: absolute;
         top: 100%;
@@ -440,7 +447,8 @@ file : /Assets/travorama20/css/_page_index.scss
         width: 100%;
         padding: 0 15px;
         z-index: 2;
-        display: none; }
+        display: none;
+        font-size: 12px; }
         .page-index .section-search .search-form .tab-content .tab-flight .option > span {
           display: block;
           color: #000;
@@ -453,45 +461,52 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger {
         margin-bottom: 10px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div {
-          padding-left: 7.5px;
-          padding-right: 7.5px; }
+          padding-left: 5px;
+          padding-right: 5px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div:first-child {
-          padding-right: 7.5px;
+          padding-right: 0px;
           padding-left: 15px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div:last-child {
-          padding-left: 7.5px;
+          padding-left: 0px;
           padding-right: 15px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger {
         background: #fff;
-        padding: 10px;
+        padding: 5px;
         color: #6a6a6a;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
         border: 1px solid #ccc;
         position: relative;
-        height: 80px; }
+        height: 60px;
+        cursor: pointer; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger small {
-          font-sizE: 12px;
+          font-sizE: 9px;
           line-height: 0; }
           .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger small br {
             display: block;
             margin-top: 0;
             margin-bottom: -5px;
             content: ""; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger input {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger .passenger-input {
           width: 50px;
-          height: 60px;
           position: absolute;
+          top: 30px;
           right: 5px;
           border: 0;
           text-align: right;
-          font-size: 45px;
+          font-size: 36px;
           padding: 0;
           line-height: 0;
           margin: 0;
           letter-spacing: 0;
           font-weight: 600; }
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger .option {
+          display: none;
+          z-index: 2;
+          width: 100%;
+          text-align: center;
+          padding: 0; }
       .page-index .section-search .search-form .tab-content .tab-hotel h3 {
         margin-bottom: 30px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location input[type="text"] {
@@ -600,49 +615,135 @@ file : /Assets/travorama20/css/_page_index.scss
           height: auto;
           font-size: 19px; }
   .page-index .section-search .search-calendar {
-    width: 450px;
-    height: 665px;
+    width: 320px;
+    height: 520px;
     background: #252525;
     position: absolute;
     top: 0;
-    left: 450px;
+    left: 335px;
     z-index: 2;
     display: none; }
     .page-index .section-search .search-calendar .calendar-header {
-      height: 70px;
+      height: 40px;
       background: #4e4e4e;
       color: #fff;
       font-weight: 600;
-      font-size: 22px;
-      padding: 20px 15px; }
+      font-size: 17px;
+      padding: 10px 15px; }
       .page-index .section-search .search-calendar .calendar-header .close-calendar {
         float: right;
         cursor: pointer; }
+    .page-index .section-search .search-calendar .calendar-body {
+      padding-top: 15px; }
   .page-index .section-search .search-location {
-    width: 900px;
-    height: 665px;
+    width: 600px;
+    min-height: 520px;
     background: #fff;
     position: absolute;
     top: 0;
-    left: 450px;
+    left: 335px;
     z-index: 2;
     display: none; }
     .page-index .section-search .search-location .location-header {
-      height: 70px;
+      height: 40px;
       background: #4e4e4e;
       color: #fff;
       font-weight: 600;
-      font-size: 22px;
-      padding: 20px 15px; }
+      font-size: 17px;
+      padding: 10px 15px; }
       .page-index .section-search .search-location .location-header .close-location {
         float: right;
         cursor: pointer; }
-    .page-index .section-search .search-location .location-body .location-recommend {
-      display: none; }
+    .page-index .section-search .search-location .location-body .location-recommend .tab-header {
+      background: #eaeaea;
+      width: 100%;
+      padding: 0 30px;
+      position: relative; }
+      .page-index .section-search .search-location .location-body .location-recommend .tab-header a.nav-click {
+        width: 30px;
+        height: 60px;
+        display: block;
+        background-color: #999999;
+        position: absolute;
+        background-image: url(/Assets/images/nav-sprite.png);
+        background-repeat: no-repeat; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-header a.nav-click.prev {
+          left: 0;
+          top: 0; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-header a.nav-click.next {
+          right: 0;
+          top: 0;
+          background-position: -30px 0; }
+      .page-index .section-search .search-location .location-body .location-recommend .tab-header:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-index .section-search .search-location .location-body .location-recommend .tab-header nav {
+        width: 540px;
+        height: 60px;
+        overflow: hidden; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul {
+          margin: 0;
+          padding: 0;
+          display: block;
+          width: 810px; }
+          .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:after {
+            display: block;
+            width: 100%;
+            content: "";
+            clear: both; }
+          .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul li {
+            display: table;
+            width: 135px;
+            float: left;
+            border-right: 1px solid #ccc;
+            cursor: pointer; }
+            .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul li span {
+              display: block;
+              color: #626262;
+              background: #eaeaea;
+              font-size: 14px;
+              font-weight: bold;
+              height: 60px;
+              padding: 0 20px;
+              display: table-cell;
+              vertical-align: middle; }
+            .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul li.active {
+              border-right-color: #fff; }
+              .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul li.active span {
+                color: #21afe5;
+                background: #fff; }
+            .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul li:last-child {
+              border-right: none; }
+    .page-index .section-search .search-location .location-body .location-recommend .tab-content {
+      padding: 0 15px;
+      padding-bottom: 15px; }
+      .page-index .section-search .search-location .location-body .location-recommend .tab-content > div {
+        display: none; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-content > div.active {
+          display: block; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-content > div h3 {
+          color: #1daee4;
+          font-size: 14px;
+          font-weight: bold; }
+        .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul {
+          margin: 0;
+          padding: 0;
+          list-style: none; }
+          .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a {
+            color: #2f2f2f; }
+            .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
+              text-decoration: none; }
+              .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before {
+                content: url(/Assets/images/recommend-selector.png);
+                position: absolute;
+                left: 0px; }
     .page-index .section-search .search-location .location-body .location-search {
-      padding: 20px;
-      height: 595px;
-      overflow: auto; }
+      padding: 10px;
+      height: 480px;
+      overflow: auto;
+      display: none; }
       .page-index .section-search .search-location .location-body .location-search .autocomplete-result ul {
         margin: 0;
         padding: 0; }
@@ -660,7 +761,7 @@ file : /Assets/travorama20/css/_page_index.scss
     height: 100%;
     top: 0;
     left: 0;
-    background: url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom;
+    background: url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom no-repeat;
     background-size: cover; }
     .page-index .section-search .slider .slider-text {
       font-size: 17px;
@@ -672,7 +773,7 @@ file : /Assets/travorama20/css/_page_index.scss
       margin-top: -200px;
       position: relative; }
 
-.page-index .section-reason > img {
+.page-index .section-reason > .container > img {
   max-width: 100%;
   height: auto; }
 
@@ -795,7 +896,7 @@ file : /Assets/travorama20/css/_page_index.scss
       height: 542.5px; }
 
 .date-picker {
-  padding: 30px; }
+  padding: 15px; }
   .date-picker .ui-datepicker {
     width: 100% !important;
     position: relative; }
@@ -807,7 +908,7 @@ file : /Assets/travorama20/css/_page_index.scss
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
         color: #fff;
         color: #1daee4;
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 600;
         margin-bottom: 10px; }
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar {
@@ -817,7 +918,8 @@ file : /Assets/travorama20/css/_page_index.scss
           text-align: center;
           padding-bottom: 10px; }
           .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th span {
-            color: #fff !important; }
+            color: #fff !important;
+            font-size: 12px; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr {
           margin-bottom: 5px; }
           .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td {
@@ -825,10 +927,10 @@ file : /Assets/travorama20/css/_page_index.scss
             .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a {
               color: #fff;
               display: inline-block;
-              width: 35px;
-              height: 35px;
-              font-size: 17px;
-              padding-top: 4px; }
+              font-size: 12px;
+              padding-top: 4px;
+              width: 25px;
+              height: 25px; }
             .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a:hover {
               background: #fff;
               color: #252525;
@@ -847,10 +949,12 @@ span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .
         top: -10px;
         left: 15px;
         cursor: pointer;
-        color: #1daee4; }
+        color: #1daee4;
+        font-size: 12px; }
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
         left: auto;
-        right: 15px; }
+        right: 15px;
+        font-size: 12px; }
 
 body {
   font-family: 'Open Sans', sans-serif;

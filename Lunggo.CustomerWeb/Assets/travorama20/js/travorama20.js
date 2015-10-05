@@ -10,6 +10,7 @@ var indexPageConfig;
 // site header function
 $('html').click(function() {
     $('.dropdown-content').hide();
+    $('.form-flight-class').siblings('.option').hide();
 });
 $('[data-trigger="dropdown"]').click(function (evt) {
     evt.stopPropagation();
@@ -75,6 +76,38 @@ function indexPageFunctions() {
     });
 
     //*****
+    // flight recommendation
+    $('.search-location .location-recommend .nav-click.prev').click(function () {
+        if ( parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0 ) {
+            $('.search-location .location-recommend .tab-header nav ul').css('margin-left','+=135px');
+        }
+    });
+    $('.search-location .location-recommend .nav-click.next').click(function () {
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
+            $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
+        }
+    });
+    $('.search-location .location-recommend nav ul li ').click(function() {
+        var showClass = $(this).attr('data-show');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        $('.search-location .location-recommend .tab-content>div').removeClass('active');
+        $('.search-location .location-recommend .tab-content>div.'+showClass).addClass('active');
+    });
+    $('.search-location .location-recommend .tab-content a').click(function (evt) {
+        evt.preventDefault();
+        var locationCode = $(this).attr('data-code');
+        if ($('.search-location').attr('data-place') == 'origin') {
+            indexPageConfig.flightForm.origin = locationCode;
+            $('.form-flight-origin').val($(this).text());
+        } else {
+            indexPageConfig.flightForm.destination = locationCode;
+            $('.form-flight-destination').val($(this).text());
+        }
+        hideLocation();
+    });
+
+    //*****
     // on switch target
     $('.switch-destination').click(function() {
         var prevOrigin = $('.form-flight-origin').val();
@@ -137,8 +170,15 @@ function indexPageFunctions() {
     });
     // on keypress on form flight search
     $('.form-flight-location').keyup(function () {
-        indexPageConfig.autocomplete.keyword = $(this).val();
-        getLocation(indexPageConfig.autocomplete.keyword);
+        if ( $(this).val().length > 0 ) {
+            $('.search-location .location-recommend').hide();
+            $('.search-location .location-search').show();
+            indexPageConfig.autocomplete.keyword = $(this).val();
+            getLocation(indexPageConfig.autocomplete.keyword);
+        } else {
+            $('.search-location .location-recommend').show();
+            $('.search-location .location-search').hide();
+        }
     });
 
     //*****
@@ -168,7 +208,7 @@ function indexPageFunctions() {
                 indexPageConfig.flightForm.returnDate = new Date(data);
                 target = '.form-flight-return';
             }
-            $(target + ' .date').html(chosenDate.getDate());
+            $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
             $(target + ' .month').html( translateMonth(chosenDate.getMonth()) );
             $(target + ' .year').html(chosenDate.getFullYear());
             $('.search-calendar').hide();
@@ -222,15 +262,17 @@ function indexPageFunctions() {
         var currentDate = new Date();
         // indexPageConfig.flightForm.departureDate = new Date();
         // indexPageConfig.flightForm.returnDate = new Date();
-        $('.form-flight-departure .date, .form-flight-return .date').html(currentDate.getDate());
+        $('.form-flight-departure .date, .form-flight-return .date').html(('0' + currentDate.getDate()).slice(-2));
         $('.form-flight-departure .month, .form-flight-return .month').html(translateMonth(currentDate.getMonth()));
         $('.form-flight-departure .year, .form-flight-return .year').html(currentDate.getFullYear());
     });
 
     //*****
     // select cabin
-    $('.form-flight-class').click(function() {
-        $(this).siblings('.option').show();
+    $('.form-flight-class').click(function (evt) {
+        evt.stopPropagation();
+        $(this).siblings('.option').toggle();
+        $('.form-flight-passenger .option').hide();
     });
     $('.form-group.flight-class .option span').click(function() {
         $('.form-flight-class').html($(this).html());
@@ -242,6 +284,8 @@ function indexPageFunctions() {
     // show and hide search location
     function showLocation(place) {
         place = place || $('.search-location').attr('data-place');
+        $('.search-location .location-recommend').show();
+        $('.search-location .location-search').hide();
         if (place == 'origin') {
             $('.search-location .location-header .origin').removeClass('hidden');
             $('.search-location .location-header .destination').addClass('hidden');
@@ -281,15 +325,44 @@ function indexPageFunctions() {
 
     //*****
     // validate passenger
-    $('.passenger-input').keydown(function(e) {
-        $(this).val('');
-        if ($.inArray(e.keyCode, [46, 8, 27, 13, 110, 190]) !== -1 ||
-            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) || (e.keyCode >= 35 && e.keyCode <= 40)) {
-            return;
+    $('.form-flight-passenger').click(function (evt) {
+        evt.stopPropagation();
+        $(this).parent().siblings('div').find('.option').hide();
+        $(this).find('.option').toggle();
+    });
+    $('.form-flight-passenger .option span').click(function(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        var parentClass = $(this).closest('.form-flight-passenger');
+        var optionValue = parseInt($(this).text());
+        if ( parentClass.hasClass('adult') ) {
+            if (optionValue > (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.child + indexPageConfig.flightForm.passenger.infant))) {
+                optionValue = (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.child + indexPageConfig.flightForm.passenger.infant));
+            }
+            if (indexPageConfig.flightForm.passenger.infant > optionValue) {
+                indexPageConfig.flightForm.passenger.infant = optionValue;
+                $('.passenger-input.infant').text(optionValue);
+            }
+            indexPageConfig.flightForm.passenger.adult = optionValue;
+            $('.passenger-input.adult').text(optionValue);
+        } else if (parentClass.hasClass('child')) {
+            if (optionValue > (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.adult + indexPageConfig.flightForm.passenger.infant))) {
+                optionValue = (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.adult + indexPageConfig.flightForm.passenger.infant));
+            }
+            indexPageConfig.flightForm.passenger.child = optionValue;
+            $('.passenger-input.child').text( optionValue );
+        } else if (parentClass.hasClass('infant')) {
+            if (optionValue > indexPageConfig.flightForm.passenger.adult) {
+                optionValue = indexPageConfig.flightForm.passenger.adult;
+            } else {
+                if (optionValue > (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.child + indexPageConfig.flightForm.passenger.adult))) {
+                    optionValue = (indexPageConfig.flightForm.maxPassenger - (indexPageConfig.flightForm.passenger.child + indexPageConfig.flightForm.passenger.adult));
+                }
+            }
+            indexPageConfig.flightForm.passenger.infant = optionValue;
+            $('.passenger-input.infant').text(optionValue);
         }
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
+        $(this).parent().hide();
     });
     $('.passenger-input').keyup(function() {
         console.log( $(this).val() );
@@ -305,22 +378,7 @@ function indexPageFunctions() {
             if ($('.passenger-input.infant').val() > $(this).val()) {
                 $('.passenger-input.infant').val($(this).val());
             }
-        } else if ($(this).hasClass('child')) {
-            if ($(this).val() > (indexPageConfig.flightForm.maxPassenger - (parseInt($('.passenger-input.adult').val()) + parseInt($('.passenger-input.infant').val())))) {
-                $(this).val((indexPageConfig.flightForm.maxPassenger - (parseInt($('.passenger-input.adult').val()) + parseInt($('.passenger-input.infant').val()))));
-            }
-        } else if ($(this).hasClass('infant')) {
-            if ( $(this).val() > $('.passenger-input.adult').val() ) {
-                $(this).val( $('.passenger-input.adult').val() );
-            } else {
-                if ($(this).val() > (indexPageConfig.flightForm.maxPassenger - (parseInt($('.passenger-input.child').val()) + parseInt($('.passenger-input.adult').val())))) {
-                    $(this).val((indexPageConfig.flightForm.maxPassenger - (parseInt($('.passenger-input.child').val()) + parseInt($('.passenger-input.adult').val()))));
-                }
-            }
-        }
-        indexPageConfig.flightForm.passenger.adult = $('.passenger-input.adult').val();
-        indexPageConfig.flightForm.passenger.child = $('.passenger-input.child').val();
-        indexPageConfig.flightForm.passenger.infant = $('.passenger-input.infant').val();
+        } 
     });
 
     //*****
