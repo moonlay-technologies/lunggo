@@ -9,40 +9,40 @@ file : /Assets/travorama20/css/_page_index.scss
 .page-index {
     //*****
     // section search 
-    .section-search {height:665px; overflow:hidden; position:relative;
+    .section-search {height:520px; position:relative;
+        &>.container {position:relative;}
         &:before, &:after {@include clearfix();}
 
         // search form
-        .search-form {width:450px; height:665px; background:rgba(37,37,37,0.8); position:relative; z-index:2;
-            .tab-header {height:70px; overflow:hidden;
+        .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:2;
+            .tab-header {height:50px;
                 &:before, &:after {@include clearfix();}
                 nav {
                     ul {margin:0; padding:0;
-                        li {float:left; width:33.333333334%; list-style:none;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:20px 15px; font-weight:600; text-decoration:none; font-size:20px;
-                                &:before {content:""; width:30px; height:30px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
+                        li {float:left; width:33.333333334%; list-style:none; border-right:2px solid #bdbdbd;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:10px 10px; font-weight:600; text-decoration:none; font-size:14px;
+                                &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
-                            &.active {
+                            &.active {border-right:0;
                                 a {color:#ffe932; background:#4e4e4e;}
                             }
                             &.flight {
                                 a:before {background-position:0 0;}
-                                &.active a:before {background-position:0px 30px;}
+                                &.active a:before {background-position:0px 20px;}
                             }
                             &.hotel {
-                                a:before {background-position:60px 0;}
-                                &.active a:before {background-position:60px 30px;}
+                                a:before {background-position:40px 0;}
+                                &.active a:before {background-position:30px 20px;}
                             }
                             &.activity {
-                                a:before {background-position:30px 0;}
-                                &.active a:before {background-position:30px 30px;}
+                                a:before {background-position:20px 0;}
+                                &.active a:before {background-position:20px 20px;}
                             }
                         }
-                        li+li {border-left:2px solid #bdbdbd;}
                     }
                 }
             }
-            .tab-content {color:#fff; padding:30px;
+            .tab-content {color:#fff; padding:5px 20px 5px;
                 &>div {display:none;}
                 &>div.active {display:block;}
                 &:before, &:after {@include clearfix();}
@@ -51,38 +51,38 @@ file : /Assets/travorama20/css/_page_index.scss
                 // tab flight
                 .tab-flight {
                     .form-group {margin-bottom:5px;}
-                    h3 {margin-bottom:15px; margin-top:0;}
-                    .form-flight-type {margin-bottom:10px;}
+                    h3 {margin-bottom:20px; font-size:17px;}
+                    .form-flight-type {margin-bottom:5px;}
                     label {font-weight:normal;}
-                    .btn.btn-yellow {font-size:20px; letter-spacing:0.1px; padding:10px 0;}
+                    .btn.btn-yellow {font-size:14px; letter-spacing:0.1px; padding:10px 0;}
                     // flight type
                     .form-group.flight-type {}
                     // flight destination
-                    .form-group.flight-destination {margin-bottom:10px;}
-                    .switch-destination {background:url(/Assets/images/switch-destination.png) center center no-repeat; width:41px; height:41px; display:inline-block; margin:10px 0 5px; cursor:pointer;}
-                    .form-flight-origin, .form-flight-destination {text-align:center; font-size:17px; padding:20px 15px;}
+                    .form-group.flight-destination {margin-bottom:5px;}
+                    .switch-destination {background:url(/Assets/images/switch-destination.png) center center no-repeat; background-size:cover; width:25px; height:25px; display:inline-block; margin:10px 0 5px; cursor:pointer;}
+                    .form-flight-origin, .form-flight-destination {text-align:center; font-size:12px; padding:5px 5px;}
                     // flight date
-                    .form-group.flight-date {margin-bottom:10px;
-                        &>div:first-child {padding-right:7.5px;}
-                        &>div:last-child {padding-left:7.5px;}
+                    .form-group.flight-date {margin-bottom:5px;
+                        &>div:first-child {padding-right:3px;}
+                        &>div:last-child {padding-left:3px;}
                     }
-                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:$border-default; font-weight:600; cursor:pointer; height:93px;
+                    .form-flight-departure {background:#fff; color:#6a6a6a; padding:7px 10px 0px; @include border-radius($border-radius-default); border:$border-default; font-weight:600; cursor:pointer; height:75px;
                         &:before, &:after {@include clearfix();}
-                        small {display:block; font-weight:normal; margin-bottom:-10px;}
-                        .date {float:left; font-size:52px; margin-right:10px; width:60px;}
-                        .month {display:block; margin-top:15px; margin-bottom:-5px; font-size:19px;}
-                        .year {display:block; font-size:19px;}
+                        small {display:block; font-weight:normal; margin-bottom:-10px; font-size:9px;}
+                        .date {float:left; font-size:42px; margin-right:0px; width:60px; margin-top:5px;}
+                        .month {display:block; margin-top:13px; margin-bottom:-5px; font-size:17px;}
+                        .year {display:block; font-size:17px;}
                     }
                     .form-flight-return {@extend .form-flight-departure;}
-                    .form-flight-oneway {@extend .form-flight-departure; display:none;
-                        h5 {font-size:24px; font-weight:bold;}
+                    .form-flight-oneway {@extend .form-flight-departure; display:none; cursor:not-allowed;
+                        h5 {font-size:21px; font-weight:bold; margin-top:14px;}
                     }
                     // flight class
-                    .form-group.flight-class {margin-bottom:10px; position:relative;}
-                    .form-flight-class {display:block; padding:10px 15px; height:auto; text-decoration:none; cursor:pointer; position:relative;
-                        &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:12px;}
+                    .form-group.flight-class {margin-bottom:5px; position:relative;}
+                    .form-flight-class {display:block; padding:7px 15px; height:auto; text-decoration:none; cursor:pointer; position:relative; font-size:12px;
+                        &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:7px;}
                     }
-                    .option {position:absolute; top:100%; left:0; display:block; width:100%; padding:0 15px; z-index:2; display:none;
+                    .option {position:absolute; top:100%; left:0; display:block; width:100%; padding:0 15px; z-index:2; display:none; font-size:12px;
                         &>span {display:block; color:#000; padding:10px; background:#ddd;
                             &+span {border-top:$border-default;}
                             &:hover {background:#fff;}
@@ -90,15 +90,18 @@ file : /Assets/travorama20/css/_page_index.scss
                     }
                     // flight passenger
                     .form-group.flight-passenger {margin-bottom:10px;
-                        &>div {padding-left:7.5px; padding-right:7.5px;}
-                        &>div:first-child {padding-right:7.5px; padding-left:15px;}
-                        &>div:last-child {padding-left:7.5px; padding-right:15px;}
+                        &>div {padding-left:5px; padding-right:5px;}
+                        &>div:first-child {padding-right:0px; padding-left:15px;}
+                        &>div:last-child {padding-left:0px; padding-right:15px;}
                     }
-                    .form-flight-passenger {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:80px;
-                        small {font-sizE:12px; line-height:0;
+                    .form-flight-passenger {background:#fff; padding:5px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:60px; cursor:pointer;
+                        small {font-sizE:9px; line-height:0;
                             br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                         }
-                        input {width:50px; height:60px; position:absolute; right:5px; border:0; text-align:right; font-size:45px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
+                        .passenger-input {width:50px; position:absolute; top:30px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
+                        .option {display:none; z-index:2; width:100%; text-align:center; padding:0;
+                            span {}
+                        }
                     }
                 }
                 //*****
@@ -114,7 +117,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right:7.5px;}
                         &>div:last-child {padding-left:7.5px;}
                     }
-                    .form-hotel-checkin {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius(4px); border:$border-default; font-weight:600;
+                    .form-hotel-checkin {background:#fff; color:#6a6a6a; padding:10px 15px 0; @include border-radius($border-radius-default); border:$border-default; font-weight:600;
                         &:before, &:after {@include clearfix();}
                         small {display:block; font-weight:normal; margin-bottom:-10px;}
                         .date {float:left; font-size:52px; margin-right:10px; width:60px;}
@@ -127,7 +130,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         &>div:first-child {padding-right:7.5px;}
                         &>div:last-child {padding-left:7.5px;}
                         //
-                        .form-hotel-night {background:#fff; padding:10px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:80px;
+                        .form-hotel-night {background:#fff; padding:10px; color:#6a6a6a; @include border-radius($border-radius-default); border:$border-default; position:relative; height:80px;
                             small {font-sizE:12px; line-height:0;
                                 br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                             }
@@ -152,20 +155,55 @@ file : /Assets/travorama20/css/_page_index.scss
             }
         }
         // search calendar
-        .search-calendar {width:450px; height:665px; background:#252525; position:absolute; top:0; left:450px; z-index:2; display:none;
-            .calendar-header {height:70px; background:#4e4e4e; color:#fff; font-weight:600; font-size:22px; padding:20px 15px;
+        .search-calendar {width:320px; height:520px; background:#252525; position:absolute; top:0; left:335px; z-index:2; display:none;
+            .calendar-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
                 .close-calendar {float:right; cursor:pointer;}
             }
-            .calendar-body {}
+            .calendar-body {padding-top:15px;}
         }
         // location dropdown
-        .search-location {width:900px; height:665px; background:#fff; position:absolute; top:0; left:450px; z-index:2; display:none;
-            .location-header {height:70px; background:#4e4e4e; color:#fff; font-weight:600; font-size:22px; padding:20px 15px;
+        .search-location {width:600px; min-height:520px; background:#fff; position:absolute; top:0; left:335px; z-index:2; display:none;
+            .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
                 .close-location {float:right; cursor:pointer;}
             }
             .location-body {
-                .location-recommend {display:none;}
-                .location-search {padding:20px; height:595px; overflow:auto;
+                .location-recommend {
+                    .tab-header {background:#eaeaea; width:100%; padding:0 30px; position:relative;
+                        a.nav-click {width:30px; height:60px; display:block; background-color:#999999; position:absolute; background-image:url(/Assets/images/nav-sprite.png); background-repeat:no-repeat;
+                            &.prev {left:0; top:0;}
+                            &.next {right:0; top:0; background-position:-30px 0;}
+                        }
+                        &:before, &:after {@include clearfix();}
+                        nav {width:540px; height:60px; overflow:hidden;
+                            ul {margin:0; padding:0; display:block; width:810px;
+                                &:before, &:after {@include clearfix();}
+                                li {display:table; width:135px; float:left; border-right:$border-default; cursor:pointer;
+                                    span {display:block; color:#626262; background:#eaeaea; font-size:14px; font-weight:bold; height:60px; padding:0 20px; display:table-cell; vertical-align:middle;}
+                                    &.active {border-right-color:#fff;
+                                        span {color:#21afe5; background:#fff;}
+                                    }
+                                    &:last-child {border-right:none;}
+                                }
+                            }
+                        }
+                    }
+                    .tab-content {padding:0 15px; padding-bottom:15px;
+                        &>div {display:none;
+                            &.active {display:block;}
+                            h3 {color:$color-main-blue; font-size:14px; font-weight:bold;}
+                            ul {margin:0; padding:0; list-style:none;
+                                li {
+                                    a {color:#2f2f2f;
+                                        &:hover {text-decoration:none;
+                                            &:before {content:url(/Assets/images/recommend-selector.png); position:absolute; left:0px;}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .location-search {padding:10px; height:480px; overflow:auto; display:none;
                     .autocomplete-no-result {}
                     .autocomplete-result {
                         ul {margin:0; padding:0;
@@ -179,7 +217,7 @@ file : /Assets/travorama20/css/_page_index.scss
             }
         }
         // slider
-        .slider {position:absolute; width:100%; height:100%; top:0; left:0; background:url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom; background-size:cover;
+        .slider {position:absolute; width:100%; height:100%; top:0; left:0; background:url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom no-repeat; background-size:cover;
             .slider-text {font-size:17px; color:#fff; font-weight:600; text-align:center; height:250px; top:50%; margin-top:-200px; position:relative;}
         }
 
@@ -188,7 +226,7 @@ file : /Assets/travorama20/css/_page_index.scss
     //*****
     // section reason
     .section-reason {
-        &>img {max-width:100%; height:auto;}
+        &>.container>img {max-width:100%; height:auto;}
         &:before, &:after {@include clearfix();}
         .reason {color:#fff; float:left; width:25%; padding:30px; height:170px;
             h3 {margin:0; position:relative; margin-bottom:15px; letter-spacing:0; line-height:120%;
@@ -249,21 +287,21 @@ file : /Assets/travorama20/css/_page_index.scss
 }
 
 // datepicker
-.date-picker {padding:30px;
+.date-picker {padding:15px;
     .ui-datepicker {width:100% !important; position:relative;
         .ui-datepicker-group {width:100%; padding:15px;
             & + .ui-datepicker-group {border-top:$border-default;}
-            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:18px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
             .ui-datepicker-calendar {width:100%; color:#fff;
                 thead {
                     th {text-align:center; padding-bottom:10px;
-                        span {color:#fff !important;}
+                        span {color:#fff !important; font-size:12px;}
                     }
                 }
                 tbody {
                     tr {margin-bottom:5px;
                         td {text-align:center;
-                            span, a {color:#fff; display:inline-block; width:35px; height:35px; font-size:17px; padding-top:4px;}
+                            span, a {color:#fff; display:inline-block; font-size:12px; padding-top:4px; width:25px; height:25px;}
                             a:hover {background:#fff; color:#252525; text-decoration:none;}
                         }
                     }
@@ -276,8 +314,8 @@ file : /Assets/travorama20/css/_page_index.scss
                     a:hover {background:#fed83e;}
                 }
             }
-            .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue;}
-            .ui-datepicker-next {@extend .ui-datepicker-prev; left:auto; right:15px;}
+            .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue; font-size:12px;}
+            .ui-datepicker-next {@extend .ui-datepicker-prev; left:auto; right:15px; font-size:12px;}
         }
     }
 }
