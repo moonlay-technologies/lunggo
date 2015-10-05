@@ -7,7 +7,7 @@
           "SequenceNo": 0,
           "TotalFare": 3068300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -39,7 +39,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T13:25:00Z",
                       "ArrivalTime": "2015-10-25T16:25:00Z",
@@ -121,7 +121,7 @@
           "SequenceNo": 1,
           "TotalFare": 3478100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -153,7 +153,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:50:00Z",
                       "ArrivalTime": "2015-10-25T14:50:00Z",
@@ -235,7 +235,7 @@
           "SequenceNo": 2,
           "TotalFare": 3903400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -267,7 +267,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T01:30:00Z",
                       "ArrivalTime": "2015-10-25T04:30:00Z",
@@ -349,7 +349,7 @@
           "SequenceNo": 3,
           "TotalFare": 4075500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -381,7 +381,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T23:25:00Z",
                       "ArrivalTime": "2015-10-25T02:25:00Z",
@@ -463,7 +463,7 @@
           "SequenceNo": 4,
           "TotalFare": 6284900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 0,
                 "Transits": [],
@@ -482,7 +482,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:50:00Z",
@@ -534,7 +534,7 @@
           "SequenceNo": 5,
           "TotalFare": 6950500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -561,7 +561,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:55:00Z",
                       "ArrivalTime": "2015-10-24T23:05:00Z",
@@ -643,7 +643,7 @@
           "SequenceNo": 6,
           "TotalFare": 6950500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -670,7 +670,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T06:00:00Z",
                       "ArrivalTime": "2015-10-25T11:10:00Z",
@@ -752,7 +752,7 @@
           "SequenceNo": 7,
           "TotalFare": 7168100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -779,7 +779,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:55:00Z",
                       "ArrivalTime": "2015-10-24T23:05:00Z",
@@ -861,7 +861,7 @@
           "SequenceNo": 8,
           "TotalFare": 7270600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -888,7 +888,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -970,7 +970,7 @@
           "SequenceNo": 9,
           "TotalFare": 7270600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -997,7 +997,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -1079,7 +1079,7 @@
           "SequenceNo": 10,
           "TotalFare": 7401500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1106,7 +1106,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -1188,7 +1188,7 @@
           "SequenceNo": 11,
           "TotalFare": 7401500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1215,7 +1215,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -1297,7 +1297,7 @@
           "SequenceNo": 12,
           "TotalFare": 7539800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1324,7 +1324,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -1406,7 +1406,7 @@
           "SequenceNo": 13,
           "TotalFare": 7539800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1433,7 +1433,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T00:50:00Z",
                       "ArrivalTime": "2015-10-25T09:55:00Z",
@@ -1515,7 +1515,7 @@
           "SequenceNo": 14,
           "TotalFare": 7768400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1542,7 +1542,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-25T23:55:00Z",
@@ -1624,7 +1624,7 @@
           "SequenceNo": 15,
           "TotalFare": 7768400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1651,7 +1651,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -1733,7 +1733,7 @@
           "SequenceNo": 16,
           "TotalFare": 7768400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1760,7 +1760,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -1842,7 +1842,7 @@
           "SequenceNo": 17,
           "TotalFare": 7768400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1869,7 +1869,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-25T23:55:00Z",
@@ -1951,7 +1951,7 @@
           "SequenceNo": 18,
           "TotalFare": 7768400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1978,7 +1978,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-25T23:55:00Z",
@@ -2060,7 +2060,7 @@
           "SequenceNo": 19,
           "TotalFare": 7897700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -2099,7 +2099,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:10:00Z",
                       "ArrivalTime": "2015-10-25T10:25:00Z",
@@ -2211,7 +2211,7 @@
           "SequenceNo": 20,
           "TotalFare": 7973800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2238,7 +2238,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T22:15:00Z",
                       "ArrivalTime": "2015-10-25T04:05:00Z",
@@ -2320,7 +2320,7 @@
           "SequenceNo": 21,
           "TotalFare": 8021700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2347,7 +2347,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T06:05:00Z",
                       "ArrivalTime": "2015-10-25T09:35:00Z",
@@ -2429,7 +2429,7 @@
           "SequenceNo": 22,
           "TotalFare": 8294600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2456,7 +2456,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T01:30:00Z",
                       "ArrivalTime": "2015-10-25T07:30:00Z",
@@ -2538,7 +2538,7 @@
           "SequenceNo": 23,
           "TotalFare": 8294600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2565,7 +2565,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:10:00Z",
                       "ArrivalTime": "2015-10-24T22:55:00Z",
@@ -2647,7 +2647,7 @@
           "SequenceNo": 24,
           "TotalFare": 8294600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2674,7 +2674,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T22:15:00Z",
                       "ArrivalTime": "2015-10-25T04:05:00Z",
@@ -2756,7 +2756,7 @@
           "SequenceNo": 25,
           "TotalFare": 8294600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2783,7 +2783,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T01:30:00Z",
                       "ArrivalTime": "2015-10-25T07:30:00Z",
@@ -2865,7 +2865,7 @@
           "SequenceNo": 26,
           "TotalFare": 9200600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -2904,7 +2904,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:30:00Z",
                       "ArrivalTime": "2015-10-25T14:30:00Z",
@@ -3016,7 +3016,7 @@
           "SequenceNo": 27,
           "TotalFare": 9298400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -3055,7 +3055,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -3167,7 +3167,7 @@
           "SequenceNo": 28,
           "TotalFare": 9298400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -3206,7 +3206,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -3318,7 +3318,7 @@
           "SequenceNo": 29,
           "TotalFare": 9410000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -3352,7 +3352,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T23:35:00Z",
                       "ArrivalTime": "2015-10-25T07:45:00Z",
@@ -3441,7 +3441,7 @@
           "SequenceNo": 30,
           "TotalFare": 9602200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3468,7 +3468,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:20:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -3550,7 +3550,7 @@
           "SequenceNo": 31,
           "TotalFare": 9794000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -3589,7 +3589,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T13:00:00Z",
                       "ArrivalTime": "2015-10-25T15:55:00Z",
@@ -3701,7 +3701,7 @@
           "SequenceNo": 32,
           "TotalFare": 9794000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -3740,7 +3740,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:30:00Z",
                       "ArrivalTime": "2015-10-25T14:30:00Z",
@@ -3852,7 +3852,7 @@
           "SequenceNo": 33,
           "TotalFare": 9901700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3884,7 +3884,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-26T00:05:00Z",
@@ -3966,7 +3966,7 @@
           "SequenceNo": 34,
           "TotalFare": 9954000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3993,7 +3993,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:40:00Z",
                       "ArrivalTime": "2015-10-25T13:55:00Z",
@@ -4075,7 +4075,7 @@
           "SequenceNo": 35,
           "TotalFare": 10128500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4107,7 +4107,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-26T00:05:00Z",
@@ -4189,7 +4189,7 @@
           "SequenceNo": 36,
           "TotalFare": 10128500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4221,7 +4221,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-26T00:05:00Z",
@@ -4303,7 +4303,7 @@
           "SequenceNo": 37,
           "TotalFare": 10142000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4335,7 +4335,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-26T00:05:00Z",
@@ -4417,7 +4417,7 @@
           "SequenceNo": 38,
           "TotalFare": 10510200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -4456,7 +4456,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -4568,7 +4568,7 @@
           "SequenceNo": 39,
           "TotalFare": 10510200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -4607,7 +4607,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:05:00Z",
                       "ArrivalTime": "2015-10-25T08:05:00Z",
@@ -4719,7 +4719,7 @@
           "SequenceNo": 40,
           "TotalFare": 10632700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -4758,7 +4758,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:15:00Z",
                       "ArrivalTime": "2015-10-25T14:05:00Z",
@@ -4870,7 +4870,7 @@
           "SequenceNo": 41,
           "TotalFare": 10632700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -4909,7 +4909,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T12:30:00Z",
                       "ArrivalTime": "2015-10-25T15:20:00Z",
@@ -5021,7 +5021,7 @@
           "SequenceNo": 42,
           "TotalFare": 10632700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -5060,7 +5060,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:15:00Z",
                       "ArrivalTime": "2015-10-25T14:05:00Z",
@@ -5172,7 +5172,7 @@
           "SequenceNo": 43,
           "TotalFare": 10935900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -5211,7 +5211,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:00:00Z",
                       "ArrivalTime": "2015-10-25T18:00:00Z",
@@ -5323,7 +5323,7 @@
           "SequenceNo": 44,
           "TotalFare": 10935900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -5362,7 +5362,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T14:15:00Z",
                       "ArrivalTime": "2015-10-25T17:15:00Z",
@@ -5474,7 +5474,7 @@
           "SequenceNo": 45,
           "TotalFare": 11232400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5506,7 +5506,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -5588,7 +5588,7 @@
           "SequenceNo": 46,
           "TotalFare": 11463800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5620,7 +5620,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -5702,7 +5702,7 @@
           "SequenceNo": 47,
           "TotalFare": 11463800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5734,7 +5734,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -5816,7 +5816,7 @@
           "SequenceNo": 48,
           "TotalFare": 11475900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -5855,7 +5855,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T13:00:00Z",
                       "ArrivalTime": "2015-10-25T15:55:00Z",
@@ -5967,7 +5967,7 @@
           "SequenceNo": 49,
           "TotalFare": 11589000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5999,7 +5999,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:20:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -6081,7 +6081,7 @@
           "SequenceNo": 50,
           "TotalFare": 11732700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6108,7 +6108,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -6190,7 +6190,7 @@
           "SequenceNo": 51,
           "TotalFare": 11732700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6217,7 +6217,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:05:00Z",
                       "ArrivalTime": "2015-10-25T23:55:00Z",
@@ -6299,7 +6299,7 @@
           "SequenceNo": 52,
           "TotalFare": 11750500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 0,
                 "Transits": [],
@@ -6318,7 +6318,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T14:35:00Z",
                       "ArrivalTime": "2015-10-26T00:00:00Z",
@@ -6370,7 +6370,7 @@
           "SequenceNo": 53,
           "TotalFare": 11858100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -6404,7 +6404,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T06:45:00Z",
                       "ArrivalTime": "2015-10-25T09:55:00Z",
@@ -6516,7 +6516,7 @@
           "SequenceNo": 54,
           "TotalFare": 12636600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6543,7 +6543,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:10:00Z",
                       "ArrivalTime": "2015-10-24T22:55:00Z",
@@ -6625,7 +6625,7 @@
           "SequenceNo": 55,
           "TotalFare": 12833100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6657,7 +6657,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:45:00Z",
                       "ArrivalTime": "2015-10-25T10:45:00Z",
@@ -6739,7 +6739,7 @@
           "SequenceNo": 56,
           "TotalFare": 12833100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6771,7 +6771,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T09:30:00Z",
                       "ArrivalTime": "2015-10-25T12:20:00Z",
@@ -6853,7 +6853,7 @@
           "SequenceNo": 57,
           "TotalFare": 12833100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6885,7 +6885,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:15:00Z",
                       "ArrivalTime": "2015-10-25T14:05:00Z",
@@ -6967,7 +6967,7 @@
           "SequenceNo": 58,
           "TotalFare": 12911300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6999,7 +6999,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T22:15:00Z",
                       "ArrivalTime": "2015-10-25T04:05:00Z",
@@ -7081,7 +7081,7 @@
           "SequenceNo": 59,
           "TotalFare": 13053600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7113,7 +7113,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T23:35:00Z",
                       "ArrivalTime": "2015-10-25T05:10:00Z",
@@ -7195,7 +7195,7 @@
           "SequenceNo": 60,
           "TotalFare": 13222000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7227,7 +7227,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -7309,7 +7309,7 @@
           "SequenceNo": 61,
           "TotalFare": 13257800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -7348,7 +7348,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -7460,7 +7460,7 @@
           "SequenceNo": 62,
           "TotalFare": 13257800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -7499,7 +7499,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -7611,7 +7611,7 @@
           "SequenceNo": 63,
           "TotalFare": 13422400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7643,7 +7643,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -7725,7 +7725,7 @@
           "SequenceNo": 64,
           "TotalFare": 13450600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7752,7 +7752,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-26T01:55:00Z",
@@ -7834,7 +7834,7 @@
           "SequenceNo": 65,
           "TotalFare": 13776000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7866,7 +7866,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:45:00Z",
                       "ArrivalTime": "2015-10-25T22:45:00Z",
@@ -7948,7 +7948,7 @@
           "SequenceNo": 66,
           "TotalFare": 14012600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7980,7 +7980,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T03:10:00Z",
                       "ArrivalTime": "2015-10-25T09:10:00Z",
@@ -8062,7 +8062,7 @@
           "SequenceNo": 67,
           "TotalFare": 14120200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8094,7 +8094,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:20:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -8176,7 +8176,7 @@
           "SequenceNo": 68,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8203,7 +8203,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:10:00Z",
                       "ArrivalTime": "2015-10-25T09:55:00Z",
@@ -8285,7 +8285,7 @@
           "SequenceNo": 69,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8312,7 +8312,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T02:20:00Z",
                       "ArrivalTime": "2015-10-25T05:05:00Z",
@@ -8394,7 +8394,7 @@
           "SequenceNo": 70,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8421,7 +8421,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T10:00:00Z",
                       "ArrivalTime": "2015-10-25T12:45:00Z",
@@ -8503,7 +8503,7 @@
           "SequenceNo": 71,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8530,7 +8530,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T11:00:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -8612,7 +8612,7 @@
           "SequenceNo": 72,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8639,7 +8639,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T12:00:00Z",
                       "ArrivalTime": "2015-10-25T14:45:00Z",
@@ -8721,7 +8721,7 @@
           "SequenceNo": 73,
           "TotalFare": 15064800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8748,7 +8748,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T01:25:00Z",
                       "ArrivalTime": "2015-10-25T04:10:00Z",
@@ -8830,7 +8830,7 @@
           "SequenceNo": 74,
           "TotalFare": 15999300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -8869,7 +8869,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -8981,7 +8981,7 @@
           "SequenceNo": 75,
           "TotalFare": 15999300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -9020,7 +9020,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T16:15:00Z",
                       "ArrivalTime": "2015-10-26T01:30:00Z",
@@ -9132,7 +9132,7 @@
           "SequenceNo": 76,
           "TotalFare": 16266500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9164,7 +9164,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T00:50:00Z",
                       "ArrivalTime": "2015-10-25T09:55:00Z",
@@ -9246,7 +9246,7 @@
           "SequenceNo": 77,
           "TotalFare": 16381700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9278,7 +9278,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:20:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -9360,7 +9360,7 @@
           "SequenceNo": 78,
           "TotalFare": 16428200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9392,7 +9392,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T23:10:00Z",
                       "ArrivalTime": "2015-10-25T02:00:00Z",
@@ -9474,7 +9474,7 @@
           "SequenceNo": 79,
           "TotalFare": 16518000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9506,7 +9506,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T22:25:00Z",
                       "ArrivalTime": "2015-10-25T01:10:00Z",
@@ -9588,7 +9588,7 @@
           "SequenceNo": 80,
           "TotalFare": 16543500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9620,7 +9620,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T07:20:00Z",
                       "ArrivalTime": "2015-10-25T13:45:00Z",
@@ -9702,7 +9702,7 @@
           "SequenceNo": 81,
           "TotalFare": 17391100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9729,7 +9729,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T22:25:00Z",
                       "ArrivalTime": "2015-10-25T01:10:00Z",
@@ -9811,7 +9811,7 @@
           "SequenceNo": 82,
           "TotalFare": 17993700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9843,7 +9843,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:55:00Z",
                       "ArrivalTime": "2015-10-24T23:05:00Z",
@@ -9925,7 +9925,7 @@
           "SequenceNo": 83,
           "TotalFare": 18997500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9957,7 +9957,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-25T15:45:00Z",
                       "ArrivalTime": "2015-10-25T23:50:00Z",
@@ -10039,7 +10039,7 @@
           "SequenceNo": 84,
           "TotalFare": 31541800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10066,7 +10066,7 @@
                 "OriginCity": "Jakarta",
                 "OriginAirportName": "Soekarno-Hatta Intl.",
                 "DepartureDate": "2015-10-24T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-24T17:20:00Z",
                       "ArrivalTime": "2015-10-24T21:40:00Z",
@@ -10155,7 +10155,7 @@
               "OriginCity": null,
               "OriginAirportName": null,
               "DepartureDate": "2015-10-25T00:00:00",
-              "FlightSegments": null
+              "Segments": null
           }
         ],
         "AdultCount": 1,

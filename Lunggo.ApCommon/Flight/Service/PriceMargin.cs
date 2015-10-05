@@ -166,8 +166,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool DepartureTimeMatches(MarginRule rule, FlightItinerary fare)
         {
-            var dates = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.Date).ToList();
-            var times = fare.FlightTrips.First().FlightSegments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
+            var dates = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.Date).ToList();
+            var times = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
             var dateSpanOk = !rule.DepartureDateSpans.Any() || dates.All(date => rule.DepartureDateSpans.Any(dateSpan => dateSpan.Includes(date)));
             var dayOk = !rule.DepartureDays.Any() || dates.All(date => rule.DepartureDays.Contains(date.DayOfWeek));
             var dateOk = !rule.DepartureDates.Any() || dates.All(date => rule.DepartureDates.Contains(date));
@@ -181,8 +181,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 return true;
             else
             {
-                var dates = fare.FlightTrips.Last().FlightSegments.Select(segment => segment.DepartureTime.Date).ToList();
-                var times = fare.FlightTrips.Last().FlightSegments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
+                var dates = fare.Trips.Last().Segments.Select(segment => segment.DepartureTime.Date).ToList();
+                var times = fare.Trips.Last().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
                 var dateSpanOk = !rule.ReturnDateSpans.Any() || dates.All(date => rule.ReturnDateSpans.Any(dateSpan => dateSpan.Includes(date)));
                 var dayOk = !rule.ReturnDays.Any() || dates.All(date => rule.ReturnDays.Contains(date.DayOfWeek));
                 var dateOk = !rule.ReturnDates.Any() || dates.All(date => rule.ReturnDates.Contains(date));
@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool AirlineMatches(MarginRule rule, FlightItinerary fare)
         {
-            var airlines = fare.FlightTrips.SelectMany(trip => trip.FlightSegments)
+            var airlines = fare.Trips.SelectMany(trip => trip.Segments)
                 .Select(segment => segment.AirlineCode);
 
             if (rule.Airlines.Any())
@@ -227,15 +227,15 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static bool AirportPairMatches(MarginRule rule, FlightItinerary fare)
         {
-            var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule
+            var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
                 Origin = trip.OriginAirport,
                 Destination = trip.DestinationAirport
             });
             var returnPair = new AirportPairRule
             {
-                Origin = fare.FlightTrips.First().OriginAirport,
-                Destination = fare.FlightTrips.First().DestinationAirport
+                Origin = fare.Trips.First().OriginAirport,
+                Destination = fare.Trips.First().DestinationAirport
             };
 
             if (rule.AirportPairs.Any())
@@ -256,15 +256,15 @@ namespace Lunggo.ApCommon.Flight.Service
         private static bool CityPairMatches(MarginRule rule, FlightItinerary fare)
         {
             var dict = DictionaryService.GetInstance();
-            var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule
+            var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
                 Origin = dict.GetAirportCityCode(trip.OriginAirport),
                 Destination = dict.GetAirportCityCode(trip.DestinationAirport)
             });
             var returnPair = new AirportPairRule
             {
-                Origin = dict.GetAirportCityCode(fare.FlightTrips.First().OriginAirport),
-                Destination = dict.GetAirportCityCode(fare.FlightTrips.First().DestinationAirport)
+                Origin = dict.GetAirportCityCode(fare.Trips.First().OriginAirport),
+                Destination = dict.GetAirportCityCode(fare.Trips.First().DestinationAirport)
             };
 
             if (rule.CityPairs.Any())
@@ -285,15 +285,15 @@ namespace Lunggo.ApCommon.Flight.Service
         private static bool CountryPairMatches(MarginRule rule, FlightItinerary fare)
         {
             var dict = DictionaryService.GetInstance();
-            var farePairs = fare.FlightTrips.Select(trip => new AirportPairRule
+            var farePairs = fare.Trips.Select(trip => new AirportPairRule
             {
                 Origin = dict.GetAirportCountryCode(trip.OriginAirport),
                 Destination = dict.GetAirportCountryCode(trip.DestinationAirport)
             });
             var returnPair = new AirportPairRule
             {
-                Origin = dict.GetAirportCountryCode(fare.FlightTrips.First().OriginAirport),
-                Destination = dict.GetAirportCountryCode(fare.FlightTrips.First().DestinationAirport)
+                Origin = dict.GetAirportCountryCode(fare.Trips.First().OriginAirport),
+                Destination = dict.GetAirportCountryCode(fare.Trips.First().DestinationAirport)
             };
 
             if (rule.CountryPairs.Any())

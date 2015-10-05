@@ -78,9 +78,9 @@ namespace Lunggo.ApCommon.Mystifly
             result.BookingId = FlightService.IdUtil.ConstructIntegratedId(response.TravelItinerary.UniqueID, FlightSupplier.Mystifly, fareType);
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
-            result.FlightItineraries = new FlightItinerary
+            result.Itineraries = new FlightItinerary
             {
-                FlightTrips = MapDetailsFlightTrips(response, conditions),
+                Trips = MapDetailsFlightTrips(response, conditions),
             };
             result.Passengers = MapDetailsPassengerInfo(response);
             result.TotalFare =
@@ -105,11 +105,11 @@ namespace Lunggo.ApCommon.Mystifly
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
                         DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>(),
+                        Segments = new List<FlightSegment>(),
                     };
                     do
                     {
-                        flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segments[i]));
+                        flightTrip.Segments.Add(MapFlightSegmentDetails(segments[i]));
                         i++;
                     } while (i < segments.Count() &&
                              segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
@@ -130,9 +130,9 @@ namespace Lunggo.ApCommon.Mystifly
                         OriginAirport = segment.DepartureAirportLocationCode,
                         DestinationAirport = segment.ArrivalAirportLocationCode,
                         DepartureDate = segment.DepartureDateTime.Date.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>(),
+                        Segments = new List<FlightSegment>(),
                     };
-                    flightTrip.FlightSegments.Add(MapFlightSegmentDetails(segment));
+                    flightTrip.Segments.Add(MapFlightSegmentDetails(segment));
                     flightTrips.Add(flightTrip);
                 }
                 return flightTrips;

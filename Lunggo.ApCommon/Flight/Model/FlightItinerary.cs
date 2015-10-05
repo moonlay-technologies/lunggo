@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int SequenceNo { get; set; }
         public decimal TotalFare { get; set; }
         public string Currency { get; set; }
-        public List<FlightTripForDisplay> FlightTrips { get; set; }
+        public List<FlightTripForDisplay> Trips { get; set; }
     }
 
     public class FlightItinerary : FlightItineraryBase
@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FareId { get; set; }
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }
-        public List<FlightTrip> FlightTrips { get; set; }
+        public List<FlightTrip> Trips { get; set; }
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }
         public decimal SupplierRate { get; set; }

@@ -31,8 +31,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 RequirePassport = itins.Any(i => i.RequirePassport),
                 RequireSameCheckIn = itins.Any(i => i.RequireSameCheckIn),
                 LocalPrice = itins.Sum(i => i.LocalPrice),
-                FlightTrips =
-                    itins.SelectMany(i => i.FlightTrips).OrderBy(t => t.FlightSegments[0].DepartureTime).ToList()
+                Trips =
+                    itins.SelectMany(i => i.Trips).OrderBy(t => t.Segments[0].DepartureTime).ToList()
             };
             return itin;
         }

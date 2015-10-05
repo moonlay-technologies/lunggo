@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    FlightTrips = MapTrips(itinerary.FlightTrips)
+                    Trips = MapTrips(itinerary.Trips)
                 };
             }
             else
@@ -71,7 +71,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var dict = DictionaryService.GetInstance();
             return trips.Select(trip => new FlightTripForDisplay
             {
-                FlightSegments = MapSegments(trip.FlightSegments),
+                Segments = MapSegments(trip.Segments),
                 OriginAirport = trip.OriginAirport,
                 OriginCity = dict.GetAirportCity(trip.OriginAirport),
                 OriginAirportName = dict.GetAirportName(trip.OriginAirport),
@@ -119,7 +119,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static TimeSpan CalculateTotalDuration(FlightTrip trip)
         {
-            var segments = trip.FlightSegments;
+            var segments = trip.Segments;
             var totalFlightDuration = new TimeSpan();
             var totalTransitDuration = new TimeSpan();
             for (var i = 0; i < segments.Count; i++)
@@ -134,7 +134,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static List<Airline> GetAirlineList(FlightTrip trip)
         {
             var dict = DictionaryService.GetInstance();
-            var segments = trip.FlightSegments;
+            var segments = trip.Segments;
             var airlineCodes = segments.Select(segment => segment.AirlineCode);
             var airlines = airlineCodes.Distinct().Select(code => new Airline
             {
@@ -147,7 +147,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static List<Transit> MapTransitDetails(FlightTrip trip)
         {
-            var segments = trip.FlightSegments;
+            var segments = trip.Segments;
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
@@ -179,7 +179,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private static int CalculateTotalTransit(FlightTrip trip)
         {
-            var segments = trip.FlightSegments;
+            var segments = trip.Segments;
             var transit = segments.Count() - 1;
             var stop = segments.Sum(segment => segment.StopQuantity);
             return transit + stop;

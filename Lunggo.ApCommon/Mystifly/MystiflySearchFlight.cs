@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Mystifly
                 ExtensionData = null
             };
 
-            var result = new SearchFlightResult { FlightItineraries = new List<FlightItinerary>() };
+            var result = new SearchFlightResult { Itineraries = new List<FlightItinerary>() };
             var retry = 0;
             var done = false;
             while (!done)
@@ -87,8 +87,8 @@ namespace Lunggo.ApCommon.Mystifly
         private static SearchFlightResult MapResult(AirLowFareSearchRS response, SearchFlightConditions conditions)
         {
             return response.PricedItineraries.Any()
-                ? new SearchFlightResult {FlightItineraries = MapFlightItineraries(response, conditions)}
-                : new SearchFlightResult {FlightItineraries = new List<FlightItinerary>()};
+                ? new SearchFlightResult {Itineraries = MapFlightItineraries(response, conditions)}
+                : new SearchFlightResult {Itineraries = new List<FlightItinerary>()};
         }
 
         private static OriginDestinationInformation[] MapOriginDestinationInformations(SearchFlightConditions conditions)
@@ -213,8 +213,8 @@ namespace Lunggo.ApCommon.Mystifly
             {
                 var flightService = FlightService.GetInstance();
                 var flightItinerary = new FlightItinerary();
-                flightItinerary.FlightTrips = MapFlightTrips(pricedItinerary, conditions);
-                if (flightItinerary.FlightTrips == null)
+                flightItinerary.Trips = MapFlightTrips(pricedItinerary, conditions);
+                if (flightItinerary.Trips == null)
                     return null;
                 flightItinerary.TripType = MapTripType(pricedItinerary.DirectionInd.ToString());
                 flightItinerary.SupplierCurrency = "USD";
@@ -355,8 +355,8 @@ namespace Lunggo.ApCommon.Mystifly
                 }
             }
             var dict = DictionaryService.GetInstance();
-            var flightTripOriginAirports = flightItinerary.FlightTrips.Select(trip => trip.OriginAirport);
-            var flightTripDestinationAirports = flightItinerary.FlightTrips.Select(trip => trip.DestinationAirport);
+            var flightTripOriginAirports = flightItinerary.Trips.Select(trip => trip.OriginAirport);
+            var flightTripDestinationAirports = flightItinerary.Trips.Select(trip => trip.DestinationAirport);
             var flightTripAirports = new List<string>();
             flightTripAirports.AddRange(flightTripOriginAirports);
             flightTripAirports.AddRange(flightTripDestinationAirports);
@@ -386,11 +386,11 @@ namespace Lunggo.ApCommon.Mystifly
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
                         DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
-                        FlightSegments = new List<FlightSegment>()
+                        Segments = new List<FlightSegment>()
                     };
                     do
                     {
-                        fareTrip.FlightSegments.Add(MapFlightSegment(segments[i]));
+                        fareTrip.Segments.Add(MapFlightSegment(segments[i]));
                         i++;
                     } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
                              dict.GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=

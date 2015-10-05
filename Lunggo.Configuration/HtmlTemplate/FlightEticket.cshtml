@@ -24,9 +24,9 @@
 </head>
 <body class="eticket">
 
-    @for (var i = 0; i < Model.Itinerary.FlightTrips.Count; i++)
+    @for (var i = 0; i < Model.Itinerary.Trips.Count; i++)
     {
-        var trip = Model.Itinerary.FlightTrips[i];
+        var trip = Model.Itinerary.Trips[i];
         <div class="page" style="page-break-after: always">
             <header class="page-header">
                 <div class="row">
@@ -57,9 +57,9 @@
                         <h2 class="flight-title"><span>PENERBANGAN KEMBALI</span></h2>
                     }
                     <div class="flight-list">
-                        @foreach (var segment in trip.FlightSegments)
+                        @foreach (var segment in trip.Segments)
                         {
-                            if (segment != trip.FlightSegments.First())
+                            if (segment != trip.Segments.First())
                             {
                                 var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
                                 <div class="transit">
@@ -100,7 +100,7 @@
                                 </div><!-- .flight-detail -->
                             </div>
                         <!-- .flight -->
-                            if (segment != trip.FlightSegments.Last())
+                            if (segment != trip.Segments.Last())
                             {
                                 prevSegment = segment;
                             }

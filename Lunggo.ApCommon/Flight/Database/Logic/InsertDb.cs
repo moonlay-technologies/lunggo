@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         };
                         FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
-                        foreach (var trip in itin.FlightTrips)
+                        foreach (var trip in itin.Trips)
                         {
                             var tripId = FlightTripIdSequence.GetInstance().GetNext();
                             var tripRecord = new FlightTripTableRecord
@@ -114,7 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             };
                             FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
-                            var segments = trip.FlightSegments;
+                            var segments = trip.Segments;
                             foreach (var segment in segments)
                             {
                                 var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var itineraryId =
                         SingletonBase<GetItineraryIdQuery>.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
-                    foreach (var trip in details.FlightItineraries.FlightTrips)
+                    foreach (var trip in details.Itineraries.Trips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord
@@ -210,7 +210,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         };
                         FlightTripTableRepo.GetInstance().Insert(conn, tripRecord);
 
-                        var segments = trip.FlightSegments;
+                        var segments = trip.Segments;
                         foreach (var segment in segments)
                         {
                             var segmentId = FlightSegmentIdSequence.GetInstance().GetNext();

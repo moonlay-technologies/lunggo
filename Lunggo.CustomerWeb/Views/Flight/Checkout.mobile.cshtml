@@ -266,12 +266,12 @@
                     <section class="flight-detail">
                         <h2 class="section-title">Flight Detail</h2>
                         <div class="section-content container">
-                            @foreach (var trip in Model.Itinerary.FlightTrips)
+                            @foreach (var trip in Model.Itinerary.Trips)
                             {
                                 <div class="flight onward">
                                     <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
                                     <div class="trip">
-                                        <h5 class="airline-name"><img ng-src="@trip.Segments.First().AirlineLogoUrl" alt="@Model.Itinerary.FlightTrips[0].Segments[0].AirlineName" src="@Model.Itinerary.FlightTrips[0].Segments[0].AirlineLogoUrl"> @Model.Itinerary.FlightTrips[0].Segments[0].AirlineName</h5>
+                                        <h5 class="airline-name"><img ng-src="@trip.Segments.First().AirlineLogoUrl" alt="@Model.Itinerary.Trips[0].Segments[0].AirlineName" src="@Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl"> @Model.Itinerary.Trips[0].Segments[0].AirlineName</h5>
                                         <div class="trip-wrapper">
                                             <div class="trip-origin">
                                                 <span>Departure</span>

@@ -52,10 +52,10 @@
             
             <div class="col-sm-4">
                 <div class="history-right">
-                    @foreach (var trip in Model.Itinerary.FlightTrips)
+                    @foreach (var trip in Model.Itinerary.Trips)
                     {
                         <div class="flight-detail">
-                            @if (trip == Model.Itinerary.FlightTrips.First())
+                            @if (trip == Model.Itinerary.Trips.First())
                             {
                                 <h4 class="text-center"><b>DEPARTURE</b> FLIGHT</h4>
                             }

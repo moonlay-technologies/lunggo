@@ -9,6 +9,6 @@ namespace Lunggo.ApCommon.Flight.Model
     internal class SearchFlightResult : ResultBase
     {
         internal string SearchId { get; set; }
-        internal List<FlightItinerary> FlightItineraries { get; set; }
+        internal List<FlightItinerary> Itineraries { get; set; }
     }
 }

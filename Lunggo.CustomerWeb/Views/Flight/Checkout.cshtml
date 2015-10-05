@@ -321,7 +321,7 @@
                         <div class="col-sm-4">
                             <section class="order-detail">
                                 <h2><b>@Html.I18NString("CW00110")</b> @Html.I18NString("CW00111")</h2>
-                                @foreach (var trip in Model.Itinerary.FlightTrips)
+                                @foreach (var trip in Model.Itinerary.Trips)
                                 {
                                     <section class="flight-detail">
                                         <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>

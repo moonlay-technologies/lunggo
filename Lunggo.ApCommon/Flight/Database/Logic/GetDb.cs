@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
-                                    FlightTrips = new List<FlightTrip>()
+                                    Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                                 reservation.Itineraries.Add(itinerary);
@@ -111,10 +111,10 @@ namespace Lunggo.ApCommon.Flight.Service
                                     DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                     DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                     DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                    FlightSegments = new List<FlightSegment>()
+                                    Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                                itinerary.FlightTrips.Add(trip);
+                                itinerary.Trips.Add(trip);
                             }
                             FlightSegment segment;
                             if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
@@ -141,7 +141,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Baggage = segmentRecord.Baggage
                                 };
                                 segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                                trip.FlightSegments.Add(segment);
+                                trip.Segments.Add(segment);
                             }
                             FlightPassenger passenger;
                             if (
@@ -231,7 +231,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
-                                    FlightTrips = new List<FlightTrip>()
+                                    Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                                 reservation.Itineraries.Add(itinerary);
@@ -248,10 +248,10 @@ namespace Lunggo.ApCommon.Flight.Service
                                     DestinationAirportName = dict.GetAirportName(tripRecord.DestinationAirportCd),
                                     DestinationCity = dict.GetAirportCity(tripRecord.DestinationAirportCd),
                                     DepartureDate = tripRecord.DepartureDate.GetValueOrDefault(),
-                                    FlightSegments = new List<FlightSegment>()
+                                    Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                                itinerary.FlightTrips.Add(trip);
+                                itinerary.Trips.Add(trip);
                             }
                             FlightSegment segment;
                             if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
@@ -279,7 +279,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Pnr = segmentRecord.Pnr
                                 };
                                 segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
-                                trip.FlightSegments.Add(segment);
+                                trip.Segments.Add(segment);
                             }
                             FlightPassenger passenger;
                             if (

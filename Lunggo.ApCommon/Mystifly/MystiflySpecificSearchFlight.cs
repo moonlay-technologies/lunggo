@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Mystifly
         {
             var request = new IntelliBestBuyRQ
             {
-                IntelliFareInformations = MapItineraryInformations(conditions.FlightSegments),
+                IntelliFareInformations = MapItineraryInformations(conditions.Segments),
                 CabinPreference = MapCabinType(conditions.CabinClass),
                 BookingClassPreference = BookingClassPreference.Any,
                 PassengerTypeQuantities = MapPassengerTypes(conditions),
@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Mystifly
                         result.Errors = null;
                         result.ErrorMessages = null;
                         result.IsSuccess = true;
-                        result.FlightItineraries = null;
+                        result.Itineraries = null;
                     }
                     else
                     {
