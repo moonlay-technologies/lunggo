@@ -30,7 +30,8 @@ namespace Lunggo.BackendWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AppInitializer.Init();
-            FlightService.GetInstance().SearchFlightInternal(new SearchFlightConditions());
+            FlightService.GetInstance().BookFlightInternal(new FlightBookingInfo {FareId = "AIRAPUBsmdka"});
+            //FlightService.GetInstance().SearchFlightInternal(new SearchFlightConditions());
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             bookInfo.FareId =
-                "CGK.SIN.20.10.2015.3.2.1.QZ.262.0~Z~~Z01H00~AAB1~~10~X|QZ~ 262~ ~~CGK~10/20/2015 07:00~SIN~10/20/2015 09:50~@10/20/2015 00:00:00";
+                "CGK.SIN.20.10.2015.3.2.1.QZ.262.0~Z~~Z01H00~AAB1~~10~X|QZ~ 262~ ~~CGK~10/20/2015 07:00~SIN~10/20/2015 09:50~";
             bookInfo.ContactData = new ContactData
             {
                 Name = "kontak",
@@ -282,7 +282,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&radioButtonNoInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonNoInsurance" +
                     @"&radioButtonYesInsuranceId=InsuranceInputControlAddOnsViewAjax_RadioButtonYesInsurance" +
                     @"&radioButton=on" +
-                    @"&HiddenFieldPageBookingData=20151020+QZ+262+CGKSINIDR" +
+                    @"&HiddenFieldPageBookingData=" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Traveler.aspx", postData);
 
@@ -308,7 +308,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24HiddenEquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0=" +
                     @"&ControlGroupUnitMapView%24UnitMapViewControl%24EquipmentConfiguration_0_PassengerNumber_0_HiddenFee=NaN" +
-                    @"&HiddenFieldPageBookingData="+date.ToString("yyyyMMdd")+"+"+airlineCode+"+"+flightNumber+"+"+origin+dest+"IDR" +
+                    @"&HiddenFieldPageBookingData=" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/UnitMap.aspx", postData);
 
@@ -335,7 +335,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24PaymentInputViewPaymentView%24HiddenFieldUpdatedMCC=" +
-                    @"&HiddenFieldPageBookingData=20151020+QZ+262+CGKSINIDR" +
+                    @"&HiddenFieldPageBookingData=" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 
@@ -362,7 +362,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&CONTROLGROUPPAYMENTBOTTOM%24MultiCurrencyConversionViewPaymentView%24DropDownListCurrency=default" +
                     @"&MCCOriginCountry=ID" +
                     @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Submit+payment" +
-                    @"&HiddenFieldPageBookingData=" + date.ToString("yyyyMMdd") + "+" + airlineCode + "+" + flightNumber + "+" + origin + "" + dest + "IDR" +
+                    @"&HiddenFieldPageBookingData=" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 

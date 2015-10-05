@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.Framework.Extension;
+using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -25,6 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             conditions.AdultCount = 1;
             conditions.ChildCount = 1;
             conditions.InfantCount = 1;
+            conditions.CabinClass = CabinClass.Economy;
             return Client.SearchFlight(conditions);
         }
 
@@ -52,8 +58,31 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 Headers["Origin"] = "https://booking2.airasia.com";
                 Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                 var html = DownloadString(url);
-                CQ dom = html;
-                var sel = dom["#trip_0_date_0_flight_0_fare_0"];
+                var searchedHtml = (CQ) html;
+                var availableFares = searchedHtml[".radio-markets"];
+                IEnumerable<string> fareIds;
+                switch (conditions.CabinClass)
+                {
+                    case CabinClass.Economy:
+                        fareIds = availableFares.Where(dom => dom.Id.Last() == '0').Select(dom => dom.Value);
+                        break;
+                    case CabinClass.Business:
+                        fareIds = availableFares.Where(dom => dom.Id.Last() == '1').Select(dom => dom.Value);
+                        break;
+                    default:
+                        fareIds = new List<string>();
+                        break;
+                }
+                var itins = new List<FlightItinerary>();
+                var trip0 = conditions.Trips[0];
+                var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." + trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." + conditions.ChildCount + "." + conditions.InfantCount + ".";
+                Parallel.ForEach(fareIds, fareId =>
+                {
+                    url = "https://booking.airasia.com/Flight/PriceItinerary" +
+                          "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                    var itinHtml = (CQ) DownloadString(url);
+                    
+                });
                 return null;
             }
         }
