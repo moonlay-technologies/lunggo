@@ -11,10 +11,33 @@ file: /Assets/travorama20/css/_page_flight.scss
 
     // *****
     // section form
-
+    .search-result-form {background:#032e55; color:#fff;
+        .result-form-left {}
+        .result-form-right {padding:10px 0;}
+    }
     // *****
     // search result
-    .search-result-filter {}
+    .search-result-filter {margin-bottom:15px;
+        .filter-left {float:left; width:7%; border-top:$border-default;
+            &>span {font-weight:bold; padding:15px 0; display:block; font-size:18px;}
+        }
+        .filter-right {float:left; width:93%; border-top:$border-default;
+            .filter-trigger {background:#f6f6f6;
+                &:before, &:after {@include clearfix();}
+                &>div {float:left; width:25%; padding:15px; padding-right:0;
+                    span {font-weight:bold; color:$color-main-blue; font-size:18px;display:block; cursor:pointer; position:relative; padding-left:35px;
+                        &:before {width:30px; height:30px; background:url(/Assets/images/flight-filter-sprite.png) no-repeat; content:""; position:absolute; left:0; top:-3px;}
+                    }
+                    &+div {border-left:$border-default;}
+                    &.filter-stop {}
+                    &.filter-price {}
+                    &.filter-airline {}
+                    &.filter-duration {}
+                }
+            }
+            .filter-content {}
+        }
+    }
     .search-result-sort {padding:10px 0; margin-bottom:10px;
         &:before, &:after {@include clearfix();}
         .container>div {float:left; text-align:center;

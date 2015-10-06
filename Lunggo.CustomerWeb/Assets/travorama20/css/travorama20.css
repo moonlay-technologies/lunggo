@@ -974,6 +974,58 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
+.page-flight.page-flight-oneway .search-result-form {
+  background: #032e55;
+  color: #fff; }
+  .page-flight.page-flight-oneway .search-result-form .result-form-right {
+    padding: 10px 0; }
+
+.page-flight.page-flight-oneway .search-result-filter {
+  margin-bottom: 15px; }
+  .page-flight.page-flight-oneway .search-result-filter .filter-left {
+    float: left;
+    width: 7%;
+    border-top: 1px solid #ccc; }
+    .page-flight.page-flight-oneway .search-result-filter .filter-left > span {
+      font-weight: bold;
+      padding: 15px 0;
+      display: block;
+      font-size: 18px; }
+  .page-flight.page-flight-oneway .search-result-filter .filter-right {
+    float: left;
+    width: 93%;
+    border-top: 1px solid #ccc; }
+    .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger {
+      background: #f6f6f6; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger:before, .page-flight.page-flight-oneway .search-result-filter .filter-right .page-index .filter-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger.section-reason:after, .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div {
+        float: left;
+        width: 25%;
+        padding: 15px;
+        padding-right: 0; }
+        .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div span {
+          font-weight: bold;
+          color: #1daee4;
+          font-size: 18px;
+          display: block;
+          cursor: pointer;
+          position: relative;
+          padding-left: 35px; }
+          .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div span:before, .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div .page-index span.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div span.section-reason:after {
+            width: 30px;
+            height: 30px;
+            background: url(/Assets/images/flight-filter-sprite.png) no-repeat;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -3px; }
+        .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div + div {
+          border-left: 1px solid #ccc; }
+
 .page-flight.page-flight-oneway .search-result-sort {
   padding: 10px 0;
   margin-bottom: 10px; }

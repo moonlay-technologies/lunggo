@@ -743,6 +743,7 @@
     <Content Include="Assets\images\flight-button-sprite.png" />
     <Content Include="Assets\images\flight-detail-active.png" />
     <Content Include="Assets\images\flight-facilities-sprite.png" />
+    <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-segment-separator.png" />
     <Content Include="Assets\images\flight-sort-switch.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
