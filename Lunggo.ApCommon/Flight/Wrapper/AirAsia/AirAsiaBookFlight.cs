@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Util;
 using Lunggo.Framework.Web;
@@ -20,75 +23,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             bookInfo.FareId =
-                "CGK.SIN.20.10.2015.3.2.1.QZ.262.0~Z~~Z01H00~AAB1~~10~X|QZ~ 262~ ~~CGK~10/20/2015 07:00~SIN~10/20/2015 09:50~";
+                "CGK.KUL.19.10.2015.1.0.0.0~Z~~Z01H00~AAB1~~73~X|AK~ 381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
             bookInfo.ContactData = new ContactData
             {
-                Name = "kontak",
+                Name = "Indera Aji Waskitho",
                 CountryCode = "62",
-                Phone = "123123"
+                Phone = "8567159813"
             };
             bookInfo.Passengers = new List<FlightPassenger>
             {
                 new FlightPassenger
                 {
-                    FirstName = "mafioso",
-                    LastName = "lasto",
+                    FirstName = "Indera Aji",
+                    LastName = "Waskitho",
                     Title = Title.Mister,
                     Type = PassengerType.Adult,
                     Gender = Gender.Male,
-                    DateOfBirth = new DateTime(1980,1,1),
+                    DateOfBirth = new DateTime(1992,8,4),
                     PassportCountry = "ID"
-                },
-                new FlightPassenger
-                {
-                    FirstName = "firstt",
-                    LastName = "lastt",
-                    Title = Title.Mistress,
-                    Type = PassengerType.Adult,
-                    Gender = Gender.Female,
-                    DateOfBirth = new DateTime(1980,1,1),
-                    PassportCountry = "ID"
-                },
-                new FlightPassenger
-                {
-                    FirstName = "firsttt",
-                    LastName = "lasttt",
-                    Title = Title.Miss,
-                    Type = PassengerType.Adult,
-                    Gender = Gender.Female,
-                    DateOfBirth = new DateTime(1980,1,1),
-                    PassportCountry = "ID"
-                },
-                new FlightPassenger
-                {
-                    FirstName = "firstchild",
-                    LastName = "lastchild",
-                    Title = Title.Mister,
-                    Type = PassengerType.Child,
-                    Gender = Gender.Male,
-                    DateOfBirth = new DateTime(2007,1,1),
-                    PassportCountry = "ID"
-                },
-                new FlightPassenger
-                {
-                    FirstName = "firstchildt",
-                    LastName = "lastchildt",
-                    Title = Title.Miss,
-                    Type = PassengerType.Child,
-                    Gender = Gender.Male,
-                    DateOfBirth = new DateTime(2007,1,1),
-                    PassportCountry = "ID"
-                },
-                new FlightPassenger
-                {
-                    FirstName = "firstinf",
-                    LastName = "lastinf",
-                    Title = Title.Mister,
-                    Type = PassengerType.Infant,
-                    Gender = Gender.Male,
-                    DateOfBirth = new DateTime(2014,1,1),
-                    PassportCountry = "ID"
-                },
+                }
             };
             Client.CreateSession();
             Client.BookFlight(bookInfo);
@@ -106,17 +59,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var adultCount = int.Parse(splittedFareId[5]);
                 var childCount = int.Parse(splittedFareId[6]);
                 var infantCount = int.Parse(splittedFareId[7]);
-                var airlineCode = splittedFareId[8];
-                var flightNumber = splittedFareId[9];
-                var coreFareId = splittedFareId[10];
+                var coreFareId = splittedFareId[8];
 
                 // SEARCH
 
                 var date2 = date.AddDays(1);
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
@@ -154,8 +105,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
@@ -196,8 +147,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
@@ -290,8 +241,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
@@ -316,8 +267,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
@@ -343,7 +294,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
@@ -369,15 +319,32 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 // WAIT
 
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                Headers["Accept-Encoding"] = null;
                 Headers["Upgrade-Insecure-Requests"] = "1";
                 Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
                 Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                DownloadString(@"https://booking2.airasia.com/Wait.aspx");
+                var html = DownloadString(@"https://booking2.airasia.com/Wait.aspx");
 
-                return null;
+                var cqHtml = (CQ) html;
+                var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
+                var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
+                var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n').Substring(0, timeLimitTexts[2].Trim(' ', '\n').Length - 2);
+                var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
+                var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
+                var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
+                var timeLimit = timeLimitDate.Add(timeLimitTime);
+                return new BookFlightResult
+                {
+                    IsSuccess = true,
+                    Status = new BookingStatusInfo
+                    {
+                        BookingId = bookingId,
+                        BookingStatus = BookingStatus.Booked,
+                        TimeLimit = timeLimit
+                    }
+                };
             }
         }
     }
