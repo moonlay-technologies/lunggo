@@ -265,6 +265,14 @@
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />

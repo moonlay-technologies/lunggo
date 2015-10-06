@@ -49,8 +49,13 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             //_sriwijayaWrapper.SearchFlight(conditions);
             var jimbet = MystiflyWrapper.SearchFlight(conditions);
-            var citilink = new CitilinkCrawler();
-            var hasil = citilink.Try();
+            var citilinks = new CitilinkCrawler.Citilink();
+            var hasil = citilinks.Login();
+            var hasil2 = citilinks.search();
+            var hasil3 = citilinks.Select();
+            var hasil4 = citilinks.Passenger();
+            var hasil5 = citilinks.Kursi();
+            var hasil6 = citilinks.Payment();
             return jimbet;
         }
 

@@ -16,6 +16,7 @@ namespace Lunggo.Framework.Web
         protected override WebRequest GetWebRequest(Uri address)
         {
             var request = (HttpWebRequest) base.GetWebRequest(address);
+
             if (request != null)
             {
                 request.CookieContainer = _cookieContainer;
@@ -32,5 +33,6 @@ namespace Lunggo.Framework.Web
             }
             return response;
         }
-    }
+}
+    
 }
