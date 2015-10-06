@@ -41,7 +41,7 @@ file : /Assets/travorama20/css/_header.scss
       height: 50px; }
   .site-header .menu-top {
     margin-bottom: 3px; }
-    .site-header .menu-top:before, .site-header .menu-top:after {
+    .site-header .menu-top:before, .site-header .page-index .menu-top.section-reason:after, .page-index .site-header .menu-top.section-reason:after, .site-header .menu-top:after {
       display: block;
       width: 100%;
       content: "";
@@ -171,7 +171,7 @@ including in this file :
       position: relative;
       padding-top: 15px;
       padding-bottom: 50px; }
-      .section-feedback blockquote p:before {
+      .section-feedback blockquote p:before, .section-feedback blockquote .page-index p.section-reason:after, .page-index .section-feedback blockquote p.section-reason:after {
         content: url("/Assets/images/quote-open.png");
         position: absolute;
         font-size: 60px;
@@ -186,7 +186,7 @@ including in this file :
       color: #fff;
       font-weight: bold;
       padding-left: 90px; }
-      .section-feedback blockquote footer:before {
+      .section-feedback blockquote footer:before, .section-feedback blockquote .page-index footer.section-reason:after, .page-index .section-feedback blockquote footer.section-reason:after {
         content: "";
         border-top: 1px solid #fff;
         width: 50%;
@@ -238,7 +238,7 @@ including in this file :
     padding: 30px 0 20px; }
     .site-footer-menu .menu-right .verisign img + img {
       margin-left: 25px; }
-    .site-footer-menu .menu-right .verisign:before {
+    .site-footer-menu .menu-right .verisign:before, .site-footer-menu .menu-right .page-index .verisign.section-reason:after, .page-index .site-footer-menu .menu-right .verisign.section-reason:after {
       content: url(/Assets/images/verisign-pin.png);
       position: absolute;
       top: -5px;
@@ -275,7 +275,7 @@ file : /Assets/travorama20/css/_page_index.scss
   position: relative; }
   .page-index .section-search > .container {
     position: relative; }
-  .page-index .section-search:before, .page-index .section-search:after {
+  .page-index .section-search:before, .page-index .section-search.section-reason:after, .page-index .section-search:after {
     display: block;
     width: 100%;
     content: "";
@@ -285,10 +285,10 @@ file : /Assets/travorama20/css/_page_index.scss
     height: 520px;
     background: rgba(37, 37, 37, 0.8);
     position: relative;
-    z-index: 2; }
+    z-index: 3; }
     .page-index .section-search .search-form .tab-header {
       height: 50px; }
-      .page-index .section-search .search-form .tab-header:before, .page-index .section-search .search-form .tab-header:after {
+      .page-index .section-search .search-form .tab-header:before, .page-index .section-search .search-form .tab-header.section-reason:after, .page-index .section-search .search-form .tab-header:after {
         display: block;
         width: 100%;
         content: "";
@@ -309,7 +309,7 @@ file : /Assets/travorama20/css/_page_index.scss
             font-weight: 600;
             text-decoration: none;
             font-size: 14px; }
-            .page-index .section-search .search-form .tab-header nav ul li a:before {
+            .page-index .section-search .search-form .tab-header nav ul li a:before, .page-index .section-search .search-form .tab-header nav ul li a.section-reason:after {
               content: "";
               width: 20px;
               height: 20px;
@@ -322,18 +322,20 @@ file : /Assets/travorama20/css/_page_index.scss
             .page-index .section-search .search-form .tab-header nav ul li.active a {
               color: #ffe932;
               background: #4e4e4e; }
-          .page-index .section-search .search-form .tab-header nav ul li.flight a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.flight a:before, .page-index .section-search .search-form .tab-header nav ul li.flight a.section-reason:after {
             background-position: 0 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.flight.active a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.flight.active a:before, .page-index .section-search .search-form .tab-header nav ul li.flight.active a.section-reason:after {
             background-position: 0px 20px; }
-          .page-index .section-search .search-form .tab-header nav ul li.hotel a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.hotel a:before, .page-index .section-search .search-form .tab-header nav ul li.hotel a.section-reason:after {
             background-position: 40px 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.hotel.active a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.hotel.active a:before, .page-index .section-search .search-form .tab-header nav ul li.hotel.active a.section-reason:after {
             background-position: 30px 20px; }
-          .page-index .section-search .search-form .tab-header nav ul li.activity a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.activity a:before, .page-index .section-search .search-form .tab-header nav ul li.activity a.section-reason:after {
             background-position: 20px 0; }
-          .page-index .section-search .search-form .tab-header nav ul li.activity.active a:before {
+          .page-index .section-search .search-form .tab-header nav ul li.activity.active a:before, .page-index .section-search .search-form .tab-header nav ul li.activity.active a.section-reason:after {
             background-position: 20px 20px; }
+          .page-index .section-search .search-form .tab-header nav ul li:last-child {
+            border-right: 0; }
     .page-index .section-search .search-form .tab-content {
       color: #fff;
       padding: 5px 20px 5px; }
@@ -341,7 +343,7 @@ file : /Assets/travorama20/css/_page_index.scss
         display: none; }
       .page-index .section-search .search-form .tab-content > div.active {
         display: block; }
-      .page-index .section-search .search-form .tab-content:before, .page-index .section-search .search-form .tab-content:after {
+      .page-index .section-search .search-form .tab-content:before, .page-index .section-search .search-form .tab-content.section-reason:after, .page-index .section-search .search-form .tab-content:after {
         display: block;
         width: 100%;
         content: "";
@@ -392,7 +394,7 @@ file : /Assets/travorama20/css/_page_index.scss
         font-weight: 600;
         cursor: pointer;
         height: 75px; }
-        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:after {
+        .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return.section-reason:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:before, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway.section-reason:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure.section-reason:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-departure:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-return:after, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-oneway:after {
           display: block;
           width: 100%;
           content: "";
@@ -453,11 +455,13 @@ file : /Assets/travorama20/css/_page_index.scss
           display: block;
           color: #000;
           padding: 10px;
-          background: #ddd; }
+          background: #ddd;
+          cursor: pointer; }
           .page-index .section-search .search-form .tab-content .tab-flight .option > span + span {
             border-top: 1px solid #ccc; }
           .page-index .section-search .search-form .tab-content .tab-flight .option > span:hover {
-            background: #fff; }
+            background: #1daee4;
+            color: #fff; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger {
         margin-bottom: 10px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div {
@@ -503,10 +507,11 @@ file : /Assets/travorama20/css/_page_index.scss
           font-weight: 600; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger .option {
           display: none;
-          z-index: 2;
+          z-index: 3;
           width: 100%;
           text-align: center;
-          padding: 0; }
+          padding: 0;
+          position: absolute; }
       .page-index .section-search .search-form .tab-content .tab-hotel h3 {
         margin-bottom: 30px; }
       .page-index .section-search .search-form .tab-content .tab-hotel .form-group.hotel-location input[type="text"] {
@@ -527,7 +532,7 @@ file : /Assets/travorama20/css/_page_index.scss
         border-radius: 4px;
         border: 1px solid #ccc;
         font-weight: 600; }
-        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:after {
+        .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout.section-reason:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin.section-reason:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:after {
           display: block;
           width: 100%;
           content: "";
@@ -636,7 +641,7 @@ file : /Assets/travorama20/css/_page_index.scss
     .page-index .section-search .search-calendar .calendar-body {
       padding-top: 15px; }
   .page-index .section-search .search-location {
-    width: 600px;
+    width: 850px;
     min-height: 520px;
     background: #fff;
     position: absolute;
@@ -674,13 +679,13 @@ file : /Assets/travorama20/css/_page_index.scss
           right: 0;
           top: 0;
           background-position: -30px 0; }
-      .page-index .section-search .search-location .location-body .location-recommend .tab-header:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header:after {
+      .page-index .section-search .search-location .location-body .location-recommend .tab-header:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header.section-reason:after, .page-index .section-search .search-location .location-body .location-recommend .tab-header:after {
         display: block;
         width: 100%;
         content: "";
         clear: both; }
       .page-index .section-search .search-location .location-body .location-recommend .tab-header nav {
-        width: 540px;
+        width: 790px;
         height: 60px;
         overflow: hidden; }
         .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul {
@@ -688,7 +693,7 @@ file : /Assets/travorama20/css/_page_index.scss
           padding: 0;
           display: block;
           width: 945px; }
-          .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:after {
+          .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:before, .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul.section-reason:after, .page-index .section-search .search-location .location-body .location-recommend .tab-header nav ul:after {
             display: block;
             width: 100%;
             content: "";
@@ -726,7 +731,8 @@ file : /Assets/travorama20/css/_page_index.scss
         .page-index .section-search .search-location .location-body .location-recommend .tab-content > div h3 {
           color: #1daee4;
           font-size: 14px;
-          font-weight: bold; }
+          font-weight: bold;
+          margin-top: 10px; }
         .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul {
           margin: 0;
           padding: 0;
@@ -735,7 +741,7 @@ file : /Assets/travorama20/css/_page_index.scss
             color: #2f2f2f; }
             .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
               text-decoration: none; }
-              .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before {
+              .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before, .page-index .section-search .search-location .location-body .location-recommend .tab-content > div ul li a.section-reason:hover:after {
                 content: url(/Assets/images/recommend-selector.png);
                 position: absolute;
                 left: 0px; }
@@ -773,63 +779,69 @@ file : /Assets/travorama20/css/_page_index.scss
       margin-top: -200px;
       position: relative; }
 
-.page-index .section-reason > .container > img {
-  max-width: 100%;
-  height: auto; }
-
-.page-index .section-reason:before, .page-index .section-reason:after {
-  display: block;
-  width: 100%;
-  content: "";
-  clear: both; }
-
-.page-index .section-reason .reason {
-  color: #fff;
-  float: left;
-  width: 25%;
-  padding: 30px;
-  height: 170px; }
-  .page-index .section-reason .reason h3 {
-    margin: 0;
+.page-index .section-reason {
+  position: relative;
+  overflow: hidden; }
+  .page-index .section-reason > .container > img {
+    max-width: 100%;
+    height: auto;
     position: relative;
-    margin-bottom: 15px;
-    letter-spacing: 0;
-    line-height: 120%; }
-    .page-index .section-reason .reason h3:before {
-      position: absolute;
-      left: 0;
-      top: 0; }
-  .page-index .section-reason .reason p {
-    margin-bottom: 0; }
-
-.page-index .section-reason .reason-1 {
-  background: #032e55;
-  padding: 40px 70px; }
-  .page-index .section-reason .reason-1 h3 {
-    font-size: 36px; }
-    .page-index .section-reason .reason-1 h3 b {
-      font-size: 48px; }
-
-.page-index .section-reason .reason-2 {
-  background: #1daee4; }
-  .page-index .section-reason .reason-2 h3 {
-    padding-left: 110px; }
-    .page-index .section-reason .reason-2 h3:before {
-      content: url(/Assets/images/reason-2-icon.png); }
-
-.page-index .section-reason .reason-3 {
-  background: #47cdff; }
-  .page-index .section-reason .reason-3 h3 {
-    padding-left: 75px; }
-    .page-index .section-reason .reason-3 h3:before {
-      content: url(/Assets/images/reason-3-icon.png); }
-
-.page-index .section-reason .reason-4 {
-  background: #7fdafc; }
-  .page-index .section-reason .reason-4 h3 {
-    padding-left: 90px; }
-    .page-index .section-reason .reason-4 h3:before {
-      content: url(/Assets/images/reason-4-icon.png); }
+    z-index: 2; }
+  .page-index .section-reason:before, .page-index .section-reason:after {
+    content: "";
+    width: 50%;
+    height: 100%;
+    background: #032e55;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; }
+  .page-index .section-reason:after {
+    left: 50%;
+    background: #7fdafc; }
+  .page-index .section-reason .reason {
+    color: #fff;
+    float: left;
+    width: 25%;
+    padding: 30px;
+    height: 170px; }
+    .page-index .section-reason .reason h3 {
+      margin: 0;
+      position: relative;
+      margin-bottom: 15px;
+      letter-spacing: 0;
+      line-height: 120%; }
+      .page-index .section-reason .reason h3:before, .page-index .section-reason .reason h3.section-reason:after {
+        position: absolute;
+        left: 0;
+        top: 0; }
+    .page-index .section-reason .reason p {
+      margin-bottom: 0; }
+  .page-index .section-reason .reason-1 {
+    background: #032e55;
+    padding: 40px 70px; }
+    .page-index .section-reason .reason-1 h3 {
+      font-size: 36px; }
+      .page-index .section-reason .reason-1 h3 b {
+        font-size: 48px; }
+  .page-index .section-reason .reason-2 {
+    background: #1daee4; }
+    .page-index .section-reason .reason-2 h3 {
+      padding-left: 110px; }
+      .page-index .section-reason .reason-2 h3:before, .page-index .section-reason .reason-2 h3.section-reason:after {
+        content: url(/Assets/images/reason-2-icon.png); }
+  .page-index .section-reason .reason-3 {
+    background: #47cdff; }
+    .page-index .section-reason .reason-3 h3 {
+      padding-left: 75px; }
+      .page-index .section-reason .reason-3 h3:before, .page-index .section-reason .reason-3 h3.section-reason:after {
+        content: url(/Assets/images/reason-3-icon.png); }
+  .page-index .section-reason .reason-4 {
+    background: #7fdafc; }
+    .page-index .section-reason .reason-4 h3 {
+      padding-left: 90px; }
+      .page-index .section-reason .reason-4 h3:before, .page-index .section-reason .reason-4 h3.section-reason:after {
+        content: url(/Assets/images/reason-4-icon.png); }
 
 .page-index .section-popular {
   padding-top: 30px; }
@@ -955,6 +967,303 @@ span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .
         left: auto;
         right: 15px;
         font-size: 12px; }
+
+/*
+
+FLIGHT Page styling
+file: /Assets/travorama20/css/_page_flight.scss
+
+*/
+.page-flight.page-flight-oneway .search-result-sort {
+  padding: 10px 0;
+  margin-bottom: 10px; }
+  .page-flight.page-flight-oneway .search-result-sort:before, .page-flight.page-flight-oneway .page-index .search-result-sort.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-sort.section-reason:after, .page-flight.page-flight-oneway .search-result-sort:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page-flight.page-flight-oneway .search-result-sort .container > div {
+    float: left;
+    text-align: center; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div span {
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer; }
+      .page-flight.page-flight-oneway .search-result-sort .container > div span:before, .page-flight.page-flight-oneway .search-result-sort .container > div .page-index span.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-sort .container > div span.section-reason:after {
+        content: url(/Assets/images/flight-sort-switch.png);
+        margin-right: 5px; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div.sort-airline {
+      width: 18.2%; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div.sort-departure {
+      width: 17.5%; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div.sort-duration {
+      width: 18.5%; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div.sort-arrival {
+      width: 18.8%; }
+    .page-flight.page-flight-oneway .search-result-sort .container > div.sort-price {
+      width: 27%;
+      text-align: left;
+      padding-left: 15px; }
+
+.page-flight.page-flight-oneway .flight {
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color: #525252;
+  background: #fff;
+  margin-bottom: 10px; }
+  .page-flight.page-flight-oneway .flight.active {
+    border: 3px solid #1daee4; }
+    .page-flight.page-flight-oneway .flight.active .flight-detail {
+      border-top: 3px solid #1daee4; }
+  .page-flight.page-flight-oneway .flight .flight-summary:before, .page-flight.page-flight-oneway .flight .page-index .flight-summary.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left {
+    float: left;
+    width: 73%;
+    border-right: 1px solid #ccc; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left:before, .page-flight.page-flight-oneway .flight .flight-summary .page-index .flight-summary-left.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top {
+      border-bottom: 1px solid #ccc; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top:before, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .page-index .summary-top.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-left {
+        text-align: center;
+        float: left;
+        width: 25%;
+        border-right: 1px solid #ccc; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-left h5 {
+          color: #1daee4;
+          font-weight: bold; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-left img {
+          height: 65px; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
+        float: left;
+        width: 75%;
+        padding-top: 10px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival {
+          float: left;
+          width: 35%;
+          padding-right: 20px;
+          text-align: right; }
+          .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 {
+            font-weight: 600;
+            font-size: 26px; }
+            .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span {
+              font-weight: bold;
+              margin-left: 10px; }
+          .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h5, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5 {
+            font-size: 16px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration {
+          float: left;
+          width: 30%;
+          text-align: center; }
+          .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration .time {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 16px; }
+            .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration .time:before, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration .page-index .time.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration .time.section-reason:after {
+              content: url(/Assets/images/sandclock.png);
+              margin-right: 10px; }
+          .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration .transit {
+            border-top: 3px solid #1daee4;
+            padding-top: 5px;
+            margin-top: 0;
+            font-size: 16px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival {
+          text-align: left;
+          padding-right: 0;
+          padding-left: 20px; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left {
+      float: left;
+      width: 25%;
+      border-right: 1px solid #ccc;
+      text-align: center;
+      padding-top: 3px; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left span {
+        background: url(/Assets/images/flight-facilities-sprite.png) no-repeat;
+        display: inline-block;
+        margin: 0 5px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left span.flight-baggage {
+          width: 35px;
+          background-position: -64px;
+          text-align: center;
+          color: #fff;
+          position: relative;
+          padding-top: 5px;
+          margin-top: -10px;
+          top: -7px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left span.flight-tax {
+          width: 35px;
+          background-position: -30px;
+          padding-bottom: 30px; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left span.flight-meal {
+          width: 30px;
+          padding-bottom: 30px; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right {
+      float: left;
+      width: 75%;
+      text-align: right; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger {
+        margin-left: 30px;
+        padding: 7px;
+        display: inline-block;
+        position: relative;
+        color: #1daee4;
+        text-decoration: none; }
+        .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger:before, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before {
+          content: "";
+          display: block;
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          background: url(/Assets/images/flight-button-sprite.png);
+          left: -24px; }
+      .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger.section-reason:after {
+        background-position: -24px; }
+  .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right {
+    color: #ff7200;
+    padding: 15px;
+    float: left;
+    width: 27%; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right:before, .page-flight.page-flight-oneway .flight .flight-summary .page-index .flight-summary-right.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right.section-reason:after, .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right h4 {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 10px; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right small {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 10px;
+      font-size: 11px; }
+    .page-flight.page-flight-oneway .flight .flight-summary .flight-summary-right .btn {
+      padding-right: 30px;
+      padding-left: 30px; }
+  .page-flight.page-flight-oneway .flight .flight-detail {
+    border-top: 1px solid #ccc;
+    padding-bottom: 20px;
+    position: relative; }
+    .page-flight.page-flight-oneway .flight .flight-detail > h3 {
+      padding: 10px;
+      padding-left: 5%;
+      font-weight: 600;
+      color: #1daee4;
+      margin-top: 10px; }
+      .page-flight.page-flight-oneway .flight .flight-detail > h3 .close-flight-detail {
+        color: #bbb;
+        cursor: pointer;
+        font-weight: bold; }
+    .page-flight.page-flight-oneway .flight .flight-detail .segment:before, .page-flight.page-flight-oneway .flight .flight-detail .page-index .segment.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-detail .segment.section-reason:after, .page-flight.page-flight-oneway .flight .flight-detail .segment:after {
+      content: "";
+      clear: both;
+      display: block;
+      width: 100%; }
+    .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-number {
+      float: left;
+      width: 5%; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-number span {
+        background: #1daee4;
+        color: #fff;
+        font-weight: 600;
+        padding: 3px 10px; }
+    .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-left, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right {
+      float: left;
+      width: 23%;
+      position: relative; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-left:after, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right:after {
+        content: url(/Assets/images/flight-segment-separator.png);
+        position: absolute;
+        right: 15px;
+        top: 15px; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-left .segment-airline-logo, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-airline-logo {
+        width: 70px;
+        height: 70px;
+        border: 1px solid #ccc;
+        float: left;
+        margin-right: 15px; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-airline-name {
+        font-weight: bold;
+        color: #1daee4;
+        font-size: 16px; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-airline-number {
+        font-weight: 600;
+        color: #1daee4;
+        font-size: 16px; }
+    .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right {
+      width: 72%; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right:before, .page-flight.page-flight-oneway .flight .flight-detail .segment .page-index .segment-right.section-reason:after, .page-index .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right.section-reason:after, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right:after {
+        content: "";
+        clear: both;
+        display: block;
+        width: 100%; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right > div {
+        float: left; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-arrival {
+        width: 33.33333334%;
+        padding-top: 15px;
+        padding-left: 15px; }
+        .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-departure h5, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-arrival h5 {
+          margin: 0;
+          margin-bottom: 5px;
+          font-size: 12px; }
+        .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-arrival h3 {
+          font-weight: bold;
+          margin: 0;
+          margin-bottom: 10px;
+          font-size: 24px; }
+        .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-departure h4, .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-arrival h4 {
+          font-weight: 600;
+          margin: 0;
+          margin-bottom: 5px;
+          font-size: 16px; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-duration {
+        width: 33.33333334%;
+        padding-right: 120px;
+        padding-top: 25px; }
+        .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-duration h5 {
+          border-bottom: 3px solid #1daee4;
+          text-align: center;
+          padding-bottom: 5px; }
+          .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-duration h5 span {
+            font-weight: bold; }
+      .page-flight.page-flight-oneway .flight .flight-detail .segment .segment-right .segment-arrival {
+        padding-left: 0; }
+    .page-flight.page-flight-oneway .flight .flight-detail .transit {
+      text-align: center;
+      padding: 15px 0; }
+      .page-flight.page-flight-oneway .flight .flight-detail .transit:after {
+        border-top: 1px dashed #1daee4;
+        content: "";
+        display: block;
+        width: 100%;
+        position: relative;
+        top: -10px; }
+      .page-flight.page-flight-oneway .flight .flight-detail .transit p {
+        background: #fff;
+        display: inline;
+        font-style: italic;
+        font-weight: 600;
+        color: #1daee4;
+        background: #fff;
+        position: relative;
+        z-index: 2;
+        padding: 0 10px; }
 
 body {
   font-family: 'Open Sans', sans-serif;

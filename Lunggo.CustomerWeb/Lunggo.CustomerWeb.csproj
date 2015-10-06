@@ -740,6 +740,11 @@
     <Content Include="Assets\images\filter-trigger.png" />
     <Content Include="Assets\images\flag-britain.png" />
     <Content Include="Assets\images\flag-indonesia.png" />
+    <Content Include="Assets\images\flight-button-sprite.png" />
+    <Content Include="Assets\images\flight-detail-active.png" />
+    <Content Include="Assets\images\flight-facilities-sprite.png" />
+    <Content Include="Assets\images\flight-segment-separator.png" />
+    <Content Include="Assets\images\flight-sort-switch.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
     <Content Include="Assets\images\flight-toggle-down.png" />
@@ -810,6 +815,7 @@
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\sand-clock.png" />
+    <Content Include="Assets\images\sandclock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
@@ -992,6 +998,7 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenMedium.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2202,6 +2209,7 @@
     <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
     <Content Include="Views\Travorama20\Index.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
+    <Content Include="Views\Travorama20\flightOneway.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />

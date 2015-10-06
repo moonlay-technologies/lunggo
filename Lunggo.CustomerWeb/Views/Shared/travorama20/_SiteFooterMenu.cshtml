@@ -1,4 +1,9 @@
-﻿<section class="site-footer-menu">
+﻿@{
+    var CurrentDate = DateTime.Now.ToString("ddMMyy");
+}
+
+
+<section class="site-footer-menu">
     
     <div class="container">
         <div class="row">
@@ -32,11 +37,11 @@
                     <div class="col-sm-4 menu-flight">
                         <p class="list-title">Tiket Rute Populer</p>
                         <ul>
-                            <li><a href="#">Tiket murah Jakarta-Bali</a></li>
-                            <li><a href="#">Tiket murah Jakarta-Surabaya</a></li>
-                            <li><a href="#">Tiket murah Jakarta-Singapura</a></li>
-                            <li><a href="#">Tiket murah Jakarta-Malang</a></li>
-                            <li><a href="#">Tiket murah Jakarta-Yogyakarta</a></li>
+                            <li><a href="/id/Flight/SearchResultList?info=CGKDPS@(CurrentDate)-100y">Tiket murah Jakarta-Bali</a></li>
+                            <li><a href="/id/Flight/SearchResultList?info=CGKSUB@(CurrentDate)-100y">Tiket murah Jakarta-Surabaya</a></li>
+                            <li><a href="/id/Flight/SearchResultList?info=CGKSIN@(CurrentDate)-100y">Tiket murah Jakarta-Singapura</a></li>
+                            <li><a href="/id/Flight/SearchResultList?info=CGKMLG@(CurrentDate)-100y">Tiket murah Jakarta-Malang</a></li>
+                            <li><a href="/id/Flight/SearchResultList?info=CGKJOG@(CurrentDate)-100y">Tiket murah Jakarta-Yogyakarta</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-2 menu-hotel hidden">

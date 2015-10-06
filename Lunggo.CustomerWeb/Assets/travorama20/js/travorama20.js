@@ -4,7 +4,9 @@
 
 //********************
 // variables
+var currentDate = new Date();
 var indexPageConfig;
+var flightPageConfig;
 
 //********************
 // site header function
@@ -17,8 +19,6 @@ $('[data-trigger="dropdown"]').click(function (evt) {
     evt.preventDefault();
     $(this).siblings('.dropdown-content').toggle();
 });
-
-
 
 //********************
 // index page functions
@@ -83,7 +83,7 @@ function indexPageFunctions() {
         }
     });
     $('.search-location .location-recommend .nav-click.next').click(function () {
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 6))) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });
@@ -169,15 +169,19 @@ function indexPageFunctions() {
         hideLocation();
     });
     // on keypress on form flight search
-    $('.form-flight-location').keyup(function () {
-        if ( $(this).val().length > 0 ) {
-            $('.search-location .location-recommend').hide();
-            $('.search-location .location-search').show();
-            indexPageConfig.autocomplete.keyword = $(this).val();
-            getLocation(indexPageConfig.autocomplete.keyword);
+    $('.form-flight-location').keyup(function (evt) {
+        if (evt.keyCode == 27) {
+            hideLocation();
         } else {
-            $('.search-location .location-recommend').show();
-            $('.search-location .location-search').hide();
+            if ($(this).val().length > 0) {
+                $('.search-location .location-recommend').hide();
+                $('.search-location .location-search').show();
+                indexPageConfig.autocomplete.keyword = $(this).val();
+                getLocation(indexPageConfig.autocomplete.keyword);
+            } else {
+                $('.search-location .location-recommend').show();
+                $('.search-location .location-search').hide();
+            }
         }
     });
 
@@ -203,6 +207,13 @@ function indexPageFunctions() {
             var chosenDate = new Date(data);
             if ( $('.search-calendar').attr('data-date') == 'departure' ) {
                 indexPageConfig.flightForm.departureDate = new Date(data);
+                if (indexPageConfig.flightForm.returnDate > indexPageConfig.flightForm.departureDate) {
+                    indexPageConfig.flightForm.returnDate = new Date(data);
+                    $('.form-flight-return .date').html(('0' + chosenDate.getDate()).slice(-2));
+                    $('.form-flight-return .month').html(translateMonth(chosenDate.getMonth()));
+                    $('.form-flight-return .year').html(chosenDate.getFullYear());
+                    $('.search-calendar').hide();
+                }
                 target = '.form-flight-departure';
             } else {
                 indexPageConfig.flightForm.returnDate = new Date(data);
@@ -272,7 +283,7 @@ function indexPageFunctions() {
     $('.form-flight-class').click(function (evt) {
         evt.stopPropagation();
         $(this).siblings('.option').toggle();
-        $('.form-flight-passenger .option').hide();
+        $('.form-flight-passenger .option, .search-calendar, .search-location').hide();
     });
     $('.form-group.flight-class .option span').click(function() {
         $('.form-flight-class').html($(this).html());
@@ -329,6 +340,7 @@ function indexPageFunctions() {
         evt.stopPropagation();
         $(this).parent().siblings('div').find('.option').hide();
         $(this).find('.option').toggle();
+        $('.search-location, .search-calendar').hide();
     });
     $('.form-flight-passenger .option span').click(function(evt) {
         evt.preventDefault();

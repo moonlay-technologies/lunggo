@@ -14,7 +14,7 @@ file : /Assets/travorama20/css/_page_index.scss
         &:before, &:after {@include clearfix();}
 
         // search form
-        .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:2;
+        .search-form {width:320px; height:520px; background:rgba(37,37,37,0.8); position:relative; z-index:3;
             .tab-header {height:50px;
                 &:before, &:after {@include clearfix();}
                 nav {
@@ -38,6 +38,7 @@ file : /Assets/travorama20/css/_page_index.scss
                                 a:before {background-position:20px 0;}
                                 &.active a:before {background-position:20px 20px;}
                             }
+                            &:last-child {border-right:0;}
                         }
                     }
                 }
@@ -83,9 +84,9 @@ file : /Assets/travorama20/css/_page_index.scss
                         &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:7px;}
                     }
                     .option {position:absolute; top:100%; left:0; display:block; width:100%; padding:0 15px; z-index:2; display:none; font-size:12px;
-                        &>span {display:block; color:#000; padding:10px; background:#ddd;
+                        &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer;
                             &+span {border-top:$border-default;}
-                            &:hover {background:#fff;}
+                            &:hover {background:$color-main-blue; color:#fff;}
                         }
                     }
                     // flight passenger
@@ -99,7 +100,7 @@ file : /Assets/travorama20/css/_page_index.scss
                             br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                         }
                         .passenger-input {width:50px; position:absolute; top:30px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
-                        .option {display:none; z-index:2; width:100%; text-align:center; padding:0;
+                        .option {display:none; z-index:3; width:100%; text-align:center; padding:0; position:absolute;
                             span {}
                         }
                     }
@@ -162,7 +163,7 @@ file : /Assets/travorama20/css/_page_index.scss
             .calendar-body {padding-top:15px;}
         }
         // location dropdown
-        .search-location {width:600px; min-height:520px; background:#fff; position:absolute; top:0; left:335px; z-index:2; display:none;
+        .search-location {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:335px; z-index:2; display:none;
             .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
                 .close-location {float:right; cursor:pointer;}
             }
@@ -174,7 +175,7 @@ file : /Assets/travorama20/css/_page_index.scss
                             &.next {right:0; top:0; background-position:-30px 0;}
                         }
                         &:before, &:after {@include clearfix();}
-                        nav {width:540px; height:60px; overflow:hidden;
+                        nav {width:790px; height:60px; overflow:hidden;
                             ul {margin:0; padding:0; display:block; width:945px;
                                 &:before, &:after {@include clearfix();}
                                 li {display:table; width:135px; float:left; border-right:$border-default; cursor:pointer;
@@ -190,7 +191,7 @@ file : /Assets/travorama20/css/_page_index.scss
                     .tab-content {padding:0 15px; padding-bottom:15px;
                         &>div {display:none;
                             &.active {display:block;}
-                            h3 {color:$color-main-blue; font-size:14px; font-weight:bold;}
+                            h3 {color:$color-main-blue; font-size:14px; font-weight:bold; margin-top:10px;}
                             ul {margin:0; padding:0; list-style:none;
                                 li {
                                     a {color:#2f2f2f;
@@ -225,9 +226,10 @@ file : /Assets/travorama20/css/_page_index.scss
 
     //*****
     // section reason
-    .section-reason {
-        &>.container>img {max-width:100%; height:auto;}
-        &:before, &:after {@include clearfix();}
+    .section-reason {position:relative; overflow:hidden;
+        &>.container>img {max-width:100%; height:auto; position:relative; z-index:2;}
+        &:before {content:""; width:50%; height:100%; background:#032e55; position:absolute; top:0; left:0; z-index:1;}
+        &:after {@extend &:before; left:50%; background:#7fdafc;}
         .reason {color:#fff; float:left; width:25%; padding:30px; height:170px;
             h3 {margin:0; position:relative; margin-bottom:15px; letter-spacing:0; line-height:120%;
                 &:before {position:absolute; left:0; top:0;}
