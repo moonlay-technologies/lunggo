@@ -175,7 +175,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         }
                         &:before, &:after {@include clearfix();}
                         nav {width:540px; height:60px; overflow:hidden;
-                            ul {margin:0; padding:0; display:block; width:810px;
+                            ul {margin:0; padding:0; display:block; width:945px;
                                 &:before, &:after {@include clearfix();}
                                 li {display:table; width:135px; float:left; border-right:$border-default; cursor:pointer;
                                     span {display:block; color:#626262; background:#eaeaea; font-size:14px; font-weight:bold; height:60px; padding:0 20px; display:table-cell; vertical-align:middle;}
