@@ -58,9 +58,10 @@ namespace Lunggo.ApCommon.Flight.Service
             return MystiflyWrapper.SpecificSearchFlight(conditions);
         }
 
-        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
+        public RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            return MystiflyWrapper.RevalidateFare(conditions);
+            //return MystiflyWrapper.RevalidateFare(conditions);
+            return AirAsiaWrapper.RevalidateFare(conditions);
         }
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)

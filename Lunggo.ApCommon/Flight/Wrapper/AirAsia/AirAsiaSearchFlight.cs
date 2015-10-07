@@ -9,6 +9,7 @@ using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Extension;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
@@ -77,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         break;
                 }
                 var itins = new List<FlightItinerary>();
-                var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." + trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." + conditions.ChildCount + "." + conditions.InfantCount + ".";
+                var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." + trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." + conditions.ChildCount + "." + conditions.InfantCount + "." + FlightService.ParseCabinClass(conditions.CabinClass) + ".";
                 foreach (var fareId in fareIds)
                 {
                     url = "https://booking.airasia.com/Flight/PriceItinerary" +
@@ -102,7 +103,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             AirlineCode = flightNumberSet[0],
                             FlightNumber = flightNumberSet[1],
-                            CabinClass = CabinClass.Economy,
+                            CabinClass = conditions.CabinClass,
+                            Rbd = fareId,
                             DepartureAirport = ori,
                             DepartureTime = departure,
                             ArrivalAirport = dest,

@@ -11,6 +11,7 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Util;
 using Lunggo.Framework.Web;
@@ -23,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             bookInfo.FareId =
-                "CGK.KUL.19.10.2015.1.0.0.0~Z~~Z01H00~AAB1~~73~X|AK~ 381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
+                "CGK.KUL.19.10.2015.1.0.0.y.0~Z~~Z01H00~AAB1~~73~X|AK~ 381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
             bookInfo.ContactData = new ContactData
             {
                 Name = "Indera Aji Waskitho",
@@ -59,7 +60,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var adultCount = int.Parse(splittedFareId[5]);
                 var childCount = int.Parse(splittedFareId[6]);
                 var infantCount = int.Parse(splittedFareId[7]);
-                var coreFareId = splittedFareId[8];
+                var cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
+                var coreFareId = splittedFareId[9];
 
                 // SEARCH
 
