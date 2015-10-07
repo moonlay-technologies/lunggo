@@ -12,23 +12,133 @@
     </script>
 }
 
-<section class="slider">
-    
+<section class="slider hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2 class="section-title stripe">Experience<br/>The <b>Easy Way</b><br/>of Flight Booking</h2>
+            </div>
+        </div>
+    </div>
 </section><!-- .slider -->
 <section class="search-result-form">
     <div class="container">
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 <div class="result-form-left">
-                    asdasdasdasd
+                    <h3><b>Jakarta</b> (JKT) to <b>Denpasar</b> (DPS) </h3>
+                    <h4><b>Wed, 15-02-2015</b> | <b>3 People</b> (1 adult, 1 child, 1 infant)</h4>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="result-form-right">
-                    <a class="btn btn-yellow block">UBAH PENCARIAN</a>
+                    <a class="btn btn-yellow block search-result-form-trigger">UBAH PENCARIAN</a>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container">
+        <div class="search-result-form-content">
+            <form method="GET" class="change-flight form-flight form">
+                
+                <div class="form-group">
+                    <label class="change-flight-type"><input type="radio" name="flightType" value="return" checked /> Pulang Pergi</label> <label class="change-flight-type"><input type="radio" name="flightType" value="oneWay" /> Sekali Jalan</label>
+                </div>
+                
+                <div class="change-flight-left">
+                    <div>
+                        <input type="text" class="form-flight-origin form-flight-location change-flight-origin form-control" value="" placeholder="Bandara Asal" />
+                    </div>
+                    <div>
+                        <div class="change-flight-date form-flight-departure change-flight-departure">
+                            <small>Tanggal<br />Keberangkatan</small>
+                            <span class="date">01</span>
+                            <span class="month">Jul</span>
+                            <span class="year">2015</span>
+                        </div>
+                        <div class="change-flight-date form-flight-return change-flight-return">
+                            <small>Tanggal<br />Pulang</small>
+                            <span class="date">01</span>
+                            <span class="month">Jul</span>
+                            <span class="year">2015</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="switch-flight">
+                    <span class="change-flight-switch"></span>
+                </div>
+                <div class="change-flight-right">
+                    <div>
+                        <input type="text" value="" class="form-flight-destination form-flight-location change-flight-destination form-control" placeholder="Bandara Tujuan" />
+                        <div class="change-flight-class form-control form-flight-class">
+                            <span>Kelas Penerbangan</span>
+                            <div class="option">
+                                <ul>
+                                    <li><span data-value="y">Kelas Ekonomi</span></li>
+                                    <li><span data-value="c">Kelas Bisnis</span></li>
+                                    <li><span data-value="f">Kelas Utama</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="change-flight-passenger change-flight-adult">
+                            <small>Dewasa<br/>(&gt; 12th)</small>
+                            <span>1</span>
+                            <div class="option">
+                                <ul>
+                                    <li><span>1</span></li>
+                                    <li><span>2</span></li>
+                                    <li><span>3</span></li>
+                                    <li><span>4</span></li>
+                                    <li><span>5</span></li>
+                                    <li><span>6</span></li>
+                                    <li><span>7</span></li>
+                                    <li><span>8</span></li>
+                                    <li><span>9</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="change-flight-passenger change-flight-child">
+                            <small>Anak<br />(2 - 12th)</small>
+                            <span>0</span>
+                            <div class="option">
+                                <ul>
+                                    <li><span>0</span></li>
+                                    <li><span>1</span></li>
+                                    <li><span>2</span></li>
+                                    <li><span>3</span></li>
+                                    <li><span>4</span></li>
+                                    <li><span>5</span></li>
+                                    <li><span>6</span></li>
+                                    <li><span>7</span></li>
+                                    <li><span>8</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="change-flight-passenger change-flight-infant">
+                            <small>Bayi<br />(&lt; 2th)</small>
+                            <span>0</span>
+                            <div class="option">
+                                <ul>
+                                    <li><span>0</span></li>
+                                    <li><span>1</span></li>
+                                    <li><span>2</span></li>
+                                    <li><span>3</span></li>
+                                    <li><span>4</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="submit" value="SEARCH" class="btn btn-yellow block" />
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div><!-- .search-result-form-content -->
+        @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
+        @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
     </div>
 </section><!-- .search-result-form -->
 <section class="search-result one-way">
