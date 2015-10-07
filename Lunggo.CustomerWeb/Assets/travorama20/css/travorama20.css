@@ -653,7 +653,6 @@ file : /Assets/travorama20/css/_page_index.scss
         left: 0;
         display: block;
         width: 100%;
-        padding: 0 15px;
         z-index: 2;
         display: none;
         font-size: 12px; }
@@ -1141,7 +1140,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       cursor: pointer; }
       .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger small {
         position: absolute; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger span {
+      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger h5 {
         font-size: 40px;
         font-weight: 600;
         position: absolute;
@@ -1166,10 +1165,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         position: absolute;
         right: 10px;
         top: 7px; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class .option li {
+      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class .option span {
         text-align: left; }
-        .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class .option li span {
-          padding-left: 10px; }
     .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-switch {
       width: 35px;
       height: 35px;
@@ -1189,25 +1186,20 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 100%;
       z-index: 2;
       display: none; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .option ul {
-        margin: 0;
-        padding: 0; }
-        .page-flight.page-flight-oneway .search-result-form form.change-flight .option ul li {
-          list-style: none;
-          text-align: right; }
-          .page-flight.page-flight-oneway .search-result-form form.change-flight .option ul li + li {
-            border-top: 1px solid #ccc; }
-          .page-flight.page-flight-oneway .search-result-form form.change-flight .option ul li span {
-            display: block;
-            width: 100%;
-            background: #ddd;
-            position: static;
-            font-size: 17px;
-            padding: 5px;
-            padding-right: 20px; }
-            .page-flight.page-flight-oneway .search-result-form form.change-flight .option ul li span:hover {
-              background: #1daee4;
-              color: #fff; }
+      .page-flight.page-flight-oneway .search-result-form form.change-flight .option span {
+        display: block;
+        width: 100%;
+        background: #ddd;
+        position: static;
+        font-size: 17px;
+        padding: 5px;
+        padding-right: 20px;
+        text-align: right; }
+        .page-flight.page-flight-oneway .search-result-form form.change-flight .option span + span {
+          border-top: 1px solid #ccc; }
+        .page-flight.page-flight-oneway .search-result-form form.change-flight .option span:hover {
+          background: #1daee4;
+          color: #fff; }
 
 .page-flight.page-flight-oneway .search-result-filter {
   margin-bottom: 15px; }

@@ -28,7 +28,7 @@
 
             <section class="tab-content">
                 <div class="tab-flight active">
-                    <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList">
+                    <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList" method="GET">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
@@ -83,11 +83,13 @@
 
                         <div class="form-group flight-class">
                             <div class="col-sm-12">
-                                <div class="form-control text-center form-flight-class">Kelas Penerbangan</div>
-                                <div class="option">
-                                    <span class="economy" data-value="y">Kelas Ekonomi</span>
-                                    <span class="business" data-value="c">Kelas Bisnis</span>
-                                    <span class="first" data-value="f">Kelas Utama</span>
+                                <div class="form-control text-center form-flight-class">
+                                    <span>Kelas Penerbangan</span>
+                                    <div class="option">
+                                        <span class="economy" data-value="y">Kelas Ekonomi</span>
+                                        <span class="business" data-value="c">Kelas Bisnis</span>
+                                        <span class="first" data-value="f">Kelas Utama</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

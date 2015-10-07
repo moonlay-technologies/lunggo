@@ -83,7 +83,7 @@ file : /Assets/travorama20/css/_page_index.scss
                     .form-flight-class {display:block; padding:7px 15px; height:auto; text-decoration:none; cursor:pointer; position:relative; font-size:12px;
                         &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:7px;}
                     }
-                    .option {position:absolute; top:100%; left:0; display:block; width:100%; padding:0 15px; z-index:2; display:none; font-size:12px;
+                    .option {position:absolute; top:100%; left:0; display:block; width:100%; z-index:2; display:none; font-size:12px;
                         &>span {display:block; color:#000; padding:10px; background:#ddd; cursor:pointer;
                             &+span {border-top:$border-default;}
                             &:hover {background:$color-main-blue; color:#fff;}

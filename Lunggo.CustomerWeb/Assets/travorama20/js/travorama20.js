@@ -310,13 +310,13 @@ function flightFormSearchFunctions() {
     // select cabin
     $('.form-flight-class').click(function (evt) {
         evt.stopPropagation();
-        $(this).siblings('.option').toggle();
+        $(this).find('.option').toggle();
         $('.form-flight-passenger .option, .search-calendar, .search-location').hide();
     });
-    $('.form-group.flight-class .option span').click(function() {
-        $('.form-flight-class').html($(this).html());
+    $('.form-flight-class .option span').click(function() {
+        $('.form-flight-class>span').html($(this).html());
         FlightSearchConfig.flightForm.cabin = $(this).attr('data-value');
-        $('.form-group.flight-class .option').hide();
+        $('.form-group.flight-class').click();
     });
 
     //*****
@@ -368,7 +368,7 @@ function flightFormSearchFunctions() {
     // validate passenger
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
-        $(this).parent().siblings('div').find('.option').hide();
+        $('.form-flight-passenger .option').hide();
         $(this).find('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });

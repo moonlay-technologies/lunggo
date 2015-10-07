@@ -46,27 +46,21 @@ file: /Assets/travorama20/css/_page_flight.scss
             .change-flight-return {@extend .change-flight-departure; margin-left:2%;}
             .change-flight-passenger {background:#fff; @include border-radius($border-radius-default); color:#666; padding:10px; position:relative; cursor:pointer;
                 small {position:absolute;}
-                span {font-size:40px; font-weight:600; position:absolute; right:10px; top:0;}
+                h5 {font-size:40px; font-weight:600; position:absolute; right:10px; top:0;}
             }
             .change-flight-destination {width:65%; float:left; margin-bottom:10px;}
             .change-flight-class {width:34%; margin-left:1%; float:left; background:#fff; @include border-radius($border-radius-default); position:relative; cursor:pointer;
                 &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:10px; top:7px;}
                 .option {
-                    li {text-align:left;
-                        span {padding-left:10px;}
-                    }
+                    span {text-align:left;}
                 }
             }
             .change-flight-switch {width:35px; height:35px; background:url(/Assets/images/flight-switch-horizontal.png); display:block; text-align:center; margin:0 auto; cursor:pointer;}
             .btn.btn-yellow {height:60px; vertical-align:middle; font-size:21px;}
             .option {position:absolute; top:100%; left:0; width:100%; z-index:2; display:none;
-                ul {margin:0; padding:0;
-                    li {list-style:none; text-align:right;
-                        &+li {border-top:$border-default;}
-                        span {display:block; width:100%; background:#ddd; position:static; font-size:17px; padding:5px; padding-right:20px;
-                            &:hover {background:$color-main-blue; color:#fff;}
-                        }
-                    }
+                span {display:block; width:100%; background:#ddd; position:static; font-size:17px; padding:5px; padding-right:20px; text-align:right;
+                    &+span {border-top:$border-default;}
+                    &:hover {background:$color-main-blue; color:#fff;}
                 }
             }
         }
