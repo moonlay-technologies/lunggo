@@ -11,9 +11,65 @@ file: /Assets/travorama20/css/_page_flight.scss
 
     // *****
     // section form
-    .search-result-form {background:#032e55; color:#fff;
-        .result-form-left {}
-        .result-form-right {padding:10px 0;}
+    .search-result-form {background:#032e55; color:#fff; padding-top:20px; padding-bottom:20px;
+        &>.container {position:relative;}
+        .result-form-left {
+            h3 {margin-top:0; font-size:21px;}
+            h4 {margin-bottom:0; font-size:17px;}
+        }
+        .col-sm-3 {display:table;}
+        .result-form-right {display:table-cell; vertical-align:middle;
+            .btn {padding:10px 0;}
+        }
+        // form content
+        form.change-flight {border-top:1px solid #fff; margin-top:15px; padding-top:15px; display:none;
+            .change-flight-type {margin-right:15px; cursor:pointer;}
+            .change-flight-left {float:left; width:35%;}
+            .switch-flight {float:left; width:5%; text-align:center;}
+            .change-flight-right {float:left; width:60%;
+                &>div {
+                    &:before, &:after {@include clearfix();}
+                }
+                &>div+div >div {width:24%; float:left; height:60px;
+                    &+div {margin-left:1.25%;}
+                }
+            }
+            .form-group {margin-bottom:10px;}
+            // ***
+            .change-flight-origin {margin-bottom:10px;}
+            .change-flight-departure {background:#fff; @include border-radius($border-radius-default); color:#969696; float:left; width:49%; padding:10px; position:relative; height:60px; cursor:pointer;
+                small {font-size:9px; line-height:120%; position:absolute;}
+                .date {font-size:40px; font-weight:600; position:absolute; right:55px; top:0; color:#666;}
+                .month {font-size:15px; font-weight:600; position:absolute; left:75%; top:10px; color:#666;}
+                .year {font-size:15px; font-weight:600; position:absolute; left:75%; top:30px; color:#666;}
+            }
+            .change-flight-return {@extend .change-flight-departure; margin-left:2%;}
+            .change-flight-passenger {background:#fff; @include border-radius($border-radius-default); color:#666; padding:10px; position:relative; cursor:pointer;
+                small {position:absolute;}
+                span {font-size:40px; font-weight:600; position:absolute; right:10px; top:0;}
+            }
+            .change-flight-destination {width:65%; float:left; margin-bottom:10px;}
+            .change-flight-class {width:34%; margin-left:1%; float:left; background:#fff; @include border-radius($border-radius-default); position:relative; cursor:pointer;
+                &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:10px; top:7px;}
+                .option {
+                    li {text-align:left;
+                        span {padding-left:10px;}
+                    }
+                }
+            }
+            .change-flight-switch {width:35px; height:35px; background:url(/Assets/images/flight-switch-horizontal.png); display:block; text-align:center; margin:0 auto; cursor:pointer;}
+            .btn.btn-yellow {height:60px; vertical-align:middle; font-size:21px;}
+            .option {position:absolute; top:100%; left:0; width:100%; z-index:2; display:none;
+                ul {margin:0; padding:0;
+                    li {list-style:none; text-align:right;
+                        &+li {border-top:$border-default;}
+                        span {display:block; width:100%; background:#ddd; position:static; font-size:17px; padding:5px; padding-right:20px;
+                            &:hover {background:$color-main-blue; color:#fff;}
+                        }
+                    }
+                }
+            }
+        }
     }
     // *****
     // search result
@@ -29,10 +85,19 @@ file: /Assets/travorama20/css/_page_flight.scss
                         &:before {width:30px; height:30px; background:url(/Assets/images/flight-filter-sprite.png) no-repeat; content:""; position:absolute; left:0; top:-3px;}
                     }
                     &+div {border-left:$border-default;}
-                    &.filter-stop {}
-                    &.filter-price {}
-                    &.filter-airline {}
-                    &.filter-duration {}
+                    &.filter-stop {
+                        span:before {}
+                    }
+                    &.filter-price {
+                        span:before {background-position:-30px;}
+                    }
+                    &.filter-airline {
+                        span:before {background-position:-60px;}
+                    }
+                    &.filter-duration {
+                        span {padding-left:50px;}
+                        span:before {background-position:-90px; width:50px;}
+                    }
                 }
             }
             .filter-content {}
@@ -52,6 +117,29 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     .search-result-list {}
+    // search location
+    .search-location {position:absolute; top:102px;
+        &#origin {left:15px;}
+        &#destination {right:0;}
+        .location-body {border:$border-default;}
+        li {color:#666;
+            &:hover {color:#fff;}
+        }
+    }
+    // search calendar
+    .search-calendar {position:absolute; top:172px; width:670px; height:300px;
+        .calendar-body {padding-top:0;}
+        .date-picker {padding-left:30px; padding-right:30px;}
+        .ui-datepicker {
+            &:before, &:after {@include clearfix();}
+        }
+        .ui-datepicker-group {width:300px; float:left;}
+        .ui-datepicker-group-last {border-top:0; border-left:$border-default;}
+        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px; left:-15px; overflow:hidden;}
+        .ui-datepicker-next {@extend .ui-datepicker-prev; background-position:-22px; left:auto; right:-15px;}
+        &#departure {left:15px;}
+        &#return {left:222px;}
+    }
     // *****
     // flight
     .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:10px;

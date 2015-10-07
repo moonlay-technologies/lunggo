@@ -684,6 +684,7 @@
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
+    <Content Include="Assets\images\calendar-sprite.png" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
     <Content Include="Assets\images\campaign\bali.jpg" />
@@ -746,6 +747,7 @@
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-segment-separator.png" />
     <Content Include="Assets\images\flight-sort-switch.png" />
+    <Content Include="Assets\images\flight-switch-horizontal.png" />
     <Content Include="Assets\images\flight-tax-true.png" />
     <Content Include="Assets\images\flight-toggle-bg.png" />
     <Content Include="Assets\images\flight-toggle-down.png" />
@@ -2211,6 +2213,8 @@
     <Content Include="Views\Travorama20\Index.cshtml" />
     <Content Include="Views\UW000TopPage\Index.cshtml" />
     <Content Include="Views\Travorama20\flightOneway.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
