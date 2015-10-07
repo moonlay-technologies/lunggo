@@ -40,7 +40,7 @@ body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-sm
 .btn.block {display:block; width:100%;}
 
 .section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
-    &.small-stripe {background:url(/Assets/images/yellow-stripe-small.png) center bottom no-repeat;}
+    &.small-stripe {background-image:url(/Assets/images/yellow-stripe-small.png);}
     span {color:#1eafe4; font-weight:bold;}
 }
 

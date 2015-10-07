@@ -31,7 +31,7 @@ body {
   padding-bottom: 30px;
   margin-bottom: 45px; }
   .section-title.stripe.small-stripe {
-    background: url(/Assets/images/yellow-stripe-small.png) center bottom no-repeat; }
+    background-image: url(/Assets/images/yellow-stripe-small.png); }
   .section-title.stripe span {
     color: #1eafe4;
     font-weight: bold; }
@@ -1039,69 +1039,69 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
-.page-flight.page-flight-oneway .slider {
+.page-flight .slider {
   background: url(/Assets/images/flight-page-slider.jpg) center center no-repeat;
   height: 250px;
   color: #fff; }
-  .page-flight.page-flight-oneway .slider h2 {
+  .page-flight .slider h2 {
     line-height: 120%;
     padding-top: 25px;
     background-position: left bottom; }
 
-.page-flight.page-flight-oneway .search-result-form {
+.page-flight .search-result-form {
   background: #032e55;
   color: #fff;
   padding-top: 20px;
   padding-bottom: 20px; }
-  .page-flight.page-flight-oneway .search-result-form > .container {
+  .page-flight .search-result-form > .container {
     position: relative; }
-  .page-flight.page-flight-oneway .search-result-form .result-form-left h3 {
+  .page-flight .search-result-form .result-form-left h3 {
     margin-top: 0;
     font-size: 21px; }
-  .page-flight.page-flight-oneway .search-result-form .result-form-left h4 {
+  .page-flight .search-result-form .result-form-left h4 {
     margin-bottom: 0;
     font-size: 17px; }
-  .page-flight.page-flight-oneway .search-result-form .col-sm-3 {
+  .page-flight .search-result-form .col-sm-3 {
     display: table; }
-  .page-flight.page-flight-oneway .search-result-form .result-form-right {
+  .page-flight .search-result-form .result-form-right {
     display: table-cell;
     vertical-align: middle; }
-    .page-flight.page-flight-oneway .search-result-form .result-form-right .btn {
+    .page-flight .search-result-form .result-form-right .btn {
       padding: 10px 0; }
-  .page-flight.page-flight-oneway .search-result-form form.change-flight {
+  .page-flight .search-result-form form.change-flight {
     border-top: 1px solid #fff;
     margin-top: 15px;
     padding-top: 15px;
     display: none; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-type {
+    .page-flight .search-result-form form.change-flight .change-flight-type {
       margin-right: 15px;
       cursor: pointer; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-left {
+    .page-flight .search-result-form form.change-flight .change-flight-left {
       float: left;
       width: 35%; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .switch-flight {
+    .page-flight .search-result-form form.change-flight .switch-flight {
       float: left;
       width: 5%;
       text-align: center; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right {
+    .page-flight .search-result-form form.change-flight .change-flight-right {
       float: left;
       width: 60%; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right > div:before, .page-flight.page-flight-oneway .search-result-form form.change-flight .page-index .change-flight-right > div.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right > div.section-reason:after, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right > div:after {
+      .page-flight .search-result-form form.change-flight .change-flight-right > div:before, .page-flight .search-result-form form.change-flight .page-index .change-flight-right > div.section-reason:after, .page-index .page-flight .search-result-form form.change-flight .change-flight-right > div.section-reason:after, .page-flight .search-result-form form.change-flight .change-flight-right > div:after {
         display: block;
         width: 100%;
         content: "";
         clear: both; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right > div + div > div {
+      .page-flight .search-result-form form.change-flight .change-flight-right > div + div > div {
         width: 24%;
         float: left;
         height: 60px; }
-        .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-right > div + div > div + div {
+        .page-flight .search-result-form form.change-flight .change-flight-right > div + div > div + div {
           margin-left: 1.25%; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .form-group {
+    .page-flight .search-result-form form.change-flight .form-group {
       margin-bottom: 10px; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-origin {
+    .page-flight .search-result-form form.change-flight .change-flight-origin {
       margin-bottom: 10px; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-departure, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return {
+    .page-flight .search-result-form form.change-flight .change-flight-departure, .page-flight .search-result-form form.change-flight .change-flight-return {
       background: #fff;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -1113,34 +1113,34 @@ file: /Assets/travorama20/css/_page_flight.scss
       position: relative;
       height: 60px;
       cursor: pointer; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-departure small, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return small {
+      .page-flight .search-result-form form.change-flight .change-flight-departure small, .page-flight .search-result-form form.change-flight .change-flight-return small {
         font-size: 9px;
         line-height: 120%;
         position: absolute; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-departure .date, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return .date {
+      .page-flight .search-result-form form.change-flight .change-flight-departure .date, .page-flight .search-result-form form.change-flight .change-flight-return .date {
         font-size: 40px;
         font-weight: 600;
         position: absolute;
         right: 55px;
         top: 0;
         color: #666; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-departure .month, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return .month {
+      .page-flight .search-result-form form.change-flight .change-flight-departure .month, .page-flight .search-result-form form.change-flight .change-flight-return .month {
         font-size: 15px;
         font-weight: 600;
         position: absolute;
         left: 75%;
         top: 10px;
         color: #666; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-departure .year, .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return .year {
+      .page-flight .search-result-form form.change-flight .change-flight-departure .year, .page-flight .search-result-form form.change-flight .change-flight-return .year {
         font-size: 15px;
         font-weight: 600;
         position: absolute;
         left: 75%;
         top: 30px;
         color: #666; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-return {
+    .page-flight .search-result-form form.change-flight .change-flight-return {
       margin-left: 2%; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger {
+    .page-flight .search-result-form form.change-flight .change-flight-passenger {
       background: #fff;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -1149,19 +1149,19 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding: 10px;
       position: relative;
       cursor: pointer; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger small {
+      .page-flight .search-result-form form.change-flight .change-flight-passenger small {
         position: absolute; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-passenger h5 {
+      .page-flight .search-result-form form.change-flight .change-flight-passenger h5 {
         font-size: 40px;
         font-weight: 600;
         position: absolute;
         right: 10px;
         top: 0; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-destination {
+    .page-flight .search-result-form form.change-flight .change-flight-destination {
       width: 65%;
       float: left;
       margin-bottom: 10px; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class {
+    .page-flight .search-result-form form.change-flight .change-flight-class {
       width: 34%;
       margin-left: 1%;
       float: left;
@@ -1171,14 +1171,14 @@ file: /Assets/travorama20/css/_page_flight.scss
       border-radius: 4px;
       position: relative;
       cursor: pointer; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class:after {
+      .page-flight .search-result-form form.change-flight .change-flight-class:after {
         content: url(/Assets/images/select-arrow.png);
         position: absolute;
         right: 10px;
         top: 7px; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-class .option span {
+      .page-flight .search-result-form form.change-flight .change-flight-class .option span {
         text-align: left; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .change-flight-switch {
+    .page-flight .search-result-form form.change-flight .change-flight-switch {
       width: 35px;
       height: 35px;
       background: url(/Assets/images/flight-switch-horizontal.png);
@@ -1186,18 +1186,18 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: center;
       margin: 0 auto;
       cursor: pointer; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .btn.btn-yellow {
+    .page-flight .search-result-form form.change-flight .btn.btn-yellow {
       height: 60px;
       vertical-align: middle;
       font-size: 21px; }
-    .page-flight.page-flight-oneway .search-result-form form.change-flight .option {
+    .page-flight .search-result-form form.change-flight .option {
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
       z-index: 2;
       display: none; }
-      .page-flight.page-flight-oneway .search-result-form form.change-flight .option span {
+      .page-flight .search-result-form form.change-flight .option span {
         display: block;
         width: 100%;
         background: #ddd;
@@ -1206,9 +1206,9 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding: 5px;
         padding-right: 20px;
         text-align: right; }
-        .page-flight.page-flight-oneway .search-result-form form.change-flight .option span + span {
+        .page-flight .search-result-form form.change-flight .option span + span {
           border-top: 1px solid #ccc; }
-        .page-flight.page-flight-oneway .search-result-form form.change-flight .option span:hover {
+        .page-flight .search-result-form form.change-flight .option span:hover {
           background: #1daee4;
           color: #fff; }
 
@@ -1266,6 +1266,33 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div.filter-duration span:before, .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div.filter-duration .page-index span.section-reason:after, .page-index .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-trigger > div.filter-duration span.section-reason:after {
           background-position: -90px;
           width: 50px; }
+    .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div {
+      background: #999999;
+      color: #fff;
+      padding: 25px;
+      position: relative;
+      display: none; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div.active {
+        display: block; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div .tab-option {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: #666; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div#filter-transit .tab-detail label {
+        margin-right: 10px;
+        cursor: pointer;
+        margin-bottom: 0; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div#filter-transit .tab-detail label + label {
+        border-left: 2px solid #fff;
+        padding-left: 15px; }
+      .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div#filter-transit .tab-option {
+        padding: 15px; }
+        .page-flight.page-flight-oneway .search-result-filter .filter-right .filter-content > div#filter-transit .tab-option label {
+          display: block;
+          cursor: pointer; }
 
 .page-flight.page-flight-oneway .search-result-sort {
   padding: 10px 0;
@@ -1609,3 +1636,62 @@ file: /Assets/travorama20/css/_page_flight.scss
         position: relative;
         z-index: 2;
         padding: 0 10px; }
+
+.page-flight.page-flight-return .search-result-container .search-result-title {
+  color: #fff;
+  background: #1daee4;
+  position: relative; }
+  .page-flight.page-flight-return .search-result-container .search-result-title:before, .page-flight.page-flight-return .search-result-container .page-index .search-result-title.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container .search-result-title.section-reason:after, .page-flight.page-flight-return .search-result-container .search-result-title:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page-flight.page-flight-return .search-result-container .search-result-title h4 {
+    font-size: 50px;
+    font-weight: 600;
+    position: absolute;
+    padding: 15px;
+    background: #2d9ac6;
+    margin: 0;
+    height: 100%; }
+  .page-flight.page-flight-return .search-result-container .search-result-title div {
+    float: left;
+    padding: 15px;
+    margin-left: 90px; }
+    .page-flight.page-flight-return .search-result-container .search-result-title div h5 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 35px; }
+      .page-flight.page-flight-return .search-result-container .search-result-title div h5:before, .page-flight.page-flight-return .search-result-container .search-result-title div .page-index h5.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container .search-result-title div h5.section-reason:after {
+        width: 30px;
+        height: 30px;
+        display: block;
+        content: "";
+        position: absolute;
+        background: url(/Assets/images/plane-updown-sprite.png) no-repeat;
+        top: 0;
+        left: 0; }
+    .page-flight.page-flight-return .search-result-container .search-result-title div p {
+      margin-bottom: 0; }
+      .page-flight.page-flight-return .search-result-container .search-result-title div p span.separator {
+        display: inline-block;
+        width: 30px;
+        border-top: 2px solid #fff;
+        position: relative;
+        top: -3px; }
+      .page-flight.page-flight-return .search-result-container .search-result-title div p span.route-date {
+        display: block; }
+
+.page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date {
+  display: inline; }
+
+.page-flight.page-flight-return .search-result-container .search-result-departure {
+  width: 750px;
+  float: left; }
+
+.page-flight.page-flight-return .search-result-container .search-result-return {
+  width: 400px;
+  float: right; }

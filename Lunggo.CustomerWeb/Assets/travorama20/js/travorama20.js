@@ -84,6 +84,12 @@ function flightPageFunctions() {
             $('.search-location, .search-calendar').hide();
         }
     });
+    // toggle filter
+    $('.search-result-filter .filter-trigger span').click(function() {
+        var targetFilter = $(this).attr('data-target');
+        $('.search-result-filter .filter-content>div').removeClass('active');
+        $('.search-result-filter .filter-content>div#'+targetFilter).addClass('active');
+    });
 }
 
 //********************

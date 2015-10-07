@@ -5,7 +5,8 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 */
 
-.page-flight.page-flight-oneway {
+// page flight
+.page-flight {
     // *****
     // section slider
     .slider {background:url(/Assets/images/flight-page-slider.jpg) center center no-repeat; height:250px; color:#fff;
@@ -67,6 +68,10 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
         }
     }
+}
+
+// page flight oneway
+.page-flight.page-flight-oneway {
     // *****
     // search result
     .search-result-filter {margin-bottom:15px;
@@ -96,7 +101,23 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
             }
-            .filter-content {}
+            .filter-content {
+                &>div {background:#999999; color:#fff; padding:25px; position:relative; display:none;
+                    &.active {display:block;}
+                    .tab-detail {}
+                    .tab-option {position:absolute; right:0; top:0; height:100%; width:150px; background:#666;}
+                    //
+                    &#filter-transit {
+                        .tab-detail {
+                            label {margin-right:10px; cursor:pointer; margin-bottom:0;}
+                            label+label {border-left:2px solid #fff; padding-left:15px;}
+                        }
+                        .tab-option {padding:15px;
+                            label {display:block; cursor:pointer;}
+                        }
+                    }
+                }
+            }
         }
     }
     .search-result-sort {padding:10px 0; margin-bottom:10px;
@@ -233,4 +254,35 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
 
+}
+
+// page flight return
+.page-flight.page-flight-return {
+    // search result container
+    .search-result-container {
+        .search-result-title {color:#fff; background:#1daee4; position:relative;
+            &:before, &:after {@include clearfix();}
+            h4 {font-size:50px; font-weight:600; position:absolute; padding:15px; background:#2d9ac6; margin:0; height:100%;}
+            div {float:left; padding:15px; margin-left:90px;
+                h5 {font-size:22px; font-weight:600; margin:0; margin-bottom:10px; position:relative; padding-left:35px;
+                    &:before {width:30px; height:30px; display:block; content:""; position:absolute; background:url(/Assets/images/plane-updown-sprite.png) no-repeat; top:0; left:0;}
+                }
+                p {margin-bottom:0;
+                    span.separator {display:inline-block; width:30px; border-top:2px solid #fff; position:relative; top:-3px;}
+                    span.route-date {display:block;}
+                }
+            }
+        }
+        // if search result departure or search result return is active
+        &>.active {
+            .search-result-title {
+                p span.route-date {display:inline;}
+            }
+        }
+        //*****
+        // search result departure
+        .search-result-departure {width:750px; float:left;}
+        // search result return
+        .search-result-return {width:400px; float:right;}
+    }
 }

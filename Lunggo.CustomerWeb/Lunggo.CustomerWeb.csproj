@@ -804,6 +804,7 @@
     <Content Include="Assets\images\pinterest-icon.png" />
     <Content Include="Assets\images\plane-down.png" />
     <Content Include="Assets\images\plane-up.png" />
+    <Content Include="Assets\images\plane-updown-sprite.png" />
     <Content Include="Assets\images\pop-bali.jpg" />
     <Content Include="Assets\images\pop-bandung.jpg" />
     <Content Include="Assets\images\pop-hongkong.jpg" />
@@ -2217,6 +2218,7 @@
     <Content Include="Views\Travorama20\flightOneway.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
+    <Content Include="Views\Travorama20\flightReturn.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />

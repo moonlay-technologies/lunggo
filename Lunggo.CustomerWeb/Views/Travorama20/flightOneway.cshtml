@@ -147,13 +147,32 @@
             <div class="filter-right">
                 
                 <div class="filter-trigger">
-                    <div class="filter-stop"><span>Pemberhentian</span></div>
-                    <div class="filter-price"><span>Harga</span></div>
-                    <div class="filter-airline"><span>Maskapai</span></div>
-                    <div class="filter-duration"><span>Waktu Penerbangan</span></div>
+                    <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
+                    <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
+                    <div class="filter-airline"><span class="switch-filter" data-target="filter-airline">Maskapai</span></div>
+                    <div class="filter-duration"><span class="switch-filter" data-target="filter-duration">Waktu Penerbangan</span></div>
                 </div>
                 <div class="filter-content">
-                    
+                    <div id="filter-transit">
+                        <div class="tab-detail">
+                            <label><input type="checkbox" value="" /> Penerbangan Langsung</label>
+                            <label><input type="checkbox" value="" /> 1x Transit</label>
+                            <label><input type="checkbox" value="" /> Lebih Dari 1x Transit</label>
+                        </div>
+                        <div class="tab-option">
+                            <label class="select-all">Pilih Semua</label>
+                            <label class="select-none">Nihil</label>
+                        </div>
+                    </div>
+                    <div id="filter-price">
+                        Filter Price
+                    </div>
+                    <div id="filter-airline">
+                        Filter Airline
+                    </div>
+                    <div id="filter-duration">
+                        Filter Duration
+                    </div>
                 </div>
 
             </div>
