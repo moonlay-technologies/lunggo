@@ -30,6 +30,8 @@ body {
   background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
   padding-bottom: 30px;
   margin-bottom: 45px; }
+  .section-title.stripe.small-stripe {
+    background: url(/Assets/images/yellow-stripe-small.png) center bottom no-repeat; }
   .section-title.stripe span {
     color: #1eafe4;
     font-weight: bold; }
@@ -1037,6 +1039,15 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
+.page-flight.page-flight-oneway .slider {
+  background: url(/Assets/images/flight-page-slider.jpg) center center no-repeat;
+  height: 250px;
+  color: #fff; }
+  .page-flight.page-flight-oneway .slider h2 {
+    line-height: 120%;
+    padding-top: 25px;
+    background-position: left bottom; }
+
 .page-flight.page-flight-oneway .search-result-form {
   background: #032e55;
   color: #fff;
