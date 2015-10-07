@@ -58,6 +58,7 @@
     <Compile Include="TableRecord\FlightSegmentTableRecord.cs" />
     <Compile Include="TableRecord\FlightStopTableRecord.cs" />
     <Compile Include="TableRecord\FlightTripTableRecord.cs" />
+    <Compile Include="TableRecord\NewsletterSubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="TableRepository\FlightSegmentRepository.cs" />
     <Compile Include="TableRepository\FlightStopRepository.cs" />
     <Compile Include="TableRepository\FlightTripRepository.cs" />
+    <Compile Include="TableRepository\NewsletterSubscriberRepository.cs" />
     <Compile Include="TableRepository\SubscriberRepository.cs" />
     <Compile Include="TableRepository\SupplierRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />

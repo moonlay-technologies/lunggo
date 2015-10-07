@@ -168,10 +168,12 @@
     <Compile Include="ApiSrc\v1\Flights\Model\FlightRevalidateApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Flights\Model\FlightSearchApiResponse.cs" />
+    <Compile Include="ApiSrc\v1\Newsletter\Query\CheckEmailQuery.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Logic\GetRoomsLogic.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Rooms\Object\RoomSearchApiResponse.cs" />
     <Compile Include="ApiSrc\v1\Rooms\RoomsController.cs" />
+    <Compile Include="ApiSrc\v1\Newsletter\NewsletterController.cs" />
     <Compile Include="ApiSrc\v1\Voucher\Logic\CheckVoucherLogic.cs" />
     <Compile Include="ApiSrc\v1\Voucher\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\v1\Voucher\Model\CheckVoucherApiResponse.cs" />
@@ -211,6 +213,7 @@
     <Folder Include="ApiSrc\v1\FlightOrders\" />
     <Folder Include="ApiSrc\v1\HotelOrders\" />
     <Folder Include="ApiSrc\v1\Hotels\Model\" />
+    <Folder Include="ApiSrc\v1\Newsletter\Logic\" />
     <Folder Include="ApiSrc\v1\Rooms\Model\" />
     <Folder Include="ApiSrc\v1\V1Common\" />
     <Folder Include="ApiSrc\v2\" />

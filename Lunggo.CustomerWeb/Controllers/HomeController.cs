@@ -72,25 +72,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult Newsletter(string address)
-        {
-            var mailService = MailService.GetInstance();
-            var mailModel = new MailModel
-            {
-                RecipientList = new[] {"travorama.newsletter@gmail.com"},
-                FromMail = "newsletter@travorama.com",
-                FromName = "Newsletter Travorama",
-                Subject = address
-            };
-            mailService.SendEmail(address, mailModel, HtmlTemplateType.Newsletter);
-            var queue = QueueService.GetInstance().GetQueueByReference(Queue.InitialSubscriberEmail);
-            var message = new SubscriberEmailModel
-            {
-                Email = address
-            };
-            queue.AddMessage(new CloudQueueMessage(message.Serialize()));
-            return null;
-        }
+        
 
         public ActionResult CekPemesanan()
         {
