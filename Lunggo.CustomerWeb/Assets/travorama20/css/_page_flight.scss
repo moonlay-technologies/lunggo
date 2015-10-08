@@ -5,6 +5,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 */
 
+// *****
 // page flight
 .page-flight {
     // *****
@@ -68,12 +69,8 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
         }
     }
-}
-
-// page flight oneway
-.page-flight.page-flight-oneway {
     // *****
-    // search result
+    // flight filter
     .search-result-filter {margin-bottom:15px;
         .filter-left {float:left; width:7%; border-top:$border-default;
             &>span {font-weight:bold; padding:15px 0; display:block; font-size:18px;}
@@ -106,7 +103,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     &.active {display:block;}
                     .tab-detail {}
                     .tab-option {position:absolute; right:0; top:0; height:100%; width:150px; background:#666;}
-                    //
+                    // *****
                     &#filter-transit {
                         .tab-detail {
                             label {margin-right:10px; cursor:pointer; margin-bottom:0;}
@@ -120,6 +117,8 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
         }
     }
+    // *****
+    // flight sort
     .search-result-sort {padding:10px 0; margin-bottom:10px;
         &:before, &:after {@include clearfix();}
         .container>div {float:left; text-align:center;
@@ -133,36 +132,13 @@ file: /Assets/travorama20/css/_page_flight.scss
             &.sort-price {width:27%; text-align:left; padding-left:15px;}
         }
     }
-    .search-result-list {}
-    // search location
-    .search-location {position:absolute; top:102px;
-        &#origin {left:15px;}
-        &#destination {right:0;}
-        .location-body {border:$border-default;}
-        li {color:#666;
-            &:hover {color:#fff;}
-        }
-    }
-    // search calendar
-    .search-calendar {position:absolute; top:172px; width:670px; height:300px;
-        .calendar-body {padding-top:0;}
-        .date-picker {padding-left:30px; padding-right:30px;}
-        .ui-datepicker {
-            &:before, &:after {@include clearfix();}
-        }
-        .ui-datepicker-group {width:300px; float:left;}
-        .ui-datepicker-group-last {border-top:0; border-left:$border-default;}
-        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px; left:-15px; overflow:hidden;}
-        .ui-datepicker-next {@extend .ui-datepicker-prev; background-position:-22px; left:auto; right:-15px;}
-        &#departure {left:15px;}
-        &#return {left:222px;}
-    }
     // *****
     // flight
-    .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:10px;
+    .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:10px; position:relative;
         // if active
         &.active {border:3px solid $color-main-blue;
-            .flight-detail {border-top:3px solid $color-main-blue;}
+            .flight-detail {border-top:3px solid $color-main-blue; display:block;}
+            &:after {content:url(/Assets/images/flight-detail-active.png); position:absolute; top:0; left:0; z-index:2; width:50px; height:50px;}
         }
         // if not active
         .flight-summary {
@@ -191,7 +167,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                         .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;}
                     }
                 }
-                .summary-bottom {;
+                .summary-bottom {
                     .summary-bottom-left {float:left; width:25%; border-right:$border-default; text-align:center; padding-top:3px;
                         span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px;
                             &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
@@ -216,7 +192,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .btn {padding-right:30px; padding-left:30px;}
             }
         }
-        .flight-detail {border-top:$border-default; padding-bottom:20px; position:relative;
+        .flight-detail {border-top:$border-default; padding-bottom:20px; position:relative; display:none;
             &>h3 {padding:10px; padding-left:5%; font-weight:600; color:$color-main-blue; margin-top:10px;
                 .close-flight-detail {color:#bbb; cursor:pointer; font-weight:bold;}
             }
@@ -254,13 +230,89 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
 
+
+
 }
 
+// *****
+// page flight oneway
+.page-flight.page-flight-oneway {
+    .search-result-list {}
+    // search location
+    .search-location {position:absolute; top:102px;
+        &#origin {left:15px;}
+        &#destination {right:0;}
+        .location-body {border:$border-default;}
+        li {color:#666;
+            &:hover {color:#fff;}
+        }
+    }
+    // search calendar
+    .search-calendar {position:absolute; top:172px; width:670px; height:300px;
+        .calendar-body {padding-top:0;}
+        .date-picker {padding-left:30px; padding-right:30px;}
+        .ui-datepicker {
+            &:before, &:after {@include clearfix();}
+        }
+        .ui-datepicker-group {width:300px; float:left;}
+        .ui-datepicker-group-last {border-top:0; border-left:$border-default;}
+        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px; left:-15px; overflow:hidden;}
+        .ui-datepicker-next {@extend .ui-datepicker-prev; background-position:-22px; left:auto; right:-15px;}
+        &#departure {left:15px;}
+        &#return {left:222px;}
+    }
+
+}
+
+// *****
 // page flight return
 .page-flight.page-flight-return {
     // search result container
     .search-result-container {
-        .search-result-title {color:#fff; background:#1daee4; position:relative;
+        // if search result departure or search result return is active
+        &>.active {width:750px;
+            .search-result-title {
+                p span.route-date {display:inline;}
+            }
+        }
+        &>.inactive {width:400px; opacity:0.5;
+            .search-result-filter {display:none;}
+            .search-result-sort {display:none;}
+            .flight {
+                .flight-summary {
+                    .flight-summary-left {border-right:none; width:100%;
+                        .summary-top-left {}
+                        .summary-top-right {
+                            .flight-date-duration {padding-top:35px;
+                                h5 {display:none;}
+                                &:after {content:""; display:block; width:100%; border-bottom:3px solid $color-main-blue;}
+                            }
+                        }
+                        .summary-bottom-left {}
+                        .summary-bottom-right {
+                            &.flight-button {display:none;}
+                            &.flight-duration {display:block !important; padding-top:10px;
+                                .duration {width:50%; text-align:center; float:left;
+                                    &:before {content:url(/Assets/images/sandclock.png); margin-right:5px; position:relative; top:3px;}
+                                }
+                                .transit {width:50%; text-align:center; float:left;}
+                            }
+                        }
+                    }
+                    .flight-summary-right {display:none;}
+                }
+                .flight-detail {}
+            }
+        }
+        //*****
+        // search result departure
+        .search-result-departure {float:left;}
+        // search result return
+        .search-result-return {float:right;}
+        
+        //*****
+        // search result title
+        .search-result-title {color:#fff; background:#1daee4; position:relative; margin-bottom:15px;
             &:before, &:after {@include clearfix();}
             h4 {font-size:50px; font-weight:600; position:absolute; padding:15px; background:#2d9ac6; margin:0; height:100%;}
             div {float:left; padding:15px; margin-left:90px;
@@ -273,16 +325,122 @@ file: /Assets/travorama20/css/_page_flight.scss
                 }
             }
         }
-        // if search result departure or search result return is active
-        &>.active {
-            .search-result-title {
-                p span.route-date {display:inline;}
+        //*****
+        // flight filter
+        .search-result-filter {margin-bottom:15px;
+            .container {padding:0;}
+            .filter-left {float:left; width:10%; border-top:none;
+                &>span {font-weight:bold; padding:15px 0; display:block; font-size:18px;}
+            }
+            .filter-right {float:left; width:90%; border-top:none;
+                .filter-trigger {
+                    &>div {text-align:center; padding:10px 0;
+                        span {position:relative; padding-left:0;
+                            &:before {width:30px; height:30px; background:url(/Assets/images/flight-filter-sprite.png) no-repeat; content:""; display:block; margin-left:auto; margin-right:auto; position:static;}
+                        }
+                        &+div {border-left:$border-default;}
+                        &.filter-stop {width:25%;
+                            span:before {}
+                        }
+                        &.filter-price {width:20%;
+                            span:before {background-position:-30px;}
+                        }
+                        &.filter-airline {width:20%;
+                            span:before {background-position:-60px;}
+                        }
+                        &.filter-duration {width:35%;
+                            span:before {background-position:-90px; width:50px;}
+                        }
+                    }
+                }
             }
         }
         //*****
-        // search result departure
-        .search-result-departure {width:750px; float:left;}
-        // search result return
-        .search-result-return {width:400px; float:right;}
+        // flight sort
+        .search-result-sort {padding:10px 0; margin-bottom:10px;
+            .container>div {float:left; text-align:center;
+                &.sort-airline {width:22%;}
+                &.sort-departure {width:17.5%;}
+                &.sort-duration {width:18%;}
+                &.sort-arrival {width:15%; text-align:left;}
+                &.sort-price {width:22%; text-align:left; padding-left:15px;}
+            }
+        }
+        //*****
+        // flight search result list
+        .search-result-list {
+            >.container {padding:0;}
+        }
+
+        //*****
+        // flight
+        .flight {
+            // if inactive
+            &.inactive {
+                .flight-summary {
+                    .flight-summary-left {}
+                    .flight-summary-right {display:none;}
+                }
+                .flight-detail {display:none;}
+            }
+
+            // default
+            .flight-summary {
+                .flight-summary-left {width:72.5%;
+                    .summary-top {
+                        .summary-top-left {width:30%;
+                            h5 {}
+                            img {height:80px;}
+                        }
+                        .summary-top-right {width:70%; padding:0; padding-top:25px;
+                            .flight-date-departure {
+                                h4 {font-size:23px;
+                                    span {font-size:23px; display:block; margin:0;}
+                                }
+                            }
+                            .flight-date-duration {
+                                h5 {font-size:15px;}
+                            }
+                            .flight-date-arrival {@extend .flight-date-departure; text-align:left;}
+                        }
+                    }
+                    .summary-bottom {
+                        .summary-bottom-left {width:30%;
+                            span {margin:0;}
+                        }
+                        .summary-bottom-right {width:70%;
+                            a {font-size:12px;
+                                &:before {left:-20px; top:3px;}
+                            }
+                            &.flight-duration {display:none;}
+                        }
+                    }
+                }
+                .flight-summary-right {width:27.5%; padding:10px;
+                    h4 {font-size:24px;}
+                    small {}
+                    a {}
+                }
+            }
+            .flight-detail {
+                &>h3 {font-size:19px; margin:5px 0; padding-left:7%;}
+                .segment {position:relative;
+                    .segment-number {width:7%;}
+                    .segment-left {width:10%; position:static; padding-top:30px;
+                        &:after {content:"";}
+                        .segment-airline-name {position:absolute; top:-10px; left:7%; width:100%;}
+                    }
+                    .segment-right {width:83%; padding-top:30px;
+                        .segment-departure {padding-top:0;}
+                        .segment-duration {padding:0; padding-top:15px;}
+                        .segment-arrival {@extend .segment-departure;}
+                    }
+                }
+                .transit {
+                    p {font-weight:600;}
+                }
+            }
+        }
+
     }
 }
