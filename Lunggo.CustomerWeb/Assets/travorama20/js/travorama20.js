@@ -96,6 +96,66 @@ function flightPageFunctions() {
 // index page functions
 function indexPageFunctions() {
     flightFormSearchFunctions();
+
+    $(document).ready(function() {
+        changeTheme(indexPageDestination);
+    });
+    $('.section-popular .destination a').click(function(evt) {
+        evt.preventDefault();
+        var target = $(this).attr('data-target');
+        changeTheme(target);
+    });
+    // change header background
+    function changeTheme(location) {
+        location = location.toLowerCase();
+        $('html,  body').stop().animate({
+            scrollTop : 0
+        });
+        var backgroundImage = "";
+        var locationCode = '';
+        if ( location.length > 0 ) {
+            switch (location) {
+                case "jakarta":
+                    backgroundImage = '/Assets/images/campaign/jakarta.jpg';
+                    locationCode = 'CGK';
+                    break;
+                case "bandung":
+                    backgroundImage = '/Assets/images/campaign/bandung.jpg';
+                    locationCode = 'BDO';
+                    break;
+                case "surabaya":
+                    backgroundImage = '/Assets/images/campaign/surabaya.jpg';
+                    locationCode = 'SUB';
+                    break;
+                case "yogyakarta":
+                    backgroundImage = '/Assets/images/campaign/yogyakarta.jpg';
+                    locationCode = 'JOG';
+                    break;
+                case "bali":
+                    backgroundImage = '/Assets/images/campaign/bali.jpg';
+                    locationCode = 'DPS';
+                    break;
+                case "singapore":
+                    backgroundImage = '/Assets/images/campaign/singapore.jpg';
+                    locationCode = 'SIN';
+                    break;
+                case "malaysia":
+                    backgroundImage = '/Assets/images/campaign/malaysia.jpg';
+                    locationCode = 'KUL';
+                    break;
+                case "hongkong":
+                    backgroundImage = '/Assets/images/campaign/hongkong.jpg';
+                    locationCode = 'HKG';
+                    break;
+            }
+
+            // change value on HTML
+            $('.form-flight-destination').val(location);
+            $('.slider').css('background-image','url('+backgroundImage+')');
+            FlightSearchConfig.flightForm.destination = locationCode;
+        }
+    }
+
 }
 
 //********************

@@ -9,6 +9,7 @@
 @section PageJS{
     <script>
         indexPageFunctions();
+        var indexPageDestination = '@ViewBag.Destination' || '';
     </script>
 }
 
@@ -271,7 +272,7 @@
         <div class="row">
             <div class="col-sm-4 popular-left">
                 <div class="destination small">
-                    <a href="#">
+                    <a href="/id/jakarta" data-target="jakarta">
                         <h3>
                             <small>Penerbangan ke</small> <b>Jakarta</b>
                         </h3>
@@ -280,7 +281,7 @@
                     <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
                 </div>
                 <div class="destination medium yellow">
-                    <a href="#">
+                    <a href="/id/bali" data-target="bali">
                         <h3>
                             <small>Penerbangan ke</small> <b>Bali</b>
                         </h3>
@@ -289,7 +290,7 @@
                     <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
                 </div>
                 <div class="destination large">
-                    <a href="#">
+                    <a href="/id/malaysia" data-target="malaysia">
                         <h3>
                             <small>Penerbangan ke</small> <b>Malaysia</b>
                         </h3>
@@ -300,7 +301,7 @@
             </div>
             <div class="col-sm-4 popular-middle">
                 <div class="destination half yellow">
-                    <a href="#">
+                    <a href="/id/yogyakarta" data-target="yogyakarta">
                         <h3>
                             <small>Penerbangan ke</small> <b>Yogyakarta</b>
                         </h3>
@@ -309,7 +310,7 @@
                     <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
                 </div>
                 <div class="destination half yellow">
-                    <a href="#">
+                    <a href="/id/singapore" data-target="singapore">
                         <h3>
                             <small>Penerbangan ke</small> <b>Singapore</b>
                         </h3>
@@ -320,7 +321,7 @@
             </div>
             <div class="col-sm-4 popular-right">
                 <div class="destination large">
-                    <a href="#">
+                    <a href="/id/bandung" data-target="bandung">
                         <h3>
                             <small>Penerbangan ke</small> <b>Bandung</b>
                         </h3>
@@ -329,7 +330,7 @@
                     <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
                 </div>
                 <div class="destination medium yellow">
-                    <a href="#">
+                    <a href="/id/surabaya" data-target="surabaya">
                         <h3>
                             <small>Penerbangan ke</small> <b>Surabaya</b>
                         </h3>
@@ -338,7 +339,7 @@
                     <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
                 </div>
                 <div class="destination small">
-                    <a href="#">
+                    <a href="/id/hongkong" data-target="hongkong">
                         <h3>
                             <small>Penerbangan ke</small> <b>Hongkong</b>
                         </h3>
