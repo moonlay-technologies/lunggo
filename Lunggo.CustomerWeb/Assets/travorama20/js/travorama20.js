@@ -66,11 +66,75 @@ function translateMonth(month) {
 
 
 //********************
-// Search form function
-function searchFormFunctions() {
-    
+// subscribe form functions
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
 }
+function subscribeFormFunctions() {
+    SubscribeConfig.email = '';
+    SubscribeConfig.name = '';
 
+    $('form.subscribe-form input[type="submit"]').click(function(evt) {
+        evt.preventDefault();
+        validateForm();
+    });
+    function validateForm() {
+        $('form.subscribe-form input[type="submit"]').prop('disabled',true);
+        $('form.subscribe-form input[type="submit"]').val('LOADING');
+        SubscribeConfig.email = $('form.subscribe-form input.subscribe-email').val();
+        SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
+
+        if ($('form.subscribe-form input.subscribe-email').val()) {
+            var emailValue = $('form.subscribe-form input.subscribe-email').val();
+            console.log('email validation : ' + validateEmail(emailValue));
+            if (validateEmail(emailValue)) {
+                SubscribeConfig.email = emailValue;
+            } else {
+                SubscribeConfig.email = '';
+                alert('Alamat email tidak valid');
+            }
+        } else {
+            $('form.subscribe-form input.subscribe-email').attr('placeholder', 'Mohon masukan Alamat Email Anda');
+            $('form.subscribe-form input.subscribe-email').parent().addClass('has-error');
+        }
+
+        if ($('form.subscribe-form input.subscribe-name').val()) {
+            SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
+        } else {
+            $('form.subscribe-form input.subscribe-name').attr('placeholder', 'Mohon masukan Alamat Nama Anda');
+            $('form.subscribe-form input.subscribe-name').parent().addClass('has-error');
+        }
+
+        if (SubscribeConfig.name && SubscribeConfig.email) {
+            submitForm();
+        } else {
+            recheckForm();
+        }
+
+    }
+
+    function recheckForm() {
+        SubscribeConfig.email = '';
+        SubscribeConfig.name = '';
+        $('form.subscribe-form input[type="submit"]').removeProp('disabled');
+        $('form.subscribe-form input[type="submit"]').val('DAFTAR');
+    }
+
+    function submitForm() {
+        $.ajax({
+            url: SubscribeConfig.Url,
+            method: 'POST',
+            data: { address : SubscribeConfig.email, name : SubscribeConfig.name }
+        }).done(function (returnData) {
+
+            $('form.subscribe-form').hide();
+            $('.subscribe-form.subscribed').show();
+
+        });
+    }
+
+}
 
 //********************
 // flight page functions
@@ -147,7 +211,7 @@ function indexPageFunctions() {
             }
 
             // change value on HTML
-            $('.form-flight-destination').val(location);
+            $('.form-flight-destination').val(location+' ('+locationCode+')');
             $('.slider').css('background-image','url('+backgroundImage+')');
             FlightSearchConfig.flightForm.destination = locationCode;
             $('html,  body').stop().animate({
@@ -235,10 +299,10 @@ function flightFormSearchFunctions() {
         var locationCode = $(this).attr('data-code');
         if ($('.search-location').attr('data-place') == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
-            $('.form-flight-origin').val($(this).text());
+            $('.form-flight-origin').val($(this).text() + ' ('+locationCode+')' );
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
-            $('.form-flight-destination').val($(this).text());
+            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
         }
         hideLocation();
     });
@@ -443,16 +507,22 @@ function flightFormSearchFunctions() {
         $(this).find('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });
-    $('.form-flight-passenger .option span').click(function(evt) {
+    $('.form-flight-passenger .option span').click(function (evt) {
+        var alertText = {
+            over: "Jumlah total penumpang tidak boleh lebih dari 9 orang",
+            infant: "Jumlah penumpang bayi tidak boleh lebih dari penumpang dewasa"
+    };
         evt.preventDefault();
         evt.stopPropagation();
         var parentClass = $(this).closest('.form-flight-passenger');
         var optionValue = parseInt($(this).text());
         if ( parentClass.hasClass('adult') ) {
             if (optionValue > (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.infant))) {
+                alert(alertText.over);
                 optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.infant));
             }
             if (FlightSearchConfig.flightForm.passenger.infant > optionValue) {
+                alert(alertText.over);
                 FlightSearchConfig.flightForm.passenger.infant = optionValue;
                 $('.passenger-input.infant').text(optionValue);
             }
@@ -460,15 +530,18 @@ function flightFormSearchFunctions() {
             $('.passenger-input.adult').text(optionValue);
         } else if (parentClass.hasClass('child')) {
             if (optionValue > (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.adult + FlightSearchConfig.flightForm.passenger.infant))) {
+                alert(alertText.over);
                 optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.adult + FlightSearchConfig.flightForm.passenger.infant));
             }
             FlightSearchConfig.flightForm.passenger.child = optionValue;
             $('.passenger-input.child').text( optionValue );
         } else if (parentClass.hasClass('infant')) {
             if (optionValue > FlightSearchConfig.flightForm.passenger.adult) {
+                alert(alertText.infant);
                 optionValue = FlightSearchConfig.flightForm.passenger.adult;
             } else {
                 if (optionValue > (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.adult))) {
+                    alert(alertText.over);
                     optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.adult));
                 }
             }
@@ -496,7 +569,8 @@ function flightFormSearchFunctions() {
 
     //*****
     // submit validation
-    $('.flight-submit-button').on('click',function (evt) {
+    $('.flight-submit-button').on('click', function (evt) {
+        $(this).prop('disabled',true);
         evt.preventDefault();
         validateFlightForm();
     });
@@ -513,9 +587,11 @@ function flightFormSearchFunctions() {
         } else {
             if (!FlightSearchConfig.flightForm.origin) {
                 alert('Please select your origin airport');
+                $('.flight-submit-button').removeProp('disabled');
             }
             if (!FlightSearchConfig.flightForm.destination) {
                 alert('Please select your destination airpot');
+                $('.flight-submit-button').removeProp('disabled');
             }
         }
     }

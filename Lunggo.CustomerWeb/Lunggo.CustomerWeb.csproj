@@ -675,6 +675,7 @@
     <Content Include="Assets\images\arrow-down.png" />
     <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\asita-logo.png" />
+    <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit\check.png" />

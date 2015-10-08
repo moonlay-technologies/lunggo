@@ -353,6 +353,10 @@ including in this file :
       width: 19%;
       margin-left: 1%;
       padding: 9px; }
+  .section-subscribe .subscribe-form.subscribed {
+    display: none; }
+    .section-subscribe .subscribe-form.subscribed h2 {
+      padding: 0; }
 
 /* section payment */
 .section-payment {

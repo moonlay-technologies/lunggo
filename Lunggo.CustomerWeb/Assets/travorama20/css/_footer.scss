@@ -24,6 +24,11 @@ including in this file :
         .subscribe-name {width:80%; float:left;}
         .btn {width:19%; margin-left:1%; padding:9px;}
     }
+    
+    .subscribe-form.subscribed {display:none;
+        h2 {padding:0;}
+    }
+
 }
 
 /* section payment */
