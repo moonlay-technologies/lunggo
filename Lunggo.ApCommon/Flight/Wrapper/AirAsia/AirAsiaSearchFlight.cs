@@ -43,6 +43,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                // [GET] Search Flight
                 var trip0 = conditions.Trips[0];
                 var url = @"http://booking.airasia.com/Flight/InternalSelect" +
                           @"?o1=" + trip0.OriginAirport +
@@ -58,107 +59,134 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                 Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
                 Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                Headers["User-Agent"] =
+                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 Headers["Origin"] = "https://booking2.airasia.com";
                 Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                 var html = DownloadString(url);
-                var searchedHtml = (CQ) html;
-                var availableFares = searchedHtml[".radio-markets"].MakeRoot();
-                IEnumerable<string> fareIds;
-                switch (conditions.CabinClass)
+
+                if (ResponseUri.AbsolutePath != "/Flight/InternalSelect")
+                    return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
+
+                // [Scrape]
+
+                try
                 {
-                    case CabinClass.Economy:
-                        fareIds = availableFares.Where(dom => dom.Id.Last() == '0').Select(dom => dom.Value);
-                        break;
-                    case CabinClass.Business:
-                        fareIds = availableFares.Where(dom => dom.Id.Last() == '1').Select(dom => dom.Value);
-                        break;
-                    default:
-                        fareIds = new List<string>();
-                        break;
-                }
-                var itins = new List<FlightItinerary>();
-                var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." + trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." + conditions.ChildCount + "." + conditions.InfantCount + "." + FlightService.ParseCabinClass(conditions.CabinClass) + ".";
-                foreach (var fareId in fareIds)
-                {
-                    url = "https://booking.airasia.com/Flight/PriceItinerary" +
-                          "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
-                    var itinHtml = (CQ) DownloadString(url);
-                    var price = itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n');
-                    var segmentsHtml = itinHtml[".price-display-segment"].Select(segHtml => segHtml.Cq().MakeRoot());
-                    var segments = new List<FlightSegment>();
-                    foreach (var segmentHtml in segmentsHtml)
+                    var searchedHtml = (CQ) html;
+                    var availableFares = searchedHtml[".radio-markets"].MakeRoot();
+                    IEnumerable<string> fareIds;
+                    switch (conditions.CabinClass)
                     {
-                        var flightNumberSet =
-                            (segmentHtml[".price-display-segment-designator > span"]).Text().Split(' ');
-                        var oriDest = segmentHtml[".price-display-segment-text"];
-                        var ori = oriDest[0].InnerText;
-                        var dest = oriDest[1].InnerText;
-                        var timingSet = segmentHtml[".price-display-segment-dates > span"];
-                        var departure = DateTime.ParseExact(timingSet[0].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
-                            CultureInfo.CreateSpecificCulture("id-ID"));
-                        var arrival = DateTime.ParseExact(timingSet[1].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
-                            CultureInfo.CreateSpecificCulture("id-ID"));
-                        segments.Add(new FlightSegment
-                        {
-                            AirlineCode = flightNumberSet[0],
-                            FlightNumber = flightNumberSet[1],
-                            CabinClass = conditions.CabinClass,
-                            Rbd = fareId,
-                            DepartureAirport = ori,
-                            DepartureTime = departure,
-                            ArrivalAirport = dest,
-                            ArrivalTime = arrival,
-                            OperatingAirlineCode = flightNumberSet[0],
-                            StopQuantity = 0
-                        });
+                        case CabinClass.Economy:
+                            fareIds = availableFares.Where(dom => dom.Id.Last() == '0').Select(dom => dom.Value);
+                            break;
+                        case CabinClass.Business:
+                            fareIds = availableFares.Where(dom => dom.Id.Last() == '1').Select(dom => dom.Value);
+                            break;
+                        default:
+                            fareIds = new List<string>();
+                            break;
                     }
-                    var itin = new FlightItinerary
+                    var itins = new List<FlightItinerary>();
+                    var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." +
+                                       trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." +
+                                       conditions.ChildCount + "." + conditions.InfantCount + "." +
+                                       FlightService.ParseCabinClass(conditions.CabinClass) + ".";
+                    foreach (var fareId in fareIds)
                     {
-                        AdultCount = conditions.AdultCount,
-                        ChildCount = conditions.ChildCount,
-                        InfantCount = conditions.InfantCount,
-                        CanHold = true,
-                        FareType = FareType.Published,
-                        RequireBirthDate = true,
-                        RequirePassport = false,
-                        RequireSameCheckIn = false,
-                        RequireNationality = true,
-                        RequestedCabinClass = CabinClass.Economy,
-                        TripType = TripType.OneWay,
-                        Supplier = FlightSupplier.AirAsia,
-                        SupplierCurrency = "IDR",
-                        SupplierRate = 1,
-                        SupplierPrice = decimal.Parse(price, CultureInfo.CreateSpecificCulture("id-ID")),
-                        FareId = fareIdPrefix + fareId,
-                        FlightTrips = new List<FlightTrip> {trip0}
+                        url = "https://booking.airasia.com/Flight/PriceItinerary" +
+                              "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                        var itinHtml = (CQ) DownloadString(url);
+                        var price =
+                            decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
+                                CultureInfo.CreateSpecificCulture("id-ID"));
+                        var segmentsHtml = itinHtml[".price-display-segment"].Select(segHtml => segHtml.Cq().MakeRoot());
+                        var segments = new List<FlightSegment>();
+                        foreach (var segmentHtml in segmentsHtml)
+                        {
+                            var flightNumberSet =
+                                (segmentHtml[".price-display-segment-designator > span"]).Text().Split(' ');
+                            var oriDest = segmentHtml[".price-display-segment-text"];
+                            var ori = oriDest[0].InnerText;
+                            var dest = oriDest[1].InnerText;
+                            var timingSet = segmentHtml[".price-display-segment-dates > span"];
+                            var departure = DateTime.ParseExact(timingSet[0].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
+                                CultureInfo.CreateSpecificCulture("id-ID"));
+                            var arrival = DateTime.ParseExact(timingSet[1].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
+                                CultureInfo.CreateSpecificCulture("id-ID"));
+                            segments.Add(new FlightSegment
+                            {
+                                AirlineCode = flightNumberSet[0],
+                                FlightNumber = flightNumberSet[1],
+                                CabinClass = conditions.CabinClass,
+                                Rbd = fareId,
+                                DepartureAirport = ori,
+                                DepartureTime = departure,
+                                ArrivalAirport = dest,
+                                ArrivalTime = arrival,
+                                OperatingAirlineCode = flightNumberSet[0],
+                                StopQuantity = 0
+                            });
+                        }
+                        var itin = new FlightItinerary
+                        {
+                            AdultCount = conditions.AdultCount,
+                            ChildCount = conditions.ChildCount,
+                            InfantCount = conditions.InfantCount,
+                            CanHold = true,
+                            FareType = FareType.Published,
+                            RequireBirthDate = true,
+                            RequirePassport = false,
+                            RequireSameCheckIn = false,
+                            RequireNationality = true,
+                            RequestedCabinClass = CabinClass.Economy,
+                            TripType = TripType.OneWay,
+                            Supplier = FlightSupplier.AirAsia,
+                            SupplierCurrency = "IDR",
+                            SupplierRate = 1,
+                            SupplierPrice = price,
+                            FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
+                            FlightTrips = new List<FlightTrip> {trip0}
+                        };
+                        itin.FlightTrips[0].Segments = segments;
+                        itins.Add(itin);
+                    }
+                    foreach (var itin in itins)
+                    {
+                        var oriFareId = itin.FareId.Split('.').Last();
+                        var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
+                        var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
+                        var durationRows = fareRow.Children().First().MakeRoot()[".fare-light-row"];
+                        var segments = itin.FlightTrips[0].Segments;
+                        itin.FlightTrips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
+                        {
+                            var durationTexts =
+                                durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
+                            var duration = new TimeSpan();
+                            duration =
+                                duration.Add(TimeSpan.ParseExact(durationTexts[0], "h'h'", CultureInfo.InvariantCulture));
+                            if (durationTexts.Count > 1)
+                                duration =
+                                    duration.Add(TimeSpan.ParseExact(durationTexts[1], "m'm'",
+                                        CultureInfo.InvariantCulture));
+                            segment.Duration = duration;
+                            return segment;
+                        }).ToList();
+                    }
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        FlightItineraries = itins
                     };
-                    itin.FlightTrips[0].Segments = segments;
-                    itins.Add(itin);
                 }
-                foreach (var itin in itins)
+                catch
                 {
-                    var oriFareId = itin.FareId.Split('.').Last();
-                    var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
-                    var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
-                    var durationRows = fareRow.Children().First().MakeRoot()[".fare-light-row"];
-                    var segments = itin.FlightTrips[0].Segments;
-                    itin.FlightTrips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
+                    return new SearchFlightResult
                     {
-                        var durationTexts = durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
-                        var duration = new TimeSpan();
-                        duration = duration.Add(TimeSpan.ParseExact(durationTexts[0], "h'h'", CultureInfo.InvariantCulture));
-                        if (durationTexts.Count > 1)
-                            duration = duration.Add(TimeSpan.ParseExact(durationTexts[1], "m'm'", CultureInfo.InvariantCulture));
-                        segment.Duration = duration;
-                        return segment;
-                    }).ToList();
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                    };
                 }
-                return new SearchFlightResult
-                {
-                    IsSuccess = true,
-                    FlightItineraries = itins
-                };
             }
         }
     }

@@ -62,7 +62,7 @@
                 }).done(function(returnData) {
 
                     if (returnData.Discount > 0) {
-                        
+
                         $('.voucher-value span').html(numberWithCommas(returnData.Discount));
                         voucherPriceAfter = voucherPriceBefore - returnData.Discount;
                         $('.voucher-price-after span').html(numberWithCommas(voucherPriceAfter));
@@ -103,6 +103,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
+    var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
 
@@ -114,6 +115,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
+        needNationality = Model.Itinerary.RequireNationality;
         token = Model.Token;
     }
     catch
@@ -122,7 +124,7 @@
     }
 }
 
-@switch ((string) ViewBag.Message)
+@switch ((string)ViewBag.Message)
 {
     default:
 
@@ -133,10 +135,12 @@
                 <div class="container">
                     <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00088")</strong></div>
                     <hr>
-                    <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
-                                                                                       {
-                                                                                           <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
-                                                                                       }</h1>
+                    <h1>
+                        <b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
+                        }
+                    </h1>
                 </div>
             </header>
 
@@ -145,7 +149,7 @@
                     <div class="row">
 
                         <div class="col-sm-8">
-                        
+
                             <section class="login-field">
                                 <form class="form form-inline">
                                     <div class="row">
@@ -265,6 +269,16 @@
                                                 </div>
                                             </div>
                                         }
+                                        else if (needNationality)
+                                        {
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 34%;">
+                                                    <label for="" class="control-label">Nationality</label>
+                                                    <input type="type" name="name" value="" class="passport-country form-control" style="width: 100%;" />
+                                                    <input type="type" name="name" value="" class="passport-country_code hidden" />
+                                                </div>
+                                            </div>
+                                        }
                                         <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                                     }
                                 </section><!-- .customer-form -->
@@ -310,8 +324,14 @@
 
                                 </section><!-- .payment-form -->
                                 <section class="payment-button">
-                                    <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
-                                    <small>@Html.I18NString("CW00109")</small>
+                                    >Dengan klik tombol "Bayar", Anda te
+                                    ef="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
+                                    <small>@Html.I18NString("CW0010
+                                    9")</small>
+                                    <small>
+                                    ef="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
+                                    <small>@Html.I18NString("CW0010
+                                    9")</small>
                                     <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-token="@token">@Html.I18NString("CW00108")</button>
                                 </section><!-- .payment-button -->
                             </section><!-- .customer-detail -->
@@ -380,7 +400,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr/>
+                                        <hr />
                                         <div class="row">
                                             <div class="col-sm-6">Final price</div>
                                             <div class="col-sm-6 voucher-price-after">Rp <span>@Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span></div>
@@ -411,14 +431,14 @@
 
         </div>
         <!-- .checkout-page content end -->
-        break;
+                                break;
     case "BookExpired":
-        @:[Ini ceritanya page booking expired]
+    @:[Ini ceritanya page booking expired]
         break;
     case "NoLongerAvailable":
-        @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
+    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
         break;
     case "InvalidInputData":
-        @:[Ini ceritanya page kalo input datanya ga bener]
+    @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }

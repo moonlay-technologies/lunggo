@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
@@ -24,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             bookInfo.FareId =
-                "CGK.KUL.19.10.2015.1.0.0.y.0~Z~~Z01H00~AAB1~~73~X|AK~ 381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
+                "CGK.KUL.19.10.2015.1.0.0.y.100000.0~Z~~Z01H00~AAB1~~73~X|AK~ 381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
             bookInfo.ContactData = new ContactData
             {
                 Name = "Indera Aji Waskitho",
@@ -52,18 +54,33 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         private partial class AirAsiaClientHandler
         {
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
-            {
-                var splittedFareId = bookInfo.FareId.Split('.').ToList();
-                var origin = splittedFareId[0];
-                var dest = splittedFareId[1];
-                var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
-                var adultCount = int.Parse(splittedFareId[5]);
-                var childCount = int.Parse(splittedFareId[6]);
-                var infantCount = int.Parse(splittedFareId[7]);
-                var cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
-                var coreFareId = splittedFareId[9];
+            { 
+                string origin, dest, coreFareId;
+                DateTime date;
+                int adultCount, childCount, infantCount;
+                CabinClass cabinClass;
+                decimal price;
 
-                // SEARCH
+                try
+                {
+                    var splittedFareId = bookInfo.FareId.Split('.').ToList();
+                    origin = splittedFareId[0];
+                    dest = splittedFareId[1];
+                    date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]),
+                        int.Parse(splittedFareId[2]));
+                    adultCount = int.Parse(splittedFareId[5]);
+                    childCount = int.Parse(splittedFareId[6]);
+                    infantCount = int.Parse(splittedFareId[7]);
+                    cabinClass = FlightService.ParseCabinClass(splittedFareId[8]);
+                    price = decimal.Parse(splittedFareId[9]);
+                    coreFareId = splittedFareId[10];
+                }
+                catch
+                {
+                    return new BookFlightResult{ Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+                }
+
+                // [POST] Search Flight
 
                 var date2 = date.AddDays(1);
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -103,7 +120,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
 
-                // SELECT
+                if (ResponseUri.AbsolutePath != "Select.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+
+                // [POST] Select Flight
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -145,7 +165,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 UploadString(@"https://booking2.airasia.com/Select.aspx", postData);
 
-                // INPUT DATA (TRAVELER)
+                if (ResponseUri.AbsolutePath != "Traveler.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+
+                // [POST] Input Data
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -239,7 +262,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Traveler.aspx", postData);
 
-                // SELECT SEAT (UNITMAP)
+                if (ResponseUri.AbsolutePath != "UnitMap.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+
+                // [POST] Select Seat
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -264,6 +290,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&HiddenFieldPageBookingData=" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/UnitMap.aspx", postData);
+
+                if (ResponseUri.AbsolutePath != "Payment.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
                 // SELECT HOLD (PAYMENT)
 
@@ -292,7 +321,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 
-                // COMMIT HOLD (PAYMENT)
+                if (ResponseUri.AbsolutePath != "Traveler.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+
+                // [POST] Select Hold
 
                 Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -318,35 +350,61 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 
-                // WAIT
+                if (ResponseUri.AbsolutePath != "Wait.aspx")
+                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
-                Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                Headers["Accept-Encoding"] = null;
-                Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                Headers["Origin"] = "https://booking2.airasia.com";
-                Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                var html = DownloadString(@"https://booking2.airasia.com/Wait.aspx");
+                // [GET] Wait for Book
 
-                var cqHtml = (CQ) html;
-                var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
-                var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
-                var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n').Substring(0, timeLimitTexts[2].Trim(' ', '\n').Length - 2);
-                var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
-                var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
-                var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
-                var timeLimit = timeLimitDate.Add(timeLimitTime);
-                return new BookFlightResult
+                string itinHtml = "";
+                var sw = Stopwatch.StartNew();
+                while (ResponseUri.AbsolutePath != "Itinerary.aspx" && sw.Elapsed <= new TimeSpan(0, 1, 0))
                 {
-                    IsSuccess = true,
-                    Status = new BookingStatusInfo
+                    Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                    Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                    Headers["Accept-Encoding"] = null;
+                    Headers["Upgrade-Insecure-Requests"] = "1";
+                    Headers["User-Agent"] =
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                    Headers["Origin"] = "https://booking2.airasia.com";
+                    Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                    itinHtml = DownloadString(@"https://booking2.airasia.com/Wait.aspx");
+                    if (ResponseUri.AbsolutePath != "Itinerary.aspx")
+                        Thread.Sleep(new TimeSpan(0,0,2));
+                }
+
+                if (ResponseUri.AbsolutePath != "Itinerary.aspx")
+                    return new BookFlightResult { IsSuccess = false };
+
+                try
+                {
+                    var cqHtml = (CQ) itinHtml;
+                    var bookingId = cqHtml["#OptionalHeaderContent_lblBookingNumber"].Text();
+                    var timeLimitTexts = cqHtml["#mainContent > p"].Text().Split('\n', ',');
+                    var timeLimitDateText = timeLimitTexts[2].Trim(' ', '\n')
+                        .Substring(0, timeLimitTexts[2].Trim(' ', '\n').Length - 2);
+                    var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
+                    var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
+                    var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
+                    var timeLimit = timeLimitDate.Add(timeLimitTime);
+                    return new BookFlightResult
                     {
-                        BookingId = bookingId,
-                        BookingStatus = BookingStatus.Booked,
-                        TimeLimit = timeLimit
-                    }
-                };
+                        IsSuccess = true,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingId = bookingId,
+                            BookingStatus = BookingStatus.Booked,
+                            TimeLimit = timeLimit
+                        }
+                    };
+                }
+                catch
+                {
+                    return new BookFlightResult
+                    {
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Web Layout Changed!" }
+                    };
+                }
             }
         }
     }
