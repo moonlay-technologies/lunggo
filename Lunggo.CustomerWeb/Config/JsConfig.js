@@ -45,4 +45,4 @@ var CheckVoucherConfig = {
 
 var SubscribeConfig = {
     Url: 'http://localhost:1147/api/v1/newsletter/subscribe'
-}
+};

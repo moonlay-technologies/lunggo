@@ -2,7 +2,7 @@
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter.Query
 {
-    public class CheckEmailQuery : QueryBase<CheckEmailQuery, bool>
+    public class CheckEmailQuery : QueryBase<CheckEmailQuery, int>
     {
         protected override string GetQuery(dynamic condition = null)
         {

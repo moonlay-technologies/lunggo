@@ -309,6 +309,7 @@ namespace Lunggo.Configuration
             const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
+            const string subscribePath = @"/api/v1/newsletter/subscribe";
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
             fileTemplate.Reset();
@@ -322,6 +323,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
+            fileTemplate.SetAttribute("subscribePath", subscribePath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

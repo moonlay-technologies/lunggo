@@ -42,3 +42,7 @@ var AirlineAutocompleteConfig = {
 var CheckVoucherConfig = {
     Url: '$apiUrl$$checkVoucherPath$'
 };
+
+var SubscribeConfig = {
+    Url: '$apiUrl$$subscribePath$'
+};
