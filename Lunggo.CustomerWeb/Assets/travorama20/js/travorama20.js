@@ -108,9 +108,6 @@ function indexPageFunctions() {
     // change header background
     function changeTheme(location) {
         location = location.toLowerCase();
-        $('html,  body').stop().animate({
-            scrollTop : 0
-        });
         var backgroundImage = "";
         var locationCode = '';
         if ( location.length > 0 ) {
@@ -153,6 +150,9 @@ function indexPageFunctions() {
             $('.form-flight-destination').val(location);
             $('.slider').css('background-image','url('+backgroundImage+')');
             FlightSearchConfig.flightForm.destination = locationCode;
+            $('html,  body').stop().animate({
+                scrollTop: 0
+            });
         }
     }
 
@@ -318,6 +318,11 @@ function flightFormSearchFunctions() {
                 $('.search-location .location-recommend').show();
                 $('.search-location .location-search').hide();
             }
+        }
+    });
+    $('.form-flight-location').keydown(function(evt) {
+        if (evt.keyCode == 9 || evt.which == 9) {
+            evt.preventDefault();
         }
     });
 
