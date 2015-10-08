@@ -90,6 +90,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
+                        var segmentFareIds
                         var segmentsHtml = itinHtml[".price-display-segment"].Select(segHtml => segHtml.Cq().MakeRoot());
                         var segments = new List<FlightSegment>();
                         foreach (var segmentHtml in segmentsHtml)
@@ -100,13 +101,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             var ori = oriDest[0].InnerText;
                             var dest = oriDest[1].InnerText;
                             var timingSet = segmentHtml[".price-display-segment-dates > span"];
-                            var dateTimeInfo = DateTimeFormatInfo.GetInstance(CultureInfo.CreateSpecificCulture("id-ID"));
-                            dateTimeInfo.MonthNames[11] = "Nopember";
                             var departure = DateTime.ParseExact(timingSet[0].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
                                 CultureInfo.CreateSpecificCulture("id-ID"));
                             var arrival = DateTime.ParseExact(timingSet[1].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
                                 CultureInfo.CreateSpecificCulture("id-ID"));
-                            dateTimeInfo.MonthNames[11] = "November";
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = flightNumberSet[0],
