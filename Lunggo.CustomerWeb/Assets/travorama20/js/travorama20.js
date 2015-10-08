@@ -399,10 +399,10 @@ function flightFormSearchFunctions() {
     $('.form-flight-return').click(function() {
         if (FlightSearchConfig.flightForm.departureDate) {
             $('.date-picker').datepicker('option', 'minDate', new Date(FlightSearchConfig.flightForm.departureDate));
-            showCalendar('return');
         } else {
-            $('.form-flight-departure').click();
+            $('.date-picker').datepicker('option', 'minDate', new Date());
         }
+        showCalendar('return');
     });
     // embed date picker into page
     $('.date-picker').datepicker({
