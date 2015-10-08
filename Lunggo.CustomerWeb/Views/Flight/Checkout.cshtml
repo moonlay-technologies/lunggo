@@ -62,7 +62,7 @@
                 }).done(function(returnData) {
 
                     if (returnData.Discount > 0) {
-
+                        
                         $('.voucher-value span').html(numberWithCommas(returnData.Discount));
                         voucherPriceAfter = voucherPriceBefore - returnData.Discount;
                         $('.voucher-price-after span').html(numberWithCommas(voucherPriceAfter));
@@ -124,7 +124,7 @@
     }
 }
 
-@switch ((string)ViewBag.Message)
+@switch ((string) ViewBag.Message)
 {
     default:
 
@@ -135,12 +135,10 @@
                 <div class="container">
                     <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00088")</strong></div>
                     <hr>
-                    <h1>
-                        <b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
-                        {
-                            <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
-                        }
-                    </h1>
+                    <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
+                                                                                       {
+                                                                                           <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
+                                                                                       }</h1>
                 </div>
             </header>
 
@@ -149,7 +147,7 @@
                     <div class="row">
 
                         <div class="col-sm-8">
-
+                        
                             <section class="login-field">
                                 <form class="form form-inline">
                                     <div class="row">
@@ -324,14 +322,8 @@
 
                                 </section><!-- .payment-form -->
                                 <section class="payment-button">
-                                    >Dengan klik tombol "Bayar", Anda te
-                                    ef="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
-                                    <small>@Html.I18NString("CW0010
-                                    9")</small>
-                                    <small>
-                                    ef="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
-                                    <small>@Html.I18NString("CW0010
-                                    9")</small>
+                                    <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
+                                    <small>@Html.I18NString("CW00109")</small>
                                     <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-token="@token">@Html.I18NString("CW00108")</button>
                                 </section><!-- .payment-button -->
                             </section><!-- .customer-detail -->
@@ -350,17 +342,17 @@
                                         </h5>
                                         <div class="row flight-route">
                                             <div class="col-sm-6 text-right flight-origin">
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.First().DepartureAirport</strong></h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.First().DepartureAirport</strong></h5>
                                                 <h5>@trip.OriginAirportName</h5>
                                                 <h5>@trip.OriginCity</h5>
                                             </div>
                                             <div class="separator">@Html.I18NString("CW00034")</div>
                                             <div class="col-sm-6 text-left flight-destination">
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.Last().ArrivalAirport</strong></h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.Last().ArrivalAirport</strong></h5>
                                                 <h5>@trip.DestinationAirportName</h5>
                                                 <h5>@trip.DestinationCity</h5>
                                             </div>
@@ -400,7 +392,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr />
+                                        <hr/>
                                         <div class="row">
                                             <div class="col-sm-6">Final price</div>
                                             <div class="col-sm-6 voucher-price-after">Rp <span>@Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span></div>
@@ -431,14 +423,16 @@
 
         </div>
         <!-- .checkout-page content end -->
-                                break;
+        break;
     case "BookExpired":
-    @:[Ini ceritanya page booking expired]
+        @:[Ini ceritanya page booking expired]
         break;
     case "NoLongerAvailable":
-    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
+        @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
         break;
     case "InvalidInputData":
-    @:[Ini ceritanya page kalo input datanya ga bener]
+        @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }
+Status API Training Shop Blog About Pricing
+© 2015 GitHub, Inc. Terms Privacy Security Contact Help

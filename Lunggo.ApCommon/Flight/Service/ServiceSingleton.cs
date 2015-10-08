@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             //_sriwijayaWrapper.SearchFlight(conditions);
             //return MystiflyWrapper.SearchFlight(conditions);
@@ -58,13 +58,13 @@ namespace Lunggo.ApCommon.Flight.Service
             return MystiflyWrapper.SpecificSearchFlight(conditions);
         }
 
-        public RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
+        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
             //return MystiflyWrapper.RevalidateFare(conditions);
             return AirAsiaWrapper.RevalidateFare(conditions);
         }
 
-        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
             var supplier = IdUtil.GetSupplier(bookInfo.FareId);
             switch (supplier)

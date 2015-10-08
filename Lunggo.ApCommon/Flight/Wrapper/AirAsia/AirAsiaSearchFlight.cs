@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +13,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Web;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -22,20 +24,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
     {
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
-            conditions = new SearchFlightConditions();
-            conditions.Trips = new List<FlightTrip>
-            {
-                new FlightTrip
-                {
-                    OriginAirport = "CGK",
-                    DestinationAirport = "HND",
-                    DepartureDate = new DateTime(2015,10,13)
-                }
-            };
-            conditions.AdultCount = 1;
-            conditions.ChildCount = 1;
-            conditions.InfantCount = 1;
-            conditions.CabinClass = CabinClass.Economy;
             return Client.SearchFlight(conditions);
         }
 
@@ -43,6 +31,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                var client = new ExtendedWebClient();
+
                 // [GET] Search Flight
                 var trip0 = conditions.Trips[0];
                 var url = @"http://booking.airasia.com/Flight/InternalSelect" +
@@ -56,16 +46,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                           @"&mon=true" +
                           @"&culture=id-ID" +
                           @"&cc=IDR";
-                Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] =
+                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                client.Headers["Upgrade-Insecure-Requests"] = "1";
+                client.Headers["User-Agent"] =
                     "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                Headers["Origin"] = "https://booking2.airasia.com";
-                Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                var html = DownloadString(url);
+                client.Headers["Origin"] = "https://booking2.airasia.com";
+                client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                var html = client.DownloadString(url);
 
-                if (ResponseUri.AbsolutePath != "/Flight/InternalSelect")
+                if (client.ResponseUri.AbsolutePath != "/Flight/Select")
                     return new SearchFlightResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
                 // [Scrape]
@@ -73,7 +63,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 try
                 {
                     var searchedHtml = (CQ) html;
-                    var availableFares = searchedHtml[".radio-markets"].MakeRoot();
+                    var availableFares = searchedHtml[".radio-markets"];
                     IEnumerable<string> fareIds;
                     switch (conditions.CabinClass)
                     {
@@ -96,7 +86,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     {
                         url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
-                        var itinHtml = (CQ) DownloadString(url);
+                        var itinHtml = (CQ) client.DownloadString(url);
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
@@ -110,16 +100,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             var ori = oriDest[0].InnerText;
                             var dest = oriDest[1].InnerText;
                             var timingSet = segmentHtml[".price-display-segment-dates > span"];
+                            var dateTimeInfo = DateTimeFormatInfo.GetInstance(CultureInfo.CreateSpecificCulture("id-ID"));
+                            dateTimeInfo.MonthNames[11] = "Nopember";
                             var departure = DateTime.ParseExact(timingSet[0].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
                                 CultureInfo.CreateSpecificCulture("id-ID"));
                             var arrival = DateTime.ParseExact(timingSet[1].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
                                 CultureInfo.CreateSpecificCulture("id-ID"));
+                            dateTimeInfo.MonthNames[11] = "November";
                             segments.Add(new FlightSegment
                             {
                                 AirlineCode = flightNumberSet[0],
-                                FlightNumber = flightNumberSet[1],
+                                FlightNumber = flightNumberSet[2],
                                 CabinClass = conditions.CabinClass,
-                                Rbd = fareId,
+                                Rbd = fareId.Split('~')[1],
                                 DepartureAirport = ori,
                                 DepartureTime = departure,
                                 ArrivalAirport = dest,
@@ -158,7 +151,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
                         var durationRows = fareRow.Children().First().MakeRoot()[".fare-light-row"];
                         var segments = itin.FlightTrips[0].Segments;
-                        itin.FlightTrips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
+                        var newSegments = segments.Zip(durationRows, (segment, durationRow) =>
                         {
                             var durationTexts =
                                 durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
@@ -172,6 +165,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             segment.Duration = duration;
                             return segment;
                         }).ToList();
+                        itin.FlightTrips[0].Segments = newSegments;
                     }
                     return new SearchFlightResult
                     {

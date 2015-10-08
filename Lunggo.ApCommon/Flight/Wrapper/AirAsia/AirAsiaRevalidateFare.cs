@@ -10,6 +10,8 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Web;
+using Microsoft.WindowsAzure.Storage;
 using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
@@ -18,8 +20,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
     {
         internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
         {
-            conditions.FareId =
-                "CGK.KUL.19.10.2015.1.0.0.y.100000.0~ZF~~Z01H00~AAB1~~73~X|AK~ 2381~ ~~CGK~10/19/2015 08:35~KUL~10/19/2015 11:35~";
             return Client.RevalidateFare(conditions);
         }
 
@@ -27,6 +27,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
             {
+                var client = new ExtendedWebClient();
+
                 if (conditions.FareId == null)
                 {
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
@@ -69,16 +71,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                           @"&mon=true" +
                           @"&culture=id-ID" +
                           @"&cc=IDR";
-                Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] =
+                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                client.Headers["Upgrade-Insecure-Requests"] = "1";
+                client.Headers["User-Agent"] =
                     "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                Headers["Origin"] = "https://booking2.airasia.com";
-                Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                var html = DownloadString(url);
+                client.Headers["Origin"] = "https://booking2.airasia.com";
+                client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                var html = client.DownloadString(url);
 
-                if (ResponseUri.AbsolutePath != "/Flight/InternalSelect")
+                if (client.ResponseUri.AbsolutePath != "/Flight/InternalSelect")
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
                 var searchedHtml = (CQ) html;
@@ -120,7 +122,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                         url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
-                        var itinHtml = (CQ) DownloadString(url);
+                        var itinHtml = (CQ) client.DownloadString(url);
                         var newPrice =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
