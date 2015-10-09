@@ -747,6 +747,8 @@
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
+    <Content Include="Assets\images\flight-review-title-bg.png" />
+    <Content Include="Assets\images\flight-review-title-sprite.png" />
     <Content Include="Assets\images\flight-segment-separator.png" />
     <Content Include="Assets\images\flight-sort-switch.png" />
     <Content Include="Assets\images\flight-switch-horizontal.png" />

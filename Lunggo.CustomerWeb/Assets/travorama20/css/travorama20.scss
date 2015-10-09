@@ -8,6 +8,7 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /* variables */
 $color-main-blue:#1daee4;
+$color-main-orange:#ff7200;
 $border-default:1px solid #ccc;
 $border-radius-default:4px;
 
@@ -35,6 +36,8 @@ $border-radius-default:4px;
 /*--------------------*/
 /* general class */
 body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased;}
+body {overflow:hidden;}
+.no-scroll {overflow:hidden;}
 
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4b4b4b; font-weight:bold;}
 .btn.btn-grey {background:#adadad; color:#fff; font-weight:bold;}
