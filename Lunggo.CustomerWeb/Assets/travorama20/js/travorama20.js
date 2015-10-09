@@ -1,6 +1,8 @@
-﻿$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+﻿$(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+var app = angular.module('travorama', ['ngRoute']);
 
 //********************
 // variables

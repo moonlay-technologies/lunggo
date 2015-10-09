@@ -941,6 +941,7 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenMedium.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\travorama20\js\flightController.js" />
     <Content Include="Assets\travorama20\js\bootstrap.min.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
     <Content Include="Assets\vendor\countrySelect\css\countrySelect.min.css" />
@@ -2222,6 +2223,8 @@
     <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
     <Content Include="Views\Travorama20\flightReturn.cshtml" />
+    <None Include="Views\Flight\SearchResultList-Return.cshtml.bak" />
+    <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />

@@ -15,9 +15,6 @@ body {
   letter-spacing: 0.5px;
   -webkit-font-smoothing: subpixel-antialiased; }
 
-body {
-  overflow: hidden; }
-
 .no-scroll {
   overflow: hidden; }
 
@@ -2073,13 +2070,14 @@ file: /Assets/travorama20/css/_page_flight.scss
   top: 0;
   left: 0;
   background: rgba(100, 100, 100, 0.7);
-  z-index: 100; }
-  .flight-review-wrapper > .active {
-    overflow: auto;
-    display: none; }
-    .flight-review-wrapper > .active .flight-review {
-      height: auto; }
-      .flight-review-wrapper > .active .flight-review .flight-review-detail {
+  z-index: 100;
+  display: none; }
+  .flight-review-wrapper.active {
+    overflow: auto; }
+    .flight-review-wrapper.active .flight-review {
+      height: auto;
+      position: relative; }
+      .flight-review-wrapper.active .flight-review .flight-review-detail {
         display: block; }
   .flight-review-wrapper .flight-review {
     -webkit-border-radius: 4px;
