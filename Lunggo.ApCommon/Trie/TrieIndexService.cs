@@ -50,6 +50,7 @@ namespace Lunggo.ApCommon.Trie
                 AirportIndex.InsertWord(airport.Value.Code, airport.Key);
                 AirportIndex.InsertWordsBySentence(airport.Value.Name, airport.Key);
                 AirportIndex.InsertWordsBySentence(airport.Value.City, airport.Key);
+                AirportIndex.InsertWordsBySentence(airport.Value.Country, airport.Key);
             }
         }
 

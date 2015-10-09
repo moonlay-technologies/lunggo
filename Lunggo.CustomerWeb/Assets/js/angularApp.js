@@ -231,44 +231,44 @@
                 switch(sort)
                 {
                     case 'airline':
-                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
+                        $scope.sort.value = 'Trips[0].Airlines[0].Name';
                         break;
                     case 'departure':
-                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        $scope.sort.value = 'Trips[0].Segments[0].DepartureTime';
                         break;
                     case 'duration':
-                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
+                        $scope.sort.value = 'Trips[0].TotalDuration';
                         break;
                     case 'arrival':
-                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        $scope.sort.value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
                         break;
                     case 'price':
                         $scope.sort.value = 'TotalFare';
                         break;
                     // return flight
                     case 'departAirline':
-                        $scope.sort.value = 'FlightTrips[0].Airlines[0].Name';
+                        $scope.sort.value = 'Trips[0].Airlines[0].Name';
                         break;
                     case 'departDeparture':
-                        $scope.sort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        $scope.sort.value = 'Trips[0].Segments[0].DepartureTime';
                         break;
                     case 'departDuration':
-                        $scope.sort.value = 'FlightTrips[0].TotalDuration';
+                        $scope.sort.value = 'Trips[0].TotalDuration';
                         break;
                     case 'departArrival':
-                        $scope.sort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        $scope.sort.value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
                         break;
                     case 'returnAirline':
-                        $scope.sort.value = 'FlightTrips[1].Airlines[0].Name';
+                        $scope.sort.value = 'Trips[1].Airlines[0].Name';
                         break;
                     case 'returnDeparture':
-                        $scope.sort.value = 'FlightTrips[1].FlightSegments[0].DepartureTime';
+                        $scope.sort.value = 'Trips[1].Segments[0].DepartureTime';
                         break;
                     case 'returnDuration':
-                        $scope.sort.value = 'FlightTrips[1].TotalDuration';
+                        $scope.sort.value = 'Trips[1].TotalDuration';
                         break;
                     case 'returnArrival':
-                        $scope.sort.value = 'FlightTrips[1].FlightSegments[(FlightTrips[1].FlightSegments.length-1)].ArrivalTime';
+                        $scope.sort.value = 'Trips[1].Segments[(Trips[1].Segments.length-1)].ArrivalTime';
                         break;
                 }
             }
@@ -362,16 +362,16 @@
             }
 
             $scope.timeFilter = function (flight) {
-                if ($scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) >= $scope.FlightSearchFilter.OnwardDepart.CurrentMin
-                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) <= $scope.FlightSearchFilter.OnwardDepart.CurrentMax
-                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.OnwardArrival.CurrentMin
-                    && $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.OnwardArrival.CurrentMax) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= $scope.FlightSearchFilter.OnwardDepart.CurrentMin
+                    && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= $scope.FlightSearchFilter.OnwardDepart.CurrentMax
+                    && $scope.getHour(flight.Trips[0].Segments[(flight.Trips[0].Segments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.OnwardArrival.CurrentMin
+                    && $scope.getHour(flight.Trips[0].Segments[(flight.Trips[0].Segments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.OnwardArrival.CurrentMax) {
                     if (FlightSearchConfig.params.TripType == 'Return') {
 
-                        if ($scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) >= $scope.FlightSearchFilter.ReturnDepart.CurrentMin
-                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[0].DepartureTime) <= $scope.FlightSearchFilter.ReturnDepart.CurrentMax
-                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.ReturnArrival.CurrentMin
-                            && $scope.getHour(flight.FlightTrips[1].FlightSegments[(flight.FlightTrips[1].FlightSegments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.ReturnArrival.CurrentMax) {
+                        if ($scope.getHour(flight.Trips[1].Segments[0].DepartureTime) >= $scope.FlightSearchFilter.ReturnDepart.CurrentMin
+                            && $scope.getHour(flight.Trips[1].Segments[0].DepartureTime) <= $scope.FlightSearchFilter.ReturnDepart.CurrentMax
+                            && $scope.getHour(flight.Trips[1].Segments[(flight.Trips[1].Segments.length - 1)].ArrivalTime) >= $scope.FlightSearchFilter.ReturnArrival.CurrentMin
+                            && $scope.getHour(flight.Trips[1].Segments[(flight.Trips[1].Segments.length - 1)].ArrivalTime) <= $scope.FlightSearchFilter.ReturnArrival.CurrentMax) {
                             return flight;
                         }
 
@@ -384,17 +384,17 @@
             $scope.stopFilter = function (flight) {
 
                 if ($scope.FlightSearchFilter.StopFilter.direct) {
-                    if ( flight.FlightTrips[0].TotalTransit == 0 ) {
+                    if ( flight.Trips[0].TotalTransit == 0 ) {
                         return flight;
                     }
                 }
                 if ( $scope.FlightSearchFilter.StopFilter.one ) {
-                    if (flight.FlightTrips[0].TotalTransit == 1) {
+                    if (flight.Trips[0].TotalTransit == 1) {
                         return flight;
                     }
                 }
                 if ($scope.FlightSearchFilter.StopFilter.two) {
-                    if (flight.FlightTrips[0].TotalTransit > 1) {
+                    if (flight.Trips[0].TotalTransit > 1) {
                         return flight;
                     }
                 }
@@ -468,14 +468,14 @@
 
                         flightList.list[i].AirlinesTag = [];
                         $scope.FlightSearchFilter.Prices.push(flightList.list[i].TotalFare);
-                        for (var x = 0 ; x < flightList.list[i].FlightTrips[0].Airlines.length; x++) {
-                            $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[0].Airlines[x]);
-                            flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[0].Airlines[x].Code);
+                        for (var x = 0 ; x < flightList.list[i].Trips[0].Airlines.length; x++) {
+                            $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].Trips[0].Airlines[x]);
+                            flightList.list[i].AirlinesTag.push(flightList.list[i].Trips[0].Airlines[x].Code);
                         }
                         if (flightList.list[i].TripType == 2) {
-                            for (var x = 0 ; x < flightList.list[i].FlightTrips[1].Airlines.length; x++) {
-                                $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].FlightTrips[1].Airlines[x]);
-                                flightList.list[i].AirlinesTag.push(flightList.list[i].FlightTrips[1].Airlines[x].Code);
+                            for (var x = 0 ; x < flightList.list[i].Trips[1].Airlines.length; x++) {
+                                $scope.FlightSearchFilter.AirlinesList.push(flightList.list[i].Trips[1].Airlines[x]);
+                                flightList.list[i].AirlinesTag.push(flightList.list[i].Trips[1].Airlines[x].Code);
                             }
                         }
                         flightList.list[i].FareLoaded = false;
@@ -1158,9 +1158,9 @@
                     targetScope.flightFilterData.price.push(flightData.FlightList[i].TotalFare);
                     // generate airline filter data
                     targetScope.flightList[i].AirlinesTag = [];
-                    for (var x = 0 ; x < targetScope.flightList[i].FlightTrips[0].Airlines.length; x++) {
-                        targetScope.flightFilterData.airline.push(targetScope.flightList[i].FlightTrips[0].Airlines[x]);
-                        targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].FlightTrips[0].Airlines[x].Code);
+                    for (var x = 0 ; x < targetScope.flightList[i].Trips[0].Airlines.length; x++) {
+                        targetScope.flightFilterData.airline.push(targetScope.flightList[i].Trips[0].Airlines[x]);
+                        targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].Trips[0].Airlines[x].Code);
                     }
                 }
 
@@ -1296,17 +1296,17 @@
 
                 return function(flight) {
                     if (targetScope.flightFilter.value.transit[0]) {
-                        if (flight.FlightTrips[0].TotalTransit == 0) {
+                        if (flight.Trips[0].TotalTransit == 0) {
                             return flight;
                         }
                     }
                     if (targetScope.flightFilter.value.transit[1]) {
-                        if (flight.FlightTrips[0].TotalTransit == 1) {
+                        if (flight.Trips[0].TotalTransit == 1) {
                             return flight;
                         }
                     }
                     if (targetScope.flightFilter.value.transit[2]) {
-                        if (flight.FlightTrips[0].TotalTransit > 1) {
+                        if (flight.Trips[0].TotalTransit > 1) {
                             return flight;
                         }
                     }
@@ -1360,10 +1360,10 @@
             $scope.timeFilter = function (targetFlight) {
                 var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
                 return function (flight) {
-                    if ($scope.getHour(flight.FlightTrips[0].FlightSegments[0].DepartureTime) >= targetScope.flightFilter.value.time.departure.value[0] &&
-                        $scope.getHour(flight.FlightTrips[0].FlightSegments[( flight.FlightTrips[0].FlightSegments.length - 1 )].DepartureTime) <= targetScope.flightFilter.value.time.departure.value[1] &&
-                        $scope.getHour(flight.FlightTrips[0].FlightSegments[0].ArrivalTime) >= targetScope.flightFilter.value.time.arrival.value[0] &&
-                        $scope.getHour(flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length - 1)].ArrivalTime) <= targetScope.flightFilter.value.time.arrival.value[1]){
+                    if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= targetScope.flightFilter.value.time.departure.value[0] &&
+                        $scope.getHour(flight.Trips[0].Segments[( flight.Trips[0].Segments.length - 1 )].DepartureTime) <= targetScope.flightFilter.value.time.departure.value[1] &&
+                        $scope.getHour(flight.Trips[0].Segments[0].ArrivalTime) >= targetScope.flightFilter.value.time.arrival.value[0] &&
+                        $scope.getHour(flight.Trips[0].Segments[(flight.Trips[0].Segments.length - 1)].ArrivalTime) <= targetScope.flightFilter.value.time.arrival.value[1]){
                         return flight;
                     }
                 }
@@ -1392,13 +1392,13 @@
                 targetFlight.flightSort.label = label;
                 switch (label) {
                     case 'airline':
-                        targetFlight.flightSort.value = 'FlightTrips[0].Airlines[0].Name';
+                        targetFlight.flightSort.value = 'Trips[0].Airlines[0].Name';
                         break;
                     case 'departure':
-                        targetFlight.flightSort.value = 'FlightTrips[0].FlightSegments[0].DepartureTime';
+                        targetFlight.flightSort.value = 'Trips[0].Segments[0].DepartureTime';
                         break;
                     case 'arrival':
-                        targetFlight.flightSort.value = 'FlightTrips[0].FlightSegments[(FlightTrips[0].FlightSegments.length-1)].ArrivalTime';
+                        targetFlight.flightSort.value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
                         break;
                     case 'price':
                         targetFlight.flightSort.value = 'TotalFare';

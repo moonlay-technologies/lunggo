@@ -1297,7 +1297,7 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightSegment[] FlightSegmentsField;
+        private Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightSegment[] FlightFlightSegmentsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1312,11 +1312,11 @@ namespace Lunggo.ApCommon.Mystifly.OnePointService.Flight {
         [System.Runtime.Serialization.DataMemberAttribute()]
         internal Lunggo.ApCommon.Mystifly.OnePointService.Flight.FlightSegment[] FlightSegments {
             get {
-                return this.FlightSegmentsField;
+                return this.FlightFlightSegmentsField;
             }
             set {
-                if ((object.ReferenceEquals(this.FlightSegmentsField, value) != true)) {
-                    this.FlightSegmentsField = value;
+                if ((object.ReferenceEquals(this.FlightFlightSegmentsField, value) != true)) {
+                    this.FlightFlightSegmentsField = value;
                     this.RaisePropertyChanged("FlightSegments");
                 }
             }

@@ -18,7 +18,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW000
             else
             {
                 ViewBag.Destination = destination;
-                return View("HomePageCampaign");
+                return View();
             }
         }
     }

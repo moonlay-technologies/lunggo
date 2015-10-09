@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             BookingId = itin.BookingId,
                             BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
                             FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
-                            SupplierCd = FlightSupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
+                            SupplierCd = SupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
                             SupplierPrice = itin.SupplierPrice,
                             SupplierCurrencyCd = itin.SupplierCurrency,
                             SupplierExchangeRate = itin.SupplierRate,
@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         };
                         FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
-                        foreach (var trip in itin.FlightTrips)
+                        foreach (var trip in itin.Trips)
                         {
                             var tripId = FlightTripIdSequence.GetInstance().GetNext();
                             var tripRecord = new FlightTripTableRecord
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     var itineraryId =
                         SingletonBase<GetItineraryIdQuery>.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
-                    foreach (var trip in details.FlightItineraries.FlightTrips)
+                    foreach (var trip in details.Itineraries.Trips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -80,18 +81,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                 var html = client.DownloadString(url);
 
-                if (client.ResponseUri.AbsolutePath != "/Flight/InternalSelect")
+                if (client.ResponseUri.AbsolutePath != "/Flight/Select")
                     return new RevalidateFareResult {Errors = new List<FlightError> {FlightError.InvalidInputData}};
 
                 var searchedHtml = (CQ) html;
-
-                if (searchedHtml.Elements.Count() <= 1)
-                    return new RevalidateFareResult
-                    {
-                        IsSuccess = true,
-                        IsValid = false,
-                        Itinerary = null
-                    };
 
 
                 // [SCRAPE]
@@ -118,11 +111,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var foundFareId = radio.Attr("value");
                         var fareIdPrefix = origin + "." + dest + "." + date.ToString("dd.MM.yyyy") + "." + adultCount +
                                            "." +
-                                           childCount + "." + infantCount + "." + cabinClass + ".";
+                                           childCount + "." + infantCount + "." + FlightService.ParseCabinClass(cabinClass) + ".";
 
                         url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
                         var itinHtml = (CQ) client.DownloadString(url);
+
+                        if (itinHtml.Children().Elements.Count() <= 1)
+                            return new RevalidateFareResult
+                            {
+                                IsSuccess = true,
+                                IsValid = false,
+                                Itinerary = null
+                            };
+
                         var newPrice =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
@@ -158,12 +160,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             RequireNationality = true,
                             RequestedCabinClass = CabinClass.Economy,
                             TripType = TripType.OneWay,
-                            Supplier = FlightSupplier.AirAsia,
+                            Supplier = Supplier.AirAsia,
                             SupplierCurrency = "IDR",
-                            SupplierRate = 1,
                             SupplierPrice = newPrice,
-                            FareId = fareIdPrefix + foundFareId,
-                            FlightTrips = new List<FlightTrip>
+                            FareId = fareIdPrefix + price.ToString("0") + "." + foundFareId,
+                            Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
                                 {
@@ -177,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                         var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
                         var durationRows = fareRow.Children().First().MakeRoot()[".fare-light-row"];
-                        itin.FlightTrips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
+                        itin.Trips[0].Segments = segments.Zip(durationRows, (segment, durationRow) =>
                         {
                             var durationTexts =
                                 durationRow.LastElementChild.FirstElementChild.InnerHTML.Trim().Split(' ').ToList();
@@ -212,6 +213,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 {
                     return new RevalidateFareResult
                     {
+                        IsSuccess = false,
                         Errors = new List<FlightError> {FlightError.TechnicalError},
                         ErrorMessages = new List<string> {"Web Layout Changed!"}
                     };

@@ -64,7 +64,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private FlightReservation CreateReservation(List<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
             var trips =
-                itins.SelectMany(itin => itin.FlightTrips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
+                itins.SelectMany(itin => itin.Trips).OrderBy(trip => trip.Segments.First().DepartureTime).ToList();
             var reservation = new FlightReservation
             {
                 RsvNo = FlightRsvNoSequence.GetInstance().GetNextFlightRsvNo(),
@@ -106,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private List<ItemDetails> ConstructItemDetails(FlightReservation reservation)
         {
             var itemDetails = new List<ItemDetails>();
-            var trips = reservation.Itineraries.SelectMany(itin => itin.FlightTrips).ToList();
+            var trips = reservation.Itineraries.SelectMany(itin => itin.Trips).ToList();
             var itemNameBuilder = new StringBuilder();
             foreach (var trip in trips)
             {

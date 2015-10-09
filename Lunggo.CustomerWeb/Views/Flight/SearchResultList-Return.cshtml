@@ -230,29 +230,29 @@
                     <div class="flight-detail">
                         <div class="flight-info">
                             <div class="flight-airline">
-                                <img ng-src="{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                                <span class="airline-name">{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                                <img ng-src="{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                                <span class="airline-name">{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineName}}</span>
                             </div>
                             <div class="flight-departure">
-                                <h4>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                <h5>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                <h5>{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].OriginCity}}({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].OriginAirport}})</h5>
+                                <h4>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                <h5>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                <h5>{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].OriginCity}}({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].OriginAirport}})</h5>
                             </div>
                             <div class="flight-arrival">
-                                <h4>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[(departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                <h5>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[(departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                <h5>{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].DestinationCity}}({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].DestinationAirport}})</h5>
+                                <h4>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[(departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                <h5>{{getDateTime( departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments[(departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                <h5>{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].DestinationCity}}({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].DestinationAirport}})</h5>
                             </div>
                         </div>
                         <div class="flight-duration">
                             <div class="detail-left">
                                 <p><b>Durasi :</b></p>
                                 <p>
-                                    <span class="duration">{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].TotalDuration}}</span> |
-                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                                    <span class="duration">{{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].TotalDuration}}</span> |
+                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].TotalTransit == 0">Direct Flight</span>
+                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].TotalTransit == 1">1 Stop</span>
+                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].TotalTransit == 2">2 Stops</span>
+                                    <span ng-if="departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].TotalTransit > 2">More than 2 Stops</span>
                                 </p>
                             </div>
                             <div class="detail-right">
@@ -261,9 +261,9 @@
                             </div>
                         </div>
                         <div class="flight-segment" ng-show="departureFlightConfig.chosenFlightShown">
-                            <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                            <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.Trips[0].Transits[ $index-1 ].Airport}}) selama {{flight.Trips[0].Transits[ $index-1 ].Duration}}</h4>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-airline">
@@ -455,18 +455,18 @@
                             <div class="flight-info">
                                 <div class="flight-top">
                                     <div class="flight-airline">
-                                        <img ng-src="{{flight.FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{flight.FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                                        <span class="airline-name">{{flight.FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                                        <img ng-src="{{flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{flight.Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                                        <span class="airline-name">{{flight.Trips[0].Segments[0].AirlineName}}</span>
                                     </div>
                                     <div class="flight-departure">
-                                        <h4>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                        <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                        <h5>{{flight.FlightTrips[0].OriginCity}}({{flight.FlightTrips[0].OriginAirport}})</h5>
+                                        <h4>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                        <h5>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                        <h5>{{flight.Trips[0].OriginCity}}({{flight.Trips[0].OriginAirport}})</h5>
                                     </div>
                                     <div class="flight-arrival">
-                                        <h4>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                        <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                        <h5>{{flight.FlightTrips[0].DestinationCity}}({{flight.FlightTrips[0].DestinationAirport}})</h5>
+                                        <h4>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                        <h5>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                        <h5>{{flight.Trips[0].DestinationCity}}({{flight.Trips[0].DestinationAirport}})</h5>
                                     </div>
                                 </div>
                                 <div class="flight-bottom">
@@ -475,11 +475,11 @@
                                     </div>
                                     <div class="flight-duration">
                                         <p>
-                                            Duration : <span class="duration">{{flight.FlightTrips[0].TotalDuration}}</span> |
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                                            Duration : <span class="duration">{{flight.Trips[0].TotalDuration}}</span> |
+                                            <span ng-if="flight.Trips[0].TotalTransit == 0">Direct Flight</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit == 1">1 Stop</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit == 2">2 Stops</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit > 2">More than 2 Stops</span>
                                         </p>
                                     </div>
                                 </div>
@@ -492,9 +492,9 @@
                             </div>
                         </div><!-- .flight-main -->
                         <div class="flight-detail">
-                            <div ng-repeat="segment in flight.FlightTrips[0].FlightSegments">
+                            <div ng-repeat="segment in flight.Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.Trips[0].Transits[ $index-1 ].Airport}}) selama {{flight.Trips[0].Transits[ $index-1 ].Duration}}</h4>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-airline">
@@ -563,29 +563,29 @@
                     <div class="flight-detail">
                         <div class="flight-info">
                             <div class="flight-airline">
-                                <img ng-src="{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                                <span class="airline-name">{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                                <img ng-src="{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                                <span class="airline-name">{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[0].AirlineName}}</span>
                             </div>
                             <div class="flight-departure">
-                                <h4>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                <h5>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                <h5>{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].OriginCity}}({{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].OriginAirport}})</h5>
+                                <h4>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                <h5>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                <h5>{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].OriginCity}}({{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].OriginAirport}})</h5>
                             </div>
                             <div class="flight-arrival">
-                                <h4>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[(returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                <h5>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments[(returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                <h5>{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].DestinationCity}}({{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].DestinationAirport}})</h5>
+                                <h4>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[(returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                <h5>{{getDateTime( returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments[(returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                <h5>{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].DestinationCity}}({{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].DestinationAirport}})</h5>
                             </div>
                         </div>
                         <div class="flight-duration">
                             <div class="detail-left">
                                 <p><b>Durasi :</b></p>
                                 <p>
-                                    <span class="duration">{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].TotalDuration}}</span> |
-                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                                    <span class="duration">{{returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].TotalDuration}}</span> |
+                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].TotalTransit == 0">Direct Flight</span>
+                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].TotalTransit == 1">1 Stop</span>
+                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].TotalTransit == 2">2 Stops</span>
+                                    <span ng-if="returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].TotalTransit > 2">More than 2 Stops</span>
                                 </p>
                             </div>
                             <div class="detail-right">
@@ -594,9 +594,9 @@
                             </div>
                         </div>
                         <div class="flight-segment" ng-show="returnFlightConfig.chosenFlightShown">
-                            <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments">
+                            <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.Trips[0].Transits[ $index-1 ].Airport}}) selama {{flight.Trips[0].Transits[ $index-1 ].Duration}}</h4>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-airline">
@@ -788,18 +788,18 @@
                             <div class="flight-info">
                                 <div class="flight-top">
                                     <div class="flight-airline">
-                                        <img ng-src="{{flight.FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{flight.FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                                        <span class="airline-name">{{flight.FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                                        <img ng-src="{{flight.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{flight.Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                                        <span class="airline-name">{{flight.Trips[0].Segments[0].AirlineName}}</span>
                                     </div>
                                     <div class="flight-departure">
-                                        <h4>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                        <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                        <h5>{{flight.FlightTrips[0].OriginCity}}({{flight.FlightTrips[0].OriginAirport}})</h5>
+                                        <h4>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                        <h5>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                        <h5>{{flight.Trips[0].OriginCity}}({{flight.Trips[0].OriginAirport}})</h5>
                                     </div>
                                     <div class="flight-arrival">
-                                        <h4>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
-                                        <h5>{{getDateTime( flight.FlightTrips[0].FlightSegments[(flight.FlightTrips[0].FlightSegments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
-                                        <h5>{{flight.FlightTrips[0].DestinationCity}}({{flight.FlightTrips[0].DestinationAirport}})</h5>
+                                        <h4>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h4>
+                                        <h5>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h5>
+                                        <h5>{{flight.Trips[0].DestinationCity}}({{flight.Trips[0].DestinationAirport}})</h5>
                                     </div>
                                 </div>
                                 <div class="flight-bottom">
@@ -808,11 +808,11 @@
                                     </div>
                                     <div class="flight-duration">
                                         <p>
-                                            Duration : <span class="duration">{{flight.FlightTrips[0].TotalDuration}}</span> |
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                                            <span ng-if="flight.FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                                            Duration : <span class="duration">{{flight.Trips[0].TotalDuration}}</span> |
+                                            <span ng-if="flight.Trips[0].TotalTransit == 0">Direct Flight</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit == 1">1 Stop</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit == 2">2 Stops</span>
+                                            <span ng-if="flight.Trips[0].TotalTransit > 2">More than 2 Stops</span>
                                         </p>
                                     </div>
                                 </div>
@@ -825,9 +825,9 @@
                             </div>
                         </div><!-- .flight-main -->
                         <div class="flight-detail">
-                            <div ng-repeat="segment in flight.FlightTrips[0].FlightSegments">
+                            <div ng-repeat="segment in flight.Trips[0].Segments">
                                 <div class="transit" ng-if="$index > 0">
-                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{flight.FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                    <h4>Transit di {{segment.DepartureCity}} ({{flight.Trips[0].Transits[ $index-1 ].Airport}}) selama {{flight.Trips[0].Transits[ $index-1 ].Duration}}</h4>
                                 </div>
                                 <div class="segment">
                                     <div class="segment-airline">
@@ -938,29 +938,29 @@
                         </div>
                         <h2>Penerbangan Pergi</h2>
                         <div class="flight-airline">
-                            <img ng-src="{{departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                            <span class="airline-name">{{departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                            <img ng-src="{{departureFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{departureFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                            <span class="airline-name">{{departureFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineName}}</span>
                         </div><!-- .flight-airline-image -->
                         <div class="flight-departure">
-                            <h3>{{getDateTime( departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h3>
-                            <h4>{{getDateTime( departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
-                            <h3>{{departureFlightConfig.chosenFlightData.FlightTrips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginAirport}})</h3>
-                            <h4>{{departureFlightConfig.chosenFlightData.FlightTrips[0].OriginAirportName}}</h4>
+                            <h3>{{getDateTime( departureFlightConfig.chosenFlightData.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h3>
+                            <h4>{{getDateTime( departureFlightConfig.chosenFlightData.Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
+                            <h3>{{departureFlightConfig.chosenFlightData.Trips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.Trips[0].OriginAirport}})</h3>
+                            <h4>{{departureFlightConfig.chosenFlightData.Trips[0].OriginAirportName}}</h4>
                             <!-- <h3>Jakarta</h3> -->
                         </div><!-- .departure -->
                         <div class="flight-duration">
-                            <h5>Durasi<br /> {{departureFlightConfig.chosenFlightData.FlightTrips[0].TotalDuration}}</h5>
+                            <h5>Durasi<br /> {{departureFlightConfig.chosenFlightData.Trips[0].TotalDuration}}</h5>
                             <hr />
-                            <span ng-if="departureFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                            <span ng-if="departureFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                            <span ng-if="departureFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                            <span ng-if="departureFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                            <span ng-if="departureFlightConfig.chosenFlightData.Trips[0].TotalTransit == 0">Direct Flight</span>
+                            <span ng-if="departureFlightConfig.chosenFlightData.Trips[0].TotalTransit == 1">1 Stop</span>
+                            <span ng-if="departureFlightConfig.chosenFlightData.Trips[0].TotalTransit == 2">2 Stops</span>
+                            <span ng-if="departureFlightConfig.chosenFlightData.Trips[0].TotalTransit > 2">More than 2 Stops</span>
                         </div><!-- .duration -->
                         <div class="flight-arrival">
-                            <h3>{{getDateTime( departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[ departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments.length - 1 ].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h3>
-                            <h4>{{getDateTime( departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[ departureFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments.length - 1 ].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
-                            <h3>{{departureFlightConfig.chosenFlightData.FlightTrips[0].OriginCity}}({{departureFlightConfig.chosenFlightData.FlightTrips[0].OriginAirport}})</h3>
-                            <h4>{{departureFlightConfig.chosenFlightData.FlightTrips[0].OriginAirportName}}</h4>
+                            <h3>{{getDateTime( departureFlightConfig.chosenFlightData.Trips[0].Segments[ departureFlightConfig.chosenFlightData.Trips[0].Segments.length - 1 ].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h3>
+                            <h4>{{getDateTime( departureFlightConfig.chosenFlightData.Trips[0].Segments[ departureFlightConfig.chosenFlightData.Trips[0].Segments.length - 1 ].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
+                            <h3>{{departureFlightConfig.chosenFlightData.Trips[0].OriginCity}}({{departureFlightConfig.chosenFlightData.Trips[0].OriginAirport}})</h3>
+                            <h4>{{departureFlightConfig.chosenFlightData.Trips[0].OriginAirportName}}</h4>
                         </div><!-- .arrival -->
                     </div>
                     <div class="flight-return-info">
@@ -970,29 +970,29 @@
                         </div>
                         <h2>Penerbangan Pulang</h2>
                         <div class="flight-airline">
-                            <img ng-src="{{returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineLogoUrl}}" alt="{{returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineName}}" class="airline-image" />
-                            <span class="airline-name">{{returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].AirlineName}}</span>
+                            <img ng-src="{{returnFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineLogoUrl}}" alt="{{returnFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineName}}" class="airline-image" />
+                            <span class="airline-name">{{returnFlightConfig.chosenFlightData.Trips[0].Segments[0].AirlineName}}</span>
                         </div><!-- .flight-airline-image -->
                         <div class="flight-departure">
-                            <h3>{{getDateTime( returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h3>
-                            <h4>{{getDateTime( returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
-                            <h3>{{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginAirport}})</h3>
-                            <h4>{{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginAirportName}}</h4>
+                            <h3>{{getDateTime( returnFlightConfig.chosenFlightData.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC'}}</h3>
+                            <h4>{{getDateTime( returnFlightConfig.chosenFlightData.Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
+                            <h3>{{returnFlightConfig.chosenFlightData.Trips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.Trips[0].OriginAirport}})</h3>
+                            <h4>{{returnFlightConfig.chosenFlightData.Trips[0].OriginAirportName}}</h4>
                             <!-- <h3>Jakarta</h3> -->
                         </div><!-- .departure -->
                         <div class="flight-duration">
-                            <h5>Durasi<br /> {{returnFlightConfig.chosenFlightData.FlightTrips[0].TotalDuration}}</h5>
+                            <h5>Durasi<br /> {{returnFlightConfig.chosenFlightData.Trips[0].TotalDuration}}</h5>
                             <hr />
-                            <span ng-if="returnFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 0">Direct Flight</span>
-                            <span ng-if="returnFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 1">1 Stop</span>
-                            <span ng-if="returnFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit == 2">2 Stops</span>
-                            <span ng-if="returnFlightConfig.chosenFlightData.FlightTrips[0].TotalTransit > 2">More than 2 Stops</span>
+                            <span ng-if="returnFlightConfig.chosenFlightData.Trips[0].TotalTransit == 0">Direct Flight</span>
+                            <span ng-if="returnFlightConfig.chosenFlightData.Trips[0].TotalTransit == 1">1 Stop</span>
+                            <span ng-if="returnFlightConfig.chosenFlightData.Trips[0].TotalTransit == 2">2 Stops</span>
+                            <span ng-if="returnFlightConfig.chosenFlightData.Trips[0].TotalTransit > 2">More than 2 Stops</span>
                         </div><!-- .duration -->
                         <div class="flight-arrival">
-                            <h3>{{getDateTime( returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[ returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments.length - 1 ].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h3>
-                            <h4>{{getDateTime( returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments[ returnFlightConfig.chosenFlightData.FlightTrips[0].FlightSegments.length - 1 ].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
-                            <h3>{{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginAirport}})</h3>
-                            <h4>{{returnFlightConfig.chosenFlightData.FlightTrips[0].OriginAirportName}}</h4>
+                            <h3>{{getDateTime( returnFlightConfig.chosenFlightData.Trips[0].Segments[ returnFlightConfig.chosenFlightData.Trips[0].Segments.length - 1 ].ArrivalTime ) | date: 'HH : mm' : 'UTC'}}</h3>
+                            <h4>{{getDateTime( returnFlightConfig.chosenFlightData.Trips[0].Segments[ returnFlightConfig.chosenFlightData.Trips[0].Segments.length - 1 ].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC'}}</h4>
+                            <h3>{{returnFlightConfig.chosenFlightData.Trips[0].OriginCity}}({{returnFlightConfig.chosenFlightData.Trips[0].OriginAirport}})</h3>
+                            <h4>{{returnFlightConfig.chosenFlightData.Trips[0].OriginAirportName}}</h4>
                         </div><!-- .arrival -->
                     </div>
                 </section>
@@ -1012,9 +1012,9 @@
                 <section class="flight-detail" ng-show="pageConfig.overviewDetailShown">
                     <div class="departure-flight">
                         <h2>Penerbangan Pergi</h2>
-                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
+                        <div ng-repeat="segment in departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Segments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Transits[ $index-1 ].Airport}}) selama {{departureFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">
@@ -1046,9 +1046,9 @@
                     </div>
                     <div class="return-flight">
                         <h2>Penerbangan Pulang</h2>
-                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].FlightTrips[0].FlightSegments track by $index">
+                        <div ng-repeat="segment in returnFlightConfig.flightList[ returnFlightConfig.chosenFlight ].Trips[0].Segments track by $index">
                             <div class="transit" ng-if="$index > 0">
-                                <h4>Transit di {{segment.DepartureCity}} ({{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Airport}}) selama {{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].FlightTrips[0].Transits[ $index-1 ].Duration}}</h4>
+                                <h4>Transit di {{segment.DepartureCity}} ({{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Transits[ $index-1 ].Airport}}) selama {{returnFlightConfig.flightList[ departureFlightConfig.chosenFlight ].Trips[0].Transits[ $index-1 ].Duration}}</h4>
                             </div>
                             <div class="segment">
                                 <div class="segment-airline">

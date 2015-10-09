@@ -234,7 +234,7 @@
 
                                 <h3>Informasi Penerbangan</h3>
                                 <h4><img src="/Assets/images/plane-up.png" alt="Plane" /> <b>Keberangkatan</b></h4>
-                                @foreach (var segment in Model.Itinerary.FlightTrips[0].FlightSegments)
+                                @foreach (var segment in Model.Itinerary.Trips[0].Segments)
                                 {
                                     <div class="flight row">
                                         <div class="flight-image col-sm-2">
@@ -247,10 +247,10 @@
                                         </div>
                                     </div>
                                 }
-                                @if (Model.Itinerary.FlightTrips.Count > 1)
+                                @if (Model.Itinerary.Trips.Count > 1)
                                 {
                                     <h4><img src="/Assets/images/plane-down.png" alt="Plane" /> <b>Kembali</b></h4>
-                                    foreach (var segment in Model.Itinerary.FlightTrips[1].FlightSegments)
+                                    foreach (var segment in Model.Itinerary.Trips[1].Segments)
                                     {
                                         <div class="flight row">
                                             <div class="flight-image col-sm-2">

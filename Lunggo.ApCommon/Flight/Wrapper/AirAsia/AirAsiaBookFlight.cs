@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
+        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType)
         {
             return Client.BookFlight(bookInfo);
         }
@@ -57,7 +57,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch
                 {
-                    return new BookFlightResult{ Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                    };
                 }
 
                 // [POST] Search Flight
@@ -100,8 +108,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "Select.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+                if (client.ResponseUri.AbsolutePath != "/Select.aspx")
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                    };
 
                 // [POST] Select Flight
 
@@ -145,8 +160,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.UploadString(@"https://booking2.airasia.com/Select.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "Traveler.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FareIdNoLongerValid } };
+                if (client.ResponseUri.AbsolutePath != "/Traveler.aspx")
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
+                    };
 
                 // [POST] Input Data
 
@@ -242,8 +265,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 client.UploadString(@"https://booking2.airasia.com/Traveler.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "UnitMap.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                if (client.ResponseUri.AbsolutePath != "/UnitMap.aspx")
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.InvalidInputData }
+                    };
 
                 // [POST] Select Seat
 
@@ -271,8 +302,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 client.UploadString(@"https://booking2.airasia.com/UnitMap.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "Payment.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                if (client.ResponseUri.AbsolutePath != "/Payment.aspx")
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
+                    };
 
                 // SELECT HOLD (PAYMENT)
 
@@ -301,8 +340,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 client.UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "Traveler.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                if (client.ResponseUri.AbsolutePath != "/Payment.aspx")
+                    return new BookFlightResult { 
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
                 // [POST] Select Hold
 
@@ -330,14 +375,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
                 client.UploadString(@"https://booking2.airasia.com/Payment.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "Wait.aspx")
-                    return new BookFlightResult { Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
+                if (client.ResponseUri.AbsolutePath != "/Wait.aspx")
+                    return new BookFlightResult { 
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier } };
 
                 // [GET] Wait for Book
 
                 string itinHtml = "";
                 var sw = Stopwatch.StartNew();
-                while (client.ResponseUri.AbsolutePath != "Itinerary.aspx" && sw.Elapsed <= new TimeSpan(0, 1, 0))
+                while (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= new TimeSpan(0, 1, 0))
                 {
                     client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                     client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
@@ -348,12 +399,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Origin"] = "https://booking2.airasia.com";
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     itinHtml = client.DownloadString(@"https://booking2.airasia.com/Wait.aspx");
-                    if (client.ResponseUri.AbsolutePath != "Itinerary.aspx")
+                    if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx")
                         Thread.Sleep(new TimeSpan(0,0,2));
                 }
 
-                if (client.ResponseUri.AbsolutePath != "Itinerary.aspx")
-                    return new BookFlightResult { IsSuccess = false };
+                if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx")
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        }
+                    };
 
                 try
                 {
@@ -381,6 +439,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 {
                     return new BookFlightResult
                     {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
                         ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };

@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         internal string BookingId { get; set; }
         internal int FlightSegmentCount { get; set; }
-        internal FlightItinerary FlightItineraries { get; set; }
+        internal FlightItinerary Itineraries { get; set; }
         internal List<FlightPassenger> Passengers { get; set; }
         internal decimal TotalFare { get; set; }
         internal decimal AdultTotalFare { get; set; }

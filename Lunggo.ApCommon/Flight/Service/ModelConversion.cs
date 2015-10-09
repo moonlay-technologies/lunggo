@@ -53,11 +53,12 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequireBirthDate = itinerary.RequireBirthDate,
                     RequirePassport = itinerary.RequirePassport,
                     RequireSameCheckIn = itinerary.RequireSameCheckIn,
+                    RequireNationality = itinerary.RequireNationality,
                     CanHold = itinerary.CanHold,
                     TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    FlightTrips = MapTrips(itinerary.FlightTrips)
+                    Trips = MapTrips(itinerary.Trips)
                 };
             }
             else

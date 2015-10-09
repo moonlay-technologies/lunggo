@@ -7,6 +7,8 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.I18nMessage;
+using Lunggo.Framework.Mail;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
@@ -24,6 +26,9 @@ namespace Lunggo.WebAPI
             InitRedisService();
             InitAutocompleteManager();
             InitFlightService();
+            InitQueueService();
+            InitMailService();
+            
         }
 
         private static void InitConfigurationManager()
@@ -86,6 +91,17 @@ namespace Lunggo.WebAPI
         {
             var flight = FlightService.GetInstance();
             flight.Init();
+        }
+
+        private static void InitMailService()
+        {
+            var mailService = MailService.GetInstance();
+            mailService.Init();
+        }
+        private static void InitQueueService()
+        {
+            var queue = QueueService.GetInstance();
+            queue.Init();
         }
     }
 }

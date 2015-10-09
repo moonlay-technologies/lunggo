@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach (var rsv in Model)
                     {
-                        var trip = rsv.Itinerary.FlightTrips.FirstOrDefault();
+                        var trip = rsv.Itinerary.Trips.FirstOrDefault();
                         <tr>
                             <td>
                                 <a href="@Url.Action("Detail", "Flight", new { RsvNo = rsv.RsvNo})">@rsv.RsvNo</a>
@@ -67,7 +67,7 @@
                             <td>
                                 @if (rsv.TripType == TripType.Return)
                                 {
-                                    @rsv.Itinerary.FlightTrips.Last().DepartureDate.ToString("d MMM yyyy")
+                                    @rsv.Itinerary.Trips.Last().DepartureDate.ToString("d MMM yyyy")
                                 }
                                 else
                                 {

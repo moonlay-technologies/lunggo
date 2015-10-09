@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var request = new RevalidateConditions
                 {
                     FareId = itin.FareId,
-                    Trips = itin.FlightTrips
+                    Trips = itin.Trips
                 };
                 var response = RevalidateFareInternal(request);
                 if (response.IsSuccess)

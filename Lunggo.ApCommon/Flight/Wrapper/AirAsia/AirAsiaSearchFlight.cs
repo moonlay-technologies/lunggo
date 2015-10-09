@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
@@ -122,14 +123,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             RequireNationality = true,
                             RequestedCabinClass = CabinClass.Economy,
                             TripType = TripType.OneWay,
-                            Supplier = FlightSupplier.AirAsia,
+                            Supplier = Supplier.AirAsia,
                             SupplierCurrency = "IDR",
-                            SupplierRate = 1,
                             SupplierPrice = price,
                             FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
-                            FlightTrips = new List<FlightTrip> {trip0}
+                            Trips = new List<FlightTrip> {trip0}
                         };
-                        itin.FlightTrips[0].Segments = segments;
+                        itin.Trips[0].Segments = segments;
                         itins.Add(itin);
                     }
                     foreach (var itin in itins)
@@ -138,7 +138,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var radio = availableFares.Single(fare => fare.Value == oriFareId).Cq();
                         var fareRow = radio.Parent().Parent().Parent().Parent().Parent();
                         var durationRows = fareRow.Children().First().MakeRoot()["tr:even"];
-                        var segments = itin.FlightTrips[0].Segments;
+                        var segments = itin.Trips[0].Segments;
                         var newSegments = segments.Zip(durationRows, (segment, durationRow) =>
                         {
                             var durationTexts =
@@ -153,12 +153,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             segment.Duration = duration;
                             return segment;
                         }).ToList();
-                        itin.FlightTrips[0].Segments = newSegments;
+                        itin.Trips[0].Segments = newSegments;
                     }
                     return new SearchFlightResult
                     {
                         IsSuccess = true,
-                        FlightItineraries = itins
+                        Itineraries = itins
                     };
                 }
                 catch

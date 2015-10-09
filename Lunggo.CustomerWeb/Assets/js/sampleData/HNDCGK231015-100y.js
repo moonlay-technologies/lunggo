@@ -7,7 +7,7 @@
           "SequenceNo": 0,
           "TotalFare": 3358700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -34,7 +34,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:35:00Z",
@@ -116,7 +116,7 @@
           "SequenceNo": 1,
           "TotalFare": 3358700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -143,7 +143,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T08:20:00Z",
                       "ArrivalTime": "2015-10-27T12:40:00Z",
@@ -225,7 +225,7 @@
           "SequenceNo": 2,
           "TotalFare": 3358700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -252,7 +252,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T08:20:00Z",
                       "ArrivalTime": "2015-10-27T12:40:00Z",
@@ -334,7 +334,7 @@
           "SequenceNo": 3,
           "TotalFare": 4552600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -366,7 +366,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -448,7 +448,7 @@
           "SequenceNo": 4,
           "TotalFare": 4552600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -480,7 +480,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -562,7 +562,7 @@
           "SequenceNo": 5,
           "TotalFare": 4552600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -594,7 +594,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -676,7 +676,7 @@
           "SequenceNo": 6,
           "TotalFare": 4581200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -708,7 +708,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -790,7 +790,7 @@
           "SequenceNo": 7,
           "TotalFare": 4581200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -822,7 +822,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -904,7 +904,7 @@
           "SequenceNo": 8,
           "TotalFare": 4581200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -936,7 +936,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:45:00Z",
                       "ArrivalTime": "2015-10-27T23:30:00Z",
@@ -1018,7 +1018,7 @@
           "SequenceNo": 9,
           "TotalFare": 6452100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1045,7 +1045,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:50:00Z",
@@ -1127,7 +1127,7 @@
           "SequenceNo": 10,
           "TotalFare": 6464500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1154,7 +1154,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -1236,7 +1236,7 @@
           "SequenceNo": 11,
           "TotalFare": 6464500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1263,7 +1263,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T13:15:00Z",
                       "ArrivalTime": "2015-10-27T15:35:00Z",
@@ -1345,7 +1345,7 @@
           "SequenceNo": 12,
           "TotalFare": 6963100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -1379,7 +1379,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:30:00Z",
                       "ArrivalTime": "2015-10-27T04:30:00Z",
@@ -1468,7 +1468,7 @@
           "SequenceNo": 13,
           "TotalFare": 6963100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -1502,7 +1502,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T00:05:00Z",
                       "ArrivalTime": "2015-10-27T03:05:00Z",
@@ -1591,7 +1591,7 @@
           "SequenceNo": 14,
           "TotalFare": 7254000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1618,7 +1618,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T09:25:00Z",
                       "ArrivalTime": "2015-10-27T13:30:00Z",
@@ -1700,7 +1700,7 @@
           "SequenceNo": 15,
           "TotalFare": 7254000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1727,7 +1727,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:05:00Z",
@@ -1809,7 +1809,7 @@
           "SequenceNo": 16,
           "TotalFare": 7458000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 0,
                 "Transits": [],
@@ -1828,7 +1828,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T04:45:00Z",
                       "ArrivalTime": "2015-10-27T10:05:00Z",
@@ -1880,7 +1880,7 @@
           "SequenceNo": 17,
           "TotalFare": 7508500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -1912,7 +1912,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:55:00Z",
@@ -1994,7 +1994,7 @@
           "SequenceNo": 18,
           "TotalFare": 8268700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2021,7 +2021,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T17:25:00Z",
                       "ArrivalTime": "2015-10-26T22:45:00Z",
@@ -2103,7 +2103,7 @@
           "SequenceNo": 19,
           "TotalFare": 8440500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2130,7 +2130,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -2212,7 +2212,7 @@
           "SequenceNo": 20,
           "TotalFare": 8669300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2239,7 +2239,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -2321,7 +2321,7 @@
           "SequenceNo": 21,
           "TotalFare": 8669300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2348,7 +2348,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T12:55:00Z",
                       "ArrivalTime": "2015-10-27T15:25:00Z",
@@ -2430,7 +2430,7 @@
           "SequenceNo": 22,
           "TotalFare": 8956300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2457,7 +2457,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:55:00Z",
@@ -2539,7 +2539,7 @@
           "SequenceNo": 23,
           "TotalFare": 8990100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2566,7 +2566,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -2648,7 +2648,7 @@
           "SequenceNo": 24,
           "TotalFare": 8990100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2675,7 +2675,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -2757,7 +2757,7 @@
           "SequenceNo": 25,
           "TotalFare": 8990100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2784,7 +2784,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -2866,7 +2866,7 @@
           "SequenceNo": 26,
           "TotalFare": 9413000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 0,
                 "Transits": [],
@@ -2885,7 +2885,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:10:00Z",
                       "ArrivalTime": "2015-10-27T08:55:00Z",
@@ -2937,7 +2937,7 @@
           "SequenceNo": 27,
           "TotalFare": 9715800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -2964,7 +2964,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:20:00Z",
@@ -3046,7 +3046,7 @@
           "SequenceNo": 28,
           "TotalFare": 11259200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3073,7 +3073,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:00:00Z",
                       "ArrivalTime": "2015-10-28T02:35:00Z",
@@ -3155,7 +3155,7 @@
           "SequenceNo": 29,
           "TotalFare": 11596100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3182,7 +3182,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T07:15:00Z",
                       "ArrivalTime": "2015-10-27T10:15:00Z",
@@ -3264,7 +3264,7 @@
           "SequenceNo": 30,
           "TotalFare": 11654600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3296,7 +3296,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -3378,7 +3378,7 @@
           "SequenceNo": 31,
           "TotalFare": 11654600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3410,7 +3410,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -3492,7 +3492,7 @@
           "SequenceNo": 32,
           "TotalFare": 11654600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3524,7 +3524,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -3606,7 +3606,7 @@
           "SequenceNo": 33,
           "TotalFare": 12817400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3638,7 +3638,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -3720,7 +3720,7 @@
           "SequenceNo": 34,
           "TotalFare": 13495800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3747,7 +3747,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -3829,7 +3829,7 @@
           "SequenceNo": 35,
           "TotalFare": 13526400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3856,7 +3856,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -3938,7 +3938,7 @@
           "SequenceNo": 36,
           "TotalFare": 13546500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -3965,7 +3965,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:20:00Z",
@@ -4047,7 +4047,7 @@
           "SequenceNo": 37,
           "TotalFare": 13619400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4074,7 +4074,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T17:20:00Z",
                       "ArrivalTime": "2015-10-26T22:25:00Z",
@@ -4156,7 +4156,7 @@
           "SequenceNo": 38,
           "TotalFare": 13755100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4183,7 +4183,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -4265,7 +4265,7 @@
           "SequenceNo": 39,
           "TotalFare": 13752900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4297,7 +4297,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -4379,7 +4379,7 @@
           "SequenceNo": 40,
           "TotalFare": 13981500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4411,7 +4411,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -4493,7 +4493,7 @@
           "SequenceNo": 41,
           "TotalFare": 13981500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4525,7 +4525,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -4607,7 +4607,7 @@
           "SequenceNo": 42,
           "TotalFare": 14071100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4639,7 +4639,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -4721,7 +4721,7 @@
           "SequenceNo": 43,
           "TotalFare": 14529600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4753,7 +4753,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:55:00Z",
@@ -4835,7 +4835,7 @@
           "SequenceNo": 44,
           "TotalFare": 14844500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4867,7 +4867,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -4949,7 +4949,7 @@
           "SequenceNo": 45,
           "TotalFare": 14882400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -4981,7 +4981,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -5063,7 +5063,7 @@
           "SequenceNo": 46,
           "TotalFare": 14900700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5095,7 +5095,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:05:00Z",
@@ -5177,7 +5177,7 @@
           "SequenceNo": 47,
           "TotalFare": 14993400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5209,7 +5209,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:20:00Z",
@@ -5291,7 +5291,7 @@
           "SequenceNo": 48,
           "TotalFare": 15955500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5323,7 +5323,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -5405,7 +5405,7 @@
           "SequenceNo": 49,
           "TotalFare": 16260700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5437,7 +5437,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T07:10:00Z",
@@ -5519,7 +5519,7 @@
           "SequenceNo": 50,
           "TotalFare": 16973400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5551,7 +5551,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -5633,7 +5633,7 @@
           "SequenceNo": 51,
           "TotalFare": 18528800,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5665,7 +5665,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -5747,7 +5747,7 @@
           "SequenceNo": 52,
           "TotalFare": 18694600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5779,7 +5779,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -5861,7 +5861,7 @@
           "SequenceNo": 53,
           "TotalFare": 18799700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -5893,7 +5893,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -5975,7 +5975,7 @@
           "SequenceNo": 54,
           "TotalFare": 18799700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6007,7 +6007,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -6089,7 +6089,7 @@
           "SequenceNo": 55,
           "TotalFare": 18923200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6121,7 +6121,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -6203,7 +6203,7 @@
           "SequenceNo": 56,
           "TotalFare": 18923200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6235,7 +6235,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -6317,7 +6317,7 @@
           "SequenceNo": 57,
           "TotalFare": 19694400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6349,7 +6349,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -6431,7 +6431,7 @@
           "SequenceNo": 58,
           "TotalFare": 19799400,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6463,7 +6463,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -6545,7 +6545,7 @@
           "SequenceNo": 59,
           "TotalFare": 19923000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6577,7 +6577,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -6659,7 +6659,7 @@
           "SequenceNo": 60,
           "TotalFare": 19923000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6691,7 +6691,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -6773,7 +6773,7 @@
           "SequenceNo": 61,
           "TotalFare": 20530600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6805,7 +6805,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -6887,7 +6887,7 @@
           "SequenceNo": 62,
           "TotalFare": 22835700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -6919,7 +6919,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T23:20:00Z",
                       "ArrivalTime": "2015-10-27T02:00:00Z",
@@ -7001,7 +7001,7 @@
           "SequenceNo": 63,
           "TotalFare": 22940000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7033,7 +7033,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:40:00Z",
                       "ArrivalTime": "2015-10-27T04:15:00Z",
@@ -7115,7 +7115,7 @@
           "SequenceNo": 64,
           "TotalFare": 22940000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7147,7 +7147,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -7229,7 +7229,7 @@
           "SequenceNo": 65,
           "TotalFare": 23064500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7261,7 +7261,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:25:00Z",
                       "ArrivalTime": "2015-10-27T04:00:00Z",
@@ -7343,7 +7343,7 @@
           "SequenceNo": 66,
           "TotalFare": 23064500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7375,7 +7375,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:45:00Z",
                       "ArrivalTime": "2015-10-27T05:15:00Z",
@@ -7457,7 +7457,7 @@
           "SequenceNo": 67,
           "TotalFare": 24036700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7489,7 +7489,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T07:10:00Z",
@@ -7571,7 +7571,7 @@
           "SequenceNo": 68,
           "TotalFare": 24036700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7603,7 +7603,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:05:00Z",
@@ -7685,7 +7685,7 @@
           "SequenceNo": 69,
           "TotalFare": 25449600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7717,7 +7717,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:05:00Z",
@@ -7799,7 +7799,7 @@
           "SequenceNo": 70,
           "TotalFare": 26651600,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 0,
                 "Transits": [],
@@ -7818,7 +7818,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T04:45:00Z",
                       "ArrivalTime": "2015-10-27T10:05:00Z",
@@ -7870,7 +7870,7 @@
           "SequenceNo": 71,
           "TotalFare": 27708300,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -7902,7 +7902,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:05:00Z",
@@ -7984,7 +7984,7 @@
           "SequenceNo": 72,
           "TotalFare": 28198700,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8016,7 +8016,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T04:00:00Z",
                       "ArrivalTime": "2015-10-27T09:00:00Z",
@@ -8098,7 +8098,7 @@
           "SequenceNo": 73,
           "TotalFare": 28903500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8130,7 +8130,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:50:00Z",
@@ -8212,7 +8212,7 @@
           "SequenceNo": 74,
           "TotalFare": 29061000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -8251,7 +8251,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:25:00Z",
                       "ArrivalTime": "2015-10-27T05:35:00Z",
@@ -8340,7 +8340,7 @@
           "SequenceNo": 75,
           "TotalFare": 29061000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -8379,7 +8379,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:30:00Z",
                       "ArrivalTime": "2015-10-27T04:30:00Z",
@@ -8468,7 +8468,7 @@
           "SequenceNo": 76,
           "TotalFare": 29063900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -8507,7 +8507,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T02:10:00Z",
                       "ArrivalTime": "2015-10-27T05:20:00Z",
@@ -8596,7 +8596,7 @@
           "SequenceNo": 77,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8628,7 +8628,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -8710,7 +8710,7 @@
           "SequenceNo": 78,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8742,7 +8742,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -8824,7 +8824,7 @@
           "SequenceNo": 79,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8856,7 +8856,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:55:00Z",
                       "ArrivalTime": "2015-10-27T23:35:00Z",
@@ -8938,7 +8938,7 @@
           "SequenceNo": 80,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -8970,7 +8970,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:55:00Z",
                       "ArrivalTime": "2015-10-27T23:35:00Z",
@@ -9052,7 +9052,7 @@
           "SequenceNo": 81,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9084,7 +9084,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:55:00Z",
                       "ArrivalTime": "2015-10-27T23:35:00Z",
@@ -9166,7 +9166,7 @@
           "SequenceNo": 82,
           "TotalFare": 29399500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9198,7 +9198,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T15:55:00Z",
                       "ArrivalTime": "2015-10-27T22:25:00Z",
@@ -9280,7 +9280,7 @@
           "SequenceNo": 83,
           "TotalFare": 31122500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9312,7 +9312,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T07:10:00Z",
@@ -9394,7 +9394,7 @@
           "SequenceNo": 84,
           "TotalFare": 31122500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9426,7 +9426,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:05:00Z",
@@ -9508,7 +9508,7 @@
           "SequenceNo": 85,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9540,7 +9540,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -9622,7 +9622,7 @@
           "SequenceNo": 86,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9654,7 +9654,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T10:30:00Z",
@@ -9736,7 +9736,7 @@
           "SequenceNo": 87,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9768,7 +9768,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T17:05:00Z",
                       "ArrivalTime": "2015-10-26T23:45:00Z",
@@ -9850,7 +9850,7 @@
           "SequenceNo": 88,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9882,7 +9882,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -9964,7 +9964,7 @@
           "SequenceNo": 89,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -9996,7 +9996,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:50:00Z",
                       "ArrivalTime": "2015-10-27T10:30:00Z",
@@ -10078,7 +10078,7 @@
           "SequenceNo": 90,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10110,7 +10110,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T10:30:00Z",
@@ -10192,7 +10192,7 @@
           "SequenceNo": 91,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10224,7 +10224,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T08:25:00Z",
@@ -10306,7 +10306,7 @@
           "SequenceNo": 92,
           "TotalFare": 31871500,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10338,7 +10338,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:50:00Z",
                       "ArrivalTime": "2015-10-27T10:30:00Z",
@@ -10420,7 +10420,7 @@
           "SequenceNo": 93,
           "TotalFare": 32136900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10452,7 +10452,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:50:00Z",
@@ -10534,7 +10534,7 @@
           "SequenceNo": 94,
           "TotalFare": 32136900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10566,7 +10566,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:50:00Z",
                       "ArrivalTime": "2015-10-27T09:05:00Z",
@@ -10648,7 +10648,7 @@
           "SequenceNo": 95,
           "TotalFare": 32246900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10680,7 +10680,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T17:05:00Z",
                       "ArrivalTime": "2015-10-26T22:05:00Z",
@@ -10762,7 +10762,7 @@
           "SequenceNo": 96,
           "TotalFare": 32566900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10794,7 +10794,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:45:00Z",
                       "ArrivalTime": "2015-10-27T08:05:00Z",
@@ -10876,7 +10876,7 @@
           "SequenceNo": 97,
           "TotalFare": 32566900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -10908,7 +10908,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T07:10:00Z",
@@ -10990,7 +10990,7 @@
           "SequenceNo": 98,
           "TotalFare": 32566900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -11022,7 +11022,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T03:00:00Z",
                       "ArrivalTime": "2015-10-27T07:10:00Z",
@@ -11104,7 +11104,7 @@
           "SequenceNo": 99,
           "TotalFare": 32662100,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -11136,7 +11136,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T18:30:00Z",
                       "ArrivalTime": "2015-10-26T22:55:00Z",
@@ -11218,7 +11218,7 @@
           "SequenceNo": 100,
           "TotalFare": 32740200,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -11250,7 +11250,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T01:50:00Z",
                       "ArrivalTime": "2015-10-27T06:05:00Z",
@@ -11332,7 +11332,7 @@
           "SequenceNo": 101,
           "TotalFare": 33122900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -11359,7 +11359,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T16:55:00Z",
                       "ArrivalTime": "2015-10-27T23:35:00Z",
@@ -11441,7 +11441,7 @@
           "SequenceNo": 102,
           "TotalFare": 35643000,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 1,
                 "Transits": [
@@ -11468,7 +11468,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-27T04:00:00Z",
                       "ArrivalTime": "2015-10-27T09:00:00Z",
@@ -11550,7 +11550,7 @@
           "SequenceNo": 103,
           "TotalFare": 50848900,
           "Currency": null,
-          "FlightTrips": [
+          "Trips": [
             {
                 "TotalTransit": 2,
                 "Transits": [
@@ -11584,7 +11584,7 @@
                 "OriginCity": "Tokyo",
                 "OriginAirportName": "Tokyo Haneda Intl.",
                 "DepartureDate": "2015-10-26T17:00:00Z",
-                "FlightSegments": [
+                "Segments": [
                   {
                       "DepartureTime": "2015-10-26T17:30:00Z",
                       "ArrivalTime": "2015-10-26T22:30:00Z",
@@ -11680,7 +11680,7 @@
               "OriginCity": null,
               "OriginAirportName": null,
               "DepartureDate": "2015-10-27T00:00:00",
-              "FlightSegments": null
+              "Segments": null
           }
         ],
         "AdultCount": 1,
