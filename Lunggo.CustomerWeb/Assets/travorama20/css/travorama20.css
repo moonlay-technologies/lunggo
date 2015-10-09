@@ -1405,6 +1405,13 @@ file: /Assets/travorama20/css/_page_flight.scss
             .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span {
               font-weight: bold;
               margin-left: 10px; }
+            .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span.overday, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span.overday, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span.overday {
+              font-size: 15px;
+              background: #aaa;
+              color: #fff;
+              position: relative;
+              top: -3px;
+              padding: 5px; }
           .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h5, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5 {
             font-size: 16px; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-duration {
@@ -1454,7 +1461,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           width: 30px;
           padding-bottom: 30px; }
     .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right {
-      float: left;
+      float: right;
       width: 75%;
       text-align: right; }
       .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger {
@@ -1463,7 +1470,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         display: inline-block;
         position: relative;
         color: #1daee4;
-        text-decoration: none; }
+        text-decoration: none;
+        cursor: pointer; }
         .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger:before, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .flight-detail-trigger.section-reason:after, .page-index .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-detail-trigger.section-reason:after, .page-index .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .section-reason.flight-rules-trigger:after, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .section-reason.flight-rules-trigger:after, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before {
           content: "";
           display: block;
@@ -1543,7 +1551,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name {
         font-weight: bold;
         color: #1daee4;
-        font-size: 16px; }
+        font-size: 16px;
+        padding-right: 30px; }
       .page-flight .flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number {
         font-weight: 600;
         color: #1daee4;
@@ -1587,6 +1596,22 @@ file: /Assets/travorama20/css/_page_flight.scss
             font-weight: bold; }
       .page-flight .flight .flight-detail .segment .segment-right .segment-arrival {
         padding-left: 0; }
+    .page-flight .flight .flight-detail .segment .segment-operator {
+      display: block;
+      clear: both;
+      padding-left: 60px;
+      padding-right: 60px;
+      padding-top: 5px; }
+      .page-flight .flight .flight-detail .segment .segment-operator p {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        padding-top: 10px;
+        margin-bottom: 0;
+        font-style: italic; }
+        .page-flight .flight .flight-detail .segment .segment-operator p img {
+          height: 20px; }
+        .page-flight .flight .flight-detail .segment .segment-operator p span {
+          font-weight: 600; }
     .page-flight .flight .flight-detail .transit {
       text-align: center;
       padding: 15px 0; }
