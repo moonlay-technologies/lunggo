@@ -126,31 +126,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var newPrice =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
-                        var segmentsHtml = itinHtml[".price-display-segment"].Select(segHtml => segHtml.Cq().MakeRoot());
+                        var segmentFareIds = foundFareId.Split('|').Last().Split('^');
                         var segments = new List<FlightSegment>();
-                        foreach (var segmentHtml in segmentsHtml)
+                        foreach (var segmentFareId in segmentFareIds)
                         {
-                            var flightNumberSet =
-                                (segmentHtml[".price-display-segment-designator > span"]).Text().Split(' ');
-                            var depArr = segmentHtml[".price-display-segment-text"];
-                            var dep = depArr[0].InnerText;
-                            var arr = depArr[1].InnerText;
-                            var timingSet = segmentHtml[".price-display-segment-dates > span"];
-                            var departure = DateTime.ParseExact(timingSet[0].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
-                                CultureInfo.CreateSpecificCulture("id-ID"));
-                            var arrival = DateTime.ParseExact(timingSet[1].InnerText, "HHmm', 'dd' 'MMMM' 'yyyy",
-                                CultureInfo.CreateSpecificCulture("id-ID"));
+                            var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
                             segments.Add(new FlightSegment
                             {
-                                AirlineCode = flightNumberSet[0],
-                                FlightNumber = flightNumberSet[1],
-                                CabinClass = CabinClass.Economy,
+                                AirlineCode = splittedSegmentFareId[0],
+                                FlightNumber = splittedSegmentFareId[1].Trim(),
+                                CabinClass = cabinClass,
                                 Rbd = foundFareId.Split('~')[1],
-                                DepartureAirport = dep,
-                                DepartureTime = departure,
-                                ArrivalAirport = arr,
-                                ArrivalTime = arrival,
-                                OperatingAirlineCode = flightNumberSet[0],
+                                DepartureAirport = splittedSegmentFareId[4],
+                                DepartureTime = DateTime.Parse(splittedSegmentFareId[5]),
+                                ArrivalAirport = splittedSegmentFareId[6],
+                                ArrivalTime = DateTime.Parse(splittedSegmentFareId[7]),
+                                OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = 0
                             });
                         }
