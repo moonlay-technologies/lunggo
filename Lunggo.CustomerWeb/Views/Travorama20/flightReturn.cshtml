@@ -5,18 +5,16 @@
     ViewBag.FooterPayment = false;
     ViewBag.FooterFeedback = false;
 }
-
 @section PageJS{
     <script>
         flightPageFunctions();
     </script>
 }
-
 <section class="slider">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h2 class="section-title stripe small-stripe">Experience<br/>The <b>Easy Way</b><br/>of Flight Booking</h2>
+                <h2 class="section-title stripe small-stripe">Experience<br />The <b>Easy Way</b><br />of Flight Booking</h2>
             </div>
         </div>
     </div>
@@ -40,11 +38,9 @@
     <div class="container">
         <div class="search-result-form-content">
             <form method="GET" class="change-flight form-flight form" action="/id/Flight/SearchResultList">
-
                 <div class="form-group">
                     <label class="change-flight-type"><input type="radio" name="flightType" value="return" checked /> Pulang Pergi</label> <label class="change-flight-type"><input type="radio" name="flightType" value="oneWay" /> Sekali Jalan</label>
                 </div>
-
                 <div class="change-flight-left">
                     <div>
                         <input type="text" class="form-flight-origin form-flight-location change-flight-origin form-control" value="" placeholder="Bandara Asal" />
@@ -128,7 +124,6 @@
                         </div>
                     </div>
                 </div>
-
             </form>
         </div><!-- .search-result-form-content -->
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
@@ -139,10 +134,10 @@
     <div class="container">
         <h2><b>HASIL</b> PENCARIAN</h2>
     </div>
-    
+
     <div class="container search-result-container">
-        
-        <div class="search-result-departure active">
+
+        <div class="search-result-departure selected">
             <div class="search-result-title">
                 <h4>01</h4>
                 <div>
@@ -150,13 +145,39 @@
                     <p>Jakarta <span class="separator"></span> Bali, <span class="route-date">Rabu, 15 Februari 2016</span> </p>
                 </div>
             </div><!-- .search-result-title -->
+            <div class="search-result-selected">
+                <div class="flight-airline">
+                    <h3><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>SINGAPORE AIRLINES</span>  </h3><div class="flight-facilities"><span class="flight-baggage">15</span><span class="flight-tax"></span></div>
+                </div>
+                <div class="flight-date">
+                    <div class="flight-date-departure">
+                        <h4>JKT <span>21:35</span></h4>
+                    </div>
+                    <div class="flight-date-duration">
+                        <h5 class="time">9h 20m</h5>
+                        <h5 class="transit">1 Transit</h5>
+                    </div>
+                    <div class="flight-date-arrival">
+                        <h4>DPS <span>22:35</span></h4>
+                    </div>
+                </div>
+                <div class="flight-button">
+                    <a href="#" class="flight-detail-trigger">Detail Penerbangan</a>
+                    <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a>
+                </div>
+                <div class="flight-price">
+                    <label>Harga Total:</label>
+                    <h3><sup>Rp</sup>999.999.999</h3>
+                    <p>Termasuk Pajak &amp; Service Charge</p>
+                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" />
+                </div>
+            </div><!-- .search-result-selected -->
             <div class="search-result-filter">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
                     </div>
                     <div class="filter-right">
-
                         <div class="filter-trigger">
                             <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
                             <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
@@ -185,7 +206,6 @@
                                 Filter Duration
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
@@ -210,7 +230,7 @@
             </div><!-- .search-result-sort -->
             <div class="search-result-list">
                 <div class="container">
-                    
+
                     <div class="flight">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
@@ -505,12 +525,11 @@
                             </div>
                         </div><!-- .flight-detail -->
                     </div><!-- .flight-->
-
                 </div>
             </div><!-- .search-result-list -->
         </div><!-- .search-result-departure -->
-        
-        <div class="search-result-return inactive">
+
+        <div class="search-result-return active">
             <div class="search-result-title">
                 <h4>02</h4>
                 <div>
@@ -524,7 +543,6 @@
                         <span>FILTER:</span>
                     </div>
                     <div class="filter-right">
-
                         <div class="filter-trigger">
                             <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
                             <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
@@ -553,7 +571,6 @@
                                 Filter Duration
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
@@ -578,306 +595,303 @@
             </div><!-- .search-result-sort -->
             <div class="search-result-list">
                 <div class="container">
-                    
-                    <div class="flight">
-                        <div class="flight-summary">
-                            <div class="flight-summary-left">
-                                <div class="summary-top">
-                                    <div class="summary-top-left flight-airline">
-                                        <h5>AIRASIA</h5>
-                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
-                                    </div><!-- .flight-airline -->
-                                    <div class="summary-top-right flight-date">
-                                        <div class="flight-date-departure">
-                                            <h4>JKT <span>21:35</span></h4>
-                                        </div>
-                                        <div class="flight-date-duration">
-                                            <h5 class="time">9h 20m</h5>
-                                            <h5 class="transit">1 Transit</h5>
-                                        </div>
-                                        <div class="flight-date-arrival">
-                                            <h4>DPS <span>22:35</span></h4>
-                                        </div>
-                                    </div><!-- .flight-date -->
-                                </div><!-- .summary-top -->
-                                <div class="summary-bottom">
-                                    <div class="summary-bottom-left flight-facilities">
-                                        <span class="flight-baggage">15</span>
-                                        <span class="flight-tax"></span>
-                                        <span class="flight-meal"></span>
-                                    </div><!-- .flight-facilities -->
-                                    <div class="summary-bottom-right flight-button">
-                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
-                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
-                                    </div><!-- .flight-button -->
-                                    <div class="summary-bottom-right flight-duration">
-                                        <div class="duration">9h 20m</div>
-                                        <div class="transit">1 Transit</div>
-                                    </div>
-                                </div><!-- .summar-bottom -->
-                            </div>
-                            <div class="flight-summary-right">
-                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
-                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
-                            </div>
-                        </div><!-- .flight-summary -->
-                        <div class="flight-detail">
-                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="transit">
-                                <p>Transit di Singapore selama 2:25:00</p>
-                            </div>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .flight-detail -->
-                    </div><!-- .flight-->
-                    <div class="flight">
-                        <div class="flight-summary">
-                            <div class="flight-summary-left">
-                                <div class="summary-top">
-                                    <div class="summary-top-left flight-airline">
-                                        <h5>AIRASIA</h5>
-                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
-                                    </div><!-- .flight-airline -->
-                                    <div class="summary-top-right flight-date">
-                                        <div class="flight-date-departure">
-                                            <h4>JKT <span>21:35</span></h4>
-                                        </div>
-                                        <div class="flight-date-duration">
-                                            <h5 class="time">9h 20m</h5>
-                                            <h5 class="transit">1 Transit</h5>
-                                        </div>
-                                        <div class="flight-date-arrival">
-                                            <h4>DPS <span>22:35</span></h4>
-                                        </div>
-                                    </div><!-- .flight-date -->
-                                </div><!-- .summary-top -->
-                                <div class="summary-bottom">
-                                    <div class="summary-bottom-left flight-facilities">
-                                        <span class="flight-baggage">15</span>
-                                        <span class="flight-tax"></span>
-                                        <span class="flight-meal"></span>
-                                    </div><!-- .flight-facilities -->
-                                    <div class="summary-bottom-right flight-button">
-                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
-                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
-                                    </div><!-- .flight-button -->
-                                    <div class="summary-bottom-right flight-duration">
-                                        <div class="duration">9h 20m</div>
-                                        <div class="transit">1 Transit</div>
-                                    </div>
-                                </div><!-- .summar-bottom -->
-                            </div>
-                            <div class="flight-summary-right">
-                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
-                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
-                            </div>
-                        </div><!-- .flight-summary -->
-                        <div class="flight-detail">
-                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="transit">
-                                <p>Transit di Singapore selama 2:25:00</p>
-                            </div>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .flight-detail -->
-                    </div><!-- .flight-->
-                    <div class="flight">
-                        <div class="flight-summary">
-                            <div class="flight-summary-left">
-                                <div class="summary-top">
-                                    <div class="summary-top-left flight-airline">
-                                        <h5>AIRASIA</h5>
-                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
-                                    </div><!-- .flight-airline -->
-                                    <div class="summary-top-right flight-date">
-                                        <div class="flight-date-departure">
-                                            <h4>JKT <span>21:35</span></h4>
-                                        </div>
-                                        <div class="flight-date-duration">
-                                            <h5 class="time">9h 20m</h5>
-                                            <h5 class="transit">1 Transit</h5>
-                                        </div>
-                                        <div class="flight-date-arrival">
-                                            <h4>DPS <span>22:35</span></h4>
-                                        </div>
-                                    </div><!-- .flight-date -->
-                                </div><!-- .summary-top -->
-                                <div class="summary-bottom">
-                                    <div class="summary-bottom-left flight-facilities">
-                                        <span class="flight-baggage">15</span>
-                                        <span class="flight-tax"></span>
-                                        <span class="flight-meal"></span>
-                                    </div><!-- .flight-facilities -->
-                                    <div class="summary-bottom-right flight-button">
-                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
-                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
-                                    </div><!-- .flight-button -->
-                                    <div class="summary-bottom-right flight-duration">
-                                        <div class="duration">9h 20m</div>
-                                        <div class="transit">1 Transit</div>
-                                    </div>
-                                </div><!-- .summar-bottom -->
-                            </div>
-                            <div class="flight-summary-right">
-                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
-                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
-                            </div>
-                        </div><!-- .flight-summary -->
-                        <div class="flight-detail">
-                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="transit">
-                                <p>Transit di Singapore selama 2:25:00</p>
-                            </div>
-                            <div class="segment">
-                                <div class="segment-number"><span>1<sup>st</sup></span></div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
-                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- .flight-detail -->
-                    </div><!-- .flight-->
 
+                    <div class="flight">
+                        <div class="flight-summary">
+                            <div class="flight-summary-left">
+                                <div class="summary-top">
+                                    <div class="summary-top-left flight-airline">
+                                        <h5>AIRASIA</h5>
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
+                                    </div><!-- .flight-airline -->
+                                    <div class="summary-top-right flight-date">
+                                        <div class="flight-date-departure">
+                                            <h4>JKT <span>21:35</span></h4>
+                                        </div>
+                                        <div class="flight-date-duration">
+                                            <h5 class="time">9h 20m</h5>
+                                            <h5 class="transit">1 Transit</h5>
+                                        </div>
+                                        <div class="flight-date-arrival">
+                                            <h4>DPS <span>22:35</span></h4>
+                                        </div>
+                                    </div><!-- .flight-date -->
+                                </div><!-- .summary-top -->
+                                <div class="summary-bottom">
+                                    <div class="summary-bottom-left flight-facilities">
+                                        <span class="flight-baggage">15</span>
+                                        <span class="flight-tax"></span>
+                                        <span class="flight-meal"></span>
+                                    </div><!-- .flight-facilities -->
+                                    <div class="summary-bottom-right flight-button">
+                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                    </div><!-- .flight-button -->
+                                    <div class="summary-bottom-right flight-duration">
+                                        <div class="duration">9h 20m</div>
+                                        <div class="transit">1 Transit</div>
+                                    </div>
+                                </div><!-- .summar-bottom -->
+                            </div>
+                            <div class="flight-summary-right">
+                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
+                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
+                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
+                            </div>
+                        </div><!-- .flight-summary -->
+                        <div class="flight-detail">
+                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="transit">
+                                <p>Transit di Singapore selama 2:25:00</p>
+                            </div>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight-->
+                    <div class="flight">
+                        <div class="flight-summary">
+                            <div class="flight-summary-left">
+                                <div class="summary-top">
+                                    <div class="summary-top-left flight-airline">
+                                        <h5>AIRASIA</h5>
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
+                                    </div><!-- .flight-airline -->
+                                    <div class="summary-top-right flight-date">
+                                        <div class="flight-date-departure">
+                                            <h4>JKT <span>21:35</span></h4>
+                                        </div>
+                                        <div class="flight-date-duration">
+                                            <h5 class="time">9h 20m</h5>
+                                            <h5 class="transit">1 Transit</h5>
+                                        </div>
+                                        <div class="flight-date-arrival">
+                                            <h4>DPS <span>22:35</span></h4>
+                                        </div>
+                                    </div><!-- .flight-date -->
+                                </div><!-- .summary-top -->
+                                <div class="summary-bottom">
+                                    <div class="summary-bottom-left flight-facilities">
+                                        <span class="flight-baggage">15</span>
+                                        <span class="flight-tax"></span>
+                                        <span class="flight-meal"></span>
+                                    </div><!-- .flight-facilities -->
+                                    <div class="summary-bottom-right flight-button">
+                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                    </div><!-- .flight-button -->
+                                    <div class="summary-bottom-right flight-duration">
+                                        <div class="duration">9h 20m</div>
+                                        <div class="transit">1 Transit</div>
+                                    </div>
+                                </div><!-- .summar-bottom -->
+                            </div>
+                            <div class="flight-summary-right">
+                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
+                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
+                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
+                            </div>
+                        </div><!-- .flight-summary -->
+                        <div class="flight-detail">
+                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="transit">
+                                <p>Transit di Singapore selama 2:25:00</p>
+                            </div>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight-->
+                    <div class="flight">
+                        <div class="flight-summary">
+                            <div class="flight-summary-left">
+                                <div class="summary-top">
+                                    <div class="summary-top-left flight-airline">
+                                        <h5>AIRASIA</h5>
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" />
+                                    </div><!-- .flight-airline -->
+                                    <div class="summary-top-right flight-date">
+                                        <div class="flight-date-departure">
+                                            <h4>JKT <span>21:35</span></h4>
+                                        </div>
+                                        <div class="flight-date-duration">
+                                            <h5 class="time">9h 20m</h5>
+                                            <h5 class="transit">1 Transit</h5>
+                                        </div>
+                                        <div class="flight-date-arrival">
+                                            <h4>DPS <span>22:35</span></h4>
+                                        </div>
+                                    </div><!-- .flight-date -->
+                                </div><!-- .summary-top -->
+                                <div class="summary-bottom">
+                                    <div class="summary-bottom-left flight-facilities">
+                                        <span class="flight-baggage">15</span>
+                                        <span class="flight-tax"></span>
+                                        <span class="flight-meal"></span>
+                                    </div><!-- .flight-facilities -->
+                                    <div class="summary-bottom-right flight-button">
+                                        <a href="#" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                        <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                    </div><!-- .flight-button -->
+                                    <div class="summary-bottom-right flight-duration">
+                                        <div class="duration">9h 20m</div>
+                                        <div class="transit">1 Transit</div>
+                                    </div>
+                                </div><!-- .summar-bottom -->
+                            </div>
+                            <div class="flight-summary-right">
+                                <h4 class="flight-price"><sup>Rp</sup> 999.999.999</h4>
+                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
+                                <a href="#" class="btn btn-yellow blcok">PESAN</a>
+                            </div>
+                        </div><!-- .flight-summary -->
+                        <div class="flight-detail">
+                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="transit">
+                                <p>Transit di Singapore selama 2:25:00</p>
+                            </div>
+                            <div class="segment">
+                                <div class="segment-number"><span>1<sup>st</sup></span></div>
+                                <div class="segment-left">
+                                    <img src="/Assets/images/airlines/AK.png" alt="Airasia" class="segment-airline-logo" />
+                                    <h5 class="segment-airline-name">Airasia QZK-1234</h5>
+                                </div>
+                                <div class="segment-right">
+                                    <div class="segment-departure">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                    <div class="segment-duration">
+                                        <h5><span>Duration :</span> 9h 20m</h5>
+                                    </div>
+                                    <div class="segment-arrival">
+                                        <h5>Selasa, 15 Feb 2015</h5>
+                                        <h3>15.00</h3>
+                                        <h4>Jakarta (CGK)</h4>
+                                        <h5>Soekarno Hatta Intl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight-->
                 </div>
             </div><!-- .search-result-list -->
         </div><!-- .search-result-return -->
-
     </div><!-- .search-result-container -->
-
 </section><!-- .search-result.return -->

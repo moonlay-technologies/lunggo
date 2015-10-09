@@ -304,6 +304,58 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .flight-detail {}
             }
         }
+        &>.selected {width:400px; opacity:1;
+            .search-result-filter {display:none;}
+            .search-result-sort {display:none;}
+            .search-result-list {display:none;}
+            .search-result-selected {border:$border-default; margin-top:-15px; background:#f9f9f9; border-top:none;
+                &>div {border-top:$border-default;}
+                .flight-airline {
+                    &:before, &:after {@include clearfix();}
+                    h3 {float:left; width:80%; margin:0; color:#3fabe3; font-weight:bold; display:table;
+                        img {height:60px; margin-left:10px; margin-right:10px; float:left; width:60px;}
+                        span {font-size:18px; display:block; float:left; height:60px; display:table-cell; vertical-align:middle; padding-top:10px;}
+                    }
+                    .flight-facilities {float:right; width:20%; text-align:right; padding-right:5px; padding-top:5px;
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0;
+                            &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
+                            &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
+                            &.flight-meal {width:30px; padding-bottom:30px;}
+                        }
+                    }
+                }
+                .flight-date {
+                    &:before, &:after {@include clearfix();}
+                    .flight-date-departure {float:left; width:35%; padding-right:20px; text-align:right;
+                        h4 {font-weight:600; font-size:26px;
+                            span {font-weight:bold; display:block;}
+                        }
+                        h5 {font-size:16px;}
+                    }
+                    .flight-date-duration {float:left; width:30%; text-align:center;
+                        .time {margin-top:15px; margin-bottom:5px; font-size:16px;
+                            &:before {content:url(/Assets/images/sandclock.png); margin-right:10px;}
+                        }
+                        .transit {border-top:3px solid $color-main-blue; padding-top:5px; margin-top:0; font-size:16px;}
+                    }
+                    .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;}
+                }
+                .flight-button {padding:5px 0; text-align:center;
+                    .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none;
+                        &:before {content:""; display:block; position:absolute; width:24px; height:24px; background:url(/Assets/images/flight-button-sprite.png); left:-24px;}
+                    }
+                    .flight-rules-trigger {@extend .flight-detail-trigger;
+                        &:before {background-position:-24px;}
+                    }
+                }
+                .flight-price {text-align:center; padding-top:25px; padding-bottom:25px;
+                    label {font-weight:bold; font-size:18px;}
+                    h3 {color:#ff7200; font-weight:bold; font-size:38px; margin-top:0; margin-bottom:0;}
+                    p {font-size:14px; color:#ff7200; margin-bottom:0;}
+                    .btn {width:80%; margin-right:auto; margin-left:auto; padding-top:10px; padding-bottom:10px; font-size:18px; margin-top:15px;}
+                }
+            }
+        }
         //*****
         // search result departure
         .search-result-departure {float:left;}
