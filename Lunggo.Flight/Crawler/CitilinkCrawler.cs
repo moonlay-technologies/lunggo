@@ -52,7 +52,7 @@ namespace Lunggo.Flight.Crawler
 
         public class Citilink : ExtendedWebClient
         {
-            public string Login()
+            public bool Login()
             {
                 string URI = "https://book.citilink.co.id/LoginAgent.aspx";
                 string myParameters =  @"ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In" + 
@@ -69,13 +69,24 @@ namespace Lunggo.Flight.Crawler
                     Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID";
                     Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
                     Headers["Origin"] = "https://book.citilink.co.id";
-                    Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
+                    //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
                     Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                     Headers["Upgrade-Insecure-Requests"] = "1";
 
                     string htmlResult = UploadString(URI,"POST",myParameters);
+                    var c = htmlResult.Contains("Search.aspx");
+                    if (!c)
+                    {
+                        bool respone = true;
+                        return respone;
+                    }
+                    else
+                    {
+                        bool respone = false;
+                        return respone;
+                    }
                     
-                    return htmlResult;
+                    
                 }
 
                  public string search()

@@ -43,6 +43,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
+        public bool RequireNationality { get; set; }
         public bool CanHold { get; set; }
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }

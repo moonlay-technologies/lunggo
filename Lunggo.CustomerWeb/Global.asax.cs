@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Util;
 using Lunggo.Framework.BrowserDetection;
@@ -30,7 +31,9 @@ namespace Lunggo.CustomerWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           
+            //FlightService.GetInstance().SearchFlightInternal(null);
+            //FlightService.GetInstance().BookFlightInternal(new FlightBookingInfo());
+            FlightService.GetInstance().RevalidateFareInternal(new RevalidateConditions());
         }
 
         void Session_Start(object sender, EventArgs e)

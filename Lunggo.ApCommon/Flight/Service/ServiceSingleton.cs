@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
@@ -37,6 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (!_isInitialized)
             {
                 MystiflyWrapper.Init();
+                CitilinkWrapper.GetInstance().Init();
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
@@ -45,18 +47,20 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            //_sriwijayaWrapper.SearchFlight(conditions);
-            var jimbet = MystiflyWrapper.SearchFlight(conditions);
-            var citilinks = new CitilinkCrawler.Citilink();
-            var hasil = citilinks.Login();
-            var hasil2 = citilinks.search();
-            var hasil3 = citilinks.Select();
-            var hasil4 = citilinks.Passenger();
-            var hasil5 = citilinks.Kursi();
-            var hasil6 = citilinks.Payment();
-            return jimbet;
+            //var jimbet = MystiflyWrapper.SearchFlight(conditions);
+            //var citilinks = new CitilinkCrawler.Citilink();
+            //var hasil = citilinks.Login();
+            //var hasil2 = citilinks.search();
+            //var hasil3 = citilinks.Select();
+            //var hasil4 = citilinks.Passenger();
+            //var hasil5 = citilinks.Kursi();
+            //var hasil6 = citilinks.Payment();
+            var aa = CitilinkWrapper.GetInstance();
+            var hasil = aa.SearchFlight(conditions);
+            //aa.BookFlight(null);
+            return hasil;
         }
 
 
@@ -65,22 +69,24 @@ namespace Lunggo.ApCommon.Flight.Service
         //    return MystiflyWrapper.SpecificSearchFlight(conditions);
         //}
 
-        private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
+        public RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
+            var a = CitilinkWrapper.GetInstance().RevalidateFare(conditions);
             return MystiflyWrapper.RevalidateFare(conditions);
         }
 
-        private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
+        public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            var supplier = IdUtil.GetSupplier(bookInfo.FareId);
-            switch (supplier)
-            {
-                case FlightSupplier.Mystifly:
-                    return MystiflyWrapper.BookFlight(bookInfo);
-                default:
-                    return null;
-            }
-            
+            //var supplier = IdUtil.GetSupplier(bookInfo.FareId);
+            //switch (supplier)
+            //{
+            //    case FlightSupplier.Mystifly:
+            //        return MystiflyWrapper.BookFlight(bookInfo);
+            //    default:
+            //        return null;
+            //}
+            var a = CitilinkWrapper.GetInstance().BookFlight(bookInfo);
+            return null;
         }
 
         private OrderTicketResult OrderTicketInternal(string bookingId)
