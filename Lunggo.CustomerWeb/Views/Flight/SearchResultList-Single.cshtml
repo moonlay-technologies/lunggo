@@ -79,6 +79,7 @@
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
 }
 
@@ -342,7 +343,7 @@
                         </div>
                     </div><!-- .flight-summary -->
                     <div class="flight-detail">
-                        <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                        <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setFlightActive(-1)">X</span></h3>
                         <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                             <div class="transit" ng-if="$index > 0">
                                 <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>

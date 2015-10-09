@@ -900,6 +900,7 @@
     <Content Include="Assets\images\_sample\sky.jpg" />
     <Content Include="Assets\images\_sample\slide_1.jpg" />
     <Content Include="Assets\images\_sample\travorama-display-large.png" />
+    <Content Include="Assets\js\angular-animate.min.js" />
     <Content Include="Assets\js\angular-route.min.js" />
     <Content Include="Assets\js\angular-route.min.js.map" />
     <Content Include="Assets\js\angular.min.js" />

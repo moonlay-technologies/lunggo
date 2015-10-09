@@ -1350,6 +1350,7 @@ file: /Assets/travorama20/css/_page_flight.scss
     border: 3px solid #1daee4; }
     .page-flight .flight.active .flight-detail {
       border-top: 3px solid #1daee4;
+      max-height: 1000px;
       display: block; }
     .page-flight .flight.active:after {
       content: url(/Assets/images/flight-detail-active.png);
@@ -1509,6 +1510,9 @@ file: /Assets/travorama20/css/_page_flight.scss
     border-top: 1px solid #ccc;
     padding-bottom: 20px;
     position: relative;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
     display: none; }
     .page-flight .flight .flight-detail > h3 {
       padding: 10px;
