@@ -13,6 +13,7 @@ app.controller('singleFlightController', [
         // general variables
         $scope.busy = false;
         $scope.loading = false;
+        $scope.loadingFlight = false;
         $scope.flightList = [];
         $scope.expiryTime = '';
         $scope.flightRequest = {
@@ -234,11 +235,87 @@ app.controller('singleFlightController', [
 
 
         // **********
+        // revalidate flight
+        $scope.revalidateFlightParam = {
+            validated: false,
+            token: '',
+            validating: false,
+            available: false,
+            newFare: false
+        };
+        $scope.revalidateFlight = function (indexNo) {
+
+            $('body').addClass('no-scroll');
+
+            console.log('---------------------');
+            console.log('Validating Flight no : '+indexNo);
+
+            $scope.revalidateFlightParam.validating = true;
+            $scope.loading = true;
+
+            // revalidate flight
+            $http.get(RevalidateConfig.Url, {
+                params: {
+                    SearchId: RevalidateConfig.SearchId,
+                    ItinIndex: indexNo
+                }
+            }).success(function (returnData) {
+                $scope.revalidateFlightParam.validating = false;
+                $scope.revalidateFlightParam.validated = true;
+
+                if (returnData.IsValid == true) {
+                    console.log('departure flight available');
+                    $scope.revalidateFlightParam.available = true;
+                    $scope.revalidateFlightParam.token = returnData.Token;
+
+                    $('.push-token input').val($scope.revalidateFlightParam.token);
+                    $('.push-token').submit();
+
+                } else if (returnData.IsValid == false) {
+                    $scope.revalidateFlightParam.available = false;
+
+                    if (returnData.IsOtherFareAvailable == true) {
+                        console.log('departure flight has new price');
+                        $scope.revalidateFlightParam.newFare = true;
+                        $scope.revalidateFlightParam.token = returnData.Token;
+                        // update price
+                        $scope.revalidateFlightParam.totalFare = returnData.NewFare;
+                        $scope.flightList[indexNo].TotalFare = returnData.NewFare;
+                        $('.push-token input').val($scope.revalidateFlightParam.token);
+
+                    } else if (returnData.IsOtherFareAvailable == false) {
+                        console.log('departure flight is gone');
+                        $scope.revalidateFlightParam.newFare = false;
+                        $scope.flightList[indexNo].available = false;
+
+                    }
+                }
+            }).error(function (returnData) {
+                $scope.departureFlightConfig.validatingFlight = false;
+                console.log('ERROR Validating Flight');
+                console.log(returnData);
+                console.log('--------------------');
+            });
+        }
+        $scope.revalidateSubmit = function() {
+            $('.push-token').submit();
+        }
+        $scope.revalidateCancel = function () {
+            $scope.loading = false;
+            $scope.revalidateFlightParam.validated = false;
+            $scope.revalidateFlightParam.newFare = false;
+            $scope.revalidateFlightParam.available = false;
+            $('body').removeClass('no-scroll');
+        }
+
+
+        // **********
         // get flight function
         $scope.getFlight = function() {
 
             $scope.busy = true;
             $scope.loading = true;
+            $scope.loadingFlight = true;
 
             console.log('----------');
             console.log('Getting flight list with parameter');
@@ -252,12 +329,16 @@ app.controller('singleFlightController', [
             }).success(function(returnData) {
                 $scope.busy = false;
                 $scope.loading = false;
+                $scope.loadingFlight = false;
 
                 // console log the return data
                 console.log(returnData);
 
                 // set expiry time
                 $scope.expiryTime = new Date(returnData.ExpiryTime);
+
+                // set searchID
+                RevalidateConfig.SearchId = returnData.SearchId;
 
                 // generate flight list
                 $scope.generateFlightList(returnData.FlightList);
