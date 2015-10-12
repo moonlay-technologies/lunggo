@@ -423,7 +423,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
-                    var timeLimit = timeLimitDate.Add(timeLimitTime);
+                    var timeLimit = timeLimitDate.Add(timeLimitTime).ToUniversalTime();
                     return new BookFlightResult
                     {
                         IsSuccess = true,

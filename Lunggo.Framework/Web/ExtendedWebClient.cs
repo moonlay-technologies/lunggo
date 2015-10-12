@@ -32,5 +32,10 @@ namespace Lunggo.Framework.Web
             }
             return response;
         }
+
+        public void AddCookie(Cookie cookie)
+        {
+            _cookieContainer.Add(cookie);
+        }
     }
 }

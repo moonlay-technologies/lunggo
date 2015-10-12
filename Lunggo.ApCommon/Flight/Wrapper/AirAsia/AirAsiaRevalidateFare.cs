@@ -140,9 +140,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CabinClass = cabinClass,
                                 Rbd = foundFareId.Split('~')[1],
                                 DepartureAirport = splittedSegmentFareId[4],
-                                DepartureTime = DateTime.Parse(splittedSegmentFareId[5]),
+                                DepartureTime = DateTime.Parse(splittedSegmentFareId[5]).ToUniversalTime(),
                                 ArrivalAirport = splittedSegmentFareId[6],
-                                ArrivalTime = DateTime.Parse(splittedSegmentFareId[7]),
+                                ArrivalTime = DateTime.Parse(splittedSegmentFareId[7]).ToUniversalTime(),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = 0
                             });

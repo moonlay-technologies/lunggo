@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                        FlightService.ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
+                        client.AddCookie(new Cookie("lastSearch", "origin=CGK", "/", "booking.airasia.com"));
                         url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var itinHtml = (CQ) client.DownloadString(url);
@@ -103,9 +105,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CabinClass = conditions.CabinClass,
                                 Rbd = fareId.Split('~')[1],
                                 DepartureAirport = splittedSegmentFareId[4],
-                                DepartureTime = DateTime.Parse(splittedSegmentFareId[5]),
+                                DepartureTime = DateTime.Parse(splittedSegmentFareId[5]).ToUniversalTime(),
                                 ArrivalAirport = splittedSegmentFareId[6],
-                                ArrivalTime = DateTime.Parse(splittedSegmentFareId[7]),
+                                ArrivalTime = DateTime.Parse(splittedSegmentFareId[7]).ToUniversalTime(),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = 0
                             });
