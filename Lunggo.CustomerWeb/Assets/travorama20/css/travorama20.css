@@ -1051,11 +1051,11 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
-.page-flight .slider {
+.page-flight .page-slider {
   background: url(/Assets/images/flight-page-slider.jpg) center center no-repeat;
   height: 250px;
   color: #fff; }
-  .page-flight .slider h2 {
+  .page-flight .page-slider h2 {
     line-height: 120%;
     padding-top: 25px;
     background-position: left bottom; }
@@ -1284,6 +1284,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding: 25px;
       position: relative;
       display: none; }
+      .page-flight .search-result-filter .filter-right .filter-content > div h3 {
+        margin-top: 0; }
       .page-flight .search-result-filter .filter-right .filter-content > div.active {
         display: block; }
       .page-flight .search-result-filter .filter-right .filter-content > div .tab-option {
@@ -1303,6 +1305,24 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .search-result-filter .filter-right .filter-content > div#filter-transit .tab-option {
         padding: 15px; }
         .page-flight .search-result-filter .filter-right .filter-content > div#filter-transit .tab-option label {
+          display: block;
+          cursor: pointer; }
+      .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail {
+        width: 910px; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .row {
+          margin-bottom: 15px; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .airline label {
+          cursor: pointer; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .airline input {
+          float: left; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .airline img {
+          width: 50px;
+          display: block; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .airline span {
+          display: block; }
+      .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-option {
+        padding: 15px; }
+        .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-option label {
           display: block;
           cursor: pointer; }
 

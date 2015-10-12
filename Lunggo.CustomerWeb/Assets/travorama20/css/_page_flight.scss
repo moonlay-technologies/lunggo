@@ -10,7 +10,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight {
     // *****
     // section slider
-    .slider {background:url(/Assets/images/flight-page-slider.jpg) center center no-repeat; height:250px; color:#fff;
+    .page-slider {background:url(/Assets/images/flight-page-slider.jpg) center center no-repeat; height:250px; color:#fff;
         h2 {line-height:120%; padding-top:25px; background-position:left bottom;}
     }
     // *****
@@ -100,6 +100,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
             .filter-content {
                 &>div {background:#999999; color:#fff; padding:25px; position:relative; display:none;
+                h3 {margin-top:0;}
                     &.active {display:block;}
                     .tab-detail {}
                     .tab-option {position:absolute; right:0; top:0; height:100%; width:150px; background:#666;}
@@ -111,6 +112,28 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                         .tab-option {padding:15px;
                             label {display:block; cursor:pointer;}
+                        }
+                    }
+                    // *****
+                    &#filter-airline {
+                        .tab-detail {width:910px;
+                            .row {margin-bottom:15px;}
+                            .airline {
+                                label {cursor:pointer;}
+                                input {float:left;}
+                                img {width:50px; display:block;}
+                                span {display:block;}
+                            }
+                        }
+                        .tab-option {padding:15px;
+                            label {display:block; cursor:pointer;}
+                        }
+                    }
+                    // *****
+                    &#filter-time {
+                        .tab-detail {
+                            .departure {}
+                            .arrival {}
                         }
                     }
                 }

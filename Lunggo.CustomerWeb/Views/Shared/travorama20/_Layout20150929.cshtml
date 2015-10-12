@@ -12,6 +12,12 @@
         <!-- stylesheets -->
         <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        
+        @if (IsSectionDefined("AdditionalCSS"))
+        {
+            @RenderSection("AdditionalCSS");
+        }
+
         <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.min.css">
 
     </head>

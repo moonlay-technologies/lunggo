@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 DestinationCity = dict.GetAirportCity(trip.DestinationAirport),
                 DestinationAirportName = dict.GetAirportName(trip.DestinationAirport),
                 DepartureDate = trip.DepartureDate,
-                TotalDuration = CalculateTotalDuration(trip),
+                TotalDuration = CalculateTotalDuration(trip).TotalMilliseconds,
                 Airlines = GetAirlineList(trip),
                 TotalTransit = CalculateTotalTransit(trip),
                 Transits = MapTransitDetails(trip)
