@@ -37,7 +37,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     outputSet.IsSuccess = false;
                     response.Errors.ForEach(output.AddError);
-                    response.ErrorMessages.ForEach(output.AddError);
+                    if (response.ErrorMessages != null)
+                        response.ErrorMessages.ForEach(output.AddError);
                 }
                 output.Sets.Add(outputSet);
             });

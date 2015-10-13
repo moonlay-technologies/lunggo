@@ -117,7 +117,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
 
-                var selectHtml = client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
+                client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
 
                 if (client.ResponseUri.AbsolutePath != "/Select.aspx")
                     return new BookFlightResult
@@ -128,12 +128,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-
-                var cqSelectHtml = (CQ) selectHtml;
-                var coreFareIdSuffix = coreFareId.Split('|').Last();
-                var coreFareIdPrefix = coreFareId.Substring(0, 10);
-                var coreFareIdElement = cqSelectHtml["[value*=" + coreFareIdSuffix + "][value^=" + coreFareIdPrefix + "]"];
-                coreFareId = coreFareIdElement.Attr("value");
 
                 // [POST] Select Flight
 
