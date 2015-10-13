@@ -550,7 +550,8 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 // **********
 // flight review wrapper
-.flight-review-wrapper {position:fixed; width:100%; height:100%; top:0; left:0; background:rgba(100,100,100,0.7); z-index:100; display:none;
+.flight-review-wrapper {position:fixed; width:100%; height:100%; top:0; left:0; background:rgba(100,100,100,0.7); z-index:100;
+    .close-review {cursor:pointer;}
     // if active
     &.active {overflow:auto;
         .flight-review {height:auto; position:relative;
@@ -596,7 +597,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                                 }
                                 .transit {border-top:3px solid $color-main-blue; padding-top:5px; margin-top:0; font-size:16px;}
                             }
-                            .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;}
+                            .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;
+                                .overday {background:#aaa; color:#fff; position:relative; top:-3px; padding:5px;}
+                            }
                         }
                     }
                     // if flight return
@@ -605,10 +608,10 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
                 .flight-button {text-align:right; padding:5px 0;;
-                    .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none;
+                    .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none; cursor:pointer;
                         &:before {content:""; display:block; position:absolute; width:24px; height:24px; background:url(/Assets/images/flight-button-sprite.png); left:-24px;}
                     }
-                    .flight-rules-trigger {@extend .flight-detail-trigger;
+                    .flight-rules-trigger {@extend .flight-detail-trigger; cursor:pointer;
                         &:before {background-position:-24px;}
                     }
                 }

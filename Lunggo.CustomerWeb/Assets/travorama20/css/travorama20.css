@@ -15,6 +15,9 @@ body {
   letter-spacing: 0.5px;
   -webkit-font-smoothing: subpixel-antialiased; }
 
+span.close {
+  cursor: pointer; }
+
 .no-scroll {
   overflow: hidden; }
 
@@ -2179,8 +2182,9 @@ file: /Assets/travorama20/css/_page_flight.scss
   top: 0;
   left: 0;
   background: rgba(100, 100, 100, 0.7);
-  z-index: 100;
-  display: none; }
+  z-index: 100; }
+  .flight-review-wrapper .close-review {
+    cursor: pointer; }
   .flight-review-wrapper.active {
     overflow: auto; }
     .flight-review-wrapper.active .flight-review {
@@ -2302,6 +2306,12 @@ file: /Assets/travorama20/css/_page_flight.scss
           text-align: left;
           padding-right: 0;
           padding-left: 20px; }
+          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival .overday {
+            background: #aaa;
+            color: #fff;
+            position: relative;
+            top: -3px;
+            padding: 5px; }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight.flight-return header h3:after {
         background-position: -22px; }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button {
@@ -2313,7 +2323,8 @@ file: /Assets/travorama20/css/_page_flight.scss
           display: inline-block;
           position: relative;
           color: #1daee4;
-          text-decoration: none; }
+          text-decoration: none;
+          cursor: pointer; }
           .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-detail-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .flight-detail-trigger.section-reason:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-detail-trigger.section-reason:after, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .section-reason.flight-rules-trigger:after, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .section-reason.flight-rules-trigger:after, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-rules-trigger:before, .page-flight .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before {
             content: "";
             display: block;
@@ -2322,8 +2333,10 @@ file: /Assets/travorama20/css/_page_flight.scss
             height: 24px;
             background: url(/Assets/images/flight-button-sprite.png);
             left: -24px; }
-        .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .flight-rules-trigger.section-reason:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger.section-reason:after {
-          background-position: -24px; }
+        .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger {
+          cursor: pointer; }
+          .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .page-index .flight-rules-trigger.section-reason:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .flight-rules-trigger.section-reason:after {
+            background-position: -24px; }
     .flight-review-wrapper .flight-review .flight-review-summary .summary-right {
       width: 25%;
       float: left;
