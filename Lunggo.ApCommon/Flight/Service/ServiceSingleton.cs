@@ -8,10 +8,12 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
+using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Microsoft.Data.OData.Query;
@@ -23,6 +25,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly FlightService Instance = new FlightService();
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
+        private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
@@ -41,6 +44,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 MystiflyWrapper.Init();
                 AirAsiaWrapper.Init();
+                CitilinkWrapper.Init();
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
@@ -51,10 +55,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            var suppliers = new WrapperBase[] {MystiflyWrapper, AirAsiaWrapper};
+            var suppliers = new WrapperBase[] {MystiflyWrapper, AirAsiaWrapper, CitilinkWrapper};
             var results = new SearchFlightResult();
             results.Itineraries = new List<FlightItinerary>();
-            for (var i = 0; i< 2; i++)
+            for (var i = 0; i< 3; i++)
             {
                 var result = suppliers[i].SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -69,7 +73,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         itin.LocalRate = 1;
                         itin.LocalPrice = itin.FinalIdrPrice*itin.LocalRate;
                         itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, suppliers[i].SupplierName, itin.FareType);
-                    }
+        }
                     results.IsSuccess = true;
                     results.Itineraries.AddRange(result.Itineraries);
                 }
@@ -124,6 +128,19 @@ namespace Lunggo.ApCommon.Flight.Service
                         result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, Supplier.AirAsia, result.Itinerary.FareType);
                     }
                     return result;
+                case Supplier.Citilink:
+                    result = CitilinkWrapper.RevalidateFare(conditions);
+                    if (result.Itinerary != null)
+                    {
+                        result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(Supplier.Citilink);
+                        result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
+                        AddPriceMargin(result.Itinerary);
+                        result.Itinerary.LocalCurrency = "IDR";
+                        result.Itinerary.LocalRate = 1;
+                        result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
+                        result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, Supplier.Citilink, result.Itinerary.FareType);
+                    }
+                    return result;
                 default:
                     return null;
             }
@@ -140,17 +157,24 @@ namespace Lunggo.ApCommon.Flight.Service
                 case Supplier.Mystifly:
                     result = MystiflyWrapper.BookFlight(bookInfo, fareType);
                     if (result.Status.BookingId != null)
-                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.Mystifly, fareType);
+                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
+                            Supplier.Mystifly, fareType);
                     return result;
                 case Supplier.AirAsia:
                     result = AirAsiaWrapper.BookFlight(bookInfo, fareType);
                     if (result.Status != null)
-                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.AirAsia, fareType);
+                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.AirAsia,
+                            fareType);
+                    return result;
+                case Supplier.Citilink:
+                    result = CitilinkWrapper.BookFlight(bookInfo, fareType);
+                    if (result.Status != null)
+                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.Citilink,
+                            fareType);
                     return result;
                 default:
                     return null;
             }
-
         }
 
         private OrderTicketResult OrderTicketInternal(string bookingId)
@@ -170,6 +194,11 @@ namespace Lunggo.ApCommon.Flight.Service
                     result = AirAsiaWrapper.OrderTicket(bookingId, fareType);
                     if (result.BookingId != null)
                         result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.AirAsia, fareType);
+                    return result;
+                case Supplier.Citilink:
+                    result = CitilinkWrapper.OrderTicket(bookingId, fareType);
+                    if (result.BookingId != null)
+                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Citilink, fareType);
                     return result;
                 default:
                     return null;
@@ -193,6 +222,11 @@ namespace Lunggo.ApCommon.Flight.Service
                     result = AirAsiaWrapper.GetTripDetails(conditions);
                     if (result.BookingId != null)
                         result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.AirAsia, fareType);
+                    return result;
+                case Supplier.Citilink:
+                    result = CitilinkWrapper.GetTripDetails(conditions);
+                    if (result.BookingId != null)
+                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Citilink, fareType);
                     return result;
                 default:
                     return null;

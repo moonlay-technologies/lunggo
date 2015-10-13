@@ -148,11 +148,11 @@ namespace Lunggo.ApCommon.Flight.Service
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
             var bookResults = new List<BookResult>();
-            Parallel.ForEach(itins, itin =>
+            foreach (var itin in itins)
             {
                 var bookResult = BookItinerary(itin, input, output);
                 bookResults.Add(bookResult);
-            });
+            };
             return bookResults;
         }
 

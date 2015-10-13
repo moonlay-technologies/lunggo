@@ -34,7 +34,8 @@
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
     </Reference>
-    <Reference Include="CsQuery">
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
@@ -264,6 +265,14 @@
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
@@ -409,6 +418,10 @@
     <Compile Include="Voucher\VoucherService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
+      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
+      <Name>Lunggo.Flight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>

@@ -13,6 +13,7 @@ using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Flight.Crawler;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.SnowMaker;
