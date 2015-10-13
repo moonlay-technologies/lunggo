@@ -103,6 +103,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
+    var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
 
@@ -114,6 +115,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
+        needNationality = Model.Itinerary.RequireNationality;
         token = Model.Token;
     }
     catch
@@ -265,6 +267,16 @@
                                                 </div>
                                             </div>
                                         }
+                                        else if (needNationality)
+                                        {
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 34%;">
+                                                    <label for="" class="control-label">Nationality</label>
+                                                    <input type="type" name="name" value="" class="passport-country form-control" style="width: 100%;" />
+                                                    <input type="type" name="name" value="" class="passport-country_code hidden" />
+                                                </div>
+                                            </div>
+                                        }
                                         <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
                                     }
                                 </section><!-- .customer-form -->
@@ -321,7 +333,7 @@
                         <div class="col-sm-4">
                             <section class="order-detail">
                                 <h2><b>@Html.I18NString("CW00110")</b> @Html.I18NString("CW00111")</h2>
-                                @foreach (var trip in Model.Itinerary.FlightTrips)
+                                @foreach (var trip in Model.Itinerary.Trips)
                                 {
                                     <section class="flight-detail">
                                         <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
@@ -330,17 +342,17 @@
                                         </h5>
                                         <div class="row flight-route">
                                             <div class="col-sm-6 text-right flight-origin">
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.First().DepartureTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.First().DepartureAirport</strong></h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.First().DepartureAirport</strong></h5>
                                                 <h5>@trip.OriginAirportName</h5>
                                                 <h5>@trip.OriginCity</h5>
                                             </div>
                                             <div class="separator">@Html.I18NString("CW00034")</div>
                                             <div class="col-sm-6 text-left flight-destination">
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
-                                                <h5>@trip.FlightSegments.Last().ArrivalTime.ToString("HH : mm")</h5>
-                                                <h5><strong>@trip.FlightSegments.Last().ArrivalAirport</strong></h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.Last().ArrivalAirport</strong></h5>
                                                 <h5>@trip.DestinationAirportName</h5>
                                                 <h5>@trip.DestinationCity</h5>
                                             </div>
@@ -422,3 +434,5 @@
         @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }
+Status API Training Shop Blog About Pricing
+© 2015 GitHub, Inc. Terms Privacy Security Contact Help

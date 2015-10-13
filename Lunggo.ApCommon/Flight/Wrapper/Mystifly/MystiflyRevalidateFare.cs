@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -15,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
                 var request = new AirRevalidateRQ
                 {
-                    FareSourceCode = FlightService.IdUtil.GetCoreId(conditions.FareId),
+                    FareSourceCode = conditions.FareId,
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null
@@ -63,14 +62,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static RevalidateFareResult MapResult(AirRevalidateRS response, RevalidateConditions conditions)
         {
-            var currency = CurrencyService.GetInstance();
-            var rate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
             var result = new RevalidateFareResult();
             if (response.PricedItineraries.Any())
             {
                 result.IsSuccess = true;
                 result.IsValid = response.IsValid;
-                result.Itinerary = MapFlightItinerary(response.PricedItineraries[0], conditions, rate);
+                result.Itinerary = MapFlightItinerary(response.PricedItineraries[0], conditions);
                 result.Errors = null;
                 result.ErrorMessages = null;
             }

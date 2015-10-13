@@ -17,7 +17,7 @@
     </div>
 
     <div class="row">
-        @foreach (var trip in Model.Itinerary.FlightTrips)
+        @foreach (var trip in Model.Itinerary.Trips)
         {
             <div class="col-md-4">
                 @{ Html.RenderPartial("RenderTrip", trip); }

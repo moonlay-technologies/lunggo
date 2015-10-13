@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 result = new SearchFlightResult
                 {
                     IsSuccess = true,
-                    FlightItineraries = cacheItin,
+                    Itineraries = cacheItin,
                     SearchId = searchId
                 };
             }
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (result.IsSuccess)
             {
                 output.IsSuccess = true;
-                output.Itineraries = result.FlightItineraries.Select(ConvertToItineraryForDisplay).ToList();
+                output.Itineraries = result.Itineraries.Select(ConvertToItineraryForDisplay).ToList();
                 output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
                 output.SearchId = result.SearchId;
                 output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
@@ -69,10 +69,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
 
             var result = SearchFlightInternal(conditions);
-            if (result.FlightItineraries != null)
+            if (result.Itineraries != null)
             {
                 var searchId = HashEncodeConditions(condition);
-                SaveSearchedItinerariesToCache(result.FlightItineraries, searchId, timeout);
+                SaveSearchedItinerariesToCache(result.Itineraries, searchId, timeout);
                 result.SearchId = searchId;
             }
             return result;

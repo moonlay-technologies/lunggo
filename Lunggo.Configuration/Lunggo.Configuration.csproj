@@ -120,6 +120,9 @@
     <None Include="Config\Driver\azureStorage.properties" />
     <None Include="Config\WebAPI\azureStorage.properties" />
     <None Include="Config\WebAPI\Country.csv" />
+    <None Include="Config\WebAPI\mandrill.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>

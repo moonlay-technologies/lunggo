@@ -6,9 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -16,8 +19,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
     {
         internal override RevalidateFareResult RevalidateFare(RevalidateConditions conditions)
         {
-            conditions.FareId =
-                "KNO.SUB.17.11.2015.3.2.1.QG.100.984000.1~N~~N~RGFR~~1~^2~P~~P~RGFR~~1~X|QG~ 831~ ~~KNO~11/17/2015 08:40~CGK~11/17/2015 10:55~^QG~ 805~ ~~CGK~11/17/2015 13:40~SUB~11/17/2015 15:00~";
             return Client.RevalidateFare(conditions);
         }
 
@@ -38,6 +39,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var FlightNumber = splittedFareId[9];
                 var price = decimal.Parse(splittedFareId[10]);
                 var coreFareId = splittedFareId[11];
+                var client = new ExtendedWebClient();
 
                 var URL = @"https://book.citilink.co.id/Search.aspx?" +
                           @"DropDownListCurrency=IDR" +
@@ -55,14 +57,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                           @"&TextBoxMarketOrigin1=" + origin +
                           @"&culture=id-ID";
 
-                Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                 //Headers["Accept-Encoding"] = "gzip, deflate";
-                Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                Headers["Referer"] = "https://www.citilink.co.id/";
+                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                client.Headers["Upgrade-Insecure-Requests"] = "1";
+                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.Headers["Referer"] = "https://www.citilink.co.id/";
 
-                var htmlRespon = DownloadString(URL);
+                var htmlRespon = client.DownloadString(URL);
                 var cobaAmbilTable = (CQ)htmlRespon;
                 var tunjukkode = cobaAmbilTable[".flight-info>span"];
                 var ambilTanggal = cobaAmbilTable[".dayHeaderTodayImage>a"];
@@ -88,14 +90,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var fareIdPrefix = origin + "." + dest + "." + date.ToString("dd.MM.yyyy") + "." + adultCount + "." +
                                        childCount + "." + infantCount + "." + AirlineCode + "." + FlightNumber +"." + price;
 
-                    Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                     //Headers["Accept-Encoding"] = "gzip, deflate";
-                    Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    Headers["Upgrade-Insecure-Requests"] = "1";
-                    Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    Headers["Referer"] = "https://www.citilink.co.id/";
-                    Headers["X-Requested-With"] = "XMLHttpRequest";
-                    Headers["Host"] = "book.citilink.co.id";
+                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                    client.Headers["Upgrade-Insecure-Requests"] = "1";
+                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                    client.Headers["Referer"] = "https://www.citilink.co.id/";
+                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
+                    client.Headers["Host"] = "book.citilink.co.id";
 
                     var url =
                          "https://book.citilink.co.id/TaxAndFeeInclusiveDisplayAjax-resource.aspx?" +
@@ -104,7 +106,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                          "&keyDelimeter=%2C" +
                          "&ssrs=FLEX";
 
-                    var responAjax = DownloadString(url);
+                    var responAjax = client.DownloadString(url);
                     CQ ambilDataAjax = (CQ)responAjax;
                     
                     //Price
@@ -157,6 +159,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 {
                                     Fnumber = ParseFID2[(8 * l) + 1].Trim();
                                 }
+
+                            var dict = DictionaryService.GetInstance();
+                            var arrtime = DateTime.Parse(ParseFID2[j + 3])
+                                .AddHours(dict.GetAirportTimeZone(ParseFID2[j + 2]));
+                            var deptime =
+                                DateTime.Parse(ParseFID2[j + 1])
+                                    .AddHours(dict.GetAirportTimeZone(ParseFID2[j]));
+
                         segments.Add(new FlightSegment
                         {
                             AirlineCode = Acode,
@@ -167,7 +177,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             DepartureTime = DateTime.Parse(ParseFID2[j+1]),
                             ArrivalAirport = ParseFID2[j+2],
                             ArrivalTime = DateTime.Parse(ParseFID2[j + 3]),
-                            OperatingAirlineCode = Fnumber,
+                            OperatingAirlineCode = Acode,
+                            //Duration = arrtime-deptime,
                             StopQuantity = 0
                         });
                         j = j + 8;
@@ -189,12 +200,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         RequireNationality = true,
                         RequestedCabinClass = CabinClass.Economy,
                         TripType = TripType.OneWay,
-                        Supplier = FlightSupplier.AirAsia,
+                        Supplier = Supplier.AirAsia,
                         SupplierCurrency = "IDR",
                         SupplierRate = 1,
                         SupplierPrice = newPrice,
-                        FareId = fareIdPrefix + foundFareId,
-                        FlightTrips = new List<FlightTrip>
+                        FareId = prefix + foundFareId,
+                        Trips = new List<FlightTrip>
                         {
                             new FlightTrip
                             {

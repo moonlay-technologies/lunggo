@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        private partial class AirAsiaClientHandler : ExtendedWebClient
+        private partial class AirAsiaClientHandler
         {
             private static readonly AirAsiaClientHandler ClientInstance = new AirAsiaClientHandler();
             private bool _isInitialized;
@@ -33,16 +33,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
             }
 
-            internal void CreateSession()
+            internal void Login(ExtendedWebClient client)
             {
-                Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                Headers["Accept-Encoding"] = "gzip, deflate";
-                Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                Headers["Upgrade-Insecure-Requests"] = "1";
-                Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                Headers["Origin"] = "http://www.airasia.com";
-                Headers["Referer"] = "http://www.airasia.com/id/id/login/travel-agent.page";
+                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                client.Headers["Accept-Encoding"] = "gzip, deflate";
+                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                client.Headers["Upgrade-Insecure-Requests"] = "1";
+                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.Headers["Origin"] = "http://www.airasia.com";
+                client.Headers["Referer"] = "http://www.airasia.com/id/id/login/travel-agent.page";
                 var postData =
                     @"ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=" + _userName +
                     @"&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=" + _password +
@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__EVENTTARGET=ControlGroupLoginAgentView$AgentLoginView$LinkButtonLogIn" +
                     @"&__EVENTARGUMENT=" +
                     @"&pageToken=";
-                UploadString(@"https://booking2.airasia.com/LoginAgent.aspx", postData);
+                client.UploadString(@"https://booking2.airasia.com/LoginAgent.aspx", postData);
             }
         }
     }

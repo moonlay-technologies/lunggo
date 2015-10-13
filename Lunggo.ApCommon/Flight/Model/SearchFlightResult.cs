@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    public class SearchFlightResult : ResultBase
+    internal class SearchFlightResult : ResultBase
     {
         internal string SearchId { get; set; }
-        internal List<FlightItinerary> FlightItineraries { get; set; }
+        internal List<FlightItinerary> Itineraries { get; set; }
     }
 }

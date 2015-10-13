@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             var request = new AirCancelRQ
             {
-                UniqueID = FlightService.IdUtil.GetCoreId(bookingId),
+                UniqueID = bookingId,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null

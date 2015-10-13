@@ -126,6 +126,21 @@ namespace Lunggo.ApCommon.Dictionary
             }
         }
 
+        public double GetAirportTimeZone(string code)
+        {
+            try
+            {
+                var valueList = AirportDict.Select(dict => dict.Value);
+                var searchedValue = valueList.Single(value => value.Code == code);
+                return searchedValue.TimeZone;
+            }
+            catch
+            {
+                return 99;
+            }
+        }
+
+
         public string GetAirportName(string code)
         {
             try
@@ -262,6 +277,7 @@ namespace Lunggo.ApCommon.Dictionary
                         City = splittedLine[4],
                         CountryCode = splittedLine[5],
                         Country = splittedLine[6],
+                        TimeZone = double.Parse(splittedLine[7])
                     });
                 }
             }
@@ -334,6 +350,8 @@ namespace Lunggo.ApCommon.Dictionary
         public string City { get; set; }
         public string CountryCode { get; set; }
         public string Country { get; set; }
+
+        public double TimeZone { get; set; }
     }
 
     public class HotelLocationDict

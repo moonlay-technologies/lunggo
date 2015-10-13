@@ -113,11 +113,11 @@
                                         {
                                             <div class="history-content-wrapper">
                                                 <div class="history-number">
-                                                    <img src="@rsv.Itinerary.FlightTrips[0].FlightSegments[0].AirlineLogoUrl" />
+                                                    <img src="@rsv.Itinerary.Trips[0].Segments[0].AirlineLogoUrl" />
                                                 </div>
                                                 <div class="history-detail">
                                                     <div class="history-name">
-                                                        <a href="#">@rsv.Itinerary.FlightTrips[0].FlightSegments[0].AirlineName</a>
+                                                        <a href="#">@rsv.Itinerary.Trips[0].Segments[0].AirlineName</a>
                                                         <p><i>@rsv.TripType</i></p>
                                                         Point Reward : @(rsv.Payment.FinalPrice / 100000)
                                                     </div>
@@ -127,25 +127,25 @@
                                                             case TripType.OneWay:
                                                                 <div class="row">
                                                                     <div class="col-sm-5"><b>@Html.I18NString("CW00172")</b></div>
-                                                                    <div class="col-sm-7">@rsv.Itinerary.FlightTrips[0].OriginCity - @rsv.Itinerary.FlightTrips[0].DestinationCity</div>
+                                                                    <div class="col-sm-7">@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-sm-5"><b>@Html.I18NString("CW00057")</b></div>
-                                                                    <div class="col-sm-7">@rsv.Itinerary.FlightTrips[0].DepartureDate.ToString("d MMMM yyyy")</div>
+                                                                    <div class="col-sm-7">@rsv.Itinerary.Trips[0].DepartureDate.ToString("d MMMM yyyy")</div>
                                                                 </div>
                                                                 break;
                                                             case TripType.Return:
                                                             <div class="row">
                                                                 <div class="col-sm-5"><b>@Html.I18NString("CW00172")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.FlightTrips[0].OriginCity - @rsv.Itinerary.FlightTrips[0].DestinationCity</div>
+                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-5"><b>@Html.I18NString("CW00057")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.FlightTrips[0].DepartureDate.ToString("d MMMM yyyy")</div>
+                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[0].DepartureDate.ToString("d MMMM yyyy")</div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-5"><b>@Html.I18NString("CW00058")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.FlightTrips[1].DepartureDate.ToString("d MMMM yyyy")</div>
+                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[1].DepartureDate.ToString("d MMMM yyyy")</div>
                                                             </div>
                                                                 break;
                                                         }

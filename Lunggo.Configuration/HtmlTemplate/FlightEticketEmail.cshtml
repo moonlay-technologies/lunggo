@@ -39,7 +39,7 @@
                 <p>Tiket pesawat Anda telah dikonfirmasi. </p>
                 <p>Attachment berikut adalah e-tiket Anda. Anda dapat menunjukkan e-tiket atau hasil print e-tiket tersebut pada saat proses check-in di bandara.</p>
                 Ringkasan penerbangan Anda:
-                @foreach (var segment in Model.Itinerary.FlightTrips.SelectMany(trip => trip.FlightSegments))
+                @foreach (var segment in Model.Itinerary.Trips.SelectMany(trip => trip.Segments))
                 {
                     <div>
                         =============================|===============================

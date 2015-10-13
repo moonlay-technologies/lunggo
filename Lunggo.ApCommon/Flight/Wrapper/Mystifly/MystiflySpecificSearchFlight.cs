@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                         result.Errors = null;
                         result.ErrorMessages = null;
                         result.IsSuccess = true;
-                        result.FlightItineraries = null;
+                        result.Itineraries = null;
                     }
                     else
                     {

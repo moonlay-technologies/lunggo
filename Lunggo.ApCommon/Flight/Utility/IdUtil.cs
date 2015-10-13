@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Encoder;
@@ -19,9 +20,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 return id.Substring(7);
             }
 
-            internal static FlightSupplier GetSupplier(string id)
+            internal static Supplier GetSupplier(string id)
             {
-                return FlightSupplierCd.Mnemonic(id.Substring(0, 4));
+                return SupplierCd.Mnemonic(id.Substring(0, 4));
             }
 
             internal static FareType GetFareType(string id)
@@ -29,9 +30,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 return FareTypeCd.Mnemonic(id.Substring(4, 3));
             }
 
-            internal static string ConstructIntegratedId(string coreId, FlightSupplier supplier, FareType fareType)
+            internal static string ConstructIntegratedId(string coreId, Supplier supplier, FareType fareType)
             {
-                return FlightSupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
+                return SupplierCd.Mnemonic(supplier) + FareTypeCd.Mnemonic(fareType) + coreId;
             }
         }
     }

@@ -1,10 +1,19 @@
-﻿namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
+﻿using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Constant;
+
+namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper : WrapperBase
     {
         private static readonly AirAsiaWrapper Instance = new AirAsiaWrapper();
         private bool _isInitialized;
         private static readonly AirAsiaClientHandler Client = AirAsiaClientHandler.GetClientInstance();
+        private const Supplier SupplierNameField = Supplier.AirAsia;
+
+        internal override Supplier SupplierName
+        {
+            get { return SupplierNameField; }
+        }
 
         private AirAsiaWrapper()
         {

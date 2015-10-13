@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
-                                    FlightTrips = new List<FlightTrip>()
+                                    Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                                 reservation.Itineraries.Add(itinerary);
@@ -114,7 +114,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                                itinerary.FlightTrips.Add(trip);
+                                itinerary.Trips.Add(trip);
                             }
                             FlightSegment segment;
                             if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))
@@ -231,7 +231,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
-                                    FlightTrips = new List<FlightTrip>()
+                                    Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
                                 reservation.Itineraries.Add(itinerary);
@@ -251,7 +251,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     Segments = new List<FlightSegment>()
                                 };
                                 tripLookup.Add(tripRecord.TripId.GetValueOrDefault(), trip);
-                                itinerary.FlightTrips.Add(trip);
+                                itinerary.Trips.Add(trip);
                             }
                             FlightSegment segment;
                             if (!segmentLookup.TryGetValue(segmentRecord.SegmentId.GetValueOrDefault(), out segment))

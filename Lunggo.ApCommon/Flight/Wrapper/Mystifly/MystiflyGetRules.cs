@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             var request = new AirRulesRQ1
             {
-                FareSourceCode = FlightService.IdUtil.GetCoreId(fareId),
+                FareSourceCode = fareId,
                 SessionId = Client.SessionId,
                 Target = Client.Target,
                 ExtensionData = null

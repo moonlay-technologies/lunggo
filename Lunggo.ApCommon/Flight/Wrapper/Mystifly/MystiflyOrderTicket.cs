@@ -13,15 +13,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId)
+        internal override OrderTicketResult OrderTicket(string bookingId, FareType fareType)
         {
-            var fareType = FlightService.IdUtil.GetFareType(bookingId);
             if (fareType != FareType.Lcc)
             {
                 var request = new AirOrderTicketRQ
                 {
                     FareSourceCode = null,
-                    UniqueID = FlightService.IdUtil.GetCoreId(bookingId),
+                    UniqueID = bookingId,
                     SessionId = Client.SessionId,
                     Target = Client.Target,
                     ExtensionData = null
@@ -70,12 +69,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
             else
             {
-                var bookInfo = WebfareBooking(FlightService.IdUtil.GetCoreId(bookingId));
+                var bookInfo = WebfareBooking(bookingId);
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
                 var request = new AirBookRQ
                 {
-                    FareSourceCode = FlightService.IdUtil.GetCoreId(bookInfo.FareId),
+                    FareSourceCode = bookInfo.FareId,
                     TravelerInfo = travelerInfo,
                     ClientMarkup = 0,
                     PaymentTransactionID = null,
@@ -149,7 +148,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             return new OrderTicketResult
             {
-                BookingId = FlightService.IdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType),
+                BookingId = response.UniqueID,
                 IsInstantIssuance = false
             };
         }
@@ -158,7 +157,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             return new OrderTicketResult
             {
-                BookingId = FlightService.IdUtil.ConstructIntegratedId(response.UniqueID, FlightSupplier.Mystifly, fareType)
+                BookingId = response.UniqueID
             };
         }
 
