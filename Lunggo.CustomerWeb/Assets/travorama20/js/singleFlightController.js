@@ -86,6 +86,13 @@ app.controller('singleFlightController', [
             return hours + "h " + minutes + "m";
         }
 
+        // get date
+        $scope.getDate = function(dateTime) {
+            dateTime = new Date(dateTime);
+            dateTime = dateTime.getDate();
+            return dateTime;
+        }
+
         // **********
         // flight detail function
         $scope.flightActive = -1;

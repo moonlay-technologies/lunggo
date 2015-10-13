@@ -1754,6 +1754,8 @@ file: /Assets/travorama20/css/_page_flight.scss
   width: 750px; }
   .page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date {
     display: inline; }
+  .page-flight.page-flight-return .search-result-container > .active .search-result-selected {
+    display: none; }
 
 .page-flight.page-flight-return .search-result-container > .inactive {
   width: 400px;
@@ -1808,7 +1810,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     border: 1px solid #ccc;
     margin-top: -15px;
     background: #f9f9f9;
-    border-top: none; }
+    border-top: none;
+    display: block; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected > div {
       border-top: 1px solid #ccc; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-airline:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .page-index .flight-airline.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-airline.section-reason:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-airline:after {
@@ -1901,6 +1904,14 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: left;
       padding-right: 0;
       padding-left: 20px; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival span.overday {
+        font-size: 15px;
+        background: #aaa;
+        color: #fff;
+        position: relative;
+        top: -3px;
+        padding: 5px;
+        display: inline; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button {
       padding: 5px 0;
       text-align: center; }
@@ -2101,6 +2112,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       font-size: 15px; }
     .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival {
       text-align: left; }
+      .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival span.overday {
+        display: inline; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left {
     width: 30%; }
     .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-left span {

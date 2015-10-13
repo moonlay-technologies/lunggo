@@ -317,6 +317,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             .search-result-title {
                 p span.route-date {display:inline;}
             }
+            .search-result-selected {display:none;}
         }
         &>.inactive {width:400px; opacity:0.5;
             .search-result-filter {display:none;}
@@ -351,7 +352,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             .search-result-filter {display:none;}
             .search-result-sort {display:none;}
             .search-result-list {display:none;}
-            .search-result-selected {border:$border-default; margin-top:-15px; background:#f9f9f9; border-top:none;
+            .search-result-selected {border:$border-default; margin-top:-15px; background:#f9f9f9; border-top:none; display:block;
                 &>div {border-top:$border-default;}
                 .flight-airline {
                     &:before, &:after {@include clearfix();}
@@ -381,7 +382,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                         .transit {border-top:3px solid $color-main-blue; padding-top:5px; margin-top:0; font-size:16px;}
                     }
-                    .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;}
+                    .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0; padding-left:20px;
+                        span.overday {font-size:15px; background:#aaa; color:#fff; position:relative; top:-3px; padding:5px; display:inline;}
+                    }
                 }
                 .flight-button {padding:5px 0; text-align:center;
                     .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none;
@@ -496,7 +499,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                             .flight-date-duration {
                                 h5 {font-size:15px;}
                             }
-                            .flight-date-arrival {@extend .flight-date-departure; text-align:left;}
+                            .flight-date-arrival {@extend .flight-date-departure; text-align:left;
+                                span.overday {display:inline;}
+                            }
                         }
                     }
                     .summary-bottom {

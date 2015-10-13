@@ -237,6 +237,8 @@
     </section><!-- .search-result-form -->
     <section class="search-result one-way" ng-app="travorama" ng-controller="singleFlightController">
     
+        <h1 class="text-center" ng-hide="!loading && !loadingFlight"><b>MENCARI PENERBANGAN</b></h1>
+
         <div class="page-overlay" ng-show="loading && loadingFlight">
             <div class="overlay-content validating-flight">
                 <header>
@@ -516,7 +518,7 @@
                             <div class="flight-summary-right">
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.TotalFare | number}}</h4>
                                 <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow blcok" ng-click="revalidateFlight(flight.SequenceNo)">PESAN</a>
+                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.SequenceNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
