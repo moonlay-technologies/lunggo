@@ -279,7 +279,7 @@
                     <label>Harga Total:</label>
                     <h3><sup>Rp</sup>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].TotalFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
-                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" />
+                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
             <div class="search-result-filter">
@@ -322,26 +322,26 @@
             <div class="search-result-sort">
                 <div class="container">
                     <div class="sort-airline">
-                        <span>Maskapai</span>
+                        <span ng-click="setSort('departure','airline')">Maskapai</span>
                     </div>
                     <div class="sort-departure">
-                        <span>Berangkat</span>
+                        <span ng-click="setSort('departure','departure')">Berangkat</span>
                     </div>
                     <div class="sort-duration">
-                        <span>Durasi</span>
+                        <span ng-click="setSort('departure','duration')">Durasi</span>
                     </div>
                     <div class="sort-arrival">
-                        <span>Tiba</span>
+                        <span ng-click="setSort('departure','arrival')">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span>Harga Total</span>
+                        <span ng-click="setSort('departure','price')">Harga Total</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in departureFlightConfig.flightList track by $index" id="flight-{{flight.SequenceNo}}">
+                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in departureFlightConfig.flightList | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse" id="flight-{{flight.SequenceNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -391,7 +391,7 @@
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
-                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('departure',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
                                     <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>
@@ -468,7 +468,7 @@
                     <label>Harga Total:</label>
                     <h3><sup>Rp</sup>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</h3>
                     <p>Termasuk Pajak &amp; Service Charge</p>
-                    <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" />
+                    <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
             <div class="search-result-filter">
@@ -511,26 +511,26 @@
             <div class="search-result-sort">
                 <div class="container">
                     <div class="sort-airline">
-                        <span>Maskapai</span>
+                        <span ng-click="setSort('return','airline')">Maskapai</span>
                     </div>
                     <div class="sort-departure">
-                        <span>Berangkat</span>
+                        <span ng-click="setSort('return','departure')">Berangkat</span>
                     </div>
                     <div class="sort-duration">
-                        <span>Durasi</span>
+                        <span ng-click="setSort('return','duration')">Durasi</span>
                     </div>
                     <div class="sort-arrival">
-                        <span>Tiba</span>
+                        <span ng-click="setSort('return','arrival')">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span>Harga Total</span>
+                        <span ng-click="setSort('return','price')">Harga Total</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in returnFlightConfig.flightList track by $index" id="flight-{{flight.SequenceNo}}">
+                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in returnFlightConfig.flightList | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse" id="flight-{{flight.SequenceNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -580,7 +580,7 @@
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
-                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right">X</span></h3>
+                            <h3>Detail Penerbangan <span class="close-flight-detail pull-right" ng-click="setActiveFlight('return',-1)">X</span></h3>
                             <div ng-repeat="segment in flight.Trips[0].Segments track by $index">
                                 <div class="transit" ng-if="$index > 0">
                                     <p>Transit di {{segment.DepartureCity}} selama {{flight.Trips[0].Transits[ $index - 1 ].Duration}}</p>

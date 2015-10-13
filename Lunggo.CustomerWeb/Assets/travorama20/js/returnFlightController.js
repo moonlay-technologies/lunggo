@@ -193,6 +193,35 @@ app.controller('returnFlightController', [
         }
 
         // ******************************
+        // flight sorting
+        $scope.setSort = function (targetFlight, label) {
+            if (targetFlight == 'departure') {
+                targetFlight = $scope.departureFlightConfig;
+            } else {
+                targetFlight = $scope.returnFlightConfig;
+            }
+            targetFlight.flightSort.reverse = (targetFlight.flightSort.label === label) ? !targetFlight.flightSort.reverse : false;
+            targetFlight.flightSort.label = label;
+            switch (label) {
+                case 'airline':
+                    targetFlight.flightSort.value = 'Trips[0].Airlines[0].Name';
+                    break;
+                case 'departure':
+                    targetFlight.flightSort.value = 'Trips[0].Segments[0].DepartureTime';
+                    break;
+                case 'arrival':
+                    targetFlight.flightSort.value = 'Trips[0].Segments[(Trips[0].Segments.length-1)].ArrivalTime';
+                    break;
+                case 'duration':
+                    targetFlight.flightSort.value = 'Trips[0].TotalDuration';
+                    break;
+                case 'price':
+                    targetFlight.flightSort.value = 'TotalFare';
+                    break;
+            }
+        }
+
+        // ******************************
         // get flights
         $scope.getFlights = function () {
             console.log('Getting flights');

@@ -327,9 +327,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                     .flight-summary-left {border-right:none; width:100%;
                         .summary-top-left {}
                         .summary-top-right {
-                            .flight-date-duration {padding-top:35px;
+                            .flight-date-duration {padding-top:35px; width:15%;
                                 h5 {display:none;}
                                 &:after {content:""; display:block; width:100%; border-bottom:3px solid $color-main-blue;}
+                            }
+                            .flight-date-arrival {width:50%;
+                                span.overday {display:inline !important;}
                             }
                         }
                         .summary-bottom-left {}

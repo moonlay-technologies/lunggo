@@ -1769,7 +1769,8 @@ file: /Assets/travorama20/css/_page_flight.scss
     border-right: none;
     width: 100%; }
     .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-top-right .flight-date-duration {
-      padding-top: 35px; }
+      padding-top: 35px;
+      width: 15%; }
       .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-top-right .flight-date-duration h5 {
         display: none; }
       .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-top-right .flight-date-duration:after {
@@ -1777,6 +1778,10 @@ file: /Assets/travorama20/css/_page_flight.scss
         display: block;
         width: 100%;
         border-bottom: 3px solid #1daee4; }
+    .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-top-right .flight-date-arrival {
+      width: 50%; }
+      .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-top-right .flight-date-arrival span.overday {
+        display: inline !important; }
     .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-button {
       display: none; }
     .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration {
