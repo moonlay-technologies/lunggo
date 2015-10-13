@@ -256,6 +256,9 @@
                     <p>@originCityNames[0] <span class="separator"></span> @originCityNames[1] , <span class="route-date">@data.Trips[0].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
                 </div>
             </div><!-- .search-result-title -->
+        
+            <h2 ng-hide="departureFlightConfig.flightList.length">MENCARI PENERBANGAN PERGI</h2>
+
             <div class="search-result-selected">
                 <div class="flight-airline">
                     <h3><img ng-src="{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineLogoUrl}}" alt="departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineName" /> <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineName}}</span>  </h3><div class="flight-facilities hidden"><span class="flight-baggage">15</span><span class="flight-tax"></span></div>
@@ -445,6 +448,9 @@
                     <p>@originCityNames[1] <span class="separator"></span> @originCityNames[0] , <span class="route-date">@data.Trips[1].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
                 </div>
             </div><!-- .search-result-title -->
+        
+            <h2 ng-hide="returnFlightConfig.flightList.length">MENCARI PENERBANGAN PULANG</h2>
+
             <div class="search-result-selected">
                 <div class="flight-airline">
                     <h3><img ng-src="{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineLogoUrl}}" alt="returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineName" /> <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].AirlineName}}</span>  </h3><div class="flight-facilities hidden"><span class="flight-baggage">15</span><span class="flight-tax"></span></div>
@@ -637,9 +643,13 @@
                 <section class="flight-review-summary">
                     <div class="summary-left">
 
-                        <section class="summary-flight flight-departure">
+                        <section class="summary-flight flight-departure" ng-class="{'warning' : (pageConfig.flightsValidated && !departureFlightConfig.validateAvailable)}">
                             <header class="flight-header">
-                                <h3>Penerbangan Pergi</h3>
+                                <h3>
+                                    Penerbangan Pergi
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && departureFlightConfig.validateNewfare && !departureFlightConfig.validateAvailable">Harga Pergi Berubah - Harga Baru Rp. {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].TotalFare | number}}</span>
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && !departureFlightConfig.validateNewfare && !departureFlightConfig.validateAvailable">Penerbangan Pergi Tidak Tersedia</span>
+                                </h3>
                             </header>
                             <div class="flight-content">
                                 <div class="flight-airline">
@@ -666,9 +676,13 @@
                             </div>
                         </section>
 
-                        <section class="summary-flight flight-return">
+                        <section class="summary-flight flight-return" ng-class="{'warning' : (pageConfig.flightsValidated && !returnFlightConfig.validateAvailable)}">
                             <header class="flight-header">
-                                <h3>Penerbangan Pulang</h3>
+                                <h3>
+                                    Penerbangan Pulang
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pergi Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</span>
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && !returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Penerbangan Pulang Tidak Tersedia</span>
+                                </h3>
                             </header>
                             <div class="flight-content">
                                 <div class="flight-airline">
@@ -705,7 +719,12 @@
                         <label>Harga Total:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].TotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                        <input type="submit" class="btn btn-yellow" value="PESAN" />
+                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" />
+                        <input type="submit" class="btn btn-yellow" value="MEMVALIDASI" disabled ng-show="departureFlightConfig.validating || returnFlightConfig.validating" />
+                        <div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
+                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-hide="(!departureFlightConfig.validateNewfare || !returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" />
+                            <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-show="(!departureFlightConfig.validateNewfare || !returnFlightConfig.validateNewfare)" ng-click="closeOverview()" />
+                        </div>
                     </div>
                 </section>
                 <footer class="flight-review-detail">

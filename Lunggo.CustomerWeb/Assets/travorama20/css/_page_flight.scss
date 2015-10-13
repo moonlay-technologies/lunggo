@@ -575,6 +575,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .summary-flight {
                     &.warning {
                         header:after {background-image:url(/Assets/images/flight-detail-active-red.png);}
+                        header h3 {padding-right:0;}
+                        header span.warning {background:#e80000; color:#fff; padding:10px; float:right; position:relative; top:-10px;}
                     }
                     header {background:#eaeaea; position:relative; padding-left:40px;
                         &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-detail-active.png) top left no-repeat; background-size:contain;}
