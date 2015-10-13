@@ -12,10 +12,11 @@ namespace Lunggo.Framework.Web
         private readonly CookieContainer _cookieContainer = new CookieContainer();
 
         public Uri ResponseUri { get; private set; }
+        public HttpStatusCode StatusCode { get; private set; }
 
         protected override WebRequest GetWebRequest(Uri address)
         {
-            var request = (HttpWebRequest) base.GetWebRequest(address);
+            var request = (HttpWebRequest)base.GetWebRequest(address);
             if (request != null)
             {
                 request.CookieContainer = _cookieContainer;
@@ -25,10 +26,19 @@ namespace Lunggo.Framework.Web
 
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-            var response = base.GetWebResponse(request);
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse) base.GetWebResponse(request);
+            }
+            catch (WebException e)
+            {
+                response = (HttpWebResponse) e.Response;
+            }
             if (response != null)
             {
                 ResponseUri = response.ResponseUri;
+                StatusCode = response.StatusCode;
             }
             return response;
         }

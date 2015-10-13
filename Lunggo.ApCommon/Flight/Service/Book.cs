@@ -172,14 +172,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 itin.BookingId = response.Status.BookingId;
                 itin.BookingStatus = response.Status.BookingStatus;
                 if (response.Status.BookingStatus == BookingStatus.Booked)
+                {
                     bookResult.TimeLimit = response.Status.TimeLimit;
+                    itin.TicketTimeLimit = bookResult.TimeLimit;
+                }
             }
             else
             {
                 bookResult.IsSuccess = false;
                 itin.BookingId = response.Status.BookingId;
                 response.Errors.ForEach(output.AddError);
-                response.ErrorMessages.ForEach(output.AddError);
+                if (response.ErrorMessages != null)
+                    response.ErrorMessages.ForEach(output.AddError);
             }
             return bookResult;
         }

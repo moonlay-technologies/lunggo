@@ -24,6 +24,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FareId { get; set; }
         public string BookingId { get; set; }
         public BookingStatus BookingStatus { get; set; }
+        public DateTime? TicketTimeLimit { get; set; }
         public List<FlightTrip> Trips { get; set; }
         public decimal SupplierPrice { get; set; }
         public string SupplierCurrency { get; set; }

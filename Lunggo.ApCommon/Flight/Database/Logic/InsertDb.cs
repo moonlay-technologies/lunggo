@@ -77,6 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             RsvNo = reservation.RsvNo,
                             BookingId = itin.BookingId,
                             BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
+                            TicketTimeLimit = itin.TicketTimeLimit,
                             FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
                             SupplierCd = SupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
                             SupplierPrice = itin.SupplierPrice,
@@ -94,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             TripTypeCd = TripTypeCd.Mnemonic(itin.TripType),
                             InsertBy = "xxx",
                             InsertDate = DateTime.UtcNow,
-                            InsertPgId = "xxx"
+                            InsertPgId = "xxx",
                         };
                         FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 

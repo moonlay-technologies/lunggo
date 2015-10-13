@@ -33,7 +33,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
             {
                 var client = new ExtendedWebClient();
-                Client.Login(client);
 
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -68,13 +67,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
+                if (!Client.Login(client))
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Can't Login!" }
+                    };
+
                 // [POST] Search Flight
 
                 var date2 = date.AddDays(1);
                 client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                 client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Accept-Encoding"] = "gzip, deflate";
+                client.Headers["Accept-Encoding"] = "";
                 client.Headers["Upgrade-Insecure-Requests"] = "1";
                 client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
                 client.Headers["Origin"] = "https://booking2.airasia.com";
@@ -106,7 +117,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0"; ;
 
-                client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
+                var selectHtml = client.UploadString(@"https://booking2.airasia.com/Search.aspx", postData);
 
                 if (client.ResponseUri.AbsolutePath != "/Select.aspx")
                     return new BookFlightResult
@@ -117,6 +128,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
+
+                var cqSelectHtml = (CQ) selectHtml;
+                var coreFareIdSuffix = coreFareId.Split('|').Last();
+                var coreFareIdPrefix = coreFareId.Substring(0, 10);
+                var coreFareIdElement = cqSelectHtml["[value*=" + coreFareIdSuffix + "][value^=" + coreFareIdPrefix + "]"];
+                coreFareId = coreFareIdElement.Attr("value");
 
                 // [POST] Select Flight
 
@@ -423,7 +440,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var timeLimitTimeText = timeLimitTexts[4].Trim(' ', '\n');
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
-                    var timeLimit = timeLimitDate.Add(timeLimitTime).ToUniversalTime();
+                    var timeLimit = timeLimitDate.Add(timeLimitTime);
                     return new BookFlightResult
                     {
                         IsSuccess = true,
