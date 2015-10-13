@@ -1750,12 +1750,13 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight.page-flight-oneway .search-calendar#return {
     left: 222px; }
 
+.page-flight.page-flight-return .search-result-container .search-result-selected {
+  display: none; }
+
 .page-flight.page-flight-return .search-result-container > .active {
   width: 750px; }
   .page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date {
     display: inline; }
-  .page-flight.page-flight-return .search-result-container > .active .search-result-selected {
-    display: none; }
 
 .page-flight.page-flight-return .search-result-container > .inactive {
   width: 400px;

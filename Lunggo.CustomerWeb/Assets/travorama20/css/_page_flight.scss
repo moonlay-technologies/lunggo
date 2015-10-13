@@ -312,12 +312,12 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-return {
     // search result container
     .search-result-container {
+        .search-result-selected {display:none;}
         // if search result departure or search result return is active
         &>.active {width:750px;
             .search-result-title {
                 p span.route-date {display:inline;}
             }
-            .search-result-selected {display:none;}
         }
         &>.inactive {width:400px; opacity:0.5;
             .search-result-filter {display:none;}

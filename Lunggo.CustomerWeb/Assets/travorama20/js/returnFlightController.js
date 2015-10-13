@@ -142,7 +142,6 @@ app.controller('returnFlightController', [
             return dateTime;
         }
 
-        // ******************************
         // set active flight
         $scope.setActiveFlight = function (target, flightSequence) {
             if (target == 'departure') {
@@ -160,7 +159,6 @@ app.controller('returnFlightController', [
             }
         }
 
-        // ******************************
         // set chosen flight
         $scope.setChosenFlight = function (target, flightSequence) {
             if (target == 'departure') {
@@ -178,6 +176,19 @@ app.controller('returnFlightController', [
                 $('body').addClass('no-scroll');
             } else {
                 $('body').removeClass('no-scroll');
+            }
+        }
+
+        // set page active section
+        $scope.setPageActiveSection = function (target) {
+            if (target == 'departure') {
+                if ($scope.departureFlightConfig.chosenFlight < 0) {
+                    $scope.pageConfig.activeFlightSection = 'departure';
+                }
+            } else if (target == 'return') {
+                if ($scope.returnFlightConfig.chosenFlight < 0) {
+                    $scope.pageConfig.activeFlightSection = 'return';
+                }
             }
         }
 
