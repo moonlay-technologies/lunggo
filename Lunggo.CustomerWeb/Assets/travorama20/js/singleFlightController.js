@@ -146,6 +146,13 @@ app.controller('singleFlightController', [
         // **********
         // flight filter function
         
+        // available filter
+        $scope.availableFilter = function(flight) {
+            if (flight.Available) {
+                return flight;
+            }
+        }
+
         // stop filter
         $scope.stopFilterParam = {
             direct: true,

@@ -126,8 +126,8 @@
             <div class="row">
                 <div class="col-sm-9">
                     <div class="result-form-left">
-                        <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) to <b>@originCityNames[1]</b> (@data.Trips[0].DestinationAirport) </h3>
-                        <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd-MM-yyyy")</b> | <b>3 People</b> (@data.AdultCount adult, @data.ChildCount child, @data.InfantCount infant)</h4>
+                        <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) to <b>@destinationCityNames[0]</b> (@data.Trips[0].DestinationAirport) </h3>
+                        <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd-MM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) People</b> (@data.AdultCount adult, @data.ChildCount child, @data.InfantCount infant)</h4>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -477,7 +477,7 @@
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (flightActive == flight.SequenceNo) }" id="flight-{{flight.SequenceNo}}" ng-repeat="flight in flightList | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (flightActive == flight.SequenceNo) }" id="flight-{{flight.SequenceNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
