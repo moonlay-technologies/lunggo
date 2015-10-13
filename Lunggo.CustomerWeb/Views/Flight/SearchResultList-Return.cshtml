@@ -237,6 +237,10 @@
     </div>
 </section><!-- .search-result-form -->
 <section class="search-result return" ng-app="travorama" ng-controller="returnFlightController">
+    
+    <form class="hidden pushToken" action="@Url.Action("Select", "Flight")" method="post">
+        <input type="text" name="token" value="" class="fareToken" />
+    </form>
 
     <div class="container">
         <h2><b>HASIL</b> PENCARIAN</h2>
@@ -282,7 +286,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter">
+            <div class="search-result-filter" ng-if="departureFlightConfig.flightList.length">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -319,7 +323,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-sort">
+            <div class="search-result-sort" ng-if="departureFlightConfig.flightList.length">
                 <div class="container">
                     <div class="sort-airline">
                         <span ng-click="setSort('departure','airline')">Maskapai</span>
@@ -471,7 +475,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter">
+            <div class="search-result-filter" ng-if="returnFlightConfig.flightList.length">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -508,7 +512,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-sort">
+            <div class="search-result-sort" ng-if="returnFlightConfig.flightList.length">
                 <div class="container">
                     <div class="sort-airline">
                         <span ng-click="setSort('return','airline')">Maskapai</span>

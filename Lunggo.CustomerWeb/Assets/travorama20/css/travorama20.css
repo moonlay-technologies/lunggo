@@ -2230,6 +2230,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         clear: both; }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-left > section + section {
         border-top: 1px solid #ccc; }
+      .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight.warning header:after {
+        background-image: url(/Assets/images/flight-detail-active-red.png); }
       .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight header {
         background: #eaeaea;
         position: relative;
