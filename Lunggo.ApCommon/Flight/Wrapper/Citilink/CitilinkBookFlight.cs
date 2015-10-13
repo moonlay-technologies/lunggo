@@ -29,8 +29,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 Client.CreateSession(client);
 
                 var splittedFareId = bookInfo.FareId.Split('.').ToList();
-                var origin = splittedFareId[0];
-                var dest = splittedFareId[1];
                 var date = new DateTime(int.Parse(splittedFareId[4]), int.Parse(splittedFareId[3]), int.Parse(splittedFareId[2]));
                 var adultCount = int.Parse(splittedFareId[5]);
                 var childCount = int.Parse(splittedFareId[6]);
@@ -38,6 +36,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var airlineCode = splittedFareId[8];
                 var flightNumber = splittedFareId[9];
                 var coreFareId = splittedFareId[11];
+                var splitcoreFareId = coreFareId.Split('~').ToList();
+                string origin;
+                string dest;
+                int index;
+                if (splitcoreFareId.Count > 16)
+                {
+                    index = 18;
+                    origin = splitcoreFareId[index];
+                    dest = splitcoreFareId[index + 10];
+                }
+                else
+                {
+                    origin = splitcoreFareId[11];
+                    dest = splitcoreFareId[13];
+                }
+
+                
                 
 
                 // SEARCH

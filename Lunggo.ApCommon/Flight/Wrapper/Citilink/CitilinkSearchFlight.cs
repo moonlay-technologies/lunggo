@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         string FID = ambilFID.Select(x => x.Cq().Attr("value")).FirstOrDefault().Trim();
                         var ParseFID1 = FID.Split('|').ToList();
                         var ParseFID2 = ParseFID1[1].Split('~').ToList();
-
+                        var Rbd = ParseFID1[0].Substring(2,1);
                         //Airline
 
                         string Acode;
@@ -161,7 +161,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 AirlineCode = Acode,
                                 FlightNumber = Fnumber,
                                 CabinClass = conditions.CabinClass,
-                                Rbd = FID,
+                                Rbd = Rbd,
                                 DepartureAirport = ParseFID2[Airport],
                                 DepartureTime = DateTime.Parse(ParseFID2[Airport+1]),
                                 ArrivalAirport = ParseFID2[Airport+2],

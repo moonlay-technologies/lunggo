@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var newFID = CekFID.Select(x => x.Cq().Attr("value")).FirstOrDefault();
                     var ParseFID1 = newFID.Split('|').ToList();
                     var ParseFID2 = ParseFID1[1].Split('~').ToList();
-
+                    var Rbd = ParseFID1[0].Substring(2, 1);
                     //Airline
                     
                     var foundFareId = CekFID.Attr("value");
@@ -172,7 +172,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             AirlineCode = Acode,
                             FlightNumber = Fnumber,
                             CabinClass = CabinClass.Economy,
-                            Rbd = FID,
+                            Rbd = Rbd,
                             DepartureAirport = ParseFID2[j],
                             DepartureTime = DateTime.Parse(ParseFID2[j+1]),
                             ArrivalAirport = ParseFID2[j+2],
