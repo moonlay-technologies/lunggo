@@ -3,7 +3,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
-    internal partial class MystiflyWrapper : WrapperBase
+    internal partial class MystiflyWrapper : FlightSupplierWrapperBase
     {
         private static readonly MystiflyWrapper Instance = new MystiflyWrapper();
         private bool _isInitialized;

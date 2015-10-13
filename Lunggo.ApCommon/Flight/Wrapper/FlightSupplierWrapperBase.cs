@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Wrapper
 {
-    internal abstract class WrapperBase
+    internal abstract class FlightSupplierWrapperBase
     {
         internal abstract Supplier SupplierName { get; }
 

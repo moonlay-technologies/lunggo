@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
-    internal partial class CitilinkWrapper : WrapperBase
+    internal partial class CitilinkWrapper : FlightSupplierWrapperBase
     {
         private static readonly CitilinkWrapper Instance = new CitilinkWrapper();
         private bool _isInitialized;
