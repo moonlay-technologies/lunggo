@@ -2,7 +2,9 @@
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-var app = angular.module('travorama', ['ngRoute']);
+if (typeof(angular) == 'object') {
+    var app = angular.module('travorama', ['ngRoute']);
+}
 
 //********************
 // variables

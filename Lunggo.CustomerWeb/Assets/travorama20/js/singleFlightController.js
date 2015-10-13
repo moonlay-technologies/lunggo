@@ -17,7 +17,7 @@ app.controller('singleFlightController', [
         $scope.flightList = [];
         $scope.expiryTime = '';
         $scope.flightRequest = {
-            cabin: FlightSearchConfig.flightForm.cabin,
+            CabinClass: FlightSearchConfig.flightForm.cabin,
             AdultCount: FlightSearchConfig.flightForm.passenger.adult,
             ChildCount: FlightSearchConfig.flightForm.passenger.child,
             InfantCount: FlightSearchConfig.flightForm.passenger.infant,
@@ -330,7 +330,7 @@ app.controller('singleFlightController', [
                 $scope.busy = false;
                 $scope.loading = false;
                 $scope.loadingFlight = false;
-
+                console.log('Success getting flight list');
                 // console log the return data
                 console.log(returnData);
 
@@ -348,9 +348,9 @@ app.controller('singleFlightController', [
 
 
             }).error(function(returnData) {
-
-                console.log(returnData);
                 console.log('Failed to get flight list');
+                console.log(returnData);
+                console.log('Finished getting flight list');
                 console.log('----------');
 
             });

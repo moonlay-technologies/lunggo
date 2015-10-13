@@ -89,12 +89,11 @@
 
 @section PageJS{
     <script>
+        var langCode = 'en';
         flightPageFunctions();
         FlightSearchConfig.flightForm = {
             cabin: '@data.CabinClass',
-            currentSelection: '',
             departureDate: '@trips[0].DepartureDate',
-            returnDate: '',
             origin: '@trips[0].OriginAirport',
             destination: '@trips[0].DestinationAirport',
             passenger: {
@@ -121,7 +120,7 @@
                 </div>
             </div>
         </div>
-    </section><!-- .slider -->
+    </section><!-- .page-slider -->
     <section class="search-result-form">
         <div class="container">
             <div class="row">
