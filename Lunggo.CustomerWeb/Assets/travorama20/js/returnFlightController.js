@@ -23,6 +23,7 @@ app.controller('returnFlightController', [
             redirectingPage: false
         }
         $scope.departureFlightConfig = {
+            flightTarget : 'departure',
             flightSearchParams: FlightSearchConfig.flightForm.departureFlightParam,
             loading: false,
             loadingFlight: false,
@@ -62,6 +63,7 @@ app.controller('returnFlightController', [
             validateActive: false,
         };
         $scope.returnFlightConfig = {
+            flightTarget : 'return',
             flightSearchParams: FlightSearchConfig.flightForm.returnFlightParam,
             loading: false,
             loadingFlight: false,
@@ -565,6 +567,21 @@ app.controller('returnFlightController', [
 
             }
 
+            // activate flight filter
+            if (targetScope.flightTarget == 'departure') {
+                $scope.initiateFlightFiltering('departure');
+            } else {
+                $scope.initiateFlightFiltering('return');
+            }
+
+        }// $scope.arrangeFlight()
+
+        // initiate flight filtering
+        $scope.initiateFlightFiltering = function(targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+
+            console.log(targetFlight);
+
             // sort prices and set initial price
             function sortNumber(a, b) {
                 return a - b;
@@ -572,6 +589,9 @@ app.controller('returnFlightController', [
             targetScope.flightFilter.price.prices.sort(sortNumber);
             targetScope.flightFilter.price.initial[0] = Math.floor(targetScope.flightFilter.price.prices[0]);
             targetScope.flightFilter.price.initial[1] = Math.round(targetScope.flightFilter.price.prices[targetScope.flightFilter.price.prices.length - 1]);
+
+            targetScope.flightFilter.price.current[0] = Math.floor(targetScope.flightFilter.price.prices[0]);
+            targetScope.flightFilter.price.current[1] = Math.round(targetScope.flightFilter.price.prices[targetScope.flightFilter.price.prices.length - 1]);
 
             // remove duplicatae from airlines
             var dupes = {};
@@ -583,8 +603,29 @@ app.controller('returnFlightController', [
             });
             targetScope.flightFilter.airline.airlines = [];
 
+            // activate price filter
+            $('.'+targetFlight+'-price-slider').slider({
+                range: true,
+                min: targetScope.flightFilter.price.initial[0],
+                max: targetScope.flightFilter.price.initial[1],
+                step: 50000,
+                values: [targetScope.flightFilter.price.initial[0], targetScope.flightFilter.price.initial[1]],
+                create: function (event, ui) {
+                    $('.departure-price-slider-min').val(targetScope.flightFilter.price.initial[0]);
+                    $('.departure-price-slider-min').trigger('input');
+                    $('.departure-price-slider-max').val(targetScope.flightFilter.price.initial[1]);
+                    $('.departure-price-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.departure-price-slider-min').val(ui.values[0]);
+                    $('.departure-price-slider-min').trigger('input');
+                    $('.departure-price-slider-max').val(ui.values[1]);
+                    $('.departure-price-slider-max').trigger('input');
+                }
+            });
+            
+        }
 
-        }// $scope.arrangeFlight()
 
 
     }

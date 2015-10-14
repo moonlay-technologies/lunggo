@@ -314,7 +314,20 @@
                                 </div>
                             </div>
                             <div id="filter-price">
-                                Filter Price
+                                <h3>Saring Berdasarkan Harga</h3>
+                                <div class="slider-value">
+                                    <span>Rp {{departureFlightConfig.flightFilter.price.current[0] | number}}</span>
+                                    <span class="pull-right">Rp {{departureFlightConfig.flightFilter.price.current[1] | number}}</span>
+                                </div>
+                                <div class="slider departure-price-slider" id="departure-price-slider"></div>
+                                <div class="slider-minmax">
+                                    <span>Rp {{departureFlightConfig.flightFilter.price.initial[0] | number}}</span>
+                                    <span class="pull-right">Rp {{departureFlightConfig.flightFilter.price.initial[1] | number}}</span>
+                                </div>
+                                <div class="hidden">
+                                    <input type="text" name="priceSliderValueMin" value="" class="departure-price-slider-min" ng-model="departureFlightConfig.flightFilter.price.current[0]" />
+                                    <input type="text" name="priceSliderValueMax" value="" class="departure-price-slider-max" ng-model="departureFlightConfig.flightFilter.price.current[1]" />
+                                </div>
                             </div>
                             <div id="filter-airline">
                                 <h3>Saring Berdasarkan Maskapai</h3>
@@ -384,7 +397,7 @@
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.SequenceNo}}">
+                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | filter:priceFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.SequenceNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -542,7 +555,20 @@
                                 </div>
                             </div>
                             <div id="filter-price">
-                                Filter Price
+                                <h3>Saring Berdasarkan Harga</h3>
+                                <div class="slider-value">
+                                    <span>Rp {{returnFlightConfig.flightFilter.price.current[0] | number}}</span>
+                                    <span class="pull-right">Rp {{returnFlightConfig.flightFilter.price.current[1] | number}}</span>
+                                </div>
+                                <div class="slider return-price-slider" id="return-price-slider"></div>
+                                <div class="slider-minmax">
+                                    <span>Rp {{returnFlightConfig.flightFilter.price.initial[0] | number}}</span>
+                                    <span class="pull-right">Rp {{returnFlightConfig.flightFilter.price.initial[1] | number}}</span>
+                                </div>
+                                <div class="hidden">
+                                    <input type="text" name="priceSliderValueMin" value="" class="return-price-slider-min" ng-model="returnFlightConfig.flightFilter.price.current[0]" />
+                                    <input type="text" name="priceSliderValueMax" value="" class="return-price-slider-max" ng-model="returnFlightConfig.flightFilter.price.current[1]" />
+                                </div>
                             </div>
                             <div id="filter-airline">
                                 <div class="tab-detail">
@@ -611,7 +637,7 @@
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.SequenceNo}}">
+                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.SequenceNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | filter:priceFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.SequenceNo}}">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
