@@ -248,7 +248,7 @@
 
     <div class="container search-result-container">
 
-        <div class="search-result-departure" ng-class="{'active': (pageConfig.activeFlightSection == 'departure'), 'inactive': (pageConfig.activeFlightSection != 'departure'), 'selected': (departureFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('departure')">
+        <div class="search-result-departure" ng-class="{'loading': (departureFlightConfig.loading && departureFlightConfig.loadingFlight) , 'active': (pageConfig.activeFlightSection == 'departure'), 'inactive': (pageConfig.activeFlightSection != 'departure'), 'selected': (departureFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('departure')">
             <div class="search-result-title">
                 <h4>01</h4>
                 <div>
@@ -289,7 +289,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-if="departureFlightConfig.flightList.length">
+            <div class="search-result-filter">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -326,7 +326,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-sort" ng-if="departureFlightConfig.flightList.length">
+            <div class="search-result-sort">
                 <div class="container">
                     <div class="sort-airline">
                         <span ng-click="setSort('departure','airline')">Maskapai</span>
@@ -440,7 +440,7 @@
             </div><!-- .search-result-list -->
         </div><!-- .search-result-departure -->
 
-        <div class="search-result-return" ng-class="{'active': (pageConfig.activeFlightSection == 'return'), 'inactive': (pageConfig.activeFlightSection != 'return'), 'selected': (returnFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('return')">
+        <div class="search-result-return" ng-class="{'loading' : (returnFlightConfig.loading && returnFlightConfig.loadingFlight), 'active': (pageConfig.activeFlightSection == 'return'), 'inactive': (pageConfig.activeFlightSection != 'return'), 'selected': (returnFlightConfig.chosenFlight > -1) }" ng-click="setPageActiveSection('return')">
             <div class="search-result-title">
                 <h4>02</h4>
                 <div>
@@ -481,7 +481,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-if="returnFlightConfig.flightList.length">
+            <div class="search-result-filter">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -518,7 +518,7 @@
                     </div>
                 </div>
             </div><!-- .search-result-filter -->
-            <div class="search-result-sort" ng-if="returnFlightConfig.flightList.length">
+            <div class="search-result-sort">
                 <div class="container">
                     <div class="sort-airline">
                         <span ng-click="setSort('return','airline')">Maskapai</span>

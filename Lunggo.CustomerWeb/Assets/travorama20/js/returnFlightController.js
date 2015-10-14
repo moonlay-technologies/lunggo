@@ -25,6 +25,7 @@ app.controller('returnFlightController', [
         $scope.departureFlightConfig = {
             flightSearchParams: FlightSearchConfig.flightForm.departureFlightParam,
             loading: false,
+            loadingFlight: false,
             searchId: '',
             flightList: [],
             flightFilterData: {
@@ -72,6 +73,7 @@ app.controller('returnFlightController', [
         $scope.returnFlightConfig = {
             flightSearchParams: FlightSearchConfig.flightForm.returnFlightParam,
             loading: false,
+            loadingFlight: false,
             searchId: '',
             flightList: [],
             flightFilterData: {
