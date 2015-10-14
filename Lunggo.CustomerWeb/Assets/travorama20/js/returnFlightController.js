@@ -472,6 +472,24 @@ app.controller('returnFlightController', [
             }
         }
 
+        // time filter
+        $scope.getHour = function (dateTime) {
+            dateTime = dateTime.substr(11, 2);
+            return parseInt(dateTime);
+        }
+        $scope.timeFilter = function (targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            return function(flight) {
+                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= parseInt(targetScope.flightFilter.time.departure[0])
+                        && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= parseInt(targetScope.flightFilter.time.departure[1])
+                        && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= parseInt(targetScope.flightFilter.time.arrival[0])
+                        && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= parseInt(targetScope.flightFilter.time.arrival[1])
+                ) {
+                    return flight;
+                }
+            }
+        }
+
         // ******************************
         // get flights
         $scope.getFlights = function () {
@@ -611,16 +629,50 @@ app.controller('returnFlightController', [
                 step: 50000,
                 values: [targetScope.flightFilter.price.initial[0], targetScope.flightFilter.price.initial[1]],
                 create: function (event, ui) {
-                    $('.departure-price-slider-min').val(targetScope.flightFilter.price.initial[0]);
-                    $('.departure-price-slider-min').trigger('input');
-                    $('.departure-price-slider-max').val(targetScope.flightFilter.price.initial[1]);
-                    $('.departure-price-slider-max').trigger('input');
+                    $('.'+targetFlight+'-price-slider-min').val(targetScope.flightFilter.price.initial[0]);
+                    $('.' + targetFlight + '-price-slider-min').trigger('input');
+                    $('.' + targetFlight + '-price-slider-max').val(targetScope.flightFilter.price.initial[1]);
+                    $('.' + targetFlight + '-price-slider-max').trigger('input');
                 },
                 slide: function (event, ui) {
-                    $('.departure-price-slider-min').val(ui.values[0]);
-                    $('.departure-price-slider-min').trigger('input');
-                    $('.departure-price-slider-max').val(ui.values[1]);
-                    $('.departure-price-slider-max').trigger('input');
+                    $('.' + targetFlight + '-price-slider-min').val(ui.values[0]);
+                    $('.' + targetFlight + '-price-slider-min').trigger('input');
+                    $('.' + targetFlight + '-price-slider-max').val(ui.values[1]);
+                    $('.' + targetFlight + '-price-slider-max').trigger('input');
+                }
+            });
+            
+            // activate time slider
+            $('.'+targetFlight+'-departure-slider').slider({
+                range: true,
+                min: 0, max: 24, step: 1, values: [0, 24],
+                create: function (event, ui) {
+                    $('.' + targetFlight + '-departure-slider-min').val(0);
+                    $('.' + targetFlight + '-departure-slider-min').trigger('input');
+                    $('.' + targetFlight + '-departure-slider-max').val(24);
+                    $('.' + targetFlight + '-departure-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.' + targetFlight + '-departure-slider-min').val(ui.values[0]);
+                    $('.' + targetFlight + '-departure-slider-min').trigger('input');
+                    $('.' + targetFlight + '-departure-slider-max').val(ui.values[1]);
+                    $('.' + targetFlight + '-departure-slider-max').trigger('input');
+                }
+            });
+            $('.'+targetFlight+'-arrival-slider').slider({
+                range: true,
+                min: 0, max: 24, step: 1, values: [0, 24],
+                create: function (event, ui) {
+                    $('.' + targetFlight + '-arrival-slider-min').val(0);
+                    $('.' + targetFlight + '-arrival-slider-min').trigger('input');
+                    $('.' + targetFlight + '-arrival-slider-max').val(24);
+                    $('.' + targetFlight + '-arrival-slider-max').trigger('input');
+                },
+                slide: function (event, ui) {
+                    $('.' + targetFlight + '-arrival-slider-min').val(ui.values[0]);
+                    $('.' + targetFlight + '-arrival-slider-min').trigger('input');
+                    $('.' + targetFlight + '-arrival-slider-max').val(ui.values[1]);
+                    $('.' + targetFlight + '-arrival-slider-max').trigger('input');
                 }
             });
             
