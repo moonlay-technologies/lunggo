@@ -459,6 +459,11 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                     }
                 }
+                .filter-content {
+                    #filter-airline {
+                        .tab-detail {width:500px;}
+                    }
+                }
             }
         }
         //*****
