@@ -395,6 +395,53 @@ app.controller('returnFlightController', [
         }
 
         // ******************************
+        // flight filtering
+        // available filter
+        $scope.availableFilter = function() {
+            return function (flight) {
+                if (flight.Available) {
+                    return flight;
+                }
+            }
+        }
+
+        // transit filter
+        $scope.transitFilter = function (targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+
+            return function (flight) {
+                if (targetScope.flightFilter.transit[0]) {
+                    if (flight.Trips[0].TotalTransit == 0) {
+                        return flight;
+                    }
+                }
+                if (targetScope.flightFilter.transit[1]) {
+                    if (flight.Trips[0].TotalTransit == 1) {
+                        return flight;
+                    }
+                }
+                if (targetScope.flightFilter.transit[2]) {
+                    if (flight.Trips[0].TotalTransit > 1) {
+                        return flight;
+                    }
+                }
+            }
+
+        }
+        $scope.setTransitFilter = function(targetFlight, target) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            if (target == 'all') {
+                targetScope.flightFilter.transit[0] = true;
+                targetScope.flightFilter.transit[1] = true;
+                targetScope.flightFilter.transit[2] = true;
+            } else {
+                targetScope.flightFilter.transit[0] = false;
+                targetScope.flightFilter.transit[1] = false;
+                targetScope.flightFilter.transit[2] = false;
+            }
+        }
+
+        // ******************************
         // get flights
         $scope.getFlights = function () {
             console.log('Getting flights');
@@ -457,12 +504,20 @@ app.controller('returnFlightController', [
 
         }// $scope.getFlights()
 
+        // arrange flight
         $scope.arrangeFlightData = function(targetScope, data) {
             targetScope.loading = false;
             targetScope.loadingFlight = false;
 
             targetScope.flightList = data.FlightList;
             targetScope.searchId = data.SearchId;
+
+            // loop the result
+            for (var i = 0; i < targetScope.flightList.length; i++) {
+                // make all flight available at initial
+                targetScope.flightList[i].Available = true;
+                
+            }
 
         }// $scope.arrangeFlight()
 
