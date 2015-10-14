@@ -391,14 +391,8 @@ app.controller('singleFlightController', [
                 };
 
                 // *****
-                // populate prices and set min-price and max-price
+                // populate prices
                 $scope.priceFilterParam.prices.push( data[i].TotalFare );
-                function sortNumber(a, b) {
-                    return a - b;
-                }
-                $scope.priceFilterParam.prices.sort(sortNumber);
-                $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
-                $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
 
                 // *****
                 // populate airline tag
@@ -409,6 +403,13 @@ app.controller('singleFlightController', [
                 }
 
             }
+            // sort prices and set initial price filter
+            function sortNumber(a, b) {
+                return a - b;
+            }
+            $scope.priceFilterParam.prices.sort(sortNumber);
+            $scope.priceFilterParam.initial[0] = Math.floor($scope.priceFilterParam.prices[0]);
+            $scope.priceFilterParam.initial[1] = Math.round($scope.priceFilterParam.prices[$scope.priceFilterParam.prices.length - 1]);
 
             // remove duplicatae from airlines
             var dupes = {};

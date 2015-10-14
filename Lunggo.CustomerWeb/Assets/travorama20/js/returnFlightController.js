@@ -28,30 +28,22 @@ app.controller('returnFlightController', [
             loadingFlight: false,
             searchId: '',
             flightList: [],
-            flightFilterData: {
-                price: [],
-                airline: []
-            },
             flightFilter: {
                 transit: [true, true, true],
                 airline: {
-                    changed: false,
+                    touched: false,
                     list: [],
-                    value: []
+                    value: [],
+                    airlines: []
                 },
                 time: {
-                    departure: {
-                        label: [0, 24],
-                        value: [0, 24]
-                    },
-                    arrival: {
-                        label: [0, 24],
-                        value: [0, 24]
-                    }
+                    departure: [0, 24],
+                    arrival: [0, 24]
                 },
                 price: {
-                    label: [-1, -1],
-                    value: [-1, -1]
+                    initial: [-1, -1],
+                    current: [-1, -1],
+                    prices: []
                 }
             },
             flightSort: {
@@ -61,7 +53,6 @@ app.controller('returnFlightController', [
             },
             activeFlight: -1,
             chosenFlight: -1,
-            chosenFlightData: {},
             validating: false,
             validated: false,
             validateToken: '',
@@ -76,30 +67,22 @@ app.controller('returnFlightController', [
             loadingFlight: false,
             searchId: '',
             flightList: [],
-            flightFilterData: {
-                price: [],
-                airline: []
-            },
             flightFilter: {
                 transit: [true, true, true],
                 airline: {
-                    changed: false,
+                    touched: false,
                     list: [],
-                    value: []
+                    value: [],
+                    airlines: []
                 },
                 time: {
-                    departure: {
-                        label: [0, 24],
-                        value: [0, 24]
-                    },
-                    arrival: {
-                        label: [0, 24],
-                        value: [0, 24]
-                    }
+                    departure: [0,24],
+                    arrival: [0,24]
                 },
                 price: {
-                    label: [-1, -1],
-                    value: [-1, -1]
+                    initial: [-1, -1],
+                    current: [-1, -1],
+                    prices: []
                 }
             },
             flightSort: {
@@ -109,7 +92,6 @@ app.controller('returnFlightController', [
             },
             activeFlight: -1,
             chosenFlight: -1,
-            chosenFlightData: {},
             validating: false,
             validated: false,
             validateToken: '',
@@ -441,6 +423,53 @@ app.controller('returnFlightController', [
             }
         }
 
+        // price filter
+        $scope.priceFilter = function (targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            return function(flight) {
+                if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+                    return flight;
+                }
+            }
+        }
+
+        // airline filter
+        $scope.checkAirline = function (targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            targetScope.flightFilter.airline.touched = true;
+            targetScope.flightFilter.airline.value = [];
+            for (var i = 0; i < targetScope.flightFilter.airline.list.length; i++) {
+                if (targetScope.flightFilter.airline.list[i].checked == true) {
+                    targetScope.flightFilter.airline.value.push(targetScope.flightFilter.airline.list[i].Code);
+                }
+            }
+        }
+        $scope.setAirlineFilter = function (targetFlight, target) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            for (var i = 0; i < targetScope.flightFilter.airline.list.length; i++) {
+                if (target == 'all') {
+                    targetScope.flightFilter.airline.list[i].checked = true;
+                } else {
+                    targetScope.flightFilter.airline.list[i].checked = false;
+                }
+            }
+            $scope.checkAirline(targetFlight);
+        }
+        $scope.airlineFilter = function (targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            return function(flight) {
+                if (targetScope.flightFilter.airline.touched == false) {
+                    return flight;
+                } else {
+                    for (var i in flight.AirlinesTag) {
+                        if (targetScope.flightFilter.airline.value.indexOf(flight.AirlinesTag[i]) != -1) {
+                            return flight;
+                        }
+                    }
+                }
+            }
+        }
+
         // ******************************
         // get flights
         $scope.getFlights = function () {
@@ -517,7 +546,43 @@ app.controller('returnFlightController', [
                 // make all flight available at initial
                 targetScope.flightList[i].Available = true;
                 
+                // fare rule
+                targetScope.flightList[i].FareRules = {
+                    Loaded: false,
+                    Content: ''
+                };
+
+                // populate prices
+                targetScope.flightFilter.price.prices.push(targetScope.flightList[i].TotalFare);
+
+                // populate airline code
+                targetScope.flightList[i].AirlinesTag = [];
+                for (var x = 0 ; x < targetScope.flightList[i].Trips[0].Airlines.length; x++) {
+                    targetScope.flightFilter.airline.airlines.push(targetScope.flightList[i].Trips[0].Airlines[x]);
+                    targetScope.flightList[i].AirlinesTag.push(targetScope.flightList[i].Trips[0].Airlines[x].Code);
+                }
+
+
             }
+
+            // sort prices and set initial price
+            function sortNumber(a, b) {
+                return a - b;
+            }
+            targetScope.flightFilter.price.prices.sort(sortNumber);
+            targetScope.flightFilter.price.initial[0] = Math.floor(targetScope.flightFilter.price.prices[0]);
+            targetScope.flightFilter.price.initial[1] = Math.round(targetScope.flightFilter.price.prices[targetScope.flightFilter.price.prices.length - 1]);
+
+            // remove duplicatae from airlines
+            var dupes = {};
+            $.each(targetScope.flightFilter.airline.airlines, function (i, el) {
+                if (!dupes[el.Code]) {
+                    dupes[el.Code] = true;
+                    targetScope.flightFilter.airline.list.push(el);
+                }
+            });
+            targetScope.flightFilter.airline.airlines = [];
+
 
         }// $scope.arrangeFlight()
 
