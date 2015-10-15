@@ -2228,6 +2228,7 @@
     <Content Include="Views\Travorama20\flightReturn.cshtml" />
     <None Include="Views\Flight\SearchResultList-Return.cshtml.bak" />
     <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
+    <Content Include="Views\Travorama20\flightCheckout.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
