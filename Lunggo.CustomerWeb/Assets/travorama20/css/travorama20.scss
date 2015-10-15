@@ -35,7 +35,8 @@ $border-radius-default:4px;
 }
 /*--------------------*/
 /* general class */
-body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased;}
+html {height:100%;}
+body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:568px; min-height:100%;}
 
 span.close {cursor:pointer;}
 

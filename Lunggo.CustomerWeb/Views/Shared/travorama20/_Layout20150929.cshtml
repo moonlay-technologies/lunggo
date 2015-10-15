@@ -29,24 +29,12 @@
     <!--********************-->
     <section class="site-content">
         
-        @RenderBody();
+        @RenderBody()
 
     </section><!-- .site-content -->
     
     <!--********************-->
     <!-- footer group start -->
-    @if ( ViewBag.FooterSubscribe == true )
-    {   
-        @Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
-    }
-    @if ( ViewBag.FooterPayment == true )
-    {
-        @Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
-    }
-    @if ( ViewBag.FooterFeedback == true )
-    {
-        @Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
-    }
     @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
     @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
    

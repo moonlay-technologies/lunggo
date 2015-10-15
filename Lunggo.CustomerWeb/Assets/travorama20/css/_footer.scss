@@ -52,7 +52,7 @@ including in this file :
 }
 
 /* site footer menu */
-.site-footer-menu {background:#303030; color:#fff; padding:25px 0 45px;
+.site-footer-menu {background:#303030; color:#fff; padding:25px 0 45px; position:absolute; width:100%; bottom:207px;
     a {color:#fff;}
 
     .menu-left {
@@ -93,7 +93,7 @@ including in this file :
 }
 
 /* site-footer */
-.site-footer {background:#111; color:#fff; padding:20px 0;
+.site-footer {background:#111; color:#fff; padding:20px 0; position:absolute; bottom:0; width:100%;
     .social-link {padding:15px 0;
         a {margin-left:5px;}
     }

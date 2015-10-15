@@ -10,10 +10,16 @@ file : /Assets/travorama20/css/travorama20.scss
 /* mixins */
 /*--------------------*/
 /* general class */
+html {
+  height: 100%; }
+
 body {
   font-family: 'Open Sans', sans-serif;
   letter-spacing: 0.5px;
-  -webkit-font-smoothing: subpixel-antialiased; }
+  -webkit-font-smoothing: subpixel-antialiased;
+  position: relative;
+  padding-bottom: 568px;
+  min-height: 100%; }
 
 span.close {
   cursor: pointer; }
@@ -422,7 +428,10 @@ including in this file :
 .site-footer-menu {
   background: #303030;
   color: #fff;
-  padding: 25px 0 45px; }
+  padding: 25px 0 45px;
+  position: absolute;
+  width: 100%;
+  bottom: 207px; }
   .site-footer-menu a {
     color: #fff; }
   .site-footer-menu .menu-left .footer-logo {
@@ -481,7 +490,10 @@ including in this file :
 .site-footer {
   background: #111;
   color: #fff;
-  padding: 20px 0; }
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%; }
   .site-footer .social-link {
     padding: 15px 0; }
     .site-footer .social-link a {
@@ -1886,18 +1898,18 @@ file: /Assets/travorama20/css/_page_flight.scss
       width: 100%;
       content: "";
       clear: both; }
-    .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival {
+    .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival {
       float: left;
       width: 35%;
       padding-right: 20px;
       text-align: right; }
-      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 {
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 {
         font-weight: 600;
         font-size: 26px; }
-        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4 span, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span {
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h4 span, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h4 span, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h4 span {
           font-weight: bold;
           display: block; }
-      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h5, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5 {
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-departure h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .search-result-selected .flight-date .flight-date-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-arrival h5, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-arrival h5 {
         font-size: 16px; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-duration {
       float: left;
@@ -1930,14 +1942,14 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button {
       padding: 5px 0;
       text-align: center; }
-      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger {
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger {
         margin-left: 30px;
         padding: 7px;
         display: inline-block;
         position: relative;
         color: #1daee4;
         text-decoration: none; }
-        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before {
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger.section-reason:after, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before {
           content: "";
           display: block;
           position: absolute;
