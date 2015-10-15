@@ -25,62 +25,76 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetDb.SavedPassengers(contactEmail);
         }
 
-        public void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, string searchId, int timeout)
+        public void SaveSearchedItinerariesToCache(List<FlightItinerary> itineraryList, string searchId, int completeness, int timeout)
         {
             if (timeout == 0)
                 timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "searchedFlightItineraries:" + searchId;
-            var cacheObject = itineraryList.ToCacheObject();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var cacheObject = redisDb.StringGet(redisKey);
+            var searchPackage = !cacheObject.IsNullOrEmpty
+                ? cacheObject.DeconvertTo<FlightSearchPackage>() 
+                : new FlightSearchPackage();
+            searchPackage.Completeness = completeness;
+            searchPackage.CompletenessPointer.Add(completeness, searchPackage.Itineraries.Count + itineraryList.Count);
+            searchPackage.Itineraries.AddRange(itineraryList);
+            var newCacheObject = searchPackage.ToCacheObject();
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
         }
 
-        private List<FlightItinerary> GetSearchedItinerariesFromCache(string searchId)
+        private Tuple<int,List<FlightItinerary>> GetSearchedItinerariesFromCache(string searchId, int completeness = 0)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "searchedFlightItineraries:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = redisDb.StringGet(redisKey);
 
             if (!cacheObject.IsNullOrEmpty)
             {
-                var itineraryList = cacheObject.DeconvertTo<List<FlightItinerary>>();
-                return itineraryList;
+                var searchPackage = cacheObject.DeconvertTo<FlightSearchPackage>();
+                var newCompleteness = searchPackage.Completeness;
+                int itinsTakeStart;
+                searchPackage.CompletenessPointer.TryGetValue(completeness, out itinsTakeStart);
+                var itinsTakeCount = searchPackage.Itineraries.Count - itinsTakeStart;
+                var itins = searchPackage.Itineraries.GetRange(searchPackage.CompletenessPointer[itinsTakeStart],
+                    itinsTakeCount);
+                return new Tuple<int, List<FlightItinerary>>(newCompleteness, itins);
             }
             else
             {
-                return null;
+                SaveSearchedItinerariesToCache(new List<FlightItinerary>(), searchId, 1, 0);
+                return new Tuple<int, List<FlightItinerary>>(0, new List<FlightItinerary>());
             }
         }
 
         public DateTime? GetSearchedItinerariesExpiry(string searchId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "searchedFlightItineraries:" + searchId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeToLive = redisDb.KeyTimeToLive(redisKey);
             var expiryTime = DateTime.UtcNow + timeToLive;
             return expiryTime;
         }
 
-        internal string SaveItineraryFromSearchToCache(string searchId, int itinIndex)
+        internal string SaveItineraryFromSearchToCache(string searchId, int registerNumber)
         {
             var plainItinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
-            var itins = GetSearchedItinerariesFromCache(searchId);
+            var itins = GetSearchedItinerariesFromCache(searchId).Item2;
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerary:" + itinCacheId;
-            var cacheObject = itins[itinIndex].ToCacheObject();
+            var cacheObject = itins.Single(itin => itin.RegisterNumber == registerNumber).ToCacheObject();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
             return itinCacheId;
         }
-        internal FlightItinerary GetItineraryFromSearchCache(string searchId, int itinIndex)
+        internal FlightItinerary GetItineraryFromSearchCache(string searchId, int registerNumber)
         {
-            var itins = GetSearchedItinerariesFromCache(searchId);
-            return itins[itinIndex];
+            var itins = GetSearchedItinerariesFromCache(searchId).Item2;
+            return itins.Single(itin => itin.RegisterNumber == registerNumber);
         }
 
         internal string SaveItineraryToCache(FlightItinerary itin)
@@ -94,18 +108,18 @@ namespace Lunggo.ApCommon.Flight.Service
         internal void SaveItineraryToCache(FlightItinerary itin, string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerary:" + itinCacheId;
             var cacheObject = itin.ToCacheObject();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
         }
 
         internal FlightItinerary GetItineraryFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerary:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = redisDb.StringGet(redisKey);
 
             if (!cacheObject.IsNullOrEmpty)
@@ -122,8 +136,8 @@ namespace Lunggo.ApCommon.Flight.Service
         public DateTime? GetItineraryExpiry(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerary:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
             var expiryTime = DateTime.UtcNow + timeToLive;
             return expiryTime;
@@ -140,12 +154,12 @@ namespace Lunggo.ApCommon.Flight.Service
         internal void SaveItinerarySetAndBundleToCache(List<FlightItinerary> itinSet, FlightItinerary itinBundle, string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisSetKey = "flightItinerarySet:" + itinCacheId;
             var setCacheObject = itinSet.ToCacheObject();
             var redisBundleKey = "flightItinerary:" + itinCacheId;
             var bundleCacheObject = itinBundle.ToCacheObject();
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisSetKey, setCacheObject, TimeSpan.FromMinutes(timeout));
             redisDb.StringSet(redisBundleKey, bundleCacheObject, TimeSpan.FromMinutes(timeout));
         }
@@ -153,8 +167,8 @@ namespace Lunggo.ApCommon.Flight.Service
         internal List<FlightItinerary> GetItinerarySetFromCache(string itinCacheId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisKey = "flightItinerarySet:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var cacheObject = redisDb.StringGet(redisKey);
 
             if (!cacheObject.IsNullOrEmpty)

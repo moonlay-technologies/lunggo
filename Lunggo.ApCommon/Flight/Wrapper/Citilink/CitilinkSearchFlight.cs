@@ -205,7 +205,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         SupplierCurrency = "IDR",
                         SupplierRate = 1,
                         SupplierPrice = decimal.Parse(harga[1]),
-                        FareId = prefix + ParseFID1[1],
+                        FareId = prefix + FID,
                         Trips = new List<FlightTrip>
                             {
                                new FlightTrip()

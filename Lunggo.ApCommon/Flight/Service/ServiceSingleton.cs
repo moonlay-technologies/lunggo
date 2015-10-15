@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
@@ -44,9 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (!_isInitialized)
             {
-                MystiflyWrapper.Init();
-                AirAsiaWrapper.Init();
-                CitilinkWrapper.Init();
+                foreach (var supplier in Suppliers) { supplier.Init(); }
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
@@ -55,11 +55,11 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        private void SearchFlightInternal(SearchFlightConditions conditions)
         {
             var results = new SearchFlightResult();
-            results.Itineraries = new List<FlightItinerary>();
-            foreach (var supplier in Suppliers)
+            var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
+            Parallel.ForEach(Suppliers, supplier =>
             {
                 var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -77,6 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                     results.IsSuccess = true;
                     results.Itineraries.AddRange(result.Itineraries);
+                    itinQueue.Enqueue(result.Itineraries);
                 }
                 else
                 {
@@ -84,8 +85,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (result.ErrorMessages != null)
                         result.ErrorMessages.ForEach(results.AddError);
                 }
-            }
-            return results;
+            });
+            Task.Run(() => PopulateSearchCache(itinQueue, conditions));
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
@@ -169,6 +170,27 @@ namespace Lunggo.ApCommon.Flight.Service
         private GetRulesResult GetRulesInternal(string fareId)
         {
             return MystiflyWrapper.GetRules(fareId);
+        }
+
+        private void PopulateSearchCache(ConcurrentQueue<List<FlightItinerary>> itinQueue, SearchFlightConditions conditions)
+        {
+            var supplierCounter = 0;
+            var totalSupplier = Suppliers.Count();
+            var itinCounter = 0;
+            while (supplierCounter < totalSupplier)
+            {
+                List<FlightItinerary> itins;
+                var gotItins = itinQueue.TryDequeue(out itins);
+                if (gotItins)
+                {
+                    supplierCounter++;
+                    var completeness = 100 * supplierCounter / totalSupplier;
+                    var searchId = HashEncodeConditions(conditions);
+                    itins.ForEach(itin => itin.RegisterNumber = itinCounter++);
+                    SaveSearchedItinerariesToCache(itins, searchId, completeness, 0);
+                }
+
+            }
         }
     }
 }
