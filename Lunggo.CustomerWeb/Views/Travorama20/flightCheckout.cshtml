@@ -8,14 +8,14 @@
     ViewBag.SiteHeader = "checkout";
 }
 
-<section class="checkout-progress">
+<section class="checkout-step active-1">
     <div class="container">
-        <div class="progress progress-1"><span>01. Data Pesanan</span></div>
-        <div class="progress progress-2"><span>02. Data Kontak</span></div>
-        <div class="progress progress-3"><span>03. Data Penumpang</span></div>
-        <div class="progress progress-4"><span>04. Pembayaran</span></div>
+        <div class="step step-1 active">01. <span>Data Pesanan</span></div>
+        <div class="step step-2">02. <span>Data Kontak</span></div>
+        <div class="step step-3">03. <span>Data Penumpang</span></div>
+        <div class="step step-4">04. <span>Pembayaran</span></div>
     </div>
-</section><!-- .checkout-progress -->
+</section><!-- .checkout-step -->
 
 <section class="checkout-content">
     
@@ -25,13 +25,15 @@
             
             <div class="col-sm-8">
                 
-                Lorem ipsum
+                
 
             </div>
             <div class="col-sm-4">
                 
                 <div class="widget-container">
-                    <div class="widget price-detail"></div><!-- .widget.price-detail -->
+                    <div class="widget price-detail">
+                        <h3><b>RINCIAN</b> HARGA</h3>
+                    </div><!-- .widget.price-detail -->
                     <div class="widget voucher"></div><!-- .widget.voucher -->
                     <div class="widget flight-detail"></div><!-- .widget.flight-detail -->
                     <div class="widget passenger-detail"></div><!-- .widget.passenger-detail -->

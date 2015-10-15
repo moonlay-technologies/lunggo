@@ -1,0 +1,30 @@
+﻿/*
+
+Page Checkout Styling
+file : /Assets/travorama20/css/_page_checkout.scss
+
+*/
+
+// page checkout
+.page-checkout {}
+
+// checkout step
+.checkout-step {position:relative;
+    &:before {content:""; background:red; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
+    &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
+    .step {float:left; width:25%; font-size:30px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6;
+        &+.step {border-left:1px solid #1f99c7;}
+        &.active {background:#032e55;}
+        span {font-size:20px; font-weight:bold;}
+    }
+
+    // if step 4 active
+    &.active-1:before {background:#032e55;}
+
+    &.active-4 {}
+
+}
+
+// checkout content
+.checkout-content {}
+

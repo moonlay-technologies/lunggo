@@ -1012,6 +1012,7 @@
     <Content Include="Assets\travorama20\css\_screenMedium.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
+    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
