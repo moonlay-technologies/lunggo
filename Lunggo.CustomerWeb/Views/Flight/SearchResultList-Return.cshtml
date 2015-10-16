@@ -243,7 +243,7 @@
     </form>
 
     <div class="container">
-        <h2><b>HASIL</b> PENCARIAN</h2>
+        <h3><b>HASIL</b> PENCARIAN</h3>
     </div>
 
     <div class="container search-result-container">
@@ -482,7 +482,7 @@
                             </div>
                             <div class="flight-summary-right">
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.TotalFare | number}}</h4>
-                                <small>*Harga Sudah Termasuk Pajak &amp; Service Charge</small>
+                                <small>*Termasuk Pajak &amp; Service Charge</small>
                                 <a class="btn btn-yellow" ng-click="setChosenFlight('departure',flight.SequenceNo)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
@@ -549,7 +549,7 @@
                         <h4>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].OriginAirport}} <span>{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                     </div>
                     <div class="flight-date-duration">
-                        <h5 class="time">{{msToTime(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</h5>
+                        <h5 class="time"><span>{{msToTime(returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</span></h5>
                         <h5 class="transit">
                             <span ng-if="returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalTransit == 0">Langsung</span>
                             <span ng-if="returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalTransit > 0">{{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].TotalTransit}} Transit</span>
@@ -839,7 +839,7 @@
                                         <h5>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'dd - MM - yyyy' : 'UTC'}}</h5>
                                     </div>
                                     <div class="flight-date-duration">
-                                        <h5 class="time">{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</h5>
+                                        <h5 class="time"><span>{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</span></h5>
                                         <h5 class="transit">
                                             <span ng-if="departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit == 0">Langsung</span>
                                             <span ng-if="departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit > 0">{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit}} Transit</span>
