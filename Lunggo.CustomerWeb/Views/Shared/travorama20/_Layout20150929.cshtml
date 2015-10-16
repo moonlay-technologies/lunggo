@@ -4,14 +4,15 @@
         
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=1200, initial-scale=1">
         <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
         
         <title>@ViewBag.Title</title>
 
         <!-- stylesheets -->
-        <link rel="stylesheet" href="/Assets/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="/Assets/css/bootstrap.min.css"> -->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+        <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
         
         @if (IsSectionDefined("AdditionalCSS"))
         {
@@ -22,7 +23,8 @@
 
     </head>
 <body class="@ViewBag.BodyClass">
-    
+    @Html.Partial("/Views/Shared/_googleTag.cshtml")
+
     <!--********************-->
     @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
     
