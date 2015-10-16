@@ -205,10 +205,10 @@ file : /Assets/travorama20/css/_page_index.scss
         img {max-width:100%;}
         .destination {position:relative; margin-bottom:15px; overflow:hidden;
             a {position:absolute; top:0; width:100%; height:100%; background:url(/Assets/images/popular-destination-bg.png) bottom center repeat-x; color:#fff;
-                h3 {float:left; width:65%; position:absolute; bottom:0; left:0; z-index:2; color:#fff; padding:15px; padding-left:25px; margin:0;
+                h3 {float:left; width:65%; position:absolute; bottom:0; left:0; z-index:2; color:#fff; padding:15px; margin:0;
                     small {display:block; color:#fff; margin-bottom:5px;}
                 }
-                span {float:left; width:35%; position:absolute; bottom:0; right:0; z-index:2; padding:150px 10px 15px; background:url(/Assets/images/popular-destination-bg.png) bottom center repeat-x; color:#ffd132; font-size:17px; text-align:center; font-weight:600; text-decoration:underline;}
+                span {float:left; width:35%; position:absolute; bottom:0; right:0; z-index:2; padding:150px 10px 15px; background:url(/Assets/images/popular-destination-bg.png) bottom center repeat-x; color:#ffd132; text-align:center; font-weight:600; text-decoration:underline;}
             }
             img {}
             //*****
@@ -218,21 +218,21 @@ file : /Assets/travorama20/css/_page_index.scss
                 }
             }
             //*****
-            &.small {height:260px;}
-            &.medium {height:435px;}
-            &.large {height:375px;}
-            &.half {height:542.5px;}
+            &.small {height:185px;}
+            &.medium {height:320px;}
+            &.large {height:270px;}
+            &.half {height:395px;}
         }
     }
 
     //*****
     // section subscribe
-    .section-subscribe {color:#18a5db; background:#d4e5ef; padding:15px 0; height:173px; margin-top:80px;
+    .section-subscribe {color:#18a5db; background:#d4e5ef; padding:3px 0; margin-top:80px;
         .container {position:relative;}
-        .subscribe-bg {position:absolute; left:-50px; top:-93px;}
+        .subscribe-bg {position:absolute; left:-50px; top:-57px; height:200px;}
 
-        h2 {padding-left:140px; line-height:45px; padding-top:5px; letter-spacing:0;}
-        form {padding:25px 0 15px;
+        h2 {padding-left:80px; line-height:150%; letter-spacing:0; padding-top:7px;}
+        form {padding-top:10px;
             input[type="text"] {padding:10px 15px; height:auto;}
             .subscribe-email {}
             .subscribe-name {width:80%; float:left;}
@@ -247,8 +247,8 @@ file : /Assets/travorama20/css/_page_index.scss
 
     //*****
     // section payment
-    .section-payment {background:#fff; padding:40px 0 60px;
-        img {vertical-align:bottom;}
+    .section-payment {background:#fff; padding:40px 0 50px;
+        img {vertical-align:bottom; height:50px;}
         img+img {margin-left:30px;}
     }
 

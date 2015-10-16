@@ -899,7 +899,6 @@ file : /Assets/travorama20/css/_page_index.scss
         z-index: 2;
         color: #fff;
         padding: 15px;
-        padding-left: 25px;
         margin: 0; }
         .page-index .section-popular .destination a h3 small {
           display: block;
@@ -915,7 +914,6 @@ file : /Assets/travorama20/css/_page_index.scss
         padding: 150px 10px 15px;
         background: url(/Assets/images/popular-destination-bg.png) bottom center repeat-x;
         color: #ffd132;
-        font-size: 17px;
         text-align: center;
         font-weight: 600;
         text-decoration: underline; }
@@ -924,33 +922,33 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-popular .destination.yellow a span {
         background: url(/Assets/images/popular-destination-bg-yellow.png) bottom center repeat-x; }
     .page-index .section-popular .destination.small {
-      height: 260px; }
+      height: 185px; }
     .page-index .section-popular .destination.medium {
-      height: 435px; }
+      height: 320px; }
     .page-index .section-popular .destination.large {
-      height: 375px; }
+      height: 270px; }
     .page-index .section-popular .destination.half {
-      height: 542.5px; }
+      height: 395px; }
 
 .page-index .section-subscribe {
   color: #18a5db;
   background: #d4e5ef;
-  padding: 15px 0;
-  height: 173px;
+  padding: 3px 0;
   margin-top: 80px; }
   .page-index .section-subscribe .container {
     position: relative; }
   .page-index .section-subscribe .subscribe-bg {
     position: absolute;
     left: -50px;
-    top: -93px; }
+    top: -57px;
+    height: 200px; }
   .page-index .section-subscribe h2 {
-    padding-left: 140px;
-    line-height: 45px;
-    padding-top: 5px;
-    letter-spacing: 0; }
+    padding-left: 80px;
+    line-height: 150%;
+    letter-spacing: 0;
+    padding-top: 7px; }
   .page-index .section-subscribe form {
-    padding: 25px 0 15px; }
+    padding-top: 10px; }
     .page-index .section-subscribe form input[type="text"] {
       padding: 10px 15px;
       height: auto; }
@@ -968,9 +966,10 @@ file : /Assets/travorama20/css/_page_index.scss
 
 .page-index .section-payment {
   background: #fff;
-  padding: 40px 0 60px; }
+  padding: 40px 0 50px; }
   .page-index .section-payment img {
-    vertical-align: bottom; }
+    vertical-align: bottom;
+    height: 50px; }
   .page-index .section-payment img + img {
     margin-left: 30px; }
 
