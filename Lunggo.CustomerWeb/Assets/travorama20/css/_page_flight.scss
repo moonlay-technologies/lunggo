@@ -463,7 +463,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 }
                 .filter-content {
                     #filter-airline {
-                        .tab-detail {width:500px;}
+                        .tab-detail {width:300px;}
                     }
                 }
             }
@@ -574,7 +574,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     // default
-    .flight-review {@include border-radius($border-radius-default); border:5px solid $color-main-blue; background:#fff; width:860px; height:380px; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0;
+    .flight-review {@include border-radius($border-radius-default); border:5px solid $color-main-blue; background:#fff; width:860px; height:340px; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0;
         // flight review header
         .flight-review-header {background:#1daee4; padding:10px;
             h3 {color:#fff; text-align:center; padding-right:15px; margin:0;}
@@ -596,7 +596,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     header {background:#eaeaea; position:relative; padding-left:40px;
                         &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-detail-active.png) top left no-repeat; background-size:contain;}
                         h3 {margin:0; font-weight:bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
-                            &:after {position:absolute; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; content:""; top:10px; left:0;}
+                            &:after {position:absolute; width:15px; height:15px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; background-size:200%; content:""; top:10px; left:0;}
                         }
                     }
                     .flight-content {
@@ -624,7 +624,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                     // if flight return
                     &.flight-return {
-                        header h3:after {background-position:-22px;}
+                        header h3:after {background-position:-15px;}
                     }
                 }
                 .flight-button {text-align:right; padding:5px 0;;
@@ -636,22 +636,25 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
             }
-            .summary-right {width:25%; float:left; text-align:center; padding-top:90px;
+            .summary-right {width:25%; float:left; text-align:center; padding-top:80px;
                 label {}
-                h3 {color:$color-main-orange; font-weight:bold; font-size:38px; margin-bottom:0; margin-top:0;}
-                p {color:$color-main-orange; font-size:13px;}
+                h3 {color:$color-main-orange; font-weight:bold; font-size:27px; margin-bottom:0; margin-top:0;}
+                p {color:$color-main-orange; font-size:9px;}
                 .btn {padding-right:50px; padding-left:50px;}
             }
         }
         // flight review detail
         .flight-review-detail {border-top:5px solid $color-main-blue; display:none;
-            &>h3 {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; font-weight:bold;}
+            &>h3 {background:#bfeeff; color:$color-main-blue; text-align:center; padding:15px; margin:0; font-weight:bold; font-size:16px;}
             .detail-flight {
                 .flight-header {background:#eaeaea; position:relative; padding-left:40px; margin-bottom:25px;
                     &:after {content:""; position:absolute; top:0; left:0; height:100%; overflow:hidden; width:50px; background:url(/Assets/images/flight-review-title-bg.png) top left no-repeat; background-size:contain;}
-                    h3 {margin:0; font-weight:bold; font-size:17px; padding:10px; padding-left:25px; position:relative;
-                        &:after {position:absolute; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; content:""; top:10px; left:0;}
+                    h3 {margin:0; font-weight:bold; font-size:12px; padding:10px; padding-left:25px; position:relative;
+                        &:after {position:absolute; width:15px; height:15px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat; background-size:200%; content:""; top:10px; left:0;}
                     }
+                }
+                &.flight-return {
+                    .flight-header h3:after {background-position:-15px;}
                 }
                 .flight-detail {padding-bottom:20px; position:relative;
                     &>h3 {padding:10px; padding-left:5%; font-weight:600; color:$color-main-blue; margin-top:10px;
@@ -662,11 +665,11 @@ file: /Assets/travorama20/css/_page_flight.scss
                         .segment-number {float:left; width:5%;
                             span {background:$color-main-blue; color:#fff; font-weight:600; padding:3px 10px;}
                         }
-                        .segment-left {float:left; width:23%; position:relative;
-                            &:after {content:url(/Assets/images/flight-segment-separator.png); position:absolute; right:15px; top:15px;}
-                            .segment-airline-logo {width:70px; height:70px; border:$border-default; float:left; margin-right:15px;}
-                            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:16px;}
-                            .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:16px;}
+                        .segment-left {float:left; width:23%; position:relative; padding-right:25px;
+                            &:after {content:""; background-image:url(/Assets/images/flight-segment-separator.png); background-repeat:no-repeat; width:0px; height:35px; position:absolute; right:15px; top:15px;}
+                            .segment-airline-logo {height:50px; border:$border-default; float:left; margin-right:15px;}
+                            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px;}
+                            .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
                             .flight-facilities {padding-right:5px; padding-top:5px;
                                 span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0;
                                     &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
@@ -675,15 +678,15 @@ file: /Assets/travorama20/css/_page_flight.scss
                                 }
                             }
                         }
-                        .segment-right {@extend .segment-left; width:72%;
+                        .segment-right {@extend .segment-left; width:72%; padding-right:0;
                             &:before,&:after {content:""; clear:both; display:block; width:100%;}
                             &>div {float:left;}
-                            .segment-departure {width:33.33333334%; padding-top:15px; padding-left:15px;
+                            .segment-departure {width:33.33333334%; padding-top:5px; padding-left:15px;
                                 h5 {margin:0; margin-bottom:5px; font-size:12px;}
-                                h3 {font-weight:bold; margin:0; margin-bottom:10px; font-size:24px;}
-                                h4 {font-weight:600; margin:0; margin-bottom:5px; font-size:16px;}
+                                h3 {font-weight:bold; margin:0; margin-bottom:10px; font-size:14px;}
+                                h4 {font-weight:600; margin:0; margin-bottom:5px; font-size:12px;}
                             }
-                            .segment-duration {width:33.33333334%; padding-right:120px; padding-top:25px;
+                            .segment-duration {width:33.33333334%; padding-right:40px; padding-top:25px;
                                 h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
                                     span {font-weight:bold;}
                                 }
