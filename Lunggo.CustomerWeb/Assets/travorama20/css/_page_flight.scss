@@ -462,6 +462,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
                 .filter-content {
+                    #filter-transit {
+                        .tab-detail label {display:block; border-left:none; margin-left:0; padding-left:0;}
+                    }
                     #filter-airline {
                         .tab-detail {width:300px;}
                     }

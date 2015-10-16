@@ -2127,6 +2127,11 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-trigger > div.filter-duration span:before, .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-trigger > div.filter-duration .page-index span.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-trigger > div.filter-duration span.section-reason:after {
           background-position: -90px;
           width: 50px; }
+    .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-content #filter-transit .tab-detail label {
+      display: block;
+      border-left: none;
+      margin-left: 0;
+      padding-left: 0; }
     .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-content #filter-airline .tab-detail {
       width: 300px; }
 
