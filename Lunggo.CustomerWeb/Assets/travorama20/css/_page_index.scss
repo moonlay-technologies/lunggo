@@ -92,8 +92,8 @@ file : /Assets/travorama20/css/_page_index.scss
                     // flight passenger
                     .form-group.flight-passenger {margin-bottom:10px;
                         &>div {padding-left:5px; padding-right:5px;}
-                        &>div:first-child {padding-right:0px; padding-left:15px;}
-                        &>div:last-child {padding-left:0px; padding-right:15px;}
+                        &>div:first-child {padding-right:0px; padding-left:6px;}
+                        &>div:last-child {padding-left:0px; padding-right:6px;}
                     }
                     .form-flight-passenger {background:#fff; padding:5px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:60px; cursor:pointer;
                         small {font-sizE:9px; line-height:0;

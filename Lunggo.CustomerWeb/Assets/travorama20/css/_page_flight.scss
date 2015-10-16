@@ -129,7 +129,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                     // *****
                     &#filter-airline {
-                        .tab-detail {width:910px;
+                        .tab-detail {width:590px;
                             .row {margin-bottom:15px;}
                             .airline {
                                 label {cursor:pointer;}
@@ -274,6 +274,20 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
 
+    // search calendar
+    .search-calendar {position:absolute; top:150px; width:670px; height:300px;
+        .calendar-body {padding-top:0;}
+        .date-picker {padding-left:30px; padding-right:30px;}
+        .ui-datepicker {
+            &:before, &:after {@include clearfix();}
+        }
+        .ui-datepicker-group {width:300px; float:left;}
+        .ui-datepicker-group-last {border-top:none !important; border-left:$border-default;}
+        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:-15px !important; overflow:hidden;}
+        .ui-datepicker-next {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:120px !important; left:150px !important; right:-15px !important; overflow:hidden;}
+        &#departure {left:5px;}
+        &#return {left:155px;}
+    }
 
 
 }
@@ -291,21 +305,6 @@ file: /Assets/travorama20/css/_page_flight.scss
             &:hover {color:#fff;}
         }
     }
-    // search calendar
-    .search-calendar {position:absolute; top:150px; width:670px; height:300px;
-        .calendar-body {padding-top:0;}
-        .date-picker {padding-left:30px; padding-right:30px;}
-        .ui-datepicker {
-            &:before, &:after {@include clearfix();}
-        }
-        .ui-datepicker-group {width:300px; float:left;}
-        .ui-datepicker-group-last {border-top:0; border-left:$border-default;}
-        .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px; left:-15px; overflow:hidden;}
-        .ui-datepicker-next {@extend .ui-datepicker-prev; background-position:-22px; left:auto; right:-15px;}
-        &#departure {left:5px;}
-        &#return {left:155px;}
-    }
-
 }
 
 // *****

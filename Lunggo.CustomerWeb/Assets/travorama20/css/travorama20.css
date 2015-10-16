@@ -98,7 +98,7 @@ span.close {
   background: #252525;
   position: absolute;
   top: 0;
-  left: 335px;
+  left: 325px;
   z-index: 2;
   display: none; }
   .search-calendar .calendar-header {
@@ -120,7 +120,7 @@ span.close {
   background: #fff;
   position: absolute;
   top: 0;
-  left: 335px;
+  left: 325px;
   z-index: 2;
   display: none; }
   .search-location .location-header {
@@ -636,10 +636,10 @@ file : /Assets/travorama20/css/_page_index.scss
           padding-right: 5px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div:first-child {
           padding-right: 0px;
-          padding-left: 15px; }
+          padding-left: 6px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div:last-child {
           padding-left: 0px;
-          padding-right: 15px; }
+          padding-right: 6px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger {
         background: #fff;
         padding: 5px;
@@ -1377,7 +1377,7 @@ file: /Assets/travorama20/css/_page_flight.scss
           display: block;
           cursor: pointer; }
       .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail {
-        width: 910px; }
+        width: 590px; }
         .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .row {
           margin-bottom: 15px; }
         .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-detail .airline label {
@@ -1746,6 +1746,49 @@ file: /Assets/travorama20/css/_page_flight.scss
         z-index: 2;
         padding: 0 10px; }
 
+.page-flight .search-calendar {
+  position: absolute;
+  top: 150px;
+  width: 670px;
+  height: 300px; }
+  .page-flight .search-calendar .calendar-body {
+    padding-top: 0; }
+  .page-flight .search-calendar .date-picker {
+    padding-left: 30px;
+    padding-right: 30px; }
+  .page-flight .search-calendar .ui-datepicker:before, .page-flight .search-calendar .page-index .ui-datepicker.section-reason:after, .page-index .page-flight .search-calendar .ui-datepicker.section-reason:after, .page-flight .search-calendar .ui-datepicker:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page-flight .search-calendar .ui-datepicker-group {
+    width: 300px;
+    float: left; }
+  .page-flight .search-calendar .ui-datepicker-group-last {
+    border-top: none !important;
+    border-left: 1px solid #ccc; }
+  .page-flight .search-calendar .ui-datepicker-prev, .page-flight .search-calendar .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next, .date-picker .ui-datepicker .ui-datepicker-group .page-flight .search-calendar .ui-datepicker-next {
+    background: url(/Assets/images/calendar-sprite.png) no-repeat;
+    width: 22px;
+    height: 37px;
+    text-indent: -1000px;
+    top: 80px !important;
+    left: -15px !important;
+    overflow: hidden; }
+  .page-flight .search-calendar .ui-datepicker-next {
+    background: url(/Assets/images/calendar-sprite.png) no-repeat;
+    width: 22px;
+    height: 37px;
+    text-indent: -1000px;
+    top: 120px !important;
+    left: 150px !important;
+    right: -15px !important;
+    overflow: hidden; }
+  .page-flight .search-calendar#departure {
+    left: 5px; }
+  .page-flight .search-calendar#return {
+    left: 155px; }
+
 .page-flight.page-flight-oneway .search-location {
   position: absolute;
   top: 95px; }
@@ -1759,44 +1802,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     color: #666; }
     .page-flight.page-flight-oneway .search-location li:hover {
       color: #fff; }
-
-.page-flight.page-flight-oneway .search-calendar {
-  position: absolute;
-  top: 150px;
-  width: 670px;
-  height: 300px; }
-  .page-flight.page-flight-oneway .search-calendar .calendar-body {
-    padding-top: 0; }
-  .page-flight.page-flight-oneway .search-calendar .date-picker {
-    padding-left: 30px;
-    padding-right: 30px; }
-  .page-flight.page-flight-oneway .search-calendar .ui-datepicker:before, .page-flight.page-flight-oneway .search-calendar .page-index .ui-datepicker.section-reason:after, .page-index .page-flight.page-flight-oneway .search-calendar .ui-datepicker.section-reason:after, .page-flight.page-flight-oneway .search-calendar .ui-datepicker:after {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
-  .page-flight.page-flight-oneway .search-calendar .ui-datepicker-group {
-    width: 300px;
-    float: left; }
-  .page-flight.page-flight-oneway .search-calendar .ui-datepicker-group-last {
-    border-top: 0;
-    border-left: 1px solid #ccc; }
-  .page-flight.page-flight-oneway .search-calendar .ui-datepicker-prev, .page-flight.page-flight-oneway .search-calendar .ui-datepicker-next {
-    background: url(/Assets/images/calendar-sprite.png) no-repeat;
-    width: 22px;
-    height: 37px;
-    text-indent: -1000px;
-    top: 80px;
-    left: -15px;
-    overflow: hidden; }
-  .page-flight.page-flight-oneway .search-calendar .ui-datepicker-next {
-    background-position: -22px;
-    left: auto;
-    right: -15px; }
-  .page-flight.page-flight-oneway .search-calendar#departure {
-    left: 5px; }
-  .page-flight.page-flight-oneway .search-calendar#return {
-    left: 155px; }
 
 .page-flight.page-flight-return .search-result-container .search-result-selected {
   display: none; }
