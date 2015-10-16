@@ -114,6 +114,71 @@ span.close {
   .search-calendar .calendar-body {
     padding-top: 15px; }
 
+.date-picker {
+  padding: 15px; }
+  .date-picker .ui-datepicker {
+    width: 100% !important;
+    position: relative; }
+    .date-picker .ui-datepicker .ui-datepicker-group {
+      width: 100%;
+      padding: 15px; }
+      .date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group {
+        border-top: 1px solid #ccc; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
+        color: #fff;
+        color: #1daee4;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar {
+        width: 100%;
+        color: #fff; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th {
+          text-align: center;
+          padding-bottom: 10px; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th span {
+            color: #fff !important;
+            font-size: 12px; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr {
+          margin-bottom: 5px; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td {
+            text-align: center; }
+            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a {
+              color: #fff;
+              display: inline-block;
+              font-size: 12px;
+              padding-top: 4px;
+              width: 25px;
+              height: 25px; }
+            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a:hover {
+              background: #fff;
+              color: #252525;
+              text-decoration: none; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled {
+          cursor: not-allowed; }
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span {
+            color: #666; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
+          color: #fed83e; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
+          background: #fed83e; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        cursor: pointer;
+        color: #1daee4;
+        font-size: 12px; }
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
+        position: absolute;
+        top: -10px;
+        cursor: pointer;
+        color: #1daee4;
+        font-size: 12px;
+        left: auto;
+        right: 15px;
+        font-size: 12px; }
+
 .search-location {
   width: 850px;
   min-height: 520px;
@@ -1012,67 +1077,6 @@ file : /Assets/travorama20/css/_page_index.scss
         margin-top: 10px;
         margin-right: 10px; }
 
-.date-picker {
-  padding: 15px; }
-  .date-picker .ui-datepicker {
-    width: 100% !important;
-    position: relative; }
-    .date-picker .ui-datepicker .ui-datepicker-group {
-      width: 100%;
-      padding: 15px; }
-      .date-picker .ui-datepicker .ui-datepicker-group + .ui-datepicker-group {
-        border-top: 1px solid #ccc; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-title {
-        color: #fff;
-        color: #1daee4;
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 10px; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar {
-        width: 100%;
-        color: #fff; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th {
-          text-align: center;
-          padding-bottom: 10px; }
-          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar thead th span {
-            color: #fff !important;
-            font-size: 12px; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr {
-          margin-bottom: 5px; }
-          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td {
-            text-align: center; }
-            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a {
-              color: #fff;
-              display: inline-block;
-              font-size: 12px;
-              padding-top: 4px;
-              width: 25px;
-              height: 25px; }
-            .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar tbody tr td a:hover {
-              background: #fff;
-              color: #252525;
-              text-decoration: none; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled {
-          cursor: not-allowed; }
-          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span {
-            color: #666; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end f
-span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
-          color: #fed83e; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
-          background: #fed83e; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
-        position: absolute;
-        top: -10px;
-        left: 15px;
-        cursor: pointer;
-        color: #1daee4;
-        font-size: 12px; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
-        left: auto;
-        right: 15px;
-        font-size: 12px; }
-
 /*
 
 FLIGHT Page styling
@@ -1767,7 +1771,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight .search-calendar .ui-datepicker-group-last {
     border-top: none !important;
     border-left: 1px solid #ccc; }
-  .page-flight .search-calendar .ui-datepicker-prev, .page-flight .search-calendar .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next, .date-picker .ui-datepicker .ui-datepicker-group .page-flight .search-calendar .ui-datepicker-next {
+  .page-flight .search-calendar .ui-datepicker-prev {
     background: url(/Assets/images/calendar-sprite.png) no-repeat;
     width: 22px;
     height: 37px;
@@ -1777,11 +1781,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     overflow: hidden; }
   .page-flight .search-calendar .ui-datepicker-next {
     background: url(/Assets/images/calendar-sprite.png) no-repeat;
+    background-position: -22px;
     width: 22px;
     height: 37px;
     text-indent: -1000px;
-    top: 120px !important;
-    left: 150px !important;
+    top: 80px !important;
+    left: auto !important;
     right: -15px !important;
     overflow: hidden; }
   .page-flight .search-calendar#departure {

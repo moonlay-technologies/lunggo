@@ -284,7 +284,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         .ui-datepicker-group {width:300px; float:left;}
         .ui-datepicker-group-last {border-top:none !important; border-left:$border-default;}
         .ui-datepicker-prev {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:-15px !important; overflow:hidden;}
-        .ui-datepicker-next {background:url(/Assets/images/calendar-sprite.png) no-repeat; width:22px; height:37px; text-indent:-1000px; top:120px !important; left:150px !important; right:-15px !important; overflow:hidden;}
+        .ui-datepicker-next {background:url(/Assets/images/calendar-sprite.png) no-repeat; background-position:-22px; width:22px; height:37px; text-indent:-1000px; top:80px !important; left:auto !important; right:-15px !important; overflow:hidden;}
         &#departure {left:5px;}
         &#return {left:155px;}
     }
