@@ -18,8 +18,11 @@ body {
   letter-spacing: 0.5px;
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
-  padding-bottom: 568px;
+  padding-bottom: 424px;
   min-height: 100%; }
+
+img {
+  max-width: 100%; }
 
 span.close {
   cursor: pointer; }
@@ -235,14 +238,14 @@ span.close {
 
 /*--------------------*/
 /* imports */
-@media (min-width: 1199px) {
+@media (max-width: 1199px) {
   .container {
     width: 860px;
     max-width: 100%; } }
 
 @media (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 860px;
     max-width: 100%; } }
 
 /*
@@ -345,105 +348,23 @@ including in this file :
 - site footer
 
 */
-/* section subscribe */
-.section-subscribe {
-  color: #18a5db;
-  background: #d4e5ef;
-  padding: 15px 0;
-  height: 173px;
-  margin-top: 80px; }
-  .section-subscribe .container {
-    position: relative; }
-  .section-subscribe .subscribe-bg {
-    position: absolute;
-    left: -50px;
-    top: -93px; }
-  .section-subscribe h2 {
-    padding-left: 140px;
-    line-height: 45px;
-    padding-top: 5px;
-    letter-spacing: 0; }
-  .section-subscribe form {
-    padding: 25px 0 15px; }
-    .section-subscribe form input[type="text"] {
-      padding: 10px 15px;
-      height: auto; }
-    .section-subscribe form .subscribe-name {
-      width: 80%;
-      float: left; }
-    .section-subscribe form .btn {
-      width: 19%;
-      margin-left: 1%;
-      padding: 9px; }
-  .section-subscribe .subscribe-form.subscribed {
-    display: none; }
-    .section-subscribe .subscribe-form.subscribed h2 {
-      padding: 0; }
-
-/* section payment */
-.section-payment {
-  background: #fff;
-  padding: 40px 0 60px; }
-  .section-payment img {
-    vertical-align: bottom; }
-  .section-payment img + img {
-    margin-left: 30px; }
-
-/* section feedback */
-.section-feedback {
-  background: url(/Assets/images/feedback-bg.jpg) top center no-repeat;
-  background-size: cover;
-  color: #fff;
-  padding: 45px 0; }
-  .section-feedback h2 {
-    font-weight: bold; }
-  .section-feedback blockquote {
-    border-left: none;
-    padding: 0; }
-    .section-feedback blockquote p {
-      padding-left: 90px;
-      position: relative;
-      padding-top: 15px;
-      padding-bottom: 50px; }
-      .section-feedback blockquote p:before, .section-feedback blockquote .page-index p.section-reason:after, .page-index .section-feedback blockquote p.section-reason:after {
-        content: url("/Assets/images/quote-open.png");
-        position: absolute;
-        font-size: 60px;
-        left: 0;
-        top: 0; }
-      .section-feedback blockquote p:after {
-        content: url("/Assets/images/quote-close.png");
-        font-size: 60px;
-        vertical-align: top;
-        position: absolute; }
-    .section-feedback blockquote footer {
-      color: #fff;
-      font-weight: bold;
-      padding-left: 90px; }
-      .section-feedback blockquote footer:before, .section-feedback blockquote .page-index footer.section-reason:after, .page-index .section-feedback blockquote footer.section-reason:after {
-        content: "";
-        border-top: 1px solid #fff;
-        width: 50%;
-        display: block;
-        float: left;
-        margin-top: 10px;
-        margin-right: 10px; }
-
 /* site footer menu */
 .site-footer-menu {
   background: #303030;
   color: #fff;
-  padding: 25px 0 45px;
+  padding: 20px 0 30px;
   position: absolute;
   width: 100%;
-  bottom: 207px; }
+  bottom: 157px; }
   .site-footer-menu a {
     color: #fff; }
-  .site-footer-menu .menu-left .footer-logo {
-    margin-bottom: 30px; }
-  .site-footer-menu .menu-left .googlePlay {
-    margin-bottom: 15px;
-    display: block; }
+  .site-footer-menu .menu-left {
+    padding-right: 50px; }
+    .site-footer-menu .menu-left .footer-logo {
+      margin-bottom: 30px; }
+    .site-footer-menu .menu-left .googlePlay {
+      margin-bottom: 15px;
+      display: block; }
   .site-footer-menu .menu-right .row:first-child {
     padding-top: 25px;
     padding-bottom: 15px; }
@@ -458,7 +379,8 @@ including in this file :
     margin-top: 30px; }
   .site-footer-menu .menu-right .call-center img {
     float: left;
-    padding-right: 10px; }
+    padding-right: 10px;
+    width: 60px; }
   .site-footer-menu .menu-right .call-center p {
     margin-bottom: 0; }
   .site-footer-menu .menu-right .call-center h2 {
@@ -466,15 +388,19 @@ including in this file :
     font-weight: bold; }
   .site-footer-menu .menu-right .asita {
     text-align: center; }
+    .site-footer-menu .menu-right .asita img {
+      height: 50px; }
   .site-footer-menu .menu-right .verisign {
-    background: url(/Assets/images/verisign-bg.jpg) top center no-repeat;
+    background: url(/Assets/images/verisign-bg.jpg) bottom right no-repeat;
     text-align: center;
     position: absolute;
     width: 100%;
     top: -50px;
-    padding: 30px 0 20px; }
+    padding: 50px 0 20px; }
+    .site-footer-menu .menu-right .verisign img {
+      height: 50px; }
     .site-footer-menu .menu-right .verisign img + img {
-      margin-left: 25px; }
+      margin-left: 15px; }
     .site-footer-menu .menu-right .verisign:before, .site-footer-menu .menu-right .page-index .verisign.section-reason:after, .page-index .site-footer-menu .menu-right .verisign.section-reason:after {
       content: url(/Assets/images/verisign-pin.png);
       position: absolute;
@@ -495,14 +421,16 @@ including in this file :
 .site-footer {
   background: #111;
   color: #fff;
-  padding: 20px 0;
+  padding: 15px 0;
   position: absolute;
   bottom: 0;
   width: 100%; }
   .site-footer .social-link {
     padding: 15px 0; }
+    .site-footer .social-link img {
+      width: 40px; }
     .site-footer .social-link a {
-      margin-left: 5px; }
+      margin-left: 3px; }
 
 /*
 
@@ -1003,6 +931,87 @@ file : /Assets/travorama20/css/_page_index.scss
       height: 375px; }
     .page-index .section-popular .destination.half {
       height: 542.5px; }
+
+.page-index .section-subscribe {
+  color: #18a5db;
+  background: #d4e5ef;
+  padding: 15px 0;
+  height: 173px;
+  margin-top: 80px; }
+  .page-index .section-subscribe .container {
+    position: relative; }
+  .page-index .section-subscribe .subscribe-bg {
+    position: absolute;
+    left: -50px;
+    top: -93px; }
+  .page-index .section-subscribe h2 {
+    padding-left: 140px;
+    line-height: 45px;
+    padding-top: 5px;
+    letter-spacing: 0; }
+  .page-index .section-subscribe form {
+    padding: 25px 0 15px; }
+    .page-index .section-subscribe form input[type="text"] {
+      padding: 10px 15px;
+      height: auto; }
+    .page-index .section-subscribe form .subscribe-name {
+      width: 80%;
+      float: left; }
+    .page-index .section-subscribe form .btn {
+      width: 19%;
+      margin-left: 1%;
+      padding: 9px; }
+  .page-index .section-subscribe .subscribe-form.subscribed {
+    display: none; }
+    .page-index .section-subscribe .subscribe-form.subscribed h2 {
+      padding: 0; }
+
+.page-index .section-payment {
+  background: #fff;
+  padding: 40px 0 60px; }
+  .page-index .section-payment img {
+    vertical-align: bottom; }
+  .page-index .section-payment img + img {
+    margin-left: 30px; }
+
+.page-index .section-feedback {
+  background: url(/Assets/images/feedback-bg.jpg) top center no-repeat;
+  background-size: cover;
+  color: #fff;
+  padding: 45px 0; }
+  .page-index .section-feedback h2 {
+    font-weight: bold; }
+  .page-index .section-feedback blockquote {
+    border-left: none;
+    padding: 0; }
+    .page-index .section-feedback blockquote p {
+      padding-left: 90px;
+      position: relative;
+      padding-top: 15px;
+      padding-bottom: 50px; }
+      .page-index .section-feedback blockquote p:before, .page-index .section-feedback blockquote p.section-reason:after {
+        content: url("/Assets/images/quote-open.png");
+        position: absolute;
+        font-size: 60px;
+        left: 0;
+        top: 0; }
+      .page-index .section-feedback blockquote p:after {
+        content: url("/Assets/images/quote-close.png");
+        font-size: 60px;
+        vertical-align: top;
+        position: absolute; }
+    .page-index .section-feedback blockquote footer {
+      color: #fff;
+      font-weight: bold;
+      padding-left: 90px; }
+      .page-index .section-feedback blockquote footer:before, .page-index .section-feedback blockquote footer.section-reason:after {
+        content: "";
+        border-top: 1px solid #fff;
+        width: 50%;
+        display: block;
+        float: left;
+        margin-top: 10px;
+        margin-right: 10px; }
 
 .date-picker {
   padding: 15px; }

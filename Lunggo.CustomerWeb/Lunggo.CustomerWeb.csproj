@@ -947,7 +947,6 @@
     <Content Include="Assets\travorama20\css\_header.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenMedium.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
@@ -1015,7 +1014,6 @@
     <Content Include="Assets\travorama20\css\_header.scss" />
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenMedium.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\css\_page_flight.scss" />
     <Content Include="Assets\travorama20\css\_page_checkout.scss" />

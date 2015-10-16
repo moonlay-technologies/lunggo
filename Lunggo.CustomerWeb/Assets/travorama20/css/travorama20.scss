@@ -36,7 +36,9 @@ $border-radius-default:4px;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:568px; min-height:100%;}
+body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%;}
+
+img {max-width:100%;}
 
 span.close {cursor:pointer;}
 
@@ -134,7 +136,6 @@ span.close {cursor:pointer;}
 /*--------------------*/
 /* imports */
 @import 'screenSmall';
-@import 'screenMedium';
 @import 'screenLarge';
 
 @import 'header';
