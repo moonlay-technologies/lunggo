@@ -232,6 +232,7 @@
     <Compile Include="Flight\Database\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Flight\Model\TopDestination.cs" />
     <Compile Include="Flight\Service\Select.cs" />
     <Compile Include="Flight\Service\Bundle.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Flight\Service\ModelConversion.cs" />
     <Compile Include="Flight\Service\Payment.cs" />
     <Compile Include="Flight\Service\PriceMargin.cs" />
+    <Compile Include="Flight\Service\TopDestinations.cs" />
     <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
     <Compile Include="Flight\Service\GetRules.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\Revalidate.cs" />
     <Compile Include="Flight\Service\Search.cs" />
+    <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />

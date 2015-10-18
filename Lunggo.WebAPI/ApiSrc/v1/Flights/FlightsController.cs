@@ -10,6 +10,7 @@ using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using Newtonsoft.Json;
+using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 {
@@ -90,6 +91,14 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         public void SyncPriceMarginRules(HttpRequestMessage httpRequest)
         {
             FlightLogic.SyncFlightMarginRules();
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("api/v1/flights/topdestinations")]
+        public TopDestinations TopDestinations(HttpRequestMessage httpRequest)
+        {
+            return FlightLogic.TopDestinations();
         }
     }
 }
