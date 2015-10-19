@@ -157,7 +157,7 @@ span.close {cursor:pointer;}
             .autocomplete-no-result {}
             .autocomplete-result {
                 ul {margin:0; padding:0;
-                    li {padding:10px; list-style:none; cursor:default;
+                    li {padding:10px; list-style:none; cursor:pointer;
                         &:hover {background:$color-main-blue;}
                     }
                     li+li {border-top:$border-default;}

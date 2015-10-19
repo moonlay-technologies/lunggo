@@ -118,7 +118,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     .tab-detail {}
                     .tab-option {position:absolute; right:0; top:0; height:100%; width:150px; background:#666;}
                     // *****
-                    &#filter-transit {
+                    &.filter-transit {
                         .tab-detail {
                             label {margin-right:10px; cursor:pointer; margin-bottom:0;}
                             label+label {border-left:2px solid #fff; padding-left:15px;}
@@ -128,7 +128,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                     }
                     // *****
-                    &#filter-airline {
+                    &.filter-airline {
                         .tab-detail {width:590px;
                             .row {margin-bottom:15px;}
                             .airline {
@@ -143,7 +143,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                     }
                     // *****
-                    &#filter-time {
+                    &.filter-time {
                         .tab-detail {
                             .departure {padding-right:15px;}
                             .arrival {padding-left:15px;}
@@ -461,11 +461,15 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                 }
                 .filter-content {
-                    #filter-transit {
+                    .filter-transit {
                         .tab-detail label {display:block; border-left:none; margin-left:0; padding-left:0;}
                     }
-                    #filter-airline {
+                    .filter-airline {
                         .tab-detail {width:300px;}
+                    }
+                    .filter-duration {
+                        .departure {padding-right:10px;}
+                        .arrival {padding-left:10px;}
                     }
                 }
             }

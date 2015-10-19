@@ -82,6 +82,10 @@
     ViewBag.FooterFeedback = false;
 }
 
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
@@ -294,13 +298,13 @@
                     </div>
                     <div class="filter-right">
                         <div class="filter-trigger">
-                            <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
-                            <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
-                            <div class="filter-airline"><span class="switch-filter" data-target="filter-airline">Maskapai</span></div>
-                            <div class="filter-duration"><span class="switch-filter" data-target="filter-duration">Waktu Penerbangan</span></div>
+                            <div class="filter-stop"><span class="switch-filter" data-target="filter-departure-transit">Pemberhentian</span></div>
+                            <div class="filter-price"><span class="switch-filter" data-target="filter-departure-price">Harga</span></div>
+                            <div class="filter-airline"><span class="switch-filter" data-target="filter-departure-airline">Maskapai</span></div>
+                            <div class="filter-duration"><span class="switch-filter" data-target="filter-departure-duration">Waktu Penerbangan</span></div>
                         </div>
                         <div class="filter-content">
-                            <div id="filter-transit">
+                            <div id="filter-departure-transit" class="filter-transit">
                                 <div class="tab-detail">
                                     <label><input type="checkbox" value="" ng-model="departureFlightConfig.flightFilter.transit[0]" /> Penerbangan Langsung</label>
                                     <label><input type="checkbox" value="" ng-model="departureFlightConfig.flightFilter.transit[1]" /> 1x Transit</label>
@@ -311,7 +315,7 @@
                                     <label class="select-none" ng-click="setTransitFilter('departure','none')">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-price">
+                            <div id="filter-departure-price" class="filter-price">
                                 <h3>Saring Berdasarkan Harga</h3>
                                 <div class="slider-value">
                                     <span>Rp {{departureFlightConfig.flightFilter.price.current[0] | number}}</span>
@@ -327,7 +331,7 @@
                                     <input type="text" name="priceSliderValueMax" value="" class="departure-price-slider-max" ng-model="departureFlightConfig.flightFilter.price.current[1]" />
                                 </div>
                             </div>
-                            <div id="filter-airline">
+                            <div id="filter-departure-airline" class="filter-airline">
                                 <h3>Saring Berdasarkan Maskapai</h3>
                                 <div class="tab-detail">
                                     <div class="row" ng-repeat="airline in departureFlightConfig.flightFilter.airline.list" ng-if="$index % 4 == 0">
@@ -366,7 +370,7 @@
                                     <label class="select-none" ng-click="setAirlineFilter('departure','none')">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-duration">
+                            <div id="filter-departure-duration" class="filter-duration">
                                 <h3>Saring Berdasarkan Waktu</h3>
                                 <div class="tab-detail">
                                     <div class="row">
@@ -575,13 +579,13 @@
                     </div>
                     <div class="filter-right">
                         <div class="filter-trigger">
-                            <div class="filter-stop"><span class="switch-filter" data-target="filter-transit">Pemberhentian</span></div>
-                            <div class="filter-price"><span class="switch-filter" data-target="filter-price">Harga</span></div>
-                            <div class="filter-airline"><span class="switch-filter" data-target="filter-airline">Maskapai</span></div>
-                            <div class="filter-duration"><span class="switch-filter" data-target="filter-duration">Waktu Penerbangan</span></div>
+                            <div class="filter-stop"><span class="switch-filter" data-target="filter-return-transit">Pemberhentian</span></div>
+                            <div class="filter-price"><span class="switch-filter" data-target="filter-return-price">Harga</span></div>
+                            <div class="filter-airline"><span class="switch-filter" data-target="filter-return-airline">Maskapai</span></div>
+                            <div class="filter-duration"><span class="switch-filter" data-target="filter-return-duration">Waktu Penerbangan</span></div>
                         </div>
                         <div class="filter-content">
-                            <div id="filter-transit">
+                            <div id="filter-return-transit" class="filter-transit">
                                 <div class="tab-detail">
                                     <label><input type="checkbox" value="" ng-model="returnFlightConfig.flightFilter.transit[0]" /> Penerbangan Langsung</label>
                                     <label><input type="checkbox" value="" ng-model="returnFlightConfig.flightFilter.transit[1]" /> 1x Transit</label>
@@ -592,7 +596,7 @@
                                     <label class="select-none" ng-click="setTransitFilter('return','none')">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-price">
+                            <div id="filter-return-price" class="filter-price">
                                 <h3>Saring Berdasarkan Harga</h3>
                                 <div class="slider-value">
                                     <span>Rp {{returnFlightConfig.flightFilter.price.current[0] | number}}</span>
@@ -608,7 +612,7 @@
                                     <input type="text" name="priceSliderValueMax" value="" class="return-price-slider-max" ng-model="returnFlightConfig.flightFilter.price.current[1]" />
                                 </div>
                             </div>
-                            <div id="filter-airline">
+                            <div id="filter-return-airline" class="filter-airline">
                                 <div class="tab-detail">
                                     <div class="row" ng-repeat="airline in returnFlightConfig.flightFilter.airline.list" ng-if="$index % 4 == 0">
                                         <div class="col-sm-3">
@@ -646,7 +650,7 @@
                                     <label class="select-none" ng-click="setAirlineFilter('return','none')">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-duration">
+                            <div id="filter-return-duration" class="filter-duration">
                                 <h3>Saring Berdasarkan Waktu</h3>
                                 <div class="tab-detail">
                                     <div class="row">
