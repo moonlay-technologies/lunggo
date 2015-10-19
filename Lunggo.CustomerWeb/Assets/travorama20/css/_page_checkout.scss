@@ -85,6 +85,25 @@ file : /Assets/travorama20/css/_page_checkout.scss
     }
 }
 
+// passenger detail
+.passenger-detail {margin-bottom:12px;
+    
+    // passenger form
+    .passenger-form {padding-bottom:12px;
+        header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
+            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+            }
+        }
+        .passenger-content {padding:12px; border:$border-default; border-top:none;}
+        // if passenger form inactive
+        &.inactive {
+            header .toggle:after {content:"+";}
+            .passenger-content {display:none;}
+        }
+    }
+}
+
 // widget
 .widget-container {
     .widget {
@@ -131,6 +150,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
                     h5 {}
                 }
             }
+            // return flight
+            &#return-flight {margin-top:-20px;}
         }
 
 

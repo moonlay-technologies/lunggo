@@ -2859,6 +2859,47 @@ file : /Assets/travorama20/css/_page_checkout.scss
         z-index: 2;
         padding: 0 10px; }
 
+.passenger-detail {
+  margin-bottom: 12px; }
+  .passenger-detail .passenger-form {
+    padding-bottom: 12px; }
+    .passenger-detail .passenger-form header {
+      background: #1daee4;
+      color: #fff;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      position: relative; }
+      .passenger-detail .passenger-form header .toggle {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0;
+        background: #028ec3;
+        height: 100%;
+        display: block;
+        width: 40px;
+        cursor: pointer; }
+        .passenger-detail .passenger-form header .toggle:after {
+          content: "-";
+          position: absolute;
+          font-size: 28px;
+          color: #fff;
+          font-weight: bold;
+          top: 0;
+          left: 0;
+          text-align: center;
+          width: 100%; }
+    .passenger-detail .passenger-form .passenger-content {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-top: none; }
+    .passenger-detail .passenger-form.inactive header .toggle:after {
+      content: "+"; }
+    .passenger-detail .passenger-form.inactive .passenger-content {
+      display: none; }
+
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
 
@@ -2938,6 +2979,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
     margin-top: 50px; }
   .widget-container .widget.flight-detail .widget-content .route h4 {
     font-weight: bold; }
+
+.widget-container .widget.flight-detail#return-flight {
+  margin-top: -20px; }
 
 .step-button .btn {
   padding: 8px 50px;
