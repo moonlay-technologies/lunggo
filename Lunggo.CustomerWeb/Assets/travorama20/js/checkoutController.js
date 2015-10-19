@@ -16,9 +16,16 @@ app.controller('checkoutController', [
             { name: 'Mr', value: 'mr' },
             { name: 'Ms', value: 'ms' }
         ];
+        $scope.adultPassenger = adultPassenger;
+        $scope.childPassenger = childPassenger;
+        $scope.infantPassenger = infantPassenger;
 
         //********************
         // general functions
+        // get number
+        $scope.getNumber = function(number) {
+            return new Array(number);
+        }
         // change page
         $scope.changePage = function (page) {
             // change current page variable
@@ -27,7 +34,8 @@ app.controller('checkoutController', [
             $scope.stepClass = 'active-' + page;
         }
         // change page after login
-        $scope.changePage(currentPage);
+        // $scope.changePage(currentPage);
+        $scope.changePage(3); // development only
 
         // toggle Travorama Login
         $scope.toggleLogin = function() {

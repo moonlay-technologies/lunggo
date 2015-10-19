@@ -19,9 +19,9 @@
         var langCode = 'en';
         var currentPage = 1;
         // passenger number
-        var adultPassenger = 0;
-        var childPassenger = 0;
-        var infantPassenger = 0;
+        var adultPassenger = 3;
+        var childPassenger = 3;
+        var infantPassenger = 3;
         // passport or id requirement
         var passportRequired = false;
         var idRequired = false;
@@ -258,7 +258,7 @@
                             <div class="form-group" ng-class="{'has-error' : buyerForm.phone.$touched && buyerForm.phone.$invalid}">
                                 <label class="control-label important">Nomor Telepon:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="phone" required />
+                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="phone" required />
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
@@ -280,7 +280,7 @@
                     <div class="content-step" id="step-3" ng-show="currentPage == 3">
                         <h3><b>DETAIL</b> PENUMPANG</h3>
 
-                        <div class="passenger-detail" ng-repeat="">
+                        <div class="passenger-detail">
 
                             <div class="passenger-form" id="adult-1">
                                 <header>
