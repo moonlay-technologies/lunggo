@@ -68,6 +68,8 @@ span.close {cursor:pointer;}
     a {padding:10px;}
 }
 
+form label.important:after {content:"*"; color:#f00000;}
+
 // form Search Location pop up
 // and form Date Selector pop up
 // search calendar

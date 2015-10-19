@@ -92,6 +92,10 @@ span.close {
   .dropdown-content.flag-select a {
     padding: 10px; }
 
+form label.important:after {
+  content: "*";
+  color: #f00000; }
+
 .search-calendar {
   width: 320px;
   height: 520px;
@@ -2905,4 +2909,29 @@ file : /Assets/travorama20/css/_page_checkout.scss
   font-style: italic; }
 
 .step-button .btn {
-  padding: 8px 35px; }
+  padding: 8px 50px;
+  font-size: 14px; }
+
+.travorama-login {
+  border-top: 1px solid #ccc;
+  position: relative;
+  margin-bottom: 15px; }
+  .travorama-login a.login-toggle {
+    background: #1daee4;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    color: #fff;
+    padding: 12px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px; }
+  .travorama-login .login-content {
+    background: #1daee4;
+    padding: 15px;
+    padding-top: 50px; }
+    .travorama-login .login-content .form-group:last-child {
+      margin-bottom: 0; }
+    .travorama-login .login-content a {
+      color: #fff; }

@@ -119,6 +119,15 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // step button
 .step-button {
-    .btn {padding:8px 35px;}
+    .btn {padding:8px 50px; font-size:14px;}
+}
+
+// travorama login
+.travorama-login {border-top:$border-default; position:relative; margin-bottom:15px;
+    a.login-toggle {background:$color-main-blue; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:12px; @include border-radius($border-radius-default);}
+    .login-content {background:$color-main-blue; padding:15px; padding-top:50px;
+        .form-group:last-child {margin-bottom:0;}
+        a {color:#fff;}
+    }
 }
 
