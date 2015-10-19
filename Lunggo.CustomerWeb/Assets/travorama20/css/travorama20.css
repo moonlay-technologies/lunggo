@@ -2926,7 +2926,17 @@ file : /Assets/travorama20/css/_page_checkout.scss
     padding: 12px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px; }
+    border-radius: 4px;
+    padding-left: 20px; }
+    .travorama-login a.login-toggle:before, .travorama-login .page-index a.login-toggle.section-reason:after, .page-index .travorama-login a.login-toggle.section-reason:after {
+      width: 16px;
+      height: 16px;
+      background: url(/Assets/images/user-icon.png);
+      background-size: contain;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 12px; }
   .travorama-login .login-content {
     background: #1daee4;
     padding: 15px;
