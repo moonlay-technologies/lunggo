@@ -18,6 +18,9 @@
     <script>
         var langCode = 'en';
         var currentPage = 1;
+        var adultPassenger = 0;
+        var childPassenger = 0;
+        var passportRequired = false;
 
         function getParam(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -192,7 +195,7 @@
                         </div><!-- .flight-detail -->
 
                         <div class="step-button">
-                            <a class="btn btn-yellow" ng-click="changePage(2)">LANJUTKAN</a>
+                            <button class="btn btn-yellow" ng-click="changePage(2)">LANJUTKAN</button>
                         </div>
 
                     </div><!-- .content-step#step-1 -->
@@ -226,48 +229,48 @@
                             </div>
                         </div><!-- .travorama-login -->
 
-                        <form class="form" id="buyer-form">
+                        <form class="form" id="buyer-form" name="buyerForm" novalidate>
 
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
                                 <div>
-                                    <select class="form-control" id="buyer-title">
+                                    <select class="form-control" id="buyer-title" name="title">
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
                                         <option value="Ms">Ms</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstName.$touched && buyerForm.firstName.$invalid}">
                                 <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" />
+                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstName" ng-model="firstName" required />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastName.$touched && buyerForm.lastName.$invalid}">
                                 <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" />
+                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastName" ng-model="lastName" required />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.phone.$touched && buyerForm.phone.$invalid}">
                                 <label class="control-label important">Nomor Telepon:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" />
+                                    <input type="text" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="phone" required />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                 <label class="control-label important">Masukan Alamat Email Anda:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" />
+                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="email" required />
                                 </div>
                             </div>
 
                         </form><!-- #buyer-form -->
 
                         <div class="step-button">
-                            <a class="btn btn-grey" ng-click="changePage(1)">KEMBALI</a>
-                            <a class="btn btn-yellow" ng-click="changePage(3)">LANJUTKAN</a>
+                            <button class="btn btn-grey" ng-click="changePage(1)">KEMBALI</button>
+                            <button class="btn btn-yellow" ng-click="changePage(3)" ng-disabled="buyerForm.$invalid">LANJUTKAN</button>
                         </div>
 
                     </div><!-- .content-step#step-2 -->
@@ -278,96 +281,6 @@
                         <div class="passenger-detail">
 
                             <div class="passenger-form" id="adult-1">
-                                <header>
-                                    <span>Penumpang Dewasa</span>
-                                    <span class="toggle"></span>
-                                </header>
-                                <div class="passenger-content">
-
-                                    <form>
-
-                                        <div class="form-group">
-                                            <label class="control-label">Title</label>
-                                            <select class="form-control">
-                                                <option value="Mr">Mr</option>
-                                                <option value="Mrs">Mrs</option>
-                                                <option value="Ms">Ms</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label important">Tanggal Lahir :</label>
-                                            <div class="row">
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tanggal</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Bulan</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tahun</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- passport detail for international flight -->
-                                        <div class="form-group">
-                                            <label class="control-label important">Passport</label>
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <label class="control-label"><small>No. Passport</small></label>
-                                                    <input type="text" value="" class="form-control" />
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label class="control-label"><small>Passport Country</small></label>
-                                                    <select class="form-control">
-                                                        <option value="indonesia">Indonesia</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <label class="control-label"><small>Passport Expires</small></label>
-                                            <div class="row">
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tanggal</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Bulan</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tahun</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Kewarganegaraan</label>
-                                            <select class="form-control">
-                                                <option value="">Indonesia</option>
-                                            </select>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div><!-- .passenger-form -->
-
-                            <div class="passenger-form inactive" id="adult-1">
                                 <header>
                                     <span>Penumpang Dewasa</span>
                                     <span class="toggle"></span>

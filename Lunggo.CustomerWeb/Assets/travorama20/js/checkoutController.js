@@ -29,8 +29,5 @@ app.controller('checkoutController', [
             }
         }
 
-        
-
-
     }
 ]);// checkout controller
