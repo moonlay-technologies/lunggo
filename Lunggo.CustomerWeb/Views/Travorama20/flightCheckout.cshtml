@@ -8,6 +8,20 @@
     ViewBag.SiteHeader = "checkout";
 }
 
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+
 <section class="checkout-step active-1">
     <div class="container">
         <div class="step step-1 active">01. <span>Data Pesanan</span></div>
