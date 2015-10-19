@@ -145,8 +145,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                     // *****
                     &#filter-time {
                         .tab-detail {
-                            .departure {}
-                            .arrival {}
+                            .departure {padding-right:15px;}
+                            .arrival {padding-left:15px;}
                         }
                     }
                 }

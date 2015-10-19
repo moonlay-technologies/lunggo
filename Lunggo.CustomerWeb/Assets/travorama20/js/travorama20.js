@@ -287,7 +287,7 @@ function flightFormSearchFunctions() {
         }
     });
     $('.search-location .location-recommend .nav-click.next').click(function () {
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 6))) {
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });

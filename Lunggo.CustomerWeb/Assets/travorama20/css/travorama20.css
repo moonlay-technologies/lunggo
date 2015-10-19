@@ -301,6 +301,18 @@ span.close {
       .search-location .location-body .location-search .autocomplete-result ul li + li {
         border-top: 1px solid #ccc; }
 
+.slider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #666; }
+  .slider .ui-slider-range {
+    background: #1daee4; }
+  .slider .ui-slider-handle {
+    background: #dedede;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
@@ -1077,6 +1089,13 @@ file : /Assets/travorama20/css/_page_index.scss
         margin-top: 10px;
         margin-right: 10px; }
 
+.page-index .search-location {
+  width: 600px; }
+  .page-index .search-location .location-body .location-recommend .tab-header nav {
+    width: 540px; }
+    .page-index .search-location .location-body .location-recommend .tab-header nav ul li span {
+      padding: 0 10px; }
+
 /*
 
 FLIGHT Page styling
@@ -1398,6 +1417,10 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-flight .search-result-filter .filter-right .filter-content > div#filter-airline .tab-option label {
           display: block;
           cursor: pointer; }
+      .page-flight .search-result-filter .filter-right .filter-content > div#filter-time .tab-detail .departure {
+        padding-right: 15px; }
+      .page-flight .search-result-filter .filter-right .filter-content > div#filter-time .tab-detail .arrival {
+        padding-left: 15px; }
 
 .page-flight .search-result-sort {
   padding: 10px 0;

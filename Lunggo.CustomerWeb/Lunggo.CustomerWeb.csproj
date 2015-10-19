@@ -362,6 +362,7 @@
       <DependentUpon>invoice.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\invoice.scss" />
+    <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
     <Content Include="Assets\css\landingPage.css">
