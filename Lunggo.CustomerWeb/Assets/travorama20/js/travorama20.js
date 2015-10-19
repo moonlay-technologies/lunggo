@@ -507,8 +507,9 @@ function flightFormSearchFunctions() {
     // validate passenger
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
+        $('.change-flight-class .option').hide();
         $('.form-flight-passenger .option').hide();
-        $(this).find('.option').toggle();
+        $(this).children('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });
     $('.form-flight-passenger .option span').click(function (evt) {

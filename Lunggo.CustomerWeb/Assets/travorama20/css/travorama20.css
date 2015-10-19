@@ -863,7 +863,7 @@ file : /Assets/travorama20/css/_page_index.scss
           padding: 15px;
           height: auto;
           font-size: 19px; }
-  .page-index .section-search .slider {
+  .page-index .section-search .page-slider {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -871,7 +871,7 @@ file : /Assets/travorama20/css/_page_index.scss
     left: 0;
     background: url(/Assets/images/slider/slider-winner-20151002.jpg) center bottom no-repeat;
     background-size: cover; }
-    .page-index .section-search .slider .slider-text {
+    .page-index .section-search .page-slider .slider-text {
       font-size: 17px;
       color: #fff;
       font-weight: 600;
@@ -1102,6 +1102,20 @@ FLIGHT Page styling
 file: /Assets/travorama20/css/_page_flight.scss
 
 */
+.page-flight .search-location {
+  position: absolute;
+  top: 95px; }
+  .page-flight .search-location#origin {
+    left: 5px; }
+  .page-flight .search-location#destination {
+    left: 5px; }
+  .page-flight .search-location .location-body {
+    border: 1px solid #ccc; }
+  .page-flight .search-location li {
+    color: #666; }
+    .page-flight .search-location li:hover {
+      color: #fff; }
+
 .page-flight .page-overlay {
   position: fixed;
   width: 100%;
@@ -1816,20 +1830,6 @@ file: /Assets/travorama20/css/_page_flight.scss
     left: 5px; }
   .page-flight .search-calendar#return {
     left: 155px; }
-
-.page-flight.page-flight-oneway .search-location {
-  position: absolute;
-  top: 95px; }
-  .page-flight.page-flight-oneway .search-location#origin {
-    left: 5px; }
-  .page-flight.page-flight-oneway .search-location#destination {
-    left: 5px; }
-  .page-flight.page-flight-oneway .search-location .location-body {
-    border: 1px solid #ccc; }
-  .page-flight.page-flight-oneway .search-location li {
-    color: #666; }
-    .page-flight.page-flight-oneway .search-location li:hover {
-      color: #fff; }
 
 .page-flight.page-flight-return .search-result-container .search-result-selected {
   display: none; }
