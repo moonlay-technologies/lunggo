@@ -30,7 +30,14 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // flight detail
 .flight-detail {margin-bottom:20px;
-    header {background:$color-main-blue; color:#fff;}
+    // header
+    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; position:relative;
+        span {font-weight:bold; margin-left:20px;
+            &:before {content:""; width:20px; height:20px; position:absolute; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%;}
+        }
+        .fare-detail {background:#028ec3; position:absolute; right:0; top:0; height:100%; padding:12px;}
+    }
+    // detail content
     .detail-content {border:$border-default; border-top:none;
         // flight segment
         .segment {position:relative; padding-bottom:12px;

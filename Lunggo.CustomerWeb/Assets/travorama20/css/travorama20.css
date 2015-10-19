@@ -2705,7 +2705,27 @@ file : /Assets/travorama20/css/_page_checkout.scss
   margin-bottom: 20px; }
   .flight-detail header {
     background: #1daee4;
-    color: #fff; }
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    position: relative; }
+    .flight-detail header span {
+      font-weight: bold;
+      margin-left: 20px; }
+      .flight-detail header span:before, .flight-detail header .page-index span.section-reason:after, .page-index .flight-detail header span.section-reason:after {
+        content: "";
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        background-image: url(/Assets/images/plane-updown-sprite.png);
+        background-size: 200%; }
+    .flight-detail header .fare-detail {
+      background: #028ec3;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      padding: 12px; }
   .flight-detail .detail-content {
     border: 1px solid #ccc;
     border-top: none; }
