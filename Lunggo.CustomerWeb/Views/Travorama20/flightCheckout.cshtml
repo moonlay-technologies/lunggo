@@ -17,541 +17,559 @@
 @section PageJS{
     <script>
         var langCode = 'en';
+        var currentPage = 1;
+
+        function getParam(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        if (getParam('page') == 2) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
 
-<section class="checkout-step active-1">
-    <div class="container">
-        <div class="step step-1 active">01. <span>Data Pesanan</span></div>
-        <div class="step step-2">02. <span>Data Kontak</span></div>
-        <div class="step step-3">03. <span>Data Penumpang</span></div>
-        <div class="step step-4">04. <span>Pembayaran</span></div>
-    </div>
-</section><!-- .checkout-step -->
+<div ng-app="travorama" ng-controller="checkoutController">
 
-<section class="checkout-content">
+    <section class="checkout-step {{stepClass}}">
+        <div class="container">
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}">01. <span>Data Pesanan</span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}">02. <span>Data Kontak</span></div>
+            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}">03. <span>Data Penumpang</span></div>
+            <div class="step step-4" ng-class="{'active' : currentPage == 4}">04. <span>Pembayaran</span></div>
+        </div>
+    </section><!-- .checkout-step -->
 
-    <div class="container">
+    <section class="checkout-content">
 
-        <div class="row">
+        <div class="container">
 
-            <div class="col-sm-8">
+            <div class="row">
 
-                <div class="content-step" id="step-1">
-                
-                    <h3><b>RINCIAN</b> PENERBANGAN</h3>    
-                    <div class="flight-detail" id="departure-flight">
-                        <header>
-                            <span>Penerbangan Pergi</span>
-                            <div class="fare-detail">
-                                <b>JKT</b> to <b>DPS</b> | 15-02-2015
-                            </div>
-                        </header>
-                        <section class="detail-content">
-                            <div class="segment">
-                                <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
-                                <div class="segment-number">
-                                    <span>1<sup>st</sup></span>
-                                </div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="transit" ng-if="$index > 0">
-                                <p>Transit di Singapore selama 2h 55m</p>
-                            </div>
-                            <div class="segment">
-                                <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
-                                <div class="segment-number">
-                                    <span>2<sup>nd</sup></span>
-                                </div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div><!-- .flight-detail -->
-                
-                    <div class="flight-detail" id="return-flight">
-                        <header>
-                            <span>Penerbangan Pulang</span>
-                            <div class="fare-detail">
-                                <b>JKT</b> to <b>DPS</b> | 15-02-2015
-                            </div>
-                        </header>
-                        <section class="detail-content">
-                            <div class="segment">
-                                <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
-                                <div class="segment-number">
-                                    <span>1<sup>st</sup></span>
-                                </div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="transit" ng-if="$index > 0">
-                                <p>Transit di Singapore selama 2h 55m</p>
-                            </div>
-                            <div class="segment">
-                                <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
-                                <div class="segment-number">
-                                    <span>2<sup>nd</sup></span>
-                                </div>
-                                <div class="segment-left">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
-                                </div>
-                                <div class="segment-right">
-                                    <div class="segment-departure">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                    <div class="segment-duration">
-                                        <h5><span>Duration :</span> 9h 20m</h5>
-                                    </div>
-                                    <div class="segment-arrival">
-                                        <h5>Selasa, 15 Feb 2015</h5>
-                                        <h3>15.00</h3>
-                                        <h4>Jakarta (CGK)</h4>
-                                        <h5>Soekarno Hatta Intl.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div><!-- .flight-detail -->
-                
-                    <div class="step-button">
-                        <a href="#" class="btn btn-yellow">LANJUTKAN</a>
-                    </div>
+                <div class="col-sm-8">
 
-                </div><!-- .content-step#step-1 -->
-                
-                <!-- ******************** -->
+                    <div class="content-step" id="step-1" ng-show="currentPage == 1">
 
-                <div class="content-step" id="step-2">
-                
-                    <h3><b>DETAIL</b> PEMESAN</h3>    
-                
-                    <div class="travorama-login">
-                        <a href="#" class="login-toggle"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
-                        <div class="login-content">
-                            <form class="form form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-xs-5">
-                                        <input type="text" class="form-control" id="login-username" value="" placeholder="Email Address" />
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <input type="password" class="form-control" id="login-password" value="" placeholder="Password" />
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <input type="submit" value="LOG IN" class="btn btn-yellow form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-10 text-right">
-                                        <a href="#">Lupa Password?</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- .travorama-login -->
-                
-                    <form class="form" id="buyer-form">
-                    
-                        <div class="form-group">
-                            <label class="control-label">Title:</label>
-                            <div>
-                                <select class="form-control" id="buyer-title">
-                                    <option value="Mr">Mr</option>
-                                    <option value="Mrs">Mrs</option>
-                                    <option value="Ms">Ms</option>
-                                </select>
-                            </div>
-                        </div>  
-                        <div class="form-group">
-                            <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
-                            <div>
-                                <input type="text"  class="form-control" value="" id="buyer-firstname" placeholder="First Name" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
-                            <div>
-                                <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label important">Nomor Telepon:</label>
-                            <div>
-                                <input type="text" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label important">Masukan Alamat Email Anda:</label>
-                            <div>
-                                <input type="text" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" />
-                            </div>
-                        </div>
-
-                    </form><!-- #buyer-form -->
-                    
-                    <div class="step-button">
-                        <a href="#" class="btn btn-grey">KEMBALI</a>
-                        <a href="#" class="btn btn-yellow">LANJUTKAN</a>
-                    </div>
-                    
-                </div><!-- .content-step#step-2 -->
-                
-
-                <!-- ******************** -->
-                <div class="content-step" id="step-3">
-                    <h3><b>DETAIL</b> PENUMPANG</h3>
-                
-                    <div class="passenger-detail">
-                        
-                        <div class="passenger-form" id="adult-1">
+                        <h3><b>RINCIAN</b> PENERBANGAN</h3>
+                        <div class="flight-detail" id="departure-flight">
                             <header>
-                                <span>Penumpang Dewasa</span>
-                                <span class="toggle"></span>
+                                <span>Penerbangan Pergi</span>
+                                <div class="fare-detail">
+                                    <b>JKT</b> to <b>DPS</b> | 15-02-2015
+                                </div>
                             </header>
-                            <div class="passenger-content">
-
-                                <form>
-
-                                    <div class="form-group">
-                                        <label class="control-label">Title</label>
-                                        <select class="form-control">
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Ms">Ms</option>
-                                        </select>
+                            <section class="detail-content">
+                                <div class="segment">
+                                    <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
+                                    <div class="segment-number">
+                                        <span>1<sup>st</sup></span>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                        <input type="text" value="" class="form-control" placeholder="First Name" />
+                                    <div class="segment-left">
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                        <input type="text" value="" class="form-control" placeholder="First Name" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label important">Tanggal Lahir :</label>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tanggal</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Bulan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tahun</option>
-                                                </select>
-                                            </div>
+                                    <div class="segment-right">
+                                        <div class="segment-departure">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
+                                        </div>
+                                        <div class="segment-duration">
+                                            <h5><span>Duration :</span> 9h 20m</h5>
+                                        </div>
+                                        <div class="segment-arrival">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
                                         </div>
                                     </div>
-                                    <!-- passport detail for international flight -->
-                                    <div class="form-group">
-                                        <label class="control-label important">Passport</label>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <label class="control-label"><small>No. Passport</small></label>
-                                                <input type="text" value="" class="form-control" />
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <label class="control-label"><small>Passport Country</small></label>
-                                                <select class="form-control">
-                                                    <option value="indonesia">Indonesia</option>
-                                                </select>
-                                            </div>
+                                </div>
+                                <div class="transit">
+                                    <p>Transit di Singapore selama 2h 55m</p>
+                                </div>
+                                <div class="segment">
+                                    <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
+                                    <div class="segment-number">
+                                        <span>2<sup>nd</sup></span>
+                                    </div>
+                                    <div class="segment-left">
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
+                                    </div>
+                                    <div class="segment-right">
+                                        <div class="segment-departure">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
                                         </div>
-                                        <label class="control-label"><small>Passport Expires</small></label>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tanggal</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Bulan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tahun</option>
-                                                </select>
-                                            </div>
+                                        <div class="segment-duration">
+                                            <h5><span>Duration :</span> 9h 20m</h5>
+                                        </div>
+                                        <div class="segment-arrival">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Kewarganegaraan</label>
-                                        <select class="form-control">
-                                            <option value="">Indonesia</option>
-                                        </select>
-                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .flight-detail -->
 
+                        <div class="flight-detail" id="return-flight">
+                            <header>
+                                <span>Penerbangan Pulang</span>
+                                <div class="fare-detail">
+                                    <b>JKT</b> to <b>DPS</b> | 15-02-2015
+                                </div>
+                            </header>
+                            <section class="detail-content">
+                                <div class="segment">
+                                    <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
+                                    <div class="segment-number">
+                                        <span>1<sup>st</sup></span>
+                                    </div>
+                                    <div class="segment-left">
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
+                                    </div>
+                                    <div class="segment-right">
+                                        <div class="segment-departure">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
+                                        </div>
+                                        <div class="segment-duration">
+                                            <h5><span>Duration :</span> 9h 20m</h5>
+                                        </div>
+                                        <div class="segment-arrival">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="transit">
+                                    <p>Transit di Singapore selama 2h 55m</p>
+                                </div>
+                                <div class="segment">
+                                    <h5 class="segment-airline-name">Singapore Airlines ABC-1234 <span class="pull-right"></span></h5>
+                                    <div class="segment-number">
+                                        <span>2<sup>nd</sup></span>
+                                    </div>
+                                    <div class="segment-left">
+                                        <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="segment-airline-logo" />
+                                    </div>
+                                    <div class="segment-right">
+                                        <div class="segment-departure">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
+                                        </div>
+                                        <div class="segment-duration">
+                                            <h5><span>Duration :</span> 9h 20m</h5>
+                                        </div>
+                                        <div class="segment-arrival">
+                                            <h5>Selasa, 15 Feb 2015</h5>
+                                            <h3>15.00</h3>
+                                            <h4>Jakarta (CGK)</h4>
+                                            <h5>Soekarno Hatta Intl.</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .flight-detail -->
+
+                        <div class="step-button">
+                            <a class="btn btn-yellow" ng-click="changePage(2)">LANJUTKAN</a>
+                        </div>
+
+                    </div><!-- .content-step#step-1 -->
+                    <!-- ******************** -->
+
+                    <div class="content-step" id="step-2" ng-show="currentPage == 2">
+
+                        <h3><b>DETAIL</b> PEMESAN</h3>
+
+                        <div class="travorama-login" ng-class="{'active' : loginShown}">
+                            <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
+                            <div class="login-content">
+                                <form class="form form-horizontal">
+                                    <div class="form-group">
+                                        <div class="col-xs-5">
+                                            <input type="text" class="form-control" id="login-username" value="" placeholder="Email Address" />
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <input type="password" class="form-control" id="login-password" value="" placeholder="Password" />
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <input type="submit" value="LOG IN" class="btn btn-yellow form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-10 text-right">
+                                            <a href="#">Lupa Password?</a>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
-                        </div><!-- .passenger-form -->
-                    
-                        <div class="passenger-form inactive" id="adult-1">
-                            <header>
-                                <span>Penumpang Dewasa</span>
-                                <span class="toggle"></span>
-                            </header>
-                            <div class="passenger-content">
+                        </div><!-- .travorama-login -->
 
-                                <form>
+                        <form class="form" id="buyer-form">
 
+                            <div class="form-group">
+                                <label class="control-label">Title:</label>
+                                <div>
+                                    <select class="form-control" id="buyer-title">
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
+                                <div>
+                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label important">Nomor Telepon:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label important">Masukan Alamat Email Anda:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" />
+                                </div>
+                            </div>
+
+                        </form><!-- #buyer-form -->
+
+                        <div class="step-button">
+                            <a class="btn btn-grey" ng-click="changePage(1)">KEMBALI</a>
+                            <a class="btn btn-yellow" ng-click="changePage(3)">LANJUTKAN</a>
+                        </div>
+
+                    </div><!-- .content-step#step-2 -->
+                    <!-- ******************** -->
+                    <div class="content-step" id="step-3" ng-show="currentPage == 3">
+                        <h3><b>DETAIL</b> PENUMPANG</h3>
+
+                        <div class="passenger-detail">
+
+                            <div class="passenger-form" id="adult-1">
+                                <header>
+                                    <span>Penumpang Dewasa</span>
+                                    <span class="toggle"></span>
+                                </header>
+                                <div class="passenger-content">
+
+                                    <form>
+
+                                        <div class="form-group">
+                                            <label class="control-label">Title</label>
+                                            <select class="form-control">
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Ms">Ms</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
+                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
+                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Tanggal Lahir :</label>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tanggal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Bulan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tahun</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- passport detail for international flight -->
+                                        <div class="form-group">
+                                            <label class="control-label important">Passport</label>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <label class="control-label"><small>No. Passport</small></label>
+                                                    <input type="text" value="" class="form-control" />
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label class="control-label"><small>Passport Country</small></label>
+                                                    <select class="form-control">
+                                                        <option value="indonesia">Indonesia</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label class="control-label"><small>Passport Expires</small></label>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tanggal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Bulan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tahun</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Kewarganegaraan</label>
+                                            <select class="form-control">
+                                                <option value="">Indonesia</option>
+                                            </select>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div><!-- .passenger-form -->
+
+                            <div class="passenger-form inactive" id="adult-1">
+                                <header>
+                                    <span>Penumpang Dewasa</span>
+                                    <span class="toggle"></span>
+                                </header>
+                                <div class="passenger-content">
+
+                                    <form>
+
+                                        <div class="form-group">
+                                            <label class="control-label">Title</label>
+                                            <select class="form-control">
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Ms">Ms</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
+                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
+                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label important">Tanggal Lahir :</label>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tanggal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Bulan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tahun</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- passport detail for international flight -->
+                                        <div class="form-group">
+                                            <label class="control-label important">Passport</label>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <label class="control-label"><small>No. Passport</small></label>
+                                                    <input type="text" value="" class="form-control" />
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label class="control-label"><small>Passport Country</small></label>
+                                                    <select class="form-control">
+                                                        <option value="indonesia">Indonesia</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label class="control-label"><small>Passport Expires</small></label>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tanggal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Bulan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control">
+                                                        <option value="">Tahun</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Kewarganegaraan</label>
+                                            <select class="form-control">
+                                                <option value="">Indonesia</option>
+                                            </select>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div><!-- .passenger-form -->
+
+                        </div><!-- .passengerdetail -->
+
+                        <div class="step-button">
+                            <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
+                            <a class="btn btn-yellow" ng-click="changePage(4)">LANJUTKAN</a>
+                        </div>
+
+                    </div><!-- .content-step#step-3 -->
+
+
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="widget-container">
+                        <div class="widget price-detail">
+                            <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                            <div class="widget-content">
+                                <dl>
+                                    <dt>Total Tiket</dt>
+                                    <dd>Rp 999.999.999</dd>
+                                </dl>
+                                <dl class="total-price">
+                                    <dt>Total</dt>
+                                    <dd>Rp 999.999.999</dd>
+                                </dl>
+                            </div>
+                            <footer>
+                                <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                            </footer>
+                        </div><!-- .widget.price-detail -->
+                        <div class="widget voucher" ng-show="currentPage == 4">
+                            <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
+                            <div class="widget-content">
+                                <span><b>Punya Kupon Travorama ?</b></span>
+                                <p>Masukan disini</p>
+                                <form class="form">
                                     <div class="form-group">
-                                        <label class="control-label">Title</label>
-                                        <select class="form-control">
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Ms">Ms</option>
-                                        </select>
+                                        <input type="text" name="voucher" value="" class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                        <input type="text" value="" class="form-control" placeholder="First Name" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                        <input type="text" value="" class="form-control" placeholder="First Name" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label important">Tanggal Lahir :</label>
                                         <div class="row">
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tanggal</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Bulan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tahun</option>
-                                                </select>
+                                            <div class="col-xs-6 col-xs-offset-6">
+                                                <input type="submit" value="REDEEM" class="btn btn-yellow form-control" />
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- passport detail for international flight -->
-                                    <div class="form-group">
-                                        <label class="control-label important">Passport</label>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <label class="control-label"><small>No. Passport</small></label>
-                                                <input type="text" value="" class="form-control" />
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <label class="control-label"><small>Passport Country</small></label>
-                                                <select class="form-control">
-                                                    <option value="indonesia">Indonesia</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <label class="control-label"><small>Passport Expires</small></label>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tanggal</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Bulan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <select class="form-control">
-                                                    <option value="">Tahun</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Kewarganegaraan</label>
-                                        <select class="form-control">
-                                            <option value="">Indonesia</option>
-                                        </select>
-                                    </div>
-
                                 </form>
                             </div>
-                        </div><!-- .passenger-form -->
-
-                    </div><!-- .passengerdetail -->
-
-                    <div class="step-button">
-                        <a href="#" class="btn btn-grey">KEMBALI</a>
-                        <a href="#" class="btn btn-yellow">LANJUTKAN</a>
-                    </div>
-
-                </div><!-- .content-step#step-3 -->
-
-
-            </div>
-            <div class="col-sm-4">
-
-                <div class="widget-container">
-                    <div class="widget price-detail">
-                        <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
-                        <div class="widget-content">
-                            <dl>
-                                <dt>Total Tiket</dt>
-                                <dd>Rp 999.999.999</dd>
-                            </dl>
-                            <dl class="total-price">
-                                <dt>Total</dt>
-                                <dd>Rp 999.999.999</dd>
-                            </dl>
-                        </div>
-                        <footer>
-                            <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
-                        </footer>
-                    </div><!-- .widget.price-detail -->
-                    <div class="widget voucher">
-                        <h3 class="widget-title"><b>KODE</b> VOUCHER</h3>
-                        <div class="widget-content">
-                            <span><b>Punya Kupon Travorama ?</b></span>
-                            <p>Masukan disini</p>
-                            <form class="form">
-                                <div class="form-group">
-                                    <input type="text" name="voucher" value="" class="form-control" />
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-xs-offset-6">
-                                            <input type="submit" value="REDEEM" class="btn btn-yellow form-control" />
+                        </div><!-- .widget.voucher -->
+                        <div class="widget flight" ng-show="currentPage > 1">
+                            <div class="flight-detail" id="departure-flight">
+                                <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
+                                <div>
+                                    <header><span>PENERBANGAN PERGI</span></header>
+                                    <div class="widget-content">
+                                        <div class="airline">
+                                            <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="airline-image" />
+                                            <h4 class="airline-name">Singapore Airline</h4>
+                                        </div>
+                                        <div class="route">
+                                            <div class="origin">
+                                                <h5>21-12-2015</h5>
+                                                <h4>21:35</h4>
+                                                <h4>JKT</h4>
+                                                <h5>Bandar Lampung</h5>
+                                            </div>
+                                            <div class="duration"></div>
+                                            <div class="destination">
+                                                <h5>21-12-2015</h5>
+                                                <h4>21:35</h4>
+                                                <h4>JKT</h4>
+                                                <h5>Bandar Lampung</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div><!-- .widget.flight-detail -->
+                            <div class="flight-detail" id="return-flight">
+                                <div>
+                                    <header><span>PENERBANGAN PERGI</span></header>
+                                    <div class="widget-content">
+                                        <div class="airline">
+                                            <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="airline-image" />
+                                            <h4 class="airline-name">Singapore Airline</h4>
+                                        </div>
+                                        <div class="route">
+                                            <div class="origin">
+                                                <h5>21-12-2015</h5>
+                                                <h4>21:35</h4>
+                                                <h4>JKT</h4>
+                                                <h5>Bandar Lampung</h5>
+                                            </div>
+                                            <div class="duration"></div>
+                                            <div class="destination">
+                                                <h5>21-12-2015</h5>
+                                                <h4>21:35</h4>
+                                                <h4>JKT</h4>
+                                                <h5>Bandar Lampung</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .widget.flight-detail -->
                         </div>
-                    </div><!-- .widget.voucher -->
-                    <div class="widget flight-detail" id="departure-flight">
-                        <h3 class="widget-title"><b>RINCIAN</b> PENERBANGAN</h3>
-                        <div>
-                            <header><span>PENERBANGAN PERGI</span></header>
-                            <div class="widget-content">
-                                <div class="airline">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="airline-image" />
-                                    <h4 class="airline-name">Singapore Airline</h4>
-                                </div>
-                                <div class="route">
-                                    <div class="origin">
-                                        <h5>21-12-2015</h5>
-                                        <h4>21:35</h4>
-                                        <h4>JKT</h4>
-                                        <h5>Bandar Lampung</h5>
-                                    </div>
-                                    <div class="duration"></div>
-                                    <div class="destination">
-                                        <h5>21-12-2015</h5>
-                                        <h4>21:35</h4>
-                                        <h4>JKT</h4>
-                                        <h5>Bandar Lampung</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- .widget.flight-detail -->
-                    <div class="widget flight-detail" id="return-flight">
-                        <div>
-                            <header><span>PENERBANGAN PERGI</span></header>
-                            <div class="widget-content">
-                                <div class="airline">
-                                    <img src="/Assets/images/airlines/AK.png" alt="AirAsia" class="airline-image" />
-                                    <h4 class="airline-name">Singapore Airline</h4>
-                                </div>
-                                <div class="route">
-                                    <div class="origin">
-                                        <h5>21-12-2015</h5>
-                                        <h4>21:35</h4>
-                                        <h4>JKT</h4>
-                                        <h5>Bandar Lampung</h5>
-                                    </div>
-                                    <div class="duration"></div>
-                                    <div class="destination">
-                                        <h5>21-12-2015</h5>
-                                        <h4>21:35</h4>
-                                        <h4>JKT</h4>
-                                        <h5>Bandar Lampung</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- .widget.flight-detail -->
-                    <div class="widget passenger-detail"></div><!-- .widget.passenger-detail -->
-                </div><!-- .widget-container -->
+                        <div class="widget passenger-detail"></div><!-- .widget.passenger-detail -->
+                    </div><!-- .widget-container -->
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+    </section><!-- .checkout-content -->
 
-</section><!-- .checkout-content -->
+</div>

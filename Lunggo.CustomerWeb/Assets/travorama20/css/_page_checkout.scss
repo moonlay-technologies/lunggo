@@ -10,18 +10,20 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // checkout step
 .checkout-step {position:relative;
-    &:before {content:""; background:red; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
+    &:before {content:""; background:#a6a6a6; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
     &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
     .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6;
         &+.step {border-left:1px solid #1f99c7;}
         &.active {background:#032e55;}
+        &.inactive {background:#a6a6a6;}
+        &.inactive + .step {border-left:1px solid #a6a6a6;}
         span {font-size:14px; font-weight:bold;}
     }
 
     // if step 4 active
     &.active-1:before {background:#032e55;}
 
-    &.active-4 {}
+    &.active-4:after {background:#032e55;}
 
 }
 
@@ -138,7 +140,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         }
 
         // widget airline
-        &.flight-detail {
+        &.flight {
             .widget-content {padding:12px;
                 .airline {padding-bottom:12px;
                     .airline-image {width:50px; border:$border-default; float:left; margin-right:12px; background:#fff;}
@@ -156,7 +158,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 }
             }
             // return flight
-            &#return-flight {margin-top:-20px;}
+            #return-flight {margin-top:-20px;}
         }
 
 
@@ -170,13 +172,18 @@ file : /Assets/travorama20/css/_page_checkout.scss
 }
 
 // travorama login
-.travorama-login {border-top:$border-default; position:relative; margin-bottom:15px;
-    a.login-toggle {background:$color-main-blue; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:12px; @include border-radius($border-radius-default); padding-left:20px;
-        &:before {width:16px; height:16px; background:url(/Assets/images/user-icon.png); background-size:contain; content:""; position:absolute; left:0; top:12px;}
+.travorama-login {border-top:$border-default; position:relative; margin-bottom:45px;
+    a.login-toggle {background:$color-main-blue; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:12px; @include border-radius($border-radius-default); padding-left:30px; cursor:pointer;
+        &:before {width:16px; height:16px; background:url(/Assets/images/user-icon.png); background-size:contain; content:""; position:absolute; left:10px; top:12px;}
     }
-    .login-content {background:$color-main-blue; padding:15px; padding-top:50px;
+    .login-content {background:$color-main-blue; padding:15px; padding-top:50px; display:none;
+        .form-group {margin-bottom:5px;}
         .form-group:last-child {margin-bottom:0;}
         a {color:#fff;}
+    }
+    // if active
+    &.active {
+        .login-content {display:block;}
     }
 }
 
