@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\CampaignTableRecord.cs" />
+    <Compile Include="TableRecord\CampaignVoucherTableRecord.cs" />
+    <Compile Include="TableRecord\ClientTableRecord.cs" />
     <Compile Include="TableRecord\FlightCrawlTargetTableRecord.cs" />
     <Compile Include="TableRecord\ActivitiesTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPriceTableRecord.cs" />
@@ -62,6 +65,7 @@
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
+    <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationRoomDetailsTableRecord.cs" />
     <Compile Include="TableRecord\HotelReservationsTableRecord.cs" />
@@ -88,6 +92,9 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\CampaignRepository.cs" />
+    <Compile Include="TableRepository\CampaignVoucherRepository.cs" />
+    <Compile Include="TableRepository\ClientRepository.cs" />
     <Compile Include="TableRepository\FlightCrawlTargetRepository.cs" />
     <Compile Include="TableRepository\ActivitiesRepository.cs" />
     <Compile Include="TableRepository\ActivityPriceRepository.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="TableRepository\SubscriberRepository.cs" />
     <Compile Include="TableRepository\SupplierRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
+    <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\HotelReservationRoomDetailsRepository.cs" />
     <Compile Include="TableRepository\HotelReservationsRepository.cs" />
