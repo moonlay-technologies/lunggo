@@ -195,5 +195,12 @@ namespace Lunggo.CustomerWeb.Controllers
             paymentService.SubmitTransferConfirmationReport(report, fileInfo);
             return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
         }
+
+        public ActionResult TopDestinations()
+        {
+            var flightService = FlightService.GetInstance();
+            var topDestinations = flightService.GetTopDestination();
+            return View(topDestinations);
+        }
     }
 }
