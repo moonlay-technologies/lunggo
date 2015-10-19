@@ -2701,8 +2701,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .checkout-step.active-1:before, .page-index .checkout-step.active-1.section-reason:after {
     background: #032e55; }
 
+.checkout-content {
+  padding-bottom: 15px; }
+
 .flight-detail {
   margin-bottom: 20px; }
+  .flight-detail#return-flight header span:before, .flight-detail#return-flight header .page-index span.section-reason:after, .page-index .flight-detail#return-flight header span.section-reason:after {
+    background-position: -20px; }
   .flight-detail header {
     background: #1daee4;
     color: #fff;
@@ -2711,11 +2716,14 @@ file : /Assets/travorama20/css/_page_checkout.scss
     position: relative; }
     .flight-detail header span {
       font-weight: bold;
-      margin-left: 20px; }
+      padding-left: 25px;
+      margin-left: 5px;
+      position: relative; }
       .flight-detail header span:before, .flight-detail header .page-index span.section-reason:after, .page-index .flight-detail header span.section-reason:after {
         content: "";
         width: 20px;
         height: 20px;
+        left: 0;
         position: absolute;
         background-image: url(/Assets/images/plane-updown-sprite.png);
         background-size: 200%; }
@@ -2895,3 +2903,6 @@ file : /Assets/travorama20/css/_page_checkout.scss
   padding: 12px;
   background: #ddd;
   font-style: italic; }
+
+.step-button .btn {
+  padding: 8px 35px; }

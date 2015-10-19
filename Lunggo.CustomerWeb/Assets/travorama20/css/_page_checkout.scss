@@ -26,14 +26,19 @@ file : /Assets/travorama20/css/_page_checkout.scss
 }
 
 // checkout content
-.checkout-content {}
+.checkout-content {padding-bottom:15px;}
 
 // flight detail
 .flight-detail {margin-bottom:20px;
+    // if return flight
+    &#return-flight {
+        header span:before {background-position:-20px;}
+    }
+    // *****
     // header
     header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; position:relative;
-        span {font-weight:bold; margin-left:20px;
-            &:before {content:""; width:20px; height:20px; position:absolute; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%;}
+        span {font-weight:bold; padding-left:25px; margin-left:5px; position:relative;
+            &:before {content:""; width:20px; height:20px; left:0; position:absolute; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%;}
         }
         .fare-detail {background:#028ec3; position:absolute; right:0; top:0; height:100%; padding:12px;}
     }
@@ -110,5 +115,10 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
     }
 
+}
+
+// step button
+.step-button {
+    .btn {padding:8px 35px;}
 }
 
