@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
+using System.Threading;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -10,6 +14,8 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
+using Lunggo.Framework.TableStorage;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -17,22 +23,22 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
-            SearchFlightResult result;
             var output = new SearchFlightOutput();
             var searchId = HashEncodeConditions(input.Conditions);
 
-            var searchTuple = GetSearchedItinerariesFromCache(searchId, input.Completeness);
-            var searchCompleteness = searchTuple.Item1;
-            var searchedItins = searchTuple.Item2;
+            var isCurrentlySearching = GetSetSearchingStatusInCache(searchId, true);
+            var completeness = GetSearchingCompletenessInCache(searchId);
+            if (!isCurrentlySearching && completeness == 0)
+                Task.Run(() => SearchFlightInternal(input.Conditions));
 
-            if (searchCompleteness == 0)
-                SearchFlightInternal(input.Conditions);
+            var searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
 
             output.IsSuccess = true;
             output.Itineraries = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
             output.SearchId = searchId;
             output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
-            output.ExpiryTime = GetSearchedItinerariesExpiry(searchId).GetValueOrDefault();
+            output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
+            output.Completeness = completeness;
 
             return output;
         }

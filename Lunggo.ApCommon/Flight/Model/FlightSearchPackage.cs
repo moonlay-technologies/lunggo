@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    internal class FlightSearchPackage
+    public class FlightSearchPackage
     {
-        internal List<FlightItinerary> Itineraries { get; set; }
-        internal int Completeness { get; set; }
-        internal Dictionary<int, int> CompletenessPointer { get; set; }
+        public List<FlightItinerary> Itineraries { get; set; }
+        public int Completeness { get; set; }
+        public Dictionary<int, int> CompletenessPointer { get; set; }
 
         public FlightSearchPackage()
         {
             Itineraries = new List<FlightItinerary>();
-            CompletenessPointer = new Dictionary<int, int> {{0, 0}};
+            CompletenessPointer = new Dictionary<int, int>();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
@@ -47,7 +48,7 @@ namespace Lunggo.ApCommon.Flight.Service
             if (!_isInitialized)
             {
                 foreach (var supplier in Suppliers) { supplier.Init(); }
-                CurrencyService.GetInstance().Init();
+                //CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
                 InitPriceDiscountRules();
@@ -57,9 +58,9 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
-            var results = new SearchFlightResult();
+            var results = new SearchFlightResult {Itineraries = new List<FlightItinerary>()};
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            Parallel.ForEach(Suppliers, supplier =>
+            Task.Run(() => Parallel.ForEach(Suppliers, supplier =>
             {
                 var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -85,7 +86,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (result.ErrorMessages != null)
                         result.ErrorMessages.ForEach(results.AddError);
                 }
-            });
+            }));
             Task.Run(() => PopulateSearchCache(itinQueue, conditions));
         }
 
@@ -177,6 +178,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierCounter = 0;
             var totalSupplier = Suppliers.Count();
             var itinCounter = 0;
+            var searchId = HashEncodeConditions(conditions);
             while (supplierCounter < totalSupplier)
             {
                 List<FlightItinerary> itins;
@@ -185,12 +187,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     supplierCounter++;
                     var completeness = 100 * supplierCounter / totalSupplier;
-                    var searchId = HashEncodeConditions(conditions);
                     itins.ForEach(itin => itin.RegisterNumber = itinCounter++);
                     SaveSearchedItinerariesToCache(itins, searchId, completeness, 0);
+                    SetSearchingCompletenessInCache(searchId, completeness);
                 }
-
             }
+            GetSetSearchingStatusInCache(searchId, false);
         }
     }
 }

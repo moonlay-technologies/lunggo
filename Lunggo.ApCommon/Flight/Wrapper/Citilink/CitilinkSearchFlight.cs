@@ -27,6 +27,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                if (conditions.CabinClass != CabinClass.Economy)
+                    return new SearchFlightResult
+                    {
+                        IsSuccess = true,
+                        Itineraries = new List<FlightItinerary>()
+                    };
+
                 // WAIT
                 var client = new ExtendedWebClient();
                 var hasil = new SearchFlightResult();
@@ -157,7 +164,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     .AddHours(-(dict.GetAirportTimeZone(ParseFID2[Airport])));
                             segments.Add(new FlightSegment
                             {
-                               
                                 AirlineCode = Acode,
                                 FlightNumber = Fnumber,
                                 CabinClass = conditions.CabinClass,
@@ -212,7 +218,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                {
                                    Segments = segments,
                                    OriginAirport = conditions.Trips[0].OriginAirport,
-                                   DestinationAirport = conditions.Trips[0].DestinationAirport
+                                   DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                   DepartureDate = conditions.Trips[0].DepartureDate
                                }
                             }
                     };   
