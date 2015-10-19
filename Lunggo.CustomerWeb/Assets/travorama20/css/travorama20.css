@@ -2908,6 +2908,37 @@ file : /Assets/travorama20/css/_page_checkout.scss
   background: #ddd;
   font-style: italic; }
 
+.widget-container .widget.flight-detail .widget-content {
+  padding: 12px; }
+  .widget-container .widget.flight-detail .widget-content .airline {
+    padding-bottom: 12px; }
+    .widget-container .widget.flight-detail .widget-content .airline .airline-image {
+      width: 50px;
+      border: 1px solid #ccc;
+      float: left;
+      margin-right: 12px;
+      background: #fff; }
+    .widget-container .widget.flight-detail .widget-content .airline .airline-name, .widget-container .widget.flight-detail .widget-content .airline .airline-number {
+      font-weight: bold;
+      color: #1daee4; }
+  .widget-container .widget.flight-detail .widget-content .route:before, .widget-container .widget.flight-detail .widget-content .page-index .route.section-reason:after, .page-index .widget-container .widget.flight-detail .widget-content .route.section-reason:after, .widget-container .widget.flight-detail .widget-content .route:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .widget-container .widget.flight-detail .widget-content .route .origin, .widget-container .widget.flight-detail .widget-content .route .destination {
+    float: left;
+    width: 45%; }
+  .widget-container .widget.flight-detail .widget-content .route .duration {
+    float: left;
+    width: 7%;
+    margin-right: 3%;
+    content: "";
+    border-top: 3px solid #1daee4;
+    margin-top: 50px; }
+  .widget-container .widget.flight-detail .widget-content .route h4 {
+    font-weight: bold; }
+
 .step-button .btn {
   padding: 8px 50px;
   font-size: 14px; }
