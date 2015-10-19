@@ -12,10 +12,10 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .checkout-step {position:relative;
     &:before {content:""; background:red; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
     &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
-    .step {float:left; width:25%; font-size:30px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6;
+    .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6;
         &+.step {border-left:1px solid #1f99c7;}
         &.active {background:#032e55;}
-        span {font-size:20px; font-weight:bold;}
+        span {font-size:14px; font-weight:bold;}
     }
 
     // if step 4 active
@@ -27,4 +27,36 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // checkout content
 .checkout-content {}
+
+// widget
+.widget-container {
+    .widget {
+        .widget-title {}
+        header {}
+        .widget-content {background:#f4f4f4;}
+        footer {}
+
+        // widget price detail
+        &.price-detail {
+            .widget-content {padding:12px; font-size:12px;
+                dl {
+                    &:before, &:after {@include clearfix();}
+                    dt {font-weight:normal; width:60%; float:left; position:relative;
+                        &:before {content:""; position:absolute; width:7px; height:7px; background:#fd8524; left:-12px; top:3px;}
+                    }
+                    dd {font-weight:600; width:40%; float:left; text-align:right;}
+                }
+                dl.total-price {border-top:$border-default; padding-top:12px; margin-bottom:0;
+                    dt {font-weight:600; width:40%;
+                        &:before {display:none;}
+                    }
+                    dd {color:#ff7200; font-size:16px; font-weight:bold; width:60%;}
+                }
+            }
+            footer {padding:12px; background:#ddd; font-style:italic;}
+        }
+
+    }
+
+}
 

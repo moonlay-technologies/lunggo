@@ -2685,7 +2685,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .checkout-step .step {
     float: left;
     width: 25%;
-    font-size: 30px;
+    font-size: 21px;
     position: relative;
     z-index: 2;
     color: #fff;
@@ -2696,7 +2696,56 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .checkout-step .step.active {
       background: #032e55; }
     .checkout-step .step span {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: bold; }
   .checkout-step.active-1:before, .page-index .checkout-step.active-1.section-reason:after {
     background: #032e55; }
+
+.widget-container .widget .widget-content {
+  background: #f4f4f4; }
+
+.widget-container .widget.price-detail .widget-content {
+  padding: 12px;
+  font-size: 12px; }
+  .widget-container .widget.price-detail .widget-content dl:before, .widget-container .widget.price-detail .widget-content .page-index dl.section-reason:after, .page-index .widget-container .widget.price-detail .widget-content dl.section-reason:after, .widget-container .widget.price-detail .widget-content dl:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .widget-container .widget.price-detail .widget-content dl dt {
+    font-weight: normal;
+    width: 60%;
+    float: left;
+    position: relative; }
+    .widget-container .widget.price-detail .widget-content dl dt:before, .widget-container .widget.price-detail .widget-content dl .page-index dt.section-reason:after, .page-index .widget-container .widget.price-detail .widget-content dl dt.section-reason:after {
+      content: "";
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #fd8524;
+      left: -12px;
+      top: 3px; }
+  .widget-container .widget.price-detail .widget-content dl dd {
+    font-weight: 600;
+    width: 40%;
+    float: left;
+    text-align: right; }
+  .widget-container .widget.price-detail .widget-content dl.total-price {
+    border-top: 1px solid #ccc;
+    padding-top: 12px;
+    margin-bottom: 0; }
+    .widget-container .widget.price-detail .widget-content dl.total-price dt {
+      font-weight: 600;
+      width: 40%; }
+      .widget-container .widget.price-detail .widget-content dl.total-price dt:before, .widget-container .widget.price-detail .widget-content dl.total-price .page-index dt.section-reason:after, .page-index .widget-container .widget.price-detail .widget-content dl.total-price dt.section-reason:after {
+        display: none; }
+    .widget-container .widget.price-detail .widget-content dl.total-price dd {
+      color: #ff7200;
+      font-size: 16px;
+      font-weight: bold;
+      width: 60%; }
+
+.widget-container .widget.price-detail footer {
+  padding: 12px;
+  background: #ddd;
+  font-style: italic; }
