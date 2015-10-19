@@ -132,6 +132,11 @@ file : /Assets/travorama20/css/_page_checkout.scss
             footer {padding:12px; background:#ddd; font-style:italic;}
         }
 
+        // widget voucher
+        &.voucher {
+            .widget-content {padding:12px;}
+        }
+
         // widget airline
         &.flight-detail {
             .widget-content {padding:12px;

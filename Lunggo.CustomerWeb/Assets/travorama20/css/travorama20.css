@@ -2949,6 +2949,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
   background: #ddd;
   font-style: italic; }
 
+.widget-container .widget.voucher .widget-content {
+  padding: 12px; }
+
 .widget-container .widget.flight-detail .widget-content {
   padding: 12px; }
   .widget-container .widget.flight-detail .widget-content .airline {
