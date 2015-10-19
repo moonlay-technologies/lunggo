@@ -7,6 +7,15 @@ app.controller('checkoutController', [
         $scope.currentPage = 1;
         $scope.loginShown = false;
         $scope.stepClass = '';
+        $scope.titles = [
+            { name: 'Mr', value: 'mr' },
+            { name: 'Mrs', value: 'mrs' },
+            { name: 'Ms', value: 'ms' }
+        ];
+        $scope.infantTitles = [
+            { name: 'Mr', value: 'mr' },
+            { name: 'Ms', value: 'ms' }
+        ];
 
         //********************
         // general functions
@@ -26,6 +35,13 @@ app.controller('checkoutController', [
                 $scope.loginShown = true;
             } else {
                 $scope.loginShown = false;
+            }
+        }
+
+        // test validate form
+        $scope.testForm = function (formSelect) {
+            if (formSelect == "buyerForm") {
+                console.log($scope.buyerForm);
             }
         }
 

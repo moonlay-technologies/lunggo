@@ -18,9 +18,13 @@
     <script>
         var langCode = 'en';
         var currentPage = 1;
+        // passenger number
         var adultPassenger = 0;
         var childPassenger = 0;
+        var infantPassenger = 0;
+        // passport or id requirement
         var passportRequired = false;
+        var idRequired = false;
 
         function getParam(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -234,10 +238,8 @@
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
                                 <div>
-                                    <select class="form-control" id="buyer-title" name="title">
-                                        <option value="Mr">Mr</option>
-                                        <option value="Mrs">Mrs</option>
-                                        <option value="Ms">Ms</option>
+                                    <select class="form-control" id="buyer-title" name="title" ng-model="title" ng-init="title = 'mr'">
+                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -278,7 +280,7 @@
                     <div class="content-step" id="step-3" ng-show="currentPage == 3">
                         <h3><b>DETAIL</b> PENUMPANG</h3>
 
-                        <div class="passenger-detail">
+                        <div class="passenger-detail" ng-repeat="">
 
                             <div class="passenger-form" id="adult-1">
                                 <header>
