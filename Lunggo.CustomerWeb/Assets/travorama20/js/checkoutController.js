@@ -22,6 +22,7 @@ app.controller('checkoutController', [
             infant: infantPassenger
         }
 
+        $scope.buyerInfo = {};
         $scope.adultPassenger = [];
         $scope.childPassenger = [];
         $scope.infantPassenger = [];

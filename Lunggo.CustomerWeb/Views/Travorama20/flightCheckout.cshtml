@@ -7,7 +7,9 @@
 
     ViewBag.SiteHeader = "checkout";
 }
-
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
@@ -43,6 +45,9 @@
         } else {
             currentPage = 1;
         }
+
+        // date picker
+        $('.datepicker').datepicker();
 
     </script>
     <!-- angular controller -->
@@ -243,33 +248,33 @@
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
                                 <div>
-                                    <select class="form-control" id="buyer-title" name="title" ng-model="title" ng-init="title = titles[0].value">
+                                    <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
                                         <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstName.$touched && buyerForm.firstName.$invalid}">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstname.$touched && buyerForm.firstname.$invalid}">
                                 <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstName" ng-model="firstName" required />
+                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstname" ng-model="buyerInfo.firstname" required />
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastName.$touched && buyerForm.lastName.$invalid}">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastname.$touched && buyerForm.lastname.$invalid}">
                                 <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastName" ng-model="lastName" required />
+                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastname" ng-model="buyerInfo.lastname" required />
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.phone.$touched && buyerForm.phone.$invalid}">
                                 <label class="control-label important">Nomor Telepon:</label>
                                 <div>
-                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="phone" required />
+                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="buyerInfo.phone" required />
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                 <label class="control-label important">Masukan Alamat Email Anda:</label>
                                 <div>
-                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="email" required />
+                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
                                 </div>
                             </div>
 
@@ -287,87 +292,59 @@
 
                         <div class="passenger-detail">
 
-                            <div class="passenger-form" id="adult-{{adultNo}}" ng-repeat="adultNo in getNumber(passenger.adult) track by $index">
+                            <div class="passenger-form" id="adult-{{$index}}" ng-repeat="adultNo in getNumber(passenger.adult) track by $index">
                                 <header>
-                                    <span>Penumpang Dewasa {{adultNo}}</span>
+                                    <span>Penumpang Dewasa {{$index + 1}} <span ng-show="adultPassenger[$index].firstname || adultPassenger[$index].lastname"> : {{adultPassenger[$index].firstname + ' ' + adultPassenger[$index].lastname}}</span></span>
                                     <span class="toggle"></span>
                                 </header>
                                 <div class="passenger-content">
 
-                                    <form novalidate name="adult{{adultNo}}Form">
+                                    <form novalidate name="adultForm_{{$index}}">
 
                                         <div class="form-group">
                                             <label class="control-label">Title</label>
-                                            <select class="form-control" ng-model="adultPassenger[adultNo].title" ng-init="adultPassenger[adultNo].title = titles[0].value">
+                                            <select class="form-control" name="title" ng-init="adultPassenger[$index].title = titles[0].value" ng-model="adultPassenger[$index].title">
                                                 <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error': adultForm_{{$index}}.firstname.$invalid && adultForm_{{$index}}.firstname.$touched }">
                                             <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" ng-model="adultPassenger[adultNo].firstName" required />
+                                            <input type="text" value="" class="form-control" placeholder="First Name" name="firstname" ng-model="adultPassenger[$index].firstname" required />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error': adultForm_{{$index}}.lastname.$invalid && adultForm_{{$index}}.lastname.$touched }">
                                             <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" ng-model="adultPassenger[adultNo].lastName" required />
+                                            <input type="text" value="" class="form-control" placeholder="First Name" name="lastname" ng-model="adultPassenger[$index].lastname" required />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error': adultForm_{{$index}}.birthday.$invalid && adultForm_{{$index}}.birthday.$touched }">
                                             <label class="control-label important">Tanggal Lahir :</label>
-                                            <div class="row">
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].birth.day" ng-init="adultPassenger[adultNo].birth.day = 1" required>
-                                                        <option value="">Tanggal</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].birth.month" ng-init="adultPassenger[adultNo].birth.month = 1" required>
-                                                        <option ng-repeat="month in months" value="{{month.value}}">{{month.name}}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].birth.year" ng-init="adultPassenger[adultNo].birth.year = 1980" required>
-                                                        <option value="">Tahun</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <input type="date" value="" name="birthdate" class="form-control datepicker" ng-model="adultPassenger[$index].birthday" required />
                                         </div>
                                         <!-- passport detail for international flight -->
-                                        <div class="form-group">
+                                        <div class="form-group" ng-if="passportRequired">
                                             <label class="control-label important">Passport</label>
                                             <div class="row">
                                                 <div class="col-xs-6">
                                                     <label class="control-label"><small>No. Passport</small></label>
-                                                    <input type="text" value="" class="form-control" ng-model="adultPassenger[adultNo].passport.number" required />
+                                                    <input type="text" value="" class="form-control" name="passportNumber" ng-model="adultPassenger[$index].passport.number" ng-required="passportRequired" />
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <label class="control-label"><small>Passport Country</small></label>
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].passport.country" ng-init="adultPassenger[adultNo].passport.country = countries[87]" required>
-                                                        <option ng-repeat="country in countries" value="{{country}}">{{country}}</option>
+                                                    <select class="form-control" name="passportCountry" ng-model="adultPassenger[$index].passport.country" ng-init="adultPassenger[$index].passport.country = countries[87]" ng-required="passportRequired">
+                                                        <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <label class="control-label"><small>Passport Expires</small></label>
-                                            <div class="row">
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].passport.expire.date" ng-init="adultPassenger[adultNo].passport.expire.date = 1">
-                                                        <option value="">Tanggal</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].passport.expire.month" ng-init="adultPassenger[adultNo].passport.expire.month = 1">
-                                                        <option ng-repeat="month in months" value="{{month.value}}">{{month.name}}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="adultPassenger[adultNo].passport.expire.year" ng-init="adultPassenger[adultNo].passport.expire.year = 2015">
-                                                        <option value="">Tahun</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <input type="date" name="passportExpire" value="" ng-model="adultPassenger[$index].passport.expire" ng-required="passportRequired" class="form-control" />
+                                        </div>
+                                        <div class="form-group" ng-if="idRequired" ng-class="{'has-error': adultForm_{{$index}}.idNumber.$invalid && adultForm_{{$index}}.idNumber.$touched }">
+                                            <label class="control-label important">Nomer KTP / SIM</label>
+                                            <input type="text" class="form-control" name="idNumber" ng-model="adultPassenger[$index].idNumber" value="" ng-required="idRequired" />
                                         </div>
                                         <div class="form-group" ng-if="nationalityRequired">
                                             <label class="control-label">Kewarganegaraan</label>
-                                            <select class="form-control" ng-model="adultPassenger[adultNo].nationality" ng-init="adultPassenger[adultNo].nationality = countries[87]" required>
-                                                <option ng-repeat="country in countries" value="{{country}}">{{country}}</option>
+                                            <select class="form-control" ng-model="adultPassenger[$index].nationality" ng-init="adultPassenger[$index].nationality = countries[87]" required>
+                                                <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                             </select>
                                         </div>
 
