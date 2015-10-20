@@ -153,8 +153,11 @@
     <Compile Include="Campaign\Constant\CampaignType.cs" />
     <Compile Include="Campaign\Constant\VoucherValidationStatusType.cs" />
     <Compile Include="Campaign\Database\Logic\GetDb.cs" />
+    <Compile Include="Campaign\Database\Logic\UpdateDb.cs" />
+    <Compile Include="Campaign\Database\Query\CheckVoucherUsageQuery.cs" />
     <Compile Include="Campaign\Database\Query\GetCampaignVoucherRecordQuery.cs" />
     <Compile Include="Campaign\Database\Query\GetVoucherRecipientsRecordQuery.cs" />
+    <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
     <Compile Include="Campaign\Model\CampaignVoucher.cs" />
     <Compile Include="Campaign\Model\VoucherRequest.cs" />
     <Compile Include="Campaign\Model\VoucherResponse.cs" />

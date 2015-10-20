@@ -1,5 +1,4 @@
 ﻿using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Campaign.Database.Query
 {
-    internal class GetVoucherRecipientsRecordQuery : QueryBase<GetVoucherRecipientsRecordQuery, VoucherRecipientsTableRecord>
+    internal class CheckVoucherUsageQuery : QueryBase<CheckVoucherUsageQuery, int>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -21,16 +20,16 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT * ");
-            clauseBuilder.Append("FROM [VoucherRecipients] ");
+            clauseBuilder.Append("SELECT COUNT(RsvNo) ");
+            clauseBuilder.Append("FROM [FlightReservation] ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE VoucherCode = @VoucherCode ");
-            clauseBuilder.Append("AND Email = @Email");
+            clauseBuilder.Append("WHERE [VoucherCode] = @VoucherCode ");
+            clauseBuilder.Append("AND [ContactEmail] = @Email");
             return clauseBuilder.ToString();
         }
     }

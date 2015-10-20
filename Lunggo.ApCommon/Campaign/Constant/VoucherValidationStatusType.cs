@@ -15,8 +15,10 @@ namespace Lunggo.ApCommon.Campaign.Constant
         BelowMinimumSpend = 4,
         EmailNotEligible = 5,
         UpdateError = 6,
-        UpdateSuccess = 7,
-        Undefined = 8
+        Success = 7,
+        VoucherNotFound = 8,
+        VoucherAlreadyUsed = 9,
+        Undefined = 10
     }
 
     internal class VoucherValidationStatusTypeMessage
@@ -39,8 +41,12 @@ namespace Lunggo.ApCommon.Campaign.Constant
                     return "EmailNotEligible";
                 case VoucherValidationStatusType.UpdateError:
                     return "UpdateError";
-                case VoucherValidationStatusType.UpdateSuccess:
-                    return "UpdateSuccess";
+                case VoucherValidationStatusType.Success:
+                    return "Success";
+                case VoucherValidationStatusType.VoucherNotFound:
+                    return "VoucherNotFound";
+                case VoucherValidationStatusType.VoucherAlreadyUsed:
+                    return "VoucherAlreadyUsed";
                 default:
                     return null;
             }
@@ -63,8 +69,12 @@ namespace Lunggo.ApCommon.Campaign.Constant
                     return VoucherValidationStatusType.EmailNotEligible;
                 case "UpdateError":
                     return VoucherValidationStatusType.UpdateError;
-                case "UpdateSuccess":
-                    return VoucherValidationStatusType.UpdateSuccess;
+                case "Success":
+                    return VoucherValidationStatusType.Success;
+                case "VoucherNotFound":
+                    return VoucherValidationStatusType.VoucherNotFound;
+                case "VoucherAlreadyUsed":
+                    return VoucherValidationStatusType.VoucherAlreadyUsed;
                 default:
                     return VoucherValidationStatusType.Undefined;
             }

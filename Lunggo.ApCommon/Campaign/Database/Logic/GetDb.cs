@@ -17,16 +17,24 @@ namespace Lunggo.ApCommon.Campaign.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var voucher = GetCampaignVoucherRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode }).Single();
+                    var voucher = GetCampaignVoucherRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode }).FirstOrDefault();
                     return voucher;
+                }
+            }
+            internal static int CheckVoucherUsage(string voucherCode, string email)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var voucherUsage = CheckVoucherUsageQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode, Email = email }).FirstOrDefault();
+                    return voucherUsage;
                 }
             }
             internal static bool IsEligibleForVoucher(string voucherCode, string email)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var voucherRecipient = GetVoucherRecipientsRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode, Email = email }).Single();
-                    return voucherRecipient==null;
+                    var voucherRecipient = GetVoucherRecipientsRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode, Email = email }).FirstOrDefault();
+                    return voucherRecipient!=null;
                 }
             }
         }

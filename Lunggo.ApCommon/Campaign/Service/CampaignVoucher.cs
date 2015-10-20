@@ -14,54 +14,68 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
-        public VoucherResponse UseCampaignVoucher(VoucherRequest voucherRequest)
+        public VoucherValidationStatusType ValidateVoucherRequest(VoucherRequest voucherRequest)
+        {
+            VoucherValidationStatusType updateStatus = VoucherValidationStatusType.Undefined;
+
+            var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
+            updateStatus = ValidateVoucher(voucher, voucherRequest);
+
+            return updateStatus;
+        }
+        public VoucherResponse UseVoucherRequest(VoucherRequest voucherRequest)
         {
             VoucherResponse response = new VoucherResponse();
+            VoucherValidationStatusType updateStatus = VoucherValidationStatusType.Undefined;
+
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
-            VoucherValidationStatusType updateStatus = ValidateVoucherRequest(voucher, voucherRequest);
-            if (updateStatus == VoucherValidationStatusType.UpdateSuccess)
+            response.Email = voucherRequest.Email;
+            response.VoucherCode = voucherRequest.VoucherCode;
+
+            updateStatus = ValidateVoucher(voucher, voucherRequest);
+            if (updateStatus == VoucherValidationStatusType.Success)
             {
-                response = CalculateVoucherDiscount(voucher, voucherRequest);
-                response.UpdateStatus = DecrementVoucher(response, voucherRequest);
+                CalculateVoucherDiscount(voucher, voucherRequest, response);
+                updateStatus = VoucherDecrement(voucherRequest.VoucherCode);
             }
-            else
-            {
-                response = new VoucherResponse()
-                {
-                    UpdateStatus = updateStatus
-                };
-            }
+
+            response.UpdateStatus = updateStatus;
 
             return response;
         }
-        private VoucherValidationStatusType ValidateVoucherRequest(CampaignVoucher voucher, VoucherRequest voucherRequest)
+        private VoucherValidationStatusType ValidateVoucher(CampaignVoucher voucher, VoucherRequest voucherRequest)
         {
             var currentTime = DateTime.Now;
+            if (voucher == null)
+                return VoucherValidationStatusType.VoucherNotFound;
             if (voucher.StartDate >= currentTime)
                 return VoucherValidationStatusType.CampaignNotStartedYet;
-            else if (voucher.EndDate <= currentTime)
+            if (voucher.EndDate <= currentTime)
                 return VoucherValidationStatusType.CampaignHasEnded;
-            else if (voucher.RemainingCount < 1)
+            if (voucher.RemainingCount < 1)
                 return VoucherValidationStatusType.NoVoucherRemaining;
-            else if (voucher.MinSpendValue > voucherRequest.Price)
+            if (voucher.MinSpendValue > voucherRequest.Price)
                 return VoucherValidationStatusType.BelowMinimumSpend;
-            else if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
+            if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
             {
                 //TODO check is registered from user table
             }
-            else if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
+            if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
             {
                 if (!GetDb.IsEligibleForVoucher(voucherRequest.VoucherCode, voucherRequest.Email))
                     return VoucherValidationStatusType.EmailNotEligible;
             }
-            else if (voucher.CampaignStatus == false)
+            if (voucher.CampaignStatus == false)
                 return VoucherValidationStatusType.CampaignInactive;
-
-            return VoucherValidationStatusType.UpdateSuccess;
+            if (voucher.IsSingleUsage!=null && voucher.IsSingleUsage == true)
+            {
+                if (GetDb.CheckVoucherUsage(voucherRequest.VoucherCode, voucherRequest.Email) > 0)
+                    return VoucherValidationStatusType.VoucherAlreadyUsed;
+            }
+            return VoucherValidationStatusType.Success;
         }
-        private VoucherResponse CalculateVoucherDiscount(CampaignVoucher voucher, VoucherRequest voucherRequest)
+        private void CalculateVoucherDiscount(CampaignVoucher voucher, VoucherRequest voucherRequest, VoucherResponse response)
         {
-            VoucherResponse response = new VoucherResponse();
             response.OriginalPrice = voucherRequest.Price;
             response.TotalDiscount = 0;
             if (voucher.ValuePercentage != null && voucher.ValuePercentage > 0)
@@ -72,12 +86,20 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.TotalDiscount = (decimal)voucher.MaxDiscountValue;
 
             response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;
-            return response;
         }
-        private VoucherValidationStatusType DecrementVoucher(VoucherResponse response, VoucherRequest voucherRequest)
+        private VoucherValidationStatusType VoucherDecrement(string voucherCode)
         {
-            //TODO decrement voucher
-            return VoucherValidationStatusType.UpdateSuccess;
+            try
+            {
+                if (UpdateDb.VoucherDecrement(voucherCode))
+                    return VoucherValidationStatusType.Success;
+                else
+                    return VoucherValidationStatusType.NoVoucherRemaining;
+            }
+            catch (Exception)
+            {
+                return VoucherValidationStatusType.UpdateError;
+            }
         }
     }
 }

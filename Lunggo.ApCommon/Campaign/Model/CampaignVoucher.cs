@@ -21,5 +21,6 @@ namespace Lunggo.ApCommon.Campaign.Model
         public Decimal? MinSpendValue { get; set; }
         public String CampaignTypeCd { get; set; }
         public bool? CampaignStatus { get; set; }
+        public bool? IsSingleUsage { get; set; }
     }
 }
