@@ -12,12 +12,9 @@ app.controller('checkoutController', [
             { name: 'Mrs', value: 'mrs' },
             { name: 'Ms', value: 'ms' }
         ];
-        $scope.childTitle = [
-            { name: 'Mr', value: 'mr' },
-            { name: 'Ms', value: 'ms' }
-        ];
 
         $scope.passengers = [];
+        $scope.passengersValid = false;
 
         $scope.buyerInfo = {};
         $scope.adultPassenger = [];
@@ -78,10 +75,61 @@ app.controller('checkoutController', [
         }
         // change page
         $scope.changePage = function (page) {
-            // change current page variable
-            $scope.currentPage = page;
-            // change step class
-            $scope.stepClass = 'active-' + page;
+            // check if page target is 4
+            // do validation if page target is 4
+            if (page == 4) {
+
+                // check each form
+                for (var i = 0; i < $scope.passengers.length; i++) {
+
+                    if ($scope.passengers[i].firstname && $scope.passengers[i].lastname && $scope.passengers[i].birthday) {
+                        $scope.passengers[i].valid = true;
+                    } else {
+                        $scope.passengers[i].valid = false;
+                    }
+
+                    // if passport required
+                    if ($scope.passportRequired) {
+                        if ($scope.passengers[i].passport.number && $scope.passengers[i].passport.expire) {
+                            $scope.passengers[i].valid = true;
+                        } else {
+                            $scope.passengers[i].valid = false;
+                        }
+                    }
+
+                    // if id required
+                    if ($scope.idRequired) {
+                        if ($scope.passengers[i].idNumber) {
+                            $scope.passengers[i].valid = true;
+                        } else {
+                            $scope.passengers[i].valid = false;
+                        }
+                    }
+
+                    // check if 
+                    if ($scope.passengers[i].valid == true) {
+                        $scope.passengersValid = true;
+                    } else {
+                        $scope.passengersValid = false;
+                    }
+
+                }
+
+                // check all form valid
+                if ($scope.passengersValid == true) {
+                    $scope.currentPage = page;
+                } else {
+                    alert('Periksa kembali form anda');
+                }
+
+
+            } else {
+                // change current page variable
+                $scope.currentPage = page;
+                // change step class
+                $scope.stepClass = 'active-' + page;
+            }
+
         }
         // change page after login
         // $scope.changePage(currentPage);
@@ -96,17 +144,9 @@ app.controller('checkoutController', [
             }
         }
 
-        // test validate form
-        $scope.testForm = function (formSelect) {
-            if (formSelect == "buyerForm") {
-                console.log($scope.buyerForm);
-            } else if (formSelect == "passenger") {
-                // console.log($scope.adult1Form);
-            } else {
-                console.log($scope);
-                console.log('Passenger form :');
-                console.log($scope.passengerForm_);
-            }
+        // log $scope
+        $scope.testForm = function () {
+            console.log($scope);
         }
 
     }
