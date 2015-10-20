@@ -248,8 +248,8 @@
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
                                 <div>
-                                    <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
-                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].name">
+                                        <option ng-repeat="title in titles" value="{{title.name}}">{{title.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@
 
                             <div class="passenger-form" id="adult-{{$index}}" ng-repeat="adultNo in getNumber(passenger.adult) track by $index">
                                 <header>
-                                    <span>Penumpang Dewasa {{$index + 1}} <span ng-show="adultPassenger[$index].firstname || adultPassenger[$index].lastname"> : {{adultPassenger[$index].firstname + ' ' + adultPassenger[$index].lastname}}</span></span>
+                                    <span>Penumpang Dewasa {{$index + 1}} <span ng-show="adultPassenger[$index].firstname || adultPassenger[$index].lastname"> : {{ adultPassenger[$index].title + ' ' + adultPassenger[$index].firstname + ' ' + adultPassenger[$index].lastname}}</span></span>
                                     <span class="toggle"></span>
                                 </header>
                                 <div class="passenger-content">
@@ -303,8 +303,8 @@
 
                                         <div class="form-group">
                                             <label class="control-label">Title</label>
-                                            <select class="form-control" name="title" ng-init="adultPassenger[$index].title = titles[0].value" ng-model="adultPassenger[$index].title">
-                                                <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                            <select class="form-control" name="title" ng-model="adultPassenger[$index].title" ng-init="adultPassenger[$index].title = titles[0].name">
+                                                <option ng-repeat="title in titles" value="{{title.name}}">{{title.name}}</option>
                                             </select>
                                         </div>
                                         <div class="form-group" ng-class="{'has-error': adultForm_{{$index}}.firstname.$invalid && adultForm_{{$index}}.firstname.$touched }">
@@ -323,7 +323,7 @@
                                         <div class="form-group" ng-if="passportRequired">
                                             <label class="control-label important">Passport</label>
                                             <div class="row">
-                                                <div class="col-xs-6">
+                                                <div class="col-xs-6" ng-class="{'has-error' : adultForm_{{$index}}.passportNumber.$invalid && adultForm_{{$index}}.passportNumber.$touched}">
                                                     <label class="control-label"><small>No. Passport</small></label>
                                                     <input type="text" value="" class="form-control" name="passportNumber" ng-model="adultPassenger[$index].passport.number" ng-required="passportRequired" />
                                                 </div>
@@ -334,8 +334,12 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <label class="control-label"><small>Passport Expires</small></label>
-                                            <input type="date" name="passportExpire" value="" ng-model="adultPassenger[$index].passport.expire" ng-required="passportRequired" class="form-control" />
+                                            <div class="row">
+                                                <div class="col-xs-12" ng-class="{'has-error' : adultForm_{{$index}}.passportExpire.$invalid && adultForm_{{$index}}.passportExpire.$touched}">
+                                                    <label class="control-label"><small>Passport Expires</small></label>
+                                                    <input type="date" name="passportExpire" value="" ng-model="adultPassenger[$index].passport.expire" ng-required="passportRequired" class="form-control" />
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group" ng-if="idRequired" ng-class="{'has-error': adultForm_{{$index}}.idNumber.$invalid && adultForm_{{$index}}.idNumber.$touched }">
                                             <label class="control-label important">Nomer KTP / SIM</label>
