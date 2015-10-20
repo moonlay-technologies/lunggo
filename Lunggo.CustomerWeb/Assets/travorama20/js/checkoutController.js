@@ -16,11 +16,8 @@ app.controller('checkoutController', [
             { name: 'Mr', value: 'mr' },
             { name: 'Ms', value: 'ms' }
         ];
-        $scope.passenger = {
-            adult: adultPassenger,
-            child: childPassenger,
-            infant: infantPassenger
-        }
+
+        $scope.passengers = [];
 
         $scope.buyerInfo = {};
         $scope.adultPassenger = [];
@@ -59,6 +56,29 @@ app.controller('checkoutController', [
             }
             return numbers;
         }
+        // generate passenger'
+        $scope.generatePassenger = function () {
+            if (adultPassenger > 0) {
+                for (var i = 0; i < adultPassenger; i++) {
+                    var x = { type: adultTypeName };
+                    $scope.passengers.push( x );
+                }
+            }
+            if (childPassenger > 0) {
+                for (var i = 0; i < childPassenger; i++) {
+                    var x = { type: childTypeName };
+                    $scope.passengers.push(x);
+                }
+            }
+            if (infantPassenger > 0) {
+                for (var i = 0; i < infantPassenger; i++) {
+                    var x = { type: infantTypeName };
+                    $scope.passengers.push(x);
+                }
+            }
+        }
+        $scope.generatePassenger();
+
         // generate years
         $scope.getYears = function(date,max) {
             var years = [];
