@@ -14,12 +14,30 @@ app.controller('checkoutController', [
         ];
 
         $scope.passengers = [];
-        $scope.passengersValid = false;
+        $scope.passengersForm = {
+            valid: false,
+            checked: false
+        };
 
         $scope.buyerInfo = {};
         $scope.adultPassenger = [];
         $scope.childPassenger = [];
         $scope.infantPassenger = [];
+
+        $scope.months = [
+            { value: 1, name: 'January' },
+            { value: 2, name: 'February' },
+            { value: 3, name: 'March' },
+            { value: 4, name: 'April' },
+            { value: 5, name: 'May' },
+            { value: 6, name: 'June' },
+            { value: 7, name: 'July' },
+            { value: 8, name: 'August' },
+            { value: 9, name: 'September' },
+            { value: 10, name: 'October' },
+            { value: 11, name: 'November' },
+            { value: 12, name: 'December' },
+        ];
 
         $scope.passportRequired = passportRequired;
         $scope.idRequired = idRequired;
@@ -29,6 +47,10 @@ app.controller('checkoutController', [
 
         //********************
         // general functions
+        // generate years
+        $scope.generateYear = function(min,max) {
+            
+        }
         // get number
         $scope.getNumber = function (number) {
             var numbers = [];
@@ -108,18 +130,18 @@ app.controller('checkoutController', [
 
                     // check if 
                     if ($scope.passengers[i].valid == true) {
-                        $scope.passengersValid = true;
+                        $scope.passengersForm.valid = true;
                     } else {
-                        $scope.passengersValid = false;
+                        $scope.passengersForm.valid = false;
                     }
+                    $scope.passengersForm.checked = true;
 
                 }
 
                 // check all form valid
                 if ($scope.passengersValid == true) {
                     $scope.currentPage = page;
-                } else {
-                    alert('Periksa kembali form anda');
+                    $scope.stepClass = 'active-' + page;
                 }
 
 
@@ -132,7 +154,7 @@ app.controller('checkoutController', [
 
         }
         // change page after login
-        // $scope.changePage(currentPage);
+        //$scope.changePage(currentPage);
         $scope.changePage(3); // development only
 
         // toggle Travorama Login

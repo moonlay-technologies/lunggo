@@ -27,7 +27,7 @@
         var adultTypeName = 'Adult';
         var childPassenger = 1;
         var childTypeName = 'Child';
-        var infantPassenger = 1;
+        var infantPassenger = 0;
         var infantTypeName = 'Infant';
         // passport or id requirement
         var passportRequired = true;
@@ -246,7 +246,7 @@
                             </div>
                         </div><!-- .travorama-login -->
 
-                        <form class="form" id="buyer-form" name="buyerForm" novalidate>
+                        <form class="form" id="buyer-form" name="buyerForm" novalidate >
 
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
@@ -316,11 +316,27 @@
                                         </div>
                                         <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.lastname.$invalid && passengerForm_{{$index}}.lastname.$touched }">
                                             <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                            <input type="text" value="" name="lastname" class="form-control" placeholder="First Name" ng-model="passenger.lastname" ng-change="passenger.lastname = passenger.lastname.split(' ').join('')" required />
+                                            <input type="text" value="" name="lastname" class="form-control" placeholder="Last Name" ng-model="passenger.lastname" ng-change="passenger.lastname = passenger.lastname.split(' ').join('')" required />
                                         </div>
-                                        <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.birthday.$invalid && passengerForm_{{$index}}.birthday.$touched }">
+                                        <div class="form-group">
                                             <label class="control-label important">Tanggal Lahir :</label>
-                                            <input type="date" value="" name="birthdate" class="form-control" ng-model="passenger.birthday" required />
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <select class="form-control" ng-model="passenger.birth.day">
+                                                        <option value="value">text</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control" ng-model="passenger.birth.month">
+                                                        <option value="value">text</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <select class="form-control" ng-model="passenger.birth.year">
+                                                        <option value="value">text</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- passport detail for international flight -->
                                         <div class="form-group" ng-if="passportRequired">
@@ -340,7 +356,23 @@
                                             <div class="row">
                                                 <div class="col-xs-12" ng-class="{'has-error' : passengerForm_{{$index}}.passportExpire.$invalid && passengerForm_{{$index}}.passportExpire.$touched}">
                                                     <label class="control-label"><small>Passport Expires</small></label>
-                                                    <input type="date" name="passportExpire" value="" ng-model="passenger.passport.expire" ng-required="passportRequired" class="form-control" />
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.day">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.month">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.year">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -364,8 +396,9 @@
                         <div class="step-button">
                             <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                             <a class="btn btn-yellow" ng-click="changePage(4)">LANJUTKAN</a>
-                            <a class="btn btn-yellow" ng-click="testForm()">LOG $SCOPE</a>
+                            <a class="btn btn-yellow" ng-click="testForm()">TEST</a>
                         </div>
+                        <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
                     </div><!-- .content-step#step-3 -->
 
