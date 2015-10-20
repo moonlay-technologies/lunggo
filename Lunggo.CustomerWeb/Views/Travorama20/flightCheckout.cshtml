@@ -297,7 +297,7 @@
 
                             <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index">
                                 <header>
-                                    <span>Penumpang {{$index + 1}} ({{passenger.type}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
+                                    <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
                                     <span class="toggle"></span>
                                 </header>
                                 <div class="passenger-content">
@@ -307,7 +307,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Title</label>
                                             <select class="form-control" name="title" ng-model="passenger.title" ng-init="passenger.title = titles[0].name">
-                                                <option ng-repeat="title in titles" value="{{title.name}}" ng-selected="title.name == 'Mr'">{{title.name}}</option>
+                                                <option ng-repeat="title in titles" value="{{title.name}}" ng-selected="title.name == 'Mr'" ng-if="!(title.name == 'Mrs' && passenger.type != 'adult')">{{title.name}}</option>
                                             </select>
                                         </div>
                                         <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">
@@ -354,6 +354,8 @@
                                                 <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                             </select>
                                         </div>
+
+                                        <h5 ng-show="passengerForm_{{$index}}.$valid">FORM VALID</h5>
 
                                     </form>
                                 </div>
