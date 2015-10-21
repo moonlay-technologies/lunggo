@@ -22,6 +22,12 @@ body {
   min-height: 100%;
   background: #f9f9f9; }
 
+.page-loading {
+  display: none; }
+
+.page-loaded {
+  display: block; }
+
 img {
   max-width: 100%; }
 
@@ -37,10 +43,11 @@ span.close {
   color: #4b4b4b;
   font-weight: bold; }
 
-.btn.btn-grey {
+.btn.btn-grey, .btn.btn-gray {
   background: #adadad;
   color: #fff;
-  font-weight: bold; }
+  font-weight: bold;
+  border: 2px solid #adadad; }
 
 .btn.block {
   display: block;
@@ -3136,17 +3143,13 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-password .form-wrapper section .form-group:last-child {
       margin-bottom: 0; }
 
-.page-password-forgot .email-sent {
-  display: none; }
-  .page-password-forgot .email-sent p {
-    padding-left: 100px;
-    background: url(/Assets/images/email-send-icon.png) center left no-repeat; }
+.page-password-forgot .email-sent p {
+  padding-left: 100px;
+  background: url(/Assets/images/email-send-icon.png) center left no-repeat; }
 
-.page-password-reset .form-container-sent {
-  display: none; }
-  .page-password-reset .form-container-sent a.btn {
-    padding: 10px 50px;
-    margin-top: 24px; }
+.page-password-reset .form-container-sent a.btn {
+  padding: 10px 50px;
+  margin-top: 24px; }
 
 .page-check-order .form-wrapper section {
   padding: 12px 24px; }
@@ -3204,11 +3207,17 @@ file : /Assets/travorama20/css/_page_password.scss
       font-weight: 600; }
 
 .page-account-profile .site-content {
-  padding-top: 50px;
+  padding-top: 30px;
   padding-bottom: 50px; }
 
 .page-account-profile form {
   text-align: left; }
+  .page-account-profile form header {
+    margin-bottom: 15px; }
+  .page-account-profile form input {
+    height: auto;
+    padding: 6px 12px;
+    text-align: left; }
 
 .page-account-profile .account-menu {
   color: #fff; }
@@ -3270,6 +3279,8 @@ file : /Assets/travorama20/css/_page_password.scss
   padding-left: 30px; }
   .page-account-profile .account-content .content-header {
     border-bottom: 1px solid #ccc; }
+    .page-account-profile .account-content .content-header h2 {
+      margin-top: 0; }
   .page-account-profile .account-content form {
     font-size: 12px; }
     .page-account-profile .account-content form header {
@@ -3295,35 +3306,39 @@ file : /Assets/travorama20/css/_page_password.scss
       padding-top: 18px;
       margin-top: 18px; }
 
-.page-account-profile .order-wrapper .order.flight header {
-  background: #1daee4;
-  text-align: right;
-  color: #fff;
-  padding: 12px; }
-
-.page-account-profile .order-wrapper .order.flight section {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-top: none; }
-  .page-account-profile .order-wrapper .order.flight section .airline {
-    padding: 6px;
-    text-align: center; }
-    .page-account-profile .order-wrapper .order.flight section .airline span {
-      font-weight: bold;
-      color: #1daee4; }
-    .page-account-profile .order-wrapper .order.flight section .airline img {
-      height: 50px; }
-  .page-account-profile .order-wrapper .order.flight section .detail {
-    padding: 6px; }
-    .page-account-profile .order-wrapper .order.flight section .detail span {
-      font-weight: bold; }
-      .page-account-profile .order-wrapper .order.flight section .detail span.success {
-        color: #14b413; }
-      .page-account-profile .order-wrapper .order.flight section .detail span.failed {
-        color: #fe0001; }
-      .page-account-profile .order-wrapper .order.flight section .detail span.pending {
-        color: #b551ea; }
-  .page-account-profile .order-wrapper .order.flight section .action {
-    padding: 6px; }
-    .page-account-profile .order-wrapper .order.flight section .action .btn {
-      display: block; }
+.page-account-profile .order-wrapper {
+  margin-top: 24px; }
+  .page-account-profile .order-wrapper .order.flight header {
+    background: #1daee4;
+    text-align: right;
+    color: #fff;
+    padding: 12px;
+    font-weight: bold; }
+  .page-account-profile .order-wrapper .order.flight section {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none; }
+    .page-account-profile .order-wrapper .order.flight section .airline {
+      padding: 6px;
+      text-align: center; }
+      .page-account-profile .order-wrapper .order.flight section .airline span {
+        font-weight: bold;
+        color: #1daee4; }
+      .page-account-profile .order-wrapper .order.flight section .airline img {
+        height: 50px; }
+    .page-account-profile .order-wrapper .order.flight section .detail {
+      padding: 6px; }
+      .page-account-profile .order-wrapper .order.flight section .detail p:last-child {
+        margin-bottom: 0; }
+      .page-account-profile .order-wrapper .order.flight section .detail span {
+        font-weight: bold; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.success {
+          color: #14b413; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.failed {
+          color: #fe0001; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.pending {
+          color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight section .action {
+      padding: 6px; }
+      .page-account-profile .order-wrapper .order.flight section .action .btn {
+        display: block; }

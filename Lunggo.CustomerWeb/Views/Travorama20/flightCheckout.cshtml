@@ -31,14 +31,6 @@
         var idRequired = true;
         var nationalityRequired = true;
 
-        // get parameter
-        function getParam(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');

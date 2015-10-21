@@ -43,8 +43,12 @@ file : /Assets/travorama20/css/_page_password.scss
 
 // account page
 .page-account-profile {
-    .site-content {padding-top:50px; padding-bottom:50px;}
-    form {text-align:left;}
+    .site-content {padding-top:30px; padding-bottom:50px;}
+    form {text-align:left;
+        header {margin-bottom:15px;}
+        input {height:auto; padding:6px 12px; text-align:left;}
+    }    
+
     // account menu
     .account-menu {color:#fff;
         header {background:$color-main-blue; padding:12px;
@@ -72,7 +76,9 @@ file : /Assets/travorama20/css/_page_password.scss
     }
     // account content
     .account-content {padding-left:30px;
-        .content-header {border-bottom:$border-default;}
+        .content-header {border-bottom:$border-default;
+            h2 {margin-top:0;}
+        }
 
         // form
         form {font-size:12px;
@@ -87,21 +93,24 @@ file : /Assets/travorama20/css/_page_password.scss
             }
             &[name="passwordForm"] {border-top:$border-default; padding-top:18px; margin-top:18px;}
         }
-
+        // profile content
+        .profile-content {}
+        // history content
+        .history-content {}
     }
-
     // order history
-    .order-wrapper {
+    .order-wrapper {margin-top:24px;
         .order {
             // flight order
             &.flight {
-                header {background:$color-main-blue; text-align:right; color:#fff; padding:12px;}
+                header {background:$color-main-blue; text-align:right; color:#fff; padding:12px; font-weight:bold;}
                 section {background:#fff; border:$border-default; border-top:none;
                     .airline {padding:6px; text-align:center;
                         span {font-weight:bold; color:$color-main-blue;}
                         img {height:50px;}
                     }
                     .detail {padding:6px;
+                        p:last-child {margin-bottom:0;}
                         span {font-weight:bold;
                             &.success {color:#14b413;}
                             &.failed {color:#fe0001;}
