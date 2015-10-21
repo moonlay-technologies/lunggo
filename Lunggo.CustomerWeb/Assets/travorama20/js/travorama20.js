@@ -25,6 +25,14 @@ $('[data-trigger="dropdown"]').click(function (evt) {
 //********************
 // general functions
 
+// get parameter
+function getParam(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 // translate month
 function translateMonth(month) {
     switch (month) {

@@ -30,13 +30,22 @@ $border-radius-default:4px;
     box-shadow:$properties;
 }
 
+@mixin skew-x($value){
+    -ms-transform: skewX($value); /* IE 9 */
+    -webkit-transform: skewX($value); /* Safari */
+    transform: skewX($value); /* Standard syntax */
+}
+
 @mixin clearfix(){
     display:block; width:100%; content:""; clear:both;
 }
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%;}
+body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%; background:#f9f9f9;}
+
+.page-loading {display:none;}
+.page-loaded {display:block;}
 
 img {max-width:100%;}
 
@@ -45,7 +54,7 @@ span.close {cursor:pointer;}
 .no-scroll {overflow:hidden;}
 
 .btn.btn-yellow {background:#ffd632; border:2px solid #ebb600; color:#4b4b4b; font-weight:bold;}
-.btn.btn-grey {background:#adadad; color:#fff; font-weight:bold;}
+.btn.btn-grey, .btn.btn-gray {background:#adadad; color:#fff; font-weight:bold; border:2px solid #adadad;}
 .btn.block {display:block; width:100%;}
 
 .section-title.stripe {font-weight:600; background:url(/Assets/images/yellow-stripe.png) center bottom no-repeat; padding-bottom:30px; margin-bottom:45px;
@@ -69,6 +78,8 @@ span.close {cursor:pointer;}
 }
 
 form label.important:after {content:"*"; color:#f00000;}
+
+.text-main-color {color:$color-main-blue;}
 
 // form Search Location pop up
 // and form Date Selector pop up
@@ -187,3 +198,5 @@ form label.important:after {content:"*"; color:#f00000;}
 @import 'page_flight';
 
 @import 'page_checkout';
+@import 'page_password';
+@import 'page_account';

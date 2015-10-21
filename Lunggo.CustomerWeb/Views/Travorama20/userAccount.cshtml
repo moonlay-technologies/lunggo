@@ -1,0 +1,192 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var userProfile = {
+            email: 'shintatamara@gmail.com',
+            firstname: 'Shinta',
+            lastname: 'Tamara',
+            phone: '08123456789',
+            country: 'Indonesia'
+        };
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+
+<div class="container page-loading" ng-controller="accountController" ng-app="travorama" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
+
+        <div class="col-xs-3">
+            <aside class="account-menu">
+
+                <header>
+                    <span>Shinta Tamara</span>
+                </header>
+                <ul>
+                    <li class="profile"><a ng-click="changeSection('profile')" ng-class="{'active':currentSection == 'profile'}">Ubah Profile</a></li>
+                    <li class="order"><a ng-click="changeSection('order')" ng-class="{'active':currentSection == 'order'}">Cek Pemesanan</a></li>
+                </ul>
+
+            </aside><!-- -.account-menu -->
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>UBAH</b> PROFILE</h2>
+                    </header>
+                    <section class="content-body">
+
+                        <form name="profileForm" class="form form-horizontal" novalidate="">
+                            <header>
+                                <h4>
+                                    <b>LOGIN ID</b> 
+                                    <span class="pull-right" ng-hide="userProfile.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('profile')">EDIT PROFILE</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="userProfile.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('profile')">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('profile')">SIMPAN</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Alamat Email</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.email}}</p>
+                                    <input type="email" name="email" ng-model="userProfile.email" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nama Depan</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
+                                    <input type="text" name="firstname" ng-model="userProfile.firstname" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nama Belakang</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
+                                    <input type="text" name="lastname" ng-model="userProfile.lastname" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Nomor Telepon</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
+                                    <input type="text" name="phone" ng-model="userProfile.phone" value="" class="form-control" ng-show="userProfile.edit" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Kewarganegaraan</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
+                                    <select class="form-control" ng-show="userProfile.edit" ng-model="userProfile.country">
+                                        <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == userProfile.country">{{country}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form name="passwordForm" class="form form-horizontal" novalidate>
+                            <header>
+                                <h4>
+                                    <b>PASSWORD</b> 
+                                    <span class="pull-right" ng-hide="password.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">EDIT PROFILE</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="password.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('password')">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">SIMPAN</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">Alamat Email</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">alamat@email.com</p>
+                                    <input type="password" name="passwordNew" value="" class="form-control" ng-show="password.edit" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </section>
+                </div><!-- .profile-content -->
+            
+                <!-- ***** -->
+            
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>CEK</b> PEMESANAN</h2>
+                    </header>
+                    <section class="content-body">
+                        
+                        
+                        <div class="order-wrapper">
+                            <div class="order flight">
+                                <header>
+                                    <span>Order ID : 123456798012</span>
+                                </header>
+                                <section class="container">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <div class="airline">
+                                                <span>AIRASIA</span>
+                                                <img src="/Assets/images/airlines/AK.png" alt="Airasia" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="detail">
+                                                <p>Tujuan : <b>JKT</b> to <b>DPS</b> (Roundtrip)</p>
+                                                <p>Tanggal berangkat: 17 Des 2015 | Tanggal pulang: 20 Des 2015</p>
+                                                <p>Status : <span class="success">COMPLETE</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <div class="action">
+                                                <a href="#" class="btn btn-yellow">DETAIL</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div><!-- .order-wrapper -->
+
+
+                    </section>
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+</div>

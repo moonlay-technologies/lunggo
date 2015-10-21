@@ -12,12 +12,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .checkout-step {position:relative;
     &:before {content:""; background:#a6a6a6; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
     &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
-    .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6;
-        &+.step {border-left:1px solid #1f99c7;}
+    .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6; @include skew-x(-30deg);
+        &+.step {border-left:2px solid #1f99c7;}
         &.active {background:#032e55;}
         &.inactive {background:#a6a6a6;}
-        &.inactive + .step {border-left:1px solid #a6a6a6;}
-        span {font-size:14px; font-weight:bold;}
+        &.inactive + .step {border-left:2px solid #a6a6a6;}
+        span {@include skew-x(30deg); display:block; padding-left:10px;}
+        b {font-size:14px; font-weight:bold;}
     }
 
     // if step 4 active
@@ -31,7 +32,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .checkout-content {padding-bottom:15px;}
 
 // flight detail
-.flight-detail {margin-bottom:20px;
+.flight-detail {margin-bottom:20px; background:#fff;
     // if return flight
     &#return-flight {
         header span:before {background-position:-20px;}
@@ -97,7 +98,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
                 &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
             }
         }
-        .passenger-content {padding:12px; border:$border-default; border-top:none;}
+        .passenger-content {padding:12px; border:$border-default; border-top:none; background:#fff;}
         // if passenger form inactive
         &.inactive {
             header .toggle:after {content:"+";}
@@ -141,7 +142,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
         // widget airline
         &.flight {
-            .widget-content {padding:12px;
+            .widget-content {padding:12px; border:$border-default; border-top:none;
                 .airline {padding-bottom:12px;
                     .airline-image {width:50px; border:$border-default; float:left; margin-right:12px; background:#fff;}
                     .airline-name {font-weight:bold; color:$color-main-blue;}

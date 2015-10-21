@@ -1,9 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
-    ViewBag.FooterSubscribe = false;
-    ViewBag.FooterPayment = false;
-    ViewBag.FooterFeedback = false;
 
     ViewBag.SiteHeader = "checkout";
 }
@@ -34,14 +31,6 @@
         var idRequired = true;
         var nationalityRequired = true;
 
-        // get parameter
-        function getParam(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -61,10 +50,10 @@
 
     <section class="checkout-step {{stepClass}}">
         <div class="container">
-            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}">01. <span>Data Pesanan</span></div>
-            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}">02. <span>Data Kontak</span></div>
-            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}">03. <span>Data Penumpang</span></div>
-            <div class="step step-4" ng-class="{'active' : currentPage == 4}">04. <span>Pembayaran</span></div>
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Kontak</b></span></div>
+            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}"><span>03. <b>Data Penumpang</b></span></div>
+            <div class="step step-4" ng-class="{'active' : currentPage == 4}"><span>04. <b>Pembayaran</b></span></div>
         </div>
     </section><!-- .checkout-step -->
 
@@ -354,21 +343,21 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-xs-12" ng-class="{'has-error' : passengerForm_{{$index}}.passportExpire.$invalid && passengerForm_{{$index}}.passportExpire.$touched}">
+                                                <div class="col-xs-12">
                                                     <label class="control-label"><small>Passport Expires</small></label>
                                                     <div class="row">
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" ng-model="passenger.birth.day">
+                                                            <select class="form-control" ng-model="passenger.passport.expire.day">
                                                                 <option value="value">text</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" ng-model="passenger.birth.month">
+                                                            <select class="form-control" ng-model="passenger.passport.expire.month">
                                                                 <option value="value">text</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <select class="form-control" ng-model="passenger.birth.year">
+                                                            <select class="form-control" ng-model="passenger.passport.expire.year">
                                                                 <option value="value">text</option>
                                                             </select>
                                                         </div>

@@ -685,6 +685,10 @@
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
+    <Content Include="Assets\images\benefit-1.jpg" />
+    <Content Include="Assets\images\benefit-2.jpg" />
+    <Content Include="Assets\images\benefit-3.jpg" />
+    <Content Include="Assets\images\benefit-4.jpg" />
     <Content Include="Assets\images\benefit\check.png" />
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
@@ -721,6 +725,7 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
+    <Content Include="Assets\images\email-send-icon.png" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
@@ -794,6 +799,8 @@
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\lock-image.jpg" />
+    <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
@@ -830,6 +837,7 @@
     <Content Include="Assets\images\quote-open.png" />
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
+    <Content Include="Assets\images\register-bg.jpg" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\sandclock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
@@ -875,6 +883,8 @@
     <Content Include="Assets\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\images\user-account-active-arrow.png" />
+    <Content Include="Assets\images\user-account-sprite.png" />
     <Content Include="Assets\images\user-icon-white.png" />
     <Content Include="Assets\images\user-icon.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
@@ -949,6 +959,7 @@
     <Content Include="Assets\travorama20\css\_page_index.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
@@ -1093,9 +1104,12 @@
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
     <Content Include="Assets\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\travorama20\css\_page_password.scss" />
+    <Content Include="Assets\travorama20\css\_page_account.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2311,6 +2325,13 @@
     <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <Content Include="Views\Travorama20\flightCheckout.cshtml" />
     <Content Include="Views\Flight\TopDestinations.cshtml" />
+    <Content Include="Views\Travorama20\register.cshtml" />
+    <Content Include="Views\Travorama20\login.cshtml" />
+    <Content Include="Views\Travorama20\forgotPassword.cshtml" />
+    <Content Include="Views\Travorama20\resetPassword.cshtml" />
+    <Content Include="Views\Travorama20\userAccount.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionBenefit.cshtml" />
+    <Content Include="Views\Travorama20\checkOrder.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
@@ -2468,7 +2489,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23321</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

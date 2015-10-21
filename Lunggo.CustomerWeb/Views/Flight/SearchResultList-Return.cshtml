@@ -77,9 +77,6 @@
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-return";
-    ViewBag.FooterSubscribe = false;
-    ViewBag.FooterPayment = false;
-    ViewBag.FooterFeedback = false;
 }
 
 @section AdditionalCSS {
@@ -238,7 +235,7 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
     </div>
 </section><!-- .search-result-form -->
-<section class="search-result return" ng-app="travorama" ng-controller="returnFlightController">
+<section class="search-result return page-loading" ng-app="travorama" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
     
     <form class="hidden pushToken" action="@Url.Action("Select", "Flight")" method="post">
         <input type="text" name="token" value="" class="fareToken" />
