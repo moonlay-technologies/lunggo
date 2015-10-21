@@ -49,7 +49,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        public ActionResult userProfile()
+        public ActionResult userAccount()
         {
             return View();
         }

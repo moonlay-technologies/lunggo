@@ -2326,7 +2326,7 @@
     <Content Include="Views\Travorama20\login.cshtml" />
     <Content Include="Views\Travorama20\forgotPassword.cshtml" />
     <Content Include="Views\Travorama20\resetPassword.cshtml" />
-    <Content Include="Views\Travorama20\userProfile.cshtml" />
+    <Content Include="Views\Travorama20\userAccount.cshtml" />
     <Content Include="Views\Shared\travorama20\_SectionBenefit.cshtml" />
     <Content Include="Views\Travorama20\checkOrder.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
