@@ -232,7 +232,7 @@
             @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         </div>
     </section><!-- .search-result-form -->
-    <section class="search-result one-way" ng-app="travorama" ng-controller="singleFlightController">
+    <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
         <h1 class="text-center" ng-hide="!loading && !loadingFlight"><b>MENCARI PENERBANGAN</b></h1>
 

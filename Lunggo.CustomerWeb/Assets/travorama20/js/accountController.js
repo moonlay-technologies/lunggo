@@ -120,3 +120,17 @@ app.controller('resetController', [
 
     }
 ]);// reset controller
+
+// Travorama Check Order Controller
+app.controller('checkController', [
+    '$http', '$scope', function ($http, $scope) {
+
+        $scope.pageLoaded = true;
+        $scope.form = {
+            orderNo: '',
+            lastname: '',
+            submitting : false
+        };
+
+    }
+]);// reset controller

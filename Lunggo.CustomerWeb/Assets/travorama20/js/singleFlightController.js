@@ -11,6 +11,7 @@ app.controller('singleFlightController', [
 
         // **********
         // general variables
+        $scope.pageLoaded = true;
         $scope.busy = false;
         $scope.loading = false;
         $scope.loadingFlight = false;
