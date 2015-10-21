@@ -3120,20 +3120,21 @@ file : /Assets/travorama20/css/_page_password.scss
 .page-password p {
   font-size: 14px; }
 
-.page-password .form-wrapper header {
-  text-align: center;
-  color: #fff;
-  background: #1daee4;
-  padding: 12px; }
-  .page-password .form-wrapper header .header-title {
-    margin: 0;
-    font-weight: bold; }
-
-.page-password .form-wrapper section {
-  background: #e2e2e2;
-  padding: 25px 50px; }
-  .page-password .form-wrapper section .form-group:last-child {
-    margin-bottom: 0; }
+.page-password .form-wrapper {
+  margin-top: 24px; }
+  .page-password .form-wrapper header {
+    text-align: center;
+    color: #fff;
+    background: #1daee4;
+    padding: 12px; }
+    .page-password .form-wrapper header .header-title {
+      margin: 0;
+      font-weight: bold; }
+  .page-password .form-wrapper section {
+    background: #e2e2e2;
+    padding: 25px 50px; }
+    .page-password .form-wrapper section .form-group:last-child {
+      margin-bottom: 0; }
 
 .page-password-forgot .email-sent {
   display: none; }
@@ -3146,6 +3147,9 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-password-reset .form-container-sent a.btn {
     padding: 10px 50px;
     margin-top: 24px; }
+
+.page-check-order .form-wrapper section {
+  padding: 12px 24px; }
 
 /*
 

@@ -53,5 +53,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult checkOrder()
+        {
+            return View();
+        }
     }
 }
