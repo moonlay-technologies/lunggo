@@ -36,7 +36,7 @@ $border-radius-default:4px;
 /*--------------------*/
 /* general class */
 html {height:100%;}
-body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%;}
+body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%; background:#f9f9f9;}
 
 img {max-width:100%;}
 
@@ -69,6 +69,8 @@ span.close {cursor:pointer;}
 }
 
 form label.important:after {content:"*"; color:#f00000;}
+
+.text-main-color {color:$color-main-blue;}
 
 // form Search Location pop up
 // and form Date Selector pop up
@@ -187,3 +189,4 @@ form label.important:after {content:"*"; color:#f00000;}
 @import 'page_flight';
 
 @import 'page_checkout';
+@import 'page_password';

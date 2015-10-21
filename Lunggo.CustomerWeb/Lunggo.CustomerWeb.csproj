@@ -721,6 +721,7 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
+    <Content Include="Assets\images\email-send-icon.png" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
@@ -794,6 +795,7 @@
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\loading-sample.png" />
+    <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
@@ -1093,6 +1095,7 @@
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
     <Content Include="Assets\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\travorama20\css\_page_password.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2311,6 +2314,11 @@
     <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <Content Include="Views\Travorama20\flightCheckout.cshtml" />
     <Content Include="Views\Flight\TopDestinations.cshtml" />
+    <Content Include="Views\Travorama20\register.cshtml" />
+    <Content Include="Views\Travorama20\login.cshtml" />
+    <Content Include="Views\Travorama20\forgotPassword.cshtml" />
+    <Content Include="Views\Travorama20\resetPassword.cshtml" />
+    <Content Include="Views\Travorama20\userProfile.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />

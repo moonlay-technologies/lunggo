@@ -19,7 +19,8 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
   padding-bottom: 424px;
-  min-height: 100%; }
+  min-height: 100%;
+  background: #f9f9f9; }
 
 img {
   max-width: 100%; }
@@ -95,6 +96,9 @@ span.close {
 form label.important:after {
   content: "*";
   color: #f00000; }
+
+.text-main-color {
+  color: #1daee4; }
 
 .search-calendar {
   width: 320px;
@@ -1046,7 +1050,6 @@ file : /Assets/travorama20/css/_page_index.scss
       padding: 0; }
 
 .page-index .section-payment {
-  background: #fff;
   padding: 40px 0 50px; }
   .page-index .section-payment img {
     vertical-align: bottom;
@@ -3103,3 +3106,43 @@ file : /Assets/travorama20/css/_page_checkout.scss
       left: auto;
       right: 15px;
       font-size: 12px; }
+
+/*
+
+FORGOT PASSWORD and RESET PASSWORD
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+.page-password .site-content {
+  padding-top: 50px;
+  padding-bottom: 50px; }
+
+.page-password p {
+  font-size: 14px; }
+
+.page-password .form-wrapper header {
+  text-align: center;
+  color: #fff;
+  background: #1daee4;
+  padding: 12px; }
+  .page-password .form-wrapper header .header-title {
+    margin: 0;
+    font-weight: bold; }
+
+.page-password .form-wrapper section {
+  background: #e2e2e2;
+  padding: 25px 50px; }
+  .page-password .form-wrapper section .form-group:last-child {
+    margin-bottom: 0; }
+
+.page-password-forgot .email-sent {
+  display: none; }
+  .page-password-forgot .email-sent p {
+    padding-left: 100px;
+    background: url(/Assets/images/email-send-icon.png) center left no-repeat; }
+
+.page-password-reset .form-container-sent {
+  display: none; }
+  .page-password-reset .form-container-sent a.btn {
+    padding: 10px 50px;
+    margin-top: 24px; }

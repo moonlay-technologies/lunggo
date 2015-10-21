@@ -28,5 +28,30 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult register()
+        {
+            return View();
+        }
+
+        public ActionResult login()
+        {
+            return View();
+        }
+
+        public ActionResult forgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult resetPassword()
+        {
+            return View();
+        }
+
+        public ActionResult userProfile()
+        {
+            return View();
+        }
     }
 }
