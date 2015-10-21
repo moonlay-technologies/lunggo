@@ -2704,16 +2704,31 @@ file : /Assets/travorama20/css/_page_checkout.scss
     z-index: 2;
     color: #fff;
     padding: 15px;
-    background: #2fb4e6; }
+    background: #2fb4e6;
+    -ms-transform: skewX(-30deg);
+    /* IE 9 */
+    -webkit-transform: skewX(-30deg);
+    /* Safari */
+    transform: skewX(-30deg);
+    /* Standard syntax */ }
     .checkout-step .step + .step {
-      border-left: 1px solid #1f99c7; }
+      border-left: 2px solid #1f99c7; }
     .checkout-step .step.active {
       background: #032e55; }
     .checkout-step .step.inactive {
       background: #a6a6a6; }
     .checkout-step .step.inactive + .step {
-      border-left: 1px solid #a6a6a6; }
+      border-left: 2px solid #a6a6a6; }
     .checkout-step .step span {
+      -ms-transform: skewX(30deg);
+      /* IE 9 */
+      -webkit-transform: skewX(30deg);
+      /* Safari */
+      transform: skewX(30deg);
+      /* Standard syntax */
+      display: block;
+      padding-left: 10px; }
+    .checkout-step .step b {
       font-size: 14px;
       font-weight: bold; }
   .checkout-step.active-1:before, .page-index .checkout-step.active-1.section-reason:after {
@@ -2725,7 +2740,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
   padding-bottom: 15px; }
 
 .flight-detail {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  background: #fff; }
   .flight-detail#return-flight header span:before, .flight-detail#return-flight header .page-index span.section-reason:after, .page-index .flight-detail#return-flight header span.section-reason:after {
     background-position: -20px; }
   .flight-detail header {
@@ -2910,7 +2926,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .passenger-detail .passenger-form .passenger-content {
       padding: 12px;
       border: 1px solid #ccc;
-      border-top: none; }
+      border-top: none;
+      background: #fff; }
     .passenger-detail .passenger-form.inactive header .toggle:after {
       content: "+"; }
     .passenger-detail .passenger-form.inactive .passenger-content {
@@ -2969,7 +2986,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
   padding: 12px; }
 
 .widget-container .widget.flight .widget-content {
-  padding: 12px; }
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-top: none; }
   .widget-container .widget.flight .widget-content .airline {
     padding-bottom: 12px; }
     .widget-container .widget.flight .widget-content .airline .airline-image {

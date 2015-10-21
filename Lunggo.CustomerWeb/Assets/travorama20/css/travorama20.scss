@@ -30,6 +30,12 @@ $border-radius-default:4px;
     box-shadow:$properties;
 }
 
+@mixin skew-x($value){
+    -ms-transform: skewX($value); /* IE 9 */
+    -webkit-transform: skewX($value); /* Safari */
+    transform: skewX($value); /* Standard syntax */
+}
+
 @mixin clearfix(){
     display:block; width:100%; content:""; clear:both;
 }

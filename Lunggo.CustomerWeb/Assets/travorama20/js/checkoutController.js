@@ -39,6 +39,9 @@ app.controller('checkoutController', [
             { value: 12, name: 'December' },
         ];
 
+        $scope.flightDetail = {};
+        $scope.flightDetail.departureDate = '2015-12-20';
+
         $scope.passportRequired = passportRequired;
         $scope.idRequired = idRequired;
         $scope.nationalityRequired = nationalityRequired;
@@ -48,8 +51,22 @@ app.controller('checkoutController', [
         //********************
         // general functions
         // generate years
-        $scope.generateYear = function(min,max) {
-            
+        $scope.generateYear = function(type) {
+            var maxYear = -1;
+            switch (type) {
+                case 'adult':
+                    maxYear = 10;
+                    break;
+                case 'child':
+                    maxYear = 12;
+                    break;
+                case 'infant':
+                    maxYear = 2;
+                    break;
+                case 'passport':
+                    maxYear = 10;
+                    break;
+            }
         }
         // get number
         $scope.getNumber = function (number) {
