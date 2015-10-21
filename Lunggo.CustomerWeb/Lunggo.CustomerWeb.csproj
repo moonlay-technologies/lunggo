@@ -883,6 +883,7 @@
     <Content Include="Assets\images\ui-icons_454545_256x240.png" />
     <Content Include="Assets\images\ui-icons_888888_256x240.png" />
     <Content Include="Assets\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\images\user-account-active-arrow.png" />
     <Content Include="Assets\images\user-account-sprite.png" />
     <Content Include="Assets\images\user-icon-white.png" />
     <Content Include="Assets\images\user-icon.png" />
