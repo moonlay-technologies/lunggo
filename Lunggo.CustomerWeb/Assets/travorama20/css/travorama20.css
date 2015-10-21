@@ -3202,3 +3202,54 @@ file : /Assets/travorama20/css/_page_password.scss
     .section-benefit .benefit h4 {
       color: #1daee4;
       font-weight: 600; }
+
+.page-account-profile .site-content {
+  padding-top: 50px; }
+
+.page-account-profile .account-menu {
+  color: #fff; }
+  .page-account-profile .account-menu header {
+    background: #1daee4;
+    padding: 12px; }
+    .page-account-profile .account-menu header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-account-profile .account-menu header:before, .page-account-profile .account-menu .page-index header.section-reason:after, .page-index .page-account-profile .account-menu header.section-reason:after {
+      width: 50px;
+      height: 50px;
+      background-image: url(/Assets/images/user-account-sprite.png);
+      background-repeat: no-repeat;
+      display: inline-block;
+      content: "";
+      vertical-align: middle;
+      margin-right: 12px; }
+    .page-account-profile .account-menu header span {
+      font-weight: 600;
+      font-size: 14px; }
+  .page-account-profile .account-menu ul {
+    margin: 0;
+    padding: 0; }
+    .page-account-profile .account-menu ul li a {
+      display: block;
+      background: #c6f0ff;
+      font-size: 14px;
+      color: #1daee4;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 0 12px; }
+      .page-account-profile .account-menu ul li a:before, .page-account-profile .account-menu ul li .page-index a.section-reason:after, .page-index .page-account-profile .account-menu ul li a.section-reason:after {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        content: "";
+        vertical-align: middle;
+        background-image: url(/Assets/images/user-account-sprite.png);
+        background-repeat: no-repeat;
+        background-position: -50px;
+        margin-right: 12px; }
+      .page-account-profile .account-menu ul li a.active {
+        background: #abe9ff; }
+    .page-account-profile .account-menu ul li.order a:before, .page-account-profile .account-menu ul li.order .page-index a.section-reason:after, .page-index .page-account-profile .account-menu ul li.order a.section-reason:after {
+      background-position: -100px; }
