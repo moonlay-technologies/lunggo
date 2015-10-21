@@ -35,6 +35,9 @@ using ZendeskApi_v2.Models.AccountsAndActivities;
 using ZendeskApi_v2.Models.Constants;
 using ZendeskApi_v2.Models.Tickets;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
+using Lunggo.ApCommon.Campaign.Service;
+using Lunggo.ApCommon.Campaign.Model;
+using Lunggo.ApCommon.Campaign.Constant;
 
 namespace Lunggo.Driver
 {
@@ -44,11 +47,18 @@ namespace Lunggo.Driver
         static void Main(string[] args)
         {
 
-            Console.WriteLine( Regex.IsMatch("-100.00", @"^(-)?\d+(\.\d\d)?$"));
-            Regex rex = new Regex(@"^\d+(\.\d\d)?$");
-            Console.WriteLine(rex.IsMatch("-100.00"));
-            TryNameValueCOllection();
-            //new BayuDriver().Init();
+            //Console.WriteLine( Regex.IsMatch("-100.00", @"^(-)?\d+(\.\d\d)?$"));
+            //Regex rex = new Regex(@"^\d+(\.\d\d)?$");
+            //Console.WriteLine(rex.IsMatch("-100.00"));
+            //TryNameValueCOllection();
+            new BayuDriver().Init();
+            VoucherRequest voucherRequest = new VoucherRequest();
+            voucherRequest.Email = "a@a.com";
+            voucherRequest.Price = 700000;
+            voucherRequest.VoucherCode = "VC182822";
+            var validationStatus = CampaignService.GetInstance().ValidateVoucherRequest(voucherRequest);
+            if (validationStatus == VoucherValidationStatusType.Success)
+                CampaignService.GetInstance().UseVoucherRequest(voucherRequest);
             //new BayuDriver().testDeserialize();
             //new BayuDriver().testasync().Start();
 
@@ -225,10 +235,10 @@ namespace Lunggo.Driver
         public void Init()
         {
             InitConfigurationManager();
-            InitUniqueIdGenerator();
+            //InitUniqueIdGenerator();
             InitDatabaseService();
             InitTicketService();
-            InitQueueService();
+            //InitQueueService();
         }
 
         private static void InitConfigurationManager()

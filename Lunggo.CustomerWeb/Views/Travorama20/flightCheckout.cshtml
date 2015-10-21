@@ -7,7 +7,9 @@
 
     ViewBag.SiteHeader = "checkout";
 }
-
+@section AdditionalCSS {
+    <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
+}
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
@@ -18,14 +20,21 @@
     <script>
         var langCode = 'en';
         var currentPage = 1;
+        // flight detail
+        var flightDetail = {};
         // passenger number
-        var adultPassenger = 3;
-        var childPassenger = 3;
-        var infantPassenger = 3;
+        var adultPassenger = 1;
+        var adultTypeName = 'Adult';
+        var childPassenger = 1;
+        var childTypeName = 'Child';
+        var infantPassenger = 0;
+        var infantTypeName = 'Infant';
         // passport or id requirement
-        var passportRequired = false;
-        var idRequired = false;
+        var passportRequired = true;
+        var idRequired = true;
+        var nationalityRequired = true;
 
+        // get parameter
         function getParam(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -33,11 +42,15 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
+        // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
         } else {
             currentPage = 1;
         }
+
+        // date picker
+        $('.datepicker').datepicker();
 
     </script>
     <!-- angular controller -->
@@ -233,38 +246,38 @@
                             </div>
                         </div><!-- .travorama-login -->
 
-                        <form class="form" id="buyer-form" name="buyerForm" novalidate>
+                        <form class="form" id="buyer-form" name="buyerForm" novalidate >
 
                             <div class="form-group">
                                 <label class="control-label">Title:</label>
                                 <div>
-                                    <select class="form-control" id="buyer-title" name="title" ng-model="title" ng-init="title = 'mr'">
-                                        <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
+                                    <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].name">
+                                        <option ng-repeat="title in titles" value="{{title.name}}">{{title.name}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstName.$touched && buyerForm.firstName.$invalid}">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstname.$touched && buyerForm.firstname.$invalid}">
                                 <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstName" ng-model="firstName" required />
+                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstname" ng-model="buyerInfo.firstname" required />
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastName.$touched && buyerForm.lastName.$invalid}">
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastname.$touched && buyerForm.lastname.$invalid}">
                                 <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastName" ng-model="lastName" required />
+                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastname" ng-model="buyerInfo.lastname" required />
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.phone.$touched && buyerForm.phone.$invalid}">
                                 <label class="control-label important">Nomor Telepon:</label>
                                 <div>
-                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="phone" required />
+                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="buyerInfo.phone" required />
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                 <label class="control-label important">Masukan Alamat Email Anda:</label>
                                 <div>
-                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="email" required />
+                                    <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
                                 </div>
                             </div>
 
@@ -282,89 +295,95 @@
 
                         <div class="passenger-detail">
 
-                            <div class="passenger-form" id="adult-1">
+                            <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index">
                                 <header>
-                                    <span>Penumpang Dewasa</span>
+                                    <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
                                     <span class="toggle"></span>
                                 </header>
                                 <div class="passenger-content">
 
-                                    <form>
+                                    <form novalidate name="passengerForm_{{$index}}">
 
                                         <div class="form-group">
                                             <label class="control-label">Title</label>
-                                            <select class="form-control">
-                                                <option value="Mr">Mr</option>
-                                                <option value="Mrs">Mrs</option>
-                                                <option value="Ms">Ms</option>
+                                            <select class="form-control" name="title" ng-model="passenger.title" ng-init="passenger.title = titles[0].name">
+                                                <option ng-repeat="title in titles" value="{{title.name}}" ng-selected="title.name == 'Mr'" ng-if="!(title.name == 'Mrs' && passenger.type != 'adult')">{{title.name}}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">
                                             <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                            <input type="text" value="" name="firstname" class="form-control" placeholder="First Name" ng-model="passenger.firstname" ng-change="passenger.firstname = passenger.firstname.split(' ').join('')" required />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.lastname.$invalid && passengerForm_{{$index}}.lastname.$touched }">
                                             <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                            <input type="text" value="" class="form-control" placeholder="First Name" />
+                                            <input type="text" value="" name="lastname" class="form-control" placeholder="Last Name" ng-model="passenger.lastname" ng-change="passenger.lastname = passenger.lastname.split(' ').join('')" required />
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label important">Tanggal Lahir :</label>
                                             <div class="row">
                                                 <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tanggal</option>
+                                                    <select class="form-control" ng-model="passenger.birth.day">
+                                                        <option value="value">text</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Bulan</option>
+                                                    <select class="form-control" ng-model="passenger.birth.month">
+                                                        <option value="value">text</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tahun</option>
+                                                    <select class="form-control" ng-model="passenger.birth.year">
+                                                        <option value="value">text</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- passport detail for international flight -->
-                                        <div class="form-group">
+                                        <div class="form-group" ng-if="passportRequired">
                                             <label class="control-label important">Passport</label>
                                             <div class="row">
-                                                <div class="col-xs-6">
+                                                <div class="col-xs-6" ng-class="{'has-error' : passengerForm_{{$index}}.passportNumber.$invalid && passengerForm_{{$index}}.passportNumber.$touched}">
                                                     <label class="control-label"><small>No. Passport</small></label>
-                                                    <input type="text" value="" class="form-control" />
+                                                    <input type="text" value="" class="form-control" name="passportNumber" ng-model="passenger.passport.number" ng-required="passportRequired" />
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <label class="control-label"><small>Passport Country</small></label>
-                                                    <select class="form-control">
-                                                        <option value="indonesia">Indonesia</option>
+                                                    <select class="form-control" name="passportCountry" ng-model="passenger.passport.country" ng-init="passenger.passport.country = countries[87]" ng-required="passportRequired">
+                                                        <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <label class="control-label"><small>Passport Expires</small></label>
                                             <div class="row">
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tanggal</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Bulan</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <select class="form-control">
-                                                        <option value="">Tahun</option>
-                                                    </select>
+                                                <div class="col-xs-12" ng-class="{'has-error' : passengerForm_{{$index}}.passportExpire.$invalid && passengerForm_{{$index}}.passportExpire.$touched}">
+                                                    <label class="control-label"><small>Passport Expires</small></label>
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.day">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.month">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <select class="form-control" ng-model="passenger.birth.year">
+                                                                <option value="value">text</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" ng-if="idRequired" ng-class="{'has-error': passengerForm_{{$index}}.idNumber.$invalid && passengerForm_{{$index}}.idNumber.$touched }">
+                                            <label class="control-label important">Nomer KTP / SIM</label>
+                                            <input type="text" class="form-control" name="idNumber" ng-model="passenger.idNumber" value="" ng-required="idRequired" ng-change="passenger.idNumber = passenger.idNumber.split(' ').join('')" />
+                                        </div>
+                                        <div class="form-group" ng-if="nationalityRequired">
                                             <label class="control-label">Kewarganegaraan</label>
-                                            <select class="form-control">
-                                                <option value="">Indonesia</option>
+                                            <select class="form-control" ng-model="passenger.nationality" ng-init="passenger.nationality = countries[87]" required>
+                                                <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                             </select>
                                         </div>
 
@@ -377,7 +396,9 @@
                         <div class="step-button">
                             <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                             <a class="btn btn-yellow" ng-click="changePage(4)">LANJUTKAN</a>
+                            <a class="btn btn-yellow" ng-click="testForm()">TEST</a>
                         </div>
+                        <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
                     </div><!-- .content-step#step-3 -->
 
@@ -391,11 +412,11 @@
                             <div class="widget-content">
                                 <dl>
                                     <dt>Total Tiket</dt>
-                                    <dd>Rp 999.999.999</dd>
+                                    <dd><sup>Rp</sup> 999.999.999</dd>
                                 </dl>
                                 <dl class="total-price">
                                     <dt>Total</dt>
-                                    <dd>Rp 999.999.999</dd>
+                                    <dd><sup>Rp</sup> 999.999.999</dd>
                                 </dl>
                             </div>
                             <footer>
