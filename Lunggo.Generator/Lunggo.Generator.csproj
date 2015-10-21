@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Generator.TopFlightDestinations.TopFlightDestinationsGenerator</StartupObject>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">
@@ -85,6 +85,7 @@
     </Content>
     <Content Include="test.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="TopFlightDestinations\TopDestinations.csv" />
   </ItemGroup>
