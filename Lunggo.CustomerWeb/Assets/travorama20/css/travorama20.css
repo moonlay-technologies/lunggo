@@ -3146,3 +3146,55 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-password-reset .form-container-sent a.btn {
     padding: 10px 50px;
     margin-top: 24px; }
+
+/*
+
+ACCOUNT PAGES
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+.page-account .form-section {
+  padding: 50px 0;
+  background-position: center top;
+  background-repeat: no-repeat; }
+
+.page-account form {
+  text-align: center;
+  color: #525252; }
+  .page-account form hgroup {
+    margin-bottom: 24px; }
+    .page-account form hgroup h1, .page-account form hgroup h4 {
+      font-weight: bold;
+      color: #525252; }
+  .page-account form input {
+    text-align: center;
+    padding: 12px 0;
+    height: auto; }
+  .page-account form a {
+    font-weight: bold;
+    color: inherit; }
+
+.page-account-login .form-section {
+  background-image: url(/Assets/images/login-bg.jpg); }
+  .page-account-login .form-section h1 {
+    font-size: 45px;
+    margin-bottom: 12px; }
+
+.page-account-register .form-section {
+  background-image: url(/Assets/images/register-bg.jpg); }
+  .page-account-register .form-section h1 {
+    font-size: 40px; }
+
+.page-account-register hgroup {
+  text-align: right;
+  margin-bottom: 24px; }
+  .page-account-register hgroup h1, .page-account-register hgroup h4 {
+    font-weight: bold; }
+
+.section-benefit {
+  padding: 30px 0; }
+  .section-benefit .benefit {
+    text-align: center; }
+    .section-benefit .benefit h4 {
+      color: #1daee4;
+      font-weight: 600; }

@@ -1,0 +1,44 @@
+﻿/*
+
+ACCOUNT PAGES
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+
+// page account
+.page-account {
+    .form-section {padding:50px 0; background-position:center top; background-repeat:no-repeat;}
+    form {text-align:center; color:#525252;
+        hgroup {margin-bottom:24px;
+            h1,h4 {font-weight:bold; color:#525252;}
+        }
+        input {text-align:center; padding:12px 0; height:auto;}
+        a {font-weight:bold; color:inherit;}
+    }
+}
+
+// login page
+.page-account-login {
+    .form-section {background-image:url(/Assets/images/login-bg.jpg);
+        h1 {font-size:45px; margin-bottom:12px;}
+    }
+}
+
+// register page
+.page-account-register {
+    .form-section {background-image:url(/Assets/images/register-bg.jpg);
+        h1 {font-size:40px;}
+    }
+    hgroup {text-align:right; margin-bottom:24px;
+        h1,h4 {font-weight:bold;}
+    }
+}
+
+// section benefit
+.section-benefit {padding:30px 0;
+    .benefit {text-align:center;
+        h4 {color:$color-main-blue; font-weight:600;}
+    }
+}
+
+

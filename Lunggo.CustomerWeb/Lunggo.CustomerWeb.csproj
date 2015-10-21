@@ -685,6 +685,10 @@
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
+    <Content Include="Assets\images\benefit-1.jpg" />
+    <Content Include="Assets\images\benefit-2.jpg" />
+    <Content Include="Assets\images\benefit-3.jpg" />
+    <Content Include="Assets\images\benefit-4.jpg" />
     <Content Include="Assets\images\benefit\check.png" />
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
@@ -796,6 +800,7 @@
     <Content Include="Assets\images\loading-image.gif" />
     <Content Include="Assets\images\loading-sample.png" />
     <Content Include="Assets\images\lock-image.jpg" />
+    <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\map.jpg" />
@@ -832,6 +837,7 @@
     <Content Include="Assets\images\quote-open.png" />
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
+    <Content Include="Assets\images\register-bg.jpg" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\sandclock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
@@ -1096,6 +1102,7 @@
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
     <Content Include="Assets\bootstrap\bootstrap.scss" />
     <Content Include="Assets\travorama20\css\_page_password.scss" />
+    <Content Include="Assets\travorama20\css\_page_account.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2320,6 +2327,7 @@
     <Content Include="Views\Travorama20\forgotPassword.cshtml" />
     <Content Include="Views\Travorama20\resetPassword.cshtml" />
     <Content Include="Views\Travorama20\userProfile.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionBenefit.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
