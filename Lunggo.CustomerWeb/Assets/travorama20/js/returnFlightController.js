@@ -191,11 +191,15 @@ app.controller('returnFlightController', [
                 if ($scope.departureFlightConfig.validateAvailable == true && $scope.returnFlightConfig.validateAvailable == false) {
                     $scope.pageConfig.activeFlightSection = 'return';
                     $scope.returnFlightConfig.chosenFlight = -1;
-                } else if ($scope.departureFlightConfig.validateAvailable== false && $scope.returnFlightConfig.validateAvailable == true) {
+                } else if ($scope.departureFlightConfig.validateAvailable == false && $scope.returnFlightConfig.validateAvailable == true) {
                     $scope.pageConfig.activeFlightSection = 'departure';
                     $scope.departureFlightConfig.chosenFlight = -1;
                 } else if ($scope.departureFlightConfig.validateAvailable == false && $scope.returnFlightConfig.validateAvailable == false) {
                     if ($scope.departureFlightConfig.validateNewfare == false && $scope.returnFlightConfig.validateNewfare == false) {
+                        $scope.pageConfig.activeFlightSection = 'departure';
+                        $scope.departureFlightConfig.chosenFlight = -1;
+                        $scope.returnFlightConfig.chosenFlight = -1;
+                    } else if ($scope.departureFlightConfig.validateNewfare == true && $scope.returnFlightConfig.validateNewfare == true) {
                         $scope.pageConfig.activeFlightSection = 'departure';
                         $scope.departureFlightConfig.chosenFlight = -1;
                         $scope.returnFlightConfig.chosenFlight = -1;

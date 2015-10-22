@@ -814,7 +814,7 @@
         <div class="container">
             <div class="flight-review">
                 <header class="flight-review-header">
-                    <h3>Rincian Penerbangan Pulang dan Pergi <span class="pull-right close-review" ng-click="closeOverview()">X</span></h3>
+                    <h3>Rincian Penerbangan Pulang dan Pergi <span class="pull-right close-review" ng-click="closeOverview()" ng-hide="(departureFlightConfig.validating || returnFlightConfig.validating)">X</span></h3>
                 </header>
                 <section class="flight-review-summary">
                     <div class="summary-left">
@@ -856,7 +856,7 @@
                             <header class="flight-header">
                                 <h3>
                                     Penerbangan Pulang
-                                    <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pergi Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</span>
+                                    <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pulang Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</span>
                                     <span class="warning" ng-if="pageConfig.flightsValidated && !returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Penerbangan Pulang Tidak Tersedia</span>
                                 </h3>
                             </header>
