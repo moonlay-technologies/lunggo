@@ -7,6 +7,10 @@ app.controller('checkoutController', [
         $scope.currentPage = 1;
         $scope.pageLoaded = true;
         $scope.loginShown = false;
+        $scope.checkoutForm = {
+            loading: false
+        };
+        $scope.paymentMethod = '';
         $scope.stepClass = '';
         $scope.titles = [
             { name: 'Mr', value: 'mr' },
@@ -145,6 +149,9 @@ app.controller('checkoutController', [
                     year: $scope.flightDetail.departureYear
                 };
             }
+            if (nationalityRequired == true) {
+                passenger.nationality = 'Indonesia';
+            }
             passenger.passport = {
                 expire: {
                     date: $scope.flightDetail.passportDate,
@@ -220,7 +227,7 @@ app.controller('checkoutController', [
         $scope.changePage = function (page) {
             // check if page target is 4
             // do validation if page target is 4
-            if (page == 4) {
+            if ($scope.currentPage == 3 && page == 4) {
 
                 // check each form
                 for (var i = 0; i < $scope.passengers.length; i++) {
@@ -275,8 +282,8 @@ app.controller('checkoutController', [
 
         }
         // change page after login
-        //$scope.changePage(currentPage);
-        $scope.changePage(3); // development only
+        $scope.changePage(currentPage);
+        // $scope.changePage(4); // development only
 
         // toggle Travorama Login
         $scope.toggleLogin = function() {
@@ -285,6 +292,11 @@ app.controller('checkoutController', [
             } else {
                 $scope.loginShown = false;
             }
+        }
+
+        // submit checkout form
+        $scope.submitCheckoutForm = function() {
+            $scope.checkoutForm.loading = true;
         }
 
         // log $scope

@@ -22,6 +22,9 @@ body {
   min-height: 100%;
   background: #f9f9f9; }
 
+hr {
+  border-top: 1px solid #ccc; }
+
 .page-loading {
   display: none; }
 
@@ -2932,6 +2935,36 @@ file : /Assets/travorama20/css/_page_checkout.scss
       content: "+"; }
     .passenger-detail .passenger-form.inactive .passenger-content {
       display: none; }
+
+.payment-wrapper {
+  margin-bottom: 24px; }
+  .payment-wrapper .payment {
+    background: #fff; }
+    .payment-wrapper .payment label {
+      display: block;
+      cursor: pointer; }
+    .payment-wrapper .payment header {
+      background: #1daee4;
+      position: relative; }
+      .payment-wrapper .payment header .input-wrapper {
+        height: 100%;
+        position: absolute;
+        background: #028ec3;
+        width: 30px;
+        text-align: center;
+        padding-top: 6px; }
+      .payment-wrapper .payment header h5 {
+        color: #fff;
+        color: #fff;
+        margin: 0;
+        padding: 10px;
+        padding-left: 30px;
+        font-size: 12px;
+        font-weight: 600; }
+    .payment-wrapper .payment section {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center; }
 
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
