@@ -345,6 +345,8 @@ function flightFormSearchFunctions() {
     // autocomplete function
     function getLocation(keyword) {
         FlightSearchConfig.autocomplete.loading = true;
+        $('autocomplete-pre .text-pre').addClass('hidden');
+        $('autocomplete-pre .text-loading').removeClass('hidden');
         $.ajax({
             url: FlightAutocompleteConfig.Url + keyword
         }).done(function (returnData) {
