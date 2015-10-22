@@ -152,6 +152,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiSrc\v1\Account\AccountController.cs" />
+    <Compile Include="ApiSrc\v1\Account\Model\AccountResponseModel.cs" />
+    <Compile Include="ApiSrc\v1\Account\Model\ResetPasswordViewModel.cs" />
     <Compile Include="ApiSrc\v1\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRulesLogic.cs" />
@@ -222,6 +225,7 @@
     <Folder Include="ApiSrc\v2\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
