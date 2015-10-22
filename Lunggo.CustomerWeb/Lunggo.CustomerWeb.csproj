@@ -2332,6 +2332,11 @@
     <Content Include="Views\Travorama20\userAccount.cshtml" />
     <Content Include="Views\Shared\travorama20\_SectionBenefit.cshtml" />
     <Content Include="Views\Travorama20\checkOrder.cshtml" />
+    <Content Include="Views\Shared\_Sectionbenefit.cshtml" />
+    <Content Include="Views\Shared\_Layout20150929.cshtml" />
+    <Content Include="Views\Shared\_SiteHeader.cshtml" />
+    <Content Include="Views\Shared\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\_SiteFooter.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
