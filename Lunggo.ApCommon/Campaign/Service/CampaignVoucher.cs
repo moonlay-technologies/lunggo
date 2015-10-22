@@ -26,20 +26,18 @@ namespace Lunggo.ApCommon.Campaign.Service
         public VoucherResponse UseVoucherRequest(VoucherRequest voucherRequest)
         {
             VoucherResponse response = new VoucherResponse();
-            VoucherValidationStatusType updateStatus = VoucherValidationStatusType.Undefined;
 
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
             response.Email = voucherRequest.Email;
             response.VoucherCode = voucherRequest.VoucherCode;
 
-            updateStatus = ValidateVoucher(voucher, voucherRequest);
-            if (updateStatus == VoucherValidationStatusType.Success)
+            response.UpdateStatus = ValidateVoucher(voucher, voucherRequest);
+
+            if (response.UpdateStatus == VoucherValidationStatusType.Success)
             {
                 CalculateVoucherDiscount(voucher, voucherRequest, response);
-                updateStatus = VoucherDecrement(voucherRequest.VoucherCode);
+                response.UpdateStatus = VoucherDecrement(voucherRequest.VoucherCode);
             }
-
-            response.UpdateStatus = updateStatus;
 
             return response;
         }
@@ -78,11 +76,15 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             response.OriginalPrice = voucherRequest.Price;
             response.TotalDiscount = 0;
+
             if (voucher.ValuePercentage != null && voucher.ValuePercentage > 0)
                 response.TotalDiscount += (response.OriginalPrice * (decimal)voucher.ValuePercentage / 100);
+
             if (voucher.ValueConstant != null && voucher.ValueConstant > 0)
                 response.TotalDiscount += (decimal)voucher.ValueConstant;
-            if (voucher.MaxDiscountValue != null && response.TotalDiscount > voucher.MaxDiscountValue)
+
+            if (voucher.MaxDiscountValue != null && voucher.MaxDiscountValue > 0
+                && response.TotalDiscount > voucher.MaxDiscountValue)
                 response.TotalDiscount = (decimal)voucher.MaxDiscountValue;
 
             response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;

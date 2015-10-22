@@ -1,154 +1,62 @@
-﻿    @{
-    Layout = "/Views/Shared/_Layout_account.cshtml";
+﻿@{
+    Layout = "/Views/Shared/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-register";
     ViewBag.Title = "Hotel Detail";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
 
-    <title>Travorama</title>
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+<section class="form-section" ng-app="travorama" ng-controller="authController">
 
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
+    <div class="container">
 
-</head>
-<body>
-    <!-- page start -->
-    <div class="page user-page user-page-register">
-
-        <section class="user-register">
-            <header id="site-header" class="site-header">
-                @{ Html.RenderPartial("_Mainmenu"); }
-            </header>
-        
-        @switch ((string) ViewBag.Message)
-        {
-            case "InvalidInputData":
-                <div class="bg-danger">Email format invalid!</div>
-                break;
-            case "ConfirmationEmailSent":
-            <div class="bg-warning">Confirmation email has been sent. Please confirm your email through link on that email.</div>
-                break;
-            case "AlreadyRegistered":
-                <div class="bg-warning">Email already registered.</div>
-                break;
-            case "AlreadyRegisteredButUnconfirmed":
-                <div class="bg-warning">Email already registered but not confirmed. Please confirm.</div>
-                break;
-            case "Failed":
-                <div class="bg-danger">There is an error. Please try again later.</div>
-                break;
-        }
-
-            <div class="container">
-                <section class="user-form">
-                    <h1 class="text-center">@Html.I18NString("CW00140")</h1>
-                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="Email" placeholder="@Html.I18NString("CW00146")">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button class="btn btn-yellow">@Html.I18NString("CW00147")</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form-add">
-                            <div class="col-sm-8 col-sm-offset-2">
-
-                            </div>
-                        </div>
-                    }
-@*
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            <div class="or text-center">
-                                <span class="or-left"></span><span>@Html.I18NString("CW00128")</span><span class="or-right"></span>
-                            </div>
-                        </div>
-                    </div>
-                    @using (Html.BeginForm("ExternalLogin", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        <section class="facebook-login text-center">
-                            <button type="submit" name="provider" value="@facebookProvider.AuthenticationType"><span class="fa fa-facebook"></span> @Html.I18NString("CW00148")</button>
-                        </section>
-                    }
-*@
-                </section>
+        <div class="row">
+            <div class="col-xs-7 col-xs-offset-4">
+                <hgroup>
+                    <h1>@Html.I18NString("CW00179")</h1>
+                    <h4>@Html.I18NString("CW00180")</h4>
+                </hgroup>
             </div>
+        </div>
 
-        </section><!-- .user-login -->
-        <!-- site content start -->
-        <div id="site-content" class="site-content">
-
-            <div class="container">
-                <section class="benefit">
-                    <h3 class="text-center"><b>@Html.I18NString("CW00132")</b> @Html.I18NString("CW00133")</h3>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <article class="media">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <img src="/assets/images/benefit/news.png" alt="Latest News">
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h4>@Html.I18NString("CW00134")</h4>
-                                        <p>@Html.I18NString("CW00135")</p>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="media">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <img src="/assets/images/benefit/discount.png" alt="Discount">
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h4>@Html.I18NString("CW00136")</h4>
-                                        <p>@Html.I18NString("CW00137")</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-sm-6">
-                            <article class="media">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <img src="/assets/images/benefit/check.png" alt="Check">
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h4>@Html.I18NString("CW00138")</h4>
-                                        <p>@Html.I18NString("CW00139")</p>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="media hidden">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <img src="/assets/images/benefit/refund.png" alt="refund">
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h4>REFUND SYSTEM</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque odio non, sed perspiciatis dolor officia dolorum ipsam consequatur, id molestiae facilis, a nulla iusto velit quae mollitia cupiditate veritatis totam.</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-7">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "register-form form form-horizontal", role = "form", name="registerForm" }))
+                {
+                @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" class="form-control" ng-model="form.email" required />
                     </div>
-                </section>
-            </div><!-- .container -->
+
+                    <div class="form-group">
+                        <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid" />
+                    </div>
+
+                    <div class="form-group text-right">
+                        <a href="@Url.Action("ForgotPassword", "Account")">@Html.I18NString("CW00126")</a> | <a href="@Url.Action("Register", "Account")">@Html.I18NString("CW00127")</a>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</section><!-- .form-section -->
+@Html.Partial("/Views/Shared/_SectionBenefit.cshtml")
+
+

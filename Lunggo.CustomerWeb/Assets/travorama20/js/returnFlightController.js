@@ -11,6 +11,7 @@ app.controller('returnFlightController', [
 
         // ******************************
         // general variables
+        $scope.pageLoaded = true;
         $scope.pageConfig = {
             activeFlightSection: 'departure',
             showNotice: false,

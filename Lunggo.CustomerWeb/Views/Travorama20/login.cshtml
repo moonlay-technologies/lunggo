@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-login";
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+<section class="form-section" ng-app="travorama" ng-controller="authController">
+    
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-7">
+                
+                <form class="login-form form form-horizontal" name="loginForm">
+                    
+                    <hgroup>
+                        <h1>Log In</h1>
+                        <h4>Dengan Akun Travorama Anda</h4>
+                    </hgroup>
+
+                    <div class="form-group">
+                        <input type="email" name="email" value="" placeholder="Alamat Email Anda" ng-model="form.email" class="form-control" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" name="password" value="" placeholder="Password" ng-model="form.password" class="form-control" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="submit" value="LOGIN" class="btn btn-yellow form-control" ng-disabled="loginForm.$invalid" />
+                    </div>
+                    
+                    <div class="form-group text-right">
+                        <label class="control-label"><input type="checkbox" name="remember" value="true" /> <span>Ingat saya</span></label>
+                    </div>
+                    
+                    <div class="form-group text-right">
+                        <a href="#linkToForgotPassword">Lupa Password?</a> | <a href="#linkToRegister">Register</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    
+</section><!-- .form-section -->
+
+@Html.Partial("/Views/Shared/travorama20/_SectionBenefit.cshtml")
+
+

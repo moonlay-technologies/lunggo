@@ -19,7 +19,14 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
   padding-bottom: 424px;
-  min-height: 100%; }
+  min-height: 100%;
+  background: #f9f9f9; }
+
+.page-loading {
+  display: none; }
+
+.page-loaded {
+  display: block; }
 
 img {
   max-width: 100%; }
@@ -36,10 +43,11 @@ span.close {
   color: #4b4b4b;
   font-weight: bold; }
 
-.btn.btn-grey {
+.btn.btn-grey, .btn.btn-gray {
   background: #adadad;
   color: #fff;
-  font-weight: bold; }
+  font-weight: bold;
+  border: 2px solid #adadad; }
 
 .btn.block {
   display: block;
@@ -95,6 +103,9 @@ span.close {
 form label.important:after {
   content: "*";
   color: #f00000; }
+
+.text-main-color {
+  color: #1daee4; }
 
 .search-calendar {
   width: 320px;
@@ -344,9 +355,9 @@ file : /Assets/travorama20/css/_header.scss
   width: 100%;
   height: 70px;
   background: #fff;
-  -webkit-box-shadow: 0 0 10px #ccc;
-  -moz-box-shadow: 0 0 10px #ccc;
-  box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #aaa;
+  -moz-box-shadow: 0 0 10px #aaa;
+  box-shadow: 0 0 10px #aaa;
   letter-spacing: 0.1px; }
   .site-header .site-logo {
     padding-top: 13px;
@@ -1046,7 +1057,6 @@ file : /Assets/travorama20/css/_page_index.scss
       padding: 0; }
 
 .page-index .section-payment {
-  background: #fff;
   padding: 40px 0 50px; }
   .page-index .section-payment img {
     vertical-align: bottom;
@@ -2694,16 +2704,31 @@ file : /Assets/travorama20/css/_page_checkout.scss
     z-index: 2;
     color: #fff;
     padding: 15px;
-    background: #2fb4e6; }
+    background: #2fb4e6;
+    -ms-transform: skewX(-30deg);
+    /* IE 9 */
+    -webkit-transform: skewX(-30deg);
+    /* Safari */
+    transform: skewX(-30deg);
+    /* Standard syntax */ }
     .checkout-step .step + .step {
-      border-left: 1px solid #1f99c7; }
+      border-left: 2px solid #1f99c7; }
     .checkout-step .step.active {
       background: #032e55; }
     .checkout-step .step.inactive {
       background: #a6a6a6; }
     .checkout-step .step.inactive + .step {
-      border-left: 1px solid #a6a6a6; }
+      border-left: 2px solid #a6a6a6; }
     .checkout-step .step span {
+      -ms-transform: skewX(30deg);
+      /* IE 9 */
+      -webkit-transform: skewX(30deg);
+      /* Safari */
+      transform: skewX(30deg);
+      /* Standard syntax */
+      display: block;
+      padding-left: 10px; }
+    .checkout-step .step b {
       font-size: 14px;
       font-weight: bold; }
   .checkout-step.active-1:before, .page-index .checkout-step.active-1.section-reason:after {
@@ -2715,7 +2740,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
   padding-bottom: 15px; }
 
 .flight-detail {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  background: #fff; }
   .flight-detail#return-flight header span:before, .flight-detail#return-flight header .page-index span.section-reason:after, .page-index .flight-detail#return-flight header span.section-reason:after {
     background-position: -20px; }
   .flight-detail header {
@@ -2900,7 +2926,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .passenger-detail .passenger-form .passenger-content {
       padding: 12px;
       border: 1px solid #ccc;
-      border-top: none; }
+      border-top: none;
+      background: #fff; }
     .passenger-detail .passenger-form.inactive header .toggle:after {
       content: "+"; }
     .passenger-detail .passenger-form.inactive .passenger-content {
@@ -2959,7 +2986,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
   padding: 12px; }
 
 .widget-container .widget.flight .widget-content {
-  padding: 12px; }
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-top: none; }
   .widget-container .widget.flight .widget-content .airline {
     padding-bottom: 12px; }
     .widget-container .widget.flight .widget-content .airline .airline-image {
@@ -3103,3 +3132,232 @@ file : /Assets/travorama20/css/_page_checkout.scss
       left: auto;
       right: 15px;
       font-size: 12px; }
+
+/*
+
+FORGOT PASSWORD and RESET PASSWORD
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+.page-password .site-content {
+  padding-top: 50px;
+  padding-bottom: 50px; }
+
+.page-password p {
+  font-size: 14px; }
+
+.page-password .form-wrapper {
+  margin-top: 24px; }
+  .page-password .form-wrapper header {
+    text-align: center;
+    color: #fff;
+    background: #1daee4;
+    padding: 12px; }
+    .page-password .form-wrapper header .header-title {
+      margin: 0;
+      font-weight: bold; }
+  .page-password .form-wrapper section {
+    background: #e2e2e2;
+    padding: 25px 50px; }
+    .page-password .form-wrapper section .form-group:last-child {
+      margin-bottom: 0; }
+
+.page-password-forgot .email-sent p {
+  padding-left: 100px;
+  background: url(/Assets/images/email-send-icon.png) center left no-repeat; }
+
+.page-password-reset .form-container-sent a.btn {
+  padding: 10px 50px;
+  margin-top: 24px; }
+
+.page-check-order .form-wrapper section {
+  padding: 12px 24px; }
+
+/*
+
+ACCOUNT PAGES
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+.page-account .form-section {
+  padding: 50px 0;
+  background-position: center top;
+  background-repeat: no-repeat; }
+
+.page-account form {
+  text-align: center;
+  color: #525252; }
+  .page-account form hgroup {
+    margin-bottom: 24px; }
+    .page-account form hgroup h1, .page-account form hgroup h4 {
+      font-weight: bold;
+      color: #525252; }
+  .page-account form input {
+    text-align: center;
+    padding: 12px 0;
+    height: auto; }
+  .page-account form a {
+    font-weight: bold;
+    color: inherit; }
+
+.page-account-login .form-section {
+  background-image: url(/Assets/images/login-bg.jpg); }
+  .page-account-login .form-section h1 {
+    font-size: 45px;
+    margin-bottom: 12px; }
+
+.page-account-register .form-section {
+  background-image: url(/Assets/images/register-bg.jpg); }
+  .page-account-register .form-section h1 {
+    font-size: 40px; }
+
+.page-account-register hgroup {
+  text-align: right;
+  margin-bottom: 24px; }
+  .page-account-register hgroup h1, .page-account-register hgroup h4 {
+    font-weight: bold; }
+
+.section-benefit {
+  padding: 30px 0; }
+  .section-benefit .benefit {
+    text-align: center; }
+    .section-benefit .benefit h4 {
+      color: #1daee4;
+      font-weight: 600; }
+
+.page-account-profile .site-content {
+  padding-top: 30px;
+  padding-bottom: 50px; }
+
+.page-account-profile form {
+  text-align: left; }
+  .page-account-profile form header {
+    margin-bottom: 15px; }
+  .page-account-profile form input {
+    height: auto;
+    padding: 6px 12px;
+    text-align: left; }
+
+.page-account-profile .account-menu {
+  color: #fff; }
+  .page-account-profile .account-menu header {
+    background: #1daee4;
+    padding: 12px; }
+    .page-account-profile .account-menu header:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-account-profile .account-menu header:before, .page-account-profile .account-menu .page-index header.section-reason:after, .page-index .page-account-profile .account-menu header.section-reason:after {
+      width: 50px;
+      height: 50px;
+      background-image: url(/Assets/images/user-account-sprite.png);
+      background-repeat: no-repeat;
+      display: inline-block;
+      content: "";
+      vertical-align: middle;
+      margin-right: 12px; }
+    .page-account-profile .account-menu header span {
+      font-weight: 600;
+      font-size: 12px; }
+  .page-account-profile .account-menu ul {
+    margin: 0;
+    padding: 0; }
+    .page-account-profile .account-menu ul li a {
+      display: block;
+      background: #c6f0ff;
+      font-size: 12px;
+      color: #1daee4;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 0 12px;
+      position: relative; }
+      .page-account-profile .account-menu ul li a:before, .page-account-profile .account-menu ul li .page-index a.section-reason:after, .page-index .page-account-profile .account-menu ul li a.section-reason:after {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        content: "";
+        vertical-align: middle;
+        background-image: url(/Assets/images/user-account-sprite.png);
+        background-repeat: no-repeat;
+        background-position: -50px;
+        margin-right: 12px; }
+      .page-account-profile .account-menu ul li a.active {
+        background: #abe9ff; }
+        .page-account-profile .account-menu ul li a.active:after {
+          content: "";
+          background: url(/Assets/images/user-account-active-arrow.png) left center no-repeat;
+          width: 10px;
+          height: 100%;
+          position: absolute;
+          right: -10px; }
+    .page-account-profile .account-menu ul li.order a:before, .page-account-profile .account-menu ul li.order .page-index a.section-reason:after, .page-index .page-account-profile .account-menu ul li.order a.section-reason:after {
+      background-position: -100px; }
+
+.page-account-profile .account-content {
+  padding-left: 30px; }
+  .page-account-profile .account-content .content-header {
+    border-bottom: 1px solid #ccc; }
+    .page-account-profile .account-content .content-header h2 {
+      margin-top: 0; }
+  .page-account-profile .account-content form {
+    font-size: 12px; }
+    .page-account-profile .account-content form header {
+      display: block; }
+      .page-account-profile .account-content form header:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-account-profile .account-content form header .btn {
+        width: 150px; }
+    .page-account-profile .account-content form .control-label {
+      text-align: left; }
+    .page-account-profile .account-content form .form-group {
+      margin-bottom: 5px; }
+      .page-account-profile .account-content form .form-group > div:first-child:after {
+        content: ":";
+        position: absolute;
+        right: 6px;
+        top: 6px; }
+    .page-account-profile .account-content form[name="passwordForm"] {
+      border-top: 1px solid #ccc;
+      padding-top: 18px;
+      margin-top: 18px; }
+
+.page-account-profile .order-wrapper {
+  margin-top: 24px; }
+  .page-account-profile .order-wrapper .order.flight header {
+    background: #1daee4;
+    text-align: right;
+    color: #fff;
+    padding: 12px;
+    font-weight: bold; }
+  .page-account-profile .order-wrapper .order.flight section {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none; }
+    .page-account-profile .order-wrapper .order.flight section .airline {
+      padding: 6px;
+      text-align: center; }
+      .page-account-profile .order-wrapper .order.flight section .airline span {
+        font-weight: bold;
+        color: #1daee4; }
+      .page-account-profile .order-wrapper .order.flight section .airline img {
+        height: 50px; }
+    .page-account-profile .order-wrapper .order.flight section .detail {
+      padding: 6px; }
+      .page-account-profile .order-wrapper .order.flight section .detail p:last-child {
+        margin-bottom: 0; }
+      .page-account-profile .order-wrapper .order.flight section .detail span {
+        font-weight: bold; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.success {
+          color: #14b413; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.failed {
+          color: #fe0001; }
+        .page-account-profile .order-wrapper .order.flight section .detail span.pending {
+          color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight section .action {
+      padding: 6px; }
+      .page-account-profile .order-wrapper .order.flight section .action .btn {
+        display: block; }
