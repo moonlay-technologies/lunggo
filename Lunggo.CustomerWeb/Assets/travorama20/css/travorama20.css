@@ -348,7 +348,6 @@ form label.important:after {
 HEADER styling
 file : /Assets/travorama20/css/_header.scss
 
-
 */
 .site-header {
   position: fixed;
@@ -429,6 +428,18 @@ file : /Assets/travorama20/css/_header.scss
 
 body {
   padding-top: 70px; }
+
+.header-ssl {
+  text-align: right;
+  padding-top: 12px; }
+  .header-ssl p {
+    float: right;
+    width: 80%;
+    padding-top: 5px;
+    margin-bottom: 0; }
+  .header-ssl .image-wrapper {
+    float: right;
+    width: 20%; }
 
 /*
 

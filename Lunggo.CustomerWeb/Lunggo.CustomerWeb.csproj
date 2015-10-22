@@ -859,6 +859,7 @@
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
+    <Content Include="Assets\images\ssl-image.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
     <Content Include="Assets\images\switch-destination.png" />
