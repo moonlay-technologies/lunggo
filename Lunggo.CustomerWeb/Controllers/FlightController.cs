@@ -98,7 +98,10 @@ namespace Lunggo.CustomerWeb.Controllers
             catch
             {
                 ViewBag.Message = "BookExpired";
-                return View();
+                return View(new FlightCheckoutData
+                {
+                    Token = token
+                });
             }
         }
 
