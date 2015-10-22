@@ -284,7 +284,7 @@
                             <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index">
                                 <header>
                                     <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
-                                    <span class="toggle"></span>
+                                    <span class="toggle hidden"></span>
                                 </header>
                                 <div class="passenger-content">
 
@@ -308,17 +308,19 @@
                                             <label class="control-label important">Tanggal Lahir :</label>
                                             <div class="row">
                                                 <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="passenger.birth.day" required>
+                                                    <select class="form-control" ng-model="passenger.birth.date" required ng-change="validateBirthday(passenger)">
                                                         <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date">{{date}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="passenger.birth.month" required>
-                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month">{{month.name}}</option>
+                                                    <select class="form-control" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
+                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
+                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && !(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth)">{{month.name}}</option>
+                                                        <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && !(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth)">{{month.name}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-4">
-                                                    <select class="form-control" ng-model="passenger.birth.year" required>
+                                                    <select class="form-control" ng-model="passenger.birth.year" required ng-change="validateBirthday(passenger)">
                                                         <option value="{{year}}" ng-repeat="year in generateYear(passenger.type)" ng-selected="year == passenger.birth.year">{{year}}</option>
                                                     </select>
                                                 </div>
@@ -368,7 +370,7 @@
                                         </div>
                                         <div class="form-group" ng-if="nationalityRequired">
                                             <label class="control-label">Kewarganegaraan</label>
-                                            <select class="form-control" ng-model="passenger.nationality" ng-init="passenger.nationality = countries[87]" required>
+                                            <select class="form-control" ng-model="passenger.nationality" ng-init="passenger.nationality = countries[87]" ng-required="nationalityRequired">
                                                 <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == 'Indonesia'">{{country}}</option>
                                             </select>
                                         </div>
@@ -382,11 +384,90 @@
                         <div class="step-button">
                             <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                             <a class="btn btn-yellow" ng-click="changePage(4)">LANJUTKAN</a>
-                            <a class="btn btn-yellow" ng-click="testForm()">TEST</a>
                         </div>
                         <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
                     </div><!-- .content-step#step-3 -->
+                    <!-- ******************** -->
+                    <div class="content-step" id="step-4" ng-show="currentPage == 4">
+                        <h3><b>METODE</b> PEMBAYARAN</h3>
+                    
+                        <hr />
+                        <p>Silahkan pilih <b>metode pembayaran</b> dibawah ini yang ingin Anda gunakan:</p>        
+                    
+                        <div class="payment-wrapper">
+                        
+                            <div class="row">
+
+                                <div class="payment transfer col-xs-4">
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="paymentMethod" value="transfer" ng-model="paymentMethod" checked />
+                                            </div>
+                                            <h5>Bank Transfer</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/payment-atm.jpg" alt="Bank Transfer" />
+                                        </section>
+                                    </label>
+                                </div><!-- .payment -->
+
+                                <div class="payment creditcard col-xs-4">
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="paymentMethod" value="creditcard" ng-model="paymentMethod" checked />
+                                            </div>
+                                            <h5>Kartu Kredit</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/payment-cc.jpg" alt="kartu Kredit" />
+                                        </section>
+                                    </label>
+                                </div><!-- .payment -->
+
+                                <div class="payment virtualAccount col-xs-4">
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="paymentMethod" value="virtualAccount" ng-model="paymentMethod" checked />
+                                            </div>
+                                            <h5>Virtual Account</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/payment-atm.jpg" alt="Virtual Account" />
+                                        </section>
+                                    </label>
+                                </div><!-- .payment -->
+
+                            </div>
+                        
+                            <div class="row">
+                                <div class="payment mandiri col-xs-4">
+                                    <label>
+                                        <header>
+                                            <div class="input-wrapper">
+                                                <input type="radio" name="paymentMethod" value="mandiri" ng-model="paymentMethod" checked />
+                                            </div>
+                                            <h5>Mandiri Clickpay</h5>
+                                        </header>
+                                        <section>
+                                            <img src="/Assets/images/payment-mandiri.jpg" alt="Bank Transfer" />
+                                        </section>
+                                    </label>
+                                </div><!-- .payment -->
+                            </div>
+
+                        </div><!-- .payment-wrapper -->
+
+                        <div class="step-button">
+                            <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat &amp; ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                            <button class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</button>
+                            <button class="btn btn-yellow" ng-click="submitCheckoutForm()" ng-disabled="checkoutForm.loading">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</button>
+                        </div>
+
+                    </div><!-- .content.step#step-4 -->
 
 
                 </div>

@@ -809,7 +809,10 @@
     <Content Include="Assets\images\nav-sprite.png" />
     <Content Include="Assets\images\no-image.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
+    <Content Include="Assets\images\payment-atm.jpg" />
+    <Content Include="Assets\images\payment-cc.jpg" />
     <Content Include="Assets\images\payment-credit.png" />
+    <Content Include="Assets\images\payment-mandiri.jpg" />
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
@@ -856,6 +859,7 @@
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
+    <Content Include="Assets\images\ssl-image.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
     <Content Include="Assets\images\switch-destination.png" />
