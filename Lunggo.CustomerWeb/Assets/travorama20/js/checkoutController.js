@@ -43,18 +43,23 @@ app.controller('checkoutController', [
         $scope.flightDetail = {};
 
         $scope.flightDetail.departureFullDate = '2016-10-12'; // development only. Please change the value to actual date on production
-        $scope.flightDetail.departureDate = '';
-        $scope.flightDetail.departureMonth = '';
-        $scope.flightDetail.departureYear = '';
-        $scope.flightDetail.passportFullDate = '';
-        $scope.flightDetail.passportDate = '';
-        $scope.flightDetail.passportMonth = '';
-        $scope.flightDetail.passportYear = '';
+        $scope.flightDetail.departureDate = -1;
+        $scope.flightDetail.departureMonth = -1;
+        $scope.flightDetail.departureYear = -1;
+        $scope.flightDetail.minYearChild = -1;
+        $scope.flightDetail.minYearInfant = -1;
+        $scope.flightDetail.passportFullDate = -1;
+        $scope.flightDetail.passportDate = -1;
+        $scope.flightDetail.passportMonth = -1;
+        $scope.flightDetail.passportYear = -1;
         $scope.flightDetail.generateDepartureDate = function(fullDate) {
             fullDate = new Date(fullDate);
             $scope.flightDetail.departureDate = fullDate.getDate();
             $scope.flightDetail.departureMonth = fullDate.getMonth();
             $scope.flightDetail.departureYear = fullDate.getFullYear();
+            $scope.flightDetail.minYearChild = fullDate.getFullYear() - 12;
+            $scope.flightDetail.minYearInfant = fullDate.getFullYear() - 2;
+            // generate passport min expiry date
             $scope.flightDetail.passportFullDate = new Date(fullDate);
             $scope.flightDetail.passportFullDate.setMonth($scope.flightDetail.passportFullDate.getMonth() + 6);
             $scope.flightDetail.passportDate = $scope.flightDetail.passportFullDate.getDate();
@@ -149,8 +154,25 @@ app.controller('checkoutController', [
             }
         }
         // validate passenger birthday
-        $scope.validateBirthday = function(passenger) {
-            
+        $scope.validateBirthday = function (passenger) {
+            if (passenger.type != 'adult') {
+                // set minimum date for passenger
+                var minYear = -1;
+                if (passenger.type == 'child') {
+                    minYear = $scope.flightDetail.minYearChild;
+                } else if (passenger.type == 'infant') {
+                    minYear = $scope.flightDetail.minYearInfant;
+                }
+
+                if (passenger.birth.year == minYear) {
+                    if (passenger.birth.month < $scope.flightDetail.departureMonth) {
+                        passenger.birth.month = $scope.flightDetail.departureMonth;
+                        if (passenger.birth.date < $scope.flightDetail.departureDate) {
+                            passenger.birth.date = $scope.flightDetail.departureDate;
+                        }
+                    }
+                }
+            }
         }
         // validate passport expiry date
         $scope.validatePassport = function(passenger) {
@@ -158,7 +180,7 @@ app.controller('checkoutController', [
                 if (passenger.passport.expire.month < $scope.flightDetail.passportMonth) {
                     passenger.passport.expire.month = $scope.flightDetail.passportMonth;
                     if (passenger.passport.expire.date < $scope.flightDetail.passportDate) {
-                        passenger.passport.expire.date = $scope.flightDetail.passportDate
+                        passenger.passport.expire.date = $scope.flightDetail.passportDate;
                     }
                 }
             }
