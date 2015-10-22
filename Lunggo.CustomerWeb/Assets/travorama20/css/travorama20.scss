@@ -44,6 +44,8 @@ $border-radius-default:4px;
 html {height:100%;}
 body {font-family:'Open Sans', sans-serif; letter-spacing:0.5px; -webkit-font-smoothing: subpixel-antialiased; position:relative; padding-bottom:424px; min-height:100%; background:#f9f9f9;}
 
+hr {border-top:$border-default;}
+
 .page-loading {display:none;}
 .page-loaded {display:block;}
 
