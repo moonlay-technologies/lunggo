@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 BookingId = details.BookingId,
                 BookingNotes = details.BookingNotes,
                 SegmentCount = details.FlightSegmentCount,
-                Itinerary = details.Itineraries,
+                Itinerary = details.Itinerary,
                 TotalFare = details.TotalFare,
                 AdultTotalFare = details.AdultTotalFare,
                 ChildTotalFare = details.ChildTotalFare,

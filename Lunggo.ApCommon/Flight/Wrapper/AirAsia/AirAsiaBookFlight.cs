@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
-                if (!Client.Login(client))
+                if (!Login(client))
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -399,7 +399,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 string itinHtml = "";
                 var sw = Stopwatch.StartNew();
-                while (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= new TimeSpan(0, 1, 0))
+                var retryLimit = new TimeSpan(0, 1, 0);
+                var retryInterval = new TimeSpan(0, 0, 2);
+                while (client.ResponseUri.AbsolutePath != "/Itinerary.aspx" && sw.Elapsed <= retryLimit)
                 {
                     client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                     client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
@@ -411,7 +413,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     itinHtml = client.DownloadString(@"https://booking2.airasia.com/Wait.aspx");
                     if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx")
-                        Thread.Sleep(new TimeSpan(0,0,2));
+                        Thread.Sleep(retryInterval);
                 }
 
                 if (client.ResponseUri.AbsolutePath != "/Itinerary.aspx")

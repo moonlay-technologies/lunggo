@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
@@ -98,8 +99,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             {
                 OriginLocationCode = item.DepartureAirport,
                 DestinationLocationCode = item.ArrivalAirport,
-                DepartureDateTime = item.DepartureTime.ToUniversalTime(),
-                ArrivalDateTime = item.ArrivalTime.ToUniversalTime(),
+                DepartureDateTime = DateTime.SpecifyKind(item.DepartureTime,DateTimeKind.Utc),
+                ArrivalDateTime = DateTime.SpecifyKind(item.ArrivalTime,DateTimeKind.Utc),
                 AirlineCode = item.AirlineCode,
                 FlightNumber = item.FlightNumber,
                 BookingClass = item.Rbd,

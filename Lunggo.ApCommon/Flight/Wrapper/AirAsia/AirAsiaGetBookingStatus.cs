@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
     {
         internal override List<BookingStatusInfo> GetBookingStatus()
         {
-            throw new NotImplementedException();
+            return new List<BookingStatusInfo>();
         }
     }
 }
