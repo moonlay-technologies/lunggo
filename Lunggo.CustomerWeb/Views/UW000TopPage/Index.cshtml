@@ -247,25 +247,6 @@
     </div>
 </section>
 
-<!--
-<section class="section-reason">
-    <div class="reason reason-1">
-        <h3>Mengapa Memilih <b>Travorama?</b></h3>
-    </div>
-    <div class="reason reason-2">
-        <h3>Memiliki <b>9000 Rute Penerbangan</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-    <div class="reason reason-3">
-        <h3>Menyediakan <b>Hotel Domestik &amp; Internasional</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-    <div class="reason reason-4">
-        <h3>Beragam Pilihan <b>Activity Domestik &amp; Internasional</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-</section><!-- .section-reason -->
-
 <section class="section-popular">
     <div class="container">
         <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
@@ -354,6 +335,60 @@
     </div>
 </section><!-- .section-popular -->
 
-@Html.Partial("/Views/Shared/travorama20/_SectionSubscribe.cshtml")
-@Html.Partial("/Views/Shared/travorama20/_SectionPayment.cshtml")
-@Html.Partial("/Views/Shared/travorama20/_SectionFeedback.cshtml")
+<section class="section-subscribe">
+    <div class="container">
+
+        <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
+
+        <div class="row">
+            <div class="col-xs-7">
+                <h2><b>Daftar &amp; Dapatkan</b> Info Promo dan Travel Terkini dari <b>Travorama!</b></h2>
+            </div>
+            <div class="col-xs-5">
+                <form class="form subscribe-form">
+                    <div class="form-group">
+                        <input type="text" name="address" value="" class="subscribe-email form-control" placeholder="Alamat Email Anda" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="name" value="" class="subscribe-name form-control" placeholder="Nama Anda" />
+                        <input type="submit" class="btn btn-yellow" value="DAFTAR" />
+                    </div>
+                </form>
+                <div class="subscribe-form subscribed">
+                    <h2>Terima kasih telah mendaftar di Travorama</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section><!-- .section-subscribe -->
+
+<section class="section-payment">
+    <div class="container text-center">
+
+        <h2 class="section-title stripe text-center">KAMI MENERIMA <span>PEMBAYARAN</span> DARI</h2>
+
+        <p class="text-center">
+            <img src="/Assets/images/payment-method.jpg" alt="Visa and Master Card, ATM Bersama" />
+        </p>
+
+    </div>
+</section><!-- .section-payment -->
+
+<section class="section-feedback">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-6">
+
+                <h2>Pendapat Orang-Orang Mengenai Travorama</h2>
+                <blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.</p>
+                    <footer>John Aliwarga</footer>
+                </blockquote>
+
+            </div>
+        </div>
+
+    </div>
+</section><!-- .section-feedback -->

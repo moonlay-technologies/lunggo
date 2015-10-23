@@ -2317,9 +2317,6 @@
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
