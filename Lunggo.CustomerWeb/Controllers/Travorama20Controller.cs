@@ -68,5 +68,15 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult orderList()
+        {
+            return View();
+        }
+
+        public ActionResult orderDetail()
+        {
+            return View();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
 }
 
 @section AdditionalJS{
@@ -30,17 +31,7 @@
     <div class="row">
 
         <div class="col-xs-3">
-            <aside class="account-menu">
-
-                <header>
-                    <span>Shinta Tamara</span>
-                </header>
-                <ul>
-                    <li class="profile"><a ng-click="changeSection('profile')" ng-class="{'active':currentSection == 'profile'}">Ubah Profile</a></li>
-                    <li class="order"><a ng-click="changeSection('order')" ng-class="{'active':currentSection == 'order'}">Cek Pemesanan</a></li>
-                </ul>
-
-            </aside><!-- -.account-menu -->
+            @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
         </div>
         <!-- ******************** -->
 
@@ -158,13 +149,7 @@
                                 </header>
                                 <section class="container">
                                     <div class="row">
-                                        <div class="col-xs-2">
-                                            <div class="airline">
-                                                <span>AIRASIA</span>
-                                                <img src="/Assets/images/airlines/AK.png" alt="Airasia" />
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8">
+                                        <div class="col-xs-10">
                                             <div class="detail">
                                                 <p>Tujuan : <b>JKT</b> to <b>DPS</b> (Roundtrip)</p>
                                                 <p>Tanggal berangkat: 17 Des 2015 | Tanggal pulang: 20 Des 2015</p>

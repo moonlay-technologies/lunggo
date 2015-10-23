@@ -102,28 +102,26 @@ file : /Assets/travorama20/css/_page_password.scss
     .order-wrapper {margin-top:24px;
         .order {
             // flight order
-            &.flight {
-                header {background:$color-main-blue; text-align:right; color:#fff; padding:12px; font-weight:bold;}
-                section {background:#fff; border:$border-default; border-top:none;
-                    .airline {padding:6px; text-align:center;
-                        span {font-weight:bold; color:$color-main-blue;}
-                        img {height:50px;}
-                    }
-                    .detail {padding:6px;
-                        p:last-child {margin-bottom:0;}
-                        span {font-weight:bold;
+            &.flight {background:#f1f1f1; padding:24px; background-image:url(/Assets/images/order-flight-list-bg.png); background-position:top left; background-repeat:no-repeat; padding-left:50px;
+                header {
+                    .row {margin-bottom:3px;}
+                    span {color:$color-main-blue;}
+                }
+                section {
+                    .row {margin-bottom:3px;}
+                    .detail {
+                        .col-xs-4 {width:30%;}
+                        .status {font-weight:bold;
                             &.success {color:#14b413;}
                             &.failed {color:#fe0001;}
                             &.pending {color:#b551ea;}
                         }
                     }
-                    .action {padding:6px;
-                        .btn {display:block;}
-                    }
+                    .action {}
                 }
+                &+.order {border-top:$border-default;}
             }
         }
     }
-
 }
 

@@ -3589,37 +3589,28 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-account-profile .order-wrapper {
   margin-top: 24px; }
-  .page-account-profile .order-wrapper .order.flight header {
-    background: #1daee4;
-    text-align: right;
-    color: #fff;
-    padding: 12px;
-    font-weight: bold; }
-  .page-account-profile .order-wrapper .order.flight section {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-top: none; }
-    .page-account-profile .order-wrapper .order.flight section .airline {
-      padding: 6px;
-      text-align: center; }
-      .page-account-profile .order-wrapper .order.flight section .airline span {
-        font-weight: bold;
-        color: #1daee4; }
-      .page-account-profile .order-wrapper .order.flight section .airline img {
-        height: 50px; }
-    .page-account-profile .order-wrapper .order.flight section .detail {
-      padding: 6px; }
-      .page-account-profile .order-wrapper .order.flight section .detail p:last-child {
-        margin-bottom: 0; }
-      .page-account-profile .order-wrapper .order.flight section .detail span {
-        font-weight: bold; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.success {
-          color: #14b413; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.failed {
-          color: #fe0001; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.pending {
-          color: #b551ea; }
-    .page-account-profile .order-wrapper .order.flight section .action {
-      padding: 6px; }
-      .page-account-profile .order-wrapper .order.flight section .action .btn {
-        display: block; }
+  .page-account-profile .order-wrapper .order.flight {
+    background: #f1f1f1;
+    padding: 24px;
+    background-image: url(/Assets/images/order-flight-list-bg.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding-left: 50px; }
+    .page-account-profile .order-wrapper .order.flight header .row {
+      margin-bottom: 3px; }
+    .page-account-profile .order-wrapper .order.flight header span {
+      color: #1daee4; }
+    .page-account-profile .order-wrapper .order.flight section .row {
+      margin-bottom: 3px; }
+    .page-account-profile .order-wrapper .order.flight section .detail .col-xs-4 {
+      width: 30%; }
+    .page-account-profile .order-wrapper .order.flight section .detail .status {
+      font-weight: bold; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.success {
+        color: #14b413; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.failed {
+        color: #fe0001; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.pending {
+        color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight + .order {
+      border-top: 1px solid #ccc; }

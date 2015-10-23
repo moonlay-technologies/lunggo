@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "order";
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
+        </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="history-content">
+                    <header class="content-header">
+                        <h2><b>CEK</b> PEMESANAN</h2>
+                    </header>
+                    <section class="content-body">
+
+
+                        <div class="order-wrapper">
+                            <div class="order flight">
+                                <header>
+                                    <span>Order ID : 123456798012</span>
+                                </header>
+                                <section class="container">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <div class="airline">
+                                                <span>AIRASIA</span>
+                                                <img src="/Assets/images/airlines/AK.png" alt="Airasia" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="detail">
+                                                <p>Tujuan : <b>JKT</b> to <b>DPS</b> (Roundtrip)</p>
+                                                <p>Tanggal berangkat: 17 Des 2015 | Tanggal pulang: 20 Des 2015</p>
+                                                <p>Status : <span class="success">COMPLETE</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <div class="action">
+                                                <a href="#" class="btn btn-yellow">DETAIL</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div><!-- .order-wrapper -->
+
+
+                    </section>
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+</div>
