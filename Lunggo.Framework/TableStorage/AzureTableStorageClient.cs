@@ -41,14 +41,8 @@ namespace Lunggo.Framework.TableStorage
             {
                 var referenceName = PreprocessTableReferenceName(reference);
                 var table = _cloudTableClient.GetTableReference(referenceName);
-                CreateIfNotExist(reference);
+                table.CreateIfNotExists();
                 return table;
-            }
-
-            protected override bool CreateIfNotExist(string reference)
-            {
-                var table = GetTableByReference(reference);
-                return table.CreateIfNotExists();
             }
 
             protected override string PreprocessTableReferenceName(string reference)
