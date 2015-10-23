@@ -34,6 +34,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult paymentConfirmation()
+        {
+            return View();
+        }
+
         public ActionResult register()
         {
             return View();

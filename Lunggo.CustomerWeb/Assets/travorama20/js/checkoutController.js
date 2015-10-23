@@ -306,3 +306,12 @@ app.controller('checkoutController', [
 
     }
 ]);// checkout controller
+
+// travorama angular app - confirmation controller
+app.controller('confirmationController', [
+    '$http', '$scope', function($http, $scope) {
+
+        $scope.pageLoaded = true;
+
+    }
+]);// checkout controller
