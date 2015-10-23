@@ -246,94 +246,129 @@
         <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
     </div>
 </section>
+@if (ViewBag.Destination == null){
+    <section class="section-popular">
+        <div class="container">
+            <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
 
-<section class="section-popular">
-    <div class="container">
-        <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
+            <div class="row">
+                <div class="col-xs-4 popular-left">
+                    <div class="destination small">
+                        <a href="/id/jakarta" data-target="jakarta">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Jakarta</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
+                    </div>
+                    <div class="destination medium yellow">
+                        <a href="/id/bali" data-target="bali">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Bali</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
+                    </div>
+                    <div class="destination large">
+                        <a href="/id/malaysia" data-target="malaysia">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Malaysia</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
+                    </div>
+                </div>
+                <div class="col-xs-4 popular-middle">
+                    <div class="destination half yellow">
+                        <a href="/id/yogyakarta" data-target="yogyakarta">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Yogyakarta</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
+                    </div>
+                    <div class="destination half yellow">
+                        <a href="/id/singapore" data-target="singapore">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Singapore</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
+                    </div>
+                </div>
+                <div class="col-xs-4 popular-right">
+                    <div class="destination large">
+                        <a href="/id/bandung" data-target="bandung">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Bandung</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
+                    </div>
+                    <div class="destination medium yellow">
+                        <a href="/id/surabaya" data-target="surabaya">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Surabaya</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
+                    </div>
+                    <div class="destination small">
+                        <a href="/id/hongkong" data-target="hongkong">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Hongkong</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
+                    </div>
+                </div>
+            </div>
 
-        <div class="row">
-            <div class="col-xs-4 popular-left">
-                <div class="destination small">
-                    <a href="/id/jakarta" data-target="jakarta">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Jakarta</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
-                </div>
-                <div class="destination medium yellow">
-                    <a href="/id/bali" data-target="bali">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
-                </div>
-                <div class="destination large">
-                    <a href="/id/malaysia" data-target="malaysia">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Malaysia</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
-                </div>
-            </div>
-            <div class="col-xs-4 popular-middle">
-                <div class="destination half yellow">
-                    <a href="/id/yogyakarta" data-target="yogyakarta">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Yogyakarta</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
-                </div>
-                <div class="destination half yellow">
-                    <a href="/id/singapore" data-target="singapore">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Singapore</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
-                </div>
-            </div>
-            <div class="col-xs-4 popular-right">
-                <div class="destination large">
-                    <a href="/id/bandung" data-target="bandung">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Bandung</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
-                </div>
-                <div class="destination medium yellow">
-                    <a href="/id/surabaya" data-target="surabaya">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Surabaya</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
-                </div>
-                <div class="destination small">
-                    <a href="/id/hongkong" data-target="hongkong">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Hongkong</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
-                </div>
-            </div>
         </div>
+    </section>
+    <!-- .section-popular -->
+}
+else
+{
+    <section class="section-popular">
+        <div class="container">
+            <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
+            
+            <div class="route-wrapper">
+            
+                <div class="row">
+                    
+                    @for (var i = 1; i <= 12; i++)
+                    {
+                        <div class="col-xs-4">
+                            <div class="route">
+                                <header>
+                                    <h5><span>Rute Penerbangan</span></h5>
+                                </header>
+                                <section>
+                                    <h4><b>Yogyakarta</b> ke <b>Yogyakarta</b></h4>
+                                    <p>Harga mulai dari <b>Rp 999.999.999</b></p>
+                                    <a class="btn btn-yellow">LIHAT SEKARANG</a>
+                                </section>
+                            </div>
+                        </div>
+                    }
 
-    </div>
-</section><!-- .section-popular -->
+                </div>    
+
+            </div><!-- .destination-wrapper -->
+
+        </div>
+    </section>
+}
 
 <section class="section-subscribe">
     <div class="container">

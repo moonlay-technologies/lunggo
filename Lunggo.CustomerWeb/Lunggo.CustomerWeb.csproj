@@ -833,6 +833,7 @@
     <Content Include="Assets\images\pop-hongkong.jpg" />
     <Content Include="Assets\images\pop-jakarta.jpg" />
     <Content Include="Assets\images\pop-malaysia.jpg" />
+    <Content Include="Assets\images\pop-route-bg.png" />
     <Content Include="Assets\images\pop-singapore.jpg" />
     <Content Include="Assets\images\pop-surabaya.jpg" />
     <Content Include="Assets\images\pop-yogyakarta.jpg" />

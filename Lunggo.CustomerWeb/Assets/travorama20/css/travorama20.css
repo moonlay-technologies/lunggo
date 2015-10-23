@@ -1035,6 +1035,42 @@ file : /Assets/travorama20/css/_page_index.scss
       height: 270px; }
     .page-index .section-popular .destination.half {
       height: 395px; }
+  .page-index .section-popular .route-wrapper .route {
+    background: #fff;
+    border: 2px solid #ddd;
+    margin-bottom: 12px;
+    padding: 12px; }
+    .page-index .section-popular .route-wrapper .route header {
+      margin-bottom: 12px; }
+      .page-index .section-popular .route-wrapper .route header h5 {
+        padding-left: 32px;
+        position: relative;
+        margin-top: 0;
+        color: #1daee4;
+        font-size: 12px; }
+        .page-index .section-popular .route-wrapper .route header h5:before, .page-index .section-popular .route-wrapper .route header h5.section-reason:after {
+          content: "";
+          background: url(/Assets/images/pop-route-bg.png) left center no-repeat;
+          background-size: 100%;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          top: 0;
+          left: 0; }
+        .page-index .section-popular .route-wrapper .route header h5:after {
+          content: "";
+          position: absolute;
+          width: 40%;
+          border-top: 1px solid #1daee4;
+          bottom: 0;
+          left: 60%; }
+    .page-index .section-popular .route-wrapper .route section {
+      padding-left: 32px; }
+      .page-index .section-popular .route-wrapper .route section p {
+        color: #ff7100;
+        margin-bottom: 12px; }
+    .page-index .section-popular .route-wrapper .route:hover {
+      border-color: #1daee4; }
 
 .page-index .section-subscribe {
   color: #18a5db;
