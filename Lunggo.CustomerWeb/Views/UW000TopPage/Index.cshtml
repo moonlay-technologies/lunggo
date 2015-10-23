@@ -233,12 +233,23 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
     </div><!-- .container -->
-    <div class="page-slider">
-        <div class="slider-text hidden">
-            <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
-            <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
-        </div>
-    </div><!-- .slider -->
+    @if (ViewBag.Destination == null )
+    {
+        <div class="page-slider">
+            <div class="slider-text hidden">
+                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
+                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
+            </div>
+        </div><!-- .slider -->
+    }else{
+        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.Destination).jpg');">    
+            <div class="slider-text hidden">
+                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
+                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
+            </div>
+        </div><!-- .slider -->
+    }
+        
 </section><!-- .section-search -->
 
 <section class="section-reason">
