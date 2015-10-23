@@ -3614,3 +3614,54 @@ file : /Assets/travorama20/css/_page_password.scss
         color: #b551ea; }
     .page-account-profile .order-wrapper .order.flight + .order {
       border-top: 1px solid #ccc; }
+
+.page-account-profile .order-detail .content-body > div + div {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #ccc; }
+
+.page-account-profile .order-detail h2, .page-account-profile .order-detail h4 {
+  letter-spacing: 0; }
+
+.page-account-profile .order-detail h4 {
+  margin-bottom: 18px; }
+
+.page-account-profile .order-detail .flight {
+  padding-left: 36px;
+  position: relative; }
+  .page-account-profile .order-detail .flight .col-xs-9 {
+    font-weight: bold; }
+  .page-account-profile .order-detail .flight img {
+    height: 36px;
+    margin-right: 24px; }
+  .page-account-profile .order-detail .flight span {
+    font-weight: bold;
+    color: #1daee4; }
+  .page-account-profile .order-detail .flight:before, .page-account-profile .order-detail .page-index .flight.section-reason:after, .page-index .page-account-profile .order-detail .flight.section-reason:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1daee4;
+    background-image: url(/Assets/images/plane-updown-sprite.png);
+    background-size: 200%;
+    background-repeat: no-repeat;
+    border: 2px solid #1daee4; }
+  .page-account-profile .order-detail .flight.return:before, .page-account-profile .order-detail .page-index .flight.return.section-reason:after, .page-index .page-account-profile .order-detail .flight.return.section-reason:after {
+    background-position: -16px; }
+
+.page-account-profile .order-detail .form .form-group {
+  margin-bottom: 6px; }
+
+.page-account-profile .order-detail .form .control-label {
+  text-align: left; }
+
+.page-account-profile .order-detail .form label + div:before, .page-account-profile .order-detail .form .page-index label + div.section-reason:after, .page-index .page-account-profile .order-detail .form label + div.section-reason:after {
+  content: ":";
+  display: inline;
+  float: left;
+  position: relative;
+  padding-top: 6px;
+  left: -18px; }

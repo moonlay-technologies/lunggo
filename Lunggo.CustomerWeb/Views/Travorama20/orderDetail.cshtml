@@ -31,43 +31,129 @@
         <div class="col-xs-9">
             <section class="account-content">
 
-                <div class="history-content">
+                <div class="order-detail">
                     <header class="content-header">
-                        <h2><b>CEK</b> PEMESANAN</h2>
+                        <h2>ORDER ID : <b>123456789012</b></h2>
                     </header>
                     <section class="content-body">
-
-
-                        <div class="order-wrapper">
-                            <div class="order flight">
-                                <header>
-                                    <span>Order ID : 123456798012</span>
-                                </header>
-                                <section class="container">
-                                    <div class="row">
-                                        <div class="col-xs-2">
-                                            <div class="airline">
-                                                <span>AIRASIA</span>
-                                                <img src="/Assets/images/airlines/AK.png" alt="Airasia" />
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8">
-                                            <div class="detail">
-                                                <p>Tujuan : <b>JKT</b> to <b>DPS</b> (Roundtrip)</p>
-                                                <p>Tanggal berangkat: 17 Des 2015 | Tanggal pulang: 20 Des 2015</p>
-                                                <p>Status : <span class="success">COMPLETE</span></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <div class="action">
-                                                <a href="#" class="btn btn-yellow">DETAIL</a>
-                                            </div>
+                        
+                        <div class="info-buyer">
+                            <header>
+                                <h4><b>BUYER INFO</b> <a href="#" class="pull-right btn btn-yellow">cetak eTicket</a></h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">User ID</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">shinta@tamara.com</p>
                                         </div>
                                     </div>
-                                </section>
-                            </div>
-                        </div><!-- .order-wrapper -->
-
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Name</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Shinta Tamara</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Date</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">15 Oktober 2015</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Type</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Flight</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Final Price</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Rp 999.999.999</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Payment Method</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">ATM Transfer</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Payment Status</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Pending</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Penumpang</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Pending</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .info-buyer -->
+                        
+                        <div class="info-flight">
+                            <header>
+                                <h4><b>DETAIL PEMESANAN</b></h4>
+                            </header>
+                            <section>
+                                <div class="flight departure">
+                                    <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <p>Berangkat : </p>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
+                                            <p>Kamis, 15 Okt 2015</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flight return">
+                                    <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <p>Berangkat : </p>
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
+                                            <p>Kamis, 15 Okt 2015</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .info-flight -->
+                        
+                        <div class="refund-detail">
+                            <header>
+                                <h4><b>DETAIL PEMESANAN</b></h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">No Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Status Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .refund-detail -->
 
                     </section>
                 </div><!-- .history-content -->
