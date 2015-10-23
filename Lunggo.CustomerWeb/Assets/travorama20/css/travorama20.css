@@ -3665,3 +3665,32 @@ file : /Assets/travorama20/css/_page_password.scss
   position: relative;
   padding-top: 6px;
   left: -18px; }
+
+.page-account-profile .order-detail .passenger-list {
+  list-style: none;
+  counter-reset: passenger-number;
+  margin: 0;
+  padding: 0; }
+  .page-account-profile .order-detail .passenger-list p {
+    margin-bottom: 0; }
+  .page-account-profile .order-detail .passenger-list li {
+    position: relative;
+    margin-bottom: 1px;
+    padding-left: 30px;
+    background: #efefef; }
+    .page-account-profile .order-detail .passenger-list li:before, .page-account-profile .order-detail .passenger-list .page-index li.section-reason:after, .page-index .page-account-profile .order-detail .passenger-list li.section-reason:after {
+      content: counter(passenger-number);
+      counter-increment: passenger-number;
+      position: absolute;
+      text-align: center;
+      width: 20px;
+      height: 100%;
+      color: #fff;
+      background: #1daee4;
+      z-index: 2;
+      left: 0;
+      padding: 6px; }
+    .page-account-profile .order-detail .passenger-list li .row > div {
+      padding: 6px; }
+    .page-account-profile .order-detail .passenger-list li .row div + div {
+      background: #e2e2e2; }

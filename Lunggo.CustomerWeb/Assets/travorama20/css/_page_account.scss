@@ -149,6 +149,16 @@ file : /Assets/travorama20/css/_page_password.scss
             .control-label {text-align:left;}
             label + div:before {content:":"; display:inline; float:left; position:relative; padding-top:6px; left:-18px;}
         }
+        .passenger-list {list-style:none; counter-reset:passenger-number; margin:0; padding:0;
+            p {margin-bottom:0;}
+            li {position:relative; margin-bottom:1px; padding-left:30px; background:#efefef;
+                &:before {content:counter(passenger-number); counter-increment:passenger-number; position:absolute; text-align:center; width:20px; height:100%; color:#fff; background:$color-main-blue; z-index:2; left:0; padding:6px;}
+                .row {
+                    & > div {padding:6px;}
+                    div+div {background:#e2e2e2;}
+                }
+            }
+        }
     }
 
 }

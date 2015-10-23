@@ -88,7 +88,21 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Penumpang</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Pending</p>
+                                            <ol class="passenger-list">
+                                                @for (var i = 1; i <= 3; i++)
+                                                {
+                                                    <li>
+                                                        <div class="row">
+                                                            <div class="col-xs-9">
+                                                                <p>Shinta Tamara Purnawan</p>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <span>Dewasa</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ol>
                                         </div>
                                     </div>
                                 </div>
