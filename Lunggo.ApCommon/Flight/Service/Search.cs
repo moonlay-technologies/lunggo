@@ -13,8 +13,11 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.TableStorage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.ApCommon.Flight.Service
@@ -24,12 +27,15 @@ namespace Lunggo.ApCommon.Flight.Service
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
             var output = new SearchFlightOutput();
-            var searchId = HashEncodeConditions(input.Conditions);
+            var searchId = EncodeConditions(input.Conditions);
 
             var isCurrentlySearching = GetSetSearchingStatusInCache(searchId, true);
             var completeness = GetSearchingCompletenessInCache(searchId);
             if (!isCurrentlySearching && completeness == 0)
-                Task.Run(() => SearchFlightInternal(input.Conditions));
+            {
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
+                queue.AddMessage(new CloudQueueMessage(searchId));
+            }
 
             var searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
 
@@ -41,6 +47,12 @@ namespace Lunggo.ApCommon.Flight.Service
             output.Completeness = completeness;
 
             return output;
+        }
+
+        public void CommenceSearchFlight(string searchId)
+        {
+            var conditions = DecodeConditions(searchId);
+            SearchFlightInternal(conditions);
         }
     }
 }

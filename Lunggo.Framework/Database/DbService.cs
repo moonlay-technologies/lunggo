@@ -28,11 +28,11 @@ namespace Lunggo.Framework.Database
             return Instance;
         }
 
-        public void Init()
+        public void Init(string connString)
         {
             if (!_isInitialized)
             {
-                _connectionString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+                _connectionString = connString;
                 _isInitialized = true;
             }
         }

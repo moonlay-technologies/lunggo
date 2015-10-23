@@ -13,11 +13,11 @@ namespace Lunggo.Framework.BlobStorage
         {
             
         }
-        public void Init()
+        public void Init(string connString)
         {
             if (!_isInitialized)
             {
-                Client.Init();
+                Client.Init(connString);
                 _isInitialized = true;
             }
         }
@@ -29,19 +29,19 @@ namespace Lunggo.Framework.BlobStorage
         {
             return Client.WriteFileToBlob(fileDto);
         }
-        public void RenameBlobs(string previousFileUriName, string newFileUriName, BlobContainer container)
+        public void RenameBlobs(string previousFileUriName, string newFileUriName, string container)
         {
             Client.RenameBlobs(previousFileUriName, newFileUriName, container);
         }
-        public void DeleteBlob(string fileUriName, BlobContainer container)
+        public void DeleteBlob(string fileUriName, string container)
         {
             Client.DeleteBlob(fileUriName, container);
         }
-        public byte[] GetByteArrayByFileUriName(string fileUriName, BlobContainer container)
+        public byte[] GetByteArrayByFileUriName(string fileUriName, string container)
         {
             return Client.GetByteArrayByFileUriName(fileUriName, container);
         }
-        public byte[] GetByteArrayByFileInContainer(string fileName, BlobContainer container)
+        public byte[] GetByteArrayByFileInContainer(string fileName, string container)
         {
             return Client.GetByteArrayByFileInContainer(fileName, container);
         }

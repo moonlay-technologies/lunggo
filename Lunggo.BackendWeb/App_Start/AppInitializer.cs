@@ -59,13 +59,15 @@ namespace Lunggo.BackendWeb
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var database = DbService.GetInstance();
-            database.Init();
+            database.Init(connString);
         }
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
 
         private static void InitRedisService()

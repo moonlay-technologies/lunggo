@@ -18,15 +18,6 @@ namespace Lunggo.Framework.TableStorage
             
         }
 
-        public void Init()
-        {
-            if (!_isInitialized)
-            {
-                Client.Init();
-                _isInitialized = true;
-            }
-        }
-
         public void Init(string connString)
         {
             if (!_isInitialized)
@@ -41,15 +32,15 @@ namespace Lunggo.Framework.TableStorage
             return Instance;
         }
 
-        public CloudTable GetTableByReference(TableStorage reference)
+        public CloudTable GetTableByReference(string reference)
         {
             return Client.GetTableByReference(reference);
         }
-        public void InsertEntityToTableStorage<T>(T objectParam, TableStorage reference) where T : ITableEntity, new()
+        public void InsertEntityToTableStorage<T>(T objectParam, string reference) where T : ITableEntity, new()
         {
             Client.InsertEntityToTableStorage(objectParam, reference);
         }
-        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, TableStorage reference) where T : ITableEntity, new()
+        public void InsertOrReplaceEntityToTableStorage<T>(T objectParam, string reference) where T : ITableEntity, new()
         {
             Client.InsertOrReplaceEntityToTableStorage(objectParam, reference);
         }

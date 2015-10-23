@@ -13,7 +13,7 @@ namespace Lunggo.Framework.SharedModel
     public class MailDetailForQueue : MailModel
     {
         public object MailObjectDetail { get; set; }
-        public HtmlTemplateType MailTemplate { get; set; }
+        public string MailTemplate { get; set; }
         public CloudQueueMessage SerializeToQueueMessage()
         {
             string classInJson = JsonConvert.SerializeObject(this);

@@ -9,7 +9,7 @@ namespace Lunggo.Framework.Mail
 {
     internal abstract class MailClient
     {
-        internal abstract void Init();
-        internal abstract void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type);
+        internal abstract void Init(string apiKey);
+        internal abstract void SendEmail<T>(T objectParam, MailModel mailModel, string type);
     }
 }

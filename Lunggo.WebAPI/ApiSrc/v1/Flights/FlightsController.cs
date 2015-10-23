@@ -18,10 +18,9 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/flights")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
         {
-            var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
-            var apiResponse = FlightLogic.SearchFlights(apiRequest);
+            var apiResponse = FlightLogic.SearchFlights(request);
             return apiResponse;
             /*
             try
@@ -56,6 +55,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         public FlightRevalidateApiResponse RevalidateFlight(HttpRequestMessage httpRequest, [FromUri] FlightRevalidateApiRequest request)
         {
             var apiResponse = FlightLogic.RevalidateFlight(request);
+            return apiResponse;
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("api/v1/flights/book")]
+        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookApiRequest request)
+        {
+            var apiResponse = FlightLogic.BookFlight(request);
+            return apiResponse;
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Route("api/v1/flights/issue")]
+        public FlightIssueApiResponse IssueFlight(HttpRequestMessage httpRequest, [FromUri] FlightIssueApiRequest request)
+        {
+            var apiResponse = FlightLogic.IssueFlight(request);
             return apiResponse;
         }
 

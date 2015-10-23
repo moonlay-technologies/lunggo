@@ -37,7 +37,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
                 output.RsvNo = reservation.RsvNo;
                 output.PaymentUrl = reservation.Payment.Url;
-                output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
             }
             else
             {

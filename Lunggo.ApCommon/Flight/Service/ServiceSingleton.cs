@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var results = new SearchFlightResult {Itineraries = new List<FlightItinerary>()};
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            Task.Run(() => Parallel.ForEach(Suppliers, supplier =>
+            Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
             {
                 var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -86,8 +86,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (result.ErrorMessages != null)
                         result.ErrorMessages.ForEach(results.AddError);
                 }
-            }));
-            Task.Run(() => PopulateSearchCache(itinQueue, conditions));
+            }),TaskCreationOptions.AttachedToParent);
+            PopulateSearchCache(itinQueue, conditions);
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierCounter = 0;
             var totalSupplier = Suppliers.Count();
             var itinCounter = 0;
-            var searchId = HashEncodeConditions(conditions);
+            var searchId = EncodeConditions(conditions);
             while (supplierCounter < totalSupplier)
             {
                 List<FlightItinerary> itins;
