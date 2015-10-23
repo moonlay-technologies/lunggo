@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     var html = client.DownloadString(url);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select")
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && client.StatusCode == HttpStatusCode.OK)
                         return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     searchedHtml = (CQ)html;
@@ -117,7 +118,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     var html = client.DownloadString(url);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select")
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && client.StatusCode == HttpStatusCode.OK)
                         return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     searchedHtml = (CQ)html;

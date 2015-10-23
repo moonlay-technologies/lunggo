@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,8 +30,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {"Can't Login!"}
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "Can't Login!" }
                     };
 
                 // [GET] BookingList
@@ -47,11 +48,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.DownloadString("https://booking2.airasia.com/BookingList.aspx");
 
-                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx")
+                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && client.StatusCode == HttpStatusCode.OK)
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.FailedOnSupplier}
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
                 // [POST] BookingList
@@ -77,11 +78,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.UploadString("https://booking2.airasia.com/BookingList.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx")
+                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && client.StatusCode == HttpStatusCode.OK)
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.FailedOnSupplier}
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
                 // [POST] BookingList -> ChangeItinerary
@@ -107,11 +108,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.UploadString("https://booking2.airasia.com/BookingList.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx")
+                if (client.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" && client.StatusCode != HttpStatusCode.OK)
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.FailedOnSupplier}
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
                 // [POST] ChangeItinerary
@@ -139,14 +140,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 var changeItinHtml = client.UploadString("https://booking2.airasia.com/ChangeItinerary.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/PaymentChange.aspx")
+                if (client.ResponseUri.AbsolutePath != "/PaymentChange.aspx" && client.StatusCode == HttpStatusCode.OK)
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
-                        Errors = new List<FlightError> {FlightError.FailedOnSupplier}
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
-                var changeItinCq = (CQ) changeItinHtml;
+                var changeItinCq = (CQ)changeItinHtml;
                 var priceValue =
                     changeItinCq["#CONTROLGROUPPAYMENTBOTTOM_PaymentInputViewPaymentView_AgencyAccount_AG_AMOUNT"].Attr(
                         "value");
@@ -185,7 +186,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     client.UploadString("https://booking2.airasia.com/PaymentChange.aspx", postData);
 
-                    if (client.ResponseUri.AbsolutePath != "/WaitChange.aspx")
+                    if (client.ResponseUri.AbsolutePath != "/WaitChange.aspx" && client.StatusCode == HttpStatusCode.OK)
                         throw new Exception();
 
                     // [GET] WaitChange
@@ -193,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var sw = Stopwatch.StartNew();
                     var retryLimit = new TimeSpan(0, 1, 0);
                     var retryInterval = new TimeSpan(0, 0, 2);
-                    while (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && sw.Elapsed <= retryLimit)
+                    while (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && sw.Elapsed <= retryLimit && client.StatusCode == HttpStatusCode.OK)
                     {
                         client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                         client.Headers["Accept"] =
@@ -207,11 +208,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         client.Headers["Referer"] = "https://booking2.airasia.com/WaitChange.aspx";
 
                         client.DownloadString("https://booking2.airasia.com/WaitChange.aspx");
-                        if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx")
+                        if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && client.StatusCode == HttpStatusCode.OK)
                             Thread.Sleep(retryInterval);
                     }
 
-                    if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx")
+                    if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && client.StatusCode == HttpStatusCode.OK)
                         throw new Exception();
 
                     return new OrderTicketResult
@@ -222,7 +223,35 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch
                 {
-                    
+                    var isIssued = IsIssued(bookingId);
+                    switch (isIssued)
+                    {
+                        case IssueEnum.IssueSuccess:
+                            return new OrderTicketResult
+                            {
+                                IsSuccess = true,
+                                BookingId = bookingId
+                            };
+                        case IssueEnum.NotIssued:
+                            return new OrderTicketResult
+                            {
+                                IsSuccess = false
+                            };
+                        case IssueEnum.CheckingError:
+                            return new OrderTicketResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                            };
+                        default:
+                            return new OrderTicketResult
+                            {
+                                IsSuccess = false,
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
+                            };
+                    }
                 }
             }
         }

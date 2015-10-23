@@ -257,6 +257,7 @@
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\AirAsia\AirAsiaGetBookingStatus.cs" />

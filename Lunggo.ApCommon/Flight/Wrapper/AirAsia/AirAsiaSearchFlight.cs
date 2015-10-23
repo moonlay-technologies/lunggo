@@ -64,7 +64,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     var html = client.DownloadString(url);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select")
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && client.StatusCode == HttpStatusCode.OK)
                         return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     var searchedHtml = (CQ)html;
@@ -94,7 +94,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
                     var html = client.DownloadString(url);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select")
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && client.StatusCode == HttpStatusCode.OK)
                         return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     var searchedHtml = (CQ)html;
