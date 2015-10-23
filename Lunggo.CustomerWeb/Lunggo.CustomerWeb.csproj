@@ -836,6 +836,7 @@
     <Content Include="Assets\images\pop-yogyakarta.jpg" />
     <Content Include="Assets\images\popular-destination-bg-yellow.png" />
     <Content Include="Assets\images\popular-destination-bg.png" />
+    <Content Include="Assets\images\print-image.png" />
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
     <Content Include="Assets\images\rapidSsl.jpg" />
@@ -2341,6 +2342,7 @@
     <Content Include="Views\Shared\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\_SiteFooterMenu.cshtml" />
     <Content Include="Views\Shared\_SiteFooter.cshtml" />
+    <Content Include="Views\Travorama20\flightThankyou.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
