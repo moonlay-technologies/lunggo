@@ -34,7 +34,7 @@ namespace Lunggo.Framework.HtmlTemplate
             return Instance;
         }
 
-        public string GenerateTemplate<T>(T objectParam, HtmlTemplateType type)
+        public string GenerateTemplate<T>(T objectParam, string type)
         {
             return Client.GenerateTemplate(objectParam, type);
         }

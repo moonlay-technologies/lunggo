@@ -29,6 +29,16 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult flightThankyou()
+        {
+            return View();
+        }
+
+        public ActionResult paymentConfirmation()
+        {
+            return View();
+        }
+
         public ActionResult register()
         {
             return View();
@@ -55,6 +65,16 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult checkOrder()
+        {
+            return View();
+        }
+
+        public ActionResult orderList()
+        {
+            return View();
+        }
+
+        public ActionResult orderDetail()
         {
             return View();
         }

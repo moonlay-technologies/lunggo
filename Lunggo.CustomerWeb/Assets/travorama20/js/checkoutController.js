@@ -69,8 +69,6 @@ app.controller('checkoutController', [
             $scope.flightDetail.passportDate = $scope.flightDetail.passportFullDate.getDate();
             $scope.flightDetail.passportMonth = $scope.flightDetail.passportFullDate.getMonth();
             $scope.flightDetail.passportYear = $scope.flightDetail.passportFullDate.getFullYear();
-            console.log('departure date : ' + fullDate);
-            console.log('passport min date : ' + $scope.flightDetail.passportFullDate);
         }
         $scope.flightDetail.generateDepartureDate($scope.flightDetail.departureFullDate);
 
@@ -267,7 +265,7 @@ app.controller('checkoutController', [
                 }
 
                 // check all form valid
-                if ($scope.passengersValid == true) {
+                if ($scope.passengersForm.valid == true) {
                     $scope.currentPage = page;
                     $scope.stepClass = 'active-' + page;
                 }
@@ -303,6 +301,15 @@ app.controller('checkoutController', [
         $scope.testForm = function () {
             console.log($scope);
         }
+
+    }
+]);// checkout controller
+
+// travorama angular app - confirmation controller
+app.controller('confirmationController', [
+    '$http', '$scope', function($http, $scope) {
+
+        $scope.pageLoaded = true;
 
     }
 ]);// checkout controller

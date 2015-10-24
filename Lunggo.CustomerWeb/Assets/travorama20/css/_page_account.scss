@@ -98,28 +98,64 @@ file : /Assets/travorama20/css/_page_password.scss
         // history content
         .history-content {}
     }
+
     // order history
     .order-wrapper {margin-top:24px;
         .order {
             // flight order
-            &.flight {
-                header {background:$color-main-blue; text-align:right; color:#fff; padding:12px; font-weight:bold;}
-                section {background:#fff; border:$border-default; border-top:none;
-                    .airline {padding:6px; text-align:center;
-                        span {font-weight:bold; color:$color-main-blue;}
-                        img {height:50px;}
-                    }
-                    .detail {padding:6px;
-                        p:last-child {margin-bottom:0;}
-                        span {font-weight:bold;
+            &.flight {background:#f1f1f1; padding:24px; background-image:url(/Assets/images/order-flight-list-bg.png); background-position:top left; background-repeat:no-repeat; padding-left:50px;
+                header {
+                    .row {margin-bottom:3px;}
+                    span {color:$color-main-blue;}
+                }
+                section {
+                    .row {margin-bottom:3px;}
+                    .detail {
+                        .col-xs-4 {width:30%;}
+                        .status {font-weight:bold;
                             &.success {color:#14b413;}
                             &.failed {color:#fe0001;}
                             &.pending {color:#b551ea;}
                         }
                     }
-                    .action {padding:6px;
-                        .btn {display:block;}
-                    }
+                    .action {}
+                }
+                &+.order {border-top:$border-default;}
+            }
+        }
+    }
+
+    // order detail
+    .order-detail {
+        .content-body {
+            & > div + div {margin-top:24px; padding-top:24px; border-top:$border-default;}
+        }
+        h2, h4 {letter-spacing:0;}
+        h4 {margin-bottom:18px;}
+        .flight {padding-left:36px; position:relative;
+            .col-xs-9 {font-weight:bold;}
+            img {height:36px; margin-right:24px;}
+            span {font-weight:bold; color:$color-main-blue;}
+            &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
+            // departure flight
+            &.departure {}
+            // return flight
+            &.return {
+                &:before {background-position:-16px;}
+            }
+        }
+        .form {
+            .form-group {margin-bottom:6px;}
+            .control-label {text-align:left;}
+            label + div:before {content:":"; display:inline; float:left; position:relative; padding-top:6px; left:-18px;}
+        }
+        .passenger-list {list-style:none; counter-reset:passenger-number; margin:0; padding:0;
+            p {margin-bottom:0;}
+            li {position:relative; margin-bottom:1px; padding-left:30px; background:#efefef;
+                &:before {content:counter(passenger-number); counter-increment:passenger-number; position:absolute; text-align:center; width:20px; height:100%; color:#fff; background:$color-main-blue; z-index:2; left:0; padding:6px;}
+                .row {
+                    & > div {padding:6px;}
+                    div+div {background:#e2e2e2;}
                 }
             }
         }

@@ -103,6 +103,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
+    var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
 
@@ -114,6 +115,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate;
         needPassport = Model.Itinerary.RequirePassport;
+        needNationality = Model.Itinerary.RequireNationality;
         token = Model.Token;
     }
     catch
@@ -262,6 +264,16 @@
                                                 <div class="form-group" style="width: 25%;">
                                                     <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
                                                     <input type="text" class="form-control control-expiry control-check" name="Passengers[@i].PassportExpiryDate" placeholder="" style="width: 100%;">
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (needNationality)
+                                        {
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 34%;">
+                                                    <label for="" class="control-label">Nationality</label>
+                                                    <input type="type" name="name" value="" class="passport-country form-control" style="width: 100%;" />
+                                                    <input type="type" name="name" value="" class="passport-country_code hidden" />
                                                 </div>
                                             </div>
                                         }
@@ -422,3 +434,5 @@
         @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }
+Status API Training Shop Blog About Pricing
+© 2015 GitHub, Inc. Terms Privacy Security Contact Help

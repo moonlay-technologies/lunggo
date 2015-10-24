@@ -223,6 +223,26 @@ file : /Assets/travorama20/css/_page_index.scss
             &.large {height:270px;}
             &.half {height:395px;}
         }
+
+        // popular destinations
+        .route-wrapper {
+            .route {background:#fff; border:2px solid #ddd; margin-bottom:12px; padding:12px;
+                header {margin-bottom:12px;
+                    h5 {padding-left:32px; position:relative; margin-top:0; color:$color-main-blue; font-size:12px;
+                        &:before {content:""; background:url(/Assets/images/pop-route-bg.png) left center no-repeat; background-size:100%; position:absolute; width:20px; height:20px; top:0; left:0;}
+                        &:after {content:""; position:absolute; width:40%; border-top:1px solid $color-main-blue; bottom:0; left:60%;}
+                    }
+                }
+                section {padding-left:32px;
+                    h4 {}
+                    p {color:#ff7100; margin-bottom:12px;}
+                    a {}
+                }
+                // if hover
+                &:hover {border-color:$color-main-blue;}
+            }
+        }
+
     }
 
     //*****

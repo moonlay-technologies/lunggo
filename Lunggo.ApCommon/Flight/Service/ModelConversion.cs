@@ -53,11 +53,13 @@ namespace Lunggo.ApCommon.Flight.Service
                     RequireBirthDate = itinerary.RequireBirthDate,
                     RequirePassport = itinerary.RequirePassport,
                     RequireSameCheckIn = itinerary.RequireSameCheckIn,
+                    RequireNationality = itinerary.RequireNationality,
                     CanHold = itinerary.CanHold,
                     TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    Trips = MapTrips(itinerary.Trips)
+                    Trips = MapTrips(itinerary.Trips),
+                    RegisterNumber = itinerary.RegisterNumber
                 };
             }
             else
@@ -109,7 +111,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 OperatingAirlineLogoUrl = dict.GetAirlineLogoUrl(segment.OperatingAirlineCode),
                 AircraftCode = segment.AircraftCode,
                 StopQuantity = segment.StopQuantity,
-                FlightStops = segment.FlightStops,
+                Stops = segment.Stops,
+                CabinClass = segment.CabinClass,
                 Pnr = segment.Pnr,
                 Rbd = segment.Rbd,
                 Meal = segment.Meal,
@@ -151,9 +154,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = new List<Transit>();
             for (var i = 0; i < segments.Count; i++)
             {
-                if (segments[i].FlightStops != null)
+                if (segments[i].Stops != null)
                 {
-                    result.AddRange(segments[i].FlightStops.Select(stop => new Transit
+                    result.AddRange(segments[i].Stops.Select(stop => new Transit
                     {
                         IsStop = true,
                         Airport = stop.Airport,
@@ -181,8 +184,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var segments = trip.Segments;
             var transit = segments.Count() - 1;
-            var stop = segments.Sum(segment => segment.StopQuantity);
-            return transit + stop;
+            return transit;
         }
     }
 }

@@ -176,11 +176,13 @@ function indexPageFunctions() {
     $(document).ready(function() {
         changeTheme(indexPageDestination);
     });
+    /*
     $('.section-popular .destination a').click(function(evt) {
         evt.preventDefault();
         var target = $(this).attr('data-target');
         changeTheme(target);
     });
+    */
     // change header background
     function changeTheme(location) {
         location = location.toLowerCase();

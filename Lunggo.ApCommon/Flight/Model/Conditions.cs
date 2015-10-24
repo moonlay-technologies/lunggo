@@ -17,11 +17,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public string FareId { get; set; }
     }
 
-    public class SpecificSearchConditions : SearchFlightConditions
-    {
-        public List<FlightSegment> Segments { get; set; }
-    }
-
     public class SearchFlightConditions : ConditionsBase
     {
         public int AdultCount { get; set; }

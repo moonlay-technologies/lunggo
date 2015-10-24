@@ -688,6 +688,7 @@
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
+    <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\bed-bg.png" />
     <Content Include="Assets\images\benefit-1.jpg" />
     <Content Include="Assets\images\benefit-2.jpg" />
@@ -802,6 +803,7 @@
     <Content Include="Assets\images\loading-icon.png" />
     <Content Include="Assets\images\loading-image-dark.gif" />
     <Content Include="Assets\images\loading-image.gif" />
+    <Content Include="Assets\images\loading-plane.png" />
     <Content Include="Assets\images\loading-sample.png" />
     <Content Include="Assets\images\lock-image.jpg" />
     <Content Include="Assets\images\login-bg.jpg" />
@@ -812,6 +814,7 @@
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\nav-sprite.png" />
     <Content Include="Assets\images\no-image.png" />
+    <Content Include="Assets\images\order-flight-list-bg.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
     <Content Include="Assets\images\payment-atm.jpg" />
     <Content Include="Assets\images\payment-cc.jpg" />
@@ -835,17 +838,20 @@
     <Content Include="Assets\images\pop-hongkong.jpg" />
     <Content Include="Assets\images\pop-jakarta.jpg" />
     <Content Include="Assets\images\pop-malaysia.jpg" />
+    <Content Include="Assets\images\pop-route-bg.png" />
     <Content Include="Assets\images\pop-singapore.jpg" />
     <Content Include="Assets\images\pop-surabaya.jpg" />
     <Content Include="Assets\images\pop-yogyakarta.jpg" />
     <Content Include="Assets\images\popular-destination-bg-yellow.png" />
     <Content Include="Assets\images\popular-destination-bg.png" />
+    <Content Include="Assets\images\print-image.png" />
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\register-bg.jpg" />
     <Content Include="Assets\images\sand-clock.png" />
+    <Content Include="Assets\images\sandclock-yellow.png" />
     <Content Include="Assets\images\sandclock.png" />
     <Content Include="Assets\images\search-flight-bg.png" />
     <Content Include="Assets\images\search-form-switch-flight.png" />
@@ -2317,9 +2323,6 @@
     <Content Include="Views\Shared\_Mainmenu.cshtml" />
     <Content Include="Views\Shared\_Layout_account.cshtml" />
     <Content Include="Views\Shared\travorama20\_Layout20150929.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionFeedback.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionPayment.cshtml" />
-    <Content Include="Views\Shared\travorama20\_SectionSubscribe.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteFooter.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteFooterMenu.cshtml" />
     <Content Include="Views\Shared\travorama20\_SiteHeader.cshtml" />
@@ -2345,6 +2348,11 @@
     <Content Include="Views\Shared\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\_SiteFooterMenu.cshtml" />
     <Content Include="Views\Shared\_SiteFooter.cshtml" />
+    <Content Include="Views\Travorama20\flightThankyou.cshtml" />
+    <Content Include="Views\Travorama20\paymentConfirmation.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionUserMenu.cshtml" />
+    <Content Include="Views\Travorama20\orderDetail.cshtml" />
+    <Content Include="Views\Travorama20\orderList.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />

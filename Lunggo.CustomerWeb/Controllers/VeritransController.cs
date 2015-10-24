@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -12,7 +13,9 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Util;
 using Lunggo.Repository.TableRepository;
 using Newtonsoft.Json;
 
@@ -27,6 +30,16 @@ namespace Lunggo.CustomerWeb.Controllers
             using (var rqStream = new StreamReader(Request.InputStream))
                 notifJson = rqStream.ReadToEnd();
             var notif = JsonConvert.DeserializeObject<VeritransNotification>(notifJson);
+
+            var serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
+            var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
+            var streamKey = new MemoryStream();
+            streamKey.WriteIntoStream(rawKey);
+            var signatureKey = SHA512.Create().ComputeHash(streamKey).ToString();
+
+            if (notif.signature_key != signatureKey)
+                return null;
+
             if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {
                 var service = FlightService.GetInstance();
@@ -62,17 +75,41 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
+            var rsvNo = response.order_id;
+            if (rsvNo.IsFlightRsvNo())
+            {
+                var flight = FlightService.GetInstance();
+                flight.UpdateFlightPayment(rsvNo, new PaymentInfo {Status = PaymentStatus.Verifying});
+                return RedirectToAction("Thankyou", "Flight", new {RsvNo = rsvNo});
+            }
+            else
+                return Redirect("/");
         }
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
+            var rsvNo = response.order_id;
+            if (rsvNo.IsFlightRsvNo())
+            {
+                var flight = FlightService.GetInstance();
+                flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
+                return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            }
+            else
+                return Redirect("/");
         }
 
         public ActionResult PaymentError(VeritransResponse response)
         {
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
+            var rsvNo = response.order_id;
+            if (rsvNo.IsFlightRsvNo())
+            {
+                var flight = FlightService.GetInstance();
+                flight.UpdateFlightPayment(rsvNo, new PaymentInfo { Status = PaymentStatus.Expired });
+                return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            }
+            else
+                return Redirect("/");
         }
 
         private static PaymentMethod MapPaymentMethod(VeritransNotification notif)
@@ -135,6 +172,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public string bank { get; set; }
         public string permata_va_number { get; set; }
         public decimal gross_amount { get; set; }
+        public string signature_key { get; set; }
     }
 
     public class VeritransResponse

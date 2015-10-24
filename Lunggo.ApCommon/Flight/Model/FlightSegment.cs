@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string AirlineLogoUrl { get; set; }
         public string OperatingAirlineName { get; set; }
         public string OperatingAirlineLogoUrl { get; set; }
-        public List<FlightStop> FlightStops { get; set; }
+        public List<FlightStop> Stops { get; set; }
         public CabinClass CabinClass { get; set; }
         public bool Meal { get; set; }
         public string Baggage { get; set; }

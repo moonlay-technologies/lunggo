@@ -1035,6 +1035,42 @@ file : /Assets/travorama20/css/_page_index.scss
       height: 270px; }
     .page-index .section-popular .destination.half {
       height: 395px; }
+  .page-index .section-popular .route-wrapper .route {
+    background: #fff;
+    border: 2px solid #ddd;
+    margin-bottom: 12px;
+    padding: 12px; }
+    .page-index .section-popular .route-wrapper .route header {
+      margin-bottom: 12px; }
+      .page-index .section-popular .route-wrapper .route header h5 {
+        padding-left: 32px;
+        position: relative;
+        margin-top: 0;
+        color: #1daee4;
+        font-size: 12px; }
+        .page-index .section-popular .route-wrapper .route header h5:before, .page-index .section-popular .route-wrapper .route header h5.section-reason:after {
+          content: "";
+          background: url(/Assets/images/pop-route-bg.png) left center no-repeat;
+          background-size: 100%;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          top: 0;
+          left: 0; }
+        .page-index .section-popular .route-wrapper .route header h5:after {
+          content: "";
+          position: absolute;
+          width: 40%;
+          border-top: 1px solid #1daee4;
+          bottom: 0;
+          left: 60%; }
+    .page-index .section-popular .route-wrapper .route section {
+      padding-left: 32px; }
+      .page-index .section-popular .route-wrapper .route section p {
+        color: #ff7100;
+        margin-bottom: 12px; }
+    .page-index .section-popular .route-wrapper .route:hover {
+      border-color: #1daee4; }
 
 .page-index .section-subscribe {
   color: #18a5db;
@@ -1143,6 +1179,40 @@ file: /Assets/travorama20/css/_page_flight.scss
     color: #666; }
     .page-flight .search-location li:hover {
       color: #fff; }
+
+.page-flight .page-progress {
+  padding: 24px 0; }
+  .page-flight .page-progress b {
+    color: #1daee4;
+    margin-bottom: 12px;
+    display: block; }
+  .page-flight .page-progress .progress-wrapper {
+    background: #f0f0f0;
+    height: 6px;
+    position: relative; }
+    .page-flight .page-progress .progress-wrapper .progress-bar {
+      height: 6px;
+      background: #1daee4;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding-right: 120px; }
+    .page-flight .page-progress .progress-wrapper .plane {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      background: #fff;
+      height: 30px;
+      width: 120px;
+      padding-left: 50px;
+      background: url(/Assets/images/loading-plane.png) left center #f9f9f9 no-repeat;
+      font-size: 28px;
+      color: #ccc;
+      text-align: left; }
+      .page-flight .page-progress .progress-wrapper .plane span {
+        top: 0;
+        line-height: 100%; }
 
 .page-flight .page-overlay {
   position: fixed;
@@ -1907,7 +1977,9 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: center;
         float: left; }
         .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration:before, .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .page-index .duration.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration.section-reason:after {
-          content: url(/Assets/images/sandclock.png);
+          width: 5px;
+          height: 20px;
+          background: url(/Assets/images/sandclock.png) bottom center no-repeat;
           margin-right: 5px;
           position: relative;
           top: 3px; }
@@ -3065,6 +3137,34 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .widget-container .widget.flight #return-flight {
   margin-top: -20px; }
 
+.widget-container .widget.countdown .widget-content {
+  background: #ffd632;
+  padding: 12px; }
+  .widget-container .widget.countdown .widget-content P {
+    padding-left: 28px;
+    background: url(/Assets/images/sandclock-yellow.png) left 3px no-repeat;
+    font-size: 12px;
+    margin-bottom: 12px; }
+  .widget-container .widget.countdown .widget-content .timer {
+    background: #ffefb1;
+    border-bottom: 1px solid #dab939;
+    text-align: center;
+    padding: 12px;
+    color: #4d4e4e; }
+    .widget-container .widget.countdown .widget-content .timer > div {
+      display: inline-block; }
+    .widget-container .widget.countdown .widget-content .timer h5 {
+      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 0;
+      margin-top: 0; }
+    .widget-container .widget.countdown .widget-content .timer span {
+      font-size: 12px; }
+    .widget-container .widget.countdown .widget-content .timer .separator {
+      vertical-align: top;
+      margin-left: 6px;
+      margin-right: 6px; }
+
 .step-button .btn {
   padding: 8px 50px;
   font-size: 14px; }
@@ -3176,6 +3276,196 @@ file : /Assets/travorama20/css/_page_checkout.scss
       left: auto;
       right: 15px;
       font-size: 12px; }
+
+.page-confirmation .site-content {
+  padding: 24px 0; }
+
+.page-confirmation .confirmation-content .instruction header {
+  background: #1daee4;
+  color: #fff;
+  padding: 6px 12px;
+  margin-bottom: 12px; }
+
+.page-confirmation .confirmation-content .instruction .text {
+  padding-left: 100px;
+  background: url(/Assets/images/exclamation-mark.png) top left no-repeat;
+  min-height: 80px; }
+  .page-confirmation .confirmation-content .instruction .text p + p {
+    margin-top: 12px;
+    border-top: 2px dashed #1daee4;
+    padding-top: 12px; }
+
+.page-confirmation .confirmation-content .instruction .bank-detail {
+  background: #cdf1ff;
+  padding: 12px; }
+  .page-confirmation .confirmation-content .instruction .bank-detail .bank dl {
+    margin-bottom: 4px; }
+    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl:before, .page-confirmation .confirmation-content .instruction .bank-detail .bank .page-index dl.section-reason:after, .page-index .page-confirmation .confirmation-content .instruction .bank-detail .bank dl.section-reason:after, .page-confirmation .confirmation-content .instruction .bank-detail .bank dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dt {
+      float: left;
+      width: 50%;
+      font-weight: normal; }
+    .page-confirmation .confirmation-content .instruction .bank-detail .bank dl dd {
+      float: left;
+      width: 50%;
+      font-weight: bold; }
+
+.page-confirmation .confirmation-form {
+  border-top: 1px solid #ccc;
+  margin-top: 24px; }
+  .page-confirmation .confirmation-form .btn.btn-yellow {
+    padding: 9px 48px;
+    font-size: 14px; }
+
+.page-thankyou .site-content {
+  padding: 24px 0; }
+
+.page-thankyou .countdown {
+  background: #fff;
+  padding: 24px;
+  border: 1px solid #ccc;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  text-align: center; }
+  .page-thankyou .countdown .timer {
+    text-align: center;
+    margin-bottom: 24px;
+    background-image: url(/Assets/images/sandclock.png);
+    background-repeat: no-repeat;
+    background-position: left center; }
+    .page-thankyou .countdown .timer > div {
+      display: inline-block;
+      color: #1daee4; }
+      .page-thankyou .countdown .timer > div + div {
+        padding-left: 15px; }
+      .page-thankyou .countdown .timer > div.separator {
+        font-size: 32px;
+        vertical-align: top;
+        padding-top: 6px; }
+      .page-thankyou .countdown .timer > div h5 {
+        font-weight: bold;
+        font-size: 36px;
+        margin: 0; }
+      .page-thankyou .countdown .timer > div span {
+        font-size: 14px; }
+  .page-thankyou .countdown .print a {
+    height: 100%;
+    padding: 16px 0; }
+    .page-thankyou .countdown .print a span {
+      background: url(/Assets/images/print-image.png) top left no-repeat;
+      padding-left: 36px;
+      font-size: 18px; }
+
+.page-thankyou .order-detail header {
+  background: #1daee4;
+  color: #fff;
+  padding: 6px 12px; }
+
+.page-thankyou .order-detail section {
+  background: #f3f1f2;
+  position: relative; }
+  .page-thankyou .order-detail section h4 {
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-bottom: 18px; }
+  .page-thankyou .order-detail section .order-detail-left {
+    padding: 12px 24px; }
+    .page-thankyou .order-detail section .order-detail-left .passenger {
+      margin-bottom: 24px; }
+      .page-thankyou .order-detail section .order-detail-left .passenger ol {
+        counter-reset: passenger-counter;
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+        .page-thankyou .order-detail section .order-detail-left .passenger ol li {
+          position: relative;
+          padding-left: 21px;
+          font-size: 12px; }
+          .page-thankyou .order-detail section .order-detail-left .passenger ol li:before, .page-thankyou .order-detail section .order-detail-left .passenger ol .page-index li.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .passenger ol li.section-reason:after {
+            content: "0" counter(passenger-counter);
+            counter-increment: passenger-counter;
+            position: absolute;
+            left: 0;
+            color: #1daee4;
+            font-weight: bold; }
+    .page-thankyou .order-detail section .order-detail-left .order .flight {
+      padding-left: 36px;
+      position: relative; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight .col-xs-9 {
+        font-weight: bold; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight img {
+        height: 36px;
+        margin-right: 24px; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight span {
+        font-weight: bold;
+        color: #1daee4; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight:before, .page-thankyou .order-detail section .order-detail-left .order .page-index .flight.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order .flight.section-reason:after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #1daee4;
+        background-image: url(/Assets/images/plane-updown-sprite.png);
+        background-size: 200%;
+        background-repeat: no-repeat;
+        border: 2px solid #1daee4; }
+      .page-thankyou .order-detail section .order-detail-left .order .flight.return:before, .page-thankyou .order-detail section .order-detail-left .order .page-index .flight.return.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-left .order .flight.return.section-reason:after {
+        background-position: -16px; }
+  .page-thankyou .order-detail section .order-detail-right {
+    background: #e9e7e8;
+    padding: 12px 24px;
+    height: 100%;
+    position: absolute;
+    right: 0; }
+    .page-thankyou .order-detail section .order-detail-right .price-detail {
+      margin-bottom: 24px; }
+      .page-thankyou .order-detail section .order-detail-right .price-detail dl:before, .page-thankyou .order-detail section .order-detail-right .price-detail .page-index dl.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.section-reason:after, .page-thankyou .order-detail section .order-detail-right .price-detail dl:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .page-thankyou .order-detail section .order-detail-right .price-detail dl dt {
+        width: 55%;
+        float: left;
+        font-weight: normal;
+        position: relative;
+        padding-left: 12px; }
+        .page-thankyou .order-detail section .order-detail-right .price-detail dl dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl dt.section-reason:after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          position: absolute;
+          top: 3px;
+          left: 0;
+          background: #ff6900; }
+      .page-thankyou .order-detail section .order-detail-right .price-detail dl dd {
+        width: 45%;
+        float: left;
+        text-align: right;
+        font-weight: bold; }
+      .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price {
+        border-top: 1px solid #ccc;
+        padding-top: 12px; }
+        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt {
+          width: 40%; }
+          .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt:before, .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price .page-index dt.section-reason:after, .page-index .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dt.section-reason:after {
+            content: "";
+            width: 0;
+            height: 0; }
+        .page-thankyou .order-detail section .order-detail-right .price-detail dl.total-price dd {
+          width: 60%;
+          color: #ff6900;
+          font-weight: bold;
+          font-size: 16px; }
+    .page-thankyou .order-detail section .order-detail-right .payment-detail h5 {
+      color: #1daee4;
+      font-weight: bold; }
 
 /*
 
@@ -3371,37 +3661,108 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-account-profile .order-wrapper {
   margin-top: 24px; }
-  .page-account-profile .order-wrapper .order.flight header {
-    background: #1daee4;
-    text-align: right;
-    color: #fff;
-    padding: 12px;
+  .page-account-profile .order-wrapper .order.flight {
+    background: #f1f1f1;
+    padding: 24px;
+    background-image: url(/Assets/images/order-flight-list-bg.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding-left: 50px; }
+    .page-account-profile .order-wrapper .order.flight header .row {
+      margin-bottom: 3px; }
+    .page-account-profile .order-wrapper .order.flight header span {
+      color: #1daee4; }
+    .page-account-profile .order-wrapper .order.flight section .row {
+      margin-bottom: 3px; }
+    .page-account-profile .order-wrapper .order.flight section .detail .col-xs-4 {
+      width: 30%; }
+    .page-account-profile .order-wrapper .order.flight section .detail .status {
+      font-weight: bold; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.success {
+        color: #14b413; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.failed {
+        color: #fe0001; }
+      .page-account-profile .order-wrapper .order.flight section .detail .status.pending {
+        color: #b551ea; }
+    .page-account-profile .order-wrapper .order.flight + .order {
+      border-top: 1px solid #ccc; }
+
+.page-account-profile .order-detail .content-body > div + div {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #ccc; }
+
+.page-account-profile .order-detail h2, .page-account-profile .order-detail h4 {
+  letter-spacing: 0; }
+
+.page-account-profile .order-detail h4 {
+  margin-bottom: 18px; }
+
+.page-account-profile .order-detail .flight {
+  padding-left: 36px;
+  position: relative; }
+  .page-account-profile .order-detail .flight .col-xs-9 {
     font-weight: bold; }
-  .page-account-profile .order-wrapper .order.flight section {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-top: none; }
-    .page-account-profile .order-wrapper .order.flight section .airline {
-      padding: 6px;
-      text-align: center; }
-      .page-account-profile .order-wrapper .order.flight section .airline span {
-        font-weight: bold;
-        color: #1daee4; }
-      .page-account-profile .order-wrapper .order.flight section .airline img {
-        height: 50px; }
-    .page-account-profile .order-wrapper .order.flight section .detail {
+  .page-account-profile .order-detail .flight img {
+    height: 36px;
+    margin-right: 24px; }
+  .page-account-profile .order-detail .flight span {
+    font-weight: bold;
+    color: #1daee4; }
+  .page-account-profile .order-detail .flight:before, .page-account-profile .order-detail .page-index .flight.section-reason:after, .page-index .page-account-profile .order-detail .flight.section-reason:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1daee4;
+    background-image: url(/Assets/images/plane-updown-sprite.png);
+    background-size: 200%;
+    background-repeat: no-repeat;
+    border: 2px solid #1daee4; }
+  .page-account-profile .order-detail .flight.return:before, .page-account-profile .order-detail .page-index .flight.return.section-reason:after, .page-index .page-account-profile .order-detail .flight.return.section-reason:after {
+    background-position: -16px; }
+
+.page-account-profile .order-detail .form .form-group {
+  margin-bottom: 6px; }
+
+.page-account-profile .order-detail .form .control-label {
+  text-align: left; }
+
+.page-account-profile .order-detail .form label + div:before, .page-account-profile .order-detail .form .page-index label + div.section-reason:after, .page-index .page-account-profile .order-detail .form label + div.section-reason:after {
+  content: ":";
+  display: inline;
+  float: left;
+  position: relative;
+  padding-top: 6px;
+  left: -18px; }
+
+.page-account-profile .order-detail .passenger-list {
+  list-style: none;
+  counter-reset: passenger-number;
+  margin: 0;
+  padding: 0; }
+  .page-account-profile .order-detail .passenger-list p {
+    margin-bottom: 0; }
+  .page-account-profile .order-detail .passenger-list li {
+    position: relative;
+    margin-bottom: 1px;
+    padding-left: 30px;
+    background: #efefef; }
+    .page-account-profile .order-detail .passenger-list li:before, .page-account-profile .order-detail .passenger-list .page-index li.section-reason:after, .page-index .page-account-profile .order-detail .passenger-list li.section-reason:after {
+      content: counter(passenger-number);
+      counter-increment: passenger-number;
+      position: absolute;
+      text-align: center;
+      width: 20px;
+      height: 100%;
+      color: #fff;
+      background: #1daee4;
+      z-index: 2;
+      left: 0;
       padding: 6px; }
-      .page-account-profile .order-wrapper .order.flight section .detail p:last-child {
-        margin-bottom: 0; }
-      .page-account-profile .order-wrapper .order.flight section .detail span {
-        font-weight: bold; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.success {
-          color: #14b413; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.failed {
-          color: #fe0001; }
-        .page-account-profile .order-wrapper .order.flight section .detail span.pending {
-          color: #b551ea; }
-    .page-account-profile .order-wrapper .order.flight section .action {
+    .page-account-profile .order-detail .passenger-list li .row > div {
       padding: 6px; }
-      .page-account-profile .order-wrapper .order.flight section .action .btn {
-        display: block; }
+    .page-account-profile .order-detail .passenger-list li .row div + div {
+      background: #e2e2e2; }
