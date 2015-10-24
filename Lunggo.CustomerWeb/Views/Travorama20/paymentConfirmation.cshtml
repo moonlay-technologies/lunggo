@@ -10,10 +10,25 @@
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
 }
 @section PageJS{
     <script>
         var langCode = 'en';
+        var paymentTimeout = '';
+
+        // development only start
+        paymentTimeout = new Date();
+        paymentTimeout.setMinutes(paymentTimeout.getMinutes() + 15);
+        // development only end
+
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
+
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
@@ -152,17 +167,17 @@
                                 <p>Sisa waktu Anda untuk melakukan pembayaran</p>
                                 <div class="timer">
                                     <div>
-                                        <h5>00</h5>
+                                        <h5 class="hour">00</h5>
                                         <span>jam</span>
                                     </div>
                                     <div class="separator"><h5>:</h5></div>
                                     <div>
-                                        <h5>00</h5>
+                                        <h5 class="minute">00</h5>
                                         <span>menit</span>
                                     </div>
                                     <div class="separator"><h5>:</h5></div>
                                     <div>
-                                        <h5>00</h5>
+                                        <h5 class="second">00</h5>
                                         <span>detik</span>
                                     </div>
                                 </div>
