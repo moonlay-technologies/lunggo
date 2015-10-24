@@ -3,6 +3,6 @@
     internal abstract class HtmlTemplateClient
     {
         internal abstract void Init();
-        internal abstract string GenerateTemplate<T>(T objectParam, HtmlTemplateType type);
+        internal abstract string GenerateTemplate<T>(T objectParam, string type);
     }
 }

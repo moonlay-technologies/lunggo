@@ -22,6 +22,7 @@ namespace Lunggo.Framework.Web
         public bool AutoRedirect { get; set; }
 
         public Uri ResponseUri { get; private set; }
+        public HttpStatusCode StatusCode { get; private set; }
 
         public bool Expect100Continue { get; set; }
 
@@ -40,13 +41,27 @@ namespace Lunggo.Framework.Web
 
         protected override WebResponse GetWebResponse(WebRequest request)
         {
-            var response = base.GetWebResponse(request);
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse) base.GetWebResponse(request);
+            }
+            catch (WebException e)
+            {
+                response = (HttpWebResponse) e.Response;
+            }
             if (response != null)
             {
                 ResponseUri = response.ResponseUri;
+                StatusCode = response.StatusCode;
             }
             return response;
         }
-}
+
+        public void AddCookie(Cookie cookie)
+        {
+            _cookieContainer.Add(cookie);
+        }
+    }
     
 }

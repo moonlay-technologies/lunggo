@@ -25,7 +25,7 @@ namespace Lunggo.Worker.EticketHandler
 
         public static async Task ProcessQueue()
         {
-            var queue = QueueService.GetInstance().GetQueueByReference(Queue.FlightEticket);
+            var queue = QueueService.GetInstance().GetQueueByReference("FlightEticket");
             Trace.WriteLine("Checking Eticket Queue...");
             var message = await queue.GetMessageAsync();
             if (message == null)
@@ -47,7 +47,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var eticketTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightEticket);
+                var eticketTemplate = templateService.GenerateTemplate(reservation, "FlightEticket");
                 sw.Stop();
                 Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
@@ -71,7 +71,7 @@ namespace Lunggo.Worker.EticketHandler
                             ContentType = "PDF",
                             FileData = eticketFile
                         },
-                        Container = BlobContainer.Eticket
+                        Container = "Eticket"
                     },
                     SaveMethod = SaveMethod.Force
                 });
@@ -81,7 +81,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Parsing Invoice for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var invoiceTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightInvoice);
+                var invoiceTemplate = templateService.GenerateTemplate(reservation, "FlightInvoice");
                 sw.Stop();
                 Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
@@ -112,7 +112,7 @@ namespace Lunggo.Worker.EticketHandler
                             ContentType = "PDF",
                             FileData = invoiceFile
                         },
-                        Container = BlobContainer.Invoice
+                        Container = "Invoice"
                     },
                     SaveMethod = SaveMethod.Force
                 });
@@ -134,7 +134,7 @@ namespace Lunggo.Worker.EticketHandler
                             ContentType = "JSON",
                             FileData = reservationContent
                         },
-                        Container = BlobContainer.Reservation
+                        Container = "Reservation"
                     },
                     SaveMethod = SaveMethod.Force
                 });
@@ -144,7 +144,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Pushing Eticket Email Queue for RsvNo " + rsvNo + "...");
                 var queueService = QueueService.GetInstance();
-                var emailQueue = queueService.GetQueueByReference(Queue.FlightEticketEmail);
+                var emailQueue = queueService.GetQueueByReference("FlightEticketEmail");
                 emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
                 Trace.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
             }

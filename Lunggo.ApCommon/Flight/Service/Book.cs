@@ -37,7 +37,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
                 output.RsvNo = reservation.RsvNo;
                 output.PaymentUrl = reservation.Payment.Url;
-                output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
             }
             else
             {
@@ -86,7 +85,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                    Coefficient = 0,
                                    Constant = 0
                                };
-            var discountNominal = originalPrice*discountRule.Coefficient + discountRule.Constant;
+            var discountNominal = originalPrice * discountRule.Coefficient + discountRule.Constant;
             reservation.Payment.FinalPrice = originalPrice - discountNominal;
             reservation.Discount = new DiscountData
             {
@@ -128,10 +127,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation.Discount.Nominal != 0)
                 itemDetails.Add(new ItemDetails
                 {
-                   Id = "2",
-                   Name = "Discount",
-                   Price = -reservation.Discount.Nominal,
-                   Quantity = 1
+                    Id = "2",
+                    Name = "Discount",
+                    Price = -reservation.Discount.Nominal,
+                    Quantity = 1
                 });
             return itemDetails;
         }
@@ -148,11 +147,11 @@ namespace Lunggo.ApCommon.Flight.Service
         private List<BookResult> BookItineraries(IEnumerable<FlightItinerary> itins, BookFlightInput input, BookFlightOutput output)
         {
             var bookResults = new List<BookResult>();
-            foreach (var itin in itins)
+            Parallel.ForEach(itins, itin =>
             {
                 var bookResult = BookItinerary(itin, input, output);
                 bookResults.Add(bookResult);
-            };
+            });
             return bookResults;
         }
 

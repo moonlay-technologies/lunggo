@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
             }
 
-            internal void Login(ExtendedWebClient client)
+            internal bool Login(ExtendedWebClient client)
             {
                 client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -51,6 +51,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&__EVENTARGUMENT=" +
                     @"&pageToken=";
                 client.UploadString(@"https://booking2.airasia.com/LoginAgent.aspx", postData);
+
+                return client.ResponseUri.AbsolutePath == "/AgentHome.aspx";
             }
         }
     }

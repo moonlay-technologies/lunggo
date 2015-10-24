@@ -95,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             TripTypeCd = TripTypeCd.Mnemonic(itin.TripType),
                             InsertBy = "xxx",
                             InsertDate = DateTime.UtcNow,
-                            InsertPgId = "xxx"
+                            InsertPgId = "xxx",
                         };
                         FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
@@ -192,10 +192,9 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var itineraryId =
-                        SingletonBase<GetItineraryIdQuery>.GetInstance().Execute(conn, new {details.BookingId}).Single();
+                    var itineraryId = GetItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
-                    foreach (var trip in details.Itineraries.Trips)
+                    foreach (var trip in details.Itinerary.Trips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord

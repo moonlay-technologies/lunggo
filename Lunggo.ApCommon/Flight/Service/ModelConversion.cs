@@ -58,7 +58,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     TripType = itinerary.TripType,
                     RequestedCabinClass = itinerary.RequestedCabinClass,
                     TotalFare = itinerary.LocalPrice,
-                    Trips = MapTrips(itinerary.Trips)
+                    Trips = MapTrips(itinerary.Trips),
+                    RegisterNumber = itinerary.RegisterNumber
                 };
             }
             else
@@ -111,6 +112,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 AircraftCode = segment.AircraftCode,
                 StopQuantity = segment.StopQuantity,
                 Stops = segment.Stops,
+                CabinClass = segment.CabinClass,
                 Pnr = segment.Pnr,
                 Rbd = segment.Rbd,
                 Meal = segment.Meal,
@@ -182,8 +184,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var segments = trip.Segments;
             var transit = segments.Count() - 1;
-            var stop = segments.Sum(segment => segment.StopQuantity);
-            return transit + stop;
+            return transit;
         }
     }
 }

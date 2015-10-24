@@ -27,7 +27,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 Subject = "[Travorama] Verifikasikan E-mail Anda"
             };
-            mailService.SendEmail(message, mailModel, HtmlTemplateType.UserConfirmationEmail);
+            mailService.SendEmail(message, mailModel, "UserConfirmationEmail");
             sw.Stop();
 
             Console.WriteLine("Done Processing User Confirmation Email for " + address + " (" + sw.Elapsed.TotalSeconds + "s).");

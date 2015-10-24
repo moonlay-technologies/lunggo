@@ -58,8 +58,9 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var db = DbService.GetInstance();
-            db.Init();
+            db.Init(connString);
         }
 
         private static void InitDictionaryService()
@@ -70,14 +71,16 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
 
         private static void InitMailService()
         {
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
-            mailService.Init();
+            mailService.Init(apiKey);
         }
 
         public static void InitHtmlTemplateService()
@@ -88,14 +91,16 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         public static void InitBlobStorageService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
-            blobStorageService.Init();
+            blobStorageService.Init(connString);
         }
 
         public static void InitTableStorageService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var tableStorageService = TableStorageService.GetInstance();
-            tableStorageService.Init();
+            tableStorageService.Init(connString);
         }
 
         private static void InitTraceListener()

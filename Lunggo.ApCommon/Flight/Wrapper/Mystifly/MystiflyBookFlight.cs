@@ -249,7 +249,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     {
                         BookingStatus = BookingStatus.Booked,
                         BookingId = response.UniqueID,
-                        TimeLimit = response.TktTimeLimit.HasValue ? response.TktTimeLimit.Value.ToUniversalTime() : (DateTime?) null
+                        TimeLimit = response.TktTimeLimit.HasValue ? DateTime.SpecifyKind(response.TktTimeLimit.Value, DateTimeKind.Utc) : (DateTime?) null
                     }
                 };
             else

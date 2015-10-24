@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             result.BookingId = response.TravelItinerary.UniqueID;
             result.FlightSegmentCount = response.TravelItinerary.ItineraryInfo.ReservationItems.Count();
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
-            result.Itineraries = new FlightItinerary
+            result.Itinerary = new FlightItinerary
             {
                 Trips = MapDetailsFlightTrips(response, conditions),
             };
@@ -98,7 +98,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     {
                         OriginAirport = tripInfo.OriginAirport,
                         DestinationAirport = tripInfo.DestinationAirport,
-                        DepartureDate = tripInfo.DepartureDate.ToUniversalTime(),
+                        DepartureDate = DateTime.SpecifyKind(tripInfo.DepartureDate,DateTimeKind.Utc),
                         Segments = new List<FlightSegment>(),
                     };
                     do
@@ -123,7 +123,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     {
                         OriginAirport = segment.DepartureAirportLocationCode,
                         DestinationAirport = segment.ArrivalAirportLocationCode,
-                        DepartureDate = segment.DepartureDateTime.Date.ToUniversalTime(),
+                        DepartureDate = DateTime.SpecifyKind(segment.DepartureDateTime.Date,DateTimeKind.Utc),
                         Segments = new List<FlightSegment>(),
                     };
                     flightTrip.Segments.Add(MapFlightSegmentDetails(segment));
@@ -147,11 +147,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 DepartureAirportName = dict.GetAirportName(item.DepartureAirportLocationCode),
                 DepartureCity = dict.GetAirportCity(item.DepartureAirportLocationCode),
                 DepartureTerminal = item.DepartureTerminal,
-                DepartureTime = item.DepartureDateTime.ToUniversalTime(),
+                DepartureTime = DateTime.SpecifyKind(item.DepartureDateTime,DateTimeKind.Utc),
                 ArrivalAirport = item.ArrivalAirportLocationCode,
                 ArrivalAirportName = dict.GetAirportName(item.ArrivalAirportLocationCode),
                 ArrivalCity = dict.GetAirportCity(item.ArrivalAirportLocationCode),
-                ArrivalTime = item.ArrivalDateTime.ToUniversalTime(),
+                ArrivalTime = DateTime.SpecifyKind(item.ArrivalDateTime,DateTimeKind.Utc),
                 ArrivalTerminal = item.ArrivalTerminal,
                 Duration = TimeSpan.FromMinutes(double.Parse(item.JourneyDuration)),
                 AirlineCode = item.MarketingAirlineCode,

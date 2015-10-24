@@ -18,10 +18,21 @@ namespace Lunggo.ApCommon.Dictionary
     {
         private static readonly DictionaryService Instance = new DictionaryService();
         private bool _isInitialized;
+
         public Dictionary<long, AirlineDict> AirlineDict;
-        public Dictionary<long, AirportDict> AirportDict;
+        public Dictionary<long, AirportDict> AirportDict;        
         public Dictionary<long, HotelLocationDict> HotelLocationDict;
         public Dictionary<long, CountryDict> CountryDict;
+
+        private static Dictionary<string, string> _airlineNameDict;
+        private static Dictionary<string, string> _airportNameDict;
+        private static Dictionary<string, string> _airportCityDict;
+        private static Dictionary<string, string> _airportCityCodeDict;
+        private static Dictionary<string, string> _airportCountryDict;
+        private static Dictionary<string, string> _airportCountryCodeDict;
+        private static Dictionary<string, double> _airportTimeZoneDict;
+        private static Dictionary<string, string> _countryNameDict;
+        private static Dictionary<string, string> _countryCallingCodeDict;
 
         private const string AirlineFileName = @"Airline.csv";
         private const string AirportFileName = @"Airport.csv";
@@ -73,27 +84,11 @@ namespace Lunggo.ApCommon.Dictionary
             return valueList.Contains(code);
         }
 
-        public string GetAirlineCode(string name)
-        {
-            try
-            {
-                var valueList = AirlineDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Name == name);
-                return searchedValue.Code;
-            }
-            catch
-            {
-                return "";
-            }
-        }
-
         public string GetAirlineName(string code)
         {
             try
             {
-                var valueList = AirlineDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.Name;
+                return _airlineNameDict[code];
             }
             catch
             {
@@ -112,42 +107,11 @@ namespace Lunggo.ApCommon.Dictionary
             return valueList.Contains(code);
         }
 
-        public string GetAirportCode(string name)
-        {
-            try
-            {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Name == name);
-                return searchedValue.Code;
-            }
-            catch
-            {
-                return "";
-            }
-        }
-
-        public double GetAirportTimeZone(string code)
-        {
-            try
-            {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.TimeZone;
-            }
-            catch
-            {
-                return 99;
-            }
-        }
-
-
         public string GetAirportName(string code)
         {
             try
             {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.Name;
+                return _airportNameDict[code];
             }
             catch
             {
@@ -159,9 +123,7 @@ namespace Lunggo.ApCommon.Dictionary
         {
             try
             {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.CityCode;
+                return _airportCityCodeDict[code];
             }
             catch
             {
@@ -173,9 +135,7 @@ namespace Lunggo.ApCommon.Dictionary
         {
             try
             {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.City;
+                return _airportCityDict[code];
             }
             catch
             {
@@ -187,9 +147,7 @@ namespace Lunggo.ApCommon.Dictionary
         {
             try
             {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.CountryCode;
+                return _airportCountryCodeDict[code];
             }
             catch
             {
@@ -201,9 +159,7 @@ namespace Lunggo.ApCommon.Dictionary
         {
             try
             {
-                var valueList = AirportDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.Country;
+                return _airportCountryDict[code];
             }
             catch
             {
@@ -211,13 +167,23 @@ namespace Lunggo.ApCommon.Dictionary
             }
         }
 
+        public double GetAirportTimeZone(string code)
+        {
+            try
+            {
+                return _airportTimeZoneDict[code];
+            }
+            catch
+            {
+                return 99;
+            }
+        }
+
         public string GetCountryName(string code)
         {
             try
             {
-                var valueList = CountryDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.Name;
+                return _countryNameDict[code];
             }
             catch
             {
@@ -229,9 +195,7 @@ namespace Lunggo.ApCommon.Dictionary
         {
             try
             {
-                var valueList = CountryDict.Select(dict => dict.Value);
-                var searchedValue = valueList.Single(value => value.Code == code);
-                return searchedValue.CallingCode;
+                return _countryCallingCodeDict[code];
             }
             catch
             {
@@ -239,7 +203,7 @@ namespace Lunggo.ApCommon.Dictionary
             }
         }
 
-        private static Dictionary<long, AirlineDict> PopulateAirlineDict(String airlineFilePath)
+        private Dictionary<long, AirlineDict> PopulateAirlineDict(String airlineFilePath)
         {
             var result = new Dictionary<long, AirlineDict>();
             using (var file = new StreamReader(airlineFilePath))
@@ -256,10 +220,11 @@ namespace Lunggo.ApCommon.Dictionary
                     });
                 }
             }
+            _airlineNameDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Name);
             return result;
         }
 
-        private static Dictionary<long, AirportDict> PopulateAirportDict(String airportFilePath)
+        private Dictionary<long, AirportDict> PopulateAirportDict(String airportFilePath)
         {
             var result = new Dictionary<long, AirportDict>();
             using (var file = new StreamReader(airportFilePath))
@@ -281,10 +246,16 @@ namespace Lunggo.ApCommon.Dictionary
                     });
                 }
             }
+            _airportNameDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Name);
+            _airportCityCodeDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.CityCode);
+            _airportCityDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.City);
+            _airportCountryCodeDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.CountryCode);
+            _airportCountryDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Country);
+            _airportTimeZoneDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.TimeZone);
             return result;
         }
 
-        private static Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)
+        private Dictionary<long, HotelLocationDict> PopulateHotelLocationDict(String hotelLocationFilePath)
         {
             var result = new Dictionary<long, HotelLocationDict>();
             using (var file = new StreamReader(hotelLocationFilePath))
@@ -314,7 +285,7 @@ namespace Lunggo.ApCommon.Dictionary
             return result;
         }
 
-        private static Dictionary<long, CountryDict> PopulateCountryDict(String countryFilePath)
+        private Dictionary<long, CountryDict> PopulateCountryDict(String countryFilePath)
         {
             var result = new Dictionary<long, CountryDict>();
             using (var file = new StreamReader(countryFilePath))
@@ -332,6 +303,8 @@ namespace Lunggo.ApCommon.Dictionary
                     });
                 }
             }
+            _countryNameDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.Name);
+            _countryCallingCodeDict = result.Values.ToDictionary(dict => dict.Code, dict => dict.CallingCode);
             return result;
         }
     }
@@ -350,7 +323,6 @@ namespace Lunggo.ApCommon.Dictionary
         public string City { get; set; }
         public string CountryCode { get; set; }
         public string Country { get; set; }
-
         public double TimeZone { get; set; }
     }
 

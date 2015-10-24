@@ -3,7 +3,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
-    internal partial class AirAsiaWrapper : WrapperBase
+    internal partial class AirAsiaWrapper : FlightSupplierWrapperBase
     {
         private static readonly AirAsiaWrapper Instance = new AirAsiaWrapper();
         private bool _isInitialized;
@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             return Instance;
         }
 
-        internal void Init()
+        internal override void Init()
         {
             if (!_isInitialized)
             {

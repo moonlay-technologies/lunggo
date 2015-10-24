@@ -23,11 +23,11 @@ namespace Lunggo.Framework.Queue
             
         }
 
-        public void Init()
+        public void Init(string connString)
         {
             if (!_isInitialized)
             {
-                Client.Init();
+                Client.Init(connString);
                 _isInitialized = true;
             }
         }
@@ -37,7 +37,7 @@ namespace Lunggo.Framework.Queue
             return Instance;
         }
 
-        public CloudQueue GetQueueByReference(Queue reference)
+        public CloudQueue GetQueueByReference(string reference)
         {
             return Client.GetQueueByReference(reference);
         }
