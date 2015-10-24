@@ -101,6 +101,7 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
+                Completeness : 0
             },
             returnFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -109,6 +110,7 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
+                Completeness : 0
             }
         };
     </script>
@@ -237,9 +239,31 @@
 </section><!-- .search-result-form -->
 <section class="search-result return page-loading" ng-app="travorama" ng-controller="returnFlightController" ng-class="{'page-loaded': pageLoaded}">
     
+    <!-- 
+        <p>Departure Flight completeness : {{departureFlightConfig.flightSearchParams.Completeness}}</p>
+        <p>Departure flight length : {{departureFlightConfig.flightList.length}}</p>
+        <p>Return Flight completeness : {{returnFlightConfig.flightSearchParams.Completeness}}</p>
+        <p>Return flight length : {{returnFlightConfig.flightList.length}}</p>
+        -->
+
     <form class="hidden pushToken" action="@Url.Action("Select", "Flight")" method="post">
         <input type="text" name="token" value="" class="fareToken" />
     </form>
+    
+    <div class="page-progress" ng-hide="( !departureFlightConfig.loading && !departureFlightConfig.loadingFlight ) && ( !returnFlightConfig.loading && !returnFlightConfig.loadingFlight )">
+        <div class="container">
+            <b>Mencari Penerbangan...</b>
+            <div class="progress-wrapper">
+
+                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2 | number:0 }}%;">
+                    <div class="plane">
+                        <span>{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2 }} %</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <h3><b>HASIL</b> PENCARIAN</h3>
@@ -255,8 +279,6 @@
                     <p>@originCityNames[0] <span class="separator"></span> @originCityNames[1] , <span class="route-date">@data.Trips[0].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
                 </div>
             </div><!-- .search-result-title -->
-        
-            <h2 ng-hide="departureFlightConfig.flightList.length">MENCARI PENERBANGAN PERGI</h2>
 
             <div class="search-result-selected">
                 <div class="flight-airline">
@@ -536,8 +558,6 @@
                     <p>@originCityNames[1] <span class="separator"></span> @originCityNames[0] , <span class="route-date">@data.Trips[1].DepartureDate.ToString("dddd, dd-MMMM-yyyy")</span> </p>
                 </div>
             </div><!-- .search-result-title -->
-        
-            <h2 ng-hide="returnFlightConfig.flightList.length">MENCARI PENERBANGAN PULANG</h2>
 
             <div class="search-result-selected">
                 <div class="flight-airline">

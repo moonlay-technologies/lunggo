@@ -1977,7 +1977,9 @@ file: /Assets/travorama20/css/_page_flight.scss
         text-align: center;
         float: left; }
         .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration:before, .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .page-index .duration.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration.section-reason:after {
-          content: url(/Assets/images/sandclock.png);
+          width: 5px;
+          height: 20px;
+          background: url(/Assets/images/sandclock.png) bottom center no-repeat;
           margin-right: 5px;
           position: relative;
           top: 3px; }
