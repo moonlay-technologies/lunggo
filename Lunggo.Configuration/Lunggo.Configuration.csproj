@@ -86,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\BackendWeb\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\BackendWeb\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\Airline.csv" />
     <None Include="Config\BackendWeb\Airport.csv" />
     <None Include="Config\BackendWeb\azureStorage.properties" />
@@ -100,6 +106,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\HotelLocation.csv" />
+    <None Include="Config\BackendWeb\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
@@ -108,7 +117,13 @@
     </None>
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
+    <None Include="Config\CustomerWeb\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\azureStorage.properties" />
+    <None Include="Config\CustomerWeb\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\Country.csv" />
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\CustomerWeb\cw.properties">
@@ -117,22 +132,67 @@
     <None Include="Config\CustomerWeb\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CustomerWeb\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\azureStorage.properties" />
+    <None Include="Config\WebAPI\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\Country.csv" />
     <None Include="Config\WebAPI\mandrill.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebAPI\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.EmailQueueHandler\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawler\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightProcessor\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightProcessor\Airline.csv" />
     <None Include="Config\WebJob.FlightProcessor\Airport.csv" />
     <None Include="Config\WebJob.FlightProcessor\azureStorage.properties" />
+    <None Include="Config\WebJob.FlightProcessor\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightProcessor\Country.csv" />
     <None Include="Config\WebJob.FlightProcessor\db.properties" />
     <None Include="Config\WebJob.FlightProcessor\flight.properties">
@@ -180,11 +240,20 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightProcessor\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.MystiflyQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\Worker.EticketHandler\airAsia.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Worker.EticketHandler\Airline.csv" />
     <None Include="Config\Worker.EticketHandler\Airport.csv" />
     <None Include="Config\Worker.EticketHandler\azureStorage.properties" />
+    <None Include="Config\Worker.EticketHandler\citilink.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Worker.EticketHandler\Country.csv" />
     <None Include="Config\Worker.EticketHandler\db.properties" />
     <None Include="Config\Worker.EticketHandler\flight.properties">
@@ -280,6 +349,9 @@
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
+    <None Include="Config\Worker.EticketHandler\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />

@@ -70,36 +70,36 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
                 }
-                //else if (destinationCountry == "ID")
-                //{
-                //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                //              @"?o1=" + trip0.DestinationAirport +
-                //              @"&d1=" + trip0.OriginAirport +
-                //              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                //              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                //              @"&ADT=" + conditions.AdultCount +
-                //              @"&CHD=" + conditions.ChildCount +
-                //              @"&inl=" + conditions.InfantCount +
-                //              @"&r=true" +
-                //              @"&s=true" +
-                //              @"&mon=true" +
-                //              @"&culture=id-ID" +
-                //              @"&cc=IDR";
-                //    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                //    client.Headers["User-Agent"] =
-                //        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                //    client.Headers["Origin"] = "https://booking2.airasia.com";
-                //    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                //    var html = client.DownloadString(url);
-                //
-                //    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
-                //        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
-                //
-                //    var searchedHtml = (CQ)html;
-                //    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
-                //}
+                else if (destinationCountry == "ID")
+                {
+                    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
+                              @"?o1=" + trip0.DestinationAirport +
+                              @"&d1=" + trip0.OriginAirport +
+                              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+                              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+                              @"&ADT=" + conditions.AdultCount +
+                              @"&CHD=" + conditions.ChildCount +
+                              @"&inl=" + conditions.InfantCount +
+                              @"&r=true" +
+                              @"&s=true" +
+                              @"&mon=true" +
+                              @"&culture=id-ID" +
+                              @"&cc=IDR";
+                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                    client.Headers["Upgrade-Insecure-Requests"] = "1";
+                    client.Headers["User-Agent"] =
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                    client.Headers["Origin"] = "https://booking2.airasia.com";
+                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                    var html = client.DownloadString(url);
+                
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                
+                    var searchedHtml = (CQ)html;
+                    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
+                }
                 else
                 {
                     return new SearchFlightResult
@@ -167,7 +167,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             CanHold = true,
                             FareType = FareType.Published,
                             RequireBirthDate = true,
-                            RequirePassport = false,
+                            RequirePassport = RequirePassport(segments),
                             RequireSameCheckIn = false,
                             RequireNationality = true,
                             RequestedCabinClass = CabinClass.Economy,
@@ -226,6 +226,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "Web Layout Changed!" }
                     };
                 }
+            }
+
+            private bool RequirePassport(List<FlightSegment> segments)
+            {
+                var dict = DictionaryService.GetInstance();
+                var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);
+                var segmentArrivalAirports = segments.Select(s => s.ArrivalAirport);
+                var segmentAirports = segmentDepartureAirports.Concat(segmentArrivalAirports);
+                var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
+                return segmentCountries.Count() > 1;
             }
         }
     }

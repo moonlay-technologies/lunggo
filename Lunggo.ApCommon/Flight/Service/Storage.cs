@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 var redisKey = "searchFlightStatus:" + searchId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
                 var currentStatus = redisDb.StringGetSet(redisKey, status);
+                redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(5));
                 return (bool) currentStatus;
             }
             catch

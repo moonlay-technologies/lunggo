@@ -332,13 +332,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 }
             }
             var dict = DictionaryService.GetInstance();
-            var flightTripOriginAirports = flightItinerary.Trips.Select(trip => trip.OriginAirport);
-            var flightTripDestinationAirports = flightItinerary.Trips.Select(trip => trip.DestinationAirport);
-            var flightTripAirports = new List<string>();
-            flightTripAirports.AddRange(flightTripOriginAirports);
-            flightTripAirports.AddRange(flightTripDestinationAirports);
-            var flightTripCountries = flightTripAirports.Select(dict.GetAirportCountryCode).Distinct();
-            if (flightTripCountries.Count() > 1)
+            var segments = flightItinerary.Trips.SelectMany(trip => trip.Segments).ToList();
+            var segmentDepartureAirports = segments.Select(s => s.DepartureAirport);
+            var segmentArrivalAirports = segments.Select(s => s.ArrivalAirport);
+            var segmentAirports = segmentDepartureAirports.Concat(segmentArrivalAirports);
+            var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
+            if (segmentCountries.Count() > 1)
                 flightItinerary.RequirePassport = true;
         }
 

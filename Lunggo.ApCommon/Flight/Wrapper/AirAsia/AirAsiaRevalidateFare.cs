@@ -94,35 +94,35 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     searchedHtml = (CQ)html;
                 }
-                //else if (destinationCountry == "ID")
-                //{
-                //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                //              @"?o1=" + dest +
-                //              @"&d1=" + origin +
-                //              @"&dd1=" + date.ToString("yyyy-MM-dd") +
-                //              @"&dd2=" + date.ToString("yyyy-MM-dd") +
-                //              @"&ADT=" + adultCount +
-                //              @"&CHD=" + childCount +
-                //              @"&inl=" + infantCount +
-                //              @"&r=true" +
-                //              @"&s=true" +
-                //              @"&mon=true" +
-                //              @"&culture=id-ID" +
-                //              @"&cc=IDR";
-                //    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                //    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                //    client.Headers["User-Agent"] =
-                //        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                //    client.Headers["Origin"] = "https://booking2.airasia.com";
-                //    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                //    var html = client.DownloadString(url);
-                //
-                //    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
-                //        return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
-                //
-                //    searchedHtml = (CQ)html;
-                //}
+                else if (destinationCountry == "ID")
+                {
+                    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
+                              @"?o1=" + dest +
+                              @"&d1=" + origin +
+                              @"&dd1=" + date.ToString("yyyy-MM-dd") +
+                              @"&dd2=" + date.ToString("yyyy-MM-dd") +
+                              @"&ADT=" + adultCount +
+                              @"&CHD=" + childCount +
+                              @"&inl=" + infantCount +
+                              @"&r=true" +
+                              @"&s=true" +
+                              @"&mon=true" +
+                              @"&culture=id-ID" +
+                              @"&cc=IDR";
+                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                    client.Headers["Upgrade-Insecure-Requests"] = "1";
+                    client.Headers["User-Agent"] =
+                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                    client.Headers["Origin"] = "https://booking2.airasia.com";
+                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                    var html = client.DownloadString(url);
+                
+                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                        return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                
+                    searchedHtml = (CQ)html;
+                }
                 else
                 {
                     return new RevalidateFareResult
@@ -201,7 +201,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             CanHold = true,
                             FareType = FareType.Published,
                             RequireBirthDate = true,
-                            RequirePassport = false,
+                            RequirePassport = RequirePassport(segments),
                             RequireSameCheckIn = false,
                             RequireNationality = true,
                             RequestedCabinClass = CabinClass.Economy,
