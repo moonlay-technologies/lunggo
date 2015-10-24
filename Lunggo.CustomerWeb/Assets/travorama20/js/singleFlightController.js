@@ -347,14 +347,15 @@ app.controller('singleFlightController', [
 
                     console.log('request : '+ $scope.flightRequest.Completeness +' & Completeness : '+ returnData.Completeness);
 
+                    // set searchID
+                    RevalidateConfig.SearchId = returnData.SearchId;
+
                     if ($scope.flightRequest.Completeness == returnData.Completeness) {
                         $scope.getFlight();
                     } else {
                         console.log('Success getting flight list');
                         // console log the return data
                         console.log(returnData);
-                        // set searchID
-                        RevalidateConfig.SearchId = returnData.SearchId;
                         // set completeness level
                         $scope.flightRequest.Completeness = returnData.Completeness;
                         // generate flight list

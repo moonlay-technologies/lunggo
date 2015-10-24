@@ -359,7 +359,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                             &.flight-button {display:none;}
                             &.flight-duration {display:block !important; padding-top:10px;
                                 .duration {width:50%; text-align:center; float:left;
-                                    &:before {content:url(/Assets/images/sandclock.png); margin-right:5px; position:relative; top:3px;}
+                                    &:before {width:5px; height:20px; background:url(/Assets/images/sandclock.png) bottom center no-repeat; margin-right:5px; position:relative; top:3px;}
                                 }
                                 .transit {width:50%; text-align:center; float:left;}
                             }
