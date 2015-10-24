@@ -236,7 +236,7 @@
     
         <h1 class="text-center" ng-hide="!loading && !loadingFlight"><b>MENCARI PENERBANGAN</b></h1>
 
-        <div class="page-overlay" ng-show="loading && loadingFlight">
+        <!-- <div class="page-overlay" ng-show="loading && loadingFlight">
             <div class="overlay-content validating-flight">
                 <header>
                     <h4>Mencari Penerbangan</h4>
@@ -318,12 +318,12 @@
     
         <!-- ****************************** -->
     
-        <div ng-hide="loading && loadingFlight">
+        <div>
 
             <div class="container">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter">
+            <div class="search-result-filter" ng-show="flightRequest.Completeness == 100">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -474,7 +474,7 @@
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.SequenceNo}}" ng-class="{'active': (flightActive == flight.SequenceNo) }" id="flight-{{flight.SequenceNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.RegisterNumber}}" ng-class="{'active': (flightActive == flight.RegisterNumber) }" id="flight-{{flight.RegisterNumber}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -507,7 +507,7 @@
                                         <span class="flight-meal"></span>
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
-                                        <a ng-click="setFlightActive(flight.SequenceNo)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                        <a ng-click="setFlightActive(flight.RegisterNumber)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
                                         <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
                                     </div><!-- .flight-button -->
                                 </div><!-- .summar-bottom -->
@@ -515,7 +515,7 @@
                             <div class="flight-summary-right">
                                 <h4 class="flight-price"><sup>Rp</sup> {{flight.TotalFare | number}}</h4>
                                 <small>Sudah Termasuk Pajak &amp; Service Charge</small>
-                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.SequenceNo)">PESAN</a>
+                                <a class="btn btn-yellow" ng-click="revalidateFlight(flight.RegisterNumber)">PESAN</a>
                             </div>
                         </div><!-- .flight-summary -->
                         <div class="flight-detail">
