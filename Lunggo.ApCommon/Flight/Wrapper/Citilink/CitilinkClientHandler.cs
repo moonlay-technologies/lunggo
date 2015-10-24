@@ -31,8 +31,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             {
                 if (!_isInitialized)
                 {
-                    _userName = "Travelmadezy";
-                    _password = "Standar1234";
+                    _userName = "Travelmadev";
+                    _password = "dev12345";
                     _isInitialized = true;
                 }
             }

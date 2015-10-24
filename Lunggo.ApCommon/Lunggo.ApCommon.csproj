@@ -284,6 +284,14 @@
     <Compile Include="Flight\Wrapper\Mystifly\MystiflySearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflySpecificSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaSearchFight.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaWrapperSingleton.cs" />
     <Compile Include="Flight\Wrapper\WrapperBase.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />

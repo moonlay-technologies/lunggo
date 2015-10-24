@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
+using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Voucher;
@@ -17,6 +18,7 @@ using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Microsoft.Data.OData.Query;
+using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -26,6 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
+        private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
         private bool _isInitialized;
 
         private FlightService()
@@ -45,6 +48,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 MystiflyWrapper.Init();
                 AirAsiaWrapper.Init();
                 CitilinkWrapper.Init();
+                SriwijayaWrapper.Init();
                 CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
@@ -55,10 +59,13 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
-            var suppliers = new WrapperBase[] {MystiflyWrapper, AirAsiaWrapper, CitilinkWrapper};
+            
+            var suppliers = new WrapperBase[] {SriwijayaWrapper,CitilinkWrapper};
+            //var coba = CitilinkWrapper.OrderTicket("EFE6SR", FareType.Published);
+            //var coba1 = SriwijayaWrapper.RevalidateFare(null);
             var results = new SearchFlightResult();
             results.Itineraries = new List<FlightItinerary>();
-            for (var i = 0; i< 3; i++)
+            for (var i = 0; i<2; i++)
             {
                 var result = suppliers[i].SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -89,6 +96,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
         {
+            //var coba = new SriwijayaSearchFight().SearchFlight(conditions);
             var results = MystiflyWrapper.SpecificSearchFlight(conditions);
             results.Itineraries.ForEach(itin => itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, Supplier.Mystifly, itin.FareType));
             return results;
