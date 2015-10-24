@@ -45,7 +45,7 @@ namespace Lunggo.Configuration
         static void InsertTemplateToTable(KeyValuePair<string, string> fileNameAndTemplate)
         {
             var emp = new MailTemplateModel() { Template = fileNameAndTemplate.Value, PartitionKey = fileNameAndTemplate.Key, RowKey = DefaultRowKey };
-            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, TableStorage.HtmlTemplate);
+            TableStorageService.GetInstance().InsertOrReplaceEntityToTableStorage(emp, "HtmlTemplate");
         }
     }
 }

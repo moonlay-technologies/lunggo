@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using CsQuery;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.TicketSupport.ZendeskClass;

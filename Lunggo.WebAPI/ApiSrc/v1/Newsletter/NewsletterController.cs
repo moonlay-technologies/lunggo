@@ -42,8 +42,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
                         FromName = "Newsletter Travorama",
                         Subject = input.Address
                     };
-                    mailService.SendEmail(input.Address, mailModel, HtmlTemplateType.Newsletter);
-                    var queue = QueueService.GetInstance().GetQueueByReference(Queue.InitialSubscriberEmail);
+                    mailService.SendEmail(input.Address, mailModel, "Newsletter");
+                    var queue = QueueService.GetInstance().GetQueueByReference("InitialSubscriberEmail");
                     var message = new SubscriberEmailModel
                     {
                         Email = input.Address

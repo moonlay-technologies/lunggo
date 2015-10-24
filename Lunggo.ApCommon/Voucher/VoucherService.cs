@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Voucher
         public void SendVoucherEmailToCustomer(string email, string voucherCode)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference(Queue.VoucherEmail);
+            var queue = queueService.GetQueueByReference("VoucherEmail");
             var model = new VoucherEmailModel
             {
                 Email = email,

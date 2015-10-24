@@ -18,11 +18,11 @@ namespace Lunggo.Framework.Mail
             
         }
 
-        public void Init()
+        public void Init(string apiKey)
         {
             if (!_isInitialized)
             {
-                Client.Init();
+                Client.Init(apiKey);
                 _isInitialized = true;
             }
         }
@@ -32,7 +32,7 @@ namespace Lunggo.Framework.Mail
             return Instance;
         }
 
-        public void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
+        public void SendEmail<T>(T objectParam, MailModel mailModel, string type)
         {
             Client.SendEmail(objectParam, mailModel, type);
         }

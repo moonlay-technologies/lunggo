@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Subscriber
         public void SendInitialSubscriberEmailToCustomer(string email, string hashLink)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference(Queue.InitialSubscriberEmail);
+            var queue = queueService.GetQueueByReference("InitialSubscriberEmail");
             var message = new SubscriberEmailModel
             {
                 Email = email,

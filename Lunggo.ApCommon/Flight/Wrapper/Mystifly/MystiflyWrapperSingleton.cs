@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return Instance;
         }
 
-        internal void Init()
+        internal override void Init()
         {
             if (!_isInitialized)
             {

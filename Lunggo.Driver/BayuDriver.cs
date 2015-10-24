@@ -255,13 +255,15 @@ namespace Lunggo.Driver
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var database = DbService.GetInstance();
-            database.Init();
+            database.Init(connString);
         }
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
         private static void InitTicketService()
         {
@@ -291,7 +293,7 @@ namespace Lunggo.Driver
         public void testAddQueue()
         {
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(Queue.FlightEticket); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference("FlightEticket"); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
 
             for (int i = 0; i < 10; i++)
@@ -334,13 +336,13 @@ namespace Lunggo.Driver
             testEmail.FromMail = "bayualvian@hotmail.com";
             testEmail.RecipientList = new string[] { "Bayualvian@hotmail.com" };
             testEmail.Subject = "testing";
-            testEmail.MailTemplate = HtmlTemplateType.FlightEticket; // TODO Flight placeholder, change it
+            testEmail.MailTemplate = "FlightEticket"; // TODO Flight placeholder, change it
             testEmail.MailObjectDetail = TestClass;
             testEmail.ListFileInfo = files;
 
             CloudQueueMessage TestCloudQueue = testEmail.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(Queue.FlightEticketEmail); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference("FlightEticketEmail"); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
         }
@@ -367,7 +369,7 @@ namespace Lunggo.Driver
 
             CloudQueueMessage TestCloudQueue = TestQueue.SerializeToQueueMessage();
             var queueService = QueueService.GetInstance();
-            var _queue = queueService.GetQueueByReference(Queue.FlightEticket); // TODO Flight queue placeholder, change it
+            var _queue = queueService.GetQueueByReference("FlightEticket"); // TODO Flight queue placeholder, change it
             _queue.CreateIfNotExists();
             _queue.AddMessage(TestCloudQueue);
             //CloudQueueMessage TestCloudQueue2 = AzureQueueExtension.Serialize(TestClass2);

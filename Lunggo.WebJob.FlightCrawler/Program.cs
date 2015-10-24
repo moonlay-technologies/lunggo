@@ -2,19 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Queue;
-using Lunggo.Framework.Redis;
-using Lunggo.Framework.SnowMaker;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Data.OData.Query.SemanticAst;
-using Microsoft.WindowsAzure.Storage;
 
 namespace Lunggo.WebJob.FlightCrawler
 {
@@ -26,8 +16,16 @@ namespace Lunggo.WebJob.FlightCrawler
         static void Main()
         {
             Init();
-            new Thread(RunScheduler).Start();
-            Thread.Sleep(0);
+
+            var configuration = new JobHostConfiguration();
+            configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
+            configuration.Queues.MaxDequeueCount = 100;
+            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+
+            var host = new JobHost(configuration);
+            // The following code ensures that the WebJob will be running continuously
+            host.RunAndBlock();
         }
     }
 }

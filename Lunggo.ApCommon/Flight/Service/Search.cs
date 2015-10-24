@@ -1,15 +1,24 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
+using System.Threading;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Extension;
+using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
+using Lunggo.Framework.TableStorage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -17,65 +26,36 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
-            SearchFlightResult result;
             var output = new SearchFlightOutput();
-            var searchId = HashEncodeConditions(input.Conditions);
-            var cacheItin = GetSearchedItinerariesFromCache(searchId);
-            if (cacheItin == null)
-                result = SearchByThirdPartyService(input.Conditions);
-            else
+            var searchId = EncodeConditions(input.Conditions);
+
+            var isCurrentlySearching = GetSetSearchingStatusInCache(searchId, true);
+            var completeness = GetSearchingCompletenessInCache(searchId);
+            if (!isCurrentlySearching && completeness == 0)
             {
-                result = new SearchFlightResult
-                {
-                    IsSuccess = true,
-                    Itineraries = cacheItin,
-                    SearchId = searchId
-                };
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
+                queue.AddMessage(new CloudQueueMessage(searchId));
             }
 
-            if (result.IsSuccess)
-            {
-                output.IsSuccess = true;
-                output.Itineraries = result.Itineraries.Select(ConvertToItineraryForDisplay).ToList();
-                output.Itineraries.ForEach(itin => itin.SequenceNo = output.Itineraries.IndexOf(itin));
-                output.SearchId = result.SearchId;
-                output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
-                output.ExpiryTime = GetSearchedItinerariesExpiry(searchId).GetValueOrDefault();
-            }
-            else
-            {
-                output.IsSuccess = false;
-                output.Errors = result.Errors;
-                output.ErrorMessages = result.ErrorMessages;
-            }
+            var searchedItins = new List<FlightItinerary>();
+
+            if (completeness > input.Completeness) 
+                searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
+
+            output.IsSuccess = true;
+            output.Itineraries = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
+            output.SearchId = searchId;
+            output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
+            output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
+            output.Completeness = completeness;
+
             return output;
         }
 
-        public void SearchFlightAndFillInSearchCache(string searchId, int timeout)
+        public void CommenceSearchFlight(string searchId)
         {
-            var condition = UnhashDecodeConditions(searchId);
-            SearchByThirdPartyService(condition, timeout);
-        }
-
-        private SearchFlightResult SearchByThirdPartyService(SearchFlightConditions condition, int timeout = 0)
-        {
-            var conditions = new SearchFlightConditions
-            {
-                AdultCount = condition.AdultCount,
-                ChildCount = condition.ChildCount,
-                InfantCount = condition.InfantCount,
-                CabinClass = condition.CabinClass,
-                Trips = condition.Trips
-            };
-
-            var result = SearchFlightInternal(conditions);
-            if (result.Itineraries != null)
-            {
-                var searchId = HashEncodeConditions(condition);
-                SaveSearchedItinerariesToCache(result.Itineraries, searchId, timeout);
-                result.SearchId = searchId;
-            }
-            return result;
+            var conditions = DecodeConditions(searchId);
+            SearchFlightInternal(conditions);
         }
     }
 }

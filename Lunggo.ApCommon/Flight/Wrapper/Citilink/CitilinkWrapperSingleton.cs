@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             return Instance;
         }
 
-        internal void Init()
+        internal override void Init()
         {
             if (!_isInitialized)
             {

@@ -22,7 +22,7 @@ namespace Lunggo.Worker.EticketHandler
 
         public static async Task ProcessQueue()
         {
-            var queue = QueueService.GetInstance().GetQueueByReference(Queue.FlightChangedEticket);
+            var queue = QueueService.GetInstance().GetQueueByReference("FlightChangedEticket");
             Trace.WriteLine("Checking Changed Eticket Queue...");
             var message = await queue.GetMessageAsync();
             if (message == null)
@@ -43,7 +43,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
                 sw.Start();
-                var eticketTemplate = templateService.GenerateTemplate(reservation, HtmlTemplateType.FlightEticket);
+                var eticketTemplate = templateService.GenerateTemplate(reservation, "FlightEticket");
                 sw.Stop();
                 Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
                 sw.Reset();
@@ -76,7 +76,7 @@ namespace Lunggo.Worker.EticketHandler
                             ContentType = "PDF",
                             FileData = fileContent
                         },
-                        Container = BlobContainer.Eticket
+                        Container = "Eticket"
                     },
                     SaveMethod = SaveMethod.Force
                 });
@@ -98,7 +98,7 @@ namespace Lunggo.Worker.EticketHandler
                             ContentType = "JSON",
                             FileData = reservationContent
                         },
-                        Container = BlobContainer.Reservation
+                        Container = "Reservation"
                     },
                     SaveMethod = SaveMethod.Force
                 });
@@ -108,7 +108,7 @@ namespace Lunggo.Worker.EticketHandler
 
                 Trace.WriteLine("Pushing Changed Eticket Email Queue for RsvNo " + rsvNo + "...");
                 var queueService = QueueService.GetInstance();
-                var emailQueue = queueService.GetQueueByReference(Queue.FlightChangedEticketEmail);
+                var emailQueue = queueService.GetQueueByReference("FlightChangedEticketEmail");
                 emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
                 Trace.WriteLine("Done Processing Changed Eticket for RsvNo " + rsvNo);
             }

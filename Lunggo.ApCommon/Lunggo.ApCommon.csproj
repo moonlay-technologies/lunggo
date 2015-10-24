@@ -187,6 +187,7 @@
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
+    <Compile Include="Flight\Model\FlightSearchPackage.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />
