@@ -77,8 +77,9 @@ namespace Lunggo.ApCommon.Flight.Service
                             RsvNo = reservation.RsvNo,
                             BookingId = itin.BookingId,
                             BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
+                            TicketTimeLimit = itin.TicketTimeLimit,
                             FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
-                            SupplierCd = FlightSupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
+                            SupplierCd = SupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
                             SupplierPrice = itin.SupplierPrice,
                             SupplierCurrencyCd = itin.SupplierCurrency,
                             SupplierExchangeRate = itin.SupplierRate,
@@ -94,7 +95,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             TripTypeCd = TripTypeCd.Mnemonic(itin.TripType),
                             InsertBy = "xxx",
                             InsertDate = DateTime.UtcNow,
-                            InsertPgId = "xxx"
+                            InsertPgId = "xxx",
                         };
                         FlightItineraryTableRepo.GetInstance().Insert(conn, itineraryRecord);
 
@@ -140,7 +141,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
                                 if (segment.StopQuantity > 0)
                                 {
-                                    foreach (var stop in segment.FlightStops)
+                                    foreach (var stop in segment.Stops)
                                     {
                                         var stopId = FlightStopIdSequence.GetInstance().GetNext();
                                         var stopRecord = new FlightStopTableRecord
@@ -191,10 +192,9 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var itineraryId =
-                        SingletonBase<GetItineraryIdQuery>.GetInstance().Execute(conn, new {details.BookingId}).Single();
+                    var itineraryId = GetItineraryIdQuery.GetInstance().Execute(conn, new {details.BookingId}).Single();
 
-                    foreach (var trip in details.Itineraries.Trips)
+                    foreach (var trip in details.Itinerary.Trips)
                     {
                         var tripId = FlightTripIdSequence.GetInstance().GetNext();
                         var tripRecord = new FlightTripTableRecord

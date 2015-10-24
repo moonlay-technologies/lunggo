@@ -3,6 +3,7 @@
     public class SearchFlightInput
     {
         public SearchFlightConditions Conditions { get; set; }
+        public int Completeness { get; set; }
         public bool IsDateFlexible { get; set; }
     }
 }

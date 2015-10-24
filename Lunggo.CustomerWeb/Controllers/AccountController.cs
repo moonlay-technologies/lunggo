@@ -189,7 +189,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                     protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, Queue.UserConfirmationEmail.ToString(), callbackUrl);
+                await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
                 ViewBag.Message = "ConfirmationEmailSent";
                 return View();
             }
@@ -265,7 +265,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
             var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = model.Email },
                 protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(foundUser.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
+                await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
             ViewBag.Message = "Success";
             return View(model);
         }

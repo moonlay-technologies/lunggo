@@ -30,30 +30,36 @@ namespace Lunggo.Framework.HtmlTemplate
         {
             if (!_isInitialized)
             {
-                TableStorageService.GetInstance().Init();
                 _isInitialized = true;
             }
         }
 
-        internal override string GenerateTemplate<T>(T objectParam , HtmlTemplateType type)
+        internal override string GenerateTemplate<T>(T objectParam , string type)
         {
-            var template = GetTemplateByPartitionKey(type.ToString());
+            var typeName = PreprocessTemplateType(type);
+            var template = GetTemplateByPartitionKey(typeName);
             var razorConfig = new TemplateServiceConfiguration
             {
                 DisableTempFileLocking = true,
                 CachingProvider = new DefaultCachingProvider(t => { }),
             };
             var razorService = RazorEngineService.Create(razorConfig);
-            razorService.AddTemplate(type.ToString(), template);
-            var result = razorService.RunCompile(type.ToString(), model: objectParam);
+            razorService.AddTemplate(typeName, template);
+            var result = razorService.RunCompile(typeName, model: objectParam);
             return result;
+        }
+
+        private string PreprocessTemplateType(string type)
+        {
+            return type.ToLower();
         }
 
         private string GetTemplateByPartitionKey(string partitionKey)
         {
-            var table = TableStorageService.GetInstance().GetTableByReference(TableStorage.TableStorage.HtmlTemplate);
+            var partitionKeyName = PreprocessTemplateType(partitionKey);
+            var table = TableStorageService.GetInstance().GetTableByReference("HtmlTemplate");
             var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                         where tabel.PartitionKey == partitionKey && tabel.RowKey == RowKey
+                         where tabel.PartitionKey == partitionKeyName && tabel.RowKey == RowKey
                          select tabel).FirstOrDefault();
             var mailTemplate = (query != null) ? query.Template : null;
 

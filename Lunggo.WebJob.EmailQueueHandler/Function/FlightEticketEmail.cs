@@ -22,9 +22,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Eticket);
-            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Invoice);
-            var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, BlobContainer.Reservation);
+            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo, "Eticket");
+            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo, "Invoice");
+            var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);
             sw.Stop();
@@ -57,13 +57,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 }
             };
             Console.WriteLine("Sending Flight Eticket Email...");
-            mailService.SendEmail(summary, mailModel, HtmlTemplateType.FlightEticketEmail);
+            mailService.SendEmail(summary, mailModel, "FlightEticketEmail");
 
             Console.WriteLine("Deleting Data in Storage...");
             sw.Start();
-            blobService.DeleteBlob(rsvNo, BlobContainer.Eticket);
-            blobService.DeleteBlob(rsvNo, BlobContainer.Invoice);
-            blobService.DeleteBlob(rsvNo, BlobContainer.Reservation);
+            blobService.DeleteBlob(rsvNo, "Eticket");
+            blobService.DeleteBlob(rsvNo, "Invoice");
+            blobService.DeleteBlob(rsvNo, "Reservation");
             sw.Stop();
             Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

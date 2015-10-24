@@ -34,8 +34,9 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var db = DbService.GetInstance();
-            db.Init();
+            db.Init(connString);
         }
 
         private static void InitUniqueIdGenerator()
@@ -79,8 +80,9 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
 
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
     }
 }

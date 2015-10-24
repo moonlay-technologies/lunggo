@@ -89,8 +89,7 @@ namespace Lunggo.CustomerWeb
         public Task SendAsync(IdentityMessage message)
         {
             var queueService = QueueService.GetInstance();
-            var emailType = (Queue) Enum.Parse(typeof (Queue), message.Subject);
-            var queue = queueService.GetQueueByReference(emailType);
+            var queue = queueService.GetQueueByReference(message.Subject);
             var messageJson = JsonConvert.SerializeObject(message);
             queue.AddMessage(new CloudQueueMessage(messageJson));
             return Task.FromResult(0);

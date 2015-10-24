@@ -15,6 +15,7 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
+
         public string EncodeConditions(SearchFlightConditions conditions)
         {
             var conditionString = new StringBuilder();
@@ -31,17 +32,14 @@ namespace Lunggo.ApCommon.Flight.Service
             conditionString.Append(conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
             conditionString.Append(conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
             conditionString.Append(ParseCabinClass(conditions.CabinClass));
-            return conditionString.ToString();
+            
+            return conditionString.ToString().Base64Encode();
         }
 
-        public string HashEncodeConditions(SearchFlightConditions conditions)
+        public SearchFlightConditions DecodeConditions(string searchId)
         {
-            var conditionString = EncodeConditions(conditions);
-            return conditionString.Base64Encode();
-        }
+            var conditionString = searchId.Base64Decode();
 
-        public SearchFlightConditions DecodeConditions(string conditionString)
-        {
             try
             {
                 var parts = conditionString.Split('-');
@@ -61,7 +59,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             int.Parse(info.Substring(8, 2)),
                             int.Parse(info.Substring(6, 2)))
                     }).ToList();
-                    conditions.AdultCount = int.Parse(infoPart.Substring(0,1));
+                    conditions.AdultCount = int.Parse(infoPart.Substring(0, 1));
                     conditions.ChildCount = int.Parse(infoPart.Substring(1, 1));
                     conditions.InfantCount = int.Parse(infoPart.Substring(2, 1));
                     conditions.CabinClass = ParseCabinClass(infoPart.Substring(3, 1));
@@ -76,12 +74,6 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return null;
             }
-        }
-
-        public SearchFlightConditions UnhashDecodeConditions(string hashedConditionString)
-        {
-            var conditionString = hashedConditionString.Base64Decode();
-            return DecodeConditions(conditionString);
         }
     }
 }

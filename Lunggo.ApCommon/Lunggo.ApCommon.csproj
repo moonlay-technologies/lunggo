@@ -24,7 +24,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -33,6 +33,10 @@
   <ItemGroup>
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
+    </Reference>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
     </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.22\lib\net45\Dapper.dll</HintPath>
@@ -165,19 +169,18 @@
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
+    <Compile Include="Constant\Supplier.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />
     <Compile Include="Constant\CacheIdentifier.cs" />
     <Compile Include="Constant\RsvNoIdentifier.cs" />
     <Compile Include="Currency\Service\CurrencyService.cs" />
     <Compile Include="Currency\Model\Deposit.cs" />
-    <Compile Include="Currency\Constant\Supplier.cs" />
     <Compile Include="Dictionary\DictionaryService.cs" />
     <Compile Include="Flight\Constant\BookingStatus.cs" />
     <Compile Include="Flight\Constant\CabinClass.cs" />
     <Compile Include="Flight\Constant\CancellationType.cs" />
     <Compile Include="Flight\Constant\FareType.cs" />
     <Compile Include="Flight\Constant\FlightError.cs" />
-    <Compile Include="Flight\Constant\FlightSupplier.cs" />
     <Compile Include="Flight\Constant\Gender.cs" />
     <Compile Include="Flight\Constant\PassengerType.cs" />
     <Compile Include="Flight\Constant\Title.cs" />
@@ -189,7 +192,6 @@
     <Compile Include="Flight\Database\Query\GetUnpaidReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchReservationQuery.cs" />
-    <Compile Include="Flight\Interface\WrapperBase.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Flight\Model\FlightOrderInfo.cs" />
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
+    <Compile Include="Flight\Model\FlightSearchPackage.cs" />
     <Compile Include="Flight\Model\FlightTrip.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingInput.cs" />
     <Compile Include="Flight\Model\Logic\CancelBookingOutput.cs" />
@@ -271,6 +274,35 @@
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaIsIssued.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\AirAsia\AirAsiaClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetBookingStatus.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetRules.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyOrderTicket.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyRevalidateFare.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflySearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflySpecificSearchFlight.cs" />
+    <Compile Include="Flight\Wrapper\Mystifly\MystiflyWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />
@@ -293,8 +325,6 @@
     <Compile Include="Model\Price.cs" />
     <Compile Include="Model\SearchBase.cs" />
     <Compile Include="Model\SearchViewModel.cs" />
-    <Compile Include="Mystifly\MystiflyCancelBooking.cs" />
-    <Compile Include="Mystifly\MystiflyClientHandler.cs" />
     <Compile Include="Flight\Service\ServiceSingleton.cs" />
     <Compile Include="Hotel\Constant\ApCommonHotelEnum.cs" />
     <Compile Include="Hotel\Logic\HotelCacheUtil.cs" />
@@ -335,15 +365,6 @@
     <Compile Include="Identity\User\CustomUser.cs" />
     <Compile Include="Identity\User\IdentityUserBase.cs" />
     <Compile Include="Identity\User\UserBase.cs" />
-    <Compile Include="Mystifly\MystiflyBookFlight.cs" />
-    <Compile Include="Mystifly\MystiflyGetBookingStatus.cs" />
-    <Compile Include="Mystifly\MystiflyGetRules.cs" />
-    <Compile Include="Mystifly\MystiflyGetTripDetails.cs" />
-    <Compile Include="Mystifly\MystiflyOrderTicket.cs" />
-    <Compile Include="Mystifly\MystiflySearchFlight.cs" />
-    <Compile Include="Mystifly\MystiflySpecificSearchFlight.cs" />
-    <Compile Include="Mystifly\MystiflyWrapperSingleton.cs" />
-    <Compile Include="Mystifly\MystiflyRevalidateFare.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
@@ -415,6 +436,10 @@
     <Compile Include="Voucher\VoucherService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
+      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
+      <Name>Lunggo.Flight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>
       <Name>Lunggo.Framework</Name>
@@ -620,6 +645,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Flight\Interface\" />
     <Folder Include="Identity\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Payment
             {
                 FileBlobModel = new FileBlobModel
                 {
-                    Container = BlobContainer.TransferReceipt,
+                    Container = "TransferReceipt",
                     FileInfo = file
                 },
                 SaveMethod = SaveMethod.Force
