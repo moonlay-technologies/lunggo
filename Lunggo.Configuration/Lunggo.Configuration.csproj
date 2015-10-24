@@ -130,6 +130,24 @@
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightProcessor\Airline.csv" />
+    <None Include="Config\WebJob.FlightProcessor\Airport.csv" />
+    <None Include="Config\WebJob.FlightProcessor\azureStorage.properties" />
+    <None Include="Config\WebJob.FlightProcessor\Country.csv" />
+    <None Include="Config\WebJob.FlightProcessor\db.properties" />
+    <None Include="Config\WebJob.FlightProcessor\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightProcessor\general.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightProcessor\HotelLocation.csv" />
+    <None Include="Config\WebJob.FlightProcessor\mystifly.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.FlightProcessor\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightCrawler\Airline.csv" />
     <None Include="Config\WebJob.FlightCrawler\Airport.csv" />
     <None Include="Config\WebJob.FlightCrawler\azureStorage.properties" />

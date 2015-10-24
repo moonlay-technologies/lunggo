@@ -11,13 +11,13 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService
     {
         public RevalidateFlightOutput RevalidateFlight(RevalidateFlightInput input)
-        {   
+        {
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
                 input.Token = SelectFlight(input.SearchId, input.ItinIndex);
             var itins = IsItinBundleCacheId(input.Token)
-                ? GetItinerarySetFromCache(input.Token) 
-                : new List<FlightItinerary>{GetItineraryFromCache(input.Token)};
+                ? GetItinerarySetFromCache(input.Token)
+                : new List<FlightItinerary> { GetItineraryFromCache(input.Token) };
             Parallel.ForEach(itins, itin =>
             {
                 var outputSet = new RevalidateFlightOutputSet();
@@ -37,10 +37,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     outputSet.IsSuccess = false;
                     response.Errors.ForEach(output.AddError);
-                    response.ErrorMessages.ForEach(output.AddError);
+                    if (response.ErrorMessages != null)
+                        response.ErrorMessages.ForEach(output.AddError);
                 }
                 output.Sets.Add(outputSet);
             });
+
             var newItins = output.Sets.Select(set => set.Itinerary).ToList();
             if (IsItinBundleCacheId(input.Token))
                 SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);

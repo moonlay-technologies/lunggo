@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Currency.Constant;
 using Lunggo.ApCommon.Currency.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
@@ -27,6 +26,8 @@ namespace Lunggo.ApCommon.Currency.Service
         {
             if (!_isInitialized)
             {
+                SetSupplierExchangeRate(Supplier.Mystifly, 1, 14000);
+                SetSupplierExchangeRate(Supplier.AirAsia, 1, 1);
                 _isInitialized = true;
             }
         }
@@ -60,7 +61,6 @@ namespace Lunggo.ApCommon.Currency.Service
 
         public decimal GetSupplierExchangeRate(Supplier supplier)
         {
-            SetSupplierExchangeRate(supplier, 1, 14000);
             var supplierName = GetSupplierName(supplier);
             var deposit = GetSupplierDepositInCache(supplierName);
             return deposit.ExchangeRate;

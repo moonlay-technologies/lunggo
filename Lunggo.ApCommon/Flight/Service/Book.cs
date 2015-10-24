@@ -37,7 +37,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
                 output.RsvNo = reservation.RsvNo;
                 output.PaymentUrl = reservation.Payment.Url;
-                output.IsPaymentThroughThirdPartyUrl = output.PaymentUrl != null;
             }
             else
             {
@@ -86,7 +85,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                    Coefficient = 0,
                                    Constant = 0
                                };
-            var discountNominal = originalPrice*discountRule.Coefficient + discountRule.Constant;
+            var discountNominal = originalPrice * discountRule.Coefficient + discountRule.Constant;
             reservation.Payment.FinalPrice = originalPrice - discountNominal;
             reservation.Discount = new DiscountData
             {
@@ -128,10 +127,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (reservation.Discount.Nominal != 0)
                 itemDetails.Add(new ItemDetails
                 {
-                   Id = "2",
-                   Name = "Discount",
-                   Price = -reservation.Discount.Nominal,
-                   Quantity = 1
+                    Id = "2",
+                    Name = "Discount",
+                    Price = -reservation.Discount.Nominal,
+                    Quantity = 1
                 });
             return itemDetails;
         }
@@ -172,14 +171,18 @@ namespace Lunggo.ApCommon.Flight.Service
                 itin.BookingId = response.Status.BookingId;
                 itin.BookingStatus = response.Status.BookingStatus;
                 if (response.Status.BookingStatus == BookingStatus.Booked)
+                {
                     bookResult.TimeLimit = response.Status.TimeLimit;
+                    itin.TicketTimeLimit = bookResult.TimeLimit;
+                }
             }
             else
             {
                 bookResult.IsSuccess = false;
                 itin.BookingId = response.Status.BookingId;
                 response.Errors.ForEach(output.AddError);
-                response.ErrorMessages.ForEach(output.AddError);
+                if (response.ErrorMessages != null)
+                    response.ErrorMessages.ForEach(output.AddError);
             }
             return bookResult;
         }

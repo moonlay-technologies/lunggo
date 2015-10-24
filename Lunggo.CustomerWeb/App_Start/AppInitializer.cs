@@ -43,8 +43,9 @@ namespace Lunggo.CustomerWeb
 
         private static void InitMailService()
         {
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
-            mailService.Init();
+            mailService.Init(apiKey);
         }
 
         private static void InitRedisService()
@@ -96,13 +97,15 @@ namespace Lunggo.CustomerWeb
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var database = DbService.GetInstance();
-            database.Init();
+            database.Init(connString);
         }
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
         private static void InitLogger()
         {

@@ -4,7 +4,7 @@ namespace Lunggo.Framework.BlobStorage
 {
     public class FileBlobModel
     {
-        public BlobContainer Container { get; set; }
+        public string Container { get; set; }
         public FileInfo FileInfo { get; set; }
 
     }

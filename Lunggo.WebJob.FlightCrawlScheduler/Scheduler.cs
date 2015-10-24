@@ -58,7 +58,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
         private static void ProcessTargetStrings(string targetString)
         {
             var flightService = FlightService.GetInstance();
-            var queue = QueueService.GetInstance().GetQueueByReference(Queue.FlightCrawl);
+            var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
             var conditionString = targetString.Split('.')[0];
             var isExpired = flightService.GetSearchedItinerariesExpiry(conditionString) == null;
             if (isExpired)
@@ -92,7 +92,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
                 for (var i = target.DaysAdvanceDepartureDateStart; i <= target.DaysAdvanceDepartureDateEnd; i++)
                 {
                     searchCondition.Trips[0].DepartureDate = DateTime.UtcNow.AddDays(i.GetValueOrDefault());
-                    var conditionString = flightService.HashEncodeConditions(searchCondition);
+                    var conditionString = flightService.EncodeConditions(searchCondition);
                     var timeout = target.Timeout;
                     var conditionStringWithTimeout = conditionString + '.' + timeout;
                     yield return conditionStringWithTimeout;

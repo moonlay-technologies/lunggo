@@ -38,25 +38,23 @@ namespace Lunggo.Framework.Mail
                 return ClientInstance;
             }
 
-            internal override void Init()
+            internal override void Init(string apiKey)
             {
                 if (!_isInitialized)
                 {
-                    HtmlTemplateService.GetInstance().Init();
-                    var mandrillApiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
-                    _apiOfMandrill = new MandrillApi(mandrillApiKey);
+                    _apiOfMandrill = new MandrillApi(apiKey);
                     _isInitialized = true;
                 }
             }
 
-            internal override void SendEmail<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
+            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string type)
             {
                 var emailMessage = GenerateMessage(objectParam, mailModel, type);
                 var emailMessageRequest = new SendMessageRequest(emailMessage);
                 _apiOfMandrill.SendMessage(emailMessageRequest);
             }
 
-            private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, HtmlTemplateType type)
+            private EmailMessage GenerateMessage<T>(T objectParam, MailModel mailModel, string type)
             {
                 var emailMessage = new EmailMessage
                 {

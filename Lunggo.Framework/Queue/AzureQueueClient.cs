@@ -31,36 +31,28 @@ namespace Lunggo.Framework.Queue
                 return ClientInstance;
             }
 
-            internal override void Init()
+            internal override void Init(string connString)
             {
                 if (!_isInitialized)
                 {
-                    var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
                     var cloudStorageAccount = CloudStorageAccount.Parse(connString);
                     _cloudQueueClient = cloudStorageAccount.CreateCloudQueueClient();
-                    foreach (var reference in Enum.GetValues(typeof(Queue)).Cast<Queue>())
-                        CreateIfNotExists(reference);
                     _isInitialized = true;
                 }
             }
 
 
-            internal override CloudQueue GetQueueByReference(Queue reference)
+            internal override CloudQueue GetQueueByReference(string reference)
             {
-                var referenceName = GetQueueReferenceName(reference);
+                var referenceName = PreprocessQueueReferenceName(reference);
                 var queue = _cloudQueueClient.GetQueueReference(referenceName);
+                queue.CreateIfNotExists();
                 return queue;
             }
 
-            internal override bool CreateIfNotExists(Queue reference)
+            protected override string PreprocessQueueReferenceName(string reference)
             {
-                var queue = GetQueueByReference(reference);
-                return queue.CreateIfNotExists();
-            }
-
-            protected override string GetQueueReferenceName(Queue reference)
-            {
-                return reference.ToString().ToLower();
+                return reference.ToLower();
             }
         }
     }

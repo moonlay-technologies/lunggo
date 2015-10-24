@@ -29,7 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama.com",
                 Subject = "[Travorama] Terima Kasih Telah Berlangganan Newsletter Travorama"
             };
-            mailService.SendEmail(message, mailModel, HtmlTemplateType.InitialSubscriberEmail);
+            mailService.SendEmail(message, mailModel, "InitialSubscriberEmail");
             sw.Stop();
 
             Console.WriteLine("Done Processing Initial Subscriber Email for " + address + " (" + sw.Elapsed.TotalSeconds + "s).");

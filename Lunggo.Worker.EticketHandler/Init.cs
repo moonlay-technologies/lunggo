@@ -46,8 +46,9 @@ namespace Lunggo.Worker.EticketHandler
 
         private static void InitDatabaseService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var db = DbService.GetInstance();
-            db.Init();
+            db.Init(connString);
         }
 
         private static void InitDictionaryService()
@@ -58,14 +59,16 @@ namespace Lunggo.Worker.EticketHandler
 
         private static void InitQueueService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
-            queue.Init();
+            queue.Init(connString);
         }
 
         private static void InitMailService()
         {
+            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
-            mailService.Init();
+            mailService.Init(apiKey);
         }
 
         public static void InitHtmlTemplateService()
@@ -76,8 +79,9 @@ namespace Lunggo.Worker.EticketHandler
 
         public static void InitBlobStorageService()
         {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
-            blobStorageService.Init();
+            blobStorageService.Init(connString);
         }
     }
 }

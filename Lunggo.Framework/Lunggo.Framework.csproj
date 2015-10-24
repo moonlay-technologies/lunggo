@@ -145,7 +145,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlobStorage\BlobContainer.cs" />
     <Compile Include="BrowserDetection\BrowserDetectionService.cs" />
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Filter\DeviceDetectionFilterAttribute.cs" />
     <Compile Include="HtmlHelperExtension\HtmlHelperExtension.cs" />
     <Compile Include="HtmlTemplate\HtmlTemplateService.cs" />
-    <Compile Include="HtmlTemplate\HtmlTemplateType.cs" />
     <Compile Include="Http\Http.cs" />
     <Compile Include="Http\HttpAuthenticationConstant.cs" />
     <Compile Include="Http\HttpEnum.cs" />
@@ -226,7 +224,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\AzureQueueClient.cs" />
     <Compile Include="Queue\AzureQueueExtension.cs" />
-    <Compile Include="Queue\Queue.cs" />
     <Compile Include="Queue\QueueClient.cs" />
     <Compile Include="Queue\QueueService.cs" />
     <Compile Include="Redis\RedisConnectionProperty.cs" />
@@ -241,7 +238,6 @@
     <Compile Include="SharedModel\FreshdeskTicket.cs" />
     <Compile Include="SharedModel\MailDetailForQueue.cs" />
     <Compile Include="SharedModel\TicketQueueMessage.cs" />
-    <Compile Include="TableStorage\TableStorage.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />
@@ -286,6 +282,9 @@
     <Compile Include="Util\StreamUtil.cs" />
     <Compile Include="Http\Rest\RestRequest.cs" />
     <Compile Include="Util\TypeUtil.cs" />
+    <Compile Include="Web\ExtendedWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

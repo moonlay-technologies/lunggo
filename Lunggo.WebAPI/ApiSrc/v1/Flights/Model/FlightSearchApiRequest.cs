@@ -16,5 +16,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
         public CabinClass CabinClass { get; set; }
+        public int Completeness { get; set; }
     }
 }
