@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Cors;
+using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 using Newtonsoft.Json;
@@ -18,10 +19,23 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/flights")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
-            var apiResponse = FlightLogic.SearchFlights(request);
-            return apiResponse;
+            try
+            {
+                var apiResponse = FlightLogic.SearchFlights(request.Deserialize<FlightSearchApiRequest>());
+                return apiResponse;
+            }
+            catch
+            {
+                return new FlightSearchApiResponse
+                {
+                    SearchId = null,
+                    OriginalRequest = null,
+                    TotalFlightCount = 0,
+                    FlightList = null
+                };
+            }
             /*
             try
             {
@@ -61,7 +75,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("api/v1/flights/book")]
-        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, [FromUri] FlightBookApiRequest request)
+        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, FlightBookApiRequest request)
         {
             var apiResponse = FlightLogic.BookFlight(request);
             return apiResponse;
@@ -70,7 +84,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("api/v1/flights/issue")]
-        public FlightIssueApiResponse IssueFlight(HttpRequestMessage httpRequest, [FromUri] FlightIssueApiRequest request)
+        public FlightIssueApiResponse IssueFlight(HttpRequestMessage httpRequest, FlightIssueApiRequest request)
         {
             var apiResponse = FlightLogic.IssueFlight(request);
             return apiResponse;

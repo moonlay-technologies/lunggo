@@ -37,7 +37,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 queue.AddMessage(new CloudQueueMessage(searchId));
             }
 
-            var searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
+            var searchedItins = new List<FlightItinerary>();
+
+            if (completeness > input.Completeness) 
+                searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
 
             output.IsSuccess = true;
             output.Itineraries = searchedItins.Select(ConvertToItineraryForDisplay).ToList();

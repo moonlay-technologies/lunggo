@@ -46,14 +46,8 @@ namespace Lunggo.Framework.Queue
             {
                 var referenceName = PreprocessQueueReferenceName(reference);
                 var queue = _cloudQueueClient.GetQueueReference(referenceName);
-                CreateIfNotExists(reference);
+                queue.CreateIfNotExists();
                 return queue;
-            }
-
-            internal override bool CreateIfNotExists(string reference)
-            {
-                var queue = GetQueueByReference(reference);
-                return queue.CreateIfNotExists();
             }
 
             protected override string PreprocessQueueReferenceName(string reference)

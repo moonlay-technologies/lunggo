@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
@@ -21,6 +22,7 @@ namespace Lunggo.WebJob.FlightCrawler
             InitRedisService();
             InitQueueService();
             InitFlightService();
+            InitDictionaryService();
         }
 
         private static void InitRedisService()
@@ -60,6 +62,12 @@ namespace Lunggo.WebJob.FlightCrawler
         {
             var flight = FlightService.GetInstance();
             flight.Init();
+        }
+
+        private static void InitDictionaryService()
+        {
+            var dict = DictionaryService.GetInstance();
+            dict.Init();
         }
     }
 }
