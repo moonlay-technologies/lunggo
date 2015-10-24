@@ -234,7 +234,20 @@
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
-        <h1 class="text-center" ng-hide="!loading && !loadingFlight"><b>MENCARI PENERBANGAN</b></h1>
+        <div class="page-progress" ng-hide="!loading && !loadingFlight">
+            <div class="container">
+                <b>Mencari Penerbangan...</b>
+                <div class="progress-wrapper">
+
+                    <div class="progress-bar" style="width:{{flightRequest.Completeness}}%;">
+                        <div class="plane">
+                            <span>{{flightRequest.Completeness}} %</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <!-- <div class="page-overlay" ng-show="loading && loadingFlight">
             <div class="overlay-content validating-flight">

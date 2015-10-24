@@ -1180,6 +1180,40 @@ file: /Assets/travorama20/css/_page_flight.scss
     .page-flight .search-location li:hover {
       color: #fff; }
 
+.page-flight .page-progress {
+  padding: 24px 0; }
+  .page-flight .page-progress b {
+    color: #1daee4;
+    margin-bottom: 12px;
+    display: block; }
+  .page-flight .page-progress .progress-wrapper {
+    background: #f0f0f0;
+    height: 6px;
+    position: relative; }
+    .page-flight .page-progress .progress-wrapper .progress-bar {
+      height: 6px;
+      background: #1daee4;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      padding-right: 120px; }
+    .page-flight .page-progress .progress-wrapper .plane {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      background: #fff;
+      height: 30px;
+      width: 120px;
+      padding-left: 50px;
+      background: url(/Assets/images/loading-plane.png) left center #f9f9f9 no-repeat;
+      font-size: 28px;
+      color: #ccc;
+      text-align: left; }
+      .page-flight .page-progress .progress-wrapper .plane span {
+        top: 0;
+        line-height: 100%; }
+
 .page-flight .page-overlay {
   position: fixed;
   width: 100%;
