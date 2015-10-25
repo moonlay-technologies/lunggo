@@ -42,8 +42,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = dict.GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
-                if (originCountry == "ID")
-                {
+                //if (originCountry == "ID")
+                //{
                     var url = @"http://booking.airasia.com/Flight/InternalSelect" +
                               @"?o1=" + trip0.OriginAirport +
                               @"&d1=" + trip0.DestinationAirport +
@@ -69,45 +69,45 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     var searchedHtml = (CQ)html;
                     availableFares = searchedHtml[".radio-markets"];
-                }
-                else if (destinationCountry == "ID")
-                {
-                    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                              @"?o1=" + trip0.DestinationAirport +
-                              @"&d1=" + trip0.OriginAirport +
-                              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                              @"&ADT=" + conditions.AdultCount +
-                              @"&CHD=" + conditions.ChildCount +
-                              @"&inl=" + conditions.InfantCount +
-                              @"&r=true" +
-                              @"&s=true" +
-                              @"&mon=true" +
-                              @"&culture=id-ID" +
-                              @"&cc=IDR";
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                    var html = client.DownloadString(url);
-                
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
-                        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
-                
-                    var searchedHtml = (CQ)html;
-                    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
-                }
-                else
-                {
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-                }
+                //}
+                //else if (destinationCountry == "ID")
+                //{
+                //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
+                //              @"?o1=" + trip0.DestinationAirport +
+                //              @"&d1=" + trip0.OriginAirport +
+                //              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+                //              @"&dd2=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
+                //              @"&ADT=" + conditions.AdultCount +
+                //              @"&CHD=" + conditions.ChildCount +
+                //              @"&inl=" + conditions.InfantCount +
+                //              @"&r=true" +
+                //              @"&s=true" +
+                //              @"&mon=true" +
+                //              @"&culture=id-ID" +
+                //              @"&cc=IDR";
+                //    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+                //    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
+                //    client.Headers["Upgrade-Insecure-Requests"] = "1";
+                //    client.Headers["User-Agent"] =
+                //        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                //    client.Headers["Origin"] = "https://booking2.airasia.com";
+                //    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
+                //    var html = client.DownloadString(url);
+                //
+                //    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                //        return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
+                //
+                //    var searchedHtml = (CQ)html;
+                //    availableFares = searchedHtml[".js_availability_container:nth-child(2) .radio-markets"];
+                //}
+                //else
+                //{
+                //    return new SearchFlightResult
+                //    {
+                //        IsSuccess = true,
+                //        Itineraries = new List<FlightItinerary>()
+                //    };
+                //}
                 
                 // [Scrape]
 
@@ -134,7 +134,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                        FlightService.ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
-                        var url = "https://booking.airasia.com/Flight/PriceItinerary" +
+                        url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var itinHtml = (CQ) client.DownloadString(url);
                         var price =
