@@ -20,47 +20,51 @@
 
     ViewBag.LocationList = "";
     ViewBag.DestinationCode = "";
-    
-    string destination = ViewBag.Destination;
-    
-    // switch location
-    switch (destination)
+
+    if (ViewBag.Destination != null)
     {
-        case "jakarta":
-            ViewBag.DestinationCode = "CGK";
-            ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
-            break;
-        case "Bali":
-            ViewBag.DestinationCode = "DPS";
-            ViewBag.LocationList = ViewBag.LocationData["Bali"];
-            break;
-        case "Malaysia":
-            ViewBag.DestinationCode = "KUL";
-            ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
-            break;
-        case "Yogyakarta":
-            ViewBag.DestinationCode = "JOG";
-            ViewBag.LocationList = ViewBag.LocationData["Yogyakarta"];
-            break;
-        case "Singapore":
-            ViewBag.DestinationCode = "SIN";
-            ViewBag.LocationList = ViewBag.LocationData["Singapore"];
-            break;
-        case "Bandung":
-            ViewBag.DestinationCode = "BDO";
-            ViewBag.LocationList = ViewBag.LocationData["Bandung"];
-            break;
-        case "Surabaya":
-            ViewBag.DestinationCode = "SUB";
-            ViewBag.LocationList = ViewBag.LocationData["Surabaya"];
-            break;
-        case "Hongkong":
-            ViewBag.DestinationCode = "HKG";
-            ViewBag.LocationList = ViewBag.LocationData["Hongkong"];
-            break;
+
+        string destination = ViewBag.Destination;
+
+        // switch location
+        switch (destination.ToLower())
+        {
+            case "jakarta":
+                ViewBag.DestinationCode = "CGK";
+                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+                break;
+            case "bali":
+                ViewBag.DestinationCode = "DPS";
+                ViewBag.LocationList = ViewBag.LocationData["Bali"];
+                break;
+            case "malaysia":
+                ViewBag.DestinationCode = "KUL";
+                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+                break;
+            case "yogyakarta":
+                ViewBag.DestinationCode = "JOG";
+                ViewBag.LocationList = ViewBag.LocationData["Yogyakarta"];
+                break;
+            case "singapore":
+                ViewBag.DestinationCode = "SIN";
+                ViewBag.LocationList = ViewBag.LocationData["Singapore"];
+                break;
+            case "bandung":
+                ViewBag.DestinationCode = "BDO";
+                ViewBag.LocationList = ViewBag.LocationData["Bandung"];
+                break;
+            case "surabaya":
+                ViewBag.DestinationCode = "SUB";
+                ViewBag.LocationList = ViewBag.LocationData["Surabaya"];
+                break;
+            case "hongkong":
+                ViewBag.DestinationCode = "HKG";
+                ViewBag.LocationList = ViewBag.LocationData["Hongkong"];
+                break;
+        }
     }
-    
-    
+
+
 }
 
 @section AdditionalJS{
@@ -75,7 +79,7 @@
         subscribeFormFunctions();
         var indexPageDestination = '@ViewBag.Destination' || '';
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
-        var TopDestinations = @Html.Raw(ViewBag.LocationList);
+        var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = @(DateTime.Now.ToString("ddMMyy"));
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>

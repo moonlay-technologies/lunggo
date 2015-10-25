@@ -149,8 +149,12 @@ app.controller('singleFlightController', [
         // flight filter function
         
         // available filter
-        $scope.availableFilter = function(flight) {
-            if (flight.Available) {
+        $scope.availableFilter = function (flight) {
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if (flight.Available) {
+                    return flight;
+                }
+            } else {
                 return flight;
             }
         }
@@ -185,8 +189,12 @@ app.controller('singleFlightController', [
             current: [-1, -1],
             prices: []
         };
-        $scope.priceFilter = function(flight) {
-            if ( flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1] ) {
+        $scope.priceFilter = function (flight) {
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if (flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1]) {
+                    return flight;
+                }
+            } else {
                 return flight;
             }
         }
@@ -219,14 +227,18 @@ app.controller('singleFlightController', [
         }
 
         $scope.airlineFilter = function (flight) {
-            if ($scope.airlineFilterParam.pure == true) {
-                return flight;
-            } else {
-                for (var i in flight.AirlinesTag) {
-                    if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
-                        return flight;
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if ($scope.airlineFilterParam.pure == true) {
+                    return flight;
+                } else {
+                    for (var i in flight.AirlinesTag) {
+                        if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
+                            return flight;
+                        }
                     }
                 }
+            } else {
+                return flight;
             }
         }
 
@@ -350,7 +362,6 @@ app.controller('singleFlightController', [
                     // set searchID
                     RevalidateConfig.SearchId = returnData.SearchId;
                     $scope.flightRequest.SearchId = returnData.SearchId;
-                    $scope.flightRequest.Completeness = returnData.Completeness;
 
                     if ($scope.flightRequest.Completeness == returnData.Completeness) {
                         setTimeout(function() {
@@ -399,7 +410,10 @@ app.controller('singleFlightController', [
 
             for (var i = 0; i < data.length; i++) {
                 $scope.flightList.push(data[i]);
+                $scope.flightList[i].Available = true;
             }
+
+            console.log($scope);
 
             if ( $scope.flightRequest.Completeness == 100 ) {
                 // loop the data
