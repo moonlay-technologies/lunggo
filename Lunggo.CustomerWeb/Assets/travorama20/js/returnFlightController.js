@@ -524,7 +524,9 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.flightSearchParams.SearchId = returnData.SearchId;
 
                     if ($scope.departureFlightConfig.flightSearchParams == returnData.Completeness) {
-                        $scope.getDepartureFlight();
+                        setTimeout(function () {
+                            $scope.getDepartureFlight();
+                        }, 1000);
                     } else {
                         $scope.departureFlightConfig.flightSearchParams.Completeness = returnData.Completeness;
 
@@ -542,7 +544,9 @@ app.controller('returnFlightController', [
                             console.log('Finished getting departure flight list');
                             console.log('----------');
                         } else {
-                            $scope.getDepartureFlight();
+                            setTimeout(function () {
+                                $scope.getDepartureFlight();
+                            }, 1000);
                         }
 
                     }
@@ -582,7 +586,9 @@ app.controller('returnFlightController', [
                     $scope.returnFlightConfig.flightSearchParams.SearchId = returnData.SearchId;
 
                     if ($scope.returnFlightConfig.flightSearchParams == returnData.Completeness) {
-                        $scope.getReturnFlight();
+                        setTimeout(function () {
+                            $scope.getReturnFlight();
+                        }, 1000);
                     } else {
                         $scope.returnFlightConfig.flightSearchParams.Completeness = returnData.Completeness;
 
@@ -600,7 +606,9 @@ app.controller('returnFlightController', [
                             console.log('Finished getting return flight list');
                             console.log('----------');
                         } else {
-                            $scope.getReturnFlight();
+                            setTimeout(function () {
+                                $scope.getReturnFlight();
+                            }, 1000);
                         }
 
                     }

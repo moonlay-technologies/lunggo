@@ -334,9 +334,9 @@ app.controller('singleFlightController', [
                 $scope.loading = true;
                 $scope.loadingFlight = true;
 
-                console.log('----------');
-                console.log('Getting flight list with parameter');
-                console.log(FlightSearchConfig.flightForm);
+                // console.log('----------');
+                // console.log('Getting flight list with parameter');
+                // console.log(FlightSearchConfig.flightForm);
 
                 // ajax
                 $http.get(FlightSearchConfig.Url, {
@@ -349,9 +349,13 @@ app.controller('singleFlightController', [
 
                     // set searchID
                     RevalidateConfig.SearchId = returnData.SearchId;
+                    $scope.flightRequest.SearchId = returnData.SearchId;
+                    $scope.flightRequest.Completeness = returnData.Completeness;
 
                     if ($scope.flightRequest.Completeness == returnData.Completeness) {
-                        $scope.getFlight();
+                        setTimeout(function() {
+                            $scope.getFlight();
+                        }, 1000);
                     } else {
                         console.log('Success getting flight list');
                         // console log the return data
@@ -371,7 +375,9 @@ app.controller('singleFlightController', [
                             $scope.loadingFlight = false;
                         } else {
                             // request for the rest of the flight
-                            $scope.getFlight();
+                            setTimeout(function () {
+                                $scope.getFlight();
+                            }, 1000);
                         }
                     }
                 }).error(function(returnData) {
