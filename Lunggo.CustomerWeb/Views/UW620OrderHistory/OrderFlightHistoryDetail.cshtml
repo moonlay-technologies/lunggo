@@ -1,92 +1,188 @@
 ﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
 @{
-    ViewBag.Title = "Hotel Detail";
-    Layout = "/Views/Shared/_Layout_OrderHistory.cshtml";
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "order";
 }
 
-<div class="flight-history">
-    <div class="container">
-        <div class="row">
-            
-            <div class="col-sm-8">
-                <div class="history-left">
-                    <div class="order-detail">
-                        
-                        <h4><b>HISTORY</b> ORDER - DETAIL <span class="order-id"><b>Reservation No:</b> @Model.RsvNo</span></h4>
-                        
-                        <div class="detail-wrapper">
-                            <div class="row">
-                                <div class="col-sm-4"><b>Contact Name</b></div>
-                                <div class="col-sm-8">@Model.Contact.Name</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Contact Email</b></div>
-                                <div class="col-sm-8">@Model.Contact.Email</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Contact Phone</b></div>
-                                <div class="col-sm-8">@Model.Contact.Phone</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Order Type</b></div>
-                                <div class="col-sm-8">Flight</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Price</b></div>
-                                <div class="col-sm-8">Rp @Model.Payment.FinalPrice.ToString("##,###")</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Payment Method</b></div>
-                                <div class="col-sm-8">@Model.Payment.Method</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4"><b>Payment Status</b></div>
-                                <div class="col-sm-8">@Model.Payment.Status</div>
-                            </div>
-                        </div>
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
 
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-4">
-                <div class="history-right">
-                    @foreach (var trip in Model.Itinerary.Trips)
-                    {
-                        <div class="flight-detail">
-                            @if (trip == Model.Itinerary.Trips.First())
-                            {
-                                <h4 class="text-center"><b>DEPARTURE</b> FLIGHT</h4>
-                            }
-                            else
-                            {
-                                <h4 class="text-center"><b>RETURN</b> FLIGHT</h4>
-                            }
-                            <div class="flight-airline">
-                                <img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" />
-                                <h4>@trip.Segments[0].AirlineName</h4>
-                                <h5>@trip.Segments[0].AirlineCode@trip.Segments[0].FlightNumber</h5>
-                            </div>
-                            <div class="flight-detail">
-                                <div class="row">
-                                    <div class="col-sm-4">Origin</div>
-                                    <div class="col-sm-8">@trip.OriginCity</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">Destination</div>
-                                    <div class="col-sm-8">@trip.DestinationCity</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">Date</div>
-                                    <div class="col-sm-8">@trip.DepartureDate.ToString("d MMMM yyyy")</div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
 
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
         </div>
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="order-detail">
+                    <header class="content-header">
+                        <h2>ORDER ID : <b>@Model.RsvNo</b></h2>
+                    </header>
+                    <section class="content-body">
+
+                        <div class="info-buyer">
+                            <header>
+                                <h4><b>BUYER INFO</b> <a href="#" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</a></h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">User ID</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">@Model.Contact.Email</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Name</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">@Model.Contact.Name</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Date</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">@Model.RsvTime</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Type</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Flight</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Order Final Price</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###")</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Payment Method</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">@Model.Payment.Method</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Payment Status</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">@Model.Payment.Status</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">@Html.I18NString("CW00017")</label>
+                                        <div class="col-xs-9">
+                                            <ol class="passenger-list">
+                                                @foreach (var passenger in Model.Passengers)
+                                                {
+                                                    <li>
+                                                        <div class="row">
+                                                            <div class="col-xs-9">
+                                                                <p>@passenger.FirstName @passenger.LastName</p>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <span>@passenger.Type</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .info-buyer -->
+
+                        <div class="info-flight">
+                            <header>
+                                <h4><b>DETAIL PEMESANAN</b></h4>
+                            </header>
+                            <section>
+                                @foreach (var trip in Model.Itinerary.Trips)
+                                {
+                                    if (trip == Model.Itinerary.Trips.First())
+                                    {
+                                        <div class="flight departure">
+                                            <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p>@Html.I18NString("CW00022") : </p>
+                                                </div><div class="col-xs-9">
+                                                    <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                    <p>@trip.DepartureDate.ToString("dddd, d MMM yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="flight return">
+                                            <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p>@Html.I18NString("CW00022") : </p>
+                                                </div><div class="col-xs-9">
+                                                    <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                    <p>@trip.DepartureDate.ToString("dddd, d MMM yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </section>
+
+                        </div><!-- .info-flight -->
+
+                        <div class="refund-detail">
+                            <header>
+                                <h4><b>DETAIL PEMESANAN</b></h4>
+                            </header>
+                            <section>
+                                <div class="form form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">No Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Status Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div><!-- .refund-detail -->
+
+                    </section>
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
     </div>
 </div>

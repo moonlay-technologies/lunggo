@@ -234,6 +234,9 @@
     <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
+    <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
     <Compile Include="Areas\UW100\Controllers\UW100RouterController.cs" />
     <Compile Include="Areas\UW100\Controllers\UW100SearchController.cs" />
     <Compile Include="Areas\UW100\Logic\UW100SearchLogic.cs" />
@@ -362,6 +365,7 @@
       <DependentUpon>invoice.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\invoice.scss" />
+    <Content Include="Areas\Api\Views\web.config" />
     <None Include="Assets\css\jquery-ui.min.css.bak" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\jquery.range.css" />
@@ -2446,6 +2450,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Api\Views\Account\" />
+    <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />

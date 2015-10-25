@@ -14,31 +14,42 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
-        public VoucherValidationStatusType ValidateVoucherRequest(VoucherRequest voucherRequest)
-        {
-            VoucherValidationStatusType updateStatus = VoucherValidationStatusType.Undefined;
-
-            var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
-            updateStatus = ValidateVoucher(voucher, voucherRequest);
-
-            return updateStatus;
-        }
-        public VoucherResponse UseVoucherRequest(VoucherRequest voucherRequest)
+        public VoucherResponse ValidateVoucherRequest(VoucherRequest voucherRequest)
         {
             VoucherResponse response = new VoucherResponse();
+            VoucherValidationStatusType validationStatus = VoucherValidationStatusType.Undefined;
 
             var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
             response.Email = voucherRequest.Email;
             response.VoucherCode = voucherRequest.VoucherCode;
 
-            response.UpdateStatus = ValidateVoucher(voucher, voucherRequest);
+            validationStatus = ValidateVoucher(voucher, voucherRequest);
 
-            if (response.UpdateStatus == VoucherValidationStatusType.Success)
+            if (validationStatus == VoucherValidationStatusType.Success)
             {
                 CalculateVoucherDiscount(voucher, voucherRequest, response);
-                response.UpdateStatus = VoucherDecrement(voucherRequest.VoucherCode);
+            }
+            response.UpdateStatus = VoucherValidationStatusTypeMessage.Mnemonic(validationStatus);
+            return response;
+        }
+        public VoucherResponse UseVoucherRequest(VoucherRequest voucherRequest)
+        {
+            VoucherResponse response = new VoucherResponse();
+            VoucherValidationStatusType validationStatus = VoucherValidationStatusType.Undefined;
+
+            var voucher = GetDb.GetCampaignVoucher(voucherRequest.VoucherCode);
+            response.Email = voucherRequest.Email;
+            response.VoucherCode = voucherRequest.VoucherCode;
+
+            validationStatus = ValidateVoucher(voucher, voucherRequest);
+
+            if (validationStatus == VoucherValidationStatusType.Success)
+            {
+                CalculateVoucherDiscount(voucher, voucherRequest, response);
+                validationStatus = VoucherDecrement(voucherRequest.VoucherCode);
             }
 
+            response.UpdateStatus = VoucherValidationStatusTypeMessage.Mnemonic(validationStatus);
             return response;
         }
         private VoucherValidationStatusType ValidateVoucher(CampaignVoucher voucher, VoucherRequest voucherRequest)

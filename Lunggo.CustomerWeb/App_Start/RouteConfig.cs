@@ -51,13 +51,11 @@ namespace Lunggo.CustomerWeb
                 url: "UW600/UW610ChangeProfile",
                 defaults: new { controller = "UW610ChangeProfile", action = "ChangeProfile" }
             );
-            /*
             routes.MapRoute(
                 name: "UW620OrderHistory",
                 url: "UW600/UW620OrderHistory",
                 defaults: new { controller = "UW620OrderHistory", action = "OrderHistory" }
             );
-            */
             routes.MapRoute(
                 name: "UW400BookhHotel",
                 url: "{langCode}/Hotel/Booking",
