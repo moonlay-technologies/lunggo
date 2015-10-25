@@ -1,0 +1,438 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Service
+@using Lunggo.ApCommon.Identity.User
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Models
+@model Lunggo.CustomerWeb.Models.FlightCheckoutData
+
+@{
+    ViewBag.Title = "FlightCheckout";
+    Layout = "/Views/Shared/_layout_20150506.cshtml";
+}
+
+@section AdditionalPageCSS {
+    <link rel="stylesheet" href="/Assets/vendor/countrySelect/css/countrySelect.min.css" />
+}
+@section AdditionalPageJavascript {
+    <script src="/Assets/vendor/countrySelect/js/countrySelect.min.js"></script>
+}
+@section PageJavascript {
+    <script>
+        validateCheckoutForm();
+        $('.passport-country').countrySelect({
+            preferredCountries: ['id']
+        });
+        bookingTimeout('@Model.ExpiryTime.ToString("o")');
+        $('.control-expiry').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            minDate: new Date()
+        });
+
+        // validate voucher code
+        var voucherPriceBefore = @Model.Itinerary.TotalFare;
+        var voucherPriceAfter = @Model.Itinerary.TotalFare;
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        $('#validateVoucher').click(function(evt) {
+            evt.preventDefault();
+
+            var voucherCode = $('#voucherCode').val();
+            var voucherEmail = $('#voucherEmail').val();
+
+            if (voucherCode.length == 0) {
+                $('#voucherCode').attr('placeholder', 'cannot null');
+                $('#voucherCode').css('background', '#ffefef')
+            } else {
+
+                $('#voucherCode').css('background', '#ffffff');
+                $('#voucherCode').prop('readonly', true);
+                $('#voucherCode').val('checking');
+
+                $.ajax({
+                    method: 'GET',
+                    url: CheckVoucherConfig.Url,
+                    data: {
+                        token: @Model.Token,
+                        code: voucherCode,
+                        email: voucherEmail
+                    }
+                }).done(function(returnData) {
+
+                    if (returnData.Discount > 0) {
+                        
+                        $('.voucher-value span').html(numberWithCommas(returnData.Discount));
+                        voucherPriceAfter = voucherPriceBefore - returnData.Discount;
+                        $('.voucher-price-after span').html(numberWithCommas(voucherPriceAfter));
+                        $('.voucher-form-label').html('Discount');
+                        $('.voucher-form').hide();
+                        $('.voucher-value').show();
+                    } else {
+                        $('#voucherCode').prop('readonly', false);
+                        $('#voucherCode').val('');
+                    }
+
+                });
+            }
+
+
+        });
+    </script>
+}
+
+@{
+    List<Object> titleList;
+
+    var adultTitleList = new List<Object>
+        {
+            new {Value = Title.Mister, Text = "Mr"},
+            new {Value = Title.Mistress, Text = "Mrs"},
+            new {Value = Title.Miss, Text = "Ms"}
+        };
+
+    var childTitleList = new List<Object>
+        {
+            new {Value = Title.Mister, Text = "Mr"},
+            new {Value = Title.Miss, Text = "Ms"}
+        };
+
+    var adultCount = 0;
+    var childCount = 0;
+    var passengerCount = 0;
+    var needBirthDate = false;
+    var needPassport = false;
+    var needNationality = false;
+    var token = "";
+    var savedPassengers = Model.SavedPassengers;
+
+    try
+    {
+        adultCount = Model.Itinerary.AdultCount;
+        childCount = Model.Itinerary.ChildCount;
+        var infantCount = Model.Itinerary.InfantCount;
+        passengerCount = adultCount + childCount + infantCount;
+        needBirthDate = Model.Itinerary.RequireBirthDate;
+        needPassport = Model.Itinerary.RequirePassport;
+        needNationality = Model.Itinerary.RequireNationality;
+        token = Model.Token;
+    }
+    catch
+    {
+        ViewBag.Message = "BookExpired";
+    }
+}
+
+@switch ((string) ViewBag.Message)
+{
+    default:
+
+    <!-- .checkout-page content start -->
+        <div class="checkout-page hotel-checkout-page">
+
+            <header class="page-header">
+                <div class="container">
+                    <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00088")</strong></div>
+                    <hr>
+                    <h1><b>@Html.I18NString("CW00089")</b> @Html.I18NString("CW00090") @if (!User.Identity.IsAuthenticated)
+                                                                                       {
+                                                                                           <a href="#" class="btn btn-primary btn-yellow toggle-login-field">Login</a>
+                                                                                       }</h1>
+                </div>
+            </header>
+
+            <div class="container">
+                <form action="" class="form" id="flight-customer-form" method="post">
+                    <div class="row">
+
+                        <div class="col-sm-8">
+                        
+                            <section class="login-field">
+                                <form class="form form-inline">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" class="form-control" placeholder="username" />
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label class="control-label">Password</label>
+                                                <input type="password" class="form-control" placeholder="password" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label class="control-label">&nbsp; </label>
+                                            <input type="submit" value="Login" class="btn btn-yellow btn-block" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </section><!-- .login-field -->
+
+                            <section class="customer-detail">
+                                <section class="customer-form">
+                                    <input type="text" class="hidden" name="Token" value="@token" />
+                                    <input type="text" class="hidden" name="Payment.Currency" value="IDR" />
+                                    <div class="form-group">
+                                        <label for="" class="control-label">@Html.I18NString("CW00091") :</label>
+                                        <input type="text" class="form-control control-contactname control-check" name="Contact.Name" placeholder="@Html.I18NString("CW00092")" value="@User.Identity.GetFirstName() @User.Identity.GetLastName()">
+                                        @Html.ValidationMessageFor(data => data.Contact.Name)
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 100%;">
+                                                    <label for="">Country :</label>
+                                                    <input type="text" class="form-control control-countrycode control-check" style="width: 100%;" name="Contact.CountryCode" placeholder="ex:62" value="@User.Identity.GetCountryCd()" />
+                                                    @Html.ValidationMessageFor(data => data.Contact.CountryCode)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 100%;">
+                                                    <label for="">@Html.I18NString("CW00093") :</label>
+                                                    <input type="tel" class="form-control control-phone control-check" style="width: 100%;" name="Contact.Phone" placeholder="ex: 81521807096" value="@User.Identity.GetPhoneNumber()" />
+                                                    @Html.ValidationMessageFor(data => data.Contact.Phone)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="" class="control-label">@Html.I18NString("CW00094") :</label>
+                                                <input type="text" class="form-control control-email control-check" name="Contact.Email" placeholder="ex : nama@email.com" id="voucherEmail" value="@User.Identity.GetEmail()">
+                                                @Html.ValidationMessageFor(data => data.Contact.Email)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @for (var i = 0; i < passengerCount; i++)
+                                    {
+                                        if (i < adultCount)
+                                        {
+                                            titleList = adultTitleList;
+                                            <h5 class="control-label"><b>@Html.I18NString("CW00095") @(i + 1) ( more than 12 @Html.I18NString("CW00096"))</b></h5>
+                                            <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Adult">
+                                        }
+                                        else
+                                        {
+                                            titleList = childTitleList;
+                                            if ((i - adultCount) < childCount)
+                                            {
+                                                <h5 class="control-label"><b>@Html.I18NString("CW00097") @(i + 1 - adultCount) ( 2-12 @Html.I18NString("CW00096") )</b></h5>
+                                                <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Child">
+                                            }
+                                            else
+                                            {
+                                                <h5 class="control-label"><b>@Html.I18NString("CW00098") @(i + 1 - adultCount - childCount) ( less than 2 @Html.I18NString("CW00096") )</b></h5>
+                                                <input type="hidden" name="Passengers[@i].Type" value="@PassengerType.Infant">
+                                            }
+                                        }
+                                        <div class="form-inline">
+                                            <div class="form-group" style="width: 20%;">
+                                                <label for="">@Html.I18NString("CW00099") :</label>
+                                                @Html.DropDownListFor(model => model.Passengers[i].Title, new SelectList(titleList, "Value", "Text"), new { @class = "form-control user-title" })
+                                            </div>
+                                            <div class="form-group" style="width: 39%;">
+                                                <label for="">@Html.I18NString("CW00100") :</label>
+                                                <input type="text" class="form-control control-firstname control-check" style="width: 100%;" name="Passengers[@i].FirstName" placeholder="">
+                                            </div>
+                                            <div class="form-group" style="width: 39%;">
+                                                <label for="">@Html.I18NString("CW00101") :</label>
+                                                <input type="text" class="form-control control-lastname control-check" style="width: 100%;" name="Passengers[@i].LastName" placeholder="">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        if (needBirthDate || i >= adultCount)
+                                        {
+                                            <div class="form-group">
+                                                <label for="" class="control-label">@Html.I18NString("CW00102") :</label>
+                                                <input type="date" class="form-control control-birthdate control-check date-picker" name="Passengers[@i].BirthDate" placeholder="">
+                                            </div>
+                                        }
+                                        if (needPassport)
+                                        {
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 34%;">
+                                                    <label for="" class="control-label">Passport Country</label>
+                                                    <input type="type" name="name" value="" class="passport-country form-control" style="width: 100%;" />
+                                                    <input type="type" name="name" value="" class="passport-country_code hidden" />
+                                                </div>
+                                                <div class="form-group" style="width: 39%">
+                                                    <label for="" class="control-label">@Html.I18NString("CW00103") :</label>
+                                                    <input type="text" class="form-control control-passport control-check" name="Passengers[@i].PassportNumber" placeholder="" style="width: 100%;">
+                                                </div>
+                                                <div class="form-group" style="width: 25%;">
+                                                    <label for="" class="control-label">@Html.I18NString("CW00104"):</label>
+                                                    <input type="text" class="form-control control-expiry control-check" name="Passengers[@i].PassportExpiryDate" placeholder="" style="width: 100%;">
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (needNationality)
+                                        {
+                                            <div class="form-inline">
+                                                <div class="form-group" style="width: 34%;">
+                                                    <label for="" class="control-label">Nationality</label>
+                                                    <input type="type" name="name" value="" class="passport-country form-control" style="width: 100%;" />
+                                                    <input type="type" name="name" value="" class="passport-country_code hidden" />
+                                                </div>
+                                            </div>
+                                        }
+                                        <input type="hidden" class="form-control" name="Passengers[@i].Country" placeholder="" value="ID">
+                                    }
+                                </section><!-- .customer-form -->
+                                <section class="payment-form">
+                                    <h2><b>@Html.I18NString("CW00106")</b> @Html.I18NString("CW00107")</h2>
+
+                                    <section class="payment-option">
+                                        <label class="payment-transfer" for="payment-transfer">
+                                            <input type="radio" name="Payment.Method" value="@PaymentMethod.BankTransfer" id="payment-transfer">
+                                            <span>Bank Transfer</span>
+                                        </label>
+                                        <label class="payment-veritrans active" for="payment-virtual">
+                                            <input type="radio" name="Payment.Method" value="@PaymentMethod.VirtualAccount" id="payment-virtual" checked>
+                                            <span>ATM</span>
+                                        </label>
+                                        <label class="payment-veritrans" for="payment-creditcard">
+                                            <input type="radio" name="Payment.Method" value="@PaymentMethod.CreditCard" id="payment-creditcard">
+                                            <span>Credit Card</span>
+                                        </label>
+                                        <label class="payment-veritrans" for="payment-mandiri">
+                                            <input type="radio" name="Payment.Method" value="@PaymentMethod.MandiriClickPay" id="payment-mandiri">
+                                            <span>Mandiri ClickPay</span>
+                                        </label>
+                                        @*
+                                            <label class="payment-veritrans" for="payment-cimb">
+                                                <input type="radio" name="Payment.Method" value="@PaymentMethod.CimbClicks" id="payment-cimb">
+                                                <span>CIMB Clicks</span>
+                                            </label>
+                                        *@
+                                    </section><!-- .payment-option -->
+                                    @*
+                                        <section class="payment-detail hidden">
+                                            <section class="payment-veritrans-detail active">
+                                                <h4>Veritrans</h4>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore assumenda laboriosam nulla quis necessitatibus nam iure, dicta dignissimos soluta sequi reiciendis, ipsa deleniti illo, voluptate! Magnam id veritatis accusamus.</p>
+                                            </section>
+                                            <section class="payment-transfer-detail">
+                                                <h4>Transfer Bank</h4>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae expedita magni a id assumenda dolor tempore, fugiat nulla at, mollitia odio quos officiis distinctio nostrum. Illum eaque, dolorem labore.</p>
+                                            </section>
+                                        </section><!-- .payment-detail -->
+                                    *@
+
+                                </section><!-- .payment-form -->
+                                <section class="payment-button">
+                                    <!--<small>Dengan klik tombol "Bayar", Anda telah setuju dengan <a href="#">syarat dan ketentuan</a> dan <a href="@Url.Action("PrivacyPolicy", "Term")" target="_blank">ketentuan dan kebijakan privasi.</a></small>-->
+                                    <small>@Html.I18NString("CW00109")</small>
+                                    <button class="btn btn-primary btn-yellow validate-fare send-form" disabled data-token="@token">@Html.I18NString("CW00108")</button>
+                                </section><!-- .payment-button -->
+                            </section><!-- .customer-detail -->
+
+                        </div><!-- .col-sm-8 -->
+
+                        <div class="col-sm-4">
+                            <section class="order-detail">
+                                <h2><b>@Html.I18NString("CW00110")</b> @Html.I18NString("CW00111")</h2>
+                                @foreach (var trip in Model.Itinerary.Trips)
+                                {
+                                    <section class="flight-detail">
+                                        <h3 class="text-center">@trip.OriginCity @Html.I18NString("CW00112") @trip.DestinationCity</h3>
+                                        <h5 class="airline-name">
+                                            <img src="@trip.Airlines[0].LogoUrl" alt="Alternate Text" class="airline-logo" /> @trip.Airlines[0].Name
+                                        </h5>
+                                        <div class="row flight-route">
+                                            <div class="col-sm-6 text-right flight-origin">
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.First().DepartureTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.First().DepartureAirport</strong></h5>
+                                                <h5>@trip.OriginAirportName</h5>
+                                                <h5>@trip.OriginCity</h5>
+                                            </div>
+                                            <div class="separator">@Html.I18NString("CW00034")</div>
+                                            <div class="col-sm-6 text-left flight-destination">
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("dd-MMM-yyyy")</h5>
+                                                <h5>@trip.Segments.Last().ArrivalTime.ToString("HH : mm")</h5>
+                                                <h5><strong>@trip.Segments.Last().ArrivalAirport</strong></h5>
+                                                <h5>@trip.DestinationAirportName</h5>
+                                                <h5>@trip.DestinationCity</h5>
+                                            </div>
+                                        </div>
+                                    </section>
+                                <!-- .flight-detail -->
+                                }
+                                <section class="price-detail">
+                                    <h2><b>@Html.I18NString("CW00114")</b> @Html.I18NString("CW00115")</h2>
+                                    <div class="content-wrapper">
+                                        <div class="row">
+                                            <div class="col-sm-6">@(Model.Itinerary.InfantCount + @Model.Itinerary.ChildCount + @Model.Itinerary.AdultCount) @Html.I18NString("CW00116")</div>
+                                            <div class="col-sm-6 voucher-price-before">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">@Html.I18NString("CW00117")</div>
+                                            <div class="col-sm-6">@Html.I18NString("CW00120")</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">@Html.I18NString("CW00118")</div>
+                                            <div class="col-sm-6">@Html.I18NString("CW00121")</div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-6">@Html.I18NString("CW00119")</div>
+                                            <div class="col-sm-6">Rp @Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 voucher-form-label">Voucher Code</div>
+                                            <div class="col-sm-6">
+                                                <div class="voucher-form form-group">
+                                                    <input type="text" class="form-control" id="voucherCode" name="DiscountCode" placeholder="">
+                                                    <a href="#" class="btn btn-yellow btn-block" id="validateVoucher">Cek Voucher</a>
+                                                </div>
+                                                <div class="voucher-value" style="display:none;">
+                                                    Rp <span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-sm-6">Final price</div>
+                                            <div class="col-sm-6 voucher-price-after">Rp <span>@Model.Itinerary.TotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</span></div>
+                                        </div>
+                                    </div>
+                                </section><!-- .price-detail -->
+                            </section><!-- .order-detail -->
+                        </div><!-- .col-sm-4 -->
+
+                    </div>
+                </form>
+            </div>
+
+
+            <!-- loading screen -->
+            <div class="search-flight-loading flight-validate-loading">
+
+                <div class="loading-image-wrapper">
+                    <img src="/Assets/images/loading-sample.png" alt="Loading" />
+                    <div class="loading-text">
+                        <h2>@Html.I18NString("CW00041")</h2>
+                        <h4>@Html.I18NString("CW00105")</h4>
+                    </div>
+                </div>
+
+            </div><!-- . search-flight-loading -->
+
+
+        </div>
+        <!-- .checkout-page content end -->
+        break;
+    case "BookExpired":
+        @:[Ini ceritanya page booking expired]
+        break;
+    case "NoLongerAvailable":
+        @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
+        break;
+    case "InvalidInputData":
+        @:[Ini ceritanya page kalo input datanya ga bener]
+        break;
+}
+Status API Training Shop Blog About Pricing
+© 2015 GitHub, Inc. Terms Privacy Security Contact Help
