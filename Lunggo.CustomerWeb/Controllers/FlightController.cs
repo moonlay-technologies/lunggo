@@ -101,7 +101,10 @@ namespace Lunggo.CustomerWeb.Controllers
             catch
             {
                 ViewBag.Message = "BookExpired";
-                return View();
+                return View(new FlightCheckoutData
+                {
+                    Token = token
+                });
             }
         }
 
@@ -195,6 +198,13 @@ namespace Lunggo.CustomerWeb.Controllers
             var paymentService = PaymentService.GetInstance();
             paymentService.SubmitTransferConfirmationReport(report, fileInfo);
             return RedirectToAction("Thankyou", "Flight", new { rsvNo = report.RsvNo });
+        }
+
+        public ActionResult TopDestinations()
+        {
+            var flightService = FlightService.GetInstance();
+            var topDestinations = flightService.GetTopDestination();
+            return View(topDestinations);
         }
     }
 }

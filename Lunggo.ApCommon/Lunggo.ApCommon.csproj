@@ -154,6 +154,19 @@
     <Compile Include="Activity\Service\SelectActivityByType.cs" />
     <Compile Include="Activity\Service\ThingsToDo.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
+    <Compile Include="Campaign\Constant\CampaignType.cs" />
+    <Compile Include="Campaign\Constant\VoucherValidationStatusType.cs" />
+    <Compile Include="Campaign\Database\Logic\GetDb.cs" />
+    <Compile Include="Campaign\Database\Logic\UpdateDb.cs" />
+    <Compile Include="Campaign\Database\Query\CheckVoucherUsageQuery.cs" />
+    <Compile Include="Campaign\Database\Query\GetCampaignVoucherRecordQuery.cs" />
+    <Compile Include="Campaign\Database\Query\GetVoucherRecipientsRecordQuery.cs" />
+    <Compile Include="Campaign\Database\Query\VoucherDecrementQuery.cs" />
+    <Compile Include="Campaign\Model\CampaignVoucher.cs" />
+    <Compile Include="Campaign\Model\VoucherRequest.cs" />
+    <Compile Include="Campaign\Model\VoucherResponse.cs" />
+    <Compile Include="Campaign\Service\CampaignVoucher.cs" />
+    <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\Supplier.cs" />
@@ -235,6 +248,7 @@
     <Compile Include="Flight\Database\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdateDetailsQuery.cs" />
     <Compile Include="Flight\Database\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Flight\Model\TopDestination.cs" />
     <Compile Include="Flight\Service\Select.cs" />
     <Compile Include="Flight\Service\Bundle.cs" />
     <Compile Include="Flight\Service\Discount.cs" />
@@ -247,6 +261,7 @@
     <Compile Include="Flight\Service\ModelConversion.cs" />
     <Compile Include="Flight\Service\Payment.cs" />
     <Compile Include="Flight\Service\PriceMargin.cs" />
+    <Compile Include="Flight\Service\TopDestinations.cs" />
     <Compile Include="Flight\Service\UpdateBookingStatus.cs" />
     <Compile Include="Flight\Service\GetDetails.cs" />
     <Compile Include="Flight\Service\GetRules.cs" />
@@ -255,6 +270,7 @@
     <Compile Include="Flight\Service\IssueTicket.cs" />
     <Compile Include="Flight\Service\Revalidate.cs" />
     <Compile Include="Flight\Service\Search.cs" />
+    <Compile Include="Flight\Utility\FlightCacheUtil.cs" />
     <Compile Include="Flight\Utility\IdUtil.cs" />
     <Compile Include="Flight\Utility\Parser.cs" />
     <Compile Include="Flight\Utility\SearchConditionEncoder.cs" />

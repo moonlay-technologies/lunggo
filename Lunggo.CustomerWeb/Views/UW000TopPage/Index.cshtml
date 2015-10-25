@@ -34,13 +34,13 @@
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>
                                     <input type="radio" name="flightType" class="form-flight-type" value="return" checked />
                                     <span>Pulang Pergi</span>
                                 </label>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <label>
                                     <input type="radio" name="flightType" class="form-flight-type" value="oneway" />
                                     <span>Sekali Jalan</span>
@@ -49,19 +49,19 @@
                         </div>
 
                         <div class="form-group flight-destination">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <input type="text" class="form-flight-origin form-flight-location form-control" value="" placeholder="Bandara Asal" />
                             </div>
-                            <div class="text-center col-sm-12">
+                            <div class="text-center col-xs-12">
                                 <span class="switch-destination"></span>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <input type="text" class="form-flight-destination form-flight-location form-control" value="" placeholder="Bandara Tujuan" />
                             </div>
                         </div>
 
                         <div class="form-group flight-date">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-flight-departure">
                                     <small>Tanggal Keberangkatan</small>
                                     <span class="date">28</span>
@@ -69,7 +69,7 @@
                                     <span class="year">2015</span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-flight-return">
                                     <small>Tanggal Pulang</small>
                                     <span class="date">28</span>
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="form-group flight-class">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <div class="form-control text-center form-flight-class">
                                     <span>Kelas Penerbangan</span>
                                     <div class="option">
@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="form-group flight-passenger">
-                            <div class="col-sm-4">
+                            <div class="col-xs-4">
                                 <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
                                     <h5 class="passenger-input adult">1</h5>
                                     <small>
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-xs-4">
                                 <div class="form-flight-passenger child">
                                     <h5 class="passenger-input child">0</h5>
                                     <small>
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-xs-4">
                                 <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="right" title="Tidak boleh lebih dari jumlah penumpang dewasa">
                                     <h5 class="passenger-input infant">0</h5>
                                     <small>
@@ -154,7 +154,7 @@
                         </div>
 
                         <div class="form-group flight-submit">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <input type="text" name="info" value="" class="hidden" />
                                 <input type="submit" class="btn btn-yellow block flight-submit-button" value="SEARCH" />
                             </div>
@@ -167,12 +167,12 @@
                     <form class="form form-horizontal form-hotel">
 
                         <div class="form-group hotel-location">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <input type="text" name="hotelLocation" value="" class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel" />
                             </div>
                         </div>
                         <div class="form-group hotel-date">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-hotel-checkin">
                                     <small>Tanggal Keberangkatan</small>
                                     <span class="date">28</span>
@@ -180,7 +180,7 @@
                                     <span class="year">2015</span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-hotel-checkout">
                                     <small>Tanggal Keberangkatan</small>
                                     <span class="date">28</span>
@@ -190,13 +190,13 @@
                             </div>
                         </div>
                         <div class="form-group hotel-room">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-hotel-night">
                                     <small>Malam</small>
                                     <input type="text" name="hotelNight" value="1" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="form-hotel-room">
                                     <small>Kamar</small>
                                     <input type="text" name="hotelNight" value="1" />
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                         <div class="form-group hotel-submit">
-                            <div class="col-sm-12">
+                            <div class="col-xs-12">
                                 <input type="submit" name="hotelSubmit" value="SEARCH" class="btn btn-yellow block form-control" />
                             </div>
                         </div>
@@ -233,12 +233,23 @@
         @Html.Partial("/Views/Shared/Travorama20/_SearchCalendar.cshtml")
         @Html.Partial("/Views/Shared/Travorama20/_SearchLocation.cshtml")
     </div><!-- .container -->
-    <div class="slider">
-        <div class="slider-text hidden">
-            <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
-            <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
-        </div>
-    </div><!-- .slider -->
+    @if (ViewBag.Destination == null )
+    {
+        <div class="page-slider">
+            <div class="slider-text hidden">
+                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
+                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
+            </div>
+        </div><!-- .slider -->
+    }else{
+        <div class="page-slider" style="background-image:url('/Assets/images/campaign/@(ViewBag.Destination).jpg');">    
+            <div class="slider-text hidden">
+                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
+                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
+            </div>
+        </div><!-- .slider -->
+    }
+        
 </section><!-- .section-search -->
 
 <section class="section-reason">
@@ -246,110 +257,184 @@
         <img src="/Assets/images/choose-travorama.png" alt="Why choose Travorama" />
     </div>
 </section>
+@if (ViewBag.Destination == null){
+    <section class="section-popular">
+        <div class="container">
+            <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
 
-<!--
-<section class="section-reason">
-    <div class="reason reason-1">
-        <h3>Mengapa Memilih <b>Travorama?</b></h3>
-    </div>
-    <div class="reason reason-2">
-        <h3>Memiliki <b>9000 Rute Penerbangan</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-    <div class="reason reason-3">
-        <h3>Menyediakan <b>Hotel Domestik &amp; Internasional</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-    <div class="reason reason-4">
-        <h3>Beragam Pilihan <b>Activity Domestik &amp; Internasional</b></h3>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-    </div>
-</section><!-- .section-reason -->
+            <div class="row">
+                <div class="col-xs-4 popular-left">
+                    <div class="destination small">
+                        <a href="/id/jakarta" data-target="jakarta">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Jakarta</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
+                    </div>
+                    <div class="destination medium yellow">
+                        <a href="/id/bali" data-target="bali">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Bali</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
+                    </div>
+                    <div class="destination large">
+                        <a href="/id/malaysia" data-target="malaysia">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Malaysia</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
+                    </div>
+                </div>
+                <div class="col-xs-4 popular-middle">
+                    <div class="destination half yellow">
+                        <a href="/id/yogyakarta" data-target="yogyakarta">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Yogyakarta</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
+                    </div>
+                    <div class="destination half yellow">
+                        <a href="/id/singapore" data-target="singapore">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Singapore</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
+                    </div>
+                </div>
+                <div class="col-xs-4 popular-right">
+                    <div class="destination large">
+                        <a href="/id/bandung" data-target="bandung">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Bandung</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
+                    </div>
+                    <div class="destination medium yellow">
+                        <a href="/id/surabaya" data-target="surabaya">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Surabaya</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
+                    </div>
+                    <div class="destination small">
+                        <a href="/id/hongkong" data-target="hongkong">
+                            <h3>
+                                <small>Penerbangan ke</small> <b>Hongkong</b>
+                            </h3>
+                            <span>See Review</span>
+                        </a>
+                        <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
+                    </div>
+                </div>
+            </div>
 
-<section class="section-popular">
+        </div>
+    </section>
+    <!-- .section-popular -->
+}
+else
+{
+    <section class="section-popular">
+        <div class="container">
+            <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
+            
+            <div class="route-wrapper">
+            
+                <div class="row">
+                    
+                    @for (var i = 1; i <= 12; i++)
+                    {
+                        <div class="col-xs-4">
+                            <div class="route">
+                                <header>
+                                    <h5><span>Rute Penerbangan</span></h5>
+                                </header>
+                                <section>
+                                    <h4><b>Yogyakarta</b> ke <b>Yogyakarta</b></h4>
+                                    <p>Harga mulai dari <b>Rp 999.999.999</b></p>
+                                    <a class="btn btn-yellow" href="@(DateTime.Now.ToString("ddMMyy"))-100y">LIHAT SEKARANG</a>
+                                </section>
+                            </div>
+                        </div>
+                    }
+
+                </div>    
+
+            </div><!-- .destination-wrapper -->
+
+        </div>
+    </section>
+}
+
+<section class="section-subscribe">
     <div class="container">
-        <h2 class="section-title stripe text-center">TUJUAN <span>TERPOPULER</span></h2>
+
+        <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
 
         <div class="row">
-            <div class="col-sm-4 popular-left">
-                <div class="destination small">
-                    <a href="/id/jakarta" data-target="jakarta">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Jakarta</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-jakarta.jpg" alt="Jakarta, Indonesia" />
-                </div>
-                <div class="destination medium yellow">
-                    <a href="/id/bali" data-target="bali">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Bali</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-bali.jpg" alt="Bali, Indonesia" />
-                </div>
-                <div class="destination large">
-                    <a href="/id/malaysia" data-target="malaysia">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Malaysia</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-malaysia.jpg" alt="Malaysia" />
-                </div>
+            <div class="col-xs-7">
+                <h2><b>Daftar &amp; Dapatkan</b> Info Promo dan Travel Terkini dari <b>Travorama!</b></h2>
             </div>
-            <div class="col-sm-4 popular-middle">
-                <div class="destination half yellow">
-                    <a href="/id/yogyakarta" data-target="yogyakarta">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Yogyakarta</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-yogyakarta.jpg" alt="Yogyakarta, Indonesia" />
-                </div>
-                <div class="destination half yellow">
-                    <a href="/id/singapore" data-target="singapore">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Singapore</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-singapore.jpg" alt="Singapore" />
-                </div>
-            </div>
-            <div class="col-sm-4 popular-right">
-                <div class="destination large">
-                    <a href="/id/bandung" data-target="bandung">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Bandung</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-bandung.jpg" alt="Bandung, Indonesia" />
-                </div>
-                <div class="destination medium yellow">
-                    <a href="/id/surabaya" data-target="surabaya">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Surabaya</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-surabaya.jpg" alt="Surabaya, Indonesia" />
-                </div>
-                <div class="destination small">
-                    <a href="/id/hongkong" data-target="hongkong">
-                        <h3>
-                            <small>Penerbangan ke</small> <b>Hongkong</b>
-                        </h3>
-                        <span>See Review</span>
-                    </a>
-                    <img src="/Assets/images/pop-hongkong.jpg" alt="Hongkong" />
+            <div class="col-xs-5">
+                <form class="form subscribe-form">
+                    <div class="form-group">
+                        <input type="text" name="address" value="" class="subscribe-email form-control" placeholder="Alamat Email Anda" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="name" value="" class="subscribe-name form-control" placeholder="Nama Anda" />
+                        <input type="submit" class="btn btn-yellow" value="DAFTAR" />
+                    </div>
+                </form>
+                <div class="subscribe-form subscribed">
+                    <h2>Terima kasih telah mendaftar di Travorama</h2>
                 </div>
             </div>
         </div>
 
     </div>
-</section><!-- .section-popular -->
+</section><!-- .section-subscribe -->
+
+<section class="section-payment">
+    <div class="container text-center">
+
+        <h2 class="section-title stripe text-center">KAMI MENERIMA <span>PEMBAYARAN</span> DARI</h2>
+
+        <p class="text-center">
+            <img src="/Assets/images/payment-method.jpg" alt="Visa and Master Card, ATM Bersama" />
+        </p>
+
+    </div>
+</section><!-- .section-payment -->
+
+<section class="section-feedback">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-6">
+
+                <h2>Pendapat Orang-Orang Mengenai Travorama</h2>
+                <blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci.</p>
+                    <footer>John Aliwarga</footer>
+                </blockquote>
+
+            </div>
+        </div>
+
+    </div>
+</section><!-- .section-feedback -->

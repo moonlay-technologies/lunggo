@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.DownloadString("https://booking2.airasia.com/BookingList.aspx");
 
-                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && client.StatusCode == HttpStatusCode.OK)
+                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 client.UploadString("https://booking2.airasia.com/BookingList.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && client.StatusCode == HttpStatusCode.OK)
+                if (client.ResponseUri.AbsolutePath != "/BookingList.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 var changeItinHtml = client.UploadString("https://booking2.airasia.com/ChangeItinerary.aspx", postData);
 
-                if (client.ResponseUri.AbsolutePath != "/PaymentChange.aspx" && client.StatusCode == HttpStatusCode.OK)
+                if (client.ResponseUri.AbsolutePath != "/PaymentChange.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
@@ -186,7 +186,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     client.UploadString("https://booking2.airasia.com/PaymentChange.aspx", postData);
 
-                    if (client.ResponseUri.AbsolutePath != "/WaitChange.aspx" && client.StatusCode == HttpStatusCode.OK)
+                    if (client.ResponseUri.AbsolutePath != "/WaitChange.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                         throw new Exception();
 
                     // [GET] WaitChange
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var sw = Stopwatch.StartNew();
                     var retryLimit = new TimeSpan(0, 1, 0);
                     var retryInterval = new TimeSpan(0, 0, 2);
-                    while (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && sw.Elapsed <= retryLimit && client.StatusCode == HttpStatusCode.OK)
+                    while (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && sw.Elapsed <= retryLimit && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                     {
                         client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                         client.Headers["Accept"] =
@@ -208,11 +208,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         client.Headers["Referer"] = "https://booking2.airasia.com/WaitChange.aspx";
 
                         client.DownloadString("https://booking2.airasia.com/WaitChange.aspx");
-                        if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && client.StatusCode == HttpStatusCode.OK)
+                        if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                             Thread.Sleep(retryInterval);
                     }
 
-                    if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && client.StatusCode == HttpStatusCode.OK)
+                    if (client.ResponseUri.AbsolutePath != "/ChangeFinalItinerary.aspx" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
                         throw new Exception();
 
                     return new OrderTicketResult

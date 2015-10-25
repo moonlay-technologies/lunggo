@@ -156,6 +156,7 @@
     <Compile Include="Database\CommandDefinition.cs" />
     <Compile Include="Database\DapperDBWrapper.cs" />
     <Compile Include="Database\DbService.cs" />
+    <Compile Include="Database\ExecuteNonQueryBase.cs" />
     <Compile Include="Database\IDbTableRepository.cs" />
     <Compile Include="Database\IDbWrapper.cs" />
     <Compile Include="Database\ITableRecord.cs" />

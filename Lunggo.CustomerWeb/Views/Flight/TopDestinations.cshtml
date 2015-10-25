@@ -1,0 +1,29 @@
+﻿@model Lunggo.ApCommon.Flight.Model.TopDestinations
+
+@{
+    ViewBag.Title = "TopDestination";
+}
+
+<h2>TopDestination</h2>
+
+<div>
+    <h4>TopDestinations</h4>
+    <hr />
+    <table>
+        <thead>
+            <tr>
+                <td>Origin</td>
+                <td>Destination</td>
+                <td>Price</td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.TopDestinationList)
+        {
+            <tr>
+                <td>@item.OriginCity</td>
+                <td>@item.DestinationCity</td>
+                <td>@item.CheapestPrice.Value @item.CheapestPrice.Currency</td>
+            </tr>
+        }
+    </table>
+</div>

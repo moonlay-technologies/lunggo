@@ -1,0 +1,11 @@
+﻿<aside class="account-menu">
+
+    <header>
+        <span>Shinta Tamara</span>
+    </header>
+    <ul>
+        <li class="profile"><a href="#" class="@(ViewBag.PageActiveSection == "profile" ? "active" : "" )" ng-click="changeSection('profile')" ng-class="{'active': currentSection == 'profile'}">Ubah Profile</a></li>
+        <li class="order"><a href="#" class="@(ViewBag.PageActiveSection == "order" ? "active" : "" )" ng-click="changeSection('order')" ng-class="{'active': currentSection == 'order'}">Cek Pemesanan</a></li>
+    </ul>
+
+</aside><!-- -.account-menu -->

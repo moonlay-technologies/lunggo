@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int TotalTransit { get; set; }
         public List<Transit> Transits { get; set; }
         public List<Airline> Airlines { get; set; }
-        public TimeSpan TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
     }
 
     public class FlightTrip : FlightTripBase

@@ -1,0 +1,353 @@
+﻿/*
+
+Page Checkout Styling
+file : /Assets/travorama20/css/_page_checkout.scss
+
+*/
+
+// page checkout
+.page-checkout {}
+
+// checkout step
+.checkout-step {position:relative;
+    &:before {content:""; background:#a6a6a6; position:absolute; width:50%; left:0; top:0; height:100%; z-index:1;}
+    &:after {content:""; background:#2fb4e6; position:absolute; width:50%; top:0; height:100%; left:50%; z-index:1;}
+    .step {float:left; width:25%; font-size:21px; position:relative; z-index:2; color:#fff; padding:15px; background:#2fb4e6; @include skew-x(-30deg);
+        &+.step {border-left:2px solid #1f99c7;}
+        &.active {background:#032e55;}
+        &.inactive {background:#a6a6a6;}
+        &.inactive + .step {border-left:2px solid #a6a6a6;}
+        span {@include skew-x(30deg); display:block; padding-left:10px;}
+        b {font-size:14px; font-weight:bold;}
+    }
+
+    // if step 4 active
+    &.active-1:before {background:#032e55;}
+
+    &.active-4:after {background:#032e55;}
+
+}
+
+// checkout content
+.checkout-content {padding-bottom:15px;}
+
+// flight detail
+.flight-detail {margin-bottom:20px; background:#fff;
+    // if return flight
+    &#return-flight {
+        header span:before {background-position:-20px;}
+    }
+    // *****
+    // header
+    header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; position:relative;
+        span {font-weight:bold; padding-left:25px; margin-left:5px; position:relative;
+            &:before {content:""; width:20px; height:20px; left:0; position:absolute; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%;}
+        }
+        .fare-detail {background:#028ec3; position:absolute; right:0; top:0; height:100%; padding:12px;}
+    }
+    // detail content
+    .detail-content {border:$border-default; border-top:none;
+        // flight segment
+        .segment {position:relative; padding-bottom:12px;
+            &:before,&:after {content:""; clear:both; display:block; width:100%;}
+            .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px; display:block; padding-left:10%; margin-top:0; padding-top:7.5px;}
+            .segment-number {float:left; width:5%; position:absolute; top:10px;
+                span {background:$color-main-blue; color:#fff; font-weight:600; padding:3px 10px;}
+            }
+            .segment-left {float:left; width:10%; margin-left:10%; position:relative;
+                .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
+                .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
+            }
+            .segment-right {@extend .segment-left; width:80%; margin-left:0;
+                &:before,&:after {content:""; clear:both; display:block; width:100%;}
+                &>div {float:left;}
+                .segment-departure {width:35%; padding-top:7.5px; padding-left:15px;
+                    h5 {margin:0; margin-bottom:5px; font-size:11px;}
+                    h3 {font-weight:bold; margin:0; margin-bottom:5px; font-size:16px;}
+                    h4 {font-weight:bold; margin:0; margin-bottom:5px; font-size:12px;}
+                }
+                .segment-duration {width:30%; padding-right:20px; padding-top:20px;
+                    h5 {border-bottom:3px solid $color-main-blue; text-align:center; padding-bottom:5px;
+                        span {font-weight:bold;}
+                    }
+                }
+                .segment-arrival {@extend .segment-departure; padding-left:0;}
+            }
+            .segment-operator {display:block; clear:both; padding-left:60px; padding-right:60px; padding-top:5px;
+                p {border-top:$border-default; margin-top:10px; padding-top:10px; margin-bottom:0; font-style:italic;
+                    img {height:20px;}
+                    span {font-weight:600;}
+                }
+            }
+        }
+        // flight transit
+        .transit {text-align:center; padding:15px 0;
+            &:after {border-top:1px dashed $color-main-blue; content:""; display:block; width:100%; position:relative; top:-10px;}
+            p {background:#fff; display:inline; font-style:italic; font-weight:600; color:$color-main-blue; background:#fff; position:relative; z-index:2; padding:0 10px;}
+        }
+    }
+}
+
+// passenger detail
+.passenger-detail {margin-bottom:12px;
+    
+    // passenger form
+    .passenger-form {padding-bottom:12px;
+        header {background:$color-main-blue; color:#fff; padding:12px; font-size:14px; font-weight:bold; position:relative;
+            .toggle {content:""; position:absolute; top:0; right:0; padding:0; background:#028ec3; height:100%; display:block; width:40px; cursor:pointer;
+                &:after {content:"-"; position:absolute; font-size:28px; color:#fff; font-weight:bold; top:0; left:0; text-align:center; width:100%;}
+            }
+        }
+        .passenger-content {padding:12px; border:$border-default; border-top:none; background:#fff;}
+        // if passenger form inactive
+        &.inactive {
+            header .toggle:after {content:"+";}
+            .passenger-content {display:none;}
+        }
+    }
+}
+
+// payment method
+.payment-wrapper {margin-bottom:24px;
+    .payment {background:#fff;
+        label {display:block; cursor:pointer;}
+        header {background:$color-main-blue; position:relative;
+            .input-wrapper {height:100%; position:absolute; background:#028ec3; width:30px; text-align:center; padding-top:6px;}
+            h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:30px; font-size:12px; font-weight:600;}
+        }
+        section {padding:12px; border:$border-default; text-align:center;}
+    }
+}
+
+// widget
+.widget-container {
+    .widget {
+        .widget-title {}
+        header {}
+        .widget-content {background:#f4f4f4;}
+        footer {}
+
+        // widget price detail
+        &.price-detail {
+            .widget-content {padding:12px; font-size:12px;
+                dl {
+                    &:before, &:after {@include clearfix();}
+                    dt {font-weight:normal; width:60%; float:left; position:relative;
+                        &:before {content:""; position:absolute; width:7px; height:7px; background:#fd8524; left:-12px; top:3px;}
+                    }
+                    dd {font-weight:600; width:40%; float:left; text-align:right;}
+                }
+                dl.total-price {border-top:$border-default; padding-top:12px; margin-bottom:0;
+                    dt {font-weight:600; width:40%;
+                        &:before {display:none;}
+                    }
+                    dd {color:#ff7200; font-size:16px; font-weight:bold; width:60%;}
+                }
+            }
+            footer {padding:12px; background:#ddd; font-style:italic;}
+        }
+
+        // widget voucher
+        &.voucher {
+            .widget-content {padding:12px;}
+        }
+
+        // widget airline
+        &.flight {
+            .widget-content {padding:12px; border:$border-default; border-top:none;
+                .airline {padding-bottom:12px;
+                    .airline-image {width:50px; border:$border-default; float:left; margin-right:12px; background:#fff;}
+                    .airline-name {font-weight:bold; color:$color-main-blue;}
+                    .airline-number {@extend &.airline-name;}
+                }
+                .route {
+                    &:before, &:after {@include clearfix;}
+                    .origin {float:left; width:45%;}
+                    .duration {float:left; width:7%; margin-right:3%; content:""; border-top:3px solid $color-main-blue; margin-top:50px;}
+                    .destination {@extend &.origin;}
+                    //
+                    h4 {font-weight:bold;}
+                    h5 {}
+                }
+            }
+            // return flight
+            #return-flight {margin-top:-20px;}
+        }
+
+        // widget countdown
+        &.countdown {
+            .widget-content {background:#ffd632; padding:12px;
+                P {padding-left:28px; background:url(/Assets/images/sandclock-yellow.png) left 3px no-repeat; font-size:12px; margin-bottom:12px;}
+                .timer {background:#ffefb1; border-bottom:1px solid #dab939; text-align:center; padding:12px; color:#4d4e4e;
+                    & > div {display:inline-block;}
+                    h5 {font-weight:bold; font-size:36px; margin-bottom:0; margin-top:0;}
+                    span {font-size:12px;}
+                    .separator {vertical-align:top; margin-left:6px; margin-right:6px;}
+                }
+            }
+        }
+
+
+    }
+
+}
+
+// step button
+.step-button {
+    .btn {padding:8px 50px; font-size:14px;}
+}
+
+// travorama login
+.travorama-login {border-top:$border-default; position:relative; margin-bottom:45px;
+    a.login-toggle {background:$color-main-blue; position:absolute; z-index:2; top:0; right:0; color:#fff; padding:12px; @include border-radius($border-radius-default); padding-left:30px; cursor:pointer;
+        &:before {width:16px; height:16px; background:url(/Assets/images/user-icon.png); background-size:contain; content:""; position:absolute; left:10px; top:12px;}
+    }
+    .login-content {background:$color-main-blue; padding:15px; padding-top:50px; display:none;
+        .form-group {margin-bottom:5px;}
+        .form-group:last-child {margin-bottom:0;}
+        a {color:#fff;}
+    }
+    // if active
+    &.active {
+        .login-content {display:block;}
+    }
+}
+
+// date picker
+.hasDatepicker {position:relative;}
+.page-checkout {
+    .ui-datepicker {width:250px !important; position:relative; background:#252525; color:#fff;
+        .ui-datepicker-group {width:100%; padding:15px;
+            & + .ui-datepicker-group {border-top:$border-default;}
+            .ui-datepicker-title {color:#fff; color:$color-main-blue; font-size:14px; font-weight:600; margin-bottom:10px;}
+            .ui-datepicker-calendar {width:100%; color:#fff;
+                thead {
+                    th {text-align:center; padding-bottom:10px;
+                        span {color:#fff !important; font-size:12px;}
+                    }
+                }
+                tbody {
+                    tr {margin-bottom:5px;
+                        td {text-align:center;
+                            span, a {color:#fff; display:inline-block; font-size:12px; padding-top:4px; width:25px; height:25px;}
+                            a:hover {background:#fff; color:#252525; text-decoration:none;}
+                        }
+                    }
+                }
+                .ui-state-disabled {cursor:not-allowed;
+                    span {color:#666;}
+                }
+                .ui-datepicker-week-end {
+                    span, a {color:#fed83e;}
+                    a:hover {background:#fed83e;}
+                }
+            }
+            .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue; font-size:12px;}
+            .ui-datepicker-next {position:absolute; top:-10px; cursor:pointer; color:$color-main-blue; font-size:12px; left:auto; right:15px; font-size:12px;}
+        }
+    }
+}
+
+// **********
+// page confirmation
+.page-confirmation {
+    .site-content {padding:24px 0;}
+    .confirmation-content {
+        .instruction {
+            header {background:$color-main-blue; color:#fff; padding:6px 12px; margin-bottom:12px;}
+            .text {padding-left:100px; background:url(/Assets/images/exclamation-mark.png) top left no-repeat; min-height:80px;
+                p+p {margin-top:12px; border-top:2px dashed $color-main-blue; padding-top:12px;}
+            }
+            .bank-detail {background:#cdf1ff; padding:12px;
+                .bank {
+                    dl {margin-bottom:4px;
+                        &:before, &:after {@include clearfix();}
+                        dt {float:left; width:50%; font-weight:normal;}
+                        dd {float:left; width:50%; font-weight:bold;}
+                    }
+                }
+            }
+        }
+    }
+    .confirmation-form {border-top:$border-default; margin-top:24px;
+        .btn.btn-yellow {padding:9px 48px; font-size:14px;}
+    }
+}
+
+
+// **********
+// page thank you
+.page-thankyou {
+    .site-content {padding:24px 0;}
+
+    .countdown {background:#fff; padding:24px; border:$border-default; margin-top:24px; margin-bottom:24px; text-align:center;
+        .timer {text-align:center; margin-bottom:24px; background-image:url(/Assets/images/sandclock.png); background-repeat:no-repeat; background-position:left center;
+            &>div {display:inline-block; color:$color-main-blue;
+                &+div {padding-left:15px;
+                    &:before {}
+                }
+                &.separator {font-size:32px; vertical-align:top; padding-top:6px;}
+                h5 {font-weight:bold; font-size:36px; margin:0;}
+                span {font-size:14px;}
+            }
+        }
+        .print {
+            a {height:100%; padding:16px 0;
+                span {background:url(/Assets/images/print-image.png) top left no-repeat; padding-left:36px; font-size:18px;}
+            }
+        }
+    }
+
+    .order-detail {
+        header {background:$color-main-blue; color:#fff; padding:6px 12px;}
+        section {background:#f3f1f2; position:relative;
+            h4 {font-weight:bold; letter-spacing:0; margin-bottom:18px;}
+
+            .order-detail-left {padding:12px 24px;
+                .passenger {margin-bottom:24px;
+                    ol {counter-reset:passenger-counter; list-style:none; margin:0; padding:0;
+                        li {position:relative; padding-left:21px; font-size:12px;
+                            &:before {content:'0' counter(passenger-counter); counter-increment:passenger-counter; position:absolute; left:0; color:$color-main-blue; font-weight:bold;}
+                        }
+                    }
+                }
+                .order {
+                    .flight {padding-left:36px; position:relative;
+                        .col-xs-9 {font-weight:bold;}
+                        img {height:36px; margin-right:24px;}
+                        span {font-weight:bold; color:$color-main-blue;}
+                        &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
+                        // departure flight
+                        &.departure {}
+                        // return flight
+                        &.return {
+                            &:before {background-position:-16px;}
+                        }
+                    }
+                }
+            }
+            .order-detail-right {background:#e9e7e8; padding:12px 24px; height:100%; position:absolute; right:0;
+                .price-detail {margin-bottom:24px;
+                    dl {
+                        &:before, &:after {@include clearfix();}
+                        dt {width:55%; float:left; font-weight:normal; position:relative; padding-left:12px;
+                            &:before {content:""; width:6px; height:6px; position:absolute; top:3px; left:0; background:#ff6900;}
+                        }
+                        dd {width:45%; float:left; text-align:right; font-weight:bold;}
+                    }
+                    dl.total-price {border-top:$border-default; padding-top:12px;
+                        dt {width:40%;
+                            &:before {content:""; width:0; height:0;}
+                        }
+                        dd {width:60%; color:#ff6900; font-weight:bold; font-size:16px;}
+                    }
+                }
+                .payment-detail {
+                    h5 {color:$color-main-blue; font-weight:bold;}
+                }
+            }
+
+        }
+    }
+
+}

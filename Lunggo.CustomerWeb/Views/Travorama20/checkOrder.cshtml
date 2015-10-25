@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-password page-check-order";
+}
+
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+
+@section PageJS{
+    <script>
+        var langCode = 'en';
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
+
+<section class="form-section page-loading" ng-app="travorama" ng-controller="checkController" ng-class="{'page-loaded': pageLoaded}">
+    
+    <h1 class="text-center section-title stripe">CEK <span>PEMESANAN</span></h1>
+
+    <div class="container form-container">
+
+        <h3>Semakin mudah mengetahui setatus pemesanan Anda di Travorama.com. Masukan data pemesanan Anda di formulir dibawah.</h3>
+        <ul>
+            <li>Jika Anda memiliki pemesanan yang belum terbayarkan, pemesanan tersebut juga dapat dilanjutkan.</li>
+            <li>Hingga 2 jam setelah pemesanan awal dilakukan.</li>
+        </ul>
+
+        <div class="form-wrapper">
+            <section class="form-content">
+                <form class="form form-horizontal" name="checkForm" novalidate>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <label class="control-label">Nomor Pemesanan:</label>
+                            <input type="text" name="orderNo" value="" class="form-control" placeholder="Ex : 123456789012" ng-model="form.name" required />
+                        </div>
+                        <div class="col-xs-5">
+                            <label class="control-label">Nama Belakang Pemesan:</label>
+                            <input type="text" name="lastname" value="" class="form-control" placeholder="Ex : Juliana" ng-model="form.lastname" required />
+                        </div>
+                        <div class="col-xs-2">
+                            <label class="control-label">&nbsp;</label>
+                            <input type="submit" value="CEK PEMESANAN" class="btn btn-yellow form-control" ng-disabled="checkForm.$invalid" />
+                        </div>
+                    </div>
+                </form>
+            </section><!-- .form-content -->
+        </div>
+
+    </div><!-- .form-container -->
+
+</section><!-- .form-section -->

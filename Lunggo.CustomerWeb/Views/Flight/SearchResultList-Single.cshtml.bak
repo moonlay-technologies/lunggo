@@ -1,0 +1,969 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Autocomplete
+@using Lunggo.ApCommon.Dictionary
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Flight.Service
+@using Lunggo.ApCommon.Trie
+@using Lunggo.CustomerWeb.Models
+@using Newtonsoft.Json
+@model FlightSearchData
+
+
+
+@{
+    ViewBag.Title = "Hotel Search List";
+    Layout = "/Views/Shared/_layout_20150506.cshtml";
+    }
+
+@{
+    bool isValid;
+    
+    List<FlightTrip> trips = null;
+    FlightSearchData.Complete data = null;
+    var originAirportNames = new List<string>();
+    var destinationAirportNames = new List<string>();
+    var originCityNames = new List<string>();
+    var destinationCityNames = new List<string>();
+    var originCountryNames = new List<string>();
+    var destinationCountryNames = new List<string>();
+
+    String tripType="aaa";
+    try
+    {
+        var parts = Model.info.Split('-');
+        var tripPart = parts.First();
+        var infoPart = parts.Last();
+        isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
+        
+        trips = tripPart.Split('.').Select(info => new FlightTrip
+        {
+            OriginAirport = info.Substring(0, 3),
+            DestinationAirport = info.Substring(3, 3),
+            DepartureDate = new DateTime(
+                2000 + int.Parse(info.Substring(10, 2)),
+                int.Parse(info.Substring(8, 2)),
+                int.Parse(info.Substring(6, 2)))
+        }).ToList();
+
+        foreach (var trip in trips)
+        {
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
+        }
+
+        data = new FlightSearchData.Complete
+        {
+            AdultCount = int.Parse(infoPart.Substring(0, 1)),
+            ChildCount = int.Parse(infoPart.Substring(1, 1)),
+            InfantCount = int.Parse(infoPart.Substring(2, 1)),
+            CabinClass = FlightService.ParseCabinClass(infoPart.Substring(3, 1)),
+            Trips = trips,
+            TripType = FlightService.ParseTripType(trips)
+        };
+
+        tripType = data.TripType == TripType.OneWay ? "single" : "return";
+    }
+    catch
+    {
+        isValid = false;
+    }
+
+}
+
+@section AdditionalPageJavascript{
+    <script type="text/javascript">
+        var langCode = 'en';
+    </script>
+}
+
+@section PageJavascript {
+    <script type="text/javascript">
+        var SiteLanguage = 'en';
+        $(document).ready(function () {
+            console.log('JEMPING OKE');
+            console.log($('.flight-departure-date').val());
+            $('.flight-return-date.date-picker').datepicker('option', 'minDate', new Date( $('.flight-departure-date').val() ));
+        });
+    </script>
+}
+
+@if (isValid)
+{
+
+    <form class="hidden" id="pushToken" action="@Url.Action("Select", "Flight")" method="post">
+        <input type="text" name="Token" id="fareToken" value="" />
+    </form>
+
+    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
+
+        <div class="container page-container flight-result active">
+            <div class="page-aside">
+            
+                <div class="filter-trigger-wrapper">
+                    <div class="filter-trigger filter-transit"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-price"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-airline"></div><!-- .filter-trigger -->
+                    <div class="filter-trigger filter-onward"></div><!-- .filter-trigger -->
+                </div><!-- .filter-trigger-wrapper -->
+            
+                <div class="filter-close active"></div>
+
+                <div class="flight-filter-wrapper">
+                    <h4 class="filter-reset-wrapper">@Html.I18NString("CW00001") <a class="filter-reset" ng-click="resetFlightFilter()">@Html.I18NString("CW00064")</a></h4>
+                    <div class="flight-filter stop-filter">
+                        <h5><span><img src="/Assets/images/filter-transit.png" alt="Filter by Transit" /></span>@Html.I18NString("CW00002")</h5>
+                        <div class="filter-content">
+                            <label for="flight-stop-0">
+                                <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> @Html.I18NString("CW00003")
+                            </label>
+                            <br/>
+                            <label for="flight-stop-1">
+                                <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> @Html.I18NString("CW00004")
+                            </label>
+                            <br/>
+                            <label for="flight-stop-2">
+                                <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> @Html.I18NString("CW00005")
+                            </label>
+                        </div>
+                    </div><!-- .stop-filter -->
+                    <div class="flight-filter price-filter">
+                        <h5><span><img src="/Assets/images/filter-price.png" alt="Filter by Price" /></span>@Html.I18NString("CW00006")</h5>
+                        <div class="filter-content">
+
+                            <div class="price-slider"></div>
+                            <div class="price-slider-text">
+                                <br />
+                                <span>@Html.I18NString("CW00007")</span>
+                                <span class="pull-right">@Html.I18NString("CW00008")</span>
+                            </div>
+                            <div class="price-slider-text">
+                                <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                            </div>
+                            <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
+                            <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
+
+                        </div>
+                    </div><!-- .price-filter -->
+                    <div class="flight-filter airline-filter">
+                        <h5><span><img src="/Assets/images/filter-airline.png" alt="Filter by Airline" /></span>@Html.I18NString("CW00009")</h5>
+                        <div class="filter-option">
+                            <a ng-click="filterSelectAirline('all')">@Html.I18NString("CW00065")</a>
+                            <a ng-click="filterSelectAirline('none')">@Html.I18NString("CW00066")</a>
+                        </div>
+                        <div class="filter-content">
+                            <label ng-repeat="airline in FlightSearchFilter.Airlines">
+                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()"/>
+                                <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
+                                <span>{{airline.Name}}</span>
+                            </label>
+                        </div>
+                    </div><!-- .airline-filter -->
+                    <div class="flight-filter onward-time">
+                        <h5 ng-if="'@tripType' == 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Onward Flight" /></span>@Html.I18NString("CW00062")</h5>
+                        <h5 ng-if="'@tripType' != 'return'"><span><img src="/Assets/images/filter-onward.png" alt="Filter by Flight Time" /></span>@Html.I18NString("CW00010")</h5>
+                        <div class="filter-content">
+                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.trips[0].OriginAirport}})</small>
+                            <div class="onward-depart-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.OnwardDepart.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
+                            <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
+                            <hr/>
+                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.trips[0].DestinationAirport}})</small>
+                            <div class="onward-arrival-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.OnwardArrival.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="onward-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMin" />
+                            <input class="onward-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMax" />
+                        </div>
+                    </div><!-- .onward-time -->
+                    <div class="flight-filter return-time" ng-if="'@tripType' == 'return'">
+                        <h5><span><img src="/Assets/images/filter-return.png" alt="Filter by Return Flight" /></span>@Html.I18NString("CW00063")</h5>
+                        <div class="filter-content">
+                            <small>@Html.I18NString("CW00011") ({{FlightSearchParams.trips[1].OriginAirport}})</small>
+                            <div class="return-depart-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.ReturnDepart.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.ReturnDepart.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="return-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMin" />
+                            <input class="return-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMax" />
+                            <hr />
+                            <small>@Html.I18NString("CW00012") ({{FlightSearchParams.trips[1].DestinationAirport}})</small>
+                            <div class="return-arrival-slider"></div>
+                            <div class="price-slider-text">
+                                <span>{{FlightSearchFilter.ReturnArrival.CurrentMin}}:00 HRS</span>
+                                <span class="pull-right">{{FlightSearchFilter.ReturnArrival.CurrentMax}}:00 HRS</span>
+                            </div>
+                            <input class="return-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMin" />
+                            <input class="return-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMax" />
+                        </div>
+                    </div><!-- .return-time -->
+                </div><!-- .flight-filter-content -->
+
+            </div><!-- .page-aside -->
+            <div class="page-wrapper">
+            
+                <header class="page-header">
+                    <div class="">
+                        <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
+                        <!-- <hr> -->
+                        <div class="flight-data">
+                            <b>(@data.Trips[0].OriginAirport) @originCityNames[0]</b> @Html.I18NString("CW00034") <b>(@data.Trips[0].DestinationAirport) @destinationCityNames[0]</b> <br />
+                            <span><b>@Html.I18NString("CW00016") : </b>@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
+                            {
+                                <span><b>Return Flight : </b>@data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
+                            } <b>@Html.I18NString("CW00017") : </b> @data.AdultCount @Html.I18NString("CW00018"), @data.ChildCount @Html.I18NString("CW00019"), @data.InfantCount @Html.I18NString("CW00020") <a href="#" class="btn btn-yellow btn-sm show-flight-search-form pull-right">@Html.I18NString("CW00014")</a>
+                        </div>
+
+                    </div>
+                </header><!-- .page-header -->
+
+                <section class="flight-search-form form-flight-search">
+                    <div class="">
+                        <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
+                            <div class="row flight-type-wrapper">
+                                <div class="col-sm-12">
+                                    <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
+                                    <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
+                                </div>
+                            </div>
+                            <div class="row airport-wrapper">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" value="@originAirportNames[0], @originCityNames[0], @originCountryNames[0] " />
+                                    <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" value="@destinationAirportNames[0], @destinationCityNames[0], @destinationCountryNames[0]" />
+                                    <select class="flight-cabin form-control">
+                                        <option value="y">@Html.I18NString("CW00054")</option>
+                                        <option value="c">@Html.I18NString("CW00055")</option>
+                                        <option value="f">@Html.I18NString("CW00056")</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            @{
+                                var departureDateString = Html.I18NString("CW00057");
+                                var returnDateString = Html.I18NString("CW00058");
+                            }
+
+                            <div class="row passenger-wrapper">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control flight-departure-date date-picker " placeholder="@departureDateString" value="@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")" />
+                                    <span class="separator">-</span>
+                                    <input type="text" class="form-control flight-return-date date-picker" placeholder="@returnDateString" value="@if (data.TripType == TripType.Return) { @data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")  }" />
+
+                                    <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
+                                    <select class="form-control flight-adult">
+                                        <option value="1">1 @Html.I18NString("CW00018")</option>
+                                        <option value="2">2 @Html.I18NString("CW00059")</option>
+                                        <option value="3">3 @Html.I18NString("CW00059")</option>
+                                        <option value="4">4 @Html.I18NString("CW00059")</option>
+                                        <option value="5">5 @Html.I18NString("CW00059")</option>
+                                        <option value="6">6 @Html.I18NString("CW00059")</option>
+                                        <option value="7">7 @Html.I18NString("CW00059")</option>
+                                        <option value="8">8 @Html.I18NString("CW00059")</option>
+                                        <option value="9">9 @Html.I18NString("CW00059")</option>
+                                    </select>
+                                    <select class="form-control flight-child">
+                                        <option value="0">0 @Html.I18NString("CW00019")</option>
+                                        <option value="1">1 @Html.I18NString("CW00019")</option>
+                                        <option value="2">2 @Html.I18NString("CW00060")</option>
+                                        <option value="3">3 @Html.I18NString("CW00060")</option>
+                                        <option value="4">4 @Html.I18NString("CW00060")</option>
+                                        <option value="5">5 @Html.I18NString("CW00060")</option>
+                                        <option value="6">6 @Html.I18NString("CW00060")</option>
+                                        <option value="7">7 @Html.I18NString("CW00060")</option>
+                                        <option value="8">8 @Html.I18NString("CW00060")</option>
+                                    </select>
+                                    <select class="form-control flight-infant">
+                                        <option value="0">0 @Html.I18NString("CW00020")</option>
+                                        <option value="1">1 @Html.I18NString("CW00020")</option>
+                                        <option value="2">2 @Html.I18NString("CW00061")</option>
+                                        <option value="3">3 @Html.I18NString("CW00061")</option>
+                                        <option value="4">4 @Html.I18NString("CW00061")</option>
+                                    </select>
+                                    <input type="text" class="hidden flight-departure-date-real" value="@data.Trips[0].DepartureDate.ToString("dd-MM-yyyy")" />
+                                    <input type="text" class="hidden flight-return-date-real" value="@if (data.TripType == TripType.Return) { @data.Trips[1].DepartureDate.ToString("dd-MM-yyyy")  }" />
+                                    <input type="text" class="hidden flight-origin-airport-real" value="@data.Trips[0].OriginAirport" />
+                                    <input type="text" class="hidden flight-destination-airport-real" value="@data.Trips[0].DestinationAirport" />
+                                    <input type="text" id="flight-data-info" name="info" class="hidden" />
+                                    <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
+                                    <div class="passenger-warning">
+                                        <p class="max-passenger">Maximum number of passenger is 9 person.</p>
+                                        <p class="max-infant">Infant cannot be more than adult.</p>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </section><!-- .flight-search-form -->
+            
+                <div class="flight-filter-mobile hidden">
+                
+                    <div class="filter-trigger">
+                        <span class="main-text">Flight Filter</span>
+                        <span class="filter-transit toggle"></span>
+                        <span class="filter-price toggle"></span>
+                        <span class="filter-airline toggle"></span>
+                        <span class="filter-onward toggle"></span>
+                        <span class="filter-close toggle"></span>
+                    </div>
+
+                </div><!-- .flight-filter for mobile -->
+
+                <div class="" ng-if="loaded && !noFlight">
+                    <h2 class="page-title"><b>@Html.I18NString("CW00050")</b> @Html.I18NString("CW00051")</h2>
+                </div>
+            
+                <div class="clearfix"></div>
+            
+                <div class="flight-filter-mobile-content hidden">
+                    <div class="filter-container col-sm-4">
+                        <div class="filter stop-filter">
+                            <h3 class="filter-title"><span><img src="/Assets/images/filter-transit.png" alt="Filter Transit"/></span> Stop</h3>
+                            <div class="filter-content">
+                                <p>Show flight with :</p>
+                                <label for="flight-stop-0">
+                                    <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> Direct Flight
+                                </label>
+                                <br />
+                                <label for="flight-stop-1">
+                                    <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> 1 stop
+                                </label>
+                                <br />
+                                <label for="flight-stop-2">
+                                    <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> more than 1 stop
+                                </label>
+                            </div>
+                        </div>
+                        <div class="filter price-filter">
+                            <h3 class="filter-title"><span><img src="/Assets/images/filter-price.png" alt="Filter Transit" /></span> Price</h3>
+                            <div class="filter-content">
+
+                                <div class="price-slider"></div>
+                                <div class="price-slider-text">
+                                    <br />
+                                    <span>Min Price</span>
+                                    <span class="pull-right">Max Price</span>
+                                </div>
+                                <div class="price-slider-text">
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                </div>
+                                <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
+                                <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-container col-sm-4">
+                        <div class="filter airline-filter">
+                            <h3 class="filter-title"><span><img src="/Assets/images/filter-airline.png" alt="Filter Transit" /></span> Airline</h3>
+                            <div class="filter-content">
+                                <label ng-repeat="airline in FlightSearchFilter.Airlines">
+                                    <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
+                                    <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
+                                    <span>{{airline.Name}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-container col-sm-4">
+                        <div class="filter onward-filter">
+                            <h3 class="filter-title"><span><img src="/Assets/images/filter-onward.png" alt="Filter Transit" /></span> Onward Time</h3>
+                            <div class="filter-content">
+                                <small>Take-off from ({{FlightSearchParams.trips[0].OriginAirport}})</small>
+                                <div class="onward-depart-slider"></div>
+                                <div class="price-slider-text">
+                                    <span>{{FlightSearchFilter.OnwardDepart.CurrentMin}}:00 HRS</span>
+                                    <span class="pull-right">{{FlightSearchFilter.OnwardDepart.CurrentMax}}:00 HRS</span>
+                                </div>
+                                <input class="onward-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMin" />
+                                <input class="onward-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardDepart.CurrentMax" />
+                                <hr />
+                                <small>Landing at ({{FlightSearchParams.trips[0].DestinationAirport}})</small>
+                                <div class="onward-arrival-slider"></div>
+                                <div class="price-slider-text">
+                                    <span>{{FlightSearchFilter.OnwardArrival.CurrentMin}}:00 HRS</span>
+                                    <span class="pull-right">{{FlightSearchFilter.OnwardArrival.CurrentMax}}:00 HRS</span>
+                                </div>
+                                <input class="onward-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMin" />
+                                <input class="onward-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.OnwardArrival.CurrentMax" />
+                            </div>
+                        </div>
+                        <div class="filter return-filter" ng-if="'@tripType' == 'return'">
+                            <h3 class="filter-title"><span><img src="/Assets/images/filter-onward.png" alt="Filter Transit" /></span> Return Time</h3>
+                            <div class="filter-content">
+                                <small>Take-off from ({{FlightSearchParams.trips[1].OriginAirport}})</small>
+                                <div class="return-depart-slider"></div>
+                                <div class="price-slider-text">
+                                    <span>{{FlightSearchFilter.ReturnDepart.CurrentMin}}:00 HRS</span>
+                                    <span class="pull-right">{{FlightSearchFilter.ReturnDepart.CurrentMax}}:00 HRS</span>
+                                </div>
+                                <input class="return-depart-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMin" />
+                                <input class="return-depart-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnDepart.CurrentMax" />
+                                <hr />
+                                <small>Landing at ({{FlightSearchParams.trips[1].DestinationAirport}})</small>
+                                <div class="return-arrival-slider"></div>
+                                <div class="price-slider-text">
+                                    <span>{{FlightSearchFilter.ReturnArrival.CurrentMin}}:00 HRS</span>
+                                    <span class="pull-right">{{FlightSearchFilter.ReturnArrival.CurrentMax}}:00 HRS</span>
+                                </div>
+                                <input class="return-arrival-slider-min hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMin" />
+                                <input class="return-arrival-slider-max hidden" type="text" ng-model="FlightSearchFilter.ReturnArrival.CurrentMax" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <section class="flight-search-filter hidden"><!-- temporary hidden on development new filter widget -->
+                    <div class="filter price" data-min="{{FlightSearchFilter.PriceFilter.min}}" data-max="{{FlightSearchFilter.PriceFilter.max}}">
+                        <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Price</a>
+                        <div class="filter-container">
+                            <h3>Price Filter</h3>
+                            <div class="filter-content">
+
+                                <div class="price-slider"></div>
+                                <div class="price-slider-text">
+                                    <br />
+                                    <span>Min Price</span>
+                                    <span class="pull-right">Max Price</span>
+                                </div>
+                                <div class="price-slider-text">
+                                    <span>Rp {{FlightSearchFilter.PriceFilter.currentMin | number}}</span>
+                                    <span class="pull-right">Rp {{FlightSearchFilter.PriceFilter.currentMax | number}}</span>
+                                </div>
+                                <input class="price-slider-min hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMin" />
+                                <input class="price-slider-max hidden" type="text" ng-model="FlightSearchFilter.PriceFilter.currentMax" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter airlines">
+                        <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Airlines</a>
+                        <div class="filter-container">
+                            <h3>Airline Filter</h3>
+                            <div class="filter-content">
+                                <label ng-repeat="airline in FlightSearchFilter.Airlines">
+                                    <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-click="checkAirline()" />
+                                    <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
+                                    <span>{{airline.Name}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter stops">
+                        <a href="#" class="toggle"><img src="http://placehold.it/50.jpg" alt="Alternate Text" /> Stops</a>
+                        <div class="filter-container">
+                            <h3>Stops Filter</h3>
+                            <div class="filter-content">
+                                <p>Show flight with :</p>
+                                <label for="flight-stop-0">
+                                    <input value="0" id="flight-stop-0" type="checkbox" ng-model="FlightSearchFilter.StopFilter.direct" /> @Html.I18NString("CW00003")
+                                </label>
+                                <label for="flight-stop-1">
+                                    <input value="1" id="flight-stop-1" type="checkbox" ng-model="FlightSearchFilter.StopFilter.one" /> @Html.I18NString("CW00004")
+                                </label>
+                                <label for="flight-stop-2">
+                                    <input value="2" id="flight-stop-2" type="checkbox" ng-model="FlightSearchFilter.StopFilter.two" /> @Html.I18NString("CW00005")
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section><!-- .flight-search-filter -->
+
+                <div class="">
+
+                    <section class="flight-loading" ng-if="!loaded">
+                        <img src="/Assets/images/loading-image-dark.gif" class="hidden" />
+                    </section>
+
+                    <div class="search-flight-loading" ng-if="!loaded">
+
+                        <div class="loading-image-wrapper">
+                            <img src="/Assets/images/loading-sample.png" alt="Loading" />
+                            <div class="loading-text">
+                                <h2>@Html.I18NString("CW00041")</h2>
+                                <h4>@Html.I18NString("CW00042")</h4>
+                            </div>
+                        </div>
+
+                    </div><!-- . search-flight-loading -->
+
+                    <div class="search-flight-loading" ng-if="validating">
+
+                        <div class="loading-image-wrapper">
+                            <img src="/Assets/images/loading-sample.png" alt="Loading" />
+                            <div class="loading-text">
+                                <h2>@Html.I18NString("CW00041")</h2>
+                                <h4>@Html.I18NString("CW00105")</h4>
+                            </div>
+                        </div>
+
+                    </div><!-- . search-flight-loading -->
+
+                    <section class="flight-noflight text-center" ng-if="noFlight">
+                        <h1>Sorry, No flight available</h1>
+                        <h2>Please refine your flight search</h2>
+                    </section>
+
+                    <section class="flight-list horizontal" ng-if="loaded && !noFlight">
+
+                        <div class="flight-sort single-flight" ng-if="FlightSearchParams.TripType == 'OneWay'">
+                            <div class="sort-airline">
+                                <a href="#" ng-click="order('airline')">@Html.I18NString("CW00021")
+                                    <span class="sortorder" ng-show="sort.label === 'airline'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-departure">
+                                <a href="#" ng-click="order('departure')">@Html.I18NString("CW00022")
+                                    <span class="sortorder" ng-show="sort.label === 'departure'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-duration">
+                                <a href="#" ng-click="order('duration')">@Html.I18NString("CW00023")
+                                    <span class="sortorder" ng-show="sort.label === 'duration'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-arrival">
+                                <a href="#" ng-click="order('arrival')">@Html.I18NString("CW00024")
+                                    <span class="sortorder" ng-show="sort.label === 'arrival'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-price">
+                                <a href="#" ng-click="order('price')">@Html.I18NString("CW00025")
+                                    <span class="sortorder" ng-show="sort.label === 'price'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                        </div><!-- .flight-sort.single-flight -->
+                    
+                        <div class="flight-sort return-flight" ng-if="FlightSearchParams.TripType != 'OneWay'">
+                            <div class="sort-depart-airline">
+                                <a href="#" ng-click="order('departAirline')">
+                                    @Html.I18NString("CW00021")
+                                    <span class="sortorder" ng-show="sort.label === 'departAirline'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-depart-departure">
+                                <a href="#" ng-click="order('departDeparture')">
+                                   @Html.I18NString("CW00022")
+                                    <span class="sortorder" ng-show="sort.label === 'departDeparture'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-depart-duration">
+                                <a href="#" ng-click="order('departDuration')">
+                                    @Html.I18NString("CW00023")
+                                    <span class="sortorder" ng-show="sort.label === 'departDuration'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-depart-arrival">
+                                <a href="#" ng-click="order('departArrival')">
+                                    @Html.I18NString("CW00024")
+                                    <span class="sortorder" ng-show="sort.label === 'departArrival'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-return-airline">
+                                <a href="#" ng-click="order('returnAirline')">
+                                    @Html.I18NString("CW00021")
+                                    <span class="sortorder" ng-show="sort.label === 'returnAirline'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-return-departure">
+                                <a href="#" ng-click="order('returnDeparture')">
+                                    @Html.I18NString("CW00022")
+                                    <span class="sortorder" ng-show="sort.label === 'returnDeparture'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-return-duration">
+                                <a href="#" ng-click="order('returnDuration')">
+                                    @Html.I18NString("CW00023")
+                                    <span class="sortorder" ng-show="sort.label === 'returnDuration'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-return-arrival">
+                                <a href="#" ng-click="order('returnArrival')">
+                                    @Html.I18NString("CW00024")
+                                    <span class="sortorder" ng-show="sort.label === 'returnArrival'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                            <div class="sort-price">
+                                <a href="#" ng-click="order('price')">
+                                    @Html.I18NString("CW00025")
+                                    <span class="sortorder" ng-show="sort.label === 'price'" ng-class="{reverse:reverse}"></span>
+                                </a>
+                            </div>
+                        </div><!-- .flight-sort.return-flight -->
+
+                        <!-- Loop start here -->
+                        <article class="flight flight-@tripType" id="itemNumber-{{flight.SequenceNo}}" ng-class="{ 'active': flight.SequenceNo == selectedItem , 'active-rules' : flight.SequenceNo == selectedRules , 'hidden' : flight.hidden == true }" ng-repeat="flight in flight_list.list | filter:priceFilter | filter:stopFilter | filter:airlineFilter | filter:timeFilter |orderBy:sort.value:reverse">
+
+                            <div class="flight-main">
+                                <!-- start here if Single Flight Type -->
+                                <div class="flight-left" ng-if="'@tripType' == 'single'">
+                                    <div class="flight-header">
+                                        <div class="flight-airline">
+                                            <h4>{{flight.Trips[0].Airlines[0].Name}}</h4>
+                                        </div>
+                                    </div><!-- .flight-header -->
+                                    <div class="flight-content">
+
+                                        <div class="flight-airline-image">
+                                            <img ng-src="{{flight.Trips[0].Airlines[0].LogoUrl}}" alt="{{flight.Trips[0].Airlines[0].Name}}" />
+                                        </div><!-- .flight-airline-image -->
+
+                                        <div class="flight-route">
+
+                                            <div class="departure">
+                                                <h2>{{ getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC' }}</h2>
+                                                <h3>{{ getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'd-MMMM-yyyy' : 'UTC' }}</h3>
+                                                <h2>{{flight.Trips[0].OriginAirport}}</h2>
+                                                <!-- <h3>Jakarta</h3> -->
+                                            </div><!-- .departure -->
+
+                                            <div class="duration">
+                                                <h5>@Html.I18NString("CW00028") <br /> {{flight.Trips[0].TotalDuration}}</h5>
+                                                <hr />
+                                                <h5 ng-if="flight.Trips[0].TotalTransit == 0">@Html.I18NString("CW00003")</h5>
+                                                <h5 ng-if="flight.Trips[0].TotalTransit > 0">{{flight.Trips[0].TotalTransit}} @Html.I18NString("CW00029")</h5>
+                                            </div><!-- .duration -->
+
+                                            <div class="arrival">
+                                                <h2>{{ getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC' }}</h2>
+                                                <h3>{{ getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'd-MMMM-yyyy' : 'UTC' }}</h3>
+                                                <h2>{{flight.Trips[0].DestinationAirport}}</h2>
+                                                <!-- <h3>Tokyo</h3> -->
+                                            </div><!-- .arrival -->
+
+                                        </div><!-- .flight-route -->
+
+                                    </div><!-- .flight-content -->
+                                    <div class="flight-action">
+                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Flight Details" /> @Html.I18NString("CW00026")</a>
+                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" alt="Fares Rules" /> @Html.I18NString("CW00027")</a>
+                                    </div><!-- .flight-action -->
+                                </div><!-- .flight-left -->
+                                <!-- end if single flight type -->
+                                <!-- start here if Return Flight Type-->
+                                <div class="flight-left" ng-if="'@tripType' == 'return'">
+                                    <div class="flight-departure">
+                                        <div class="flight-header">
+                                            <span>@Html.I18NString("CW00039")</span>
+                                            <span class="pull-right flight-cabin hidden"><i>economy</i></span>
+                                        </div><!-- .flight-header -->
+                                        <div class="flight-content">
+                                            <div class="flight-airline">
+                                                <img ng-src="{{flight.Trips[0].Airlines[0].LogoUrl}}" alt="{{flight.Trips[0].Airlines[0].Name}}" />
+                                                <span>{{flight.Trips[0].Airlines[0].Name}}</span>
+                                            </div>
+                                            <div class="flight-route">
+                                                <div class="route-wrapper">
+                                                    <div class="departure">
+                                                        <h4>{{flight.Trips[0].Segments[0].DepartureAirport}}</h4>
+                                                        <h5>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'dd-MMM-yyyy' : 'UTC' }}</h5>
+                                                        <h5>{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC' }}</h5>
+                                                    </div>
+                                                    <div class="to">to</div>
+                                                    <div class="arrival">
+                                                        <h4>{{flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalAirport}}</h4>
+                                                        <h5>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy' : 'UTC' }}</h5>
+                                                        <h5>{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC' }}</h5>
+                                                    </div>
+                                                </div>
+                                                <h5 class="duration" ng-if="flight.Trips[0].TotalTransit == 0">@Html.I18NString("CW00003") - {{flight.Trips[0].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.Trips[0].TotalTransit > 0">{{flight.Trips[0].TotalTransit}} @Html.I18NString("CW00029") - {{flight.Trips[0].TotalDuration}}</h5>
+                                            </div>
+                                        </div><!-- .flight-content -->
+                                    </div><!-- .flight-departure -->
+                                    <div class="flight-return">
+                                        <div class="flight-header">
+                                            <span>@Html.I18NString("CW00040")</span>
+                                            <span class="pull-right flight-cabin hidden"><i>economy</i></span>
+                                        </div><!-- .flight-header -->
+                                        <div class="flight-content">
+                                            <div class="flight-airline">
+                                                <img ng-src="{{flight.Trips[1].Airlines[0].LogoUrl}}" alt="{{flight.Trips[1].Airlines[0].Name}}" />
+                                                <span>{{flight.Trips[1].Airlines[0].Name}}</span>
+                                            </div>
+                                            <div class="flight-route">
+                                                <div class="route-wrapper">
+                                                    <div class="departure">
+                                                        <h4>{{flight.Trips[1].Segments[0].DepartureAirport}}</h4>
+                                                        <h5>{{getDateTime( flight.Trips[1].Segments[0].DepartureTime ) | date: 'dd-MMM-yyyy' : 'UTC' }}</h5>
+                                                        <h5>{{getDateTime( flight.Trips[1].Segments[0].DepartureTime ) | date: 'HH : mm' : 'UTC' }}</h5>
+                                                    </div>
+                                                    <div class="to">to</div>
+                                                    <div class="arrival">
+                                                        <h4>{{flight.Trips[1].Segments[(flight.Trips[1].Segments.length-1)].ArrivalAirport}}</h4>
+                                                        <h5>{{getDateTime( flight.Trips[1].Segments[(flight.Trips[1].Segments.length-1)].ArrivalTime ) | date: 'dd-MMM-yyyy' : 'UTC' }}</h5>
+                                                        <h5>{{getDateTime( flight.Trips[1].Segments[(flight.Trips[1].Segments.length-1)].ArrivalTime ) | date: 'HH : mm' : 'UTC' }}</h5>
+                                                    </div>
+                                                </div>
+                                                <h5 class="duration" ng-if="flight.Trips[1].TotalTransit == 0">@Html.I18NString("CW00003") - {{flight.Trips[1].TotalDuration}}</h5>
+                                                <h5 class="duration" ng-if="flight.Trips[1].TotalTransit > 0">{{flight.Trips[1].TotalTransit}} @Html.I18NString("CW00029") - {{flight.Trips[1].TotalDuration}}</h5>
+                                            </div>
+                                        </div><!-- .flight-content -->
+                                    </div><!-- .flight-return -->
+                                    <div class="flight-action">
+                                        <a ng-click="clickedItem(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> @Html.I18NString("CW00026")</a>
+                                        <a ng-click="getRules(flight.SequenceNo)"><img src="/Assets/images/paperplane-icon.png" /> @Html.I18NString("CW00027")</a>
+                                    </div><!-- .flight-action -->
+                                </div><!-- .flight-left -->
+                                <!-- end if Return Flight Type -->
+                                <div class="flight-right">
+                                    <form ng-submit="revalidate(flight.SequenceNo)">
+                                        <span class="tag red hidden">Disc 20%</span>
+                                        <p>@Html.I18NString("CW00030"):</p>
+                                        <h5 class="price-was"><!-- <del>Rp 1.800.000</del> --></h5>
+                                        <h4 class="price-now">{{flight.Currency || 'Rp'}} {{flight.TotalFare | number:0}}</h4>
+                                        <small>@Html.I18NString("CW00031")</small>
+                                        <input class="hidden" type="text" name="itinIndex" value="{{flight.SequenceNo}}" />
+                                        <input class="hidden" type="text" name="searchId" value="{{FlightSearchParams.SearchId}}" />
+                                        <button type="submit" class="btn btn-blue">@Html.I18NString("CW00032") !</button>
+                                    </form>
+                                </div><!-- .flight-right -->
+                            </div><!-- .flight-main -->
+
+                            <div class="flight-detail">
+                                <div class="flight-detail-content">
+                                    <h4 class="detail-title" ng-if="'@tripType' == 'single'"> <b>@Html.I18NString("CW00049")</b> @Html.I18NString("CW00048")</h4>
+                                    <h4 class="detail-title" ng-if="'@tripType' == 'return'"> <b>@Html.I18NString("CW00044")</b> @Html.I18NString("CW00046")</h4>
+                                    <ol>
+                                        <li class="route" ng-repeat="trip in flight.Trips[0].Segments">
+                                            <div class="flight-transit" ng-if="$index > 0">@Html.I18NString("CW00086") {{trip.DepartureCity}} @Html.I18NString("CW00087") {{flight.Trips[0].Transits[ $index-1 ].Duration}}</div>
+                                            <div class="flight-airline">
+                                                <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                                <h5>{{trip.AirlineName}}</h5>
+                                                <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
+                                            </div><!-- .flight-airline-->
+                                            <div class="flight-route">
+                                                <div class="flight-departure-airport">
+                                                    <h4>{{trip.DepartureAirport}}</h4>
+                                                    <h5>{{trip.DepartureCity}}</h5>
+                                                    <h5>{{trip.DepartureAirportName}}</h5>
+                                                </div><!-- .flight-departure-airport -->
+                                                <div class="flight-departure-time">
+                                                    <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                                    <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                                </div><!-- .flight-departure-time -->
+                                                <div class="flight-duration">
+                                                    <h5>@Html.I18NString("CW00028")<br />{{trip.Duration}}</h5>
+                                                    <hr />
+                                                    <span class="fa fa-cutlery" ng-if="trip.Meal"></span>
+                                                </div><!-- .flight-departure-duration -->
+                                                <div class="flight-arrival-time">
+                                                    <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                                    <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                                </div><!-- .flight-arrival-time -->
+                                                <div class="flight-arrival-airport">
+                                                    <h4>{{trip.ArrivalAirport}}</h4>
+                                                    <h5>{{trip.ArrivalCity}}</h5>
+                                                    <h5>{{trip.ArrivalAirportName}}</h5>
+                                                </div><!-- .flight-departure-airport -->
+                                            </div>
+                                            <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                                <h5>@Html.I18NString("CW00033") {{trip.OperatingAirlineName}}</h5>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <div ng-if="'@tripType' == 'return'" class="return-flight-detail">
+                                        <h4 class="detail-title"> <b>@Html.I18NString("CW00045")</b> @Html.I18NString("CW00047")</h4>
+                                        <ol>
+                                            <li class="route" ng-repeat="trip in flight.Trips[1].Segments">
+                                                <div class="flight-transit" ng-if="$index > 0">@Html.I18NString("CW00086") {{trip.DepartureCity}} @Html.I18NString("CW00087") {{flight.Trips[1].Transits[ $index-1 ].Duration}}</div>
+                                                <div class="flight-airline">
+                                                    <img ng-src="{{trip.AirlineLogoUrl}}" />
+                                                    <h5>{{trip.AirlineName}}</h5>
+                                                    <h5>{{trip.AirlineCode}} {{trip.FlightNumber}}</h5>
+                                                </div><!-- .flight-airline-->
+                                                <div class="flight-route">
+                                                    <div class="flight-departure-airport">
+                                                        <h4>{{trip.DepartureAirport}}</h4>
+                                                        <h5>{{trip.DepartureCity}}</h5>
+                                                        <h5>{{trip.DepartureAirportName}}</h5>
+                                                    </div><!-- .flight-departure-airport -->
+                                                    <div class="flight-departure-time">
+                                                        <h4>{{getDateTime(trip.DepartureTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                                        <h5>{{getDateTime(trip.DepartureTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                                    </div><!-- .flight-departure-time -->
+                                                    <div class="flight-duration">
+                                                        <h5>@Html.I18NString("CW00028")<br />{{trip.Duration}}</h5>
+                                                        <hr />
+                                                        <span class="fa fa-cutlery" ng-if="trip.Meal"></span>
+                                                    </div><!-- .flight-departure-duration -->
+                                                    <div class="flight-arrival-time">
+                                                        <h4>{{getDateTime(trip.ArrivalTime) | date:'HH:mm' : 'UTC' }}</h4>
+                                                        <h5>{{getDateTime(trip.ArrivalTime) | date:'d-MMMM-yyyy' : 'UTC' }}</h5>
+                                                    </div><!-- .flight-arrival-time -->
+                                                    <div class="flight-arrival-airport">
+                                                        <h4>{{trip.ArrivalAirport}}</h4>
+                                                        <h5>{{trip.ArrivalCity}}</h5>
+                                                        <h5>{{trip.ArrivalAirportName}}</h5>
+                                                    </div><!-- .flight-departure-airport -->
+                                                </div>
+                                                <div class="flight-operator" ng-class=" ('{{trip.OperatingAirlineCode}}' == '{{trip.AirlineCode}}') ? 'hidden' : 'show'">
+                                                    <h5>@Html.I18NString("CW00033") {{trip.OperatingAirlineName}}</h5>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div><!-- .flight-details -->
+
+                            <div class="flight-rules">
+                                <div class="flight-rules-content">
+                                    <div class="text-center rules-loading" ng-if="flight.FareLoaded == false">
+                                        <p class="text-center"><img src="/Assets/images/ajax-loader.gif" alt="Loading" /></p>
+                                    </div>
+                                    <div ng-if="flight.FareLoaded == true">
+                                        <div class="no-rules" ng-if="flight.FareRules.BaggageRules.length == 0 && flight.FareRules.AirlineRules.length == 0">
+                                            <p>No rules for this fare</p>
+                                        </div>
+                                        <div class="baggage-rules" ng-if="flight.FareRules.BaggageRules.length > 0">
+                                            <h4><b>BAGGAGE</b> RULES</h4>
+                                            <div class="rules-content">
+                                                <ul>
+                                                    <li ng-repeat="rule in flight.FareRules.BaggageRules">
+                                                        <h4>{{rule.AirlineName}} - {{rule.AirlineCode}} {{rule.FlightNumber}}</h4>
+                                                        <p>Flight from {{rule.DepartureAirportName}},{{rule.DepartureCity}},{{rule.DepartureCountry}} to {{rule.ArrivalAirportName}},{{rule.ArrivalCity}},{{rule.ArrivalCountry}}</p>
+                                                        <p>Maximum baggage : {{rule.Baggage}}</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="airline-rules" ng-if="flight.FareRules.AirlineRules.length > 0">
+                                            <h4><b>AIRLINE</b> RULES</h4>
+                                            <div class="rules-content">
+                                                <div ng-repeat="airlineRules in flight.FareRules.AirlineRules">
+                                                    <p>Rules for : {{airlineRules.AirlineName}} <br />Flight from {{airlineRules.DepartureAirportName}},{{airlineRules.DepartureCity}}, {{airlineRules.DepartureCountry}} to {{airlineRules.ArrivalAirportName}},{{airlineRules.ArrivalCity}},{{airlineRules.ArrivalCountry}}</p>
+                                                    <ul>
+                                                        <li ng-repeat="rule in airlineRules.Rules">{{rule}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .flight-rules -->
+
+                        </article><!-- .flight -->
+                        <!-- loop end here -->
+                    
+                        <div class="back-to-top">
+                            <a href="#">
+                                <img src="/Assets/images/backtotop.jpg" alt="Back to Top" />
+                                <span>Back To Top</span>
+                            </a>
+                        </div>
+
+                    </section><!-- .flght-list -->
+
+                </div><!-- .container -->
+
+            </div><!-- .page-wrapper -->
+        </div><!-- .container.page-container -->
+
+
+
+    </div>
+    <!-- .search-flight -->
+
+    
+}
+else
+{
+    <div class="search-page flight-search-page" ng-controller="FlightController as flight_list">
+
+        <header class="page-header">
+            <div class="container">
+                <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00015")</strong></div>
+                <hr>
+                Data invalid, please change your data <a href="#" class="btn btn-yellow btn-sm show-flight-search-form">@Html.I18NString("CW00014")</a>
+            </div>
+        </header><!-- .page-header -->
+        
+        <section class="flight-search-form form-flight-search">
+            <div class="container">
+                <form class="form-inline" action="/id/Flight/SearchResultList" data-flighttype="round-trip">
+                    <div class="row flight-type-wrapper">
+                        <div class="col-sm-12">
+                            <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
+                            <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>
+                        </div>
+                    </div>
+                    <div class="row airport-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-airport-origin flight-origin autocomplete" placeholder="Origin Airport" />
+                            <input type="text" class="form-control flight-airport-destination flight-destination autocomplete" placeholder="Destination Airport" />
+                            <select class="flight-cabin form-control">
+                                <option value="y">@Html.I18NString("CW00054")</option>
+                                <option value="c">@Html.I18NString("CW00055")</option>
+                                <option value="f">@Html.I18NString("CW00056")</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row passenger-wrapper">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control flight-departure-date date-picker" placeholder="" />
+                            <span class="separator">-</span>
+                            <input type="text" class="form-control flight-return-date date-picker" placeholder="" />
+                            <input type="text" class="form-control flight-return-disable" placeholder="One way" disabled />
+                            <select class="form-control flight-adult">
+                                <option value="1">1 Adult</option>
+                                <option value="2">2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                            </select>
+                            <select class="form-control flight-child">
+                                <option value="0">0 Child</option>
+                                <option value="1">1 Child</option>
+                                <option value="2">2 Childs</option>
+                                <option value="3">3 Childs</option>
+                                <option value="4">4 Childs</option>
+                            </select>
+                            <select class="form-control flight-infant">
+                                <option value="0">0 Child</option>
+                                <option value="1">1 Infant</option>
+                                <option value="2">2 Infants</option>
+                                <option value="3">3 Infants</option>
+                                <option value="4">4 Infants</option>
+                            </select>
+                            <input type="text" class="hidden flight-departure-date-real" value="" />
+                            <input type="text" class="hidden flight-return-date-real" value="" />
+                            <input type="text" class="hidden flight-origin-airport-real" value="" />
+                            <input type="text" class="hidden flight-destination-airport-real" value="" />
+                            <input type="text" id="flight-data-info" name="info" class="hidden" />
+                            <a href="#" class="btn btn-yellow submit-button flight-submit-button">SEARCH</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section><!-- .flight-search-form -->
+
+        <div class="container">
+            <h2 class="page-title"><b>SEARCH</b> RESULT</h2>
+        </div>
+        
+        <div class="container">
+
+            <section class="flight-noflight text-center">
+                <h1>Sorry, No flight available</h1>
+                <h2>Please refine your flight search</h2>
+            </section>
+
+        </div>
+
+        </div>
+    
+}

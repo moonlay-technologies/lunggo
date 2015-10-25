@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,11 @@ namespace Lunggo.WebJob.FlightCrawler
         public static void ProcessQueueMessage([QueueTrigger("flightcrawl")] string searchId, TextWriter log)
         {
             var flight = FlightService.GetInstance();
+            Console.WriteLine("Searching for "+searchId+"...");
+            var sw = Stopwatch.StartNew();
             flight.CommenceSearchFlight(searchId);
+            sw.Stop();
+            Console.WriteLine("Done searching " + searchId + ". (" + sw.ElapsedMilliseconds/1000 + " s)");
         }
     }
 }

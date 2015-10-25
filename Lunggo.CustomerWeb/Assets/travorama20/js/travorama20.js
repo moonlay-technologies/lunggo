@@ -1,6 +1,10 @@
-﻿$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+﻿$(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+if (typeof(angular) == 'object') {
+    var app = angular.module('travorama', ['ngRoute']);
+}
 
 //********************
 // variables
@@ -20,6 +24,14 @@ $('[data-trigger="dropdown"]').click(function (evt) {
 
 //********************
 // general functions
+
+// get parameter
+function getParam(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 // translate month
 function translateMonth(month) {
@@ -164,11 +176,13 @@ function indexPageFunctions() {
     $(document).ready(function() {
         changeTheme(indexPageDestination);
     });
+    /*
     $('.section-popular .destination a').click(function(evt) {
         evt.preventDefault();
         var target = $(this).attr('data-target');
         changeTheme(target);
     });
+    */
     // change header background
     function changeTheme(location) {
         location = location.toLowerCase();
@@ -283,7 +297,7 @@ function flightFormSearchFunctions() {
         }
     });
     $('.search-location .location-recommend .nav-click.next').click(function () {
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 6))) {
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });
@@ -333,6 +347,8 @@ function flightFormSearchFunctions() {
     // autocomplete function
     function getLocation(keyword) {
         FlightSearchConfig.autocomplete.loading = true;
+        $('autocomplete-pre .text-pre').addClass('hidden');
+        $('autocomplete-pre .text-loading').removeClass('hidden');
         $.ajax({
             url: FlightAutocompleteConfig.Url + keyword
         }).done(function (returnData) {
@@ -503,8 +519,9 @@ function flightFormSearchFunctions() {
     // validate passenger
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
+        $('.change-flight-class .option').hide();
         $('.form-flight-passenger .option').hide();
-        $(this).find('.option').toggle();
+        $(this).children('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });
     $('.form-flight-passenger .option span').click(function (evt) {

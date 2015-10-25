@@ -1,0 +1,165 @@
+﻿/*
+
+ACCOUNT PAGES
+file : /Assets/travorama20/css/_page_password.scss
+
+*/
+
+// page account
+.page-account {
+    .form-section {padding:50px 0; background-position:center top; background-repeat:no-repeat;}
+    form {text-align:center; color:#525252;
+        hgroup {margin-bottom:24px;
+            h1,h4 {font-weight:bold; color:#525252;}
+        }
+        input {text-align:center; padding:12px 0; height:auto;}
+        a {font-weight:bold; color:inherit;}
+    }
+}
+
+// login page
+.page-account-login {
+    .form-section {background-image:url(/Assets/images/login-bg.jpg);
+        h1 {font-size:45px; margin-bottom:12px;}
+    }
+}
+
+// register page
+.page-account-register {
+    .form-section {background-image:url(/Assets/images/register-bg.jpg);
+        h1 {font-size:40px;}
+    }
+    hgroup {text-align:right; margin-bottom:24px;
+        h1,h4 {font-weight:bold;}
+    }
+}
+
+// section benefit
+.section-benefit {padding:30px 0;
+    .benefit {text-align:center;
+        h4 {color:$color-main-blue; font-weight:600;}
+    }
+}
+
+// account page
+.page-account-profile {
+    .site-content {padding-top:30px; padding-bottom:50px;}
+    form {text-align:left;
+        header {margin-bottom:15px;}
+        input {height:auto; padding:6px 12px; text-align:left;}
+    }    
+
+    // account menu
+    .account-menu {color:#fff;
+        header {background:$color-main-blue; padding:12px;
+            &:after {@include clearfix();}
+            &:before {width:50px; height:50px; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; display:inline-block; content:""; vertical-align:middle; margin-right:12px;}
+            span {font-weight:600; font-size:12px;}
+        }
+        ul {margin:0; padding:0;
+            li {
+                a {display:block; background:#c6f0ff; font-size:12px; color:$color-main-blue; cursor:pointer; font-weight:600; padding:0 12px; position:relative;
+                    &:before {width:50px; height:50px; display:inline-block; content:""; vertical-align:middle; background-image:url(/Assets/images/user-account-sprite.png); background-repeat:no-repeat; background-position:-50px; margin-right:12px;}
+                    // if active
+                    &.active {background:#abe9ff;
+                        &:after {content:""; background:url(/Assets/images/user-account-active-arrow.png) left center no-repeat; width:10px; height:100%; position:absolute; right:-10px;}
+                    }
+                }
+                // profile
+                &.profile {}
+                // order
+                &.order {
+                    a:before {background-position:-100px;}
+                }
+            }
+        }
+    }
+    // account content
+    .account-content {padding-left:30px;
+        .content-header {border-bottom:$border-default;
+            h2 {margin-top:0;}
+        }
+
+        // form
+        form {font-size:12px;
+            header {display:block;
+                &:after {@include clearfix();}
+                h4 {}
+                .btn {width:150px;}
+            }
+            .control-label {text-align:left;}
+            .form-group {margin-bottom:5px;
+                >div:first-child:after {content:":"; position:absolute; right:6px; top:6px;}
+            }
+            &[name="passwordForm"] {border-top:$border-default; padding-top:18px; margin-top:18px;}
+        }
+        // profile content
+        .profile-content {}
+        // history content
+        .history-content {}
+    }
+
+    // order history
+    .order-wrapper {margin-top:24px;
+        .order {
+            // flight order
+            &.flight {background:#f1f1f1; padding:24px; background-image:url(/Assets/images/order-flight-list-bg.png); background-position:top left; background-repeat:no-repeat; padding-left:50px;
+                header {
+                    .row {margin-bottom:3px;}
+                    span {color:$color-main-blue;}
+                }
+                section {
+                    .row {margin-bottom:3px;}
+                    .detail {
+                        .col-xs-4 {width:30%;}
+                        .status {font-weight:bold;
+                            &.success {color:#14b413;}
+                            &.failed {color:#fe0001;}
+                            &.pending {color:#b551ea;}
+                        }
+                    }
+                    .action {}
+                }
+                &+.order {border-top:$border-default;}
+            }
+        }
+    }
+
+    // order detail
+    .order-detail {
+        .content-body {
+            & > div + div {margin-top:24px; padding-top:24px; border-top:$border-default;}
+        }
+        h2, h4 {letter-spacing:0;}
+        h4 {margin-bottom:18px;}
+        .flight {padding-left:36px; position:relative;
+            .col-xs-9 {font-weight:bold;}
+            img {height:36px; margin-right:24px;}
+            span {font-weight:bold; color:$color-main-blue;}
+            &:before {content:''; width:20px; height:20px; position:absolute; top:0; left:0; background-color:$color-main-blue; background-image:url(/Assets/images/plane-updown-sprite.png); background-size:200%; background-repeat:no-repeat; border:2px solid $color-main-blue;}
+            // departure flight
+            &.departure {}
+            // return flight
+            &.return {
+                &:before {background-position:-16px;}
+            }
+        }
+        .form {
+            .form-group {margin-bottom:6px;}
+            .control-label {text-align:left;}
+            label + div:before {content:":"; display:inline; float:left; position:relative; padding-top:6px; left:-18px;}
+        }
+        .passenger-list {list-style:none; counter-reset:passenger-number; margin:0; padding:0;
+            p {margin-bottom:0;}
+            li {position:relative; margin-bottom:1px; padding-left:30px; background:#efefef;
+                &:before {content:counter(passenger-number); counter-increment:passenger-number; position:absolute; text-align:center; width:20px; height:100%; color:#fff; background:$color-main-blue; z-index:2; left:0; padding:6px;}
+                .row {
+                    & > div {padding:6px;}
+                    div+div {background:#e2e2e2;}
+                }
+            }
+        }
+    }
+
+}
+

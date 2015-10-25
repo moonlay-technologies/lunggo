@@ -3,12 +3,11 @@
 HEADER styling
 file : /Assets/travorama20/css/_header.scss
 
-
 */
 
-.site-header {position:fixed; top:0; left:0; z-index:10; width:100%; height:70px; background:#fff; @include box-shadow(0 0 10px #ccc); letter-spacing:0.1px;
-    .site-logo {padding-top:10px; display:block;
-        img {height:50px;}
+.site-header {position:fixed; top:0; left:0; z-index:10; width:100%; height:70px; background:#fff; @include box-shadow(0 0 10px #aaa); letter-spacing:0.1px;
+    .site-logo {padding-top:13px; display:block;
+        img {height:40px;}
     }
     .menu-top {margin-bottom:3px;
         &:before, &:after {@include clearfix();}
@@ -54,3 +53,9 @@ file : /Assets/travorama20/css/_header.scss
     }
 }
 body {padding-top:70px;}
+
+// header SSL on checkout header
+.header-ssl {text-align:right; padding-top:12px;
+    p {float:right; width:80%; padding-top:5px; margin-bottom:0;}
+    .image-wrapper {float:right; width:20%;}
+}

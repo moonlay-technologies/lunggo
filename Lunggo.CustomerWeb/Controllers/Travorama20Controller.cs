@@ -23,5 +23,60 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult flightCheckout()
+        {
+            return View();
+        }
+
+        public ActionResult flightThankyou()
+        {
+            return View();
+        }
+
+        public ActionResult paymentConfirmation()
+        {
+            return View();
+        }
+
+        public ActionResult register()
+        {
+            return View();
+        }
+
+        public ActionResult login()
+        {
+            return View();
+        }
+
+        public ActionResult forgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult resetPassword()
+        {
+            return View();
+        }
+
+        public ActionResult userAccount()
+        {
+            return View();
+        }
+
+        public ActionResult checkOrder()
+        {
+            return View();
+        }
+
+        public ActionResult orderList()
+        {
+            return View();
+        }
+
+        public ActionResult orderDetail()
+        {
+            return View();
+        }
     }
 }

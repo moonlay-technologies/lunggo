@@ -16,7 +16,7 @@ namespace Lunggo.Configuration
     {
         Local = 5,
         Development1 = 6,
-        Development2 = 7,
+        QA = 7,
         Production = 8
     }
 
