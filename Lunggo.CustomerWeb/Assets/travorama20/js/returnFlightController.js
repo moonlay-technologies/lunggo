@@ -390,7 +390,11 @@ app.controller('returnFlightController', [
         // available filter
         $scope.availableFilter = function() {
             return function (flight) {
-                if (flight.Available) {
+                if (!$scope.departureFlightConfig.loading && !$scope.departureFlightConfig.loadingFlight && !$scope.returnFlightConfig.loading && !$scope.returnFlightConfig.loadingFlight) {
+                    if (flight.Available) {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
@@ -435,8 +439,12 @@ app.controller('returnFlightController', [
         // price filter
         $scope.priceFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
-            return function(flight) {
-                if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+            return function (flight) {
+                if (!$scope.departureFlightConfig.loading && !$scope.departureFlightConfig.loadingFlight && !$scope.returnFlightConfig.loading && !$scope.returnFlightConfig.loadingFlight) {
+                    if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
