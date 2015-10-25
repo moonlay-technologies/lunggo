@@ -1,18 +1,90 @@
-﻿@{
+﻿@using System.Web.UI.WebControls
+@using Lunggo.CustomerWeb.Models
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-index";
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
+
+    // location
+    ViewBag.LocationData = new Dictionary<string, string>();
+    ViewBag.LocationData["Jakarta"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '500000'},{'name' : 'Medan','origin' : 'KNO',	'price' : '700000'},{'name' : 'Denpasar','origin' : 'DPS','price' : '500000'},{'name' : 'Semarang','origin' : 'SMG','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '300000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '600000'},{'name' : 'Makassar','origin' : 'UPG','price' : '600000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'}]";
+    ViewBag.LocationData["Bali"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Semarang','origin' : 'SMG','price' : '600000'},{'name' : 'Kuala'Lumpur','origin' : 'KUL','price' : '300000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '800000'},{'name' : 'Mataram','origin' : 'AMI','price' : '200000'}]";
+    ViewBag.LocationData["Malaysia"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '300000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Padang','origin' : 'DPG','price' : '300000'},{'name' : 'Pekanbaru','origin' : 'PKU','price' : '300000'}]";
+    ViewBag.LocationData["Yogyakarta"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '300000'},{'name' : 'Bali','origin' : 'DPS','price' : '400000'},{'name' : 'Medan','origin' : 'KNO','price' : '900000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '300000'},{'name' : 'Makassar','origin' : 'UPG','price' : '700000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Batam','origin' : 'BTH','price' : '900000'},{'name' : 'Banjarmasin','origin' : 'BDJ','price' : '600000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'}]";
+    ViewBag.LocationData["Singapore"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '200000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '600000'},{'name' : 'Semarang','origin' : 'SMG','price' : '400000'},{'name' : 'Kuala'Lumpur','origin' : 'KUL','price' : '200000'},{'name' : 'Bandung','origin' : 'BDO','price' : '500000'},{'name' : 'Hong'Kong','origin' : 'HKG','price' : '800000'}]";
+    ViewBag.LocationData["Bandung"] = "[{'name' : 'Surabaya','origin' : 'SUB','price' : '400000'},{'name' : 'Kuala'Lumpur','origin' : 'KUL','price' : '500000'},{'name' : 'Palembang','origin' : 'PLM','price' : '700000'},{'name' : 'Medan','origin' : 'KNO','price' : '600000'},{'name' : 'Bali','origin' : 'DPS','price' : '500000'},{'name' : 'Mataram','origin' : 'AMI','price' : '700000'},{'name' : 'Batam','origin' : 'BTH','price' : '500000'},{'name' : 'Yogyakarta','origin' : 'JOG','price' : '400000'},{'name' : 'Singapore','origin' : 'SIN','price' : '500000'}]";
+    ViewBag.LocationData["Surabaya"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '400000'},{'name' : 'Makassar','origin' : 'UPG','price' : '500000'},{'name' : 'Bandung','origin' : 'BDO','price' : '400000'},{'name' : 'Balikpapan','origin' : 'BPN','price' : '500000'},{'name' : 'Medan','origin' : 'KNO','price' : '800000'},{'name' : 'Bali','origin' : 'DPS','price' : '300000'},{'name' : 'Singapore','origin' : 'SIN','price' : '400000'},{'name' : 'Mataram','origin' : 'AMI','price' : '300000'},{'name' : 'Kuala'Lumpur','origin' : 'KUL','price' : '300000'}]";
+    ViewBag.LocationData["Hongkong"] = "[{'name' : 'Jakarta','origin' : 'CGK','price' : '1000000'},{'name' : 'Surabaya','origin' : 'SUB','price' : '1000000'},{'name' : 'Bali','origin' : 'DPS','price' : '1000000'},{'name' : 'Medan','origin' : 'KNO','price' : '1000000'},{'name' : 'Singapore','origin' : 'SIN','price' : '900000'},{'name' : 'Kuala'Lumpur','origin' : 'KUL','price' : '900000'},{'name' : 'Shanghai','origin' : 'PVG','price' : '1000000'},{'name' : 'Bangkok','origin' : 'BKK','price' : '1000000'},{'name' : 'Bandung','origin' : 'BDO','price' : '1000000'}]";
+
+    ViewBag.LocationList = "";
+    ViewBag.DestinationCode = "";
+
+    if (ViewBag.Destination != null)
+    {
+
+        string destination = ViewBag.Destination;
+
+        // switch location
+        switch (destination.ToLower())
+        {
+            case "jakarta":
+                ViewBag.DestinationCode = "CGK";
+                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+                break;
+            case "bali":
+                ViewBag.DestinationCode = "DPS";
+                ViewBag.LocationList = ViewBag.LocationData["Bali"];
+                break;
+            case "malaysia":
+                ViewBag.DestinationCode = "KUL";
+                ViewBag.LocationList = ViewBag.LocationData["Jakarta"];
+                break;
+            case "yogyakarta":
+                ViewBag.DestinationCode = "JOG";
+                ViewBag.LocationList = ViewBag.LocationData["Yogyakarta"];
+                break;
+            case "singapore":
+                ViewBag.DestinationCode = "SIN";
+                ViewBag.LocationList = ViewBag.LocationData["Singapore"];
+                break;
+            case "bandung":
+                ViewBag.DestinationCode = "BDO";
+                ViewBag.LocationList = ViewBag.LocationData["Bandung"];
+                break;
+            case "surabaya":
+                ViewBag.DestinationCode = "SUB";
+                ViewBag.LocationList = ViewBag.LocationData["Surabaya"];
+                break;
+            case "hongkong":
+                ViewBag.DestinationCode = "HKG";
+                ViewBag.LocationList = ViewBag.LocationData["Hongkong"];
+                break;
+        }
+    }
+
+
 }
 
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
 @section PageJS{
     <script>
         indexPageFunctions();
         subscribeFormFunctions();
         var indexPageDestination = '@ViewBag.Destination' || '';
+        var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
+        var topDestinations = @Html.Raw(ViewBag.LocationList);
+        var departureDate = @(DateTime.Now.ToString("ddMMyy"));
     </script>
+    <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
+
 
 <section class="section-search">
     <div class="container">
@@ -353,25 +425,22 @@ else
         <div class="container">
             <h2 class="section-title stripe text-center">RUTE PENERBANGAN <span>TERPOPULER</span></h2>
             
-            <div class="route-wrapper">
+            <div class="route-wrapper" ng-app="travorama" ng-controller="homeController">
             
                 <div class="row">
                     
-                    @for (var i = 1; i <= 12; i++)
-                    {
-                        <div class="col-xs-4">
-                            <div class="route">
-                                <header>
-                                    <h5><span>Rute Penerbangan</span></h5>
-                                </header>
-                                <section>
-                                    <h4><b>Yogyakarta</b> ke <b>Yogyakarta</b></h4>
-                                    <p>Harga mulai dari <b>Rp 999.999.999</b></p>
-                                    <a class="btn btn-yellow" href="@(DateTime.Now.ToString("ddMMyy"))-100y">LIHAT SEKARANG</a>
-                                </section>
-                            </div>
+                    <div class="col-xs-4" ng-repeat="destination in topDestinations">
+                        <div class="route">
+                            <header>
+                                <h5><span>Rute Penerbangan</span></h5>
+                            </header>
+                            <section>
+                                <h4><b>{{destination.name}}</b> ke <b>{{flightDestination.name}}</b></h4>
+                                <p>Harga mulai dari <b>Rp {{destination.price | number}}</b></p>
+                                <a class="btn btn-yellow" href="@Url.Action("SearchResultList","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
+                            </section>
                         </div>
-                    }
+                    </div>
 
                 </div>    
 
