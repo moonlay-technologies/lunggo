@@ -234,7 +234,7 @@
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
-        <div class="page-progress" ng-hide="!loading && !loadingFlight">
+        <div class="page-progress" ng-show="loading && loadingFlight">
             <div class="container">
                 <b>Mencari Penerbangan...</b>
                 <div class="progress-wrapper">
