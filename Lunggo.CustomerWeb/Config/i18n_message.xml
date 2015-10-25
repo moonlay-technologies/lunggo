@@ -356,46 +356,4 @@
   <Message code="CW00177" lang="id_ID" value="Alamat" />
   <Message code="CW00178" lang="en_US" value="Country Code" />
   <Message code="CW00178" lang="id_ID" value="Kode Negara" />
-  <Message code="CW00179" lang="en_US" value="Join Travorama Now!" />
-  <Message code="CW00179" lang="id_ID" value="Bergabung dengan Travorama Sekarang!" />
-  <Message code="CW00180" lang="en_US" value="And win a variety of valuable benefits" />
-  <Message code="CW00180" lang="id_ID" value="Dan Dapatkan Banyak Keuntungan" />
-  <Message code="CW00181" lang="en_US" value="your new password" />
-  <Message code="CW00181" lang="id_ID" value="password baru" />
-  <Message code="CW00182" lang="en_US" value="Reset your password" />
-  <Message code="CW00182" lang="id_ID" value="Reset Password Anda" />
-  <Message code="CW00183" lang="en_US" value="Please insert your email address for us to send you reset instruction's email." />
-  <Message code="CW00183" lang="id_ID" value="Masukan alamat email Anda dan kami akan mengirimkan email instruksi untuk mengganti password Anda." />
-  <Message code="CW00184" lang="en_US" value="Email" />
-  <Message code="CW00184" lang="id_ID" value="Email" />
-  <Message code="CW00185" lang="en_US" value="SUBMIT" />
-  <Message code="CW00185" lang="id_ID" value="KIRIM" />
-  <Message code="CW00186" lang="en_US" value="SUBMITTING" />
-  <Message code="CW00186" lang="id_ID" value="MENGIRIM" />
-  <Message code="CW00187" lang="en_US" value="Checking your order status were never were as easy as on Travorama.com. Insert your order details below." />
-  <Message code="CW00187" lang="id_ID" value="Semakin mudah mengetahui status pemesanan Anda di Travorama.com. Masukan data pemesanan Anda di formulir dibawah." />
-  <Message code="CW00188" lang="en_US" value="If your order hasn't paid yet, you may proceed to continue" />
-  <Message code="CW00188" lang="id_ID" value="Jika Anda memiliki pemesanan yang belum terbayarkan, pemesanan tersebut juga dapat dilanjutkan" />
-  <Message code="CW00189" lang="en_US" value="Upto 2 hours after your order has been made." />
-  <Message code="CW00189" lang="id_ID" value="Hingga 2 jam setelah pemesanan awal dilakukan." />
-  <Message code="CW00190" lang="en_US" value="Order Number" />
-  <Message code="CW00190" lang="id_ID" value="Nomor Pemesanan" />
-  <Message code="CW00191" lang="en_US" value="Customer's last name" />
-  <Message code="CW00191" lang="id_ID" value="Nama Belakang Pemesan" />
-  <Message code="CW00192" lang="en_US" value="CHECK ORDER" />
-  <Message code="CW00192" lang="id_ID" value="CEK PEMESANAN" />
-  <Message code="CW00193" lang="en_US" value="Nationality" />
-  <Message code="CW00193" lang="id_ID" value="Kewarganegaraan" />
-  <Message code="CW00194" lang="en_US" value="EDIT PROFILE" />
-  <Message code="CW00194" lang="id_ID" value="UBAH PROFIL" />
-  <Message code="CW00195" lang="en_US" value="CHECK" />
-  <Message code="CW00195" lang="id_ID" value="CEK" />
-  <Message code="CW00196" lang="en_US" value="ORDER" />
-  <Message code="CW00196" lang="id_ID" value="PEMESANAN" />
-  <Message code="CW00197" lang="en_US" value="Destination" />
-  <Message code="CW00197" lang="id_ID" value="Tujuan" />
-  <Message code="CW00198" lang="en_US" value="print eTicket" />
-  <Message code="CW00198" lang="id_ID" value="cetak eTicket" />
-  <Message code="CW00198" lang="en_US" value="print eTicket" />
-  <Message code="CW00198" lang="id_ID" value="cetak eTicket" />
 </Messages>
