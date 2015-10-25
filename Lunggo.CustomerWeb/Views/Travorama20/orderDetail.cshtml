@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.PageActiveSection = "order";
@@ -46,19 +47,19 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">User ID</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">shinta@tamara.com</p>
+                                            <p class="form-control-static">@Model.Contact.Email</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Name</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Shinta Tamara</p>
+                                            <p class="form-control-static">@Model.Contact.Name</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Date</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">15 Oktober 2015</p>
+                                            <p class="form-control-static">@Model.RsvTime</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -70,19 +71,19 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Final Price</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Rp 999.999.999</p>
+                                            <p class="form-control-static">Rp @Model.Payment.FinalPrice.ToString("##,###")</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Method</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">ATM Transfer</p>
+                                            <p class="form-control-static">@Model.Payment.Method</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Status</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">Pending</p>
+                                            <p class="form-control-static">@Model.Payment.Status</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -114,31 +115,39 @@
                                 <h4><b>DETAIL PEMESANAN</b></h4>
                             </header>
                             <section>
-                                <div class="flight departure">
-                                    <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
-                                    <div class="row">
-                                        <div class="col-xs-2">
-                                            <p>Berangkat : </p>
+                                @foreach (var trip in Model.Itinerary.Trips)
+                                {
+                                    if (trip == Model.Itinerary.Trips.First())
+                                    {
+                                        <div class="flight departure">
+                                            <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p>Berangkat : </p>
+                                                </div><div class="col-xs-9">
+                                                    <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                    <p>@trip.DepartureDate.ToString("dddd, d MMM yyyy")</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-xs-9">
-                                            <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
-                                            <p>Kamis, 15 Okt 2015</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="flight return">
+                                            <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p>Berangkat : </p>
+                                                </div><div class="col-xs-9">
+                                                    <p>@trip.OriginCity - @trip.DestinationCity</p>
+                                                    <p>@trip.DepartureDate.ToString("dddd, d MMM yyyy")</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="flight return">
-                                    <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
-                                    <div class="row">
-                                        <div class="col-xs-2">
-                                            <p>Berangkat : </p>
-                                        </div>
-                                        <div class="col-xs-9">
-                                            <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
-                                            <p>Kamis, 15 Okt 2015</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    }
+                                }
                             </section>
+
                         </div><!-- .info-flight -->
                         
                         <div class="refund-detail">

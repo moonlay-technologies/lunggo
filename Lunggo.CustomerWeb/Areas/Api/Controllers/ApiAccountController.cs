@@ -23,13 +23,13 @@ using Lunggo.WebAPI.ApiSrc.v1.Account.Model;
 namespace Lunggo.CustomerWeb.Areas.Api.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class ApiAccountController : Controller
     {
-        public AccountController()
+        public ApiAccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ApiAccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -80,7 +80,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
                 var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                     protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, Queue.UserConfirmationEmail.ToString(), callbackUrl);
+                await UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl);
                 response.Status = "Success";
                 response.Description = "ConfirmationEmailSent";
                 return Json(response);
@@ -93,8 +93,6 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
 
         }
 
-        //
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         public async Task<JsonResult> ForgotPassword(ForgotPasswordViewModel model)
@@ -121,12 +119,11 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
             var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
             var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = model.Email },
                 protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(foundUser.Id, Queue.ForgotPasswordEmail.ToString(), callbackUrl);
+            await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
             response.Description = response.Status = "Success";
             return Json(response);
         }
 
-        // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         public async Task<JsonResult> ResetPassword(Lunggo.CustomerWeb.Models.ResetPasswordViewModel model)

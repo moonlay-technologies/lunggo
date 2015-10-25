@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.WebAPI.ApiSrc.v1.Voucher.Model;
+using Lunggo.ApCommon.Campaign.Model;
+using Lunggo.ApCommon.Campaign.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
 {
@@ -11,17 +13,24 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
     {
         public static CheckVoucherApiResponse CheckVoucher(CheckVoucherApiRequest request)
         {
-            var service = VoucherService.GetInstance();
-            var discount = service.CheckVoucherDiscount(request.Token, request.Code, request.Email);
-            var apiResponse = AssembleApiResponse(discount, request);
+            var service = CampaignService.GetInstance();
+            var voucher = new VoucherRequest()
+            {
+                Email = request.Email,
+                Price = request.Price,
+                VoucherCode = request.VoucherCode
+            };
+            var response = service.ValidateVoucherRequest(voucher);
+            var apiResponse = AssembleApiResponse(response, request);
             return apiResponse;
         }
 
-        private static CheckVoucherApiResponse AssembleApiResponse(decimal discount, CheckVoucherApiRequest request)
+        private static CheckVoucherApiResponse AssembleApiResponse(VoucherResponse response, CheckVoucherApiRequest request)
         {
             return new CheckVoucherApiResponse
             {
-                Discount = discount,
+                Discount = response.TotalDiscount,
+                ValidationStatus = response.UpdateStatus,
                 OriginalRequest = request
             };
         }
