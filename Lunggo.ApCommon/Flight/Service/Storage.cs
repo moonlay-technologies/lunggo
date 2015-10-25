@@ -27,21 +27,37 @@ namespace Lunggo.ApCommon.Flight.Service
             return GetDb.SavedPassengers(contactEmail);
         }
 
-        public bool GetSetSearchingStatusInCache(string searchId, bool status)
+        public bool GetSearchingStatusInCache(string searchId)
         {
             try
             {
                 var redisService = RedisService.GetInstance();
                 var redisKey = "searchFlightStatus:" + searchId;
                 var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                var currentStatus = redisDb.StringGetSet(redisKey, status);
-                redisDb.KeyExpire(redisKey, TimeSpan.FromMinutes(5));
-                return (bool) currentStatus;
+                var redisTransaction = redisDb.CreateTransaction();
+                redisTransaction.AddCondition(Condition.KeyNotExists(redisKey));
+                redisTransaction.StringSetAsync(redisKey, true, TimeSpan.FromMinutes(5));
+                var currentStatusTask = redisTransaction.StringGetAsync(redisKey);
+                redisTransaction.Execute();
+                return currentStatusTask.Status == TaskStatus.Canceled;
             }
             catch
             {
                 return true;
             }
+        }
+
+        public void InvalidateSearchingStatusInCache(string searchId)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "searchFlightStatus:" + searchId;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var expiry = GetSearchedItinerariesExpiry(searchId);
+                redisDb.StringSet(redisKey, true, expiry-DateTime.UtcNow);
+            }
+            catch { }
         }
 
         public int GetSearchingCompletenessInCache(string searchId)

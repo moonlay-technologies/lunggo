@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper
         internal abstract void Init();
         internal abstract SearchFlightResult SearchFlight(SearchFlightConditions conditions);
         internal abstract RevalidateFareResult RevalidateFare(RevalidateConditions conditions);
-        internal abstract BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType);
+        internal abstract BookFlightResult BookFlight(FlightBookingInfo bookInfo);
         internal abstract OrderTicketResult OrderTicket(string bookingId, FareType fareType);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
         internal abstract List<BookingStatusInfo> GetBookingStatus();

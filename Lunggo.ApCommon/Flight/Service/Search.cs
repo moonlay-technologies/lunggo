@@ -29,13 +29,13 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new SearchFlightOutput();
             var searchId = EncodeConditions(input.Conditions);
 
-            var isCurrentlySearching = GetSetSearchingStatusInCache(searchId, true);
+            var isCurrentlySearching = GetSearchingStatusInCache(searchId);
             var completeness = GetSearchingCompletenessInCache(searchId);
             if (!isCurrentlySearching && completeness == 0)
             {
                 //var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
                 //queue.AddMessage(new CloudQueueMessage(searchId));
-                Task.Run(()=>CommenceSearchFlight(searchId));
+                Task.Run(() => CommenceSearchFlight(searchId));
             }
 
             var searchedItins = new List<FlightItinerary>();

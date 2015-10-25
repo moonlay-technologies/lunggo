@@ -29,7 +29,7 @@ namespace Lunggo.CustomerWeb
             InitConfigurationManager();
             InitI18NMessageManager();
             InitUniqueIdGenerator();
-            //InitRedisService();
+            InitRedisService();
             InitDatabaseService();
             InitQueueService();
             //InitLogger();

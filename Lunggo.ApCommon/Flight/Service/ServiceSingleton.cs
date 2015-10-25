@@ -58,9 +58,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
-            var results = new SearchFlightResult {Itineraries = new List<FlightItinerary>()};
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
+            var searchTask = Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
             {
                 var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -76,18 +75,15 @@ namespace Lunggo.ApCommon.Flight.Service
                         itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
                         itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                     }
-                    results.IsSuccess = true;
-                    results.Itineraries.AddRange(result.Itineraries);
-                    itinQueue.Enqueue(result.Itineraries);
                 }
                 else
                 {
-                    result.Errors.ForEach(results.AddError);
-                    if (result.ErrorMessages != null)
-                        result.ErrorMessages.ForEach(results.AddError);
+                    result.Itineraries = new List<FlightItinerary>();
                 }
-            }),TaskCreationOptions.AttachedToParent);
+                itinQueue.Enqueue(result.Itineraries);
+            }));
             PopulateSearchCache(itinQueue, conditions);
+            searchTask.Wait();
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
@@ -125,7 +121,7 @@ namespace Lunggo.ApCommon.Flight.Service
             bookInfo.FareId = IdUtil.GetCoreId(bookInfo.FareId);
             BookFlightResult result;
             var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
-            result = supplier.BookFlight(bookInfo, fareType);
+            result = supplier.BookFlight(bookInfo);
             if (result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
@@ -192,7 +188,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     SetSearchingCompletenessInCache(searchId, completeness);
                 }
             }
-            GetSetSearchingStatusInCache(searchId, false);
+            InvalidateSearchingStatusInCache(searchId);
         }
     }
 }
