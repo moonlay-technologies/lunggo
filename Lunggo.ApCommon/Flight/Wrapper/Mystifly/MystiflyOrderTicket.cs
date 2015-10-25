@@ -13,9 +13,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, FareType fareType)
+        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            if (fareType != FareType.Lcc)
+            if (canHold)
             {
                 var request = new AirOrderTicketRQ
                 {
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any())
                     {
-                        result = MapResult(response, fareType);
+                        result = MapResult(response);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any() && response.Status == "CONFIRMED")
                     {
-                        result = MapBookResult(response, fareType);
+                        result = MapBookResult(response);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -144,7 +144,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             }
         }
 
-        private static OrderTicketResult MapResult(AirOrderTicketRS response, FareType fareType)
+        private static OrderTicketResult MapResult(AirOrderTicketRS response)
         {
             return new OrderTicketResult
             {
@@ -153,7 +153,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             };
         }
 
-        private static OrderTicketResult MapBookResult(AirBookRS response, FareType fareType)
+        private static OrderTicketResult MapBookResult(AirBookRS response)
         {
             return new OrderTicketResult
             {

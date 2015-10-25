@@ -23,11 +23,12 @@ namespace Lunggo.ApCommon.Flight.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = GetReservation(input.RsvNo);
-                var bookingIds = reservation.Itineraries.Select(itin => itin.BookingId);
                 var output = new IssueTicketOutput();
-                Parallel.ForEach(bookingIds, bookingId =>
+                Parallel.ForEach(reservation.Itineraries, itin =>
                 {
-                    var response = OrderTicketInternal(bookingId);
+                    var bookingId = itin.BookingId;
+                    var canHold = itin.CanHold;
+                    var response = OrderTicketInternal(bookingId, canHold);
                     var orderResult = new OrderResult();
                     if (response.IsSuccess)
                     {
