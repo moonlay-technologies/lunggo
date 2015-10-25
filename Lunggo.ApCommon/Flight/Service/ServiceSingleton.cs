@@ -60,12 +60,12 @@ namespace Lunggo.ApCommon.Flight.Service
         public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             
-            var suppliers = new FlightSupplierWrapperBase[] {SriwijayaWrapper,CitilinkWrapper,AirAsiaWrapper};
+            var suppliers = new FlightSupplierWrapperBase[] {SriwijayaWrapper};
             //var coba = AirAsiaWrapper.OrderTicket("EFE6SR", FareType.Published);
-            var coba1 = SriwijayaWrapper.RevalidateFare(null);
+            //var coba1 = SriwijayaWrapper.BookFlight(null, FareType.Published);
             var results = new SearchFlightResult();
             results.Itineraries = new List<FlightItinerary>();
-            for (var i = 0; i<3; i++)
+            for (var i = 0; i<1; i++)
             {
                 var result = suppliers[i].SearchFlight(conditions);
                 if (result.IsSuccess)

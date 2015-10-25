@@ -17,6 +17,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
     {
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
+            //var sementarai = new SearchFlightConditions
+            //{
+            //    AdultCount = 2,
+            //    ChildCount = 2,
+            //    InfantCount = 2,
+            //    CabinClass = CabinClass.Economy,
+            //    Trips = new List<FlightTrip>
+            //        {
+            //            new FlightTrip
+            //            {
+            //                OriginAirport = "KNO",
+            //                DestinationAirport = "WGP",
+            //                DepartureDate = new DateTime(2015,11,4)
+            //            }
+            //        },
+            //
+            //};
             return Client.SearchFlight(conditions);
         }
 
@@ -24,6 +41,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
+                
                 // WAIT
                 var client = new ExtendedWebClient();
                 var hasil = new SearchFlightResult();

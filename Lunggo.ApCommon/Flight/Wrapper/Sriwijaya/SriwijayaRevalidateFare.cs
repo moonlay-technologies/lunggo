@@ -157,8 +157,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  "&ruteTujuan=" + arrAirport +
                  "&tanggalBerangkat=" + tglBerangkat.ToString("dd-MMM-yyyy") +
                  "&ADT=" + penumpang[0] +
-                 "&CHD=0" + penumpang[1] +
-                 "&INF=0" + penumpang[2] +
+                 "&CHD=0" + penumpang[2] +
+                 "&INF=0" + penumpang[4] +
                  "&Submit=Search" +
                  "&action=booking" +
                  "&2210150413=2210150413";
