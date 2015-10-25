@@ -234,7 +234,7 @@
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
-        <div class="page-progress" ng-hide="!loading && !loadingFlight">
+        <div class="page-progress" ng-show="loading && loadingFlight">
             <div class="container">
                 <b>Mencari Penerbangan...</b>
                 <div class="progress-wrapper">
@@ -250,13 +250,34 @@
         </div>
 
         <!-- <div class="page-overlay" ng-show="loading && loadingFlight">
+                 <div class="overlay-content validating-flight">
+                     <header>
+                         <h4>Mencari Penerbangan</h4>
+                     </header>
+                     <section>
+                         <p>Mencari penerbangan. Harap tunggu.</p>
+                     </section>
+                 </div>
+             </div><!-- .page-overlay -->
+        <div class="page-overlay" ng-show="expiry.expired">
             <div class="overlay-content validating-flight">
                 <header>
-                    <h4>Mencari Penerbangan</h4>
+                    <h4>Pencarian Kadaluarsa</h4>
                 </header>
                 <section>
-                    <p>Mencari penerbangan. Harap tunggu.</p>
+                    <p>Penerbangan Anda Kadaluarsa.</p>
                 </section>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-yellow btn-block" onclick="location.reload();">REFRESH</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div><!-- .page-overlay -->
         <div class="page-overlay" ng-show="loading && revalidateFlightParam.validating">

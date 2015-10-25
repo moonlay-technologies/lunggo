@@ -26,6 +26,17 @@ app.controller('singleFlightController', [
             Trips: FlightSearchConfig.flightForm.trips,
             Completeness : 0
         };
+        $scope.expiry = {
+            expired: false,
+            time: '',
+            start : function(expiryTime) {
+                var currentTime = new Date();
+                expiryTime = new Date(expiryTime);
+                if (currentTime > expiryTime) {
+                    $scope.expiry.expired = true;
+                }
+            }
+        }
 
         // **********
         // general functions
@@ -381,6 +392,10 @@ app.controller('singleFlightController', [
                         if (returnData.Completeness == 100) {
                             console.log('COMPLETE !');
                             $scope.expiryTime = new Date(returnData.ExpiryTime);
+                            $scope.expiry.time = returnData.ExpiryTime;
+                            setInterval(function () {
+                                $scope.expiry.start();
+                            }, 1000);
                             $scope.busy = false;
                             $scope.loading = false;
                             $scope.loadingFlight = false;
