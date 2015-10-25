@@ -57,15 +57,15 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        private SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
         {
             
-            var suppliers = new WrapperBase[] {SriwijayaWrapper,CitilinkWrapper};
-            //var coba = CitilinkWrapper.OrderTicket("EFE6SR", FareType.Published);
-            //var coba1 = SriwijayaWrapper.RevalidateFare(null);
+            var suppliers = new FlightSupplierWrapperBase[] {SriwijayaWrapper,CitilinkWrapper,AirAsiaWrapper};
+            //var coba = AirAsiaWrapper.OrderTicket("EFE6SR", FareType.Published);
+            var coba1 = SriwijayaWrapper.RevalidateFare(null);
             var results = new SearchFlightResult();
             results.Itineraries = new List<FlightItinerary>();
-            for (var i = 0; i<2; i++)
+            for (var i = 0; i<3; i++)
             {
                 var result = suppliers[i].SearchFlight(conditions);
                 if (result.IsSuccess)

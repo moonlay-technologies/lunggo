@@ -280,7 +280,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6], format, provider);
                                         var deptime = departureTime.AddHours(-(dict.GetAirportTimeZone(bandara1)));
                                         var arrtime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(bandara2)));
-                                        tampungPesawat.Add(codeParse1[0] + codeParse1[1]);
+                                        tampungPesawat.Add(codeParse1[0] +"."+ codeParse1[1]);
                                         tampungPesawatString = string.Join(".", tampungPesawat.ToArray());
                                         segments.Add(new FlightSegment
                                         {
@@ -309,14 +309,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "" + tampungPesawatString + "" +
                                         "." + conditions.Trips[0].OriginAirport + "" +
                                         "." + conditions.Trips[0].DestinationAirport + "" +
-                                        "." + conditions.Trips[0].DepartureDate.Day + "" +
-                                        "." + conditions.Trips[0].DepartureDate.Month + "" +
-                                        "." + conditions.Trips[0].DepartureDate.Year + "" +
-                                        "." + conditions.AdultCount + "" +
+                                        "?" + conditions.Trips[0].DepartureDate.Year + "" +
+                                        "-" + conditions.Trips[0].DepartureDate.Month + "" +
+                                        "-" + conditions.Trips[0].DepartureDate.Day + "" +
+                                        "|" + conditions.AdultCount + "" +
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
-                                        "." + decimal.Parse(harga[1]) + "" +
-                                        ".";
+                                        "|" + decimal.Parse(harga[1]) + "" +
+                                        "." + "1";
 
                                     var itin = new FlightItinerary
                                     {
@@ -517,17 +517,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         
 
                                         var prefix =
-                                            "" + tampungPesawatString + "" +
+                                             "" + tampungPesawatString + "" +
                                             "." + conditions.Trips[0].OriginAirport + "" +
                                             "." + conditions.Trips[0].DestinationAirport + "" +
-                                            "." + conditions.Trips[0].DepartureDate.Day + "" +
-                                            "." + conditions.Trips[0].DepartureDate.Month + "" +
-                                            "." + conditions.Trips[0].DepartureDate.Year + "" +
-                                            "." + conditions.AdultCount + "" +
+                                            "?" + conditions.Trips[0].DepartureDate.Year + "" +
+                                            "-" + conditions.Trips[0].DepartureDate.Month + "" +
+                                            "-" + conditions.Trips[0].DepartureDate.Day + "" +
+                                            "|" + conditions.AdultCount + "" +
                                             "." + conditions.ChildCount + "" +
                                             "." + conditions.InfantCount + "" +
-                                            "." + decimal.Parse(harga[1]) + "" +
-                                            ".";
+                                            "|" + decimal.Parse(harga[1]) + "" + 
+                                            "." + "2";
 
                                         var itin = new FlightItinerary
                                         {

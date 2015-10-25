@@ -271,10 +271,12 @@
     <Compile Include="Flight\Wrapper\Citilink\CitilinkClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetBookingStatus.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Citilink\CitilinkIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkSearchFlight.cs" />
     <Compile Include="Flight\Wrapper\Citilink\CitilinkWrapperSingleton.cs" />
+    <Compile Include="Flight\Wrapper\FlightSupplierWrapperBase.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyBookFlight.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyCancelBooking.cs" />
     <Compile Include="Flight\Wrapper\Mystifly\MystiflyClientHandler.cs" />
@@ -294,7 +296,6 @@
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaSearchFight.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaWrapperSingleton.cs" />
-    <Compile Include="Flight\Wrapper\WrapperBase.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
     <Compile Include="Identity\Query\GetListRoleByUserIdQuery.cs" />

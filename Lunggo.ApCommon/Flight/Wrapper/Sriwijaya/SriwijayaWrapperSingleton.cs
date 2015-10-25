@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
-    internal partial class SriwijayaWrapper : WrapperBase
+    internal partial class SriwijayaWrapper : FlightSupplierWrapperBase
     {
         private static readonly SriwijayaWrapper Instance = new SriwijayaWrapper();
         private bool _isInitialized;
@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             return Instance;
         }
 
-        internal void Init()
+        internal override void Init()
         {
             if (!_isInitialized)
             {

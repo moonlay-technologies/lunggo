@@ -31,6 +31,8 @@ namespace Lunggo.CustomerWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            var coba = FlightService.GetInstance().SearchFlightInternal(null);
+
         }
 
         void Session_Start(object sender, EventArgs e)
