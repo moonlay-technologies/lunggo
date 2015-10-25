@@ -33,9 +33,8 @@ namespace Lunggo.ApCommon.Flight.Service
             var completeness = GetSearchingCompletenessInCache(searchId);
             if (!isCurrentlySearching && completeness == 0)
             {
-                //var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
-                //queue.AddMessage(new CloudQueueMessage(searchId));
-                Task.Run(() => CommenceSearchFlight(searchId));
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
+                queue.AddMessage(new CloudQueueMessage(searchId));
             }
 
             var searchedItins = new List<FlightItinerary>();

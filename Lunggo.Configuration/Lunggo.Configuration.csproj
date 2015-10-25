@@ -120,6 +120,7 @@
     <None Include="Config\CustomerWeb\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CustomerWeb\api.properties" />
     <None Include="Config\CustomerWeb\azureStorage.properties" />
     <None Include="Config\CustomerWeb\citilink.properties">
       <SubType>Designer</SubType>
