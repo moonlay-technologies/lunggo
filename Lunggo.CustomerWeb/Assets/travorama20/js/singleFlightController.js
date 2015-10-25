@@ -314,7 +314,7 @@ app.controller('singleFlightController', [
                     } else if (returnData.IsOtherFareAvailable == false) {
                         console.log('departure flight is gone');
                         $scope.revalidateFlightParam.newFare = false;
-                        $scope.flightList[indexNo].available = false;
+                        $scope.flightList[indexNo].Available = false;
 
                     }
                 }
