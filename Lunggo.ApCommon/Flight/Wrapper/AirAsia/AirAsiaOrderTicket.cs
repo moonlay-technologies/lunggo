@@ -230,7 +230,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             return new OrderTicketResult
                             {
                                 IsSuccess = true,
-                                BookingId = bookingId
+                                BookingId = bookingId,
+                                IsInstantIssuance = true
                             };
                         case IssueEnum.NotIssued:
                             return new OrderTicketResult

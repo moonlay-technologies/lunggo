@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Constant;
@@ -10,7 +14,6 @@ using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
-using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Voucher;
@@ -18,7 +21,6 @@ using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Microsoft.Data.OData.Query;
-using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -28,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
-        private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
+        private static readonly FlightSupplierWrapperBase[] Suppliers = { MystiflyWrapper, AirAsiaWrapper, CitilinkWrapper };
         private bool _isInitialized;
 
         private FlightService()
@@ -45,11 +47,8 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             if (!_isInitialized)
             {
-                MystiflyWrapper.Init();
-                AirAsiaWrapper.Init();
-                CitilinkWrapper.Init();
-                SriwijayaWrapper.Init();
-                CurrencyService.GetInstance().Init();
+                foreach (var supplier in Suppliers) { supplier.Init(); }
+                //CurrencyService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
                 InitPriceDiscountRules();
@@ -57,46 +56,38 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
-        public SearchFlightResult SearchFlightInternal(SearchFlightConditions conditions)
+        private void SearchFlightInternal(SearchFlightConditions conditions)
         {
-            
-            var suppliers = new FlightSupplierWrapperBase[] {SriwijayaWrapper};
-            //var coba = AirAsiaWrapper.OrderTicket("EFE6SR", FareType.Published);
-            //var coba1 = SriwijayaWrapper.BookFlight(null, FareType.Published);
-            var results = new SearchFlightResult();
-            results.Itineraries = new List<FlightItinerary>();
-            for (var i = 0; i<1; i++)
+            var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
+            var searchTask = Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
             {
-                var result = suppliers[i].SearchFlight(conditions);
+                var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
                 {
                     foreach (var itin in result.Itineraries)
                     {
                         var currency = CurrencyService.GetInstance();
-                        itin.SupplierRate = currency.GetSupplierExchangeRate(suppliers[i].SupplierName);
-                        itin.OriginalIdrPrice = itin.SupplierPrice*itin.SupplierRate;
+                        itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
+                        itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
                         AddPriceMargin(itin);
                         itin.LocalCurrency = "IDR";
                         itin.LocalRate = 1;
-                        itin.LocalPrice = itin.FinalIdrPrice*itin.LocalRate;
-                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, suppliers[i].SupplierName, itin.FareType);
-        }
-                    results.IsSuccess = true;
-                    results.Itineraries.AddRange(result.Itineraries);
+                        itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
+                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+                    }
                 }
                 else
                 {
-                    result.Errors.ForEach(results.AddError);
-                    if (result.ErrorMessages != null) 
-                        result.ErrorMessages.ForEach(results.AddError);
+                    result.Itineraries = new List<FlightItinerary>();
                 }
-            }
-            return results;
+                itinQueue.Enqueue(result.Itineraries);
+            }));
+            PopulateSearchCache(itinQueue, conditions);
+            searchTask.Wait();
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
         {
-            //var coba = new SriwijayaSearchFight().SearchFlight(conditions);
             var results = MystiflyWrapper.SpecificSearchFlight(conditions);
             results.Itineraries.ForEach(itin => itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, Supplier.Mystifly, itin.FareType));
             return results;
@@ -104,141 +95,63 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private RevalidateFareResult RevalidateFareInternal(RevalidateConditions conditions)
         {
-            var supplier = IdUtil.GetSupplier(conditions.FareId);
+            var supplierName = IdUtil.GetSupplier(conditions.FareId);
             conditions.FareId = IdUtil.GetCoreId(conditions.FareId);
             RevalidateFareResult result;
             var currency = CurrencyService.GetInstance();
-            switch (supplier)
+            var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
+            result = supplier.RevalidateFare(conditions);
+            if (result.Itinerary != null)
             {
-                case Supplier.Mystifly:
-                    result = MystiflyWrapper.RevalidateFare(conditions);
-                    if (result.Itinerary != null)
-                    {
-                        result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(Supplier.Mystifly);
-                        result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
-                        AddPriceMargin(result.Itinerary);
-                        result.Itinerary.LocalCurrency = "IDR";
-                        result.Itinerary.LocalRate = 1;
-                        result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
-                        result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, Supplier.Mystifly, result.Itinerary.FareType);
-                    }
-                    return result;
-                case Supplier.AirAsia:
-                    result = AirAsiaWrapper.RevalidateFare(conditions);
-                    if (result.Itinerary != null)
-                    {
-                        result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(Supplier.AirAsia);
-                        result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
-                        AddPriceMargin(result.Itinerary);
-                        result.Itinerary.LocalCurrency = "IDR";
-                        result.Itinerary.LocalRate = 1;
-                        result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
-                        result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, Supplier.AirAsia, result.Itinerary.FareType);
-                    }
-                    return result;
-                case Supplier.Citilink:
-                    result = CitilinkWrapper.RevalidateFare(conditions);
-                    if (result.Itinerary != null)
-                    {
-                        result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(Supplier.Citilink);
-                        result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
-                        AddPriceMargin(result.Itinerary);
-                        result.Itinerary.LocalCurrency = "IDR";
-                        result.Itinerary.LocalRate = 1;
-                        result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
-                        result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, Supplier.Citilink, result.Itinerary.FareType);
-                    }
-                    return result;
-                default:
-                    return null;
+                result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(supplierName);
+                result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
+                AddPriceMargin(result.Itinerary);
+                result.Itinerary.LocalCurrency = "IDR";
+                result.Itinerary.LocalRate = 1;
+                result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
+                result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, supplierName, result.Itinerary.FareType);
             }
+            return result;
         }
 
         private BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
             var fareType = IdUtil.GetFareType(bookInfo.FareId);
-            var supplier = IdUtil.GetSupplier(bookInfo.FareId);
+            var supplierName = IdUtil.GetSupplier(bookInfo.FareId);
             bookInfo.FareId = IdUtil.GetCoreId(bookInfo.FareId);
             BookFlightResult result;
-            switch (supplier)
-            {
-                case Supplier.Mystifly:
-                    result = MystiflyWrapper.BookFlight(bookInfo, fareType);
-                    if (result.Status.BookingId != null)
-                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
-                            Supplier.Mystifly, fareType);
-                    return result;
-                case Supplier.AirAsia:
-                    result = AirAsiaWrapper.BookFlight(bookInfo, fareType);
-                    if (result.Status != null)
-                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.AirAsia,
-                            fareType);
-                    return result;
-                case Supplier.Citilink:
-                    result = CitilinkWrapper.BookFlight(bookInfo, fareType);
-                    if (result.Status != null)
-                        result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId, Supplier.Citilink,
-                            fareType);
-                    return result;
-                default:
-                    return null;
-            }
+            var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
+            result = supplier.BookFlight(bookInfo);
+            if (result.Status.BookingId != null)
+                result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
+                    supplierName, fareType);
+            return result;
         }
 
         private OrderTicketResult OrderTicketInternal(string bookingId)
         {
             var fareType = IdUtil.GetFareType(bookingId);
-            var supplier = IdUtil.GetSupplier(bookingId);
+            var supplierName = IdUtil.GetSupplier(bookingId);
             bookingId = IdUtil.GetCoreId(bookingId);
             OrderTicketResult result;
-            switch (supplier)
-            {
-                case Supplier.Mystifly:
-                    result = MystiflyWrapper.OrderTicket(bookingId, fareType);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Mystifly, fareType);
-                    return result;
-                case Supplier.AirAsia:
-                    result = AirAsiaWrapper.OrderTicket(bookingId, fareType);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.AirAsia, fareType);
-                    return result;
-                case Supplier.Citilink:
-                    result = CitilinkWrapper.OrderTicket(bookingId, fareType);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Citilink, fareType);
-                    return result;
-                default:
-                    return null;
-            }
+            var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
+            result = supplier.OrderTicket(bookingId, fareType);
+            if (result.BookingId != null)
+                result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            return result;
         }
 
         private GetTripDetailsResult GetTripDetailsInternal(TripDetailsConditions conditions)
         {
             var fareType = IdUtil.GetFareType(conditions.BookingId);
-            var supplier = IdUtil.GetSupplier(conditions.BookingId);
+            var supplierName = IdUtil.GetSupplier(conditions.BookingId);
             conditions.BookingId = IdUtil.GetCoreId(conditions.BookingId);
             GetTripDetailsResult result;
-            switch (supplier)
-            {
-                case Supplier.Mystifly:
-                    result = MystiflyWrapper.GetTripDetails(conditions);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Mystifly, fareType);
-                    return result;
-                case Supplier.AirAsia:
-                    result = AirAsiaWrapper.GetTripDetails(conditions);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.AirAsia, fareType);
-                    return result;
-                case Supplier.Citilink:
-                    result = CitilinkWrapper.GetTripDetails(conditions);
-                    if (result.BookingId != null)
-                        result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, Supplier.Citilink, fareType);
-                    return result;
-                default:
-                    return null;
-            }
+            var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
+            result = supplier.GetTripDetails(conditions);
+            if (result.BookingId != null)
+                result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
+            return result;
         }
 
         private List<BookingStatusInfo> GetBookingStatusInternal()
@@ -254,6 +167,28 @@ namespace Lunggo.ApCommon.Flight.Service
         private GetRulesResult GetRulesInternal(string fareId)
         {
             return MystiflyWrapper.GetRules(fareId);
+        }
+
+        private void PopulateSearchCache(ConcurrentQueue<List<FlightItinerary>> itinQueue, SearchFlightConditions conditions)
+        {
+            var supplierCounter = 0;
+            var totalSupplier = Suppliers.Count();
+            var itinCounter = 0;
+            var searchId = EncodeConditions(conditions);
+            while (supplierCounter < totalSupplier)
+            {
+                List<FlightItinerary> itins;
+                var gotItins = itinQueue.TryDequeue(out itins);
+                if (gotItins)
+                {
+                    supplierCounter++;
+                    var completeness = 100 * supplierCounter / totalSupplier;
+                    itins.ForEach(itin => itin.RegisterNumber = itinCounter++);
+                    SaveSearchedItinerariesToCache(itins, searchId, completeness, 0);
+                    SetSearchingCompletenessInCache(searchId, completeness);
+                }
+            }
+            InvalidateSearchingStatusInCache(searchId);
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
                 if (!_isInitialized)
                 {
-                    _userName = "IDTDEZYCGK_ADMIN";
-                    _password = "Travorama123";
+                    _userName = ConfigManager.GetInstance().GetConfigValue("airAsia", "webUserName");
+                    _password = ConfigManager.GetInstance().GetConfigValue("airAsia", "webPassword");
                     _isInitialized = true;
                 }
             }

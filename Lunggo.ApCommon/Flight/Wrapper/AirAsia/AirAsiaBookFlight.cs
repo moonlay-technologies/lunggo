@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
-        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType)
+        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             return Client.BookFlight(bookInfo);
         }

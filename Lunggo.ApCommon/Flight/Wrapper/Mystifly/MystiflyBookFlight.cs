@@ -10,7 +10,6 @@ using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
-using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using Gender = Lunggo.ApCommon.Flight.Constant.Gender;
 using PassengerType = Lunggo.ApCommon.Flight.Constant.PassengerType;
 
@@ -18,9 +17,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType)
+        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            if (fareType != FareType.Lcc)
+            if (bookInfo.CanHold)
             {
                 var airTravelers = bookInfo.Passengers.Select(MapAirTraveler).ToList();
                 var travelerInfo = MapTravelerInfo(bookInfo.ContactData, airTravelers);
@@ -44,7 +43,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     done = true;
                     if (response.Success && !response.Errors.Any() && response.Status.ToLower() == "confirmed")
                     {
-                        result = MapResult(response, fareType, true);
+                        result = MapResult(response, true);
                         result.IsSuccess = true;
                         result.Errors = null;
                         result.ErrorMessages = null;
@@ -52,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     else
                     {
                         result.IsSuccess = false;
-                        result = MapResult(response, fareType, false);
+                        result = MapResult(response, false);
                         if (response.Errors.Any())
                         {
                             result.Errors = new List<FlightError>();
@@ -240,7 +239,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             return travelerInfo;
         }
 
-        private static BookFlightResult MapResult(AirBookRS response, FareType fareType, bool isSuccess)
+        private static BookFlightResult MapResult(AirBookRS response, bool isSuccess)
         {
             if (isSuccess)
                 return new BookFlightResult
