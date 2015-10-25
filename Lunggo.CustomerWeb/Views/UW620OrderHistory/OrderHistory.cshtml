@@ -4,224 +4,186 @@
 @model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
-    Layout = "/Views/Shared/_Layout_account.cshtml";
-    ViewBag.Title = "Hotel Detail";
+    Layout = "/Views/Shared/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.PageActiveSection = "profile";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
 
-    <title>Travorama</title>
-
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/application.css">
-
-</head>
-<body>
-    <!-- page start -->
-    <div class="page user-account">
-
-        <header id="site-header" class="site-header">
-            @{ Html.RenderPartial("_Mainmenu"); }
-        </header>
-
-        <!-- site content start -->
-        <div id="site-content" class="site-content">
-
-            <header class="page-header">
-                <div class="container">
-                    <div class="site-nav"> <a href="#">@Html.I18NString("CW00013")</a> / <strong>@Html.I18NString("CW00157")</strong></div>
-                    <hr>
-                    <h2 class="page-title"><b>@Html.I18NString("CW00155")</b> @Html.I18NString("CW00156")</h2>
-                </div>
-            </header><!-- .page-header -->
-
-            <section class="page-content">
-                <div class="container">
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var userProfile = {
+            email: 'shintatamara@gmail.com',
+            firstname: 'Shinta',
+            lastname: 'Tamara',
+            phone: '08123456789',
+            country: 'Indonesia'
+        };
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+}
 
 
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><span class="fa fa-users"></span> @Html.I18NString("CW00158")</a></li>
-                        <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab"><span class="fa fa-history"></span> @Html.I18NString("CW00169")</a></li>
-                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab"><span class="fa fa-lock"></span> @Html.I18NString("CW00144")</a></li>
-                    </ul>
+<div class="container page-loading" ng-controller="accountController" ng-app="travorama" ng-class="{'page-loaded' : pageLoaded}">
+    <div class="row">
 
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="profile">
-                            <h4><b>@Html.I18NString("CW00159")</b> @Html.I18NString("CW00160")</h4>
-
-                            <div class="row">
-                                <div class="col-sm-8 col-sm-offset-1">
-
-                                    @using (Html.BeginForm("ChangeProfile", "Account", FormMethod.Post, new { @class = "user-account-form form-horizontal" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00100")</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="FirstName" class="form-control" value="@User.Identity.GetFirstName()" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00101")</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="LastName" class="form-control" value="@User.Identity.GetLastName()" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">@Html.I18NString("CW00178")</label>
-                                            <div class="col-sm-2">
-                                                <input type="text" name="CountryCd" class="form-control" value="@User.Identity.GetCountryCd()" />
-                                            </div>
-                                            <label class="col-sm-3 control-label">@Html.I18NString("CW00161")</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" name="PhoneNumber" class="form-control" value="@User.Identity.GetPhoneNumber()" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00177")</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" name="Address" class="form-control" value="@User.Identity.GetAddress()" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-4">
-                                                <button class="btn btn-primary">@Html.I18NString("CW00162")</button>
-                                            </div>
-                                        </div>
-                                    }
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="history">
-                            <h4><b>@Html.I18NString("CW00170")</b> @Html.I18NString("CW00171")</h4>
-
-                            <div class="history-wrapper">
-                                <ul class="history-list">
-
-                                    <li class="history">
-                                        @foreach (var rsv in Model)
-                                        {
-                                            <div class="history-content-wrapper">
-                                                <div class="history-number">
-                                                    <img src="@rsv.Itinerary.Trips[0].Segments[0].AirlineLogoUrl" />
-                                                </div>
-                                                <div class="history-detail">
-                                                    <div class="history-name">
-                                                        <a href="#">@rsv.Itinerary.Trips[0].Segments[0].AirlineName</a>
-                                                        <p><i>@rsv.TripType</i></p>
-                                                        Point Reward : @(rsv.Payment.FinalPrice / 100000)
-                                                    </div>
-                                                    <div class="history-date">
-                                                        @switch (rsv.TripType)
-                                                        {
-                                                            case TripType.OneWay:
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>@Html.I18NString("CW00172")</b></div>
-                                                                    <div class="col-sm-7">@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-5"><b>@Html.I18NString("CW00057")</b></div>
-                                                                    <div class="col-sm-7">@rsv.Itinerary.Trips[0].DepartureDate.ToString("d MMMM yyyy")</div>
-                                                                </div>
-                                                                break;
-                                                            case TripType.Return:
-                                                            <div class="row">
-                                                                <div class="col-sm-5"><b>@Html.I18NString("CW00172")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[0].OriginCity - @rsv.Itinerary.Trips[0].DestinationCity</div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-5"><b>@Html.I18NString("CW00057")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[0].DepartureDate.ToString("d MMMM yyyy")</div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-5"><b>@Html.I18NString("CW00058")</b></div>
-                                                                <div class="col-sm-7">@rsv.Itinerary.Trips[1].DepartureDate.ToString("d MMMM yyyy")</div>
-                                                            </div>
-                                                                break;
-                                                        }
-                                                    </div>
-                                                    <div class="history-id">
-                                                        <div class="row">
-                                                            <div class="col-sm-5"><b>@Html.I18NString("CW00173")</b></div>
-                                                            <div class="col-sm-7">@rsv.RsvNo</div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-sm-5"><b>@Html.I18NString("CW00174")</b></div>
-                                                            <div class="col-sm-7">@rsv.Payment.Status</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="history-action">
-                                                        <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new {rsvNo = rsv.RsvNo})" target="_blank" class="btn btn-primary">@Html.I18NString("CW00175")</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </li>
-
-                                </ul>
-                            </div>
-                            @*
-                                <nav class="row text-center">
-                                    <ul class="pagination">
-                                        <li><a href="#">&lt;</a></li>
-                                        <li><a href="#" class="active">1</a></li>
-                                        <li class="active"><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">&gt;</a></li>
-                                    </ul>
-                                </nav>
-                            *@
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="password">
-                            <h4><b>@Html.I18NString("CW00163")</b> @Html.I18NString("CW00164")</h4>
-                            <div class="row">
-                                <div class="col-sm-8 col-sm-offset-1">
-                                    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { @class = "user-account-form form-horizontal" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00165")</label>
-                                            <div class="col-sm-8">
-                                                <input type="password" name="OldPassword" class="form-control" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00166")</label>
-                                            <div class="col-sm-8">
-                                                <input type="password" name="NewPassword" class="form-control" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">@Html.I18NString("CW00167")</label>
-                                            <div class="col-sm-8">
-                                                <input type="password" name="ConfirmPassword" class="form-control" placeholder="" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-4">
-                                                <button type="submit" class="btn btn-primary">@Html.I18NString("CW00168")</button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section><!-- .page-content -->
-
-
+        <div class="col-xs-3">
+            @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
         </div>
-        <!-- site content end -->
+        <!-- ******************** -->
+
+        <div class="col-xs-9">
+            <section class="account-content">
+
+                <div class="profile-content" ng-show="currentSection == 'profile'">
+                    <header class="content-header">
+                        <h2><b>@Html.I18NString("CW00168")</b> @Html.I18NString("CW00158")</h2>
+                    </header>
+                    <section class="content-body">
+
+                        <form name="profileForm" class="form form-horizontal" novalidate="">
+                            <header>
+                                <h4>
+                                    <b>LOGIN ID</b>
+                                    <span class="pull-right" ng-hide="userProfile.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('profile')">@Html.I18NString("CW00194")</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="userProfile.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('profile')">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('profile')">SIMPAN</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00094")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.email}}</p>
+                                    <input type="email" name="email" ng-model="userProfile.email" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00100")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
+                                    <input type="text" name="firstname" ng-model="userProfile.firstname" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00101")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
+                                    <input type="text" name="lastname" ng-model="userProfile.lastname" class="form-control" ng-show="userProfile.edit" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00093")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
+                                    <input type="text" name="phone" ng-model="userProfile.phone" value="" class="form-control" ng-show="userProfile.edit" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">>@Html.I18NString("CW00193")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
+                                    <select class="form-control" ng-show="userProfile.edit" ng-model="userProfile.country">
+                                        <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == userProfile.country">{{country}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form name="passwordForm" class="form form-horizontal" novalidate>
+                            <header>
+                                <h4>
+                                    <b>@Html.I18NString("CW00164")</b>
+                                    <span class="pull-right" ng-hide="password.edit">
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">@Html.I18NString("CW00194")</a>
+                                    </span>
+                                    <span class="pull-right" ng-show="password.edit">
+                                        <a class="btn btn-grey" ng-click="editForm('password')">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">SIMPAN</a>
+                                    </span>
+                                </h4>
+                            </header>
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00144")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordNew" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </section>
+                </div><!-- .profile-content -->
+                <!-- ***** -->
+
+                <div class="history-content" ng-show="currentSection == 'order'">
+                    <header class="content-header">
+                        <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
+                    </header>
+                    <section class="content-body">
+
+                        @foreach(var flight in Model)
+                        { 
+                            <div class="order-wrapper">
+                                <div class="order flight">
+                                    <header>
+                                        <span>Order ID : @flight.RsvNo</span>
+                                    </header>
+                                    <section class="container">
+                                        <div class="row">
+                                            <div class="col-xs-10">
+                                                <div class="detail">
+                                                    <p>@Html.I18NString("CW00197") : <b>@flight.Itinerary.Trips[0].OriginAirport</b> to <b>@flight.Itinerary.Trips[0].DestinationAirport</b> (@flight.TripType.ToString())</p>
+                                                    @if (flight.Itinerary.Trips.Count > 1)
+                                                    {
+                                                        <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy") | @Html.I18NString("CW00058"): @flight.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy")</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy")
+                                                    }
+                                                    <p>Status : <span class="success">@flight.Payment.Status</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="action">
+                                                    <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new {rsvNo = flight.RsvNo})" class="btn btn-yellow">@Html.I18NString("CW00175")</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div><!-- .order-wrapper -->
+                        }
+
+                    </section>
+                </div><!-- .history-content -->
+
+            </section><!-- .account-content -->
+        </div>
+
+    </div>
+</div>

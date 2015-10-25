@@ -14,11 +14,6 @@ namespace Lunggo.ApCommon.Campaign.Model
         public decimal OriginalPrice { get; set; }
         public decimal DiscountedPrice { get; set; }
         public decimal TotalDiscount { get; set; }
-        private VoucherValidationStatusType _updateStatus = VoucherValidationStatusType.Undefined;
-        public VoucherValidationStatusType UpdateStatus 
-        {
-            get { return _updateStatus; }
-            set { _updateStatus = value; }
-        }
+        public String UpdateStatus { get; set; }
     }
 }
