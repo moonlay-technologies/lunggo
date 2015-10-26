@@ -130,14 +130,14 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        private OrderTicketResult OrderTicketInternal(string bookingId)
+        private OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
         {
             var fareType = IdUtil.GetFareType(bookingId);
             var supplierName = IdUtil.GetSupplier(bookingId);
             bookingId = IdUtil.GetCoreId(bookingId);
             OrderTicketResult result;
             var supplier = Suppliers.Single(sup => sup.SupplierName == supplierName);
-            result = supplier.OrderTicket(bookingId, fareType);
+            result = supplier.OrderTicket(bookingId, canHold);
             if (result.BookingId != null)
                 result.BookingId = IdUtil.ConstructIntegratedId(result.BookingId, supplierName, fareType);
             return result;

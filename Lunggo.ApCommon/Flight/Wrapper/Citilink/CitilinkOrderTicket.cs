@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
     internal partial class CitilinkWrapper
     {
-        internal override OrderTicketResult OrderTicket(string bookingId, FareType fareType)
+        internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
             return Client.OrderTicket(bookingId);
         }
