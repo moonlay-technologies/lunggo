@@ -18,7 +18,12 @@
         var langCode = 'en';
         var currentPage = 1;
         // flight detail
-        var flightDetail = {};
+        var token = @Model.Token;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var expiryDate = '@Model.ExpiryTime.ToString("o")';
+        var itinerary = '@Model.Itinerary.Trips';
+        var price = @Model.Itinerary.TotalFare;
         // passenger number
         var adultPassenger = 1;
         var adultTypeName = 'Adult';
@@ -38,7 +43,7 @@
             currentPage = 1;
         }
 
-    </script>
+</script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/checkoutController.js"></script>
 }
@@ -242,22 +247,23 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.firstname.$touched && buyerForm.firstname.$invalid}">
-                                <label class="control-label important">Nama Depan (dan Nama Tengah):</label>
+                            <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
+                                <label class="control-label important">Nama Lengkap :</label>
                                 <div>
-                                    <input type="text" class="form-control" value="" id="buyer-firstname" placeholder="First Name" name="firstname" ng-model="buyerInfo.firstname" required />
+                                    <input type="text" class="form-control" value="" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
                                 </div>
                             </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.lastname.$touched && buyerForm.lastname.$invalid}">
-                                <label class="control-label important">Nama Belakang / Nama Keluarga:</label>
-                                <div>
-                                    <input type="text" class="form-control" value="" id="buyer-lastname" placeholder="Last Name" name="lastname" ng-model="buyerInfo.lastname" required />
-                                </div>
-                            </div>
-                            <div class="form-group" ng-class="{'has-error' : buyerForm.phone.$touched && buyerForm.phone.$invalid}">
+                            <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
                                 <label class="control-label important">Nomor Telepon:</label>
-                                <div>
-                                    <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 0821 2345 6789" name="phone" ng-model="buyerInfo.phone" required />
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <p>Country Code</p>
+                                        <input type="number" name="countryCode" value="" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" />
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <p>Nomor Telepon (Tanpa Kode Negara)</p>
+                                        <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
@@ -479,11 +485,11 @@
                             <div class="widget-content">
                                 <dl>
                                     <dt>Total Tiket</dt>
-                                    <dd><sup>Rp</sup> 999.999.999</dd>
+                                    <dd><sup>Rp</sup> {{price | number}}</dd>
                                 </dl>
                                 <dl class="total-price">
                                     <dt>Total</dt>
-                                    <dd><sup>Rp</sup> 999.999.999</dd>
+                                    <dd><sup>Rp</sup> {{totalPrice | number}}</dd>
                                 </dl>
                             </div>
                             <footer>
@@ -574,5 +580,39 @@
         </div>
 
     </section><!-- .checkout-content -->
+    
+    <div class="checkout-form">
+        <form action="/" method="post">
+            
+            <input type="text" name="Token" value=""/>
+            <input type="text" name="Payment.Currency" value="IDR" />
+            
+            <p>Buyer Info</p>
+            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
+            <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
+            <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
+            <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
+            
+            <p>Passenger Info</p>
+            <div ng-repeat="passenger in passengers track by $index">
+                
+                <input type="text" name="Passengers[{{$index}}].Type" value="" />
+                <input type="text" name="Passengers[{{$index}}].Title" value="" />
+                <input type="text" name="Passengers[{{$index}}].FirstName" value="" />
+                <input type="text" name="Passengers[{{$index}}].LastName" value="" />
+                <input type="text" name="Passengers[{{$index}}].BirthDate" value="" />
+                
+                <input type="text" name="Passengers[{{$index}}].PassportNumber" value="" />
+                <input type="text" name="Passengers[{{$index}}].PassportExpiryDate" value="" />
+                <input type="text" name="Passengers[{{$index}}].Country" value="" />
+
+            </div>
+            
+            <p>Payment Method</p>
+            <input type="text" name="Payment.Method" value="" />
+
+
+        </form>
+    </div><!-- .checkout-form -->
 
 </div>

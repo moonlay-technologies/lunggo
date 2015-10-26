@@ -3022,7 +3022,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .payment-wrapper {
   margin-bottom: 24px; }
   .payment-wrapper .payment {
-    background: #fff; }
+    margin-bottom: 6px; }
     .payment-wrapper .payment label {
       display: block;
       cursor: pointer; }
@@ -3047,7 +3047,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .payment-wrapper .payment section {
       padding: 12px;
       border: 1px solid #ccc;
-      text-align: center; }
+      text-align: center;
+      background: #fff; }
 
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
@@ -3100,6 +3101,10 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 .widget-container .widget.voucher .widget-content {
   padding: 12px; }
+
+.widget-container .widget.voucher .bg-danger {
+  padding: 6px;
+  margin-top: 6px; }
 
 .widget-container .widget.flight .widget-content {
   padding: 12px;
