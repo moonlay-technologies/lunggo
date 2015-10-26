@@ -40,7 +40,7 @@
 
                         <div class="info-buyer">
                             <header>
-                                <h4><b>BUYER INFO</b> <a href="#" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</a></h4>
+                                <h4><b>BUYER INFO</b> <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</a></h4>
                             </header>
                             <section>
                                 <div class="form form-horizontal">
@@ -112,7 +112,7 @@
 
                         <div class="info-flight">
                             <header>
-                                <h4><b>DETAIL PEMESANAN</b></h4>
+                                <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>
                             <section>
                                 @foreach (var trip in Model.Itinerary.Trips)
@@ -152,7 +152,7 @@
 
                         <div class="refund-detail">
                             <header>
-                                <h4><b>DETAIL PEMESANAN</b></h4>
+                                <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>
                             <section>
                                 <div class="form form-horizontal">
