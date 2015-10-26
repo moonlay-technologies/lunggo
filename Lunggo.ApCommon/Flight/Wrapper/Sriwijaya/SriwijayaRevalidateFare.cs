@@ -67,7 +67,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                  var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                  tglBerangkat = DateTime.Parse(tglBerangkatRaw);
-                 var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
+                 var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga-1);
                  harga = Decimal.Parse(hargaRaw);
              }else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
                 {
@@ -93,11 +93,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1-1 - indextglBerangkat));
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw);
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
-                    var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2+1), indexHarga);
+                    var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2+1), indexHarga-1);
                     harga = Decimal.Parse(hargaRaw);
                 }else if (ParseFID1.Count == 1)
                     {
-                        FIDsegment1 = ParseFID1[1];
+                        FIDsegment1 = ParseFID1[0];
                         FIDsegment2 = null;
                         FIDsegment3 = null;
                         var titikIndex1 = FID.IndexOf(":");
@@ -118,7 +118,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                         tglBerangkat = DateTime.Parse(tglBerangkatRaw, CultureInfo.CreateSpecificCulture("id-ID"));
                         var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
-                        var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
+                        var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga-1);
                         harga = Decimal.Parse(hargaRaw);
                     }
                 else
@@ -173,14 +173,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
              if ((ParseFID1.Count > 1) && (ParseFID1.Count <= 3))
              {
                  #region
-                 var cekFID1 = ambilFare["[value$=" + FIDsegment1 + "]"];
-                 var cekFID2 = ambilFare["[value$=" + FIDsegment2 + "]"];
+                 var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
+                 var cekFID2 = ambilFare["[value*=" + FIDsegment2 + "]"];
                  var FIDsegments = new List<string>
                  {
                      FIDsegment1,FIDsegment2,FIDsegment3
                  };
 
-                 if ((cekFID1.FirstElement() == null) || (cekFID2.FirstElement() == null))
+                 if ((cekFID1.FirstElement() != null) || (cekFID2.FirstElement() != null))
                  {
                      client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                      //Headers["Accept-Encoding"] = "gzip, deflate";
@@ -241,9 +241,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                              CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                              Rbd = Rbd[i],
                              DepartureAirport = bandara[0],
-                             DepartureTime = departureDate,
+                             DepartureTime = DateTime.SpecifyKind(departureDate,DateTimeKind.Utc),
                              ArrivalAirport = bandara[1],
-                             ArrivalTime = arrivalDate,
+                             ArrivalTime = DateTime.SpecifyKind(arrivalDate,DateTimeKind.Utc),
                              OperatingAirlineCode = ParseFare[i],
                              Duration = arrtime - deptime,
                              StopQuantity = 0
@@ -258,8 +258,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      var itin = new FlightItinerary
                      {
                          AdultCount = penumpang[0],
-                         ChildCount = penumpang[1],
-                         InfantCount = penumpang[2],
+                         ChildCount = penumpang[2],
+                         InfantCount = penumpang[4],
                          CanHold = true,
                          FareType = FareType.Published,
                          RequireBirthDate = true,
@@ -290,21 +290,30 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      hasil.Itinerary = itin;
 
                  }
+                 else
+                 {
+                     return new RevalidateFareResult
+                     {
+                         IsSuccess = false,
+                         IsValid = false,
+                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                     };
+                 }
                  #endregion
              }
              else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
              {
                  #region
-                 var cekFID1 = ambilFare["[value$=" + FIDsegment1 + "]"];
-                 var cekFID2 = ambilFare["[value$=" + FIDsegment2 + "]"];
-                 var cekFID3 = ambilFare["[value$=" + FIDsegment3 + "]"];
+                 var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
+                 var cekFID2 = ambilFare["[value*=" + FIDsegment2 + "]"];
+                 var cekFID3 = ambilFare["[value*=" + FIDsegment3 + "]"];
                  var FIDsegments = new List<string>
                  {
                      FIDsegment1,FIDsegment2,FIDsegment3
                  };
                  
 
-                 if ((cekFID1.FirstElement() == null) || (cekFID2.FirstElement() == null) || (cekFID2.FirstElement() == null))
+                 if ((cekFID1.FirstElement() != null) || (cekFID2.FirstElement() != null) || (cekFID2.FirstElement() != null))
                  {
                      client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                      //Headers["Accept-Encoding"] = "gzip, deflate";
@@ -366,9 +375,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                              CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                              Rbd = Rbd[i],
                              DepartureAirport = bandara[0],
-                             DepartureTime = departureDate,
+                             DepartureTime = DateTime.SpecifyKind(departureDate,DateTimeKind.Utc),
                              ArrivalAirport = bandara[1],
-                             ArrivalTime = arrivalDate,
+                             ArrivalTime = DateTime.SpecifyKind(arrivalDate,DateTimeKind.Utc),
                              OperatingAirlineCode = ParseFare[i],
                              Duration = arrtime-deptime,
                              StopQuantity = 0
@@ -413,18 +422,27 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      hasil.IsValid = harga == Decimal.Parse(hargaBaru);
                      hasil.Itinerary = itin;
                  }
+                 else
+                 {
+                     return new RevalidateFareResult
+                     {
+                         IsSuccess = false,
+                         IsValid = false,
+                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                     };
+                 }
                  #endregion
              }
              else if (ParseFID1.Count == 1)
              {
                  #region
-                 var cekFID1 = ambilFare["[value$=" + FIDsegment1 + "]"];
+                 var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
                  var FIDsegments = new List<string>
                  {
                      FIDsegment1,FIDsegment2,FIDsegment3
                  };
 
-                 if ((cekFID1.FirstElement() == null))
+                 if ((cekFID1.FirstElement() != null))
                  {
                      client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                      //Headers["Accept-Encoding"] = "gzip, deflate";
@@ -530,6 +548,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      hasil.IsSuccess = true;
                      hasil.IsValid = harga == Decimal.Parse(hargaBaru);
                      hasil.Itinerary = itin;
+                 }
+                 else
+                 {
+                     return new RevalidateFareResult
+                     {
+                         IsSuccess = false,
+                         IsValid = false,
+                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
+                     };
                  }
                  #endregion
              }

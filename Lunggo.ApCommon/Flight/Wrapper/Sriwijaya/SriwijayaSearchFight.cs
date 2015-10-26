@@ -47,6 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var hasil = new SearchFlightResult();
                 var convertBulan = conditions.Trips[0].DepartureDate.ToString("MMMM");
                 var bulan3 = convertBulan.Substring(0, 3);
+                Client.CreateSession(client);
 
                 client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                 //Headers["Accept-Encoding"] = "gzip, deflate";
@@ -178,7 +179,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     }
                                     if (ParseFID1.Count == 1)
                                     {
-                                        FIDsegmentEko1 = ParseFID1[1];
+                                        FIDsegmentEko1 = ParseFID1[0];
                                         var rbdIndex1 = FID.IndexOf(":");
                                         var rbdIndex11 = FID.Substring(rbdIndex1 + 1);
                                         var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -308,9 +309,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             CabinClass = CabinClass.Economy,
                                             Rbd = rbdEko[code],
                                             DepartureAirport = bandara1,
-                                            DepartureTime = departureTime.ToUniversalTime(),
+                                            DepartureTime = DateTime.SpecifyKind(departureTime,DateTimeKind.Utc),
                                             ArrivalAirport = bandara2,
-                                            ArrivalTime = arrivalTime.ToUniversalTime(),
+                                            ArrivalTime = DateTime.SpecifyKind(arrivalTime, DateTimeKind.Utc),
                                             OperatingAirlineCode = codeParse1[0],
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime
@@ -334,7 +335,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "." + conditions.ChildCount + "" +
                                         "." + conditions.InfantCount + "" +
                                         "|" + decimal.Parse(harga[1]) + "" +
-                                        "." + "1";
+                                        "." + "1.";
 
                                     var itin = new FlightItinerary
                                     {
@@ -360,7 +361,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                        {
                                            Segments = segments,
                                            OriginAirport = conditions.Trips[0].OriginAirport,
-                                           DestinationAirport = conditions.Trips[0].DestinationAirport
+                                           DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                           DepartureDate = conditions.Trips[0].DepartureDate
                                        }
                                     }
                                     };
@@ -396,8 +398,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                         if ((ParseFID1B.Count > 1) && (ParseFID1B.Count <= 3))
                                         {
-                                            //FIDsegmentBis1 = ParseFID1[0];
-                                            //FIDsegmentBis2 = ParseFID1[1].Substring(0, (ParseFID1[1].Length - 2));
+                                            FIDsegmentBis1 = ParseFID1[0];
+                                            FIDsegmentBis2 = ParseFID1[1].Substring(0, (ParseFID1[1].Length - 2));
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -407,9 +409,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                         if ((ParseFID1B.Count > 3) && (ParseFID1B.Count <= 5))
                                         {
-                                            //FIDsegmentBis1 = ParseFID1[0];
-                                            //FIDsegmentBis2 = ParseFID1[1];
-                                            //FIDsegmentBis3 = ParseFID1[2].Substring(0, (ParseFID1[2].Length - 2));
+                                            FIDsegmentBis1 = ParseFID1[0];
+                                            FIDsegmentBis2 = ParseFID1[1];
+                                            FIDsegmentBis3 = ParseFID1[2].Substring(0, (ParseFID1[2].Length - 2));
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -418,7 +420,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                         if (ParseFID1B.Count == 1)
                                         {
-                                            //FIDsegmentBis1 = ParseFID1[1];
+                                            FIDsegmentBis1 = ParseFID1[0];
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -517,9 +519,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                                 CabinClass = CabinClass.Business,
                                                 Rbd = rbdBis[code],
                                                 DepartureAirport = bandara1,
-                                                DepartureTime = departureTime,
+                                                DepartureTime = DateTime.SpecifyKind(departureTime,DateTimeKind.Utc),
                                                 ArrivalAirport = bandara2,
-                                                ArrivalTime = arrivalTime,
+                                                ArrivalTime = DateTime.SpecifyKind(arrivalTime,DateTimeKind.Utc),
                                                 OperatingAirlineCode = codeParse1[0],
                                                 StopQuantity = 0,
                                                 Duration = arrtime - deptime
@@ -545,7 +547,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             "." + conditions.ChildCount + "" +
                                             "." + conditions.InfantCount + "" +
                                             "|" + decimal.Parse(harga[1]) + "" + 
-                                            "." + "2";
+                                            "." + "2.";
 
                                         var itin = new FlightItinerary
                                         {

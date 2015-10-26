@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
+using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Voucher;
@@ -30,7 +31,8 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();
         private static readonly CitilinkWrapper CitilinkWrapper = CitilinkWrapper.GetInstance();
-        private static readonly FlightSupplierWrapperBase[] Suppliers = { MystiflyWrapper, AirAsiaWrapper, CitilinkWrapper };
+        private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
+        private static readonly FlightSupplierWrapperBase[] Suppliers = { MystiflyWrapper, AirAsiaWrapper, CitilinkWrapper, SriwijayaWrapper };
         private bool _isInitialized;
 
         private FlightService()

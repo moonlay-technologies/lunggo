@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
     internal partial class SriwijayaWrapper
     {
-        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType)
+        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
            
             var sementara = new FlightBookingInfo
@@ -212,7 +212,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&action=booking" +
                     "&2210150413=2210150413";
 
-                //client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking", agentBooking);
+                client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking", agentBooking);
 
                 client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                 //client.Headers["Accept-Encoding"] = "gzip, deflate";
@@ -300,10 +300,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                 if (client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
                 {
-                    //CQ ambilDataBooking = (CQ)bookingResult;
-                    //
-                    //var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode"];
-                    //var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
+                    CQ ambilDataBooking = (CQ)bookingResult;
+                    
+                    var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode"];
+                    var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
                     
 
                     client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -312,13 +312,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
                     client.Headers["Upgrade-Insecure-Requests"] = "1";
                     client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo=VDWAKK";
+                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+kodeBook+"";
                     client.Headers["Host"] = "agent.sriwijayaair.co.id";
                     client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
                     client.AutoRedirect = true;
 
                     var cekparams =
-                        "reffNo=VDWAKK" +
+                        "reffNo=" + kodeBook +
                         "&action=CheckBCode" +
                         "&step=STEP2";
 
