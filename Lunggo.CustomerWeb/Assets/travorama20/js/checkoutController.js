@@ -1,6 +1,6 @@
 ﻿// travorama angular app - checkout controller
 app.controller('checkoutController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope', '$interval',function($http, $scope, $interval) {
 
         //********************
         // variables
@@ -22,7 +22,14 @@ app.controller('checkoutController', [
         $scope.trips = trips;
         $scope.initialPrice = price;
         $scope.totalPrice = price;
-        $scope.expiryDate = expiryDate;
+        $scope.expired = false;
+        $scope.expiryDate = new Date(expiryDate);
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.expiryDate) {
+                $scope.expired = true;
+            }
+        }, 1000);
         $scope.voucher = {
             confirmedCode: '',
             code: '',

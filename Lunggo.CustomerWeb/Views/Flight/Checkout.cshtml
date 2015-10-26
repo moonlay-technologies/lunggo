@@ -635,6 +635,28 @@
                 </div>
 
             </section><!-- .checkout-content -->
+            
+            <div class="page-overlay" ng-show="expired">
+                <div class="overlay-content validating-flight">
+                    <header>
+                        <h4>Pencarian Kadaluarsa</h4>
+                    </header>
+                    <section>
+                        <p>Penerbangan Anda Kadaluarsa.</p>
+                    </section>
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-yellow btn-block" onclick="window.history.back();">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div><!-- .page-overlay -->
 
         </div>
 
