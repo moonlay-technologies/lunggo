@@ -476,7 +476,7 @@
 
                                 <div class="step-button">
                                     
-                                    <form action="" method="post">
+                                    <form action="" method="post" id="finalForm">
                                         
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
@@ -637,12 +637,34 @@
             </section><!-- .checkout-content -->
             
             <div class="page-overlay" ng-show="expired">
-                <div class="overlay-content validating-flight">
+                <div class="overlay-content flight-expired">
                     <header>
                         <h4>Pencarian Kadaluarsa</h4>
                     </header>
                     <section>
                         <p>Penerbangan Anda Kadaluarsa.</p>
+                    </section>
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-yellow btn-block" onclick="window.history.back();">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div><!-- .page-overlay -->
+            
+            <div class="page-overlay" ng-show="booking">
+                <div class="overlay-content validating-flight">
+                    <header>
+                        <h4>Mohon Tunggu</h4>
+                    </header>
+                    <section>
+                        <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit./p>
                     </section>
                     <footer>
                         <div class="container">

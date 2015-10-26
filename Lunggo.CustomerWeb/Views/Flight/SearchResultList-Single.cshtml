@@ -371,7 +371,7 @@
                             <div class="filter-time"><span class="switch-filter" data-target="filter-time">Waktu Penerbangan</span></div>
                         </div>
                         <div class="filter-content">
-                            <div id="filter-transit">
+                            <div id="filter-transit" class="filter-transit">
                                 <h3>Saring Berdasarkan Pemberhentian</h3>
                                 <div class="tab-detail">
                                     <label><input type="checkbox" value="" ng-model="stopFilterParam.direct" /> Penerbangan Langsung</label>
@@ -383,7 +383,7 @@
                                     <label class="select-none" ng-click="stopFilterParam.direct = false; stopFilterParam.one = false; stopFilterParam.two = false">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-price">
+                            <div id="filter-price" class="filter-price">
                                 <h3>Saring Berdasarkan Harga</h3>
                                 <div class="slider-value">
                                     <span>Rp {{priceFilterParam.current[0] | number}}</span>
@@ -399,7 +399,7 @@
                                     <input type="text" name="priceSliderValueMax" value="" class="price-slider-max" ng-model="priceFilterParam.current[1]" />
                                 </div>
                             </div>
-                            <div id="filter-airline">
+                            <div id="filter-airline" class="filter-airline">
                                 <h3>Saring Berdasarkan Maskapai</h3>
                                 <div class="tab-detail">
                                     <div class="row" ng-repeat="airline in airlineFilterParam.airlines" ng-if="$index % 4 == 0">
@@ -438,7 +438,7 @@
                                     <label class="select-none" ng-click="setAirlineFilter('none')">Nihil</label>
                                 </div>
                             </div>
-                            <div id="filter-time">
+                            <div id="filter-time" class="filter-time">
                                 <h3>Saring Berdasarkan Waktu</h3>
                                 <div class="tab-detail">
                                     <div class="row">
