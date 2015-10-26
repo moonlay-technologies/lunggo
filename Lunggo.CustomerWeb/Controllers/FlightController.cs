@@ -132,32 +132,32 @@ namespace Lunggo.CustomerWeb.Controllers
             BookFlightOutput bookResult;
             try
             {
-                //var apiResult = client.UploadString(bookApi, postData);
-                //bookResult = apiResult.Deserialize<BookFlightOutput>();
+                var apiResult = client.UploadString(bookApi, postData);
+                bookResult = apiResult.Deserialize<BookFlightOutput>();
 
-                var passengers = data.Passengers.Select(passenger => new FlightPassenger
-                {
-                    Type = passenger.Type,
-                    Title = passenger.Title,
-                    FirstName = passenger.FirstName,
-                    LastName = passenger.LastName,
-                    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                    DateOfBirth = passenger.BirthDate,
-                    PassportNumber = passenger.PassportNumber,
-                    PassportExpiryDate = passenger.PassportExpiryDate,
-                    PassportCountry = passenger.Country
-                }).ToList();
-
-                var bookServiceRequest = new BookFlightInput
-                {
-                    ItinCacheId = data.Token,
-                    Contact = data.Contact,
-                    Passengers = passengers,
-                    Payment = data.Payment,
-                    DiscountCode = data.DiscountCode
-                };
-
-                bookResult = FlightService.GetInstance().BookFlight(bookServiceRequest);
+                //var passengers = data.Passengers.Select(passenger => new FlightPassenger
+                //{
+                //    Type = passenger.Type,
+                //    Title = passenger.Title,
+                //    FirstName = passenger.FirstName,
+                //    LastName = passenger.LastName,
+                //    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
+                //    DateOfBirth = passenger.BirthDate,
+                //    PassportNumber = passenger.PassportNumber,
+                //    PassportExpiryDate = passenger.PassportExpiryDate,
+                //    PassportCountry = passenger.Country
+                //}).ToList();
+                //
+                //var bookServiceRequest = new BookFlightInput
+                //{
+                //    ItinCacheId = data.Token,
+                //    Contact = data.Contact,
+                //    Passengers = passengers,
+                //    Payment = data.Payment,
+                //    DiscountCode = data.DiscountCode
+                //};
+                //
+                //bookResult = FlightService.GetInstance().BookFlight(bookServiceRequest);
 
             }
             catch

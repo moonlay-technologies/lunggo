@@ -28,9 +28,7 @@ namespace Lunggo.WebJob.FlightCrawler
 
             var host = new JobHost(configuration);
             // The following code ensures that the WebJob will be running continuously
-
-            host.Call(typeof(Program).GetMethod("ProcessQueueMessage"), new { searchId = "walalalal" });
-            //host.RunAndBlock();
+            host.RunAndBlock();
         }
     }
 }

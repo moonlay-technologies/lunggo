@@ -69,6 +69,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                     RsvNo = bookServiceResponse.RsvNo,
                     TimeLimit = bookServiceResponse.TimeLimit,
                     PaymentUrl = bookServiceResponse.PaymentUrl,
+                    Error = bookServiceResponse.Errors[0],
                     OriginalRequest = request
                 };
             else
