@@ -170,7 +170,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (bookResult.IsSuccess)
             {
-                if (bookResult.PaymentUrl == null)
+                if (bookResult.PaymentUrl != null)
                     return Redirect(bookResult.PaymentUrl);
                 else
                     return RedirectToAction("Thankyou", "Flight", new { bookResult.RsvNo });
