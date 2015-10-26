@@ -64,6 +64,8 @@ app.controller('checkoutController', [
             }
         };
 
+        $scope.booking = false;
+
         $scope.passengers = [];
         $scope.passengersForm = {
             valid: false,
