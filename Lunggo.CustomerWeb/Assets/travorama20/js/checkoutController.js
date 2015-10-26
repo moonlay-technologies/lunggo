@@ -41,23 +41,19 @@ app.controller('checkoutController', [
                 $http({
                     method: 'GET',
                     url: CheckVoucherConfig.Url,
-                    data: {
+                    params: {
                         token: $scope.token,
                         code: $scope.voucher.code,
                         email: $scope.buyerInfo.email
                     }
                 }).then(function(returnData) {
-                    console.log('Success Getting Voucher Code');
-                    console.log(returnData);
-                    if (returnData.Amount > 0) {
+                    if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.Amount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                     }
                     $scope.voucher.checked = true;
                     $scope.voucher.checking = false;
                 }, function(returnData) {
-                    console.log('Failed to Checking Voucher Code');
-                    console.log(returnData);
                     $scope.voucher.checked = true;
                     $scope.voucher.checking = false;
                 });
