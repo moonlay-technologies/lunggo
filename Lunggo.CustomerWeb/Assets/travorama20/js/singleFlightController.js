@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('singleFlightController', [
-    '$http', '$scope', function ($http, $scope) {
+    '$http', '$scope', '$interval', function ($http, $scope, $interval) {
 
         // **********
         // on document ready
@@ -29,12 +29,18 @@ app.controller('singleFlightController', [
         $scope.expiry = {
             expired: false,
             time: '',
-            start : function(expiryTime) {
-                var currentTime = new Date();
+            start: function (expiryTime) {
                 expiryTime = new Date(expiryTime);
-                if (currentTime > expiryTime) {
-                    $scope.expiry.expired = true;
-                }
+                if ($scope.expiry.expired) return;
+                $interval(function () {
+                    var nowTime = new Date();
+                    console.log('JEMPING');
+                    console.log(nowTime);
+                    console.log(expiryTime);
+                    if ( nowTime > expiryTime ) {
+                        $scope.expiry.expired = true;
+                    }
+                }, 1000);
             }
         }
 
@@ -393,9 +399,7 @@ app.controller('singleFlightController', [
                             console.log('COMPLETE !');
                             $scope.expiryTime = new Date(returnData.ExpiryTime);
                             $scope.expiry.time = returnData.ExpiryTime;
-                            setInterval(function () {
-                                $scope.expiry.start();
-                            }, 1000);
+                            $scope.expiry.start(returnData.ExpiryTime);
                             $scope.busy = false;
                             $scope.loading = false;
                             $scope.loadingFlight = false;

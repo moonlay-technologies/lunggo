@@ -519,7 +519,7 @@
                                     <div class="summary-top-right flight-date">
                                         <div class="flight-date-departure">
                                             <h4>{{flight.Trips[0].OriginAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
-                                            <h5>{{flight.Trips[0].DepartureDate | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
+                                            <h5>{{flight.Trips[0].Segments[0].DepartureTime | date : 'dd - MMM - yyyy' : 'UTC'}}</h5>
                                         </div>
                                         <div class="flight-date-duration">
                                             <h5 class="time"><span>{{msToTime(flight.Trips[0].TotalDuration)}}</span></h5>

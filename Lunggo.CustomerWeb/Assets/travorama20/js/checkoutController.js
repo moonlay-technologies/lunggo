@@ -1,6 +1,6 @@
 ﻿// travorama angular app - checkout controller
 app.controller('checkoutController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope', '$interval',function($http, $scope, $interval) {
 
         //********************
         // variables
@@ -17,6 +17,52 @@ app.controller('checkoutController', [
             { name: 'Mrs', value: 'mrs' },
             { name: 'Ms', value: 'ms' }
         ];
+
+        $scope.token = token;
+        $scope.trips = trips;
+        $scope.initialPrice = price;
+        $scope.totalPrice = price;
+        $scope.expired = false;
+        $scope.expiryDate = new Date(expiryDate);
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.expiryDate) {
+                $scope.expired = true;
+            }
+        }, 1000);
+        $scope.voucher = {
+            confirmedCode: '',
+            code: '',
+            amount: 0,
+            checking: false,
+            checked: false,
+            check: function() {
+                $scope.voucher.checking = true;
+                $http({
+                    method: 'GET',
+                    url: CheckVoucherConfig.Url,
+                    data: {
+                        token: $scope.token,
+                        code: $scope.voucher.code,
+                        email: $scope.buyerInfo.email
+                    }
+                }).then(function(returnData) {
+                    console.log('Success Getting Voucher Code');
+                    console.log(returnData);
+                    if (returnData.Amount > 0) {
+                        $scope.voucher.amount = returnData.Amount;
+                        $scope.voucher.confirmedCode = $scope.voucher.code;
+                    }
+                    $scope.voucher.checked = true;
+                    $scope.voucher.checking = false;
+                }, function(returnData) {
+                    console.log('Failed to Checking Voucher Code');
+                    console.log(returnData);
+                    $scope.voucher.checked = true;
+                    $scope.voucher.checking = false;
+                });
+            }
+        };
 
         $scope.passengers = [];
         $scope.passengersForm = {
@@ -225,6 +271,7 @@ app.controller('checkoutController', [
         $scope.changePage = function (page) {
             // check if page target is 4
             // do validation if page target is 4
+            /*
             if ($scope.currentPage == 3 && page == 4) {
 
                 // check each form
@@ -272,11 +319,12 @@ app.controller('checkoutController', [
 
 
             } else {
+            */
                 // change current page variable
                 $scope.currentPage = page;
                 // change step class
                 $scope.stepClass = 'active-' + page;
-            }
+            // }
 
         }
         // change page after login

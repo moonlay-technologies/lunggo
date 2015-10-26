@@ -109,13 +109,13 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 // payment method
 .payment-wrapper {margin-bottom:24px;
-    .payment {background:#fff;
+    .payment {margin-bottom:6px;
         label {display:block; cursor:pointer;}
         header {background:$color-main-blue; position:relative;
             .input-wrapper {height:100%; position:absolute; background:#028ec3; width:30px; text-align:center; padding-top:6px;}
             h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:30px; font-size:12px; font-weight:600;}
         }
-        section {padding:12px; border:$border-default; text-align:center;}
+        section {padding:12px; border:$border-default; text-align:center; background:#fff;}
     }
 }
 
@@ -150,6 +150,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         // widget voucher
         &.voucher {
             .widget-content {padding:12px;}
+            .bg-danger {padding:6px; margin-top:6px;}
         }
 
         // widget airline
@@ -350,4 +351,17 @@ file : /Assets/travorama20/css/_page_checkout.scss
         }
     }
 
+}
+
+// *****
+// page overlay
+.page-overlay {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(100,100,100,0.7);
+    .overlay-content {width:400px; height:300px; background:#fff; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+        header {background:$color-main-blue; text-align:center; color:#fff; padding:15px;
+            h4 {margin:0; font-weight:600;}
+            .close {color:#fff; opacity:1;}
+        }
+        section {padding:15px;}
+        footer {position:absolute; bottom:15px; left:0; width:100%;}
+    }
 }
