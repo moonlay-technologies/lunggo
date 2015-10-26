@@ -67,8 +67,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     IsSuccess = true,
                     RsvNo = bookServiceResponse.RsvNo,
-                    TimeLimit = bookServiceResponse.TimeLimit,
-                    PaymentUrl = bookServiceResponse.PaymentUrl,
                     Error = bookServiceResponse.Errors[0],
                     OriginalRequest = request
                 };
@@ -82,6 +80,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)
         {
+            request.Payment.Medium = request.Payment.Method == PaymentMethod.BankTransfer
+                ? PaymentMedium.Direct
+                : PaymentMedium.Veritrans;
+
             var bookServiceRequest = new BookFlightInput
             {
                 ItinCacheId = request.Token,

@@ -22,6 +22,11 @@ var RevalidateConfig = {
     working: false
 };
 
+var FlightBookConfig = {
+    Url: 'http://localhost:1147/api/v1/flights/book',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: 'http://localhost:1147/api/v1/flights/rules',
     working: false

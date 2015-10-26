@@ -109,81 +109,15 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(FlightCheckoutData data)
+        [ActionName("Checkout")]
+        public ActionResult CheckoutPost(string rsvNo)
         {
-            data.Payment.Medium = data.Payment.Method == PaymentMethod.BankTransfer
-                ? PaymentMedium.Direct
-                : PaymentMedium.Veritrans;
-
-            var thisUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
-            var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
-            var bookApi = apiUrl + "/api/v1/flights/book";
-            var client = new WebClient();
-            client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            client.Headers["Accept"] = "application/json";
-            client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-            client.Headers["Accept-Encoding"] = "";
-            client.Headers["Upgrade-Insecure-Requests"] = "1";
-            client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-            client.Headers["Origin"] = thisUrl;
-            client.Headers["Referer"] = thisUrl;
-            var postData = data.Serialize();
-
-            BookFlightOutput bookResult;
-            try
-            {
-                var apiResult = client.UploadString(bookApi, postData);
-                bookResult = apiResult.Deserialize<BookFlightOutput>();
-
-                //var passengers = data.Passengers.Select(passenger => new FlightPassenger
-                //{
-                //    Type = passenger.Type,
-                //    Title = passenger.Title,
-                //    FirstName = passenger.FirstName,
-                //    LastName = passenger.LastName,
-                //    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
-                //    DateOfBirth = passenger.BirthDate,
-                //    PassportNumber = passenger.PassportNumber,
-                //    PassportExpiryDate = passenger.PassportExpiryDate,
-                //    PassportCountry = passenger.Country
-                //}).ToList();
-                //
-                //var bookServiceRequest = new BookFlightInput
-                //{
-                //    ItinCacheId = data.Token,
-                //    Contact = data.Contact,
-                //    Passengers = passengers,
-                //    Payment = data.Payment,
-                //    DiscountCode = data.DiscountCode
-                //};
-                //
-                //bookResult = FlightService.GetInstance().BookFlight(bookServiceRequest);
-
-            }
-            catch
-            {
-                bookResult = new BookFlightOutput
-                {
-                    IsSuccess = false
-                };
-            }
-
-            if (bookResult.IsSuccess)
-            {
-                if (bookResult.PaymentUrl != null)
-                    return Redirect(bookResult.PaymentUrl);
-                else
-                    return RedirectToAction("Thankyou", "Flight", new { bookResult.RsvNo });
-
-            }
+            var flight = FlightService.GetInstance();
+            var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
+            if (paymentUrl != null)
+                return Redirect(paymentUrl);
             else
-            {
-                return RedirectToAction("Checkout", new FlightSelectData
-                {
-                    token = data.Token,
-                    error = bookResult.Errors[0]
-                });
-            }
+                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
         }
 
         public ActionResult Thankyou(string rsvNo)
