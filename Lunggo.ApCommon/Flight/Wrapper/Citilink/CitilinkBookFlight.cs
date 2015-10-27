@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
     internal partial class CitilinkWrapper
     {
-        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo, FareType fareType)
+        internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {            
             return Client.BookFlight(bookInfo);
         }

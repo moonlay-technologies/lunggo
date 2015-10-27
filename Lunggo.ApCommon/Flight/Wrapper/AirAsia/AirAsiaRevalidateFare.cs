@@ -67,8 +67,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var originCountry = dict.GetAirportCountryCode(origin);
                 var destinationCountry = dict.GetAirportCountryCode(dest);
                 var searchedHtml = new CQ();
-                if (originCountry == "ID")
-                {
+                //if (originCountry == "ID")
+                //{
                     var url = @"http://booking.airasia.com/Flight/InternalSelect" +
                               @"?o1=" + origin +
                               @"&d1=" + dest +
@@ -93,7 +93,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         return new RevalidateFareResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     searchedHtml = (CQ)html;
-                }
+                //}
                 //else if (destinationCountry == "ID")
                 //{
                 //    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
@@ -123,15 +123,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 //
                 //    searchedHtml = (CQ)html;
                 //}
-                else
-                {
-                    return new RevalidateFareResult
-                    {
-                        IsSuccess = true,
-                        IsValid = false,
-                        Itinerary = null
-                    };
-                }
+                //else
+                //{
+                //    return new RevalidateFareResult
+                //    {
+                //        IsSuccess = true,
+                //        IsValid = false,
+                //        Itinerary = null
+                //    };
+                //}
 
                 // [SCRAPE]
 
@@ -159,7 +159,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                            "." +
                                            childCount + "." + infantCount + "." + FlightService.ParseCabinClass(cabinClass) + ".";
 
-                        var url = "https://booking.airasia.com/Flight/PriceItinerary" +
+                        url = "https://booking.airasia.com/Flight/PriceItinerary" +
                               "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(foundFareId);
                         var itinHtml = (CQ) client.DownloadString(url);
 
@@ -201,7 +201,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             CanHold = true,
                             FareType = FareType.Published,
                             RequireBirthDate = true,
-                            RequirePassport = false,
+                            RequirePassport = RequirePassport(segments),
                             RequireSameCheckIn = false,
                             RequireNationality = true,
                             RequestedCabinClass = CabinClass.Economy,

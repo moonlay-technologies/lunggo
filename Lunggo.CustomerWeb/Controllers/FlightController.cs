@@ -120,7 +120,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var bookApi = apiUrl + "/api/v1/flights/book";
             var client = new WebClient();
             client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            client.Headers["Accept"] = "application/json";
             client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
             client.Headers["Accept-Encoding"] = "";
             client.Headers["Upgrade-Insecure-Requests"] = "1";
@@ -132,7 +132,33 @@ namespace Lunggo.CustomerWeb.Controllers
             BookFlightOutput bookResult;
             try
             {
-                bookResult = client.UploadString(bookApi, postData).Deserialize<BookFlightOutput>();
+                //var apiResult = client.UploadString(bookApi, postData);
+                //bookResult = apiResult.Deserialize<BookFlightOutput>();
+
+                var passengers = data.Passengers.Select(passenger => new FlightPassenger
+                {
+                    Type = passenger.Type,
+                    Title = passenger.Title,
+                    FirstName = passenger.FirstName,
+                    LastName = passenger.LastName,
+                    Gender = passenger.Title == Title.Mister ? Gender.Male : Gender.Female,
+                    DateOfBirth = passenger.BirthDate,
+                    PassportNumber = passenger.PassportNumber,
+                    PassportExpiryDate = passenger.PassportExpiryDate,
+                    PassportCountry = passenger.Country
+                }).ToList();
+
+                var bookServiceRequest = new BookFlightInput
+                {
+                    ItinCacheId = data.Token,
+                    Contact = data.Contact,
+                    Passengers = passengers,
+                    Payment = data.Payment,
+                    DiscountCode = data.DiscountCode
+                };
+
+                bookResult = FlightService.GetInstance().BookFlight(bookServiceRequest);
+
             }
             catch
             {

@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('singleFlightController', [
-    '$http', '$scope', function ($http, $scope) {
+    '$http', '$scope', '$interval', function ($http, $scope, $interval) {
 
         // **********
         // on document ready
@@ -26,6 +26,23 @@ app.controller('singleFlightController', [
             Trips: FlightSearchConfig.flightForm.trips,
             Completeness : 0
         };
+        $scope.expiry = {
+            expired: false,
+            time: '',
+            start: function (expiryTime) {
+                expiryTime = new Date(expiryTime);
+                if ($scope.expiry.expired) return;
+                $interval(function () {
+                    var nowTime = new Date();
+                    console.log('JEMPING');
+                    console.log(nowTime);
+                    console.log(expiryTime);
+                    if ( nowTime > expiryTime ) {
+                        $scope.expiry.expired = true;
+                    }
+                }, 1000);
+            }
+        }
 
         // **********
         // general functions
@@ -149,8 +166,12 @@ app.controller('singleFlightController', [
         // flight filter function
         
         // available filter
-        $scope.availableFilter = function(flight) {
-            if (flight.Available) {
+        $scope.availableFilter = function (flight) {
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if (flight.Available) {
+                    return flight;
+                }
+            } else {
                 return flight;
             }
         }
@@ -185,8 +206,12 @@ app.controller('singleFlightController', [
             current: [-1, -1],
             prices: []
         };
-        $scope.priceFilter = function(flight) {
-            if ( flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1] ) {
+        $scope.priceFilter = function (flight) {
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if (flight.TotalFare >= $scope.priceFilterParam.current[0] && flight.TotalFare <= $scope.priceFilterParam.current[1]) {
+                    return flight;
+                }
+            } else {
                 return flight;
             }
         }
@@ -219,14 +244,18 @@ app.controller('singleFlightController', [
         }
 
         $scope.airlineFilter = function (flight) {
-            if ($scope.airlineFilterParam.pure == true) {
-                return flight;
-            } else {
-                for (var i in flight.AirlinesTag) {
-                    if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
-                        return flight;
+            if (!$scope.loading && !$scope.loadingFlight) {
+                if ($scope.airlineFilterParam.pure == true) {
+                    return flight;
+                } else {
+                    for (var i in flight.AirlinesTag) {
+                        if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
+                            return flight;
+                        }
                     }
                 }
+            } else {
+                return flight;
             }
         }
 
@@ -302,7 +331,7 @@ app.controller('singleFlightController', [
                     } else if (returnData.IsOtherFareAvailable == false) {
                         console.log('departure flight is gone');
                         $scope.revalidateFlightParam.newFare = false;
-                        $scope.flightList[indexNo].available = false;
+                        $scope.flightList[indexNo].Available = false;
 
                     }
                 }
@@ -334,9 +363,9 @@ app.controller('singleFlightController', [
                 $scope.loading = true;
                 $scope.loadingFlight = true;
 
-                console.log('----------');
-                console.log('Getting flight list with parameter');
-                console.log(FlightSearchConfig.flightForm);
+                // console.log('----------');
+                // console.log('Getting flight list with parameter');
+                // console.log(FlightSearchConfig.flightForm);
 
                 // ajax
                 $http.get(FlightSearchConfig.Url, {
@@ -349,9 +378,12 @@ app.controller('singleFlightController', [
 
                     // set searchID
                     RevalidateConfig.SearchId = returnData.SearchId;
+                    $scope.flightRequest.SearchId = returnData.SearchId;
 
                     if ($scope.flightRequest.Completeness == returnData.Completeness) {
-                        $scope.getFlight();
+                        setTimeout(function() {
+                            $scope.getFlight();
+                        }, 1000);
                     } else {
                         console.log('Success getting flight list');
                         // console log the return data
@@ -366,12 +398,16 @@ app.controller('singleFlightController', [
                         if (returnData.Completeness == 100) {
                             console.log('COMPLETE !');
                             $scope.expiryTime = new Date(returnData.ExpiryTime);
+                            $scope.expiry.time = returnData.ExpiryTime;
+                            $scope.expiry.start(returnData.ExpiryTime);
                             $scope.busy = false;
                             $scope.loading = false;
                             $scope.loadingFlight = false;
                         } else {
                             // request for the rest of the flight
-                            $scope.getFlight();
+                            setTimeout(function () {
+                                $scope.getFlight();
+                            }, 1000);
                         }
                     }
                 }).error(function(returnData) {
@@ -393,7 +429,10 @@ app.controller('singleFlightController', [
 
             for (var i = 0; i < data.length; i++) {
                 $scope.flightList.push(data[i]);
+                $scope.flightList[i].Available = true;
             }
+
+            console.log($scope);
 
             if ( $scope.flightRequest.Completeness == 100 ) {
                 // loop the data

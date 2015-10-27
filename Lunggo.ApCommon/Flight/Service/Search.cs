@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new SearchFlightOutput();
             var searchId = EncodeConditions(input.Conditions);
 
-            var isCurrentlySearching = GetSetSearchingStatusInCache(searchId, true);
+            var isCurrentlySearching = GetSearchingStatusInCache(searchId);
             var completeness = GetSearchingCompletenessInCache(searchId);
             if (!isCurrentlySearching && completeness == 0)
             {

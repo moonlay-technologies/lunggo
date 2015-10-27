@@ -390,7 +390,11 @@ app.controller('returnFlightController', [
         // available filter
         $scope.availableFilter = function() {
             return function (flight) {
-                if (flight.Available) {
+                if (!$scope.departureFlightConfig.loading && !$scope.departureFlightConfig.loadingFlight && !$scope.returnFlightConfig.loading && !$scope.returnFlightConfig.loadingFlight) {
+                    if (flight.Available) {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
@@ -435,8 +439,12 @@ app.controller('returnFlightController', [
         // price filter
         $scope.priceFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
-            return function(flight) {
-                if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+            return function (flight) {
+                if (!$scope.departureFlightConfig.loading && !$scope.departureFlightConfig.loadingFlight && !$scope.returnFlightConfig.loading && !$scope.returnFlightConfig.loadingFlight) {
+                    if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
@@ -524,7 +532,9 @@ app.controller('returnFlightController', [
                     $scope.departureFlightConfig.flightSearchParams.SearchId = returnData.SearchId;
 
                     if ($scope.departureFlightConfig.flightSearchParams == returnData.Completeness) {
-                        $scope.getDepartureFlight();
+                        setTimeout(function () {
+                            $scope.getDepartureFlight();
+                        }, 1000);
                     } else {
                         $scope.departureFlightConfig.flightSearchParams.Completeness = returnData.Completeness;
 
@@ -542,7 +552,9 @@ app.controller('returnFlightController', [
                             console.log('Finished getting departure flight list');
                             console.log('----------');
                         } else {
-                            $scope.getDepartureFlight();
+                            setTimeout(function () {
+                                $scope.getDepartureFlight();
+                            }, 1000);
                         }
 
                     }
@@ -582,7 +594,9 @@ app.controller('returnFlightController', [
                     $scope.returnFlightConfig.flightSearchParams.SearchId = returnData.SearchId;
 
                     if ($scope.returnFlightConfig.flightSearchParams == returnData.Completeness) {
-                        $scope.getReturnFlight();
+                        setTimeout(function () {
+                            $scope.getReturnFlight();
+                        }, 1000);
                     } else {
                         $scope.returnFlightConfig.flightSearchParams.Completeness = returnData.Completeness;
 
@@ -600,7 +614,9 @@ app.controller('returnFlightController', [
                             console.log('Finished getting return flight list');
                             console.log('----------');
                         } else {
-                            $scope.getReturnFlight();
+                            setTimeout(function () {
+                                $scope.getReturnFlight();
+                            }, 1000);
                         }
 
                     }

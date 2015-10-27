@@ -982,6 +982,7 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
+    <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\bootstrap.min.js" />
@@ -2339,6 +2340,7 @@
     <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
     <Content Include="Views\Travorama20\flightReturn.cshtml" />
+    <None Include="Views\Flight\Checkout.cshtml.bak" />
     <None Include="Views\Flight\SearchResultList-Return.cshtml.bak" />
     <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <Content Include="Views\Travorama20\flightCheckout.cshtml" />

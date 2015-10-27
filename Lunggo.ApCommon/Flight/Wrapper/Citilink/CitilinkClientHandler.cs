@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
@@ -31,8 +32,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             {
                 if (!_isInitialized)
                 {
-                    _userName = "Travelmadezy";
-                    _password = "Standar1234";
+                    _userName = ConfigManager.GetInstance().GetConfigValue("citilink", "webUserName");
+                    _password = ConfigManager.GetInstance().GetConfigValue("citilink", "webPassword");
                     _isInitialized = true;
                 }
             }
