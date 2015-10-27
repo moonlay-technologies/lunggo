@@ -30,7 +30,6 @@ namespace Lunggo.ApCommon.Autocomplete
         {
             if (!_isInitialized)
             {
-                DictionaryService.GetInstance().Init();
                 TrieIndexService.GetInstance().Init();
                 _isInitialized = true;
             }

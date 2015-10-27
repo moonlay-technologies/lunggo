@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc.Routing;
 using System.Web.WebPages;
+using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
@@ -59,13 +60,15 @@ namespace Lunggo.ApCommon.Dictionary
             return Instance;
         }
 
-        public void Init()
+        public void Init(string folderName)
         {
             if (!_isInitialized)
             {
                 _configPath = HttpContext.Current != null
-                    ? HttpContext.Current.Server.MapPath(@"~/Config/")
-                    : @"Config\";
+                    ? HttpContext.Current.Server.MapPath(@"~/" + folderName + @"/")
+                    : folderName.IsNullOrEmpty()
+                        ? ""
+                        : folderName + @"\";
                 _airlineFilePath = Path.Combine(_configPath, AirlineFileName);
                 _airportFilePath = Path.Combine(_configPath, AirportFileName);
                 _hotelLocationFilePath = Path.Combine(_configPath, HotelLocationFileName);

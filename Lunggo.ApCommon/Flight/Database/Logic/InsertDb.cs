@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         ContactEmail = reservation.Contact.Email,
                         ContactCountryCd = reservation.Contact.CountryCode,
                         ContactPhone = reservation.Contact.Phone,
-                        LangCd = OnlineContext.GetActiveLanguageCode(),
+                        LangCd = OnlineContext.GetActiveLanguageCode() ?? "",
                         MemberCd = "xxx",
                         CancellationTypeCd = "xxx",
                         AdultCount = reservation.Passengers.Count(p => p.Type == PassengerType.Adult),
