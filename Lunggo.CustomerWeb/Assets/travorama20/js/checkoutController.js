@@ -66,6 +66,7 @@ app.controller('checkoutController', [
             url: FlightBookConfig.Url,
             postData: '',
             checked: false,
+            rsvNo: '',
             isSuccess: false,
             send: function () {
                 $scope.book.booking = true;
@@ -82,7 +83,7 @@ app.controller('checkoutController', [
                 $http({
                     method: 'POST',
                     url: $scope.book.url,
-                    data: $scope.book.postData,
+                    data: $.param($scope.book.postData),
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).then(function(returnData) {
                     console.log(returnData);
@@ -91,6 +92,11 @@ app.controller('checkoutController', [
 
                     if (returnData.data.IsSuccess) {
                         $scope.book.isSuccess = true;
+                        $scope.book.rsvNo = returnData.data.RsvNo;
+
+                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno').submit();
+
                     } else {
                         $scope.book.isSuccess = false;
                     }
