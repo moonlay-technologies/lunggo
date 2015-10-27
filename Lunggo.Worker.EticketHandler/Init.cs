@@ -54,7 +54,7 @@ namespace Lunggo.Worker.EticketHandler
         private static void InitDictionaryService()
         {
             var dict = DictionaryService.GetInstance();
-            dict.Init();
+            dict.Init("~");
         }
 
         private static void InitQueueService()

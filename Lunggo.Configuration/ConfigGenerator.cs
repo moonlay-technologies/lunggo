@@ -183,12 +183,16 @@ namespace Lunggo.Configuration
         private void WriteCommonFileToProject(string file, String projectName)
         {
             var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", CommonDirectoryName, file);
-            var destinationPath = Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", file);
+            var destinationPath = projectName.Contains("WebJob")
+                ? Path.Combine(WorkspacePath, RootProject + "." + projectName, "", file)
+                : Path.Combine(WorkspacePath, RootProject + "." + projectName, "Config", file);
             File.Copy(sourcePath, destinationPath, true);
         }
         private void WriteCommonFileToLog(string file, String projectName)
         {
-            var sourcePath = Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", CommonDirectoryName, file);
+            var sourcePath = projectName.Contains("WebJob")
+                ? Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "", CommonDirectoryName, file)
+                : Path.Combine(WorkspacePath, RootProject + "." + ConfigurationProject, "Config", CommonDirectoryName, file);
             var destinationPath = Path.Combine(_currentExecutionDir, projectName, file);
             File.Copy(sourcePath, destinationPath, true);
         }
@@ -367,7 +371,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
 
             var fileContent = fileTemplate.ToString();
-            string[] projectList = { "WebJob.MystiflyQueueHandler" };
+            string[] projectList = { "WebJob.EmailQueueHandler, WebJob.FlightCrawler, WebJob.MystiflyQueueHandler" };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
 
@@ -380,7 +384,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
 
             var fileContent = fileTemplate.ToString();
-            string[] projectList = { "WebJob.MystiflyQueueHandler" };
+            string[] projectList = { "WebJob.EmailQueueHandler, WebJob.FlightCrawler, WebJob.MystiflyQueueHandler" };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }
 

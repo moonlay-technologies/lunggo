@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 using CsQuery.ExtensionMethods;
@@ -61,34 +62,31 @@ namespace Lunggo.ApCommon.Flight.Service
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            foreach (var supplier in Suppliers)
+            var populateTask = Task.Run(() => PopulateSearchCache(itinQueue, conditions));
+            Parallel.ForEach(Suppliers, supplier =>
             {
-                var currentSupplier = supplier;
-                Task.Run(() =>
+                var result = supplier.SearchFlight(conditions);
+                if (result.IsSuccess)
                 {
-                    var result = currentSupplier.SearchFlight(conditions);
-                    if (result.IsSuccess)
+                    foreach (var itin in result.Itineraries)
                     {
-                        foreach (var itin in result.Itineraries)
-                        {
-                            var currency = CurrencyService.GetInstance();
-                            itin.SupplierRate = currency.GetSupplierExchangeRate(currentSupplier.SupplierName);
-                            itin.OriginalIdrPrice = itin.SupplierPrice*itin.SupplierRate;
-                            AddPriceMargin(itin);
-                            itin.LocalCurrency = "IDR";
-                            itin.LocalRate = 1;
-                            itin.LocalPrice = itin.FinalIdrPrice*itin.LocalRate;
-                            itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, currentSupplier.SupplierName, itin.FareType);
-                        }
+                        var currency = CurrencyService.GetInstance();
+                        itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
+                        itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
+                        AddPriceMargin(itin);
+                        itin.LocalCurrency = "IDR";
+                        itin.LocalRate = 1;
+                        itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
+                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                     }
-                    else
-                    {
-                        result.Itineraries = new List<FlightItinerary>();
-                    }
-                    itinQueue.Enqueue(result.Itineraries);
-                });
-            }
-            PopulateSearchCache(itinQueue, conditions);
+                }
+                else
+                {
+                    result.Itineraries = new List<FlightItinerary>();
+                }
+                itinQueue.Enqueue(result.Itineraries);
+            });
+            populateTask.Wait();
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
