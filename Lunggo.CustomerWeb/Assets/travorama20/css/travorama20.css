@@ -172,14 +172,16 @@ form label.important:after {
               background: #fff;
               color: #252525;
               text-decoration: none; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled {
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable {
           cursor: not-allowed; }
-          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span {
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable span {
             color: #666; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
           color: #fed83e; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
           background: #fed83e; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable a {
+          color: #666; }
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev {
         position: absolute;
         top: -10px;
