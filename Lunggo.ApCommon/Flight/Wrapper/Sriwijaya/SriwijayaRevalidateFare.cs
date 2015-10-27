@@ -562,6 +562,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
              }
              else
              {
+                 Client.LogoutSession(client);
                  return new RevalidateFareResult
                  {
                      IsSuccess = false,
@@ -569,6 +570,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                  };
              }
+             Client.LogoutSession(client);
              return hasil;
         }
     }

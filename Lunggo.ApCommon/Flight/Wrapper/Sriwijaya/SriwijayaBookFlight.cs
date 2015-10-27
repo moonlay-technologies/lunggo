@@ -214,6 +214,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 client.Headers["Host"] = "agent.sriwijayaair.co.id";
                 client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
                 client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+                client.Expect100Continue = false;
 
                 var agentBooking =
                     "vSub=YES" +
@@ -311,12 +312,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&featuring=Um5KdmJUb3dPak09&2410150551=2410150551";
                 client.AutoRedirect = true;
                 var bookingResult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/menu_others.php?reffNo=Y0hKdmMyVnpRbTl2YTJsdVowUnBjbVZqZEM0eU5ERXdNVFV3TlRVeE9uQnliM05sYzBKdmIydHBibWRFYVhKbFkzUT0=", bookingParams);
-
+                //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
+                
                 if (client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))
                 {
                     CQ ambilDataBooking = (CQ)bookingResult;
                     
-                    var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode"];
+                    var tunjukKodeBook = ambilDataBooking.MakeRoot()[".bookingCode>input"];
                     var kodeBook = tunjukKodeBook.Select(x => x.Cq().Attr("value")).FirstOrDefault();
                     
 
@@ -326,7 +328,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
                     client.Headers["Upgrade-Insecure-Requests"] = "1";
                     client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+kodeBook+"";
+                    //client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+kodeBook+"";
                     client.Headers["Host"] = "agent.sriwijayaair.co.id";
                     client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
                     client.AutoRedirect = true;
@@ -335,19 +337,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         "reffNo=" + kodeBook +
                         "&action=CheckBCode" +
                         "&step=STEP2";
-
+                    
                     var cekresult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?", cekparams);
-
+                    
                     CQ ambilTimeLimit = (CQ)cekresult;
 
                     var tunjukTimeLimit = ambilTimeLimit.MakeRoot()[".timeLimit"];
                     var timelimit = tunjukTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
                     var timelimitParse = timelimit.Substring(3).Split(' ');
                     var status = new BookingStatusInfo();
+                    string format = "dd/MM/yyyy h:mm:ss tt z";
+                    //CultureInfo provider = CultureInfo.InvariantCulture;
+                    var timeLimitDate = DateTime.Parse(timelimitParse[0]+ "/" + timelimitParse[1] + "/" + timelimitParse[2]+" "+timelimitParse[3]);
+                    var timeLimitGMT = timelimitParse[4].Substring(4, 2);
+
                     
                     status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
-                    status.TimeLimit = DateTime.Parse(timelimitParse[0]+ "-" + timelimitParse[1] + "-" + timelimitParse[2]+" "+ timelimitParse[3]);
+                    status.TimeLimit = DateTime.Parse(timeLimitDate+" "+ timeLimitGMT);
                 
                     hasil.Status = status;
                     hasil.IsSuccess = true;
@@ -365,7 +372,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         Errors = new List<FlightError> {FlightError.FareIdNoLongerValid}
                     };
                 
-                };
+                }
 
                 return hasil;
             }
