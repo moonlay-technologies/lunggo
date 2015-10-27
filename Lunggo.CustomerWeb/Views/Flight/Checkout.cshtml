@@ -476,11 +476,11 @@
 
                                 <div class="step-button">
                                     
-                                    <form action="" method="post" id="finalForm">
+                                    <form action="" method="post" name="finalForm" id="finalForm" ng-submit="book.send()">
                                         
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
-                                            <input type="text" name="Payment.Currency" value="IDR" />
+                                            <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
 
                                             <p>Buyer Info</p>
                                             <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
@@ -503,8 +503,8 @@
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Year" value="" ng-model="passenger.passport.expire.year" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Month" value="" ng-model="passenger.passport.expire.month" />
                                                 <input type="text" name="Passengers[{{$index}}].PassportExpiryDate.Date" value="" ng-model="passenger.passport.expire.date" />
-                                                <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.passport.idNumber" />
-                                                <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.passport.country" />
+                                                <input type="text" name="Passengers[{{$index}}].idNumber" value="" ng-model="passenger.idNumber" />
+                                                <input type="text" name="Passengers[{{$index}}].Country" value="" ng-model="passenger.nationality" />
 
                                             </div>
                                             
@@ -517,8 +517,12 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat &amp; ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
                                         <button class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</button>
-                                        <button class="btn btn-yellow" type="submit" ng-disabled="checkoutForm.loading || !paymentMethod">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</button>
+                                        <a class="btn btn-yellow" ng-click="book.send()" ng-disabled="checkoutForm.loading || !paymentMethod">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</a>
                                         
+                                    </form>
+                                    
+                                    <form action="" method="post" name="submitForm">
+                                        <input type="text" name="RSVNO" value="" />
                                     </form>
 
                                 </div>
@@ -664,19 +668,8 @@
                         <h4>Mohon Tunggu</h4>
                     </header>
                     <section>
-                        <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit./p>
+                        <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
                     </section>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                </div>
-                                <div class="col-sm-6">
-                                    <a class="btn btn-yellow btn-block" onclick="window.history.back();">KEMBALI</a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
                 </div>
             </div><!-- .page-overlay -->
 

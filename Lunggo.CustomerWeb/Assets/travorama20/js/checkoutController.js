@@ -60,7 +60,36 @@ app.controller('checkoutController', [
             }
         };
 
-        $scope.booking = false;
+        $scope.book = {
+            booking: false,
+            url: FlightBookConfig.Url,
+            postData: '',
+            send: function () {
+                $scope.booking = true;
+
+                // generate data
+                $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'"';
+
+                for (var i=0; i < $scope.passengers.length; i++) {
+                    $scope.book.postData = $scope.book.postData + (' "Passengers['+i+'].Type": "'+$scope.passengers[i].type+'", "Passengers['+i+'].Title": "'+$scope.passengers[i].title+'", "Passengers['+i+'].FirstName":"'+$scope.passengers[i].firstname+'", "Passengers['+i+'].LastName": "'+$scope.passengers[i].lastname+'", "Passengers['+i+'].BirthDate.Year":"'+$scope.passengers[i].birth.year+' date", "Passengers['+i+'].BirthDate.Month":"'+$scope.passengers[i].birth.month+'", "Passengers['+i+'].BirthDate.Date":"'+$scope.passengers[i].date+'", "Passengers['+i+'].PassportNumber":"'+$scope.passengers[i].passport.number+'", "Passengers['+i+'].PassportExpiryDate.Year":"'+$scope.passengers[i].passport.expire.year+'", "Passengers['+i+'].PassportExpiryDate.Month":"'+$scope.passengers[i].passport.expire.month+'","Passengers['+i+'].PassportExpiryDate.Date":"'+$scope.passengers[i].passport.expire.date+'", "Passengers['+i+'].idNumber":"'+$scope.passengers[i].idNumber+'", "Passengers['+i+'].Country":"'+$scope.passengers[i].nationality+'" ');
+                }
+
+                console.log($scope.book.postData);
+
+                // send form
+                $http({
+                    method: 'POST',
+                    url: $scope.book.url,
+                    data: $scope.book.postData
+                }).then(function(returnData) {
+                    console.log(returnData);
+                }, function(returnData) {
+                    console.log(returnData);
+                });
+
+            }
+        };
+
 
         $scope.passengers = [];
         $scope.passengersForm = {
