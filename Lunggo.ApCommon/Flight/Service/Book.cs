@@ -35,8 +35,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                     SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
+                SaveRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
-                output.PaymentUrl = reservation.Payment.Url;
             }
             else
             {
@@ -46,6 +46,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.DistinguishErrors();
             }
             return output;
+        }
+
+        public string GetBookingRedirectionUrl(string rsvNo)
+        {
+            return GetRedirectionUrlInCache(rsvNo);
         }
 
         #region Helpers

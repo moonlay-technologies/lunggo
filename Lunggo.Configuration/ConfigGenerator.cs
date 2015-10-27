@@ -304,6 +304,7 @@ namespace Lunggo.Configuration
             const string roomPath = @"/api/v1/rooms";
             const string flightPath = @"/api/v1/flights";
             const string flightRevalidatePath = @"/api/v1/flights/revalidate";
+            const string flightBookPath = @"/api/v1/flights/book";
             const string flightRulesPath = @"/api/v1/flights/rules";
             const string autocompleteHotelLocationPath = @"/api/v1/autocomplete/hotellocation/";
             const string autocompleteAirportPath = @"/api/v1/autocomplete/airport/";
@@ -318,6 +319,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("roomPath", roomPath);
             fileTemplate.SetAttribute("flightPath", flightPath);
             fileTemplate.SetAttribute("flightRevalidatePath", flightRevalidatePath);
+            fileTemplate.SetAttribute("flightBookPath", flightBookPath);
             fileTemplate.SetAttribute("flightRulesPath", flightRulesPath);
             fileTemplate.SetAttribute("autocompleteHotelLocationPath", autocompleteHotelLocationPath);
             fileTemplate.SetAttribute("autocompleteAirportPath", autocompleteAirportPath);

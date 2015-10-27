@@ -34,9 +34,6 @@ app.controller('singleFlightController', [
                 if ($scope.expiry.expired) return;
                 $interval(function () {
                     var nowTime = new Date();
-                    console.log('JEMPING');
-                    console.log(nowTime);
-                    console.log(expiryTime);
                     if ( nowTime > expiryTime ) {
                         $scope.expiry.expired = true;
                     }

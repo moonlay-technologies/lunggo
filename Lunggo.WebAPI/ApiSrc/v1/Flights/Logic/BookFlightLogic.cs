@@ -49,14 +49,17 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             return
                 request != null &&
                 request.Token != null &&
+                request.Contact != null &&
                 request.Contact.Name != null &&
                 request.Contact.Phone != null &&
                 request.Contact.Email != null &&
                 request.Contact.CountryCode != null &&
+                request.Passengers != null &&
                 request.Passengers.TrueForAll(p => p.FirstName != null) &&
                 request.Passengers.TrueForAll(p => p.LastName != null) &&
                 request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
                 request.Passengers.TrueForAll(p => p.Type != PassengerType.Undefined) &&
+                request.Payment != null &&
                 request.Payment.Method != PaymentMethod.Undefined;
         }
 
@@ -67,8 +70,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 {
                     IsSuccess = true,
                     RsvNo = bookServiceResponse.RsvNo,
-                    TimeLimit = bookServiceResponse.TimeLimit,
-                    PaymentUrl = bookServiceResponse.PaymentUrl,
+                    Error = bookServiceResponse.Errors[0],
                     OriginalRequest = request
                 };
             else
@@ -81,6 +83,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static BookFlightInput PreprocessServiceRequest(FlightBookApiRequest request)
         {
+            request.Payment.Medium = request.Payment.Method == PaymentMethod.BankTransfer
+                ? PaymentMedium.Direct
+                : PaymentMedium.Veritrans;
+
             var bookServiceRequest = new BookFlightInput
             {
                 ItinCacheId = request.Token,

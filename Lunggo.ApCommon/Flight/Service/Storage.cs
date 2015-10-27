@@ -303,6 +303,46 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        internal void SaveRedirectionUrlInCache(string rsvNo, string paymentUrl, DateTime? timeLimit)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "rsvNoRedirectionUrl:" + rsvNo;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                redisDb.StringSet(redisKey, paymentUrl, timeLimit - DateTime.Now);
+            }
+            catch { }
+        }
+
+        internal string GetRedirectionUrlInCache(string rsvNo)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "rsvNoRedirectionUrl:" + rsvNo;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var redirectionUrl = redisDb.StringGet(redisKey);
+                return redirectionUrl;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        internal void DeleteRedirectionUrlInCache(string rsvNo)
+        {
+            try
+            {
+                var redisService = RedisService.GetInstance();
+                var redisKey = "rsvNoRedirectionUrl:" + rsvNo;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                redisDb.KeyDelete(redisKey);
+            }
+            catch { }
+        }
+
         private bool IsItinBundleCacheId(string cacheId)
         {
             return cacheId.Substring(1, 4) == ItinBundleKeyPrefix;

@@ -30,9 +30,9 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(@"SET ");
             if (condition.PaymentId != null)
                 clauseBuilder.Append(@"PaymentId = @PaymentId, ");
-            if (condition.PaymentMediumCd != null)
+            if (condition.PaymentMediumCd != null && condition.PaymentMediumCd != "")
                 clauseBuilder.Append(@"PaymentMediumCd = @PaymentMediumCd, ");
-            if (condition.PaymentMethodCd != null)
+            if (condition.PaymentMethodCd != null && condition.PaymentMethodCd != "")
                 clauseBuilder.Append(@"PaymentMethodCd = @PaymentMethodCd, ");
             if (condition.PaymentTime != null)
                 clauseBuilder.Append(@"PaymentTime = @PaymentTime, ");
@@ -42,9 +42,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(@"PaymentTargetAccount = @PaymentTargetAccount, ");
             if (condition.PaymentUrl != null)
                 clauseBuilder.Append(@"PaymentUrl = @PaymentUrl, ");
-            if (condition.PaymentReceiptUrl != null)
-                clauseBuilder.Append(@"PaymentReceiptUrl = @PaymentReceiptUrl, ");
-            if (condition.PaidAmount != null)
+            if (condition.PaidAmount != null && condition.PaidAmount != 0M)
                 clauseBuilder.Append(@"PaidAmount = @PaidAmount, ");
             if (condition.PaymentStatusCd != null)
             {
@@ -77,8 +75,6 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                             @"END ");
                 clauseBuilder.Append(
-                        @"ELSE PaymentStatusCd ");
-                clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'VER' THEN ");
                 clauseBuilder.Append(
                             @"CASE WHEN PaymentStatusCd = 'PEN' ");
@@ -88,8 +84,6 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                                 @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
                             @"END ");
-                clauseBuilder.Append(
-                        @"ELSE PaymentStatusCd ");
                 clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'CHA' THEN ");
                 clauseBuilder.Append(
