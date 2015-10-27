@@ -61,31 +61,34 @@ namespace Lunggo.ApCommon.Flight.Service
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            var searchTask = Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
+            foreach (var supplier in Suppliers)
             {
-                var result = supplier.SearchFlight(conditions);
-                if (result.IsSuccess)
+                var currentSupplier = supplier;
+                Task.Run(() =>
                 {
-                    foreach (var itin in result.Itineraries)
+                    var result = currentSupplier.SearchFlight(conditions);
+                    if (result.IsSuccess)
                     {
-                        var currency = CurrencyService.GetInstance();
-                        itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
-                        itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
-                        AddPriceMargin(itin);
-                        itin.LocalCurrency = "IDR";
-                        itin.LocalRate = 1;
-                        itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
-                        itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
+                        foreach (var itin in result.Itineraries)
+                        {
+                            var currency = CurrencyService.GetInstance();
+                            itin.SupplierRate = currency.GetSupplierExchangeRate(currentSupplier.SupplierName);
+                            itin.OriginalIdrPrice = itin.SupplierPrice*itin.SupplierRate;
+                            AddPriceMargin(itin);
+                            itin.LocalCurrency = "IDR";
+                            itin.LocalRate = 1;
+                            itin.LocalPrice = itin.FinalIdrPrice*itin.LocalRate;
+                            itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, currentSupplier.SupplierName, itin.FareType);
+                        }
                     }
-                }
-                else
-                {
-                    result.Itineraries = new List<FlightItinerary>();
-                }
-                itinQueue.Enqueue(result.Itineraries);
-            }));
+                    else
+                    {
+                        result.Itineraries = new List<FlightItinerary>();
+                    }
+                    itinQueue.Enqueue(result.Itineraries);
+                });
+            }
             PopulateSearchCache(itinQueue, conditions);
-            searchTask.Wait();
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)
