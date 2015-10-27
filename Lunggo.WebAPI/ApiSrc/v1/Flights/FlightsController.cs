@@ -20,10 +20,48 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpGet]
         [LunggoCorsPolicy]
         [Route("api/v1/flights")]
-        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] FlightSearchApiRequest request)
+        public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
-            var apiResponse = FlightLogic.SearchFlights(request);
-            return apiResponse;
+            try
+            {
+                var apiResponse = FlightLogic.SearchFlights(request.Deserialize<FlightSearchApiRequest>());
+                return apiResponse;
+            }
+            catch
+            {
+                return new FlightSearchApiResponse
+                {
+                    SearchId = null,
+                    OriginalRequest = null,
+                    TotalFlightCount = 0,
+                    FlightList = null
+                };
+            }
+            /*
+            try
+            {
+                var apiRequest = JsonConvert.DeserializeObject<FlightSearchApiRequest>(request);
+                var apiResponse = FlightLogic.SearchFlights(apiRequest);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                if (e.Source == "Newtonsoft.Json")
+                {
+                    return new FlightSearchApiResponse
+                    {
+                        SearchId = null,
+                        OriginalRequest = null,
+                        TotalFlightCount = 0,
+                        FlightList = null
+                    };
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            */
         }
 
         [HttpGet]

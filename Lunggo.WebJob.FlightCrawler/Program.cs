@@ -20,8 +20,8 @@ namespace Lunggo.WebJob.FlightCrawler
             var configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
             configuration.Queues.MaxDequeueCount = 100;
-            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.StorageConnectionString = "";
+            configuration.DashboardConnectionString = "";
 
             var host = new JobHost(configuration);
             // The following code ensures that the WebJob will be running continuously
