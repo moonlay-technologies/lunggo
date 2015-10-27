@@ -52,10 +52,10 @@ namespace Lunggo.ApCommon.Flight.Service
             return output;
         }
 
-        public void CommenceSearchFlight(string searchId)
+        public void CommenceSearchFlight(string searchId, int supplierIndex)
         {
             var conditions = DecodeConditions(searchId);
-            SearchFlightInternal(conditions);
+            SearchFlightInternal(conditions, supplierIndex);
         }
     }
 }
