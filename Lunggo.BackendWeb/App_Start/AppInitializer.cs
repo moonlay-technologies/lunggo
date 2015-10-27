@@ -93,7 +93,7 @@ namespace Lunggo.BackendWeb
         private static void InitDictionaryService()
         {
             var dictionary = DictionaryService.GetInstance();
-            dictionary.Init();
+            dictionary.Init("Config");
         }
 
         private static void InitFlightService()

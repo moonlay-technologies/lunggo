@@ -112,12 +112,16 @@ form label.important:after {content:"*"; color:#f00000;}
                         }
                     }
                 }
-                .ui-state-disabled {cursor:not-allowed;
+                .ui-state-disabled, .ui-datepicker-unselectable {cursor:not-allowed;
                     span {color:#666;}
                 }
                 .ui-datepicker-week-end {
                     span, a {color:#fed83e;}
                     a:hover {background:#fed83e;}
+                    // if disabled
+                    &.ui-datepicker-unselectable {
+                        span, a {color:#666;}
+                    }
                 }
             }
             .ui-datepicker-prev {position:absolute; top:-10px; left:15px; cursor:pointer; color:$color-main-blue; font-size:12px;}

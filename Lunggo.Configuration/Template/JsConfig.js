@@ -22,6 +22,11 @@ var RevalidateConfig = {
     working: false
 };
 
+var FlightBookConfig = {
+    Url: '$apiUrl$$flightBookPath$',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: '$apiUrl$$flightRulesPath$',
     working: false

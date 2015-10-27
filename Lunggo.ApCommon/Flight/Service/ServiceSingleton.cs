@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 using CsQuery.ExtensionMethods;
@@ -59,7 +60,8 @@ namespace Lunggo.ApCommon.Flight.Service
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
-            var searchTask = Task.Factory.StartNew(() => Parallel.ForEach(Suppliers, supplier =>
+            var populateTask = Task.Run(() => PopulateSearchCache(itinQueue, conditions));
+            Parallel.ForEach(Suppliers, supplier =>
             {
                 var result = supplier.SearchFlight(conditions);
                 if (result.IsSuccess)
@@ -81,9 +83,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     result.Itineraries = new List<FlightItinerary>();
                 }
                 itinQueue.Enqueue(result.Itineraries);
-            }));
-            PopulateSearchCache(itinQueue, conditions);
-            searchTask.Wait();
+            });
+            populateTask.Wait();
         }
 
         private SearchFlightResult SpecificSearchFlightInternal(SearchFlightConditions conditions)

@@ -1,6 +1,6 @@
 ﻿// travorama angular app - checkout controller
 app.controller('checkoutController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope', '$interval',function($http, $scope, $interval) {
 
         //********************
         // variables
@@ -13,10 +13,103 @@ app.controller('checkoutController', [
         $scope.paymentMethod = '';
         $scope.stepClass = '';
         $scope.titles = [
-            { name: 'Mr', value: 'mr' },
-            { name: 'Mrs', value: 'mrs' },
-            { name: 'Ms', value: 'ms' }
+            { name: 'Mr', value: 'Mister' },
+            { name: 'Mrs', value: 'Mistress' },
+            { name: 'Ms', value: 'Miss' }
         ];
+
+        $scope.currency = 'IDR';
+        $scope.token = token;
+        $scope.trips = trips;
+        $scope.initialPrice = price;
+        $scope.totalPrice = price;
+        $scope.expired = false;
+        $scope.expiryDate = new Date(expiryDate);
+        $interval(function () {
+            var nowTime = new Date();
+            if (nowTime > $scope.expiryDate) {
+                $scope.expired = true;
+            }
+        }, 1000);
+        $scope.voucher = {
+            confirmedCode: '',
+            code: '',
+            amount: 0,
+            checking: false,
+            checked: false,
+            check: function() {
+                $scope.voucher.checking = true;
+                $http({
+                    method: 'GET',
+                    url: CheckVoucherConfig.Url,
+                    params: {
+                        token: $scope.token,
+                        code: $scope.voucher.code,
+                        email: $scope.buyerInfo.email
+                    }
+                }).then(function(returnData) {
+                    if (returnData.data.Discount > 0) {
+                        $scope.voucher.amount = returnData.Amount;
+                        $scope.voucher.confirmedCode = $scope.voucher.code;
+                    }
+                    $scope.voucher.checked = true;
+                    $scope.voucher.checking = false;
+                }, function(returnData) {
+                    $scope.voucher.checked = true;
+                    $scope.voucher.checking = false;
+                });
+            }
+        };
+
+        $scope.book = {
+            booking: false,
+            url: FlightBookConfig.Url,
+            postData: '',
+            checked: false,
+            rsvNo: '',
+            isSuccess: false,
+            send: function () {
+                $scope.book.booking = true;
+
+                // generate data
+                $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'"';
+                for (var i=0; i < $scope.passengers.length; i++) {
+                    $scope.book.postData = $scope.book.postData + (',"Passengers['+i+'].Type": "'+$scope.passengers[i].type+'", "Passengers['+i+'].Title": "'+$scope.passengers[i].title+'", "Passengers['+i+'].FirstName":"'+$scope.passengers[i].firstname+'", "Passengers['+i+'].LastName": "'+$scope.passengers[i].lastname+'", "Passengers['+i+'].BirthDate.Year":"'+$scope.passengers[i].birth.year+'", "Passengers['+i+'].BirthDate.Month":"'+$scope.passengers[i].birth.month+'", "Passengers['+i+'].BirthDate.Date":"'+$scope.passengers[i].birth.date+'", "Passengers['+i+'].PassportNumber":"'+$scope.passengers[i].passport.number+'", "Passengers['+i+'].PassportExpiryDate.Year":"'+$scope.passengers[i].passport.expire.year+'", "Passengers['+i+'].PassportExpiryDate.Month":"'+$scope.passengers[i].passport.expire.month+'","Passengers['+i+'].PassportExpiryDate.Date":"'+$scope.passengers[i].passport.expire.date+'", "Passengers['+i+'].idNumber":"'+$scope.passengers[i].idNumber+'", "Passengers['+i+'].Country":"'+$scope.passengers[i].nationality+'"');
+                }
+                $scope.book.postData = '{'+$scope.book.postData+'}';
+                $scope.book.postData = JSON.parse($scope.book.postData);
+
+                // send form
+                $http({
+                    method: 'POST',
+                    url: $scope.book.url,
+                    data: $.param($scope.book.postData),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).then(function(returnData) {
+                    console.log(returnData);
+
+                    $scope.book.checked = true;
+
+                    if (returnData.data.IsSuccess) {
+                        $scope.book.isSuccess = true;
+                        $scope.book.rsvNo = returnData.data.RsvNo;
+
+                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno').submit();
+
+                    } else {
+                        $scope.book.isSuccess = false;
+                    }
+
+                }, function(returnData) {
+                    console.log(returnData);
+                    $scope.book.checked = true;
+                    $scope.book.isSuccess = false;
+                });
+
+            }
+        };
+
 
         $scope.passengers = [];
         $scope.passengersForm = {
@@ -225,6 +318,7 @@ app.controller('checkoutController', [
         $scope.changePage = function (page) {
             // check if page target is 4
             // do validation if page target is 4
+            /*
             if ($scope.currentPage == 3 && page == 4) {
 
                 // check each form
@@ -272,11 +366,12 @@ app.controller('checkoutController', [
 
 
             } else {
+            */
                 // change current page variable
                 $scope.currentPage = page;
                 // change step class
                 $scope.stepClass = 'active-' + page;
-            }
+            // }
 
         }
         // change page after login

@@ -76,9 +76,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [HttpPost]
         [LunggoCorsPolicy]
         [Route("api/v1/flights/book")]
-        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, string requestJson)
+        public FlightBookApiResponse BookFlight(HttpRequestMessage httpRequest, FlightBookApiRequest request)
         {
-            var request = requestJson.Deserialize<FlightBookApiRequest>();
             var apiResponse = FlightLogic.BookFlight(request);
             return apiResponse;
         }

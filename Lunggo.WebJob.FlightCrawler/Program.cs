@@ -19,7 +19,7 @@ namespace Lunggo.WebJob.FlightCrawler
 
             var configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
-            configuration.Queues.MaxDequeueCount = 100;
+            configuration.Queues.MaxDequeueCount = 1;
             configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
 

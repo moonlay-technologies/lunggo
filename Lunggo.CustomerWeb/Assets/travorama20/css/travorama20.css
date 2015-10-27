@@ -172,14 +172,16 @@ form label.important:after {
               background: #fff;
               color: #252525;
               text-decoration: none; }
-        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled {
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable {
           cursor: not-allowed; }
-          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span {
+          .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-state-disabled span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-unselectable span {
             color: #666; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a {
           color: #fed83e; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
           background: #fed83e; }
+        .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable a {
+          color: #666; }
       .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev {
         position: absolute;
         top: -10px;
@@ -1971,18 +1973,23 @@ file: /Assets/travorama20/css/_page_flight.scss
       display: none; }
     .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration {
       display: block !important;
-      padding-top: 10px; }
+      padding-top: 10px;
+      padding: 6px; }
       .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration {
         width: 50%;
         text-align: center;
-        float: left; }
+        float: left;
+        position: relative; }
         .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration:before, .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .page-index .duration.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .duration.section-reason:after {
-          width: 5px;
+          width: 10px;
           height: 20px;
-          background: url(/Assets/images/sandclock.png) bottom center no-repeat;
+          background: url(/Assets/images/sandclock.png) top left no-repeat;
+          background-size: 100%;
           margin-right: 5px;
-          position: relative;
-          top: 3px; }
+          position: absolute;
+          top: 0;
+          left: 10px;
+          content: ""; }
       .page-flight.page-flight-return .search-result-container > .inactive .flight .flight-summary .flight-summary-left .summary-bottom-right.flight-duration .transit {
         width: 50%;
         text-align: center;
@@ -2086,11 +2093,14 @@ file: /Assets/travorama20/css/_page_flight.scss
         .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-duration .time span:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-duration .time .page-index span.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-duration .time span.section-reason:after {
           content: "";
           background-image: url(/Assets/images/sandclock.png);
+          background-size: 100%;
           margin-right: 10px;
           width: 10px;
-          height: 10px;
+          height: 20px;
           background-repeat: no-repeat;
-          position: absolute; }
+          position: relative;
+          display: inline-block;
+          vertical-align: middle; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-date .flight-date-duration .transit {
         border-top: 2px solid #1daee4;
         padding-top: 5px;
@@ -2513,10 +2523,18 @@ file: /Assets/travorama20/css/_page_flight.scss
           .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-duration .time {
             margin-top: 5px;
             margin-bottom: 5px;
-            font-size: 11px; }
+            font-size: 11px;
+            position: relative; }
             .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-duration .time:before, .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-duration .page-index .time.section-reason:after, .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-duration .time.section-reason:after {
-              content: url(/Assets/images/sandclock.png);
-              margin-right: 10px; }
+              content: "";
+              background: url(/Assets/images/sandclock.png) top left no-repeat;
+              background-size: 100%;
+              width: 10px;
+              height: 20px;
+              position: relative;
+              margin-right: 10px;
+              display: inline-block;
+              vertical-align: middle; }
           .flight-review-wrapper .flight-review .flight-review-summary .summary-left .summary-flight .flight-content .flight-date .flight-date-duration .transit {
             border-top: 3px solid #1daee4;
             padding-top: 5px;
@@ -3022,7 +3040,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
 .payment-wrapper {
   margin-bottom: 24px; }
   .payment-wrapper .payment {
-    background: #fff; }
+    margin-bottom: 6px; }
     .payment-wrapper .payment label {
       display: block;
       cursor: pointer; }
@@ -3047,7 +3065,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .payment-wrapper .payment section {
       padding: 12px;
       border: 1px solid #ccc;
-      text-align: center; }
+      text-align: center;
+      background: #fff; }
 
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
@@ -3100,6 +3119,10 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 .widget-container .widget.voucher .widget-content {
   padding: 12px; }
+
+.widget-container .widget.voucher .bg-danger {
+  padding: 6px;
+  margin-top: 6px; }
 
 .widget-container .widget.flight .widget-content {
   padding: 12px;
@@ -3466,6 +3489,49 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .page-thankyou .order-detail section .order-detail-right .payment-detail h5 {
       color: #1daee4;
       font-weight: bold; }
+
+.page-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(100, 100, 100, 0.7); }
+  .page-overlay .overlay-content {
+    width: 400px;
+    height: 300px;
+    background: #fff;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    overflow: hidden; }
+    .page-overlay .overlay-content header {
+      background: #1daee4;
+      text-align: center;
+      color: #fff;
+      padding: 15px; }
+      .page-overlay .overlay-content header h4 {
+        margin: 0;
+        font-weight: 600; }
+      .page-overlay .overlay-content header .close {
+        color: #fff;
+        opacity: 1; }
+    .page-overlay .overlay-content section {
+      padding: 15px; }
+    .page-overlay .overlay-content footer {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%; }
+  .page-overlay.flight-expired {
+    z-index: 9999; }
 
 /*
 

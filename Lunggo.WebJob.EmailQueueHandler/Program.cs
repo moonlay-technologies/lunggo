@@ -47,7 +47,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"Config\");
+            configManager.Init(@"");
         }
 
         private static void InitFlightService()
@@ -66,7 +66,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
         private static void InitDictionaryService()
         {
             var dict = DictionaryService.GetInstance();
-            dict.Init();
+            dict.Init("");
         }
 
         private static void InitQueueService()
