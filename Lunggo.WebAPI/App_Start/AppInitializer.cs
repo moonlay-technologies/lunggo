@@ -24,6 +24,7 @@ namespace Lunggo.WebAPI
             InitDatabaseService();
             InitUniqueIdGenerator();
             InitRedisService();
+            InitDictionaryService();
             InitAutocompleteManager();
             InitFlightService();
             InitQueueService();
@@ -82,6 +83,13 @@ namespace Lunggo.WebAPI
                 }
             });
         }
+
+        private static void InitDictionaryService()
+        {
+            var dict = DictionaryService.GetInstance();
+            dict.Init("Config");
+        }
+
         private static void InitAutocompleteManager()
         {
             var autocompleteManager = AutocompleteManager.GetInstance();

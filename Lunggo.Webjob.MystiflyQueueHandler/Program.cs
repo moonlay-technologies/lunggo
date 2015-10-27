@@ -75,7 +75,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"Config\");
+            configManager.Init(@"");
         }
 
         private static void InitDatabaseService()
