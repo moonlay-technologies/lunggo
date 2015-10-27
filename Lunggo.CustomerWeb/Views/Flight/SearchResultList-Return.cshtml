@@ -289,7 +289,7 @@
                         <h4>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].OriginAirport}} <span>{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                     </div>
                     <div class="flight-date-duration">
-                        <h5 class="time">{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</h5>
+                        <h5 class="time"><span>{{msToTime(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalDuration)}}</span></h5>
                         <h5 class="transit">
                             <span ng-if="departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit == 0">Langsung</span>
                             <span ng-if="departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit > 0">{{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].TotalTransit}} Transit</span>
@@ -915,11 +915,11 @@
                         <label>Harga Total:</label>
                         <h3><sup>Rp</sup> {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].TotalFare + returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</h3>
                         <p>*Harga termasuk Pajak &amp; Service Charge</p>
-                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" />
+                        <input type="submit" class="btn btn-yellow" value="PESAN" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-hide="departureFlightConfig.validating || returnFlightConfig.validating || pageConfig.flightsValidated" ng-disabled="pageConfig.redirectingPage" />
                         <input type="submit" class="btn btn-yellow" value="MEMVALIDASI" disabled ng-show="departureFlightConfig.validating || returnFlightConfig.validating" />
                         <div ng-show="pageConfig.flightsValidated && (!departureFlightConfig.validateAvailable || !returnFlightConfig.validateAvailable )">
-                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-hide="(!departureFlightConfig.validateNewfare || !returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" />
-                            <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-show="(!departureFlightConfig.validateNewfare || !returnFlightConfig.validateNewfare)" ng-click="closeOverview()" />
+                            <input type="submit" class="btn btn-yellow" value="LANJUTKAN" ng-show="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="revalidateFlight(departureFlightConfig.chosenFlight, returnFlightConfig.chosenFlight)" ng-disabled="pageConfig.redirectingPage" />
+                            <input type="submit" class="btn btn-yellow" value="PILIH KEMBALI" ng-hide="(departureFlightConfig.validateNewfare || returnFlightConfig.validateNewfare)" ng-click="closeOverview()" />
                         </div>
                     </div>
                 </section>
