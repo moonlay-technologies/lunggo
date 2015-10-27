@@ -248,8 +248,8 @@
                                     <div class="form-group">
                                         <label class="control-label">Title:</label>
                                         <div>
-                                            <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].name">
-                                                <option ng-repeat="title in titles" value="{{title.name}}">{{title.name}}</option>
+                                            <select class="form-control" id="buyer-title" name="title" ng-model="buyerInfo.title" ng-init="buyerInfo.title = titles[0].value">
+                                                <option ng-repeat="title in titles" value="{{title.value}}">{{title.name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -304,8 +304,8 @@
 
                                                 <div class="form-group">
                                                     <label class="control-label">Title</label>
-                                                    <select class="form-control" name="passenger_{{$index}}_title" ng-model="passenger.title" ng-init="passenger.title = titles[0].name">
-                                                        <option ng-repeat="title in titles" value="{{title.name}}" ng-selected="title.name == 'Mr'" ng-if="!(title.name == 'Mrs' && passenger.type != 'adult')">{{title.name}}</option>
+                                                    <select class="form-control" name="passenger_{{$index}}_title" ng-model="passenger.title" ng-init="passenger.title = titles[0].value" required>
+                                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-selected="title.value == 'Mister'" ng-if="!(title.value == 'Mistress' && passenger.type != 'adult')">{{title.name}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">

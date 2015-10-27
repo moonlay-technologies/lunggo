@@ -16,6 +16,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
+        private static string[] _airlinesExclude = {"SJ", "IN", "AK", "QZ", "D7", "XT", "QG"};
+
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
             var request = new AirLowFareSearchRQ
@@ -131,7 +133,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AirTripType = airTripType,
                 CabinPreference = cabinType,
                 MaxStopsQuantity = MaxStopsQuantity.All,
-                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : null,
+                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : _airlinesExclude,
                 VendorPreferenceCodes = conditions.AirlinePreferences != null ? conditions.AirlinePreferences.ToArray() : null,
                 ExtensionData = null
             };
