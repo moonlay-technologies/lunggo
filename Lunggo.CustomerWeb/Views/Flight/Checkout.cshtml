@@ -521,8 +521,8 @@
                                         
                                     </form>
                                     
-                                    <form action="" method="post" name="submitForm">
-                                        <input type="text" name="RSVNO" value="" />
+                                    <form action="" method="post" name="submitForm" id="rsvno">
+                                        <input type="text" name="RsvNo" value="" id="rsvno-input" />
                                     </form>
 
                                 </div>
@@ -640,8 +640,8 @@
 
             </section><!-- .checkout-content -->
             
-            <div class="page-overlay" ng-show="expired">
-                <div class="overlay-content flight-expired">
+            <div class="page-overlay flight-expired" ng-show="expired">
+                <div class="overlay-content">
                     <header>
                         <h4>Pencarian Kadaluarsa</h4>
                     </header>
@@ -662,14 +662,41 @@
                 </div>
             </div><!-- .page-overlay -->
             
-            <div class="page-overlay" ng-show="booking">
-                <div class="overlay-content validating-flight">
+            <div class="page-overlay booking-flight" ng-show="book.booking">
+                <div class="overlay-content" ng-hide="book.checked">
                     <header>
                         <h4>Mohon Tunggu</h4>
                     </header>
                     <section>
                         <p>Sedang memproses pemesanan Anda ke maskapai. Proses ini dapat berlangsung hingga 5 (lima) menit.</p>
                     </section>
+                </div>
+                <div class="overlay-content" ng-show="book.checked && book.isSuccess">
+                    <header>
+                        <h4>Pemesanan Berhasil</h4>
+                    </header>
+                    <section>
+                        <p>Penerbangan Tersedia. Mengalihkan Anda ke halaman pembayaran.</p>
+                    </section>
+                </div>
+                <div class="overlay-content" ng-show="book.checked && !book.isSuccess">
+                    <header>
+                        <h4>Pemesanan Gagal</h4>
+                    </header>
+                    <section>
+                        <p>Mohon Maaf, pemesanan Anda gagal di proses.</p>
+                    </section>
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                    <a class="btn btn-yellow btn-block" onclick="window.history.back();">KEMBALI</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
                 </div>
             </div><!-- .page-overlay -->
 

@@ -364,4 +364,5 @@ file : /Assets/travorama20/css/_page_checkout.scss
         section {padding:15px;}
         footer {position:absolute; bottom:15px; left:0; width:100%;}
     }
+    &.flight-expired {z-index:9999;}
 }
