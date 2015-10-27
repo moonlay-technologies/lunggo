@@ -354,7 +354,7 @@
     
         <div>
 
-            <div class="container">
+            <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
             <div class="search-result-filter" ng-show="flightRequest.Completeness == 100">
@@ -486,7 +486,7 @@
                     </div>
                 </div>
             </div><!-- .flight-result-filter -->
-            <div class="search-result-sort">
+            <div class="search-result-sort" ng-hide="!flightList.length">
                 <div class="container">
                     <div class="sort-airline">
                         <span ng-click="setSort('airline')">Maskapai</span>

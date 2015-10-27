@@ -1567,6 +1567,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: left;
       padding-left: 15px; }
 
+.page-flight .search-result {
+  min-height: 500px; }
+
 .page-flight .flight {
   border: 1px solid #ccc;
   -webkit-border-radius: 4px;

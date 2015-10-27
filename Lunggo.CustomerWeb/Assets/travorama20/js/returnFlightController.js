@@ -511,6 +511,9 @@ app.controller('returnFlightController', [
                 targetScope = $scope.returnFlightConfig;
             }
 
+            targetScope.loading = true;
+            targetScope.loadingFlight = true;
+
             // get flight
             if (targetScope.flightSearchParams.Completeness < 100) {
 
