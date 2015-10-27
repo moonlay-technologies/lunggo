@@ -308,6 +308,7 @@
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaClientHandler.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetBookingStatus.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaGetTripDetails.cs" />
+    <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaIsIssued.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaRevalidateFare.cs" />
     <Compile Include="Flight\Wrapper\Sriwijaya\SriwijayaSearchFight.cs" />

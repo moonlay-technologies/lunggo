@@ -171,9 +171,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                             CabinClass = conditions.CabinClass,
                                             Rbd = Rbd,
                                             DepartureAirport = ParseFID2[Airport],
-                                            DepartureTime = DateTime.Parse(ParseFID2[Airport + 1]).ToUniversalTime(),
+                                            DepartureTime = DateTime.SpecifyKind(DateTime.Parse(ParseFID2[Airport + 1]),DateTimeKind.Utc),
                                             ArrivalAirport = ParseFID2[Airport + 2],
-                                            ArrivalTime = DateTime.Parse(ParseFID2[Airport + 3]).ToUniversalTime(),
+                                            ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(ParseFID2[Airport + 3]), DateTimeKind.Utc),
                                             OperatingAirlineCode = Acode,
                                             StopQuantity = 0,
                                             Duration = arrtime - deptime
@@ -220,7 +220,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         {
                                             Segments = segments,
                                             OriginAirport = conditions.Trips[0].OriginAirport,
-                                            DestinationAirport = conditions.Trips[0].DestinationAirport
+                                            DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                            DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                         }
                                     }
                                 };

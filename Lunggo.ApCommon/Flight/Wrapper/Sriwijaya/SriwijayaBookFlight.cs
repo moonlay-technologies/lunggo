@@ -16,64 +16,64 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
            
-            var sementara = new FlightBookingInfo
-            {
-                FareId = "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.1.1|2346000.0.3820089,3853792,1953189:X,T,Q:S:KNO:WGP:U2s5VlVrNUZXUT09",
-                ContactData = new ContactData
-                {
-                    Name = "Fani",
-                    Phone = "08172182371",
-                },
-                Passengers = new List<FlightPassenger>
-                {
-                    new FlightPassenger
-                    {
-                        FirstName = "Fani",
-                        LastName = "Abdullah",
-                        DateOfBirth = new DateTime(1976,4,3),
-                        Gender = Gender.Male,
-                        Title = Title.Mister,
-                        PassportNumber = "9320183092141",
-                        Type = PassengerType.Adult
-                    },
-                    //new FlightPassenger
-                    //{
-                    //    FirstName = "Nina",
-                    //    LastName = "Luthvia",
-                    //    DateOfBirth = new DateTime(1980,7,5).Date,
-                    //    Gender = Gender.Female,
-                    //    Title = Title.Miss,
-                    //    PassportNumber = "9310182091131",
-                    //    Type = PassengerType.Adult
-                    //},
-                    new FlightPassenger
-                    {
-                        FirstName = "Habibi",
-                        LastName = "",
-                        DateOfBirth = new DateTime(2005,11,7).Date,
-                        Gender = Gender.Male,
-                        Title = Title.Mister,
-                        Type = PassengerType.Child
-                    },
-                    //new FlightPassenger
-                    //{
-                    //    FirstName = "Dhimas",
-                    //    LastName = "Alvian",
-                    //    DateOfBirth = new DateTime(2015,2,1).Date,
-                    //    Gender = Gender.Male,
-                    //    Type = PassengerType.Infant
-                    //},
-                    new FlightPassenger
-                    {
-                        FirstName = "Shinta",
-                        LastName = "Julia",
-                        DateOfBirth = new DateTime(2014,12,19).Date,
-                        Gender = Gender.Female,
-                        Type = PassengerType.Infant
-                    }
-                }
-            };
-            return Client.BookFlight(sementara);
+            //var sementara = new FlightBookingInfo
+            //{
+            //    FareId = "SJ.017.SJ.272.IN.9662.KNO.WGP?2015-11-11|1.1.1|2346000.0.3820089,3853792,1953189:X,T,Q:S:KNO:WGP:U2s5VlVrNUZXUT09",
+            //    ContactData = new ContactData
+            //    {
+            //        Name = "Fani",
+            //        Phone = "08172182371",
+            //    },
+            //    Passengers = new List<FlightPassenger>
+            //    {
+            //        new FlightPassenger
+            //        {
+            //            FirstName = "Fani",
+            //            LastName = "Abdullah",
+            //            DateOfBirth = new DateTime(1976,4,3),
+            //            Gender = Gender.Male,
+            //            Title = Title.Mister,
+            //            PassportNumber = "9320183092141",
+            //            Type = PassengerType.Adult
+            //        },
+            //        //new FlightPassenger
+            //        //{
+            //        //    FirstName = "Nina",
+            //        //    LastName = "Luthvia",
+            //        //    DateOfBirth = new DateTime(1980,7,5).Date,
+            //        //    Gender = Gender.Female,
+            //        //    Title = Title.Miss,
+            //        //    PassportNumber = "9310182091131",
+            //        //    Type = PassengerType.Adult
+            //        //},
+            //        new FlightPassenger
+            //        {
+            //            FirstName = "Habibi",
+            //            LastName = "",
+            //            DateOfBirth = new DateTime(2005,11,7).Date,
+            //            Gender = Gender.Male,
+            //            Title = Title.Mister,
+            //            Type = PassengerType.Child
+            //        },
+            //        //new FlightPassenger
+            //        //{
+            //        //    FirstName = "Dhimas",
+            //        //    LastName = "Alvian",
+            //        //    DateOfBirth = new DateTime(2015,2,1).Date,
+            //        //    Gender = Gender.Male,
+            //        //    Type = PassengerType.Infant
+            //        //},
+            //        new FlightPassenger
+            //        {
+            //            FirstName = "Shinta",
+            //            LastName = "Julia",
+            //            DateOfBirth = new DateTime(2014,12,19).Date,
+            //            Gender = Gender.Female,
+            //            Type = PassengerType.Infant
+            //        }
+            //    }
+            //};
+            return Client.BookFlight(bookInfo);
         }
 
         private partial class SriwijayaClientHandler
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var FID = ParseFare[(ParseFare.Count() - 1)];
 
 
-                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpang;
+                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpang, bookingParams;
                 decimal harga;
                 var ParseFID1 = FID.Split(',').ToList();
                 DateTime tglBerangkat;
@@ -119,6 +119,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw);
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+
+                    bookingParams =
+                        "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "%3AU2s5VlVrNUZXUT09" +
+                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "%3AU2s5VlVrNUZXUT09";
+
                 }
                 else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
                 {
@@ -146,10 +153,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+
+                    bookingParams =
+                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
                 }
                 else if (ParseFID1.Count == 1)
                 {
-                    FIDsegment1 = ParseFID1[1];
+                    FIDsegment1 = ParseFID1[0];
                     FIDsegment2 = null;
                     FIDsegment3 = null;
                     var titikIndex1 = FID.IndexOf(":");
@@ -172,6 +184,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+
+                    bookingParams =
+                        "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "%3AU2s5VlVrNUZXUT09";
+
                 }
                 else
                 {
@@ -226,10 +243,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 client.AutoRedirect = false;
                 //client.Expect100Continue = false;
 
-                var bookingParams =
-                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
+                
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PassengerType.Adult))
                 {
@@ -330,7 +344,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var timelimit = tunjukTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
                     var timelimitParse = timelimit.Substring(3).Split(' ');
                     var status = new BookingStatusInfo();
-                    //status.BookingId = kodeBook;
+                    
+                    status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
                     status.TimeLimit = DateTime.Parse(timelimitParse[0]+ "-" + timelimitParse[1] + "-" + timelimitParse[2]+" "+ timelimitParse[3]);
                 

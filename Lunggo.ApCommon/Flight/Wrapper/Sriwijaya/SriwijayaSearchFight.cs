@@ -293,10 +293,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         DateTime arrivalDate = DateTime.Parse(jadwalParse1[5].Substring(ArrTimeIndex + 1));
                                         var coba = departureDate.ToString("dd/MM/yyyy");
                                         var coba1 = arrivalDate.ToString("dd/MM/yyyy");
-                                        string format = "dd/MM/yyyy hh.mm.ss";
+                                        string format = "dd/MM/yyyy hh.mm.ss tt";
                                         CultureInfo provider = CultureInfo.InvariantCulture;
-                                        var departureTime = DateTime.ParseExact(coba + " " + jadwalParse1[1], format, provider);
-                                        var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6], format, provider);
+                                        var departureTime = DateTime.ParseExact(coba + " " + jadwalParse1[1]+ " " + jadwalParse1[2], format, provider);
+                                        var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6] + " " + jadwalParse1[7], format, provider);
                                         var deptime = departureTime.AddHours(-(dict.GetAirportTimeZone(bandara1)));
                                         var arrtime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(bandara2)));
                                         tampungPesawat.Add(codeParse1[0] +"."+ codeParse1[1]);
@@ -376,7 +376,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             Itineraries = new List<FlightItinerary>(),
                                             IsSuccess = true
                                         };
-
                                 }
                                 #endregion
                                 break;
@@ -398,8 +397,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                                         if ((ParseFID1B.Count > 1) && (ParseFID1B.Count <= 3))
                                         {
-                                            FIDsegmentBis1 = ParseFID1[0];
-                                            FIDsegmentBis2 = ParseFID1[1].Substring(0, (ParseFID1[1].Length - 2));
+                                            FIDsegmentBis1 = ParseFID1B[0];
+                                            FIDsegmentBis2 = ParseFID1B[1].Substring(0, (ParseFID1B[1].Length - 2));
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -409,9 +408,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                         if ((ParseFID1B.Count > 3) && (ParseFID1B.Count <= 5))
                                         {
-                                            FIDsegmentBis1 = ParseFID1[0];
-                                            FIDsegmentBis2 = ParseFID1[1];
-                                            FIDsegmentBis3 = ParseFID1[2].Substring(0, (ParseFID1[2].Length - 2));
+                                            FIDsegmentBis1 = ParseFID1B[0];
+                                            FIDsegmentBis2 = ParseFID1B[1];
+                                            FIDsegmentBis3 = ParseFID1B[2].Substring(0, (ParseFID1B[2].Length - 2));
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -420,7 +419,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         }
                                         if (ParseFID1B.Count == 1)
                                         {
-                                            FIDsegmentBis1 = ParseFID1[0];
+                                            FIDsegmentBis1 = ParseFID1B[0];
                                             var rbdIndex1 = FIDB.IndexOf(":");
                                             var rbdIndex11 = FIDB.Substring(rbdIndex1 + 1);
                                             var rbdIndex2 = rbdIndex11.IndexOf(":");
@@ -489,15 +488,42 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             var bandaraRaw = ambilBandara.Select(x => x.Cq().Text()).FirstOrDefault();
                                             var bandaraParse1 = bandaraRaw.Split(' ').ToList();
 
-                                            var bandara1Index1 = bandaraParse1[0].IndexOf("(");
-                                            var bandara1Index11 = bandaraParse1[0].Substring(bandara1Index1 + 1);
-                                            var bandara1Index2 = bandara1Index11.IndexOf(")");
-                                            var bandara1 = bandaraParse1[0].Substring(bandara1Index1 + 1, (bandara1Index2));
+                                            string bandara1Index11, bandara1;
+                                            int bandara1Index1, bandara1Index2;
+                                            if (bandaraParse1[0].IndexOf("(") == -1)
+                                            {
+                                                bandara1Index1 = bandaraParse1[1].IndexOf("(");
+                                                bandara1Index11 = bandaraParse1[1].Substring(bandara1Index1 + 1);
+                                                bandara1Index2 = bandara1Index11.IndexOf(")");
+                                                bandara1 = bandaraParse1[1].Substring(bandara1Index1 + 1, (bandara1Index2));
+                                            }
+                                            else
+                                            {
+                                                bandara1Index1 = bandaraParse1[0].IndexOf("(");
+                                                bandara1Index11 = bandaraParse1[0].Substring(bandara1Index1 + 1);
+                                                bandara1Index2 = bandara1Index11.IndexOf(")");
+                                                bandara1 = bandaraParse1[0].Substring(bandara1Index1 + 1, (bandara1Index2));
+                                            }
 
-                                            var bandara2Index1 = bandaraParse1[2].IndexOf("(");
-                                            var bandara2Index11 = bandaraParse1[2].Substring(bandara2Index1 + 1);
-                                            var bandara2Index2 = bandara2Index11.IndexOf(")");
-                                            var bandara2 = bandaraParse1[2].Substring(bandara2Index1 + 1, (bandara2Index2));
+
+                                            string bandara2Index11, bandara2;
+                                            int bandara2Index1, bandara2Index2;
+
+                                            if (bandaraParse1[2].IndexOf("(") == -1)
+                                            {
+                                                bandara2Index1 = bandaraParse1[3].IndexOf("(");
+                                                bandara2Index11 = bandaraParse1[3].Substring(bandara2Index1 + 1);
+                                                bandara2Index2 = bandara2Index11.IndexOf(")");
+                                                bandara2 = bandaraParse1[3].Substring(bandara2Index1 + 1, (bandara2Index2));
+                                            }
+                                            else
+                                            {
+                                                bandara2Index1 = bandaraParse1[2].IndexOf("(");
+                                                bandara2Index11 = bandaraParse1[2].Substring(bandara2Index1 + 1);
+                                                bandara2Index2 = bandara2Index11.IndexOf(")");
+                                                bandara2 = bandaraParse1[2].Substring(bandara2Index1 + 1, (bandara2Index2));
+                                            }
+
 
                                             var dict = DictionaryService.GetInstance();
                                             var ambilJadwal = isiData.MakeRoot()["dd:nth-child(" + ((1 + (3 * code)) + 2) + ")"];
@@ -505,11 +531,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             var jadwalParse1 = jadwalRaw.Split(' ').ToList();
                                             var DeptTimeIndex = jadwalParse1[0].IndexOf('\t');
                                             var ArrTimeIndex = jadwalParse1[5].IndexOf('\t');
-                                            var departureTime = DateTime.Parse(jadwalParse1[0].Substring(DeptTimeIndex + 1));
-                                            var arrivalTime = DateTime.Parse(jadwalParse1[5].Substring(ArrTimeIndex + 1));
-                                            var arrtime = departureTime.AddHours(-(dict.GetAirportTimeZone(bandara1)));
-                                            var deptime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(bandara2)));
-                                            tampungPesawat.Add(codeParse1[0] + codeParse1[1]);
+                                            DateTime departureDate = DateTime.Parse(jadwalParse1[0].Substring(DeptTimeIndex + 1));
+                                            DateTime arrivalDate = DateTime.Parse(jadwalParse1[5].Substring(ArrTimeIndex + 1));
+                                            var coba = departureDate.ToString("dd/MM/yyyy");
+                                            var coba1 = arrivalDate.ToString("dd/MM/yyyy");
+                                            string format = "dd/MM/yyyy hh.mm.ss tt";
+                                            CultureInfo provider = CultureInfo.InvariantCulture;
+                                            var departureTime = DateTime.ParseExact(coba + " " + jadwalParse1[1] + " " + jadwalParse1[2], format, provider);
+                                            var arrivalTime = DateTime.ParseExact(coba1 + " " + jadwalParse1[6] + " " + jadwalParse1[7], format, provider);
+                                            var deptime = departureTime.AddHours(-(dict.GetAirportTimeZone(bandara1)));
+                                            var arrtime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(bandara2)));
+                                            tampungPesawat.Add(codeParse1[0] + "." + codeParse1[1]);
                                             tampungPesawatString = string.Join(".", tampungPesawat.ToArray());
                                             segments.Add(new FlightSegment
                                             {
@@ -568,14 +600,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                             SupplierPrice = decimal.Parse(harga[1]),
                                             FareId = prefix + FIDB,
                                             Trips = new List<FlightTrip>
-                                    {
-                                       new FlightTrip()
-                                       {
-                                           Segments = segments,
-                                           OriginAirport = conditions.Trips[0].OriginAirport,
-                                           DestinationAirport = conditions.Trips[0].DestinationAirport
-                                       }
-                                    }
+                                            {
+                                               new FlightTrip()
+                                               {
+                                                   Segments = segments,
+                                                   OriginAirport = conditions.Trips[0].OriginAirport,
+                                                   DestinationAirport = conditions.Trips[0].DestinationAirport
+                                               }
+                                            }
                                         };
                                         itins.Add(itin);
                                         hasil.IsSuccess = true;
@@ -587,17 +619,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                                 Itineraries = new List<FlightItinerary>(),
                                                 IsSuccess = true
                                             };
-    
                                     }
                                 }
                                 #endregion
                                 break;
                         }
                     }
+                    Client.LogoutSession(client);
                     return hasil;
                 }
                 catch
-                {
+                {   
+                    Client.LogoutSession(client);
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

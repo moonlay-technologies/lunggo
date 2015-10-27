@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
              string FIDsegment3;
              string ognAirport;
              string arrAirport;
-             string penumpang;
+             var penumpang = new List<string>();
              decimal harga;
 
              DateTime tglBerangkat;
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                  var indexPenumpang1 = Fare.IndexOf('|');
                  var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                 penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                 penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
                  var indextglBerangkat = Fare.IndexOf('?');
                  var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                  var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                     var indexPenumpang1 = Fare.IndexOf('|');
                     var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
                     var indextglBerangkat = Fare.IndexOf('?');
                     var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1-1 - indextglBerangkat));
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw);
@@ -113,7 +113,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                         var indexPenumpang1 = Fare.IndexOf('|');
                         var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                        penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                        penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
                         var indextglBerangkat = Fare.IndexOf('?');
                         var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                         tglBerangkat = DateTime.Parse(tglBerangkatRaw, CultureInfo.CreateSpecificCulture("id-ID"));
@@ -157,8 +157,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  "&ruteTujuan=" + arrAirport +
                  "&tanggalBerangkat=" + tglBerangkat.ToString("dd-MMM-yyyy") +
                  "&ADT=" + penumpang[0] +
-                 "&CHD=0" + penumpang[2] +
-                 "&INF=0" + penumpang[4] +
+                 "&CHD=0" + penumpang[1] +
+                 "&INF=0" + penumpang[2] +
                  "&Submit=Search" +
                  "&action=booking" +
                  "&2210150413=2210150413";
@@ -257,9 +257,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                      var itin = new FlightItinerary
                      {
-                         AdultCount = penumpang[0],
-                         ChildCount = penumpang[2],
-                         InfantCount = penumpang[4],
+                         AdultCount = int.Parse(penumpang[0]),
+                         ChildCount = int.Parse(penumpang[1]),
+                         InfantCount = int.Parse(penumpang[2]),
                          CanHold = true,
                          FareType = FareType.Published,
                          RequireBirthDate = true,
@@ -391,9 +391,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                      var itin = new FlightItinerary
                      {
-                         AdultCount = penumpang[0],
-                         ChildCount = penumpang[1],
-                         InfantCount = penumpang[2],
+                         AdultCount = int.Parse(penumpang[0]),
+                         ChildCount = int.Parse(penumpang[1]),
+                         InfantCount = int.Parse(penumpang[2]),
                          CanHold = true,
                          FareType = FareType.Published,
                          RequireBirthDate = true,
@@ -518,9 +518,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                      var itin = new FlightItinerary
                      {
-                         AdultCount = penumpang[0],
-                         ChildCount = penumpang[1],
-                         InfantCount = penumpang[2],
+                         AdultCount = int.Parse(penumpang[0]),
+                         ChildCount = int.Parse(penumpang[1]),
+                         InfantCount = int.Parse(penumpang[2]),
                          CanHold = true,
                          FareType = FareType.Published,
                          RequireBirthDate = true,
