@@ -333,7 +333,7 @@ app.controller('singleFlightController', [
                     }
                 }
             }).error(function (returnData) {
-                $scope.departureFlightConfig.validatingFlight = false;
+                $scope.revalidateFlightParam.validatingFlight = false;
                 console.log('ERROR Validating Flight');
                 console.log(returnData);
                 console.log('--------------------');
