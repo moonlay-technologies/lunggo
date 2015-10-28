@@ -1567,6 +1567,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       text-align: left;
       padding-left: 15px; }
 
+.page-flight .search-result {
+  min-height: 500px; }
+
 .page-flight .flight {
   border: 1px solid #ccc;
   -webkit-border-radius: 4px;
@@ -3832,3 +3835,66 @@ file : /Assets/travorama20/css/_page_password.scss
       padding: 6px; }
     .page-account-profile .order-detail .passenger-list li .row div + div {
       background: #e2e2e2; }
+
+.page-static .site-content {
+  padding: 24px 0; }
+
+.page-faq .question-wrapper > ol {
+  list-style: none;
+  counter-reset: main-number; }
+  .page-faq .question-wrapper > ol > li {
+    position: relative; }
+    .page-faq .question-wrapper > ol > li > header {
+      padding-left: 40px; }
+      .page-faq .question-wrapper > ol > li > header h2 {
+        color: #1daee4;
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: bold; }
+        .page-faq .question-wrapper > ol > li > header h2 span {
+          font-size: 14px;
+          text-decoration: underline; }
+    .page-faq .question-wrapper > ol > li:before, .page-faq .page-index .question-wrapper > ol > li.section-reason:after, .page-index .page-faq .question-wrapper > ol > li.section-reason:after {
+      content: counter(main-number);
+      counter-increment: main-number;
+      background: #ffd632;
+      color: #4f3500;
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      padding-top: 5px; }
+    .page-faq .question-wrapper > ol > li > ol {
+      list-style: none;
+      counter-reset: sub-number; }
+      .page-faq .question-wrapper > ol > li > ol > li {
+        position: relative;
+        background: #fff;
+        padding: 12px;
+        border: 1px solid #ccc;
+        padding-left: 42px;
+        cursor: pointer; }
+        .page-faq .question-wrapper > ol > li > ol > li:before, .page-faq .page-index .question-wrapper > ol > li > ol > li.section-reason:after, .page-index .page-faq .question-wrapper > ol > li > ol > li.section-reason:after {
+          content: counter(main-number) "." counter(sub-number);
+          counter-increment: sub-number;
+          position: absolute;
+          top: 12px;
+          left: 12px; }
+        .page-faq .question-wrapper > ol > li > ol > li > header {
+          color: #1daee4; }
+          .page-faq .question-wrapper > ol > li > ol > li > header > h3 {
+            margin: 0;
+            font-size: 17px; }
+        .page-faq .question-wrapper > ol > li > ol > li > section {
+          height: 0;
+          overflow: hidden; }
+        .page-faq .question-wrapper > ol > li > ol > li.active > header {
+          margin-bottom: 12px; }
+        .page-faq .question-wrapper > ol > li > ol > li.active > section {
+          display: block;
+          height: auto; }

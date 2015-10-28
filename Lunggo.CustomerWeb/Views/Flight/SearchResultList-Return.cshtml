@@ -101,7 +101,9 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Completeness : 0
+                Requests: [1,2,3],
+                Completed: [],
+                Progress: 0
             },
             returnFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -110,7 +112,9 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Completeness : 0
+                Requests: [1,2,3],
+                Completed: [],
+                Progress: 0
             }
         };
     </script>
@@ -255,9 +259,9 @@
             <b>Mencari Penerbangan...</b>
             <div class="progress-wrapper">
 
-                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2 | number:0 }}%;">
+                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2 | number:0 }}%;">
                     <div class="plane">
-                        <span>{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2 }} %</span>
+                        <span>{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2  | number:0}} %</span>
                     </div>
                 </div>
 

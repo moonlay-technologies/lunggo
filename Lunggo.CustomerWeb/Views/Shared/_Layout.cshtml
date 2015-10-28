@@ -1,230 +1,79 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta id="viewport" name="viewport" content="width=1200, initial-scale=1">
     <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
 
-    <title>Travorama</title>
+    @{ Html.RenderPartial("_openGraph"); }
+
+    <title>@ViewBag.Title</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/Assets/css/jquery.range.css"/>
+    <!-- <link rel="stylesheet" href="/Assets/css/bootstrap.min.css"> -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/assets/css/application.css">
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    <link rel="stylesheet" href="/Assets/travorama20/css/travorama20.css">
 
 </head>
-<body ng-app="travorama" class="page">
+<body class="@ViewBag.BodyClass">
+    @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
-        <!-- site header start -->
-        <header id="site-header" class="site-header" data-activeTab="hotel">
-            <div class="search-switch-button flight">
-                <img src="/Assets/images/search-form-switch-flight.png" alt="Search for Flights" />
-            </div><!-- .search-switch-button -->
-            @{ Html.RenderPartial("_Mainmenu"); }
-            <div class="header-form-wrapper">
-                <section class="header-form">
-                    <section class="hotel-form">
-                        <section class="search">
-                            <section class="search-hotel">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm-12">
+    <!--********************-->
+    @Html.Partial("/Views/Shared/travorama20/_SiteHeader.cshtml")
 
-                                            <form action="/UW100/UW100HotelSearch" method="GET" class="form-inline search-hotel-form">
-                                                <div class="form-group">
-                                                    <span class="fa fa-building	"></span> <input type="text" class="form-control input-location" placeholder="Start here. Enter Hotel Location">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control input-checkin select-date" placeholder="checkin">
-                                                </div>
-                                                <div class="form-group">
-                                                    <span class="form-dash">-</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control input-checkout select-date" placeholder="checkout">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control input-room select-room" placeholder="room">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input class="hidden search-hotel-value location" name="LocationId" />
-                                                    <input class="hidden search-hotel-value staydate" name="StayDate" />
-                                                    <input class="hidden search-hotel-value staylength" name="StayLength" />
-                                                    <input class="hidden search-hotel-value roomcount" name="RoomCount" />
-                                                    <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                                </div>
-                                            </form>
+    <!--********************-->
+    <section class="site-content">
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </section><!-- .search-hotel -->
-                        </section>
-                    </section><!-- .hotel-form -->
-                    <section class="flight-form">
-                        <section class="search">
-                            <section class="search-flight">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm-12">
+        @RenderBody()
 
-                                            <form action="/id/Flight/SearchListOneway" method="GET" class="form-inline search-flight-form">
-                                                <div class="form-group loc-auto-wrapper">
-                                                    <span class="fa fa-plane"></span> <input type="text" class="form-control airport-autocomplete-input flight-origin" placeholder="Start here" data-airport-for="Ori">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control airport-autocomplete-input flight-destination" placeholder="Enter your destination" data-airport-for="Dest" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control flight-date select-date" placeholder="flight date">
-                                                </div>
-                                                <div class="form-group">
-                                                    <span class="form-dash">-</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control flight-return-date select-date" placeholder="return date">
-                                                    <label for="return-flight" id="return-flight-label"><input type="checkbox" id="return-flight" checked /> Pulang Pergi</label>
-                                                </div>
-                                                <div class="form-group flight-passenger form-control">
-                                                    <label class="adult-passenger"><span>A</span> <input type="text" name="Adult" class="" value="1" maxlength="1" /></label>
-                                                    <label class="child-passenger"><span>C</span> <input type="text" name="Child" class="" value="0" maxlength="1" /></label>
-                                                    <label class="infant-passenger"><span>I</span> <input type="text" name="Infant" class="" value="0" maxlength="1" /></label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="hidden flight-form-value" id="flight-origin" name="Ori" />
-                                                    <input type="text" class="hidden flight-form-value" id="flight-destination" name="Dest" />
-                                                    <input type="text" class="hidden flight-form-value" id="flight-date" name="Date" />
-                                                    <input type="text" class="hidden flight-form-value" id="flight-return-date" name="ReturnDate" />
-                                                    <input type="text" class="hidden flight-form-value" id="flight-type" name="Type" value="RET" />
-                                                    <button class="btn btn-primary btn-yellow">SEARCH</button>
-                                                </div>
-                                            </form>
+    </section><!-- .site-content -->
+    <!--********************-->
+    <!-- footer group start -->
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooterMenu.cshtml")
+    @Html.Partial("/Views/Shared/travorama20/_SiteFooter.cshtml")
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </section><!-- .search-hotel -->
-                        </section>
-                    </section><!-- .flight-form -->
-                </section><!-- .header-form -->
-            </div><!-- .header-form-wrapper -->
-        </header>
-        <!-- site header end -->
-        <!-- site content start -->
-        <div id="site-content" class="site-content">
-
-            @RenderBody()
-
-        </div>
-        <!-- site content end -->
-        <!-- site footer start -->
-        <footer id="site-footer" class="site-footer">
-            <section class="footer-menu">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-6">
-
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Tentang Kami</h4>
-                                    <ul>
-                                        <li><a href="#">Sejarah</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li><a href="#">Syarat &amp; Ketentuan</a></li>
-                                        <li><a href="#">Kebijakan &amp; privasi</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <h4>Penawaran</h4>
-                                    <ul>
-                                        <li><a href="#">Hotel</a></li>
-                                        <li><a href="#">Mitra Kami</a></li>
-                                        <li><a href="#">Program Perjalanan</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <h4>Kontak</h4>
-                                    <ul>
-                                        <li><a href="#">Lokasi</a></li>
-                                        <li><a href="#">Email</a></li>
-                                        <li><a href="#">Social Media</a></li>
-                                        <li><a href="#">Maps</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-5 col-sm-offset-1">
-                            <h4>Subscribe Email</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur odit fugit, harum, voluptas distinctio ratione enim ipsum.</p>
-                            <form action="#" class="form subscribe-form">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Email address" class="form-control no-radius">
-                                </div>
-                                <div class="form-group text-right">
-                                    <button class="btn btn-primary no-radius">SUBSCRIBE</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-            <section class="footer-copyright">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-sm-12">
-
-                            <div class="text-center footer-socialmedia">
-                                <a href="#" class="fa fa-instagram"></a>
-                                <a href="#" class="fa fa-facebook"></a>
-                                <a href="#" class="fa fa-pinterest"></a>
-                                <a href="#" class="fa fa-youtube"></a>
-                            </div>
-                            <p class="text-center">
-                                Copyright 2014 - Travelmadezy. All Rights Reserved.
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-        </footer>
-        <!-- site footer end -->
-
-    <!-- javascripts -->
-    <script src="/assets/js/jquery.min.js"></script>
-    
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
-    <script src="/Assets/js/jquery.range-min.js"></script>
-
-    <script src="/Assets/js/jquery.pickmeup.min.js"></script>
-    <script src="/assets/js/jquery.pickmeup.twitter-bootstrap.min.js"></script>
-    
-    @if (IsSectionDefined("AdditionalPageJavascript"))
-    {
-        @RenderSection("AdditionalPageJavascript");
-    }
-    
+    <!--********************-->
+    <!-- Javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/travorama20/js/bootstrap.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
     <script src="/Config/JsConfig.js"></script>
-    <script src="/assets/js/application.js"></script>
-    
-    @if (IsSectionDefined("PageJavascript"))
+
+    @if (IsSectionDefined("AdditionalJS"))
     {
-        @RenderSection("PageJavascript");
+        @RenderSection("AdditionalJS");
     }
+
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width; //get proper width
+                var mw = 1000; // min width of site
+                var ratio = ww / mw; //calculate ratio
+                if (ww < mw) { //smaller than minimum size
+                    $('#viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+                } else { //regular size
+                    $('#viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>

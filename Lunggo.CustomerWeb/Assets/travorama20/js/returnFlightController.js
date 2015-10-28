@@ -511,55 +511,56 @@ app.controller('returnFlightController', [
                 targetScope = $scope.returnFlightConfig;
             }
 
+            targetScope.loading = true;
+            targetScope.loadingFlight = true;
+
             // get flight
-            if (targetScope.flightSearchParams.Completeness < 100) {
+            console.log('Getting flight for '+targetScope.name+' : '+targetScope.flightSearchParams.Requests);
 
-                 $http.get(FlightSearchConfig.Url, {
-                    params: {
-                        request : targetScope.flightSearchParams
-                    }
-                }).success(function(returnData) {
+            $http.get(FlightSearchConfig.Url, {
+                params: {
+                    request : targetScope.flightSearchParams
+                }
+            }).success(function(returnData) {
                     
-                    console.log(targetScope.name+'completeness : ' +targetScope.flightSearchParams.Completeness + ' & '+targetScope.name+' completeness : ' +returnData.Completeness);
+                targetScope.flightSearchParams.SearchId = returnData.SearchId;
+                targetScope.searchId = returnData.SearchId;
 
-                    targetScope.flightSearchParams.SearchId = returnData.SearchId;
-                    targetScope.searchId = returnData.SearchId;
+                // -----
 
-                    if (targetScope.flightSearchParams.Completeness == returnData.Completeness) {
-                         setTimeout(function() {
-                             $scope.getFlight(targetScope.targetFlight);
-                         }, 1000);
-                    } else {
-                         targetScope.flightSearchParams.Completeness = returnData.Completeness;
+                    if (targetScope.flightSearchParams.Completed.length < returnData.MaxRequest) {
 
-                        console.log('Success getting '+targetScope.name+' flight list');
-                        console.log(returnData);
-
-                        // pass data if FlightList.length != 0
+                        // if flight list not empty
                         if (returnData.FlightList.length) {
+                            // update flight list
                             $scope.arrangeFlightData(targetScope, returnData.FlightList);
+                            // update Request
+                            for (var i = 0; i < returnData.GrantedRequests.length; i++) {
+                                targetScope.flightSearchParams.Completed.push(returnData.GrantedRequests[i]);
+                                targetScope.flightSearchParams.Requests = targetScope.flightSearchParams.Requests.splice((targetScope.flightSearchParams.Requests.indexOf(i)), 1);
+                            }
+
                         }
 
-                        if (returnData.Completeness == 100) {
-                            targetScope.loading = false;
-                            targetScope.loadingFlight = false;
-                            console.log('Finished getting ' + targetScope.name + ' flight list');
-                            console.log('----------');
-                        } else {
-                            setTimeout(function() {
-                                $scope.getFlight(targetScope.name);
-                            }, 1000);
-                        }
+                        setTimeout(function () {
+                            $scope.getFlight(targetScope.name);
+                        }, 1000);
+
+                    } else {
+                        targetScope.loading = false;
+                        targetScope.loadingFlight = false;
+                        console.log('Finished getting ' + targetScope.name + ' flight list');
+                        console.log('----------');
                     }
-                 }).error(function(returnData) {
-                    console.log('Failed to get '+targetScope.name+' flight list');
-                    console.log('ERROR :' +returnData);
-                });
 
-            } else {
-                targetScope.loading = false;
-                targetScope.loadingFlight = false;
-            }
+                // -----
+                    
+                }).error(function(returnData) {
+                console.log('Failed to get '+targetScope.name+' flight list');
+                console.log('ERROR :' +returnData);
+            });
+
+            
 
         }
 

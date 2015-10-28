@@ -192,6 +192,9 @@ file: /Assets/travorama20/css/_page_flight.scss
         }
     }
     // *****
+    // search result
+    .search-result {min-height:500px;}
+    // *****
     // flight
     .flight {border:$border-default; @include border-radius($border-radius-default); color:#525252; background:#fff; margin-bottom:15px; position:relative;
         // if active
