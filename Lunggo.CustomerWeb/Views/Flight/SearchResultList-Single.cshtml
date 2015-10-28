@@ -99,7 +99,8 @@
                 infant: @data.InfantCount,
             },
             type: '@data.TripType',
-            trips: @Html.Raw(JsonConvert.SerializeObject(trips))
+            trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
+            Requests:[1,2,3]
         };
     </script>
     <!-- angular controller -->
@@ -239,9 +240,9 @@
                 <b>Mencari Penerbangan...</b>
                 <div class="progress-wrapper">
 
-                    <div class="progress-bar" style="width:{{flightRequest.Completeness}}%;">
+                    <div class="progress-bar" style="width:{{flightRequest.Progress}}%;">
                         <div class="plane">
-                            <span>{{flightRequest.Completeness}} %</span>
+                            <span>{{flightRequest.Progress | number:0}} %</span>
                         </div>
                     </div>
 

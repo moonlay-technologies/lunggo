@@ -2,3 +2,39 @@
 .page-static {
     .site-content {padding:24px 0;}
 }
+
+
+// page questions
+.page-faq {
+
+    .question-wrapper {
+        &>ol {list-style:none; counter-reset:main-number;
+            &>li {position:relative;
+                > header {padding-left:40px;
+                    h2 {color:$color-main-blue; font-size:18px; line-height:30px; font-weight:bold;
+                        span {font-size:14px; text-decoration:underline;}
+                    }
+                }
+                &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:5px;}
+                &>ol {list-style:none; counter-reset:sub-number;
+                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px; cursor:pointer;
+                        &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
+                        > header {color:$color-main-blue; 
+                            > h3 {margin:0; font-size:17px;
+                                span {}
+                            }
+                        }
+                        > section {height:0; overflow:hidden;}
+                        > section {}
+                        // if active
+                        &.active {
+                            > header {margin-bottom:12px;}
+                            > section {display:block; height:auto;}
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
