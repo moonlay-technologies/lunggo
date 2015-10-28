@@ -30,9 +30,16 @@ namespace Lunggo.ApCommon.Flight.Service
             var searchId = EncodeConditions(input.Conditions);
 
             var searchedItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
+            var searchedSuppliers = searchedItins.Keys.ToList();
+            var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
+            foreach (var missingSupplier in missingSuppliers)
+            {
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawler" + missingSupplier);
+                queue.AddMessage(new CloudQueueMessage(searchId));
+            }
+
             var itinsForDisplay = searchedItins.SelectMany(dict => dict.Value).Select(ConvertToItineraryForDisplay).ToList();
             itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
-            var searchedSuppliers = searchedItins.Keys.ToList();
 
             output.IsSuccess = true;
             output.SearchId = searchId;

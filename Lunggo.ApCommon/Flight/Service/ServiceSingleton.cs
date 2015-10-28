@@ -88,7 +88,8 @@ namespace Lunggo.ApCommon.Flight.Service
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                     itin.RegisterNumber = counter++;
                 }
-                SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), completeness, supplierIndex);
+                var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+                SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
             }
         }
 
