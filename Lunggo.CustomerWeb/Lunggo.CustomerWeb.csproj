@@ -262,6 +262,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Travorama20Controller.cs" />
@@ -2355,6 +2356,10 @@
     <Content Include="Views\Shared\travorama20\_SectionUserMenu.cshtml" />
     <Content Include="Views\Travorama20\orderDetail.cshtml" />
     <Content Include="Views\Travorama20\orderList.cshtml" />
+    <Content Include="Views\StaticPage\Question.cshtml" />
+    <Content Include="Views\StaticPage\Terms.cshtml" />
+    <Content Include="Views\StaticPage\HowToOrder.cshtml" />
+    <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
