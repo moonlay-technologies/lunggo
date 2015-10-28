@@ -158,6 +158,22 @@ namespace Lunggo.ApCommon.Flight.Service
             }
         }
 
+        public Dictionary<int, List<FlightItinerary>> GetSearchedSupplierItineraries(string searchId, List<int> requestedSupplierIds)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var searchedSupplierItins = new Dictionary<int, List<FlightItinerary>>();
+            foreach (var supplierId in requestedSupplierIds)
+            {
+                var redisKey = "searchedFlightItineraries:" + searchId + ":" + supplierId;
+                var cacheObject = redisDb.StringGet(redisKey);
+                var isSearched = !cacheObject.IsNullOrEmpty;
+                if (isSearched)
+                    searchedSupplierItins.Add(supplierId, cacheObject.DeconvertTo<List<FlightItinerary>>());
+            }
+            return searchedSupplierItins;
+        }
+
         internal string SaveItineraryFromSearchToCache(string searchId, int registerNumber)
         {
             try
@@ -179,7 +195,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 return "";
             }
         }
-        internal FlightItinerary GetItineraryFromSearchCache(string searchId, int registerNumber)
+        internal FlightItinerary GetItineraryFromSearchCache(string searchId, string supplierId, int registerNumber)
         {
             var itins = GetSearchedItinerariesFromCache(searchId);
             return itins.Single(itin => itin.RegisterNumber == registerNumber);

@@ -29,25 +29,16 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new SearchFlightOutput();
             var searchId = EncodeConditions(input.Conditions);
 
-            var isCurrentlySearching = GetSearchingStatusInCache(searchId);
-            var completeness = GetSearchingCompletenessInCache(searchId);
-            if (!isCurrentlySearching && completeness == 0)
-            {
-                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
-                queue.AddMessage(new CloudQueueMessage(searchId));
-            }
-
-            var searchedItins = new List<FlightItinerary>();
-
-            if (completeness > input.Completeness) 
-                searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
+            var searchedItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
+            var itinsForDisplay = searchedItins.SelectMany(dict => dict.Value).Select(ConvertToItineraryForDisplay).ToList();
+            itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
+            var searchedSuppliers = searchedItins.Keys.ToList();
 
             output.IsSuccess = true;
-            output.Itineraries = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
             output.SearchId = searchId;
-            output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
             output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
-            output.Completeness = completeness;
+            output.Itineraries = itinsForDisplay;
+            output.SearchedSuppliers = searchedSuppliers;
 
             return output;
         }

@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public TripType TripType { get; set; }
-        public CabinClass RequestedCabinClass { get; set; }   
+        public CabinClass RequestedCabinClass { get; set; }
         public int RegisterNumber { get; set; }
     }
 }
