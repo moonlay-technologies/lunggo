@@ -86,7 +86,7 @@ app.controller('checkoutController', [
                         $scope.passengers[i].idNumber = '';
                     }
                     // birthdate
-                    $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '' + ('0' + $scope.passengers[i].birth.month).slice(-2) + '' + ('0' + $scope.passengers[i].birth.date).slice(-2);
+                    $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '-' + ('0' + $scope.passengers[i].birth.month).slice(-2) + '-' + ('0' + $scope.passengers[i].birth.date).slice(-2);
 
                     $scope.book.postData = $scope.book.postData + (',"Passengers['+i+'].Type": "'+$scope.passengers[i].type+'", "Passengers['+i+'].Title": "'+$scope.passengers[i].title+'", "Passengers['+i+'].FirstName":"'+$scope.passengers[i].firstname+'", "Passengers['+i+'].LastName": "'+$scope.passengers[i].lastname+'", "Passengers['+i+'].BirthDate":"'+$scope.passengers[i].birth.full+'", "Passengers['+i+'].PassportNumber":"'+$scope.passengers[i].passport.number+'", "Passengers['+i+'].PassportExpiryDate.Year":"'+$scope.passengers[i].passport.expire.year+'", "Passengers['+i+'].PassportExpiryDate.Month":"'+$scope.passengers[i].passport.expire.month+'","Passengers['+i+'].PassportExpiryDate.Date":"'+$scope.passengers[i].passport.expire.date+'", "Passengers['+i+'].idNumber":"'+$scope.passengers[i].idNumber+'", "Passengers['+i+'].Country":"'+$scope.passengers[i].passport.country+'"');
                 }
