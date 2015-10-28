@@ -35,17 +35,17 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.IsSuccess = true;
                 output.TotalSupplier = Suppliers.Count;
                 output.Itineraries = new List<FlightItineraryForDisplay>();
+                output.SearchedSuppliers = new List<int>();
                 output.SearchId = searchId;
             }
             else
             {
-
                 var searchedItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
                 var searchedSuppliers = searchedItins.Keys.ToList();
                 var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
                 foreach (var missingSupplier in missingSuppliers)
                 {
-                    var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawler" + missingSupplier);
+                    var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + missingSupplier);
                     queue.AddMessage(new CloudQueueMessage(searchId));
                 }
 

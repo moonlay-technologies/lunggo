@@ -75,6 +75,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = supplier.SearchFlight(conditions);
             if (result.IsSuccess)
             {
+                result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
                 var counter = 0;
                 foreach (var itin in result.Itineraries)
                 {
