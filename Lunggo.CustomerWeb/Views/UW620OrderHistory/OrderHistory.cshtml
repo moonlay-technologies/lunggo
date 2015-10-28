@@ -18,15 +18,15 @@
 
 @section PageJS{
     <script>
-        var langCode = 'en';
-        var userProfile = {
-            email: 'shintatamara@gmail.com',
-            firstname: 'Shinta',
-            lastname: 'Tamara',
-            phone: '08123456789',
-            country: 'Indonesia'
-        };
-    </script>
+    var langCode = 'en';
+    var userProfile = {
+        email: '@User.Identity.GetEmail()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: '@User.Identity.GetPhoneNumber()',
+        country: '@User.Identity.GetCountryCd()'
+    };
+</script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }

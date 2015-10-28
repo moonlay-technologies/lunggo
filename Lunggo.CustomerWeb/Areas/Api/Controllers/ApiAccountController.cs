@@ -94,6 +94,31 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> ChangeProfile(ChangeProfileViewModel model)
+        {
+            AccountResponseModel response = new AccountResponseModel();
+            if (!ModelState.IsValid)
+            {
+                response.Description = response.Status = "ModelInvalid";
+                return Json(response);
+            }
+            var updatedUser = User.Identity.GetCustomUser();
+            updatedUser.FirstName = model.FirstName;
+            updatedUser.LastName = model.LastName;
+            updatedUser.CountryCd = model.CountryCd;
+            updatedUser.PhoneNumber = model.PhoneNumber;
+            updatedUser.Address = model.Address;
+            var result = await UserManager.UpdateAsync(updatedUser);
+            if (result.Succeeded)
+            {
+                response.Description = response.Status = "Success";
+                return Json(response);
+            }
+            response.Description = response.Status = "UpdateFailed";
+            return Json(response);
+        }
+
+        [HttpPost]
         [AllowAnonymous]
         public async Task<JsonResult> ForgotPassword(ForgotPasswordViewModel model)
         {
