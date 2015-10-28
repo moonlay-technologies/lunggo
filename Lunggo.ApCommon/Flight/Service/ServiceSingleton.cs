@@ -133,7 +133,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return result;
         }
 
-        public OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
+        private OrderTicketResult OrderTicketInternal(string bookingId, bool canHold)
         {
             //var coba = SriwijayaWrapper.OrderTicket(null, true);
             var fareType = IdUtil.GetFareType(bookingId);

@@ -373,8 +373,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
                 
                 }
-
-                return hasil;
             }
         }
     }
