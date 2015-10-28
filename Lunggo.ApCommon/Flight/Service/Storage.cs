@@ -159,7 +159,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var redisKey = "searchedFlightItineraries:" + searchId + ":" + supplierId;
                 var cacheObject = redisDb.StringGet(redisKey);
-                var isSearched = !cacheObject.IsNullOrEmpty;
+                var isSearched = !cacheObject.IsNull;
                 if (isSearched)
                     searchedSupplierItins.Add(supplierId, cacheObject.DeconvertTo<List<FlightItinerary>>());
             }
