@@ -45,8 +45,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
                 foreach (var missingSupplier in missingSuppliers)
                 {
-                    var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + missingSupplier);
-                    queue.AddMessage(new CloudQueueMessage(searchId));
+                    var isNotSearching = GetSearchingStatusInCache(searchId, missingSupplier);
+                    if (isNotSearching)
+                    {
+                        var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl" + missingSupplier);
+                        queue.AddMessage(new CloudQueueMessage(searchId));
+                    }
                 }
 
                 var itinsForDisplay =

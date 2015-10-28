@@ -91,6 +91,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
                 var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
                 SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
+                var searchId = EncodeConditions(conditions);
+                InvalidateSearchingStatusInCache(searchId, supplierIndex);
             }
         }
 
