@@ -51,12 +51,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     origin = splitcoreFareId[11];
                     dest = splitcoreFareId[13];
                 }
-
                 
                 
-
+                
+                
                 // SEARCH
-                //Client.CreateSession(client);
+                Client.CreateSession(client);
                 var date2 = date.AddDays(1);
                 string searchURI = @"https://book.citilink.co.id/BookingListTravelAgent.aspx";
                 client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
@@ -101,7 +101,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 
                 client.UploadString(searchURI, searchParamaters);
                 
-              
+                
                 if (client.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                     return new BookFlightResult
                     {
@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-
+                
                 // SELECT
                 
                 string selectURI = @"https://book.citilink.co.id/ScheduleSelect.aspx";
@@ -156,7 +156,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&pageToken=";
                 
                 client.UploadString(selectURI, selectParameters);
-               
+                
                 if (client.ResponseUri.AbsolutePath != "/Passenger.aspx")
                     return new BookFlightResult
                     {
@@ -167,7 +167,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid }
                     };
-
+                
                 // INPUT DATA (TRAVELER)
                 
                 string passURI = @"https://book.citilink.co.id/Passenger.aspx";
@@ -330,7 +330,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         },
                         Errors = new List<FlightError> { FlightError.InvalidInputData }
                     };
-
+                
                 // SELECT HOLD (PAYMENT)
                 
                 string paymentURI = @"https://book.citilink.co.id/Payment.aspx";
@@ -374,7 +374,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Lanjutkan";
                 
                 client.UploadString(paymentURI, payParameter);
-               
+                
                 if (client.ResponseUri.AbsolutePath != "/Wait.aspx")
                     return new BookFlightResult
                     {
@@ -425,6 +425,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var timelimitParse = timelimitString.Split(',');
                 var timelimitParse2 = timelimitParse[1].Split(' ');
                 var ambiltahun = timelimitParse[2].Trim();
+                var timeLimitUTC = timelimitParse3[54].Substring(4,2);
                 string tahun;
                 if (ambiltahun.Length > 4)
                 {
@@ -437,7 +438,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
 
 
-                var timelimit = DateTime.Parse(timelimitParse2[2] + "-" + timelimitParse2[1] + "-" + tahun +" "+ timelimitParse3[41],CultureInfo.CreateSpecificCulture("id-ID"));
+                var timelimit = DateTime.Parse(timelimitParse2[2] + "-" + timelimitParse2[1] + "-" + tahun +" "+ timelimitParse3[41]+" "+timeLimitUTC,CultureInfo.CreateSpecificCulture("id-ID"));
 
                 var status = new BookingStatusInfo();
                 status.BookingId = NomorBooking;

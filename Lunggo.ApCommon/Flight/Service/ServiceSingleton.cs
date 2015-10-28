@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private void SearchFlightInternal(SearchFlightConditions conditions)
         {
-            var coba = SriwijayaWrapper.BookFlight(null);
+            //var coba = SriwijayaWrapper.BookFlight(null);
             var itinQueue = new ConcurrentQueue<List<FlightItinerary>>();
             var populateTask = Task.Run(() => PopulateSearchCache(itinQueue, conditions));
             Parallel.ForEach(Suppliers, supplier =>
@@ -120,7 +120,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
-            //var coba = SriwijayaWrapper.BookFlight(null);
+            //var coba = CitilinkWrapper.BookFlight(null);
             var fareType = IdUtil.GetFareType(bookInfo.FareId);
             var supplierName = IdUtil.GetSupplier(bookInfo.FareId);
             bookInfo.FareId = IdUtil.GetCoreId(bookInfo.FareId);

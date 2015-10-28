@@ -23,6 +23,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 var client = new ExtendedWebClient();
 
+                Client.CreateSession(client);
                 try
                 {
                     client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
@@ -35,6 +36,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     client.Headers["Host"] = "agent.sriwijayaair.co.id";
                     client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
                     client.AutoRedirect = true;
+                    client.Expect100Continue = false;
 
                     var issueparams =
                         "Submit=Issue" +
