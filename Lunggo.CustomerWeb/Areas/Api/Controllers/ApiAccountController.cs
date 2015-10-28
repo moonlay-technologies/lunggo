@@ -196,5 +196,27 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
                 return Json(response);
             }
         }
+
+        [HttpPost]
+        public async Task<JsonResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            AccountResponseModel response = new AccountResponseModel();
+            if (!ModelState.IsValid)
+            {
+                response.Description = response.Status = "ModelInvalid";
+                return Json(response);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                response.Description = response.Status = "Success";
+                return Json(response);
+            }
+            else
+            {
+                response.Description = response.Status = "ChangePasswordFailed";
+                return Json(response);
+            }
+        }
     }
 }

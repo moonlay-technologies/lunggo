@@ -11,6 +11,7 @@ using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model;
 using System.IO;
 using Lunggo.Framework.HtmlTemplate;
+using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
@@ -39,9 +40,23 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             var templateService = HtmlTemplateService.GetInstance();
             var converter = new SelectPdf.HtmlToPdf();
             var reservation = flightService.GetDetails(rsvNo);
+            if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
+                return Content("ticket unavailable");
             string eticket = templateService.GenerateTemplate(reservation, "FlightEticket");
             eticket = eticket.Replace("<body class=\"eticket\">", "<body onload=\"window.print()\">");
             return Content(eticket);
+        }
+        public ActionResult OrderFlightHistoryDetailResendTicket(string rsvNo)
+        {
+            var flightService = FlightService.GetInstance();
+            var reservation = flightService.GetDetails(rsvNo); 
+            if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
+                return Content("ticket unavailable");
+            if (reservation.Payment.Method != PaymentMethod.BankTransfer)
+                flightService.SendInstantPaymentNotifToCustomer(rsvNo);
+            else
+                flightService.SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
+            return Content("Success");
         }
     }
 }
