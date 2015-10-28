@@ -80,7 +80,6 @@
     <Compile Include="Init.cs" />
     <Compile Include="ProcessCrawlQueue3.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
