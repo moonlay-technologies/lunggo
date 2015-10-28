@@ -397,5 +397,5 @@
   <Message code="CW00198" lang="en_US" value="print eTicket" />
   <Message code="CW00198" lang="id_ID" value="cetak eTicket" />
   <Message code="CW00199" lang="en_US" value="ORDER DETAIL" />
-  <Message code="CW00199" lang="id_ID" value="DETAIL PEMESANAN" />
+  <Message code="CW00199" lang="id_ID" value="DETAIL PEMESANAN"/>
 </Messages>
