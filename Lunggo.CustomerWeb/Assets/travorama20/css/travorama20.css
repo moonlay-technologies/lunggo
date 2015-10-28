@@ -3835,3 +3835,6 @@ file : /Assets/travorama20/css/_page_password.scss
       padding: 6px; }
     .page-account-profile .order-detail .passenger-list li .row div + div {
       background: #e2e2e2; }
+
+.page-static .site-content {
+  padding: 24px 0; }

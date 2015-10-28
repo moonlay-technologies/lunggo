@@ -262,6 +262,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileTemplateController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\StaticPageController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Travorama20Controller.cs" />
@@ -1121,6 +1122,7 @@
     <Content Include="Assets\bootstrap\bootstrap.scss" />
     <Content Include="Assets\travorama20\css\_page_password.scss" />
     <Content Include="Assets\travorama20\css\_page_account.scss" />
+    <Content Include="Assets\travorama20\css\_page_static.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2355,6 +2357,11 @@
     <Content Include="Views\Shared\travorama20\_SectionUserMenu.cshtml" />
     <Content Include="Views\Travorama20\orderDetail.cshtml" />
     <Content Include="Views\Travorama20\orderList.cshtml" />
+    <Content Include="Views\StaticPage\Question.cshtml" />
+    <Content Include="Views\StaticPage\Terms.cshtml" />
+    <Content Include="Views\StaticPage\HowToOrder.cshtml" />
+    <Content Include="Views\StaticPage\HowToPay.cshtml" />
+    <Content Include="Views\StaticPage\Privacy.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
