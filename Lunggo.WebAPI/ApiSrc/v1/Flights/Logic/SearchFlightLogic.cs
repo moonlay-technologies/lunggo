@@ -69,8 +69,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
                 SearchId = searchServiceResponse.SearchId,
                 FlightList = searchServiceResponse.Itineraries,
                 TotalFlightCount = searchServiceResponse.Itineraries.Count,
-                ExpiryTime = searchServiceResponse.ExpiryTime,
-                Completeness = searchServiceResponse.Completeness
+                ExpiryTime = searchServiceResponse.ExpiryTime
             };
             return apiResponse;
         }
@@ -88,8 +87,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             var searchServiceRequest = new SearchFlightInput
             {
                 Conditions = searchConditions,
-                IsDateFlexible = false,
-                Completeness = request.Completeness
+                IsDateFlexible = false
             };
             return searchServiceRequest;
         }

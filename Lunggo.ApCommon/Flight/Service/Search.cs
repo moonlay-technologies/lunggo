@@ -29,33 +29,31 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new SearchFlightOutput();
             var searchId = EncodeConditions(input.Conditions);
 
-            var isCurrentlySearching = GetSearchingStatusInCache(searchId);
-            var completeness = GetSearchingCompletenessInCache(searchId);
-            if (!isCurrentlySearching && completeness == 0)
+            var searchedItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
+            var searchedSuppliers = searchedItins.Keys.ToList();
+            var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
+            foreach (var missingSupplier in missingSuppliers)
             {
-                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
+                var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawler" + missingSupplier);
                 queue.AddMessage(new CloudQueueMessage(searchId));
             }
 
-            var searchedItins = new List<FlightItinerary>();
-
-            if (completeness > input.Completeness) 
-                searchedItins = GetSearchedItinerariesFromCache(searchId, input.Completeness);
+            var itinsForDisplay = searchedItins.SelectMany(dict => dict.Value).Select(ConvertToItineraryForDisplay).ToList();
+            itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
 
             output.IsSuccess = true;
-            output.Itineraries = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
             output.SearchId = searchId;
-            output.Itineraries.ForEach(itin => itin.SearchId = output.SearchId);
             output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
-            output.Completeness = completeness;
+            output.Itineraries = itinsForDisplay;
+            output.SearchedSuppliers = searchedSuppliers;
 
             return output;
         }
 
-        public void CommenceSearchFlight(string searchId)
+        public void CommenceSearchFlight(string searchId, int supplierIndex)
         {
             var conditions = DecodeConditions(searchId);
-            SearchFlightInternal(conditions);
+            SearchFlightInternal(conditions, supplierIndex);
         }
     }
 }
