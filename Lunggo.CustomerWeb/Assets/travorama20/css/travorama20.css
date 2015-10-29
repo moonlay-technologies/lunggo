@@ -3898,3 +3898,41 @@ file : /Assets/travorama20/css/_page_password.scss
         .page-faq .question-wrapper > ol > li > ol > li.active > section {
           display: block;
           height: auto; }
+
+.page-terms ol.terms {
+  list-style: none;
+  counter-reset: main-counter;
+  margin: 0;
+  padding: 0; }
+  .page-terms ol.terms > li {
+    position: relative;
+    padding-left: 40px; }
+    .page-terms ol.terms > li:before, .page-terms .page-index ol.terms > li.section-reason:after, .page-index .page-terms ol.terms > li.section-reason:after {
+      content: counter(main-counter);
+      counter-increment: main-counter;
+      background: #ffd632;
+      color: #4f3500;
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      font-weight: bold;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      padding-top: 6px;
+      top: 0;
+      left: 0; }
+    .page-terms ol.terms > li h4 {
+      color: #1daee4;
+      font-weight: 600;
+      line-height: 18px;
+      padding-top: 6px; }
+    .page-terms ol.terms > li ol {
+      list-style: lower-alpha; }
+      .page-terms ol.terms > li ol > li {
+        color: #1daee4;
+        font-weight: bold; }
+        .page-terms ol.terms > li ol > li p {
+          color: #333;
+          font-weight: normal; }
