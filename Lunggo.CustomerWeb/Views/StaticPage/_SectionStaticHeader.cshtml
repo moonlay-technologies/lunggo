@@ -4,13 +4,13 @@
             <div class="col-xs-4">
                 @if (ViewBag.StaticActivePage == "term")
                 {
-                    <a href="#" class="terms active">
+                    <a href="@Url.Action("Terms","StaticPage")" class="terms active">
                         <span>Syarat dan Ketentuan</span>
                     </a>
                 }
                 else
                 {
-                    <a href="#" class="terms">
+                    <a href="@Url.Action("Terms","StaticPage")" class="terms">
                         <span>Syarat dan Ketentuan</span>
                     </a>
                 }
@@ -32,13 +32,13 @@
             <div class="col-xs-4">
                 @if (ViewBag.StaticActivePage == "faq")
                 {
-                    <a href="#" class="faq active">
+                    <a href="@Url.Action("Question","StaticPage")" class="faq active">
                         <span>FAQ</span>
                     </a>
                 }
                 else
                 {
-                    <a href="#" class="faq">
+                    <a href="@Url.Action("Question","StaticPage")" class="faq">
                         <span>FAQ</span>
                     </a>
                 }
