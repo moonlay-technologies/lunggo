@@ -35,6 +35,7 @@ app.controller('returnFlightController', [
             loadingFlight: false,
             searchId: '',
             flightList: [],
+            pristine: true,
             flightFilter: {
                 transit: [true, true, true],
                 airline: {
@@ -76,6 +77,7 @@ app.controller('returnFlightController', [
             loadingFlight: false,
             searchId: '',
             flightList: [],
+            pristine: true,
             flightFilter: {
                 transit: [true, true, true],
                 airline: {
@@ -405,20 +407,24 @@ app.controller('returnFlightController', [
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
 
             return function (flight) {
-                if (targetScope.flightFilter.transit[0]) {
-                    if (flight.Trips[0].TotalTransit == 0) {
-                        return flight;
+                if (!targetFlight.loading && !targetFlight.loadingFlight) {
+                    if (targetScope.flightFilter.transit[0]) {
+                        if (flight.Trips[0].TotalTransit == 0) {
+                            return flight;
+                        }
                     }
-                }
-                if (targetScope.flightFilter.transit[1]) {
-                    if (flight.Trips[0].TotalTransit == 1) {
-                        return flight;
+                    if (targetScope.flightFilter.transit[1]) {
+                        if (flight.Trips[0].TotalTransit == 1) {
+                            return flight;
+                        }
                     }
-                }
-                if (targetScope.flightFilter.transit[2]) {
-                    if (flight.Trips[0].TotalTransit > 1) {
-                        return flight;
+                    if (targetScope.flightFilter.transit[2]) {
+                        if (flight.Trips[0].TotalTransit > 1) {
+                            return flight;
+                        }
                     }
+                } else {
+                    return flight;
                 }
             }
 
@@ -440,7 +446,11 @@ app.controller('returnFlightController', [
         $scope.priceFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
-                if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+                if (!targetFlight.loading && !targetFlight.loadingFlight) {
+                    if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
@@ -517,48 +527,65 @@ app.controller('returnFlightController', [
             // get flight
             console.log('Getting flight for '+targetScope.name+' : '+targetScope.flightSearchParams.Requests);
 
-            $http.get(FlightSearchConfig.Url, {
-                params: {
-                    request : targetScope.flightSearchParams
-                }
-            }).success(function(returnData) {
-                    
-                targetScope.flightSearchParams.SearchId = returnData.SearchId;
-                targetScope.searchId = returnData.SearchId;
+            if (targetScope.flightSearchParams.Progress < 100) {
+                $http.get(FlightSearchConfig.Url, {
+                    params: {
+                        request: targetScope.flightSearchParams
+                    }
+                }).success(function (returnData) {
 
-                // -----
+                    // set search ID
+                    targetScope.flightSearchParams.SearchId = returnData.SearchId;
+                    targetScope.searchId = returnData.SearchId;
 
-                    if (targetScope.flightSearchParams.Completed.length < returnData.MaxRequest) {
+                    // set flight request if pristine
+                    if (targetScope.pristine == true) {
+                        targetScope.pristine = false;
+                        for (var i = 0; i < returnData.MaxRequest; i++) {
+                            targetScope.flightSearchParams.Requests.push(i + 1);
+                        }
+                    }
 
-                        // if flight list not empty
-                        if (returnData.FlightList.length) {
-                            // update flight list
-                            $scope.arrangeFlightData(targetScope, returnData.FlightList);
-                            // update Request
-                            for (var i = 0; i < returnData.GrantedRequests.length; i++) {
+                    // if granted request is not null
+                    if (returnData.GrantedRequests.length) {
+                        console.log('Granted request for ' + targetScope.name + '  : ' + returnData.GrantedRequests);
+                        for (var i = 0; i < returnData.GrantedRequests.length; i++) {
+                            // add to completed
+                            if (targetScope.flightSearchParams.Completed.indexOf(returnData.GrantedRequests[i] < 0)) {
                                 targetScope.flightSearchParams.Completed.push(returnData.GrantedRequests[i]);
-                                targetScope.flightSearchParams.Requests = targetScope.flightSearchParams.Requests.splice((targetScope.flightSearchParams.Requests.indexOf(i)), 1);
+                            }
+                            // check current request. Remove if completed
+                            if (targetScope.flightSearchParams.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
+                                targetScope.flightSearchParams.Requests.splice(targetScope.flightSearchParams.Requests.indexOf(returnData.GrantedRequests[i]), 1);
                             }
 
                         }
 
-                        setTimeout(function () {
-                            $scope.getFlight(targetScope.name);
-                        }, 1000);
+                        // generate flight
+                        $scope.arrangeFlightData(targetScope, returnData.FlightList);
 
-                    } else {
-                        targetScope.loading = false;
-                        targetScope.loadingFlight = false;
-                        console.log('Finished getting ' + targetScope.name + ' flight list');
-                        console.log('----------');
+                        // update total progress
+                        targetScope.flightSearchParams.Progress = ((returnData.MaxRequest - targetScope.flightSearchParams.Requests.length) / returnData.MaxRequest) * 100;
+                        console.log('Progress : ' + targetScope.flightSearchParams.Progress + ' %');
+                        console.log(returnData);
                     }
 
-                // -----
-                    
-                }).error(function(returnData) {
-                console.log('Failed to get '+targetScope.name+' flight list');
-                console.log('ERROR :' +returnData);
-            });
+                    // loop the function
+                    setTimeout(function () {
+                        $scope.getFlight(targetScope.name);
+                    }, 1000);
+
+                    // if error     
+                }).error(function (returnData) {
+                    console.log('Failed to get ' + targetScope.name + ' flight list');
+                    console.log('ERROR :' + returnData);
+                });
+            } else {
+                console.log('complete getting flight for : '+targetScope.name);
+                console.log(targetScope);
+                targetScope.loading = false;
+                targetScope.loadingFlight = false;
+            }
 
             
 
@@ -572,7 +599,7 @@ app.controller('returnFlightController', [
                 targetScope.flightList.push(data[i]);
             }
 
-            if (targetScope.flightSearchParams.Completeness == 100) {
+            if (targetScope.flightSearchParams.Progress == 100) {
 
                 console.log(targetScope);
 

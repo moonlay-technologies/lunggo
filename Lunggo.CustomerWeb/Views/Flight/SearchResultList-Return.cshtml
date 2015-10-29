@@ -101,7 +101,7 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Requests: [1,2,3],
+                Requests: [],
                 Completed: [],
                 Progress: 0
             },
@@ -112,7 +112,7 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Requests: [1,2,3],
+                Requests: [],
                 Completed: [],
                 Progress: 0
             }
@@ -254,7 +254,7 @@
         <input type="text" name="token" value="" class="fareToken" />
     </form>
     
-    <div class="page-progress" ng-hide="( !departureFlightConfig.loading && !departureFlightConfig.loadingFlight ) && ( !returnFlightConfig.loading && !returnFlightConfig.loadingFlight )">
+    <div class="page-progress" ng-hide="( !departureFlightConfig.loading && !departureFlightConfig.loadingFlight && departureFlightConfig.flightSearchParams.Progress < 100 ) && ( !returnFlightConfig.loading && !returnFlightConfig.loadingFlight && returnFlightConfig.flightSearchParams.Progress < 100 )">
         <div class="container">
             <b>Mencari Penerbangan...</b>
             <div class="progress-wrapper">
