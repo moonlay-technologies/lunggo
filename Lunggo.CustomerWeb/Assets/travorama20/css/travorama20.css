@@ -3837,7 +3837,50 @@ file : /Assets/travorama20/css/_page_password.scss
       background: #e2e2e2; }
 
 .page-static .site-content {
-  padding: 24px 0; }
+  padding: 0;
+  padding-bottom: 24px; }
+
+.static-header {
+  background: #003b70; }
+  .static-header .row {
+    padding-top: 12px; }
+    .static-header .row .col-xs-4 a {
+      color: #fff;
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      -webkit-border-radius: 4px 4px 0 0;
+      -moz-border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
+      padding: 12px 0; }
+      .static-header .row .col-xs-4 a span:before, .static-header .row .col-xs-4 a .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a span.section-reason:after {
+        content: "";
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background-image: url(/Assets/images/static-header-sprite.png);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        vertical-align: middle;
+        margin-right: 6px; }
+      .static-header .row .col-xs-4 a.active {
+        background: #f9f9f9;
+        color: #003b70;
+        font-weight: 600; }
+      .static-header .row .col-xs-4 a.terms span:before, .static-header .row .col-xs-4 a.terms .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.terms span.section-reason:after {
+        background-position: 0 0; }
+      .static-header .row .col-xs-4 a.terms.active span:before, .static-header .row .col-xs-4 a.terms.active .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.terms.active span.section-reason:after {
+        background-position: 0 -25px; }
+      .static-header .row .col-xs-4 a.privacy span:before, .static-header .row .col-xs-4 a.privacy .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.privacy span.section-reason:after {
+        background-position: -25px 0; }
+      .static-header .row .col-xs-4 a.privacy.active span:before, .static-header .row .col-xs-4 a.privacy.active .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.privacy.active span.section-reason:after {
+        background-position: -25px -25px; }
+      .static-header .row .col-xs-4 a.faq span:before, .static-header .row .col-xs-4 a.faq .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.faq span.section-reason:after {
+        background-position: -50px 0;
+        width: 35px; }
+      .static-header .row .col-xs-4 a.faq.active span:before, .static-header .row .col-xs-4 a.faq.active .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a.faq.active span.section-reason:after {
+        background-position: -50px -25px; }
 
 .page-faq .question-wrapper > ol {
   list-style: none;
@@ -3899,15 +3942,15 @@ file : /Assets/travorama20/css/_page_password.scss
           display: block;
           height: auto; }
 
-.page-terms ol.terms {
+.page-term ol.terms {
   list-style: none;
   counter-reset: main-counter;
   margin: 0;
   padding: 0; }
-  .page-terms ol.terms > li {
+  .page-term ol.terms > li {
     position: relative;
     padding-left: 40px; }
-    .page-terms ol.terms > li:before, .page-terms .page-index ol.terms > li.section-reason:after, .page-index .page-terms ol.terms > li.section-reason:after {
+    .page-term ol.terms > li:before, .page-term .page-index ol.terms > li.section-reason:after, .page-index .page-term ol.terms > li.section-reason:after {
       content: counter(main-counter);
       counter-increment: main-counter;
       background: #ffd632;
@@ -3923,16 +3966,16 @@ file : /Assets/travorama20/css/_page_password.scss
       padding-top: 6px;
       top: 0;
       left: 0; }
-    .page-terms ol.terms > li h4 {
+    .page-term ol.terms > li h4 {
       color: #1daee4;
       font-weight: 600;
       line-height: 18px;
       padding-top: 6px; }
-    .page-terms ol.terms > li ol {
+    .page-term ol.terms > li ol {
       list-style: lower-alpha; }
-      .page-terms ol.terms > li ol > li {
+      .page-term ol.terms > li ol > li {
         color: #1daee4;
         font-weight: bold; }
-        .page-terms ol.terms > li ol > li p {
+        .page-term ol.terms > li ol > li p {
           color: #333;
           font-weight: normal; }

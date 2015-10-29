@@ -1,0 +1,48 @@
+﻿<section class="static-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+                @if (ViewBag.StaticActivePage == "term")
+                {
+                    <a href="#" class="terms active">
+                        <span>Syarat dan Ketentuan</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="terms">
+                        <span>Syarat dan Ketentuan</span>
+                    </a>
+                }
+            </div>
+            <div class="col-xs-4">
+                @if (ViewBag.StaticActivePage == "privacy")
+                {
+                    <a href="#" class="privacy active">
+                        <span>Kebijakan Privacy</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="privacy">
+                        <span>Kebijakan Privacy</span>
+                    </a>
+                }
+            </div>
+            <div class="col-xs-4">
+                @if (ViewBag.StaticActivePage == "faq")
+                {
+                    <a href="#" class="faq active">
+                        <span>FAQ</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="faq">
+                        <span>FAQ</span>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</section><!-- .static-header -->

@@ -878,6 +878,7 @@
     <Content Include="Assets\images\social-instagram.png" />
     <Content Include="Assets\images\social-twitter.png" />
     <Content Include="Assets\images\ssl-image.png" />
+    <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
     <Content Include="Assets\images\switch-destination.png" />
@@ -2369,6 +2370,7 @@
     <Content Include="Views\StaticPage\HowToOrder.cshtml" />
     <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <Content Include="Views\StaticPage\Privacy.cshtml" />
+    <Content Include="Views\Shared\travorama20\_SectionStaticHeader.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
