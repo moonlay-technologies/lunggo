@@ -19,6 +19,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
         public ActionResult HowToOrder()
         {
             return View();

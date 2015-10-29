@@ -18,6 +18,9 @@ using Lunggo.Framework.Database;
 using Microsoft.WindowsAzure.Storage;
 using WURFL;
 using WURFL.Config;
+using Lunggo.Framework.BlobStorage;
+using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.TableStorage;
 
 
 namespace Lunggo.CustomerWeb
@@ -39,6 +42,8 @@ namespace Lunggo.CustomerWeb
             InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
+            InitHtmlTemplateService();
+            InitTableStorageService();
         }
 
         private static void InitMailService()
@@ -150,6 +155,17 @@ namespace Lunggo.CustomerWeb
                                 context.Request.Url.Host == mobileUrl
             });
             DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
+        }
+        public static void InitHtmlTemplateService()
+        {
+            var htmlTemplateService = HtmlTemplateService.GetInstance();
+            htmlTemplateService.Init();
+        }
+        public static void InitTableStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var tableStorageService = TableStorageService.GetInstance();
+            tableStorageService.Init(connString);
         }
     }
 }

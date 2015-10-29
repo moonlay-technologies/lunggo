@@ -99,7 +99,8 @@
                 infant: @data.InfantCount,
             },
             type: '@data.TripType',
-            trips: @Html.Raw(JsonConvert.SerializeObject(trips))
+            trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
+            Requests:[]
         };
     </script>
     <!-- angular controller -->
@@ -234,14 +235,14 @@
     </section><!-- .search-result-form -->
     <section class="search-result one-way page-loading" ng-app="travorama" ng-controller="singleFlightController" ng-class="{'page-loaded': pageLoaded}">
     
-        <div class="page-progress" ng-show="loading && loadingFlight">
+        <div class="page-progress" ng-show="loading && loadingFlight && flightRequest.Progress < 100">
             <div class="container">
                 <b>Mencari Penerbangan...</b>
                 <div class="progress-wrapper">
 
-                    <div class="progress-bar" style="width:{{flightRequest.Completeness}}%;">
+                    <div class="progress-bar" style="width:{{flightRequest.Progress}}%;">
                         <div class="plane">
-                            <span>{{flightRequest.Completeness}} %</span>
+                            <span>{{flightRequest.Progress | number:0}} %</span>
                         </div>
                     </div>
 
@@ -357,7 +358,7 @@
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>
-            <div class="search-result-filter" ng-show="flightRequest.Completeness == 100">
+            <div class="search-result-filter" ng-show="flightRequest.Progress == 100">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>

@@ -93,27 +93,27 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     switch (displayReservation.Payment.Status)
                     {
-                            case PaymentStatus.Settled:
+                        case PaymentStatus.Settled:
                             var rsvNoSet = new
                             {
                                 RsvNo = displayReservation.RsvNo
                             };
-                                return RedirectToAction("Thankyou", "Flight", rsvNoSet);
+                            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                             break;
 
-                            case PaymentStatus.Pending:
+                        case PaymentStatus.Pending:
                             if (displayReservation.Payment.Method == PaymentMethod.BankTransfer)
                             {
                                 var rsvNoPen = new
                                 {
                                     RsvNo = displayReservation.RsvNo
                                 };
-                            return RedirectToAction("Thankyou", "Flight", rsvNoPen);
-                                }
+                                return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoPen);
+                            }
                             else
                             {
                                 return Redirect(displayReservation.Payment.Url);
-                                }
+                            }
                             break;
                     }
                 }

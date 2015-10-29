@@ -101,7 +101,9 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Completeness : 0
+                Requests: [],
+                Completed: [],
+                Progress: 0
             },
             returnFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -110,7 +112,9 @@
                 ChildCount: "@data.ChildCount",
                 InfantCount: "@data.InfantCount",
                 CabinClass: "@data.CabinClass",
-                Completeness : 0
+                Requests: [],
+                Completed: [],
+                Progress: 0
             }
         };
     </script>
@@ -250,14 +254,14 @@
         <input type="text" name="token" value="" class="fareToken" />
     </form>
     
-    <div class="page-progress" ng-hide="( !departureFlightConfig.loading && !departureFlightConfig.loadingFlight ) && ( !returnFlightConfig.loading && !returnFlightConfig.loadingFlight )">
+    <div class="page-progress" ng-hide="( !departureFlightConfig.loading && !departureFlightConfig.loadingFlight && departureFlightConfig.flightSearchParams.Progress < 100 ) && ( !returnFlightConfig.loading && !returnFlightConfig.loadingFlight && returnFlightConfig.flightSearchParams.Progress < 100 )">
         <div class="container">
             <b>Mencari Penerbangan...</b>
             <div class="progress-wrapper">
 
-                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2 | number:0 }}%;">
+                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2 | number:0 }}%;">
                     <div class="plane">
-                        <span>{{ ( departureFlightConfig.flightSearchParams.Completeness + returnFlightConfig.flightSearchParams.Completeness ) / 2  | number:0}} %</span>
+                        <span>{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2  | number:0}} %</span>
                     </div>
                 </div>
 

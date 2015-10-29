@@ -66,16 +66,23 @@ app.controller('passwordController', [
             console.log('submitting form');
             // submit form to URL
             $http({
-                url: 'CHANGE PASSWORD URL',
+                url: ForgotPasswordConfig.Url,
                 method: 'POST',
                 data: {
                     email : $scope.form.email
                 }
             }).then(function (returnData) {
-                console.log('Success requesting reset password');
-                console.log(returnData);
-                $scope.form.submitting = false;
-                $scope.form.submitted = true;
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.form.submitting = false;
+                }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
@@ -94,22 +101,33 @@ app.controller('resetController', [
         $scope.form = {
             submitted: false,
             submitting: false,
-            userEmail: userEmail
+            userEmail: userEmail,
+            code : code
         };
         $scope.form.submit = function() {
             $scope.form.submitting = true;
 
             $http({
-                url: 'CHANGE PASSWORD URL',
+                url: ResetPasswordConfig.Url,
                 method: 'POST',
                 data: {
-                    email: $scope.form.password
+                    Password: $scope.form.password,
+                    ConfirmPassword: $scope.form.password,
+                    Email: $scope.form.userEmail,
+                    Code: $scope.form.code
                 }
             }).then(function (returnData) {
-                console.log('Success requesting reset password');
-                console.log(returnData);
-                $scope.form.submitting = false;
-                $scope.form.submitted = true;
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.form.submitting = false;
+                    $scope.form.submitted = true;
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.form.submitting = false;
+                }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
                 console.log(returnData);
