@@ -65,18 +65,18 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, FlightBookApiRequest request)
         {
-            if (bookServiceResponse.Errors != null)
+            if (bookServiceResponse.IsSuccess)
                 return new FlightBookApiResponse
                 {
                     IsSuccess = true,
                     RsvNo = bookServiceResponse.RsvNo,
-                    Error = bookServiceResponse.Errors[0],
                     OriginalRequest = request
                 };
             else
                 return new FlightBookApiResponse
                 {
                     IsSuccess = false,
+                    Error = bookServiceResponse.Errors[0],
                     OriginalRequest = request
                 };
         }

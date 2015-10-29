@@ -4,7 +4,7 @@ using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Model
 {
-    internal class BookFlightResult : ResultBase
+    public class BookFlightResult : ResultBase
     {
         internal BookingStatusInfo Status { get; set; }
     }
