@@ -236,6 +236,25 @@ function indexPageFunctions() {
 
 }
 
+
+//********************
+// static page functions
+function staticPageFunctions() {
+    // *****
+    // toggle FAQ question
+    $('.toggle-all').click(function() {
+        $(this).closest('li').children('ol').children('li').removeClass('active');
+
+
+        
+    });
+    $('.question-wrapper ol li ol li header').click(function() {
+        $(this).closest('li').toggleClass('active');
+    });
+
+
+}
+
 //********************
 // flight form search function
 function flightFormSearchFunctions() {

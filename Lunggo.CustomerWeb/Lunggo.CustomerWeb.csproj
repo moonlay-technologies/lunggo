@@ -754,6 +754,7 @@
     <Content Include="Assets\images\eticket-background.png" />
     <Content Include="Assets\images\exclamation-mark.png" />
     <Content Include="Assets\images\facebook-icon.png" />
+    <Content Include="Assets\images\faq-toggle-sprite.png" />
     <Content Include="Assets\images\favico.ico" />
     <Content Include="Assets\images\feedback-bg.jpg" />
     <Content Include="Assets\images\feedback-title.png" />

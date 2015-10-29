@@ -38,23 +38,27 @@
             &>li {position:relative;
                 > header {padding-left:40px;
                     h2 {color:$color-main-blue; font-size:18px; line-height:30px; font-weight:bold;
-                        span {font-size:14px; text-decoration:underline;}
+                        span {font-size:14px; text-decoration:underline; cursor:pointer;}
                     }
                 }
                 &:before {content:counter(main-number); counter-increment:main-number; background:#ffd632; color:#4f3500; position:absolute; height:30px; width:30px; text-align:center; @include border-radius(50px); font-size:14px; font-weight:600; padding-top:5px;}
                 &>ol {list-style:none; counter-reset:sub-number;
-                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px; cursor:pointer;
+                    &>li {position:relative; background:#fff; padding:12px; border:$border-default; padding-left:42px;
                         &:before {content:counter(main-number) '.' counter(sub-number); counter-increment:sub-number; position:absolute; top:12px; left:12px;}
-                        > header {color:$color-main-blue; 
+                        > header {color:$color-main-blue; cursor:pointer;
                             > h3 {margin:0; font-size:17px;
-                                span {}
+                                span {width:23px; height:22px; border:2px solid $color-main-blue; display:inline-block; @include border-radius(15px); background-image:url(/Assets/images/faq-toggle-sprite.png); background-position:-13px 0;}
                             }
                         }
                         > section {height:0; overflow:hidden;}
                         > section {}
                         // if active
                         &.active {
-                            > header {margin-bottom:12px;}
+                            > header {margin-bottom:12px;
+                                > h3 {
+                                    span {background-position:1px 0;}
+                                }
+                            }
                             > section {display:block; height:auto;}
                         }
                     }
