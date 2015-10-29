@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 
@@ -15,12 +16,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
     {
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            return Client.OrderTicket(bookingId, canHold);
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            if (env == "production")
+                return Client.OrderTicket(bookingId);
+            else
+                return new OrderTicketResult
+                {
+                    IsSuccess = true,
+                    BookingId = bookingId,
+                    IsInstantIssuance = true
+                };
         }
 
         private partial class SriwijayaClientHandler
         {
-            internal OrderTicketResult OrderTicket(string bookingId, bool canHold)
+            internal OrderTicketResult OrderTicket(string bookingId)
             {
                 var client = new ExtendedWebClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
