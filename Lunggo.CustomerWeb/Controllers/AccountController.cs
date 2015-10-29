@@ -285,7 +285,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (email == null)
                 return Redirect("/");
-            var model = new ResetPasswordViewModel { Email = email };
+            var model = new ResetPasswordViewModel { Email = email, Code = code };
             return View(model);
         }
 
