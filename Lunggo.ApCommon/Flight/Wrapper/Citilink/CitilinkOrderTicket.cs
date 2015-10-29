@@ -7,6 +7,7 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
@@ -15,7 +16,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
     {
         internal override OrderTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            return Client.OrderTicket(bookingId);
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            if (env == "production")
+                return Client.OrderTicket(bookingId);
+            else
+                return new OrderTicketResult
+                {
+                    IsSuccess = true,
+                    BookingId = bookingId,
+                    IsInstantIssuance = true
+                };
         }
 
         private partial class CitilinkClientHandler
