@@ -311,6 +311,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&features=RD%3ANO" +
                     "&featuring=Um5KdmJUb3dPak09&2410150551=2410150551";
                 client.AutoRedirect = true;
+                client.Expect100Continue = false;
                 var bookingResult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/menu_others.php?reffNo=Y0hKdmMyVnpRbTl2YTJsdVowUnBjbVZqZEM0eU5ERXdNVFV3TlRVeE9uQnliM05sYzBKdmIydHBibWRFYVhKbFkzUT0=", bookingParams);
                 //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
                 
@@ -332,6 +333,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     client.Headers["Host"] = "agent.sriwijayaair.co.id";
                     client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
                     client.AutoRedirect = true;
+                    client.Expect100Continue = false;
 
                     var cekparams =
                         "reffNo=" + kodeBook +

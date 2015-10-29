@@ -31,7 +31,7 @@ namespace Lunggo.CustomerWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            //var coba = FlightService.GetInstance().BookFlightInternal(null);
+            //var coba = FlightService.GetInstance().OrderTicketInternal(null,true);
 
         }
 

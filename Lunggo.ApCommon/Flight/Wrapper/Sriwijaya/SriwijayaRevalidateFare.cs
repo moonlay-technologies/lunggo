@@ -44,6 +44,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
              DateTime tglBerangkat;
              var Rbd = new List<string>();
 
+             // PARSING FARE
+
+             //Penerbangan 2 Segment
              if ((ParseFID1.Count > 1) && (ParseFID1.Count <= 3))
              {
                  FIDsegment1 = ParseFID1[0];
@@ -69,74 +72,85 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  tglBerangkat = DateTime.Parse(tglBerangkatRaw);
                  var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga-1);
                  harga = Decimal.Parse(hargaRaw);
-             }else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
-                {
-                    FIDsegment1 = ParseFID1[0];
-                    FIDsegment2 = ParseFID1[1];
-                    FIDsegment3 = ParseFID1[2].Substring(0, (ParseFID1[2].Length - 2));
-                    var titikIndex1 = FID.IndexOf(":");
-                    var titikIndex11 = FID.Substring(titikIndex1 + 1);
-                    var titikIndex2 = titikIndex11.IndexOf(":");
-                    var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
-                    Rbd = rbdRaw.Split(',').ToList();
+             }
+             
+             //Penerbangan 3 segment
+             else    
+             if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
+             {
+                 FIDsegment1 = ParseFID1[0];
+                 FIDsegment2 = ParseFID1[1];
+                 FIDsegment3 = ParseFID1[2].Substring(0, (ParseFID1[2].Length - 2));
+                 var titikIndex1 = FID.IndexOf(":");
+                 var titikIndex11 = FID.Substring(titikIndex1 + 1);
+                 var titikIndex2 = titikIndex11.IndexOf(":");
+                 var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
+                 Rbd = rbdRaw.Split(',').ToList();
 
-                    var ambilOrigin = FID.Substring((titikIndex2+1) + (titikIndex1 + 1));
-                    var titikIndex4 = ambilOrigin.IndexOf(":");
-                    var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
-                    ognAirport = ambilOrigin.Substring((titikIndex4+1),titikIndex5);
-                    var titikIndex6 = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1)).IndexOf(":");
-                    arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
-                    var indexPenumpang1 = Fare.IndexOf('|');
-                    var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
-                    var indextglBerangkat = Fare.IndexOf('?');
-                    var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1-1 - indextglBerangkat));
-                    tglBerangkat = DateTime.Parse(tglBerangkatRaw);
-                    var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
-                    var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2+1), indexHarga-1);
-                    harga = Decimal.Parse(hargaRaw);
-                }else if (ParseFID1.Count == 1)
-                    {
-                        FIDsegment1 = ParseFID1[0];
-                        FIDsegment2 = null;
-                        FIDsegment3 = null;
-                        var titikIndex1 = FID.IndexOf(":");
-                        var titikIndex11 = FID.Substring(titikIndex1 + 1);
-                        var titikIndex2 = titikIndex11.IndexOf(":");
-                        var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
-                        Rbd = rbdRaw.Split(',').ToList();
-                        var ambilOrigin = FID.Substring((titikIndex2 + 1) + (titikIndex1 + 1));
-                        var titikIndex4 = ambilOrigin.IndexOf(":");
-                        var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
-                        ognAirport = ambilOrigin.Substring((titikIndex4 + 1), titikIndex5);
-                        var titikIndex6 = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1)).IndexOf(":");
-                        arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
-                        var indexPenumpang1 = Fare.IndexOf('|');
-                        var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                        penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
-                        var indextglBerangkat = Fare.IndexOf('?');
-                        var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
-                        tglBerangkat = DateTime.Parse(tglBerangkatRaw, CultureInfo.CreateSpecificCulture("id-ID"));
-                        var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
-                        var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga-1);
-                        harga = Decimal.Parse(hargaRaw);
-                    }
-                else
-                {
-                    ognAirport = null;
-                    arrAirport = null;
-                    FIDsegment1 = null;
-                    FIDsegment2 = null;
-                    FIDsegment3 = null;
+                 var ambilOrigin = FID.Substring((titikIndex2+1) + (titikIndex1 + 1));
+                 var titikIndex4 = ambilOrigin.IndexOf(":");
+                 var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
+                 ognAirport = ambilOrigin.Substring((titikIndex4+1),titikIndex5);
+                 var titikIndex6 = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1)).IndexOf(":");
+                 arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
+                 var indexPenumpang1 = Fare.IndexOf('|');
+                 var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
+                 penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
+                 var indextglBerangkat = Fare.IndexOf('?');
+                 var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1-1 - indextglBerangkat));
+                 tglBerangkat = DateTime.Parse(tglBerangkatRaw);
+                 var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
+                 var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2+1), indexHarga-1);
+                 harga = Decimal.Parse(hargaRaw);
+             }
+             
+             //Penerbangan 1 segment
+             else
+             if (ParseFID1.Count == 1)
+             {
+                 FIDsegment1 = ParseFID1[0];
+                 FIDsegment2 = null;
+                 FIDsegment3 = null;
+                 var titikIndex1 = FID.IndexOf(":");
+                 var titikIndex11 = FID.Substring(titikIndex1 + 1);
+                 var titikIndex2 = titikIndex11.IndexOf(":");
+                 var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
+                 Rbd = rbdRaw.Split(',').ToList();
+                 var ambilOrigin = FID.Substring((titikIndex2 + 1) + (titikIndex1 + 1));
+                 var titikIndex4 = ambilOrigin.IndexOf(":");
+                 var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
+                 ognAirport = ambilOrigin.Substring((titikIndex4 + 1), titikIndex5);
+                 var titikIndex6 = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1)).IndexOf(":");
+                 arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
+                 var indexPenumpang1 = Fare.IndexOf('|');
+                 var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
+                 penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2).Split('.').ToList();
+                 var indextglBerangkat = Fare.IndexOf('?');
+                 var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
+                 tglBerangkat = DateTime.Parse(tglBerangkatRaw, CultureInfo.CreateSpecificCulture("id-ID"));
+                 var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
+                 var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga-1);
+                 harga = Decimal.Parse(hargaRaw);
+             }
+             else
+             {
+                 ognAirport = null;
+                 arrAirport = null;
+                 FIDsegment1 = null;
+                 FIDsegment2 = null;
+                 FIDsegment3 = null;
 
-                    return new RevalidateFareResult
-                    {
-                       IsValid = false,
-                       Errors = new List<FlightError> { FlightError.TechnicalError },
-                       ErrorMessages = new List<string> { "Web Layout Changed!" }
-                    };
-                }
+                 return new RevalidateFareResult
+                 {
+                    IsValid = false,
+                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                    ErrorMessages = new List<string> { "Web Layout Changed!" }
+                 };
+             }
             
+
+
+             //AMBIL AJAX
 
              client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
              //Headers["Accept-Encoding"] = "gzip, deflate";
@@ -169,7 +183,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
              CQ ambilFare = (CQ) htmlRespon;
 
-             
+             //Proses untuk 2 segment
              if ((ParseFID1.Count > 1) && (ParseFID1.Count <= 3))
              {
                  #region
@@ -301,7 +315,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  }
                  #endregion
              }
-             else if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
+
+             //Proses untuk 3 Segement
+             else
+             if ((ParseFID1.Count > 3) && (ParseFID1.Count <= 5))
              {
                  #region
                  var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
@@ -433,7 +450,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  }
                  #endregion
              }
-             else if (ParseFID1.Count == 1)
+
+             //Proses untuk 1 segment
+             else
+             if (ParseFID1.Count == 1)
              {
                  #region
                  var cekFID1 = ambilFare["[value*=" + FIDsegment1 + "]"];
@@ -560,6 +580,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  }
                  #endregion
              }
+
              else
              {
                  Client.LogoutSession(client);

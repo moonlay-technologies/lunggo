@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
@@ -22,6 +23,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             internal OrderTicketResult OrderTicket(string bookingId, bool canHold)
             {
                 var client = new ExtendedWebClient();
+                var untukEncode = "ticketing:" + bookingId + ":STEP2";
+                var encode = untukEncode.Base64Encode();
+                var encode2 = encode.Base64Encode();
 
                 Client.CreateSession(client);
                 try
@@ -41,10 +45,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var issueparams =
                         "Submit=Issue" +
                         "&action=ticketing" +
-                        "&reffNo=ZEdsamEyVjBhVzVuT2tsR1RFMVZSenBUVkVWUU1nPT0%3D";
+                        "&reffNo="+ encode2 +"%3D";
 
                     client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+ bookingId +"", issueparams);
-
+        
                     client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
                     //client.Headers["Accept-Encoding"] = "gzip, deflate";
                     client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
@@ -62,6 +66,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         "&step=STEP2";
 
                     var cekresult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?", cekparams);
+                   
                     //var cekresult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\REPONSEissue.txt");
                     CQ ambilTimeLimit = (CQ)cekresult;
 
@@ -74,12 +79,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     {
                         hasil.BookingId = bookingId;
                         hasil.IsSuccess = true;
+                        hasil.IsInstantIssuance = true;
                     }
                     else
                     {
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };
                     }
+                    
+                    Client.LogoutSession(client);
                     return hasil;
                 }
                 catch (Exception)
@@ -88,17 +96,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     switch (isIssued)
                     {
                         case IssueEnum.IssueSuccess:
+                            Client.LogoutSession(client);
                             return new OrderTicketResult
                             {
                                 IsSuccess = true,
                                 BookingId = bookingId
                             };
                         case IssueEnum.NotIssued:
+                            Client.LogoutSession(client);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false
                             };
                         case IssueEnum.CheckingError:
+                            Client.LogoutSession(client);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false,
@@ -106,6 +117,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 ErrorMessages = new List<string> { "Failed to check whether deposit cut or not! Manual checking advised!" }
                             };
                         default:
+                            Client.LogoutSession(client);
                             return new OrderTicketResult
                             {
                                 IsSuccess = false,

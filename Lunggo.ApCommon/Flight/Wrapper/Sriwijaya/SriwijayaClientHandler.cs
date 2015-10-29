@@ -33,8 +33,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 if (!_isInitialized)
                 {
-                    _userName = "MLWAG0215";
-                    _password = "TRAVELMADEZY";
+                    _userName = "MLWAG02152";
+                    _password = "Dev12345";
                     _isInitialized = true;
                 }
             }
@@ -52,6 +52,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 client.Headers["Host"] = "agent.sriwijayaair.co.id";
                 client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
                 client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+                client.Expect100Continue = false;
 
                 var logIn =
                     "username=" + _userName +
@@ -60,6 +61,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&actions=LOGIN";
 
                 client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in", logIn);
+                if (client.StatusCode != HttpStatusCode.OK)
+                {
+                    client.Expect100Continue = true;
+                    client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=in", logIn);
+                }
             }
             internal void LogoutSession(ExtendedWebClient client)
             {
@@ -75,6 +81,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 client.Headers["Origin"] = "http://agent.sriwijayaair.co.id";
                 //client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 client.AutoRedirect = true;
+                client.Expect100Continue = false;
 
                 client.DownloadString("http://agent.sriwijayaair.co.id/SJ-Eticket/login.php?action=out");
             }

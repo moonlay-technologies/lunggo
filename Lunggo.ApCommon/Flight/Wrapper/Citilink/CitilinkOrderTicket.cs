@@ -271,6 +271,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         {
                             hasil.BookingId = bookingId;
                             hasil.IsSuccess = true;
+                            hasil.IsInstantIssuance = true;
                         }
                     else
                         {
