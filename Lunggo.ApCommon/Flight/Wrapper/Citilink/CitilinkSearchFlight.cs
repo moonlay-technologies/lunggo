@@ -89,8 +89,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 var tunjuk = isi.MakeRoot()["tr:nth-child(" + j + ")"];
 
                                 //FareID
+                                string FID;
                                 var ambilFID = tunjuk.MakeRoot()[".fareCol2>p:nth-child(1)>input"];
-                                string FID = ambilFID.Select(x => x.Cq().Attr("value")).FirstOrDefault().Trim();
+                                try
+                                {
+                                    FID = ambilFID.Select(x => x.Cq().Attr("value")).FirstOrDefault().Trim();
+                                }
+                                catch (Exception)
+                                {
+                                    new SearchFlightResult
+                                    {
+                                        Itineraries = new List<FlightItinerary>(),
+                                        IsSuccess = true
+                                    };
+                                    continue;
+                                }
+
                                 var ParseFID1 = FID.Split('|').ToList();
                                 var ParseFID2 = ParseFID1[1].Split('~').ToList();
                                 var Rbd = ParseFID1[0].Substring(2, 1);
