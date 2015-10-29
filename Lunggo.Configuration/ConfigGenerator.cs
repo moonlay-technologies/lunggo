@@ -55,7 +55,7 @@ namespace Lunggo.Configuration
 
         public static void Main(String[] args)
         {
-            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.FlightCrawlScheduler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.FlightProcessor", "Worker.EticketHandler" };
+            String[] projectList = { "BackendWeb", "CustomerWeb", "WebAPI", "WebJob.MystiflyQueueHandler", "WebJob.EmailQueueHandler", "WebJob.FlightCrawlScheduler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.FlightCrawler4", "WebJob.FlightProcessor", "Worker.EticketHandler" };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
 
@@ -375,7 +375,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
 
             var fileContent = fileTemplate.ToString();
-            string[] projectList = { "WebJob.EmailQueueHandler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.MystiflyQueueHandler" };
+            string[] projectList = { "WebJob.EmailQueueHandler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.FlightCrawler4", "WebJob.MystiflyQueueHandler" };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
 
@@ -388,7 +388,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("mystiflyApiEndPoint", mystiflyApiEndPoint);
 
             var fileContent = fileTemplate.ToString();
-            string[] projectList = { "WebJob.EmailQueueHandler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.MystiflyQueueHandler" };
+            string[] projectList = { "WebJob.EmailQueueHandler", "WebJob.FlightCrawler1", "WebJob.FlightCrawler2", "WebJob.FlightCrawler3", "WebJob.FlightCrawler4", "WebJob.MystiflyQueueHandler" };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }
 

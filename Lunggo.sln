@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler3", "Lunggo.WebJob.FlightCrawler3\Lunggo.WebJob.FlightCrawler3.csproj", "{34F7E2E7-6F45-40CA-942F-7787F328243F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler4", "Lunggo.WebJob.FlightCrawler4\Lunggo.WebJob.FlightCrawler4.csproj", "{B077F772-60CD-4B7D-8825-836662B9A838}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,16 @@ Global
 		{34F7E2E7-6F45-40CA-942F-7787F328243F}.Release|ARM.ActiveCfg = Release|Any CPU
 		{34F7E2E7-6F45-40CA-942F-7787F328243F}.Release|x64.ActiveCfg = Release|Any CPU
 		{34F7E2E7-6F45-40CA-942F-7787F328243F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|x64.ActiveCfg = Release|Any CPU
+		{B077F772-60CD-4B7D-8825-836662B9A838}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
