@@ -1939,12 +1939,6 @@ file: /Assets/travorama20/css/_page_flight.scss
 .page-flight.page-flight-return .search-result-container .search-result-selected {
   display: none; }
 
-.page-flight.page-flight-return .search-result-container > .loading .search-result-filter {
-  display: none; }
-
-.page-flight.page-flight-return .search-result-container > .loading .search-result-sort {
-  display: none; }
-
 .page-flight.page-flight-return .search-result-container > .active {
   width: 530px; }
   .page-flight.page-flight-return .search-result-container > .active .search-result-title p span.route-date {

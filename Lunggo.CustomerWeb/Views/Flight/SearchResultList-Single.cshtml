@@ -519,7 +519,7 @@
             <div class="search-result-list">
                 <div class="container">
 
-                    <div class="flight flight-{{flight.RegisterNumber}}" ng-class="{'active': (flightActive == flight.RegisterNumber) }" id="flight-{{flight.RegisterNumber}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
+                    <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (flightActive == flight.IndexNo) }" id="flight-{{flight.IndexNo}}" ng-repeat="flight in flightList | filter:availableFilter | filter:stopFilter | filter:priceFilter | filter:airlineFilter | filter:timeFilter | orderBy:sort.value:sort.reverse">
                         <div class="flight-summary">
                             <div class="flight-summary-left">
                                 <div class="summary-top">
@@ -552,7 +552,7 @@
                                         <span class="flight-meal"></span>
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
-                                        <a ng-click="setFlightActive(flight.RegisterNumber)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
+                                        <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
                                         <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
                                     </div><!-- .flight-button -->
                                 </div><!-- .summar-bottom -->
