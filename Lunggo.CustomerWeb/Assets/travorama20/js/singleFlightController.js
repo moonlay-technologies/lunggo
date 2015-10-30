@@ -16,7 +16,6 @@ app.controller('singleFlightController', [
         $scope.loading = false;
         $scope.loadingFlight = false;
         $scope.flightList = [];
-        $scope.expiryTime = '';
         $scope.pristine = true;
         $scope.flightRequest = {
             CabinClass: FlightSearchConfig.flightForm.cabin,
@@ -32,8 +31,8 @@ app.controller('singleFlightController', [
         $scope.expiry = {
             expired: false,
             time: '',
-            start: function (expiryTime) {
-                expiryTime = new Date(expiryTime);
+            start: function () {
+                var expiryTime = new Date($scope.expiry.time);
                 if ($scope.expiry.expired) return;
                 $interval(function () {
                     var nowTime = new Date();
@@ -302,7 +301,7 @@ app.controller('singleFlightController', [
             $http.get(RevalidateConfig.Url, {
                 params: {
                     SearchId: RevalidateConfig.SearchId,
-                    ItinIndex: indexNo
+                    ItinIndex: $scope.flightList[indexNo].RegisterNumber
                 }
             }).success(function (returnData) {
                 $scope.revalidateFlightParam.validating = false;
@@ -366,7 +365,9 @@ app.controller('singleFlightController', [
             // console.log('Getting flight list with parameter');
             // console.log(FlightSearchConfig.flightForm);
 
-            console.log('request : ' + $scope.flightRequest.Requests);
+            if ($scope.pristine || $scope.flightRequest.Requests.length) {
+                console.log('request : ' + $scope.flightRequest.Requests);
+            }
 
             if ($scope.flightRequest.Progress < 100) {
                 // **********
@@ -407,8 +408,14 @@ app.controller('singleFlightController', [
                         // update total progress
                         $scope.flightRequest.Progress = ((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
 
+                        // set expiry if progress == 100
+                        if ($scope.flightRequest.Progress == 100) {
+                            $scope.expiry.time = returnData.ExpiryTime;
+                        }
+
                         // generate flight
                         $scope.generateFlightList(returnData.FlightList);
+                        
 
                         console.log('Progress : '+ $scope.flightRequest.Progress +' %');
                         console.log(returnData);
@@ -429,8 +436,7 @@ app.controller('singleFlightController', [
                 });
 
             } else {
-                console.log('COMPLETE !');
-                console.log($scope);
+                console.log('Finished getting flight list !');
                 $scope.busy = false;
                 $scope.loading = false;
                 $scope.loadingFlight = false;
@@ -442,14 +448,20 @@ app.controller('singleFlightController', [
         // generate flight list
         $scope.generateFlightList = function(data) {
 
+            var startNo = $scope.flightList.length;
+
             for (var i = 0; i < data.length; i++) {
                 data[i].Available = true;
+                data[i].IndexNo = ( startNo + i);
                 $scope.flightList.push(data[i]);
             }
 
             if ($scope.flightRequest.Progress == 100) {
 
                 console.log('Generating Filter');
+
+                // set expiry time
+                $scope.expiry.start();
 
                 // loop the data
                 for (var i = 0; i < $scope.flightList.length; i++) {
@@ -550,7 +562,7 @@ app.controller('singleFlightController', [
                     }
                 });
 
-                console.log('Completed');
+                console.log('Completed setting flight and filter');
                 console.log($scope);
             }
 
