@@ -39,7 +39,7 @@ namespace Lunggo.Configuration
         static KeyValuePair<string, string> GetFileNameAndTemplate(string aFilePath)
         {
             string template = System.IO.File.ReadAllText(aFilePath);
-            string fileName = Path.GetFileNameWithoutExtension(aFilePath);
+            string fileName = Path.GetFileNameWithoutExtension(aFilePath).ToLower();
             return new KeyValuePair<string, string>(fileName,template);
         }
         static void InsertTemplateToTable(KeyValuePair<string, string> fileNameAndTemplate)

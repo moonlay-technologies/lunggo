@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             ArrivalAirport = ParseFID2[j+2],
                             ArrivalTime = DateTime.Parse(ParseFID2[j + 3]),
                             OperatingAirlineCode = Acode,
-                            //Duration = arrtime-deptime,
+                            Duration = arrtime-deptime,
                             StopQuantity = 0
                         });
                         j = j + 8;

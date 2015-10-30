@@ -158,6 +158,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\db.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>

@@ -39,7 +39,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(reservation, mailModel, "FlightPendingPaymentNotifEmail");
-
+            
             Console.WriteLine("Done Processing Flight Pending Payment Notif Email for RsvNo " + rsvNo);
         }
     }

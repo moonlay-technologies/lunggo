@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Veritrans
             if (!_isInitialized)
             {
                 _endPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint");
-                _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
+                _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey") + ":";
                 _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
                 _isInitialized = true;
             }
