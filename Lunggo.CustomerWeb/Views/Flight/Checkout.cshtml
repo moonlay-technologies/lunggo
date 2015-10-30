@@ -121,7 +121,7 @@
                                     </header>
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[0].Segments track by $index">
-                                            <div class="transit" ng-if="$index > 1">
+                                            <div class="transit" ng-if="$index > 0">
                                                 <p>Transit di {{segment.DepartureCity}} selama {{trips[0].Transits[ $index - 1 ].Duration}}</p>
                                             </div>
                                             <div class="segment">
@@ -169,7 +169,7 @@
                                     </header>
                                     <section class="detail-content">
                                         <div ng-repeat="segment in trips[1].Segments track by $index">
-                                            <div class="transit" ng-if="$index > 1">
+                                            <div class="transit" ng-if="$index > 0">
                                                 <p>Transit di {{segment.DepartureCity}} selama {{trips[1].Transits[ $index - 1 ].Duration}}</p>
                                             </div>
                                             <div class="segment">
