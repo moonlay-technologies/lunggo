@@ -159,13 +159,15 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">No Refund</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">-</p>
+                                            <p class="form-control-static">@(Model.Payment.Refund!=null?
+                                            Model.Payment.Refund.Amount.ToString():"-" )</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Tgl Pengajuan</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">-</p>
+                                            <p class="form-control-static">@(Model.Payment.Refund != null ?
+                                            Model.Payment.Refund.Time.ToString() : "-")</p>
                                         </div>
                                     </div>
                                     <div class="form-group">

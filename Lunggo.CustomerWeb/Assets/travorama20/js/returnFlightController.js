@@ -407,7 +407,7 @@ app.controller('returnFlightController', [
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
 
             return function (flight) {
-                if (!targetFlight.loading && !targetFlight.loadingFlight) {
+                if (!targetScope.loading && !targetScope.loadingFlight) {
                     if (targetScope.flightFilter.transit[0]) {
                         if (flight.Trips[0].TotalTransit == 0) {
                             return flight;
@@ -446,7 +446,7 @@ app.controller('returnFlightController', [
         $scope.priceFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             return function (flight) {
-                if (!targetFlight.loading && !targetFlight.loadingFlight) {
+                if (!targetScope.loading && !targetScope.loadingFlight) {
                     if (flight.TotalFare >= targetScope.flightFilter.price.current[0] && flight.TotalFare <= targetScope.flightFilter.price.current[1]) {
                         return flight;
                     }
@@ -500,12 +500,16 @@ app.controller('returnFlightController', [
         }
         $scope.timeFilter = function (targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
-            return function(flight) {
-                if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= parseInt(targetScope.flightFilter.time.departure[0])
+            return function (flight) {
+                if (!targetScope.loading && !targetScope.loadingFlight) {
+                    if ($scope.getHour(flight.Trips[0].Segments[0].DepartureTime) >= parseInt(targetScope.flightFilter.time.departure[0])
                         && $scope.getHour(flight.Trips[0].Segments[0].DepartureTime) <= parseInt(targetScope.flightFilter.time.departure[1])
                         && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) >= parseInt(targetScope.flightFilter.time.arrival[0])
-                        && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= parseInt(targetScope.flightFilter.time.arrival[1])
-                ) {
+                        && $scope.getHour(flight.Trips[0].Segments[flight.Trips[0].Segments.length - 1].ArrivalTime) <= parseInt(targetScope.flightFilter.time.arrival[1]))
+                    {
+                        return flight;
+                    }
+                } else {
                     return flight;
                 }
             }
@@ -598,6 +602,8 @@ app.controller('returnFlightController', [
                 data[i].Available = true;
                 targetScope.flightList.push(data[i]);
             }
+
+            console.log(targetScope.flightList);
 
             if (targetScope.flightSearchParams.Progress == 100) {
 

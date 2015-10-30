@@ -20,7 +20,7 @@
     <script>
     var langCode = 'en';
     var userProfile = {
-        email: '@User.Identity.GetEmail()',
+        address: '@User.Identity.GetAddress()',
         firstname: '@User.Identity.GetFirstName()',
         lastname: '@User.Identity.GetLastName()',
         phone: '@User.Identity.GetPhoneNumber()',
@@ -58,7 +58,7 @@
                                     </span>
                                     <span class="pull-right" ng-show="userProfile.edit">
                                         <a class="btn btn-grey" ng-click="editForm('profile')">CANCEL</a>
-                                        <a class="btn btn-yellow" ng-click="editForm('profile')">SIMPAN</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('profileSave')">SIMPAN</a>
                                     </span>
                                 </h4>
                             </header>
@@ -67,8 +67,8 @@
                                     <p class="control-label">@Html.I18NString("CW00094")</p>
                                 </div>
                                 <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.email}}</p>
-                                    <input type="email" name="email" ng-model="userProfile.email" class="form-control" ng-show="userProfile.edit" required />
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
+                                    <input type="text" name="address" ng-model="userProfile.address" class="form-control" ng-show="userProfile.edit" required />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -100,7 +100,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <p class="control-label">>@Html.I18NString("CW00193")</p>
+                                    <p class="control-label">@Html.I18NString("CW00193")</p>
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
@@ -120,17 +120,31 @@
                                     </span>
                                     <span class="pull-right" ng-show="password.edit">
                                         <a class="btn btn-grey" ng-click="editForm('password')">CANCEL</a>
-                                        <a class="btn btn-yellow" ng-click="editForm('password')">SIMPAN</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('passwordSave')">SIMPAN</a>
                                     </span>
                                 </h4>
                             </header>
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <p class="control-label">@Html.I18NString("CW00144")</p>
+                                    <p class="control-label">@Html.I18NString("CW00165")</p>
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordNew" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00166")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                </div>
+                                <div class="col-xs-3">
+                                    <p class="control-label">@Html.I18NString("CW00167")</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="password.edit">**********</p>
+                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
                                 </div>
                             </div>
                         </form>

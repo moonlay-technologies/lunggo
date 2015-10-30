@@ -4,7 +4,13 @@
     ViewBag.StaticActivePage = "faq";
 }
 
-@Html.Partial("/Views/Shared/Travorama20/_SectionStaticHeader.cshtml");
+@Html.Partial("/Views/StaticPage/_SectionStaticHeader.cshtml");
+
+@section PageJS {
+    <script>
+        staticPageFunctions();
+    </script>
+}
 
 <section>
     
@@ -18,12 +24,12 @@
             <ol>
                 <li>
                     <header>
-                        <h2>Tentang Travorama <span class="pull-right toggle">Hide All</span></h2>
+                        <h2>Tentang Travorama <span class="pull-right toggle-all">Hide All</span></h2>
                     </header>
                     <ol>
                         <li>
                             <header>
-                                <h3>Siapa Travorama? <span class="pull-right fa fa-chevron-up"></span></h3>
+                                <h3>Siapa Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
                             <section>
                                 <p>Travorama merupakan situs pencarian dan pembelian tiket pesawat di Indonesia untuk tujuan domestik maupun internasional dengan pilihan penerbangan lebih dari 900 maskapai. Kami menyediakan berbagai informasi, harga, ketersediaan, dan layanan pemesanan tiket pesawat yang dapat diakses oleh Anda kapan pun dan dimana pun. Kami berkomitmen untuk selalu membuat Anda merasakan pengalaman yang terbaik dalam melakukan perjalanan.</p>
@@ -33,12 +39,12 @@
                 </li>
                 <li>
                     <header>
-                        <h2>Tentang Travorama <span class="pull-right toggle">Hide All</span></h2>
+                        <h2>Tentang Travorama <span class="pull-right toggle-all">Hide All</span></h2>
                     </header>
                     <ol>
                         <li>
                             <header>
-                                <h3>Siapa Travorama?</h3>
+                                <h3>Siapa Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
                             <section>
                                 <p>Travorama merupakan situs pencarian dan pembelian tiket pesawat di Indonesia untuk tujuan domestik maupun internasional dengan pilihan penerbangan lebih dari 900 maskapai. Kami menyediakan berbagai informasi, harga, ketersediaan, dan layanan pemesanan tiket pesawat yang dapat diakses oleh Anda kapan pun dan dimana pun. Kami berkomitmen untuk selalu membuat Anda merasakan pengalaman yang terbaik dalam melakukan perjalanan.</p>
@@ -46,7 +52,7 @@
                         </li>
                         <li>
                             <header>
-                                <h3>Siapa Travorama?</h3>
+                                <h3>Siapa Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
                             <section>
                                 <p>Travorama merupakan situs pencarian dan pembelian tiket pesawat di Indonesia untuk tujuan domestik maupun internasional dengan pilihan penerbangan lebih dari 900 maskapai. Kami menyediakan berbagai informasi, harga, ketersediaan, dan layanan pemesanan tiket pesawat yang dapat diakses oleh Anda kapan pun dan dimana pun. Kami berkomitmen untuk selalu membuat Anda merasakan pengalaman yang terbaik dalam melakukan perjalanan.</p>
@@ -54,7 +60,7 @@
                         </li>
                         <li>
                             <header>
-                                <h3>Siapa Travorama?</h3>
+                                <h3>Siapa Travorama? <span class="pull-right toggle-one"></span></h3>
                             </header>
                             <section>
                                 <p>Travorama merupakan situs pencarian dan pembelian tiket pesawat di Indonesia untuk tujuan domestik maupun internasional dengan pilihan penerbangan lebih dari 900 maskapai. Kami menyediakan berbagai informasi, harga, ketersediaan, dan layanan pemesanan tiket pesawat yang dapat diakses oleh Anda kapan pun dan dimana pun. Kami berkomitmen untuk selalu membuat Anda merasakan pengalaman yang terbaik dalam melakukan perjalanan.</p>

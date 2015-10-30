@@ -8,7 +8,10 @@ app.controller('accountController', [
         $scope.profileForm = {
             active : false
         };
-
+        $scope.passwordForm = {
+            active: false
+        };
+        
         $scope.userProfile = userProfile;
         $scope.userProfile.edit = false;
         $scope.userProfile.updating = false;
@@ -27,22 +30,103 @@ app.controller('accountController', [
         $scope.editForm = function (name) {
             // edit profile form
             if (name == 'profile') {
-                if ($scope.userProfile.edit) {
-                    $scope.userProfile.edit = false;
-                } else {
-                    $scope.userProfile.edit = true;
-                }
+                $scope.userProfile.edit = !($scope.userProfile.edit);
+            }
+            else if (name == 'profileSave') {
+                console.log('submitting form');
+                // submit form to URL
+                $http({
+                    url: ChangeProfileConfig.Url,
+                    method: 'POST',
+                    data: {
+                        Address: $scope.userProfile.address,
+                        FirstName: $scope.userProfile.firstname,
+                        LastName: $scope.userProfile.lastname,
+                        PhoneNumber: $scope.userProfile.phone,
+                        CountryCd: $scope.userProfile.country
+                    }
+                }).then(function (returnData) {
+                    if (returnData.data.Status == 'Success') {
+                        console.log('Success requesting change profile');
+                        console.log(returnData);
+                        $scope.profileForm.edit = false;
+                    }
+                    else {
+                        console.log(returnData.data.Description);
+                        console.log(returnData);
+                        $scope.profileForm.edit = true;
+                    }
+                }, function (returnData) {
+                    console.log('Failed requesting change profile');
+                    console.log(returnData);
+                    $scope.profileForm.edit = true;
+                });
             }
             if (name == 'password') {
-                if ($scope.password.edit) {
-                    $scope.password.edit = false;
-                } else {
+                $scope.password.edit = !($scope.password.edit);
+            }
+            else if (name == 'passwordSave') {
+                console.log('submitting form');
+                // submit form to URL
+                $http({
+                    url: ChangePasswordConfig.Url,
+                    method: 'POST',
+                    data: {
+                        NewPassword: $scope.passwordForm.newPassword,
+                        OldPassword: $scope.passwordForm.currentPassword,
+                        ConfirmPassword: $scope.passwordForm.confirmationPassword
+                    }
+                }).then(function (returnData) {
+                    $scope.passwordForm.newPassword = '';
+                    $scope.passwordForm.currentPassword = '';
+                    $scope.passwordForm.confirmationPassword = '';
+                    if (returnData.data.Status == 'Success') {
+                        console.log('Success requesting reset password');
+                        console.log(returnData);
+                        $scope.password.edit = false;
+                    }
+                    else {
+                        console.log(returnData.data.Description);
+                        console.log(returnData);
+                        $scope.password.edit = true;
+                    }
+                }, function (returnData) {
+                    console.log('Failed requesting reset password');
+                    console.log(returnData);
                     $scope.password.edit = true;
-                }
+                });
             }
         }
+        
 
-
+        $scope.passwordForm.submit = function () {
+            $scope.passwordForm.submitting = true;
+            console.log('submitting form');
+            // submit form to URL
+            $http({
+                url: ChangePasswordConfig.Url,
+                method: 'POST',
+                data: {
+                    password: $scope.passwordForm.newPassword
+                }
+            }).then(function (returnData) {
+                if (returnData.data.Status == 'Success') {
+                    console.log('Success requesting reset password');
+                    console.log(returnData);
+                    $scope.passwordForm.submitting = false;
+                    $scope.passwordForm.submitted = true;
+                }
+                else {
+                    console.log(returnData.data.Description);
+                    console.log(returnData);
+                    $scope.passwordForm.submitting = false;
+                }
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.passwordForm.submitting = false;
+            });
+        }
     }
 ]);// account controller
 

@@ -1226,7 +1226,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   background: rgba(100, 100, 100, 0.7); }
   .page-flight .page-overlay .overlay-content {
     width: 400px;
-    height: 300px;
+    height: 250px;
     background: #fff;
     position: absolute;
     margin: auto;
@@ -3896,7 +3896,8 @@ file : /Assets/travorama20/css/_page_password.scss
         font-weight: bold; }
         .page-faq .question-wrapper > ol > li > header h2 span {
           font-size: 14px;
-          text-decoration: underline; }
+          text-decoration: underline;
+          cursor: pointer; }
     .page-faq .question-wrapper > ol > li:before, .page-faq .page-index .question-wrapper > ol > li.section-reason:after, .page-index .page-faq .question-wrapper > ol > li.section-reason:after {
       content: counter(main-number);
       counter-increment: main-number;
@@ -3920,8 +3921,7 @@ file : /Assets/travorama20/css/_page_password.scss
         background: #fff;
         padding: 12px;
         border: 1px solid #ccc;
-        padding-left: 42px;
-        cursor: pointer; }
+        padding-left: 42px; }
         .page-faq .question-wrapper > ol > li > ol > li:before, .page-faq .page-index .question-wrapper > ol > li > ol > li.section-reason:after, .page-index .page-faq .question-wrapper > ol > li > ol > li.section-reason:after {
           content: counter(main-number) "." counter(sub-number);
           counter-increment: sub-number;
@@ -3929,15 +3929,28 @@ file : /Assets/travorama20/css/_page_password.scss
           top: 12px;
           left: 12px; }
         .page-faq .question-wrapper > ol > li > ol > li > header {
-          color: #1daee4; }
+          color: #1daee4;
+          cursor: pointer; }
           .page-faq .question-wrapper > ol > li > ol > li > header > h3 {
             margin: 0;
             font-size: 17px; }
+            .page-faq .question-wrapper > ol > li > ol > li > header > h3 span {
+              width: 23px;
+              height: 22px;
+              border: 2px solid #1daee4;
+              display: inline-block;
+              -webkit-border-radius: 15px;
+              -moz-border-radius: 15px;
+              border-radius: 15px;
+              background-image: url(/Assets/images/faq-toggle-sprite.png);
+              background-position: -13px 0; }
         .page-faq .question-wrapper > ol > li > ol > li > section {
           height: 0;
           overflow: hidden; }
         .page-faq .question-wrapper > ol > li > ol > li.active > header {
           margin-bottom: 12px; }
+          .page-faq .question-wrapper > ol > li > ol > li.active > header > h3 span {
+            background-position: 1px 0; }
         .page-faq .question-wrapper > ol > li > ol > li.active > section {
           display: block;
           height: auto; }
