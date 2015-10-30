@@ -19,6 +19,7 @@ using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Mystifly;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
+using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
@@ -64,6 +65,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
 
                 //CurrencyService.GetInstance().Init();
+                PaymentService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
                 InitPriceDiscountRules();

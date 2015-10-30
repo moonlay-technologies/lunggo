@@ -437,6 +437,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
 
 
+                if (timelimitParse2[1] == "Nop")
+                    timelimitParse2[1] = "Nov";
 
                 var timelimit = DateTime.Parse(timelimitParse2[2] + "-" + timelimitParse2[1] + "-" + tahun +" "+ timelimitParse3[41]+" "+timeLimitUTC,CultureInfo.CreateSpecificCulture("id-ID"));
 

@@ -310,11 +310,11 @@
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.firstname.$invalid && passengerForm_{{$index}}.firstname.$touched }">
                                                     <label class="control-label important">Nama Depan (dan Nama Tengah) :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_firstname" class="form-control" placeholder="First Name" ng-model="passenger.firstname" ng-change="passenger.firstname = passenger.firstname.split(' ').join('')" required />
+                                                    <input type="text" value="" name="passenger_{{$index}}_firstname" class="form-control" placeholder="First Name" ng-model="passenger.firstname" required />
                                                 </div>
                                                 <div class="form-group" ng-class="{'has-error': passengerForm_{{$index}}.lastname.$invalid && passengerForm_{{$index}}.lastname.$touched }">
                                                     <label class="control-label important">Nama Belakang / Nama Keluarga :</label>
-                                                    <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Last Name" ng-model="passenger.lastname" ng-change="passenger.lastname = passenger.lastname.split(' ').join('')" required />
+                                                    <input type="text" value="" name="passenger_{{$index}}_lastname" class="form-control" placeholder="Last Name" ng-model="passenger.lastname" required />
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label important">Tanggal Lahir :</label>
