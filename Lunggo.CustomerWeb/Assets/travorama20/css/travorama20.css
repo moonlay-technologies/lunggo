@@ -206,7 +206,7 @@ form label.important:after {
   position: absolute;
   top: 0;
   left: 325px;
-  z-index: 2;
+  z-index: 3;
   display: none; }
   .search-location .location-header {
     height: 40px;
@@ -281,8 +281,10 @@ form label.important:after {
           .search-location .location-body .location-recommend .tab-header nav ul li:last-child {
             border-right: none; }
   .search-location .location-body .location-recommend .tab-content {
-    padding: 0 15px;
+    padding: 0 30px;
     padding-bottom: 15px; }
+    .search-location .location-body .location-recommend .tab-content .col-xs-3 {
+      padding: 0 12px; }
     .search-location .location-body .location-recommend .tab-content > div {
       display: none; }
       .search-location .location-body .location-recommend .tab-content > div.active {

@@ -404,11 +404,12 @@ app.controller('singleFlightController', [
 
                         }
 
+                        // update total progress
+                        $scope.flightRequest.Progress = ((returnData.MaxRequest - $scope.flightRequest.Requests.length) / returnData.MaxRequest) * 100;
+
                         // generate flight
                         $scope.generateFlightList(returnData.FlightList);
 
-                        // update total progress
-                        $scope.flightRequest.Progress = ( (returnData.MaxRequest - $scope.flightRequest.Requests.length )/ returnData.MaxRequest )*100;
                         console.log('Progress : '+ $scope.flightRequest.Progress +' %');
                         console.log(returnData);
                     }

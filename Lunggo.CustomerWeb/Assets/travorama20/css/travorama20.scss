@@ -131,7 +131,7 @@ form label.important:after {content:"*"; color:#f00000;}
 }
 
 // location dropdown
-.search-location {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:2; display:none;
+.search-location {width:850px; min-height:520px; background:#fff; position:absolute; top:0; left:325px; z-index:3; display:none;
     .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
         .close-location {float:right; cursor:pointer;}
     }
@@ -156,7 +156,8 @@ form label.important:after {content:"*"; color:#f00000;}
                     }
                 }
             }
-            .tab-content {padding:0 15px; padding-bottom:15px;
+            .tab-content {padding:0 30px; padding-bottom:15px;
+                .col-xs-3 {padding:0 12px;}
                 &>div {display:none;
                     &.active {display:block;}
                     h3 {color:$color-main-blue; font-size:14px; font-weight:bold; margin-top:10px;}

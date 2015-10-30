@@ -310,12 +310,14 @@ function flightFormSearchFunctions() {
 
     //*****
     // flight recommendation
-    $('.search-location .location-recommend .nav-click.prev').click(function () {
+    $('.search-location .location-recommend .nav-click.prev').click(function (evt) {
+        evt.preventDefault();
         if ( parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) < 0 ) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left','+=135px');
         }
     });
-    $('.search-location .location-recommend .nav-click.next').click(function () {
+    $('.search-location .location-recommend .nav-click.next').click(function (evt) {
+        evt.preventDefault();
         if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }

@@ -83,7 +83,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .month {font-size:11px; font-weight:600; position:absolute; left:80%; top:5px; color:#666;}
                 .year {font-size:11px; font-weight:600; position:absolute; left:80%; top:20px; color:#666;}
             }
-            .change-flight-return {@extend .change-flight-departure; margin-left:2%;}
+            .change-flight-return {@extend & .change-flight-departure; margin-left:2%;}
             .change-flight-passenger {background:#fff; @include border-radius($border-radius-default); color:#666; padding:6px; position:relative; cursor:pointer;
                 small {position:absolute;}
                 h5 {font-size:30px; font-weight:600; position:absolute; right:10px; top:0;}
