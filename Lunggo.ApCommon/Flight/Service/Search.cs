@@ -57,9 +57,11 @@ namespace Lunggo.ApCommon.Flight.Service
                     searchedItins.SelectMany(dict => dict.Value).Select(ConvertToItineraryForDisplay).ToList();
                 itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
 
+                var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(searchId, supplier)).Min();
+
                 output.IsSuccess = true;
                 output.SearchId = searchId;
-                output.ExpiryTime = GetSearchedItinerariesExpiry(searchId);
+                output.ExpiryTime = expiry;
                 output.Itineraries = itinsForDisplay;
                 output.SearchedSuppliers = searchedSuppliers;
                 output.TotalSupplier = Suppliers.Count;

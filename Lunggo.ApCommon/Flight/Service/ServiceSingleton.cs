@@ -81,7 +81,6 @@ namespace Lunggo.ApCommon.Flight.Service
             result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
             if (result.IsSuccess)
             {
-                var counter = 0;
                 foreach (var itin in result.Itineraries)
                 {
                     var currency = CurrencyService.GetInstance();
@@ -92,7 +91,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     itin.LocalRate = 1;
                     itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
-                    itin.RegisterNumber = counter++;
                 }
             }
             SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);

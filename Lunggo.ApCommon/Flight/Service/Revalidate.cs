@@ -15,57 +15,69 @@ namespace Lunggo.ApCommon.Flight.Service
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
                 input.Token = SelectFlight(input.SearchId, input.ItinIndex);
-            var itins = IsItinBundleCacheId(input.Token)
-                ? GetItinerarySetFromCache(input.Token)
-                : new List<FlightItinerary> { GetItineraryFromCache(input.Token) };
-            Parallel.ForEach(itins, itin =>
-            {
-                var outputSet = new RevalidateFlightOutputSet();
-                var request = new RevalidateConditions
-                {
-                    FareId = itin.FareId,
-                    Trips = itin.Trips
-                };
-                var response = RevalidateFareInternal(request);
-                if (response.IsSuccess)
-                {
-                    outputSet.IsSuccess = true;
-                    outputSet.IsValid = response.IsValid;
-                    outputSet.Itinerary = response.Itinerary;
-                }
-                else
-                {
-                    outputSet.IsSuccess = false;
-                    response.Errors.ForEach(output.AddError);
-                    if (response.ErrorMessages != null)
-                        response.ErrorMessages.ForEach(output.AddError);
-                }
-                output.Sets.Add(outputSet);
-            });
-
-            var newItins = output.Sets.Select(set => set.Itinerary).ToList();
-            if (IsItinBundleCacheId(input.Token))
-                SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
-            else
-                SaveItineraryToCache(newItins.Single(), input.Token);
-            if (output.Sets.TrueForAll(set => set.IsSuccess))
+            if (input.Token == null)
             {
                 output.IsSuccess = true;
-                output.IsValid = output.Sets.TrueForAll(set => set.IsValid);
-                if (output.Sets.Any(set => set.Itinerary == null))
-                    output.NewFare = null;
-                else
-                    output.NewFare = output.Sets.Sum(set => set.Itinerary.LocalPrice);
-                output.Token = input.Token;
+                output.IsValid = false;
+                output.NewFare = null;
+                output.Sets = null;
+                output.Token = null;
+                return output;
             }
             else
             {
-                if (output.Sets.Any(set => set.IsSuccess))
-                    output.PartiallySucceed();
-                output.IsSuccess = false;
-                output.DistinguishErrors();
+                var itins = IsItinBundleCacheId(input.Token)
+                    ? GetItinerarySetFromCache(input.Token)
+                    : new List<FlightItinerary> {GetItineraryFromCache(input.Token)};
+                Parallel.ForEach(itins, itin =>
+                {
+                    var outputSet = new RevalidateFlightOutputSet();
+                    var request = new RevalidateConditions
+                    {
+                        FareId = itin.FareId,
+                        Trips = itin.Trips
+                    };
+                    var response = RevalidateFareInternal(request);
+                    if (response.IsSuccess)
+                    {
+                        outputSet.IsSuccess = true;
+                        outputSet.IsValid = response.IsValid;
+                        outputSet.Itinerary = response.Itinerary;
+                    }
+                    else
+                    {
+                        outputSet.IsSuccess = false;
+                        response.Errors.ForEach(output.AddError);
+                        if (response.ErrorMessages != null)
+                            response.ErrorMessages.ForEach(output.AddError);
+                    }
+                    output.Sets.Add(outputSet);
+                });
+
+                var newItins = output.Sets.Select(set => set.Itinerary).ToList();
+                if (IsItinBundleCacheId(input.Token))
+                    SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
+                else
+                    SaveItineraryToCache(newItins.Single(), input.Token);
+                if (output.Sets.TrueForAll(set => set.IsSuccess))
+                {
+                    output.IsSuccess = true;
+                    output.IsValid = output.Sets.TrueForAll(set => set.IsValid);
+                    if (output.Sets.Any(set => set.Itinerary == null))
+                        output.NewFare = null;
+                    else
+                        output.NewFare = output.Sets.Sum(set => set.Itinerary.LocalPrice);
+                    output.Token = input.Token;
+                }
+                else
+                {
+                    if (output.Sets.Any(set => set.IsSuccess))
+                        output.PartiallySucceed();
+                    output.IsSuccess = false;
+                    output.DistinguishErrors();
+                }
+                return output;
             }
-            return output;
         }
     }
 }
