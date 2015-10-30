@@ -1,7 +1,7 @@
 ﻿// travorama angular app - Flight Controller
 
 app.controller('returnFlightController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope', '$interval', function($http, $scope, $interval) {
 
         // ******************************
         // on document ready
@@ -25,7 +25,23 @@ app.controller('returnFlightController', [
             overviewDetailShown: false,
             flightsValidated: false,
             redirectingPage: false,
-            progress: 0
+            progress: 0,
+            expiry: {
+                expired: false,
+                time: '',
+                start: function() {
+                    var expiryTime = new Date($scope.pageConfig.expiry.time);
+                    if ($scope.pageConfig.expiry.expired || $scope.pageConfig.expiry.starting) return;
+                    $interval(function () {
+                        $scope.pageConfig.expiry.starting = true;
+                        var nowTime = new Date();
+                        if (nowTime > expiryTime) {
+                            $scope.pageConfig.expiry.expired = true;
+                        }
+                    }, 1000);
+                },
+                starting : false
+            }
         }
         $scope.departureFlightConfig = {
             name: 'departure',
@@ -254,12 +270,12 @@ app.controller('returnFlightController', [
             } else {
 
                 // revalidate departure flight
-                console.log('validating departure flight');
+                console.log('validating departure flight no : '+ departureFlightIndexNo);
                 $scope.departureFlightConfig.validating = true;
                 $http.get(RevalidateConfig.Url, {
                     params: {
                         SearchId: $scope.departureFlightConfig.searchId,
-                        ItinIndex: departureFlightIndexNo
+                        ItinIndex: $scope.departureFlightConfig.flightList[departureFlightIndexNo].RegisterNumber
                     }
                 }).success(function (returnData) {
                     $scope.departureFlightConfig.validating = false;
@@ -298,12 +314,12 @@ app.controller('returnFlightController', [
                 });
 
                 // revalidate return flight
-                console.log('validating return flight');
+                console.log('validating return flight no : '+returnFlightIndexNo);
                 $scope.returnFlightConfig.validating = true;
                 $http.get(RevalidateConfig.Url, {
                     params: {
                         SearchId: $scope.returnFlightConfig.searchId,
-                        ItinIndex: returnFlightIndexNo
+                        ItinIndex: $scope.returnFlightConfig.flightList[returnFlightIndexNo].RegisterNumber
                     }
                 }).success(function (returnData) {
                     $scope.returnFlightConfig.validating = false;
@@ -565,13 +581,18 @@ app.controller('returnFlightController', [
 
                         }
 
-                        // generate flight
-                        $scope.arrangeFlightData(targetScope, returnData.FlightList);
+                        // add expiry date
+                        if (!$scope.pageConfig.expiry.time) {
+                            $scope.pageConfig.expiry.time = returnData.ExpiryTime;
+                        }
 
                         // update total progress
                         targetScope.flightSearchParams.Progress = ((returnData.MaxRequest - targetScope.flightSearchParams.Requests.length) / returnData.MaxRequest) * 100;
-                        console.log('Progress : ' + targetScope.flightSearchParams.Progress + ' %');
+                        // generate flight
+                        $scope.arrangeFlightData(targetScope, returnData.FlightList);
+
                         console.log(returnData);
+
                     }
 
                     // loop the function
@@ -585,8 +606,7 @@ app.controller('returnFlightController', [
                     console.log('ERROR :' + returnData);
                 });
             } else {
-                console.log('complete getting flight for : '+targetScope.name);
-                console.log(targetScope);
+                console.log('complete getting flight for '+targetScope.name);
                 targetScope.loading = false;
                 targetScope.loadingFlight = false;
             }
@@ -598,16 +618,18 @@ app.controller('returnFlightController', [
         // arrange flight
         $scope.arrangeFlightData = function(targetScope, data) {
 
+            var startNumber = targetScope.flightList.length;
+
             for (var i = 0; i < data.length; i++) {
                 data[i].Available = true;
+                data[i].IndexNo = (startNumber + i);
                 targetScope.flightList.push(data[i]);
             }
 
-            console.log(targetScope.flightList);
-
             if (targetScope.flightSearchParams.Progress == 100) {
 
-                console.log(targetScope);
+                // start expiry date
+                $scope.pageConfig.expiry.start();
 
                 // loop the result
                 for (var i = 0; i < targetScope.flightList.length; i++) {
@@ -643,8 +665,6 @@ app.controller('returnFlightController', [
         // initiate flight filtering
         $scope.initiateFlightFiltering = function(targetFlight) {
             var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
-
-            console.log(targetFlight);
 
             // sort prices and set initial price
             function sortNumber(a, b) {
@@ -721,7 +741,10 @@ app.controller('returnFlightController', [
                     $('.' + targetFlight + '-arrival-slider-max').trigger('input');
                 }
             });
-            
+
+            console.log('Completed setting flight filtering for : ' + targetScope.name);
+            console.log(targetScope);
+
         }
 
 
