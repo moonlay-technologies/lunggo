@@ -3499,7 +3499,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
   background: rgba(100, 100, 100, 0.7); }
   .page-overlay .overlay-content {
     width: 400px;
-    height: 300px;
+    height: 250px;
     background: #fff;
     position: absolute;
     margin: auto;
