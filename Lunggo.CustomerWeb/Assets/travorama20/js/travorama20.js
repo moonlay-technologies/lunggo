@@ -290,9 +290,11 @@ function flightFormSearchFunctions() {
         if (FlightSearchConfig.flightForm.type == 'return') {
             $('.form-flight-oneway').hide();
             $('.form-flight-return').show();
+            $('.form-flight-return').removeClass('disabled');
         } else {
             $('.form-flight-oneway').show();
             $('.form-flight-return').hide();
+            $('.form-flight-return').addClass('disabled');
         }
 
     });
