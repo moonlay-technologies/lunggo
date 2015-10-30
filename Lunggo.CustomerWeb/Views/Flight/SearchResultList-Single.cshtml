@@ -250,16 +250,6 @@
             </div>
         </div>
 
-        <!-- <div class="page-overlay" ng-show="loading && loadingFlight">
-                 <div class="overlay-content validating-flight">
-                     <header>
-                         <h4>Mencari Penerbangan</h4>
-                     </header>
-                     <section>
-                         <p>Mencari penerbangan. Harap tunggu.</p>
-                     </section>
-                 </div>
-             </div><!-- .page-overlay -->
         <div class="page-overlay" ng-show="expiry.expired">
             <div class="overlay-content validating-flight">
                 <header>
@@ -363,8 +353,12 @@
     
         <!-- ****************************** -->
     
-        <div>
+        <div class="no-flight" ng-show="!loading && !loadingFlight && !flightList.length">
+            <h3 class="text-center">Penerbangan tidak ditemukan.<br/> Silahkan mencari mengganti tangal penerbangan atau rute Anda.</h3>
+        </div>
 
+        <div ng-hide="!loading && !loadingFlight && !flightList.length">
+            
             <div class="container" ng-hide="!flightList.length && loading && loadingFlight">
                 <h3><b>HASIL</b> PENCARIAN</h3>
             </div>

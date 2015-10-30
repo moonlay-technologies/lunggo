@@ -346,7 +346,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PERGI" class="btn btn-grey block" ng-click="setChosenFlight('departure',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-hide="departureFlightConfig.loading && departureFlightConfig.loadingFlight">
+            <div class="search-result-filter" ng-hide="(departureFlightConfig.loading && departureFlightConfig.loadingFlight) || (!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length)">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -491,7 +491,10 @@
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
-            <div class="search-result-list">
+            <div class="no-flight" ng-show="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari mengganti tangal penerbangan atau rute Anda.</h3>
+            </div>
+            <div class="search-result-list" ng-hide="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
                 <div class="container">
 
                     <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (departureFlightConfig.activeFlight == flight.IndexNo) }" ng-repeat="flight in departureFlight = (departureFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('departure') | filter:airlineFilter('departure') | filter:priceFilter('departure') | filter:timeFilter('departure') | orderBy:departureFlightConfig.flightSort.value:departureFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
@@ -625,7 +628,7 @@
                     <input type="submit" value="GANTI PENERBANGAN PULANG" class="btn btn-grey block" ng-click="setChosenFlight('return',-1)" />
                 </div>
             </div><!-- .search-result-selected -->
-            <div class="search-result-filter" ng-hide="returnFlightConfig.loading && returnFlightConfig.loadingFlight">
+            <div class="search-result-filter" ng-hide="(returnFlightConfig.loading && returnFlightConfig.loadingFlight) || (!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length)">
                 <div class="container">
                     <div class="filter-left">
                         <span>FILTER:</span>
@@ -769,7 +772,10 @@
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
-            <div class="search-result-list">
+            <div class="no-flight" ng-show="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari mengganti tangal penerbangan atau rute Anda.</h3>
+            </div>
+            <div class="search-result-list" ng-hide="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
                 <div class="container">
 
                     <div class="flight flight-{{flight.IndexNo}}" ng-class="{'active': (returnFlightConfig.activeFlight == flight.IndexNo) }" ng-repeat="flight in returnFlight = (returnFlightConfig.flightList | filter:availableFilter() | filter:transitFilter('return') | filter:airlineFilter('return') | filter:priceFilter('return') | filter:timeFilter('return') | orderBy:returnFlightConfig.flightSort.value:returnFlightConfig.flightSort.reverse)" id="flight-{{flight.IndexNo}}">
