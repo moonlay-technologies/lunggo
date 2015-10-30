@@ -23,15 +23,17 @@
         var printTimeout = '';
 
         // development only start
-        printTimeout = new Date();
-        printTimeout.setMinutes(printTimeout.getMinutes() + 15);
+        printTimeout = new Date(); // please change this print time out to actual time
+        printTimeout.setSeconds(printTimeout.getSeconds() + 5);
         // development only end
 
         // countdown timer
-        $('.timer').countdown(printTimeout, function (event) {
+        $('.timer').countdown(printTimeout, function(event) {
             $('.timer .hour h5').text(event.strftime('%H'));
             $('.timer .minute h5').text(event.strftime('%M'));
             $('.timer .second h5').text(event.strftime('%S'));
+        }).on('finish.countdown', function() {
+            $('.print .btn').removeClass('disabled');
         });
 
     </script>
