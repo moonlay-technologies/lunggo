@@ -153,6 +153,12 @@ app.controller('returnFlightController', [
             dateTime = dateTime.getDate();
             return dateTime;
         }
+        $scope.getFullDate = function (dateTime) {
+            if (dateTime) {
+                dateTime = parseInt(dateTime.substr(0, 4) + '' + dateTime.substr(5, 2) + '' + dateTime.substr(8, 2));
+                return dateTime;
+            }
+        }
 
         // set active flight
         $scope.setActiveFlight = function (target, flightSequence) {

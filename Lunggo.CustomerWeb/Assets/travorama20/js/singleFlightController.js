@@ -105,9 +105,13 @@ app.controller('singleFlightController', [
         }
 
         // get date
-        $scope.getDate = function(dateTime) {
+        $scope.getDate = function (dateTime) {
             dateTime = new Date(dateTime);
             dateTime = dateTime.getDate();
+            return dateTime;
+        }
+        $scope.getFullDate = function (dateTime) {
+            dateTime = parseInt(dateTime.substr(0, 4) + '' + dateTime.substr(5, 2) + '' + dateTime.substr(8, 2));
             return dateTime;
         }
 

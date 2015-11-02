@@ -2373,6 +2373,8 @@
     <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <Content Include="Views\StaticPage\Privacy.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
+    <None Include="Views\Flight\Thankyou.cshtml.bak" />
+    <Content Include="Views\Flight\FlightSearchForm.cshtml" />
     <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
