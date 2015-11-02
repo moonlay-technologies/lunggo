@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             {
                                 OriginAirport = origin,
                                 DestinationAirport = dest,
-                                DepartureDate = date,
+                                DepartureDate = DateTime.SpecifyKind(date,DateTimeKind.Utc),
                                 Segments = segments
                             }
                         }

@@ -26,7 +26,8 @@ app.controller('singleFlightController', [
             Trips: FlightSearchConfig.flightForm.trips,
             Requests: FlightSearchConfig.flightForm.Requests,
             Completed: [],
-            Progress: 0
+            Progress: 0,
+            FinalProgress: 0
         };
         $scope.expiry = {
             expired: false,
@@ -415,6 +416,8 @@ app.controller('singleFlightController', [
                         // set expiry if progress == 100
                         if ($scope.flightRequest.Progress == 100) {
                             $scope.expiry.time = returnData.ExpiryTime;
+                        } else {
+                            $scope.flightRequest.FinalProgress = $scope.flightRequest.Progress;
                         }
 
                         // generate flight
@@ -565,6 +568,8 @@ app.controller('singleFlightController', [
                         $('.arrival-slider-max').trigger('input');
                     }
                 });
+
+                $scope.flightRequest.FinalProgress = 100;
 
                 console.log('Completed setting flight and filter');
                 console.log($scope);

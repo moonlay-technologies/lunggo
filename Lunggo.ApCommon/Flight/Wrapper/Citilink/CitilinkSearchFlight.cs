@@ -108,6 +108,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 var ParseFID1 = FID.Split('|').ToList();
                                 var ParseFID2 = ParseFID1[1].Split('~').ToList();
                                 var Rbd = ParseFID1[0].Substring(2, 1);
+
                                 //Airline
 
                                 string Acode;
@@ -151,24 +152,22 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     for (int l = 0; l < jumlahSegment; l++)
                                     {
                                         if (ParseFID2[(8*l)].Length > 2)
-                                        {
-                                            Acode = ParseFID2[(8*l)].Substring(1, 2);
-
-                                        }
+                                            {
+                                                Acode = ParseFID2[(8*l)].Substring(1, 2);
+                                            }
                                         else
-                                        {
-                                            Acode = ParseFID2[(8*l)];
-
-                                        }
+                                            {
+                                                Acode = ParseFID2[(8*l)];
+                                            }
 
                                         if (ParseFID2[(8*l) + 1].Trim().Length > 3)
-                                        {
-                                            Fnumber = ParseFID2[(8*l) + 1].Substring(0, 4).Trim();
-                                        }
+                                            {
+                                                Fnumber = ParseFID2[(8*l) + 1].Substring(0, 4).Trim();
+                                            }
                                         else
-                                        {
-                                            Fnumber = ParseFID2[(8*l) + 1].Trim();
-                                        }
+                                            {
+                                                Fnumber = ParseFID2[(8*l) + 1].Trim();
+                                            }
 
                                         var dict = DictionaryService.GetInstance();
                                         var arrtime = DateTime.Parse(ParseFID2[Airport + 3])

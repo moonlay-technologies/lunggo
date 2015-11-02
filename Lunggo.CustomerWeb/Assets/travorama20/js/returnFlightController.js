@@ -594,6 +594,9 @@ app.controller('returnFlightController', [
 
                         // update total progress
                         targetScope.flightSearchParams.Progress = ((returnData.MaxRequest - targetScope.flightSearchParams.Requests.length) / returnData.MaxRequest) * 100;
+                        if (targetScope.flightSearchParams.Progress < 100) {
+                            targetScope.flightSearchParams.FinalProgress = targetScope.flightSearchParams.Progress;
+                        }
                         // generate flight
                         $scope.arrangeFlightData(targetScope, returnData.FlightList);
 
@@ -747,6 +750,8 @@ app.controller('returnFlightController', [
                     $('.' + targetFlight + '-arrival-slider-max').trigger('input');
                 }
             });
+
+            targetScope.flightSearchParams.FinalProgress = 100;
 
             console.log('Completed setting flight filtering for : ' + targetScope.name);
             console.log(targetScope);

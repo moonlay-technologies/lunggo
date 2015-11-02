@@ -103,7 +103,8 @@
                 CabinClass: "@data.CabinClass",
                 Requests: [],
                 Completed: [],
-                Progress: 0
+                Progress: 0,
+                FinalProgress: 0
             },
             returnFlightParam: {
                 TripType: "@TripType.OneWay",
@@ -114,7 +115,8 @@
                 CabinClass: "@data.CabinClass",
                 Requests: [],
                 Completed: [],
-                Progress: 0
+                Progress: 0,
+                FinalProgress: 0
             }
         };
     </script>
@@ -167,14 +169,14 @@
         <input type="text" name="token" value="" class="fareToken" />
     </form>
     
-    <div class="page-progress" ng-show="(departureFlightConfig.flightSearchParams.Progress < 100) && (returnFlightConfig.flightSearchParams.Progress < 100)">
+    <div class="page-progress" ng-show="(departureFlightConfig.flightSearchParams.FinalProgress < 100) && (returnFlightConfig.flightSearchParams.FinalProgress < 100)">
         <div class="container">
             <b>Mencari Penerbangan...</b>
             <div class="progress-wrapper">
 
-                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2 | number:0 }}%;">
+                <div class="progress-bar" style="width:{{ ( departureFlightConfig.flightSearchParams.FinalProgress + returnFlightConfig.flightSearchParams.FinalProgress ) / 2 | number:0 }}%;">
                     <div class="plane">
-                        <span>{{ ( departureFlightConfig.flightSearchParams.Progress + returnFlightConfig.flightSearchParams.Progress ) / 2  | number:0}} %</span>
+                        <span>{{ ( departureFlightConfig.flightSearchParams.FinalProgress + returnFlightConfig.flightSearchParams.FinalProgress ) / 2  | number:0}} %</span>
                     </div>
                 </div>
 
@@ -420,7 +422,7 @@
                                     </div><!-- .flight-airline -->
                                     <div class="summary-top-right flight-date">
                                         <div class="flight-date-departure">
-                                            <h4>{{flight.Trips[0].OriginAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
+                                            <h4>{{flight.Trips[0].Segments[0].DepartureAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                                         </div>
                                         <div class="flight-date-duration">
                                             <h5 class="time">{{msToTime(flight.Trips[0].TotalDuration)}}</h5>
@@ -430,7 +432,7 @@
                                             </h5>
                                         </div>
                                         <div class="flight-date-arrival">
-                                            <h4>{{flight.Trips[0].DestinationAirport}} <span>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) > getFullDate(flight.Trips[0].Segments[0].DepartureTime)">+{{getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) - getFullDate(flight.Trips[0].Segments[0].DepartureTime)}}</span></span></h4>
+                                            <h4>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalAirport}} <span>{{flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime | date : 'HH:mm' : 'UTC'}} <span class="overday" ng-if="getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) > getFullDate(flight.Trips[0].Segments[0].DepartureTime)">+{{getFullDate(flight.Trips[0].Segments[ flight.Trips[0].Segments.length - 1 ].ArrivalTime) - getFullDate(flight.Trips[0].Segments[0].DepartureTime)}}</span></span></h4>
                                         </div>
                                     </div><!-- .flight-date -->
                                 </div><!-- .summary-top -->

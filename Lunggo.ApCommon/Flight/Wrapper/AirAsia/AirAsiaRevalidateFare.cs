@@ -216,7 +216,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 {
                                     OriginAirport = origin,
                                     DestinationAirport = dest,
-                                    DepartureDate = date,
+                                    DepartureDate = DateTime.SpecifyKind(date,DateTimeKind.Utc),
                                     Segments = segments
                                 }
                             }

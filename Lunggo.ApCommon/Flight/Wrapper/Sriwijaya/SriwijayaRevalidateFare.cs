@@ -306,6 +306,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  }
                  else
                  {
+                     Client.LogoutSession(client);
                      return new RevalidateFareResult
                      {
                          IsSuccess = false,
@@ -441,6 +442,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                  }
                  else
                  {
+                     Client.LogoutSession(client);
                      return new RevalidateFareResult
                      {
                          IsSuccess = false,
@@ -522,9 +524,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                              CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                              Rbd = Rbd[i],
                              DepartureAirport = bandara[0],
-                             DepartureTime = departureDate,
+                             DepartureTime = DateTime.SpecifyKind(departureDate,DateTimeKind.Utc),
                              ArrivalAirport = bandara[1],
-                             ArrivalTime = arrivalDate,
+                             ArrivalTime = DateTime.SpecifyKind(arrivalDate,DateTimeKind.Utc),
                              OperatingAirlineCode = ParseFare[i],
                              Duration = arrtime - deptime,
                              StopQuantity = 0
