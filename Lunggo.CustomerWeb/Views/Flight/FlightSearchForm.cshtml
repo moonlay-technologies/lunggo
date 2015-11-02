@@ -1,8 +1,8 @@
 ﻿<form method="GET" class="change-flight form-flight form" action="/id/Flight/SearchResultList">
-
+    
     <div class="form-group">
-        <label class="form-flight-type"><input type="radio" name="flightType" value="return" checked /> Pulang Pergi</label>
-        <label class="form-flight-type"><input type="radio" name="flightType" value="oneWay" /> Sekali Jalan</label>
+        <label class="form-flight-type" data-value="return"><input type="radio" name="flightType" value="return" checked /> Pulang Pergi</label>
+        <label class="form-flight-type" data-value="oneway"><input type="radio" name="flightType" value="oneWay" /> Sekali Jalan</label>
     </div>
 
     <div class="change-flight-left">
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="switch-flight">
-        <span class="change-flight-switch switch-destination"></span>
+        <span class="change-flight-switch switch-destination form-flight-switch"></span>
     </div>
     <div class="change-flight-right">
         <div>
