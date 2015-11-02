@@ -51,3 +51,19 @@ var CheckVoucherConfig = {
 var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };
+
+var ResetPasswordConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ResetPassword'
+};
+
+var ForgotPasswordConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ForgotPassword'
+};
+
+var ChangePasswordConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ChangePassword'
+};
+
+var ChangeProfileConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ChangeProfile'
+};
