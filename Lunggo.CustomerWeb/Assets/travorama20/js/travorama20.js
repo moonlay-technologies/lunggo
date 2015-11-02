@@ -287,6 +287,8 @@ function flightFormSearchFunctions() {
     $('.form-flight-type').click(function() {
         FlightSearchConfig.flightForm.type = $('input[name="flightType"]:checked').val();
 
+        $('.change-flight-class .option, .form-flight-passenger .option , .search-location, .search-calendar').hide();
+
         if (FlightSearchConfig.flightForm.type == 'return') {
             $('.form-flight-oneway').hide();
             $('.form-flight-return').show();
@@ -473,8 +475,6 @@ function flightFormSearchFunctions() {
     // set current date as default
     $(document).ready(function() {
         var currentDate = new Date();
-        // indexPageConfig.flightForm.departureDate = new Date();
-        // indexPageConfig.flightForm.returnDate = new Date();
         $('.form-flight-departure .date, .form-flight-return .date').html(('0' + currentDate.getDate()).slice(-2));
         $('.form-flight-departure .month, .form-flight-return .month').html(translateMonth(currentDate.getMonth()));
         $('.form-flight-departure .year, .form-flight-return .year').html(currentDate.getFullYear());
@@ -543,7 +543,7 @@ function flightFormSearchFunctions() {
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
         $('.change-flight-class .option').hide();
-        $('.form-flight-passenger .option').hide();
+        $(this).siblings().children('.option').hide();
         $(this).children('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });
