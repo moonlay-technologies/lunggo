@@ -28,6 +28,8 @@ namespace Lunggo.ApCommon.Currency.Service
             {
                 SetSupplierExchangeRate(Supplier.Mystifly, 1, 14000);
                 SetSupplierExchangeRate(Supplier.AirAsia, 1, 1);
+                SetSupplierExchangeRate(Supplier.Citilink, 1, 1);
+                SetSupplierExchangeRate(Supplier.Sriwijaya, 1, 1);
                 _isInitialized = true;
             }
         }

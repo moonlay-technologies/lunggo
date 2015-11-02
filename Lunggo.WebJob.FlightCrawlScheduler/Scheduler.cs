@@ -60,7 +60,7 @@ namespace Lunggo.WebJob.FlightCrawlScheduler
             var flightService = FlightService.GetInstance();
             var queue = QueueService.GetInstance().GetQueueByReference("FlightCrawl");
             var conditionString = targetString.Split('.')[0];
-            var isExpired = flightService.GetSearchedItinerariesExpiry(conditionString) == null;
+            var isExpired = flightService.GetSearchedItinerariesExpiry(conditionString, 0) == null;
             if (isExpired)
             {    
                 var message = new CloudQueueMessage("", "");
