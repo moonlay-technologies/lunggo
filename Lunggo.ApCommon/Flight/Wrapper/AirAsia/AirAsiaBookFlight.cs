@@ -444,7 +444,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingId = bookingId,
                             BookingStatus = BookingStatus.Booked,
-                            TimeLimit = timeLimit
+                            TimeLimit = timeLimit.ToUniversalTime()
                         }
                     };
                 }

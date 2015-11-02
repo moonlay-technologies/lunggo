@@ -65,7 +65,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
 
                 //CurrencyService.GetInstance().Init();
-                PaymentService.GetInstance().Init();
                 VoucherService.GetInstance().Init();
                 InitPriceMarginRules();
                 InitPriceDiscountRules();

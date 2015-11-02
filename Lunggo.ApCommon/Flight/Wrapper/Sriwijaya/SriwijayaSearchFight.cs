@@ -398,7 +398,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                            Segments = segments,
                                            OriginAirport = conditions.Trips[0].OriginAirport,
                                            DestinationAirport = conditions.Trips[0].DestinationAirport,
-                                           DepartureDate = conditions.Trips[0].DepartureDate
+                                           DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                        }
                                     }
                                     };
@@ -662,9 +662,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         {
                                            new FlightTrip()
                                            {
-                                               Segments = segments,
-                                               OriginAirport = conditions.Trips[0].OriginAirport,
-                                               DestinationAirport = conditions.Trips[0].DestinationAirport
+                                                Segments = segments,
+                                                OriginAirport = conditions.Trips[0].OriginAirport,
+                                                DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                                DepartureDate = DateTime.SpecifyKind(conditions.Trips[0].DepartureDate,DateTimeKind.Utc)
                                            }
                                         }
                                     };

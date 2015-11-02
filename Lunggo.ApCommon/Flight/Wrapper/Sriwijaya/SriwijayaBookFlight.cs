@@ -352,11 +352,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     //CultureInfo provider = CultureInfo.InvariantCulture;
                     var timeLimitDate = DateTime.Parse(timelimitParse[0]+ "/" + timelimitParse[1] + "/" + timelimitParse[2]+" "+timelimitParse[3]);
                     var timeLimitGMT = timelimitParse[4].Substring(4, 2);
-
+                    var timeLimitFinal = DateTime.Parse(timeLimitDate + " " + timeLimitGMT);
                     
                     status.BookingId = kodeBook;
                     status.BookingStatus = BookingStatus.Booked;
-                    status.TimeLimit = DateTime.Parse(timeLimitDate+" "+ timeLimitGMT);
+                    status.TimeLimit = timeLimitFinal.ToUniversalTime();
                 
                     hasil.Status = status;
                     hasil.IsSuccess = true;

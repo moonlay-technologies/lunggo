@@ -188,7 +188,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 {
                                     OriginAirport = trip0.OriginAirport,
                                     DestinationAirport = trip0.DestinationAirport,
-                                    DepartureDate = trip0.DepartureDate,
+                                    DepartureDate = DateTime.SpecifyKind(trip0.DepartureDate, DateTimeKind.Utc),
                                     Segments = segments
                                 }
                             }
