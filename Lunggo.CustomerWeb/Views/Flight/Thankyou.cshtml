@@ -1,6 +1,8 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
+@using Lunggo.Framework.Payment.Data
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
@@ -28,11 +30,11 @@
         // development only end
 
         // countdown timer
-        $('.timer').countdown(printTimeout, function(event) {
+        $('.timer').countdown(printTimeout, function (event) {
             $('.timer .hour h5').text(event.strftime('%H'));
             $('.timer .minute h5').text(event.strftime('%M'));
             $('.timer .second h5').text(event.strftime('%S'));
-        }).on('finish.countdown', function() {
+        }).on('finish.countdown', function () {
             $('.print .btn').removeClass('disabled');
         });
 
@@ -109,8 +111,36 @@ else
                                     <h4>INFO PENUMPANG</h4>
 
                                     <ol>
-                                        <li><p>Dewasa : Shinta Tamara Purnawan</p></li>
-                                        <li><p>Dewasa : Chyntia Budiwati</p></li>
+                                        @foreach (var passenger in Model.Passengers)
+                                        {
+                                            var pType = "";
+                                            switch (passenger.Type)
+                                            {
+                                                case PassengerType.Adult:
+                                                    pType = "Dewasa";
+                                                    break;
+                                                case PassengerType.Child:
+                                                    pType = "Anak-Anak";
+                                                    break;
+                                                case PassengerType.Infant:
+                                                    pType = "Bayi";
+                                                    break;
+                                            }
+                                            var pTitle = "";
+                                            switch (passenger.Title)
+                                            {
+                                                case Title.Mister:
+                                                    pTitle = "Tuan";
+                                                    break;
+                                                case Title.Mistress:
+                                                    pTitle = "Nyonya";
+                                                    break;
+                                                case Title.Miss:
+                                                    pTitle = "Nona";
+                                                    break;
+                                            }
+                                            <li><p>@pType : @pTitle @passenger.FirstName @passenger.LastName</p></li>
+                                        }
                                     </ol>
 
                                 </div>
@@ -118,29 +148,38 @@ else
                                     <h4>DETAIL PESANAN</h4>
 
                                     <div class="flight departure">
-                                        <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <p>Berangkat : </p>
+                                        @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                        {
+                                            <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" /> <span>@segment.AirlineName</span> </p>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <p>Berangkat : </p>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <p>@segment.DepartureCity (@segment.DepartureAirport) - @segment.ArrivalCity (@segment.ArrivalAirport)</p>
+                                                    <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-9">
-                                                <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
-                                                <p>Kamis, 15 Okt 2015</p>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
-                                    <div class="flight return">
-                                        <p><img src="/Assets/images/airlines/AK.png" alt="AirAsia" /> <span>AIRASIA</span> </p>
-                                        <div class="row">
-                                            <div class="col-xs-3">
-                                                <p>Berangkat : </p>
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <p>Jakarta (CGK) - Denpasar, Bali (DPS)</p>
-                                                <p>Kamis, 15 Okt 2015</p>
-                                            </div>
+                                    @if (Model.Itinerary.Trips.Count > 1)
+                                    {
+                                        <div class="flight return">
+                                            @foreach (var segment in Model.Itinerary.Trips[0].Segments)
+                                            {
+                                                <p><img src="@segment.AirlineLogoUrl" alt="@segment.AirlineName" /> <span>@segment.AirlineName</span> </p>
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <p>Berangkat : </p>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <p>@segment.DepartureCity (@segment.DepartureAirport) - @segment.ArrivalCity (@segment.ArrivalAirport)</p>
+                                                        <p>@segment.DepartureTime.ToString("dddd, d MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
-                                    </div>
+                                    }
                                 </div>
 
                             </div>
@@ -148,23 +187,24 @@ else
                                 <div class="price-detail">
                                     <h4>RINCIAN HARGA</h4>
                                     <dl>
-                                        <dt>Penerbangan Pergi <span>(4 Penumpang)</span></dt>
-                                        <dd>Rp 999.999.999</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>Penerbangan Pulang (4 penumpang)</dt>
-                                        <dd>Rp 999.999.999</dd>
+                                        <dt>Tiket Pesawat <span>(@Model.Passengers.Count Penumpang)</span></dt>
+                                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                     </dl>
                                     <dl class="total-price">
                                         <dt>Total</dt>
-                                        <dd>Rp 999.999.999</dd>
+                                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                     </dl>
                                 </div>
 
                                 <div class="payment-detail">
                                     <h4>METODE PEMBAYARAN</h4>
-                                    <h5>Credit Card</h5>
-                                    <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                    @switch (Model.Payment.Method)
+                                    {
+                                        case PaymentMethod.CreditCard:
+                                            <h5>Credit Card</h5>
+                                            <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
+                                            break;
+                                    }
                                 </div>
 
                             </div>
