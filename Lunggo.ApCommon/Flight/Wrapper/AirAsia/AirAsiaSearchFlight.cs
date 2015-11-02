@@ -37,20 +37,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var client = new ExtendedWebClient();
 
                 // Airport Generalizing
-                if (conditions.Trips[0].OriginAirport == "JKT")
-                    conditions.Trips[0].OriginAirport = "CGK";
-                if (conditions.Trips[0].DestinationAirport == "JKT")
-                    conditions.Trips[0].DestinationAirport = "CGK";
+                var trip0 = new FlightTrip
+                {
+                    OriginAirport = conditions.Trips[0].OriginAirport,
+                    DestinationAirport = conditions.Trips[0].DestinationAirport,
+                    DepartureDate = conditions.Trips[0].DepartureDate
+                };
+                if (trip0.OriginAirport == "JKT")
+                    trip0.OriginAirport = "CGK";
+                if (trip0.DestinationAirport == "JKT")
+                    trip0.DestinationAirport = "CGK";
 
                 // [GET] Search Flight
-                var trip0 = conditions.Trips[0];
                 var dict = DictionaryService.GetInstance();
                 var originCountry = dict.GetAirportCountryCode(trip0.OriginAirport);
                 var destinationCountry = dict.GetAirportCountryCode(trip0.DestinationAirport);
                 var availableFares = new CQ();
                 if (originCountry == "ID")
                 {
-                    var url = @"http://booking.airasia.com/Flight/InternalSelect" +
+                   var url = @"http://booking.airasia.com/Flight/InternalSelect" +
                               @"?o1=" + trip0.OriginAirport +
                               @"&d1=" + trip0.DestinationAirport +
                               @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
