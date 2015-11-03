@@ -4,20 +4,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Http;
-using Lunggo.Framework.Util;
 using Lunggo.Framework.Web;
-using Microsoft.Data.OData.Query;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {

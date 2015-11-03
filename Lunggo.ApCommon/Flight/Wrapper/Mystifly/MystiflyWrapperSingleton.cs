@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {

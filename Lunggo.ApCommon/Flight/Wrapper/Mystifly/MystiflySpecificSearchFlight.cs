@@ -5,7 +5,6 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
-using PassengerType = Lunggo.ApCommon.Mystifly.OnePointService.Flight.PassengerType;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {

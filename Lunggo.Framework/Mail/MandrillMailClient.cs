@@ -1,12 +1,8 @@
-﻿using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
-using Lunggo.Framework.HtmlTemplate;
+﻿using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.SharedModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mandrill;
 using Mandrill.Models;
 using Mandrill.Requests.Messages;

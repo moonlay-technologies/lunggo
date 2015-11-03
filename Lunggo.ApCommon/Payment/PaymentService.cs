@@ -1,28 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.ModelBinding;
-using System.Web.Mvc;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Veritrans;
-using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Http;
-using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using HttpRequest = System.Web.HttpRequest;
 
 namespace Lunggo.ApCommon.Payment
 {

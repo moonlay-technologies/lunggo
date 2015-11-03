@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Dictionary;
+﻿using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
-using Lunggo.Framework.Core.CustomTraceListener;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;

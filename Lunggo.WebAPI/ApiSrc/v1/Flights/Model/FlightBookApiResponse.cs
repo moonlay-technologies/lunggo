@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model

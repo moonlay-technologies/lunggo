@@ -1,12 +1,7 @@
-﻿using Dapper;
-using Lunggo.ApCommon.Query;
+﻿using Lunggo.ApCommon.Query;
 using Lunggo.CustomerWeb.Areas.UW100.Models;
 using Lunggo.Framework.Database;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Areas.UW100.Logic

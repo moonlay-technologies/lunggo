@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Web.UI.WebControls.WebParts;
-using Base36Encoder;
-
-using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Subscriber.Query;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;

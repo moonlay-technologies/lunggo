@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
+﻿using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.BackendWeb.Models
 {

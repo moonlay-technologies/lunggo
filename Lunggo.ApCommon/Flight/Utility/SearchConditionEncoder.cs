@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Dictionary;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.Framework.Encoder;
-using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

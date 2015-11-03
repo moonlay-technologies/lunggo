@@ -1,5 +1,4 @@
-﻿using System.Web.UI.WebControls;
-using Lunggo.ApCommon.Hotel.Logic;
+﻿using Lunggo.ApCommon.Hotel.Logic;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.CustomerWeb.WebSrc.UW100.Object;
 

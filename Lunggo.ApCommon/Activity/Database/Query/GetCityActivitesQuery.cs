@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Lunggo.ApCommon.Actifity.Model;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
+
 namespace Lunggo.ApCommon.Actifity.Database.Query
 {
     internal class GetCityActivitiesQuery : QueryBase<GetCityActivitiesQuery, ActivityType>

@@ -1,36 +1,21 @@
-﻿using System.Collections;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.IO.Compression;
-using System.Runtime.InteropServices;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Pattern;
-using Lunggo.Framework.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;     
 using System.IO;
 using System.Drawing;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Http.Rest;
 using Lunggo.Framework.Util;
-using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
-using Dapper;
-using Lunggo.Repository;
-using System.Dynamic;
-using System.Reflection;
 using StackExchange.Redis;
 
 

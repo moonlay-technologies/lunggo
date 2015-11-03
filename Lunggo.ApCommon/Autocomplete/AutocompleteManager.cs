@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Helpers;
-using System.Web.Mvc;
-using System.Web.WebPages;
 using Lunggo.ApCommon.Dictionary;
-using Lunggo.ApCommon.Model;
 using Lunggo.ApCommon.Trie;
 
 namespace Lunggo.ApCommon.Autocomplete

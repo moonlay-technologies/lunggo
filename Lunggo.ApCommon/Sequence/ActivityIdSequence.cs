@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Base36Encoder;
-using Lunggo.ApCommon.Activity.Constant;
-using Lunggo.ApCommon.Constant;
-using Lunggo.Framework.Sequence;
+﻿using Lunggo.Framework.Sequence;
 
 namespace Lunggo.ApCommon.Sequence
 {

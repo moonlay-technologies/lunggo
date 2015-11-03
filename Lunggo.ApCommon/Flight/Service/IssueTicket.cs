@@ -1,18 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Queue;
-using Microsoft.WindowsAzure.Storage.Queue;
-using StackExchange.Redis;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

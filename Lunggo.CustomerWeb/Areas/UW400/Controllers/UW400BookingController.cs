@@ -1,10 +1,5 @@
 ﻿using Lunggo.CustomerWeb.Areas.UW400.Logic;
 using Lunggo.CustomerWeb.Areas.UW400.Models;
-using Lunggo.Framework.Payment.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Areas.UW400.Controllers

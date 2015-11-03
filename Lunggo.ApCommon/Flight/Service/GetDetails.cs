@@ -1,12 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Web.UI;
-
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

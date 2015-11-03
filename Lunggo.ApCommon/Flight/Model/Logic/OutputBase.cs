@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 
 namespace Lunggo.ApCommon.Flight.Model.Logic
 {

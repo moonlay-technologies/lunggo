@@ -1,25 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.WebPages;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Currency.Service;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Util;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Constant;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Http;
-using WURFL;
-using HttpRequest = System.Web.HttpRequest;
 
 namespace Lunggo.CustomerWeb
 {

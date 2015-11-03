@@ -1,21 +1,14 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
-
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.Filter;
-using Lunggo.Framework.Pattern;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 

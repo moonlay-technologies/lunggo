@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Error;

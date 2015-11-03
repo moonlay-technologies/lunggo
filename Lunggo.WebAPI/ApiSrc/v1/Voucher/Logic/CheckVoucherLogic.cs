@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Lunggo.ApCommon.Voucher;
-using Lunggo.WebAPI.ApiSrc.v1.Voucher.Model;
+﻿using Lunggo.WebAPI.ApiSrc.v1.Voucher.Model;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 
