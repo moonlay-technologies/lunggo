@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher.Query;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;

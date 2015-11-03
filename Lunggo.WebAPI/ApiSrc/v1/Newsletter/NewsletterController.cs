@@ -5,6 +5,7 @@ using System.Web.Http;
 using Lunggo.ApCommon.Subscriber;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;

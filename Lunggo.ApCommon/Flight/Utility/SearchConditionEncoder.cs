@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.Encoder;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

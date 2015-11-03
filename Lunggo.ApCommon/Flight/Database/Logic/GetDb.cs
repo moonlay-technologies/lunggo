@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
