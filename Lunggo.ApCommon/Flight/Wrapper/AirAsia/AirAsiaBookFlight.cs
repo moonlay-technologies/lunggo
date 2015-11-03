@@ -430,6 +430,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
                     var timeLimit = timeLimitDate.Add(timeLimitTime);
+                    var timeLimitFinal = timeLimit.AddHours(-7);
                     return new BookFlightResult
                     {
                         IsSuccess = true,
@@ -437,7 +438,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingId = bookingId,
                             BookingStatus = BookingStatus.Booked,
-                            TimeLimit = timeLimit.ToUniversalTime()
+                            TimeLimit = DateTime.SpecifyKind(timeLimitFinal,DateTimeKind.Utc)
                         }
                     };
                 }

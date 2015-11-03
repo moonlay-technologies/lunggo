@@ -26,7 +26,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
                     SearchId = null,
                     OriginalRequest = null,
                     TotalFlightCount = 0,
-                    FlightList = null
+                    FlightList = new List<FlightItineraryForDisplay>(),
+                    GrantedRequests = new List<int>(),
+                    ExpiryTime = null,
+                    MaxRequest = 0
                 };
             }
             /*

@@ -5,51 +5,51 @@ var SystemConfig = {
 };
 
 var SearchHotelConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/hotels',
+    Url: 'http://localhost:1147/api/v1/hotels',
     ResultCount: 24
 };
 
 var SearchRoomConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/rooms'
+    Url: 'http://localhost:1147/api/v1/rooms'
 };
 
 var FlightSearchConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights'
+    Url: 'http://localhost:1147/api/v1/flights'
 };
 
 var RevalidateConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights/revalidate',
+    Url: 'http://localhost:1147/api/v1/flights/revalidate',
     working: false
 };
 
 var FlightBookConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights/book',
+    Url: 'http://localhost:1147/api/v1/flights/book',
     working: false
 };
 
 var GetRulesConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/flights/rules',
+    Url: 'http://localhost:1147/api/v1/flights/rules',
     working: false
 };
 
 var HotelAutocompleteConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/autocomplete/hotellocation/'
+    Url: 'http://localhost:1147/api/v1/autocomplete/hotellocation/'
 };
 
 var FlightAutocompleteConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/autocomplete/airport/'
+    Url: 'http://localhost:1147/api/v1/autocomplete/airport/'
 };
 
 var AirlineAutocompleteConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/autocomplete/airline/'
+    Url: 'http://localhost:1147/api/v1/autocomplete/airline/'
 };
 
 var CheckVoucherConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/voucher/check'
+    Url: 'http://localhost:1147/api/v1/voucher/check'
 };
 
 var SubscribeConfig = {
-    Url: 'http://dv2-api.azurewebsites.net/api/v1/newsletter/subscribe'
+    Url: 'http://localhost:1147/api/v1/newsletter/subscribe'
 };
 
 var ResetPasswordConfig = {

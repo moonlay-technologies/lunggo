@@ -229,6 +229,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      var dict = DictionaryService.GetInstance();
                      for (int i = 0; i < 2; i++)
                      {
+                         int j = i*0;
                          var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (i + 1) + ")>td:nth-child(3)"];
                          bandaraRaw = tunjukSetiapBandara.Select(x => x.Cq().Text()).FirstOrDefault();
                          var bandara = bandaraRaw.Split('-').ToList();
@@ -248,8 +249,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                          tampungFareString = string.Join(";", tampungFare.ToArray());
                          segments.Add(new FlightSegment
                          {
-                             AirlineCode = ParseFare[i],
-                             FlightNumber = ParseFare[i + 1],
+                             AirlineCode = ParseFare[j],
+                             FlightNumber = ParseFare[j + 1],
                              CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                              Rbd = Rbd[i],
                              DepartureAirport = bandara[0],
@@ -367,6 +368,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      var dict = DictionaryService.GetInstance();
                      for (int i = 0; i < 3; i++)
                      {
+                         int j = i*0;
                          var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (i + 1) + ")>td:nth-child(3)"];
                          bandaraRaw = tunjukSetiapBandara.Select(x => x.Cq().Text()).FirstOrDefault();
                          var bandara = bandaraRaw.Split('-').ToList();
@@ -386,8 +388,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                          tampungFareString = string.Join(";", tampungFare.ToArray());
                          segments.Add(new FlightSegment
                          {
-                             AirlineCode = ParseFare[i],
-                             FlightNumber = ParseFare[i + 1],
+                             AirlineCode = ParseFare[j],
+                             FlightNumber = ParseFare[j + 1],
                              CabinClass = (CabinClass)int.Parse(ParseFare[fareCabin]),
                              Rbd = Rbd[i],
                              DepartureAirport = bandara[0],
