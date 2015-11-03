@@ -11,7 +11,7 @@
 
 
 @{
-    Layout = "/Views/Shared/_layout_mobile.cshtml";
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Flight Search Page";
 }
 
@@ -74,12 +74,6 @@
 
 }
 
-@section PageJavascript{
-    <script>
-        flightFilter();
-        homePageFunctions();
-    </script>
-}
 
 <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
     <input type="text" name="Token" id="fareToken" value="" />

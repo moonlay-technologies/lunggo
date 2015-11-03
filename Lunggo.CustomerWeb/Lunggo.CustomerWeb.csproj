@@ -965,6 +965,13 @@
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\spin.min.js" />
     <Content Include="Assets\js\travoramaApp.js" />
+    <Content Include="Assets\mobile\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
@@ -1133,6 +1140,7 @@
     <Content Include="Assets\travorama20\css\_page_password.scss" />
     <Content Include="Assets\travorama20\css\_page_account.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
+    <Content Include="Assets\mobile\css\application.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
     <None Include="Properties\PublishProfiles\prod-cw.pubxml" />
@@ -2345,9 +2353,6 @@
     <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
     <Content Include="Views\Travorama20\flightReturn.cshtml" />
-    <None Include="Views\Flight\Checkout.cshtml.bak" />
-    <None Include="Views\Flight\SearchResultList-Return.cshtml.bak" />
-    <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <Content Include="Views\Travorama20\flightCheckout.cshtml" />
     <Content Include="Views\Flight\TopDestinations.cshtml" />
     <Content Include="Views\Travorama20\register.cshtml" />
@@ -2373,9 +2378,9 @@
     <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <Content Include="Views\StaticPage\Privacy.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
-    <None Include="Views\Flight\Thankyou.cshtml.bak" />
     <Content Include="Views\Flight\FlightSearchForm.cshtml" />
-    <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
+    <Content Include="Views\Shared\mobile\_Layout.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteHeader.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
@@ -2447,6 +2452,7 @@
     <Content Include="Views\Home\CekPemesanan.cshtml" />
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2458,7 +2464,6 @@
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
     <Content Include="Views\Template\UserForgot.cshtml" />
-    <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2477,6 +2482,7 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Assets\mobile\images\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />

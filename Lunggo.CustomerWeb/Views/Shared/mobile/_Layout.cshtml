@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+        
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+        
+    @{ Html.RenderPartial("_openGraph"); }
+
+    <title>@ViewBag.Title</title>
+
+    <!-- stylesheets -->
+    <!-- <link rel="stylesheet" href="/Assets/css/bootstrap.min.css"> -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link href="/Assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
+        
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    <link rel="stylesheet" href="/Assets/mobile/css/application.css">
+
+</head>
+<body class="@ViewBag.BodyClass">
+    @Html.Partial("/Views/Shared/_googleTag.cshtml")
+
+    <!--********************-->
+    @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
+    
+    <!--********************-->
+    <section class="site-content hidden">
+        
+        @RenderBody()
+
+    </section><!-- .site-content -->
+    
+    <!--********************-->
+    <!-- footer group start -->
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+   
+    <!--********************-->
+    <!-- Javascripts -->
+    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="/Config/JsConfig.js"></script>
+
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+    
+    <script src="/Assets/mobile/js/application.js"></script>
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
+
+
+</body>
+</html>
