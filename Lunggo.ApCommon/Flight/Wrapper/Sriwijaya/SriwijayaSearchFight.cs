@@ -232,7 +232,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "&nameFROM=radioFrom" +
                                         "&voteTO=" +
                                         "&nameTO=" +
-                                        "&STI=true" +
+                                        "&STI=false" +
                                         "&RR=NO&ADM=";
 
                                     var responAjax = client.DownloadString(url);
