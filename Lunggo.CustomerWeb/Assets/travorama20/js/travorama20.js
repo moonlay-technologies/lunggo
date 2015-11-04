@@ -134,6 +134,7 @@ function subscribeFormFunctions() {
     }
 
     function submitForm() {
+        $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled',true);
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
