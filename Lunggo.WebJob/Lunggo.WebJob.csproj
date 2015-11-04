@@ -7,19 +7,19 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{839C8598-4F07-4FA2-94CE-E61739A17700}</ProjectGuid>
+    <ProjectGuid>{304B9323-5306-4569-B047-62DB267B0224}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lunggo.WebJobFlightSearch</RootNamespace>
-    <AssemblyName>Lunggo.WebJobFlightSearch</AssemblyName>
+    <RootNamespace>Lunggo.WebJob</RootNamespace>
+    <AssemblyName>Lunggo.WebJob</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <ApplicationInsightsResourceId>/subscriptions/e5ab7f6d-8dd6-4372-9213-b917b32d5933/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/Lunggo.WebJobFlightSearch</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,14 +58,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\dv1-webjobflightsearch %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\dv1-webjobflightsearch.pubxml" />
-    <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch.pubxml" />
+    <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -92,9 +87,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5259</DevelopmentServerPort>
+          <DevelopmentServerPort>31449</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:5259/</IISUrl>
+          <IISUrl>http://localhost:31449/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
