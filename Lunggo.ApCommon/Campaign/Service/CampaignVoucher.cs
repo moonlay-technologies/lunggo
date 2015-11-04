@@ -67,7 +67,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return VoucherValidationStatusType.BelowMinimumSpend;
             if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
             {
-                //TODO check is registered from user table
+                if (!GetDb.IsMember(voucherRequest.Email))
+                    return VoucherValidationStatusType.EmailNotEligible;
             }
             if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
             {
