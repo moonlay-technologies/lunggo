@@ -18,7 +18,7 @@ body {
   letter-spacing: 0.5px;
   -webkit-font-smoothing: subpixel-antialiased;
   position: relative;
-  padding-bottom: 424px;
+  padding-bottom: 405px;
   min-height: 100%;
   background: #f9f9f9; }
 
@@ -43,7 +43,7 @@ span.close {
 .btn.btn-yellow {
   background: #ffd632;
   border: 2px solid #ebb600;
-  color: #4b4b4b;
+  color: #4f3500;
   font-weight: bold; }
 
 .btn.btn-grey, .btn.btn-gray {
@@ -272,7 +272,8 @@ form label.important:after {
             height: 60px;
             padding: 0 20px;
             display: table-cell;
-            vertical-align: middle; }
+            vertical-align: middle;
+            line-height: 120%; }
           .search-location .location-body .location-recommend .tab-header nav ul li.active {
             border-right-color: #fff; }
             .search-location .location-body .location-recommend .tab-header nav ul li.active span {
@@ -282,7 +283,8 @@ form label.important:after {
             border-right: none; }
   .search-location .location-body .location-recommend .tab-content {
     padding: 0 30px;
-    padding-bottom: 15px; }
+    padding-bottom: 15px;
+    padding-top: 30px; }
     .search-location .location-body .location-recommend .tab-content .col-xs-3 {
       padding: 0 12px; }
     .search-location .location-body .location-recommend .tab-content > div {
@@ -293,19 +295,24 @@ form label.important:after {
         color: #1daee4;
         font-size: 14px;
         font-weight: bold;
-        margin-top: 10px; }
+        margin-top: 10px;
+        margin-bottom: 6px; }
       .search-location .location-body .location-recommend .tab-content > div ul {
         margin: 0;
         padding: 0;
-        list-style: none; }
-        .search-location .location-body .location-recommend .tab-content > div ul li a {
-          color: #2f2f2f; }
-          .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
-            text-decoration: none; }
-            .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before, .search-location .location-body .location-recommend .tab-content > div ul li .page-index a.section-reason:hover:after, .page-index .search-location .location-body .location-recommend .tab-content > div ul li a.section-reason:hover:after {
-              content: url(/Assets/images/recommend-selector.png);
-              position: absolute;
-              left: 0px; }
+        list-style: none;
+        margin-bottom: 23px; }
+        .search-location .location-body .location-recommend .tab-content > div ul li {
+          margin-bottom: -1px; }
+          .search-location .location-body .location-recommend .tab-content > div ul li a {
+            color: #2f2f2f;
+            font-weight: 600; }
+            .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
+              text-decoration: none; }
+              .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before, .search-location .location-body .location-recommend .tab-content > div ul li .page-index a.section-reason:hover:after, .page-index .search-location .location-body .location-recommend .tab-content > div ul li a.section-reason:hover:after {
+                content: url(/Assets/images/recommend-selector.png);
+                position: absolute;
+                left: 0px; }
   .search-location .location-body .location-search {
     padding: 10px;
     height: 480px;
@@ -331,9 +338,9 @@ form label.important:after {
     background: #1daee4; }
   .slider .ui-slider-handle {
     background: #dedede;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px; }
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px; }
 
 /*--------------------*/
 /* imports */
@@ -361,9 +368,9 @@ file : /Assets/travorama20/css/_header.scss
   width: 100%;
   height: 70px;
   background: #fff;
-  -webkit-box-shadow: 0 0 10px #aaa;
-  -moz-box-shadow: 0 0 10px #aaa;
-  box-shadow: 0 0 10px #aaa;
+  -webkit-box-shadow: 0px -2px 15px #555;
+  -moz-box-shadow: 0px -2px 15px #555;
+  box-shadow: 0px -2px 15px #555;
   letter-spacing: 0.1px; }
   .site-header .site-logo {
     padding-top: 13px;
@@ -380,13 +387,13 @@ file : /Assets/travorama20/css/_header.scss
     .site-header .menu-top nav {
       float: right;
       background: #1daee4;
-      padding: 5px;
-      -webkit-border-bottom-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
-      -moz-border-radius-bottomright: 4px;
-      -moz-border-radius-bottomleft: 4px;
-      border-bottom-right-radius: 4px;
-      border-bottom-left-radius: 4px; }
+      padding: 5px 12px;
+      -webkit-border-bottom-right-radius: 2px;
+      -webkit-border-bottom-left-radius: 2px;
+      -moz-border-radius-bottomright: 2px;
+      -moz-border-radius-bottomleft: 2px;
+      border-bottom-right-radius: 2px;
+      border-bottom-left-radius: 2px; }
       .site-header .menu-top nav ul {
         padding: 0;
         margin: 0; }
@@ -429,6 +436,8 @@ file : /Assets/travorama20/css/_header.scss
           font-size: 14px;
           padding: 5px 10px;
           display: inline-block; }
+      .site-header .menu-bottom .menu-side nav ul .caret {
+        opacity: 0.5; }
 
 body {
   padding-top: 70px; }
@@ -462,7 +471,7 @@ including in this file :
 .site-footer-menu {
   background: #303030;
   color: #fff;
-  padding: 20px 0 30px;
+  padding: 0 0 30px;
   position: absolute;
   width: 100%;
   bottom: 157px; }
@@ -471,7 +480,8 @@ including in this file :
   .site-footer-menu .menu-left {
     padding-right: 50px; }
     .site-footer-menu .menu-left .footer-logo {
-      margin-bottom: 30px; }
+      margin-bottom: 30px;
+      margin-top: 26px; }
     .site-footer-menu .menu-left .googlePlay {
       margin-bottom: 15px;
       display: block; }
@@ -487,26 +497,31 @@ including in this file :
       position: relative; }
   .site-footer-menu .menu-right .row + .row {
     margin-top: 30px; }
-  .site-footer-menu .menu-right .call-center img {
-    float: left;
-    padding-right: 10px;
-    width: 60px; }
-  .site-footer-menu .menu-right .call-center p {
-    margin-bottom: 0; }
-  .site-footer-menu .menu-right .call-center h2 {
-    margin: 0;
-    font-weight: bold; }
+  .site-footer-menu .menu-right .call-center {
+    margin-top: 10px; }
+    .site-footer-menu .menu-right .call-center img {
+      float: left;
+      padding-right: 10px;
+      width: 60px; }
+    .site-footer-menu .menu-right .call-center p {
+      margin-bottom: 0; }
+    .site-footer-menu .menu-right .call-center h2 {
+      margin: 0;
+      font-weight: bold; }
   .site-footer-menu .menu-right .asita {
     text-align: center; }
     .site-footer-menu .menu-right .asita img {
-      height: 50px; }
+      height: auto;
+      vertical-align: bottom;
+      position: relative;
+      top: 10px; }
   .site-footer-menu .menu-right .verisign {
     background: url(/Assets/images/verisign-bg.jpg) bottom right no-repeat;
     text-align: center;
     position: absolute;
     width: 100%;
-    top: -50px;
-    padding: 50px 0 20px; }
+    top: -25px;
+    padding: 30px 0 20px; }
     .site-footer-menu .menu-right .verisign img {
       height: 50px; }
     .site-footer-menu .menu-right .verisign img + img {
@@ -520,12 +535,16 @@ including in this file :
     width: 30%; }
   .site-footer-menu .menu-right .menu-hotel {
     width: 20%; }
+  .site-footer-menu .menu-right .menu-about {
+    margin-left: 20px; }
   .site-footer-menu .menu-right .list-title {
     font-weight: bold; }
   .site-footer-menu .menu-right ul {
     padding: 0;
     margin: 0;
     list-style: none; }
+    .site-footer-menu .menu-right ul li {
+      margin-bottom: 2px; }
 
 /* site-footer */
 .site-footer {
@@ -541,6 +560,8 @@ including in this file :
       width: 40px; }
     .site-footer .social-link a {
       margin-left: 3px; }
+    .site-footer .social-link a + a {
+      margin-left: 10px; }
 
 /*
 
@@ -583,7 +604,8 @@ file : /Assets/travorama20/css/_page_index.scss
             color: #4f4f4f;
             background: #d2d2d2;
             display: block;
-            padding: 10px 10px;
+            padding: 13px 0px;
+            text-align: center;
             font-weight: 600;
             text-decoration: none;
             font-size: 14px; }
@@ -616,7 +638,8 @@ file : /Assets/travorama20/css/_page_index.scss
             border-right: 0; }
     .page-index .section-search .search-form .tab-content {
       color: #fff;
-      padding: 5px 20px 5px; }
+      padding: 15px 20px 5px;
+      letter-spacing: 0.2px; }
       .page-index .section-search .search-form .tab-content > div {
         display: none; }
       .page-index .section-search .search-form .tab-content > div.active {
@@ -628,10 +651,12 @@ file : /Assets/travorama20/css/_page_index.scss
         clear: both; }
       .page-index .section-search .search-form .tab-content input {
         color: #6a6a6a; }
+      .page-index .section-search .search-form .tab-content input[type="submit"] {
+        color: #4f3500; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group {
         margin-bottom: 5px; }
       .page-index .section-search .search-form .tab-content .tab-flight h3 {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         font-size: 17px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-type {
         margin-bottom: 5px; }
@@ -642,7 +667,7 @@ file : /Assets/travorama20/css/_page_index.scss
         letter-spacing: 0.1px;
         padding: 10px 0; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-destination {
-        margin-bottom: 5px; }
+        margin-bottom: 7px; }
       .page-index .section-search .search-form .tab-content .tab-flight .switch-destination {
         background: url(/Assets/images/switch-destination.png) center center no-repeat;
         background-size: cover;
@@ -654,9 +679,10 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-origin, .page-index .section-search .search-form .tab-content .tab-flight .form-flight-destination {
         text-align: center;
         font-size: 12px;
-        padding: 5px 5px; }
+        padding: 7px 5px;
+        height: auto; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date {
-        margin-bottom: 5px; }
+        margin-bottom: 7px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date > div:first-child {
           padding-right: 3px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-date > div:last-child {
@@ -665,9 +691,9 @@ file : /Assets/travorama20/css/_page_index.scss
         background: #fff;
         color: #6a6a6a;
         padding: 7px 10px 0px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
         border: 1px solid #ccc;
         font-weight: 600;
         cursor: pointer;
@@ -704,7 +730,7 @@ file : /Assets/travorama20/css/_page_index.scss
           font-weight: bold;
           margin-top: 14px; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-class {
-        margin-bottom: 5px;
+        margin-bottom: 7px;
         position: relative; }
       .page-index .section-search .search-form .tab-content .tab-flight .form-flight-class {
         display: block;
@@ -742,8 +768,8 @@ file : /Assets/travorama20/css/_page_index.scss
       .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger {
         margin-bottom: 10px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div {
-          padding-left: 5px;
-          padding-right: 5px; }
+          padding-left: 6px;
+          padding-right: 6px; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-group.flight-passenger > div:first-child {
           padding-right: 0px;
           padding-left: 6px; }
@@ -759,7 +785,7 @@ file : /Assets/travorama20/css/_page_index.scss
         border-radius: 4px;
         border: 1px solid #ccc;
         position: relative;
-        height: 60px;
+        height: 50px;
         cursor: pointer; }
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger small {
           font-sizE: 9px;
@@ -772,7 +798,7 @@ file : /Assets/travorama20/css/_page_index.scss
         .page-index .section-search .search-form .tab-content .tab-flight .form-flight-passenger .passenger-input {
           width: 50px;
           position: absolute;
-          top: 30px;
+          top: 25px;
           right: 5px;
           border: 0;
           text-align: right;
@@ -804,9 +830,9 @@ file : /Assets/travorama20/css/_page_index.scss
         background: #fff;
         color: #6a6a6a;
         padding: 10px 15px 0;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
         border: 1px solid #ccc;
         font-weight: 600; }
         .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:before, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout.section-reason:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin.section-reason:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin:after, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout:after {
@@ -841,9 +867,9 @@ file : /Assets/travorama20/css/_page_index.scss
           background: #fff;
           padding: 10px;
           color: #6a6a6a;
-          -webkit-border-radius: 4px;
-          -moz-border-radius: 4px;
-          border-radius: 4px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px;
           border: 1px solid #ccc;
           position: relative;
           height: 80px; }
@@ -1080,7 +1106,8 @@ file : /Assets/travorama20/css/_page_index.scss
   color: #18a5db;
   background: #d4e5ef;
   padding: 3px 0;
-  margin-top: 80px; }
+  margin-top: 80px;
+  height: 120px; }
   .page-index .section-subscribe .container {
     position: relative; }
   .page-index .section-subscribe .subscribe-bg {
@@ -1090,14 +1117,16 @@ file : /Assets/travorama20/css/_page_index.scss
     height: 200px; }
   .page-index .section-subscribe h2 {
     padding-left: 80px;
-    line-height: 150%;
+    line-height: 145%;
     letter-spacing: 0;
-    padding-top: 7px; }
+    padding-top: 10px;
+    font-size: 22px; }
   .page-index .section-subscribe form {
     padding-top: 10px; }
     .page-index .section-subscribe form input[type="text"] {
-      padding: 10px 15px;
-      height: auto; }
+      padding: 8px 12px;
+      height: auto;
+      font-size: 12px; }
     .page-index .section-subscribe form .subscribe-name {
       width: 80%;
       float: left; }
@@ -1105,6 +1134,9 @@ file : /Assets/travorama20/css/_page_index.scss
       width: 19%;
       margin-left: 1%;
       padding: 9px; }
+    .page-index .section-subscribe form .form-group {
+      margin-top: 7px;
+      margin-bottom: 8px; }
   .page-index .section-subscribe .subscribe-after {
     display: none;
     height: 114px;
@@ -1159,12 +1191,28 @@ file : /Assets/travorama20/css/_page_index.scss
         margin-top: 10px;
         margin-right: 10px; }
 
+.page-index .search-calendar .calendar-header {
+  height: 45px;
+  padding: 10px 27px;
+  padding-right: 16px; }
+  .page-index .search-calendar .calendar-header .calendar-title {
+    font-size: 14px;
+    padding: 4px 0; }
+
 .page-index .search-location {
   width: 600px; }
+  .page-index .search-location .location-header {
+    font-size: 14px;
+    height: 45px;
+    padding: 10px 27px;
+    padding-right: 16px; }
+    .page-index .search-location .location-header p {
+      padding: 4px 0; }
   .page-index .search-location .location-body .location-recommend .tab-header nav {
     width: 540px; }
     .page-index .search-location .location-body .location-recommend .tab-header nav ul li span {
-      padding: 0 10px; }
+      padding: 0 10px;
+      padding-left: 17px; }
 
 /*
 
@@ -1238,9 +1286,9 @@ file: /Assets/travorama20/css/_page_flight.scss
     right: 0;
     bottom: 0;
     left: 0;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     overflow: hidden; }
     .page-flight .page-overlay .overlay-content header {
       background: #1daee4;
@@ -1263,7 +1311,8 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .page-slider {
   background: url(/Assets/images/flight-page-slider.jpg) center center no-repeat;
-  height: 250px;
+  background-size: cover;
+  height: 240px;
   color: #fff; }
   .page-flight .page-slider h2 {
     line-height: 120%;
@@ -1325,9 +1374,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-bottom: 10px; }
     .page-flight .search-result-form form.change-flight .change-flight-departure, .page-flight .search-result-form form.change-flight .change-flight-return, .page-flight .search-result-form form.change-flight .change-flight-oneway {
       background: #fff;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
       color: #969696;
       float: left;
       width: 49%;
@@ -1367,9 +1416,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       cursor: not-allowed; }
     .page-flight .search-result-form form.change-flight .change-flight-passenger {
       background: #fff;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
       color: #666;
       padding: 6px;
       position: relative;
@@ -1391,9 +1440,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-left: 1%;
       float: left;
       background: #fff;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      border-radius: 4px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
       position: relative;
       cursor: pointer; }
       .page-flight .search-result-form form.change-flight .change-flight-class:after {
@@ -1579,9 +1628,9 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 .page-flight .flight {
   border: 1px solid #ccc;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   color: #525252;
   background: #fff;
   margin-bottom: 15px;
@@ -2415,9 +2464,9 @@ file: /Assets/travorama20/css/_page_flight.scss
       .flight-review-wrapper.active .flight-review .flight-review-detail {
         display: block; }
   .flight-review-wrapper .flight-review {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     border: 5px solid #1daee4;
     background: #fff;
     width: 860px;
@@ -3208,9 +3257,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
     right: 0;
     color: #fff;
     padding: 12px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     padding-left: 30px;
     cursor: pointer; }
     .travorama-login a.login-toggle:before, .travorama-login .page-index a.login-toggle.section-reason:after, .page-index .travorama-login a.login-toggle.section-reason:after {
@@ -3512,9 +3561,9 @@ file : /Assets/travorama20/css/_page_checkout.scss
     right: 0;
     bottom: 0;
     left: 0;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     overflow: hidden; }
     .page-overlay .overlay-content header {
       background: #1daee4;
@@ -3851,9 +3900,9 @@ file : /Assets/travorama20/css/_page_password.scss
       width: 100%;
       text-align: center;
       font-size: 16px;
-      -webkit-border-radius: 4px 4px 0 0;
-      -moz-border-radius: 4px 4px 0 0;
-      border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 2px 2px 0 0;
+      -moz-border-radius: 2px 2px 0 0;
+      border-radius: 2px 2px 0 0;
       padding: 12px 0; }
       .static-header .row .col-xs-4 a span:before, .static-header .row .col-xs-4 a .page-index span.section-reason:after, .page-index .static-header .row .col-xs-4 a span.section-reason:after {
         content: "";
