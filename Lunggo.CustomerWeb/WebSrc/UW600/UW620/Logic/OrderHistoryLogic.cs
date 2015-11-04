@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
-using Lunggo.Repository.TableRepository;
 using Lunggo.Framework.Database;
 using Lunggo.ApCommon.Hotel.Logic;
 using Lunggo.ApCommon.Hotel.Logic.Search;
-using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Object;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Query;
-using Microsoft.Ajax.Utilities;
 
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Logic

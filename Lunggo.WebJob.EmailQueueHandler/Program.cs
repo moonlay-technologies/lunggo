@@ -13,7 +13,6 @@ using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.TableStorage;
 using Microsoft.Azure.WebJobs;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.WebJob.EmailQueueHandler
 {

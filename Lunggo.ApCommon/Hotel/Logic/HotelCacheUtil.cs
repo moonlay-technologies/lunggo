@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.Framework.Util;
 using Newtonsoft.Json;

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Services.Client;
 using System.Diagnostics;
-using System.Text;
-using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
-using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;
-using Newtonsoft.Json;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
 {

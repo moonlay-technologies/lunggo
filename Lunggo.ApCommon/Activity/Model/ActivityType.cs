@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Lunggo.ApCommon.Actifity.Model
+﻿namespace Lunggo.ApCommon.Actifity.Model
 {
     public class ActivityType
     {

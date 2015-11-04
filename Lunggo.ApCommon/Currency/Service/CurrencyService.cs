@@ -1,6 +1,5 @@
 ﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Newtonsoft.Json;
 using StackExchange.Redis;

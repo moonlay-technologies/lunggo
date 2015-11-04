@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
@@ -161,12 +156,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 }
 
                             var dict = DictionaryService.GetInstance();
-                            var arrtime = DateTime.Parse(ParseFID2[j + 3])
-                                .AddHours(dict.GetAirportTimeZone(ParseFID2[j + 2]));
-                            var deptime =
-                                DateTime.Parse(ParseFID2[j + 1])
-                                    .AddHours(dict.GetAirportTimeZone(ParseFID2[j]));
-
+                            var departureTime = DateTime.Parse(ParseFID2[j + 1]);
+                            var arrivalTime = DateTime.Parse(ParseFID2[j + 3]);
+                            var arrtime = arrivalTime.AddHours(-(dict.GetAirportTimeZone(ParseFID2[j + 2])));
+                            var deptime = departureTime.AddHours(-(dict.GetAirportTimeZone(ParseFID2[j])));
+                            
                         segments.Add(new FlightSegment
                         {
                             AirlineCode = Acode,
@@ -174,9 +168,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             CabinClass = CabinClass.Economy,
                             Rbd = Rbd,
                             DepartureAirport = ParseFID2[j],
-                            DepartureTime = DateTime.Parse(ParseFID2[j+1]),
+                            DepartureTime = DateTime.SpecifyKind(departureTime, DateTimeKind.Utc),
                             ArrivalAirport = ParseFID2[j+2],
-                            ArrivalTime = DateTime.Parse(ParseFID2[j + 3]),
+                            ArrivalTime = DateTime.SpecifyKind(arrivalTime, DateTimeKind.Utc),
                             OperatingAirlineCode = Acode,
                             Duration = arrtime-deptime,
                             StopQuantity = 0

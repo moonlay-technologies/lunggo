@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ServiceModel.Security.Tokens;
-using CsQuery.EquationParser.Implementation.Functions;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.ApCommon.Flight.Wrapper

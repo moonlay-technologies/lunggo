@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Model;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Http;
 using Lunggo.Repository.TableRecord;
-using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRepository;
-using Lunggo.Repository.TableRecord;
 using Lunggo.BackendWeb.Query;
-using Microsoft.Ajax.Utilities;
 
 namespace Lunggo.BackendWeb.Controllers
 {

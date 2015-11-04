@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
 using Lunggo.Framework.Exceptions;
-using Lunggo.Framework.Util;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.Caching;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW610.Model;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW610.Object;
-using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Lunggo.Framework.Database;
 

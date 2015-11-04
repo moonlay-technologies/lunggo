@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
-using Microsoft.WindowsAzure.Storage.Queue;
-using RestSharp.Extensions;
+﻿using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Framework.Queue
 {

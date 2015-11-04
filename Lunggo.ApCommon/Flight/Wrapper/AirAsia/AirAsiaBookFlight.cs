@@ -4,20 +4,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Http;
-using Lunggo.Framework.Util;
 using Lunggo.Framework.Web;
-using Microsoft.Data.OData.Query;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -437,6 +430,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var timeLimitDate = DateTime.Parse(timeLimitDateText, CultureInfo.CreateSpecificCulture("en-US"));
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
                     var timeLimit = timeLimitDate.Add(timeLimitTime);
+                    var timeLimitFinal = timeLimit.AddHours(-7);
                     return new BookFlightResult
                     {
                         IsSuccess = true,
@@ -444,7 +438,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingId = bookingId,
                             BookingStatus = BookingStatus.Booked,
-                            TimeLimit = timeLimit.ToUniversalTime()
+                            TimeLimit = DateTime.SpecifyKind(timeLimitFinal,DateTimeKind.Utc)
                         }
                     };
                 }

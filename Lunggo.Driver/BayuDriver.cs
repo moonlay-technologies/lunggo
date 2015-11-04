@@ -1,43 +1,25 @@
 ﻿using System.CodeDom;
 using System.Collections.Specialized;
-using System.Net.Mime;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web;
-using System.Web.ModelBinding;
-using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.HtmlTemplate;
-using Lunggo.Framework.Payment.Data;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SharedModel;
 using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.TicketSupport;
 using Lunggo.Framework.TicketSupport.ZendeskClass;
-using Lunggo.Framework.Util;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using ZendeskApi_v2.Models.AccountsAndActivities;
 using ZendeskApi_v2.Models.Constants;
-using ZendeskApi_v2.Models.Tickets;
-using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Campaign.Model;
-using Lunggo.ApCommon.Campaign.Constant;
 
 namespace Lunggo.Driver
 {

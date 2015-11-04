@@ -200,7 +200,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -210,6 +209,7 @@
     <Content Include="Config\Airline.csv" />
     <Content Include="Config\Country.csv" />
     <None Include="Properties\PublishProfiles\dv1-api.pubxml" />
+    <None Include="Properties\PublishProfiles\dv2-api %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-api.pubxml" />
     <None Include="Properties\PublishProfiles\prod-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-apidev.pubxml" />

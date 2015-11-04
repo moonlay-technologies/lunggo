@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Identity.Role;
-using Lunggo.ApCommon.Query;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;

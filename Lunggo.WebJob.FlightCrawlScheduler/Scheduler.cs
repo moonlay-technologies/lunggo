@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Queue;
-using Lunggo.Framework.Redis;
-using Lunggo.Framework.SnowMaker;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using Lunggo.WebJob.FlightCrawlScheduler.Model;
-using Microsoft.Azure.WebJobs;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.WebJob.FlightCrawlScheduler

@@ -3,7 +3,6 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.Framework.TicketSupport.ZendeskClass
 {

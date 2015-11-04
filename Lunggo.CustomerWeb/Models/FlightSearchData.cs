@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using Microsoft.Win32;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 
 namespace Lunggo.CustomerWeb.Models

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Web;
+﻿using System.Web;
 using System.Web.WebPages;
 using log4net;
 using Lunggo.ApCommon.Constant;
@@ -16,9 +15,6 @@ using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.Database;
 using Microsoft.WindowsAzure.Storage;
-using WURFL;
-using WURFL.Config;
-using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.TableStorage;
 

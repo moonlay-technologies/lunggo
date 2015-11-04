@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.Framework.HtmlTemplate;
-
-namespace Lunggo.Framework.Mail
+﻿namespace Lunggo.Framework.Mail
 {
     public partial class MailService
     {

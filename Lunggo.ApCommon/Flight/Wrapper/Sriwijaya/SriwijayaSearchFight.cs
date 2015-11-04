@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
@@ -232,7 +230,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                         "&nameFROM=radioFrom" +
                                         "&voteTO=" +
                                         "&nameTO=" +
-                                        "&STI=true" +
+                                        "&STI=false" +
                                         "&RR=NO&ADM=";
 
                                     var responAjax = client.DownloadString(url);

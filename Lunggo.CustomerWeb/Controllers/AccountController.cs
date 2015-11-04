@@ -1,21 +1,15 @@
 ﻿using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
-using Lunggo.ApCommon.Identity.UserStore;
-using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Context;
-using Lunggo.Framework.Core;
-using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Globalization;
 using Lunggo.CustomerWeb.Models;
 
 namespace Lunggo.CustomerWeb.Controllers

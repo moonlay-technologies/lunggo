@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Configuration;
-using System.Security.Cryptography;
-using System.Web;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Redis;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using Microsoft.Data.Edm.Csdl;
-using StackExchange.Redis;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {
