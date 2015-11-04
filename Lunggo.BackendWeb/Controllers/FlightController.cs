@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
-using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.BackendWeb.Models;
-using Lunggo.Repository.TableRecord;
-using Microsoft.Ajax.Utilities;
-using Microsoft.CSharp.RuntimeBinder;
-using ModelBinders = System.Web.ModelBinding.ModelBinders;
 
 namespace Lunggo.BackendWeb.Controllers
 {

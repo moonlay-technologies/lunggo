@@ -6,7 +6,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.BackendWeb.Models;
 using Lunggo.CustomerWeb.Models;
-using Lunggo.Framework.Queue;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;

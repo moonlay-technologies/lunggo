@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Lunggo.ApCommon.Hotel.Model;
-using Lunggo.ApCommon.Model;
 using Lunggo.CustomerWeb.WebSrc.UW200.Model;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW200.Object

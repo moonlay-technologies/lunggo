@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using Newtonsoft.Json;
 using Lunggo.ApCommon.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights

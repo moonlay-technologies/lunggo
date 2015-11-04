@@ -1,0 +1,11 @@
+﻿{
+  "$schema": "http://schemastore.org/schemas/json/webjobs-list.json",
+  "WebJobs": [
+    {
+      "filePath": "../Lunggo.Webjob.MystiflyQueueHandler/Lunggo.WebJob.MystiflyQueueHandler.csproj"
+    },
+    {
+      "filePath": "../Lunggo.WebJob.EmailQueueHandler/Lunggo.WebJob.EmailQueueHandler.csproj"
+    }
+  ]
+}

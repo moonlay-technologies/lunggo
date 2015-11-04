@@ -1,0 +1,43 @@
+﻿/*--------------------*/
+/* variables */
+/*--------------------*/
+/* mixins */
+/*--------------------*/
+body {
+  background: #f9f9f9;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px; }
+
+.site-content {
+  min-height: 100%; }
+
+.site-footer {
+  background-color: #111;
+  color: #fefefe; }
+  .site-footer .site-footer-menu {
+    background-color: #303030; }
+    .site-footer .site-footer-menu nav {
+      padding: 0 12px; }
+      .site-footer .site-footer-menu nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+        .site-footer .site-footer-menu nav ul li a {
+          color: #fefefe;
+          padding: 12px 0;
+          display: block; }
+        .site-footer .site-footer-menu nav ul li + li {
+          border-top: 1px solid #ccc; }
+  .site-footer .site-footer-social {
+    text-align: center;
+    padding: 12px 0; }
+    .site-footer .site-footer-social nav {
+      margin-bottom: 12px; }
+      .site-footer .site-footer-social nav .facebook .fa-circle {
+        color: #4a6eaa; }
+      .site-footer .site-footer-social nav .twitter .fa-circle {
+        color: #28a9e0; }
+      .site-footer .site-footer-social nav .instagram .fa-circle {
+        color: #9a6756; }
+    .site-footer .site-footer-social .fa-inverse {
+      color: #000; }

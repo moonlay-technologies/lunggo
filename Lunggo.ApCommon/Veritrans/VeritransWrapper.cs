@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Helpers;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Veritrans.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
-using Lunggo.Framework.Payment.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Lunggo.ApCommon.Veritrans
 {

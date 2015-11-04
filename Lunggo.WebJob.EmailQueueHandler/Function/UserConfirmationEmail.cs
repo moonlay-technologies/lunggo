@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Microsoft.AspNet.Identity;
 using Microsoft.Azure.WebJobs;

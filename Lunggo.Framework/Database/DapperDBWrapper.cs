@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Web.UI.WebControls.WebParts;
 using Dapper;
 using System.Data;
-using Lunggo.Framework.Util;
 
 namespace Lunggo.Framework.Database
 {

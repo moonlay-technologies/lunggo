@@ -1,6 +1,4 @@
-﻿@using System.Data.Entity.ModelConfiguration.Conventions
-@using Lunggo.ApCommon.Flight.Constant
-@using Lunggo.ApCommon.Identity.User
+﻿@using Lunggo.ApCommon.Identity.User
 @model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
@@ -105,7 +103,7 @@
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
                                     <select class="form-control" ng-show="userProfile.edit" ng-model="userProfile.country">
-                                        <option ng-repeat="country in countries" value="{{country}}" ng-selected="country == userProfile.country">{{country}}</option>
+                                        <option ng-repeat="country in countries" value="{{country.twoLetter}}" ng-selected="country.twoLetter == userProfile.country">{{country.name}}</option>
                                     </select>
                                 </div>
                             </div>

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using Lunggo.Framework.Config;
+﻿using System.Linq;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.TableStorage;
-using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 

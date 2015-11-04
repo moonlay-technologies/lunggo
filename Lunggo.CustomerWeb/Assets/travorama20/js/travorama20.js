@@ -134,14 +134,15 @@ function subscribeFormFunctions() {
     }
 
     function submitForm() {
+        $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled',true);
         $.ajax({
             url: SubscribeConfig.Url,
             method: 'POST',
             data: { address : SubscribeConfig.email, name : SubscribeConfig.name }
         }).done(function (returnData) {
 
-            $('form.subscribe-form').hide();
-            $('.subscribe-form.subscribed').show();
+            $('.subscribe-before').hide();
+            $('.subscribe-after').show();
 
         });
     }
@@ -410,10 +411,28 @@ function flightPageSearchFormFunctions() {
 
     // set current date as default
     $(document).ready(function () {
-        var currentDate = new Date();
-        $('.form-flight-departure .date, .form-flight-return .date').html(('0' + currentDate.getDate()).slice(-2));
-        $('.form-flight-departure .month, .form-flight-return .month').html(translateMonth(currentDate.getMonth()));
-        $('.form-flight-departure .year, .form-flight-return .year').html(currentDate.getFullYear());
+        // set default date for departure flight
+        var tomorrowDate = new Date();
+        tomorrowDate = tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+        tomorrowDate = new Date(tomorrowDate);
+        $('.form-flight-departure .date').html(('0' + tomorrowDate.getDate()).slice(-2));
+        $('.form-flight-departure .month').html(translateMonth(tomorrowDate.getMonth()));
+        $('.form-flight-departure .year').html(tomorrowDate.getFullYear());
+        flightPageSearchFormParam.departureDate = tomorrowDate;
+        // set default date for return flight
+        var afterTomorrow = new Date();
+        afterTomorrow = afterTomorrow.setDate(afterTomorrow.getDate() + 2);
+        afterTomorrow = new Date(afterTomorrow);
+        $('.form-flight-return .date').html(('0' + (afterTomorrow.getDate())).slice(-2));
+        $('.form-flight-return .month').html(translateMonth(afterTomorrow.getMonth()));
+        $('.form-flight-return .year').html(afterTomorrow.getFullYear());
+        flightPageSearchFormParam.returnDate = afterTomorrow;
+
+        // set default flight and return flight
+        $('.form-flight-origin').val('Jakarta (CGK)');
+        flightPageSearchFormParam.origin = 'CGK';
+        $('.form-flight-destination').val('Denpasar, Bali (DPS)');
+        flightPageSearchFormParam.destination = 'DPS';
     });
 
     // show and hide search calendar
@@ -856,11 +875,29 @@ function flightFormSearchFunctions() {
     });
 
     // set current date as default
-    $(document).ready(function() {
-        var currentDate = new Date();
-        $('.form-flight-departure .date, .form-flight-return .date').html(('0' + currentDate.getDate()).slice(-2));
-        $('.form-flight-departure .month, .form-flight-return .month').html(translateMonth(currentDate.getMonth()));
-        $('.form-flight-departure .year, .form-flight-return .year').html(currentDate.getFullYear());
+    $(document).ready(function () {
+        // set default date for departure flight
+        var tomorrowDate = new Date();
+        tomorrowDate = tomorrowDate.setDate( tomorrowDate.getDate() + 1 );
+        tomorrowDate = new Date(tomorrowDate);
+        $('.form-flight-departure .date').html(('0' + tomorrowDate.getDate()).slice(-2));
+        $('.form-flight-departure .month').html(translateMonth(tomorrowDate.getMonth()));
+        $('.form-flight-departure .year').html(tomorrowDate.getFullYear());
+        FlightSearchConfig.flightForm.departureDate = tomorrowDate;
+        // set default date for return flight
+        var afterTomorrow = new Date();
+        afterTomorrow = afterTomorrow.setDate( afterTomorrow.getDate() + 2 );
+        afterTomorrow = new Date(afterTomorrow);
+        $('.form-flight-return .date').html(('0' + (afterTomorrow.getDate())).slice(-2));
+        $('.form-flight-return .month').html(translateMonth(afterTomorrow.getMonth()));
+        $('.form-flight-return .year').html(afterTomorrow.getFullYear());
+        FlightSearchConfig.flightForm.returnDate = afterTomorrow;
+
+        // set default flight and return flight
+        $('.form-flight-origin').val('Jakarta (CGK)');
+        FlightSearchConfig.flightForm.origin = 'CGK';
+        $('.form-flight-destination').val('Denpasar, Bali (DPS)');
+        FlightSearchConfig.flightForm.destination = 'DPS';
     });
 
     //*****

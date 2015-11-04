@@ -1,7 +1,17 @@
 ﻿@{
-    var CurrentDate = DateTime.Now.ToString("ddMMyy");
+    var CurrentDate = DateTime.UtcNow.AddDays(1);
 }
 
+<script>
+    var preDate = @CurrentDate.ToString("dd");
+    var preMonth = @CurrentDate.ToString("MM") - 1;
+    var preYear = @CurrentDate.ToString("yyyy");
+    var preHour = @CurrentDate.ToString("HH");
+    var preMinute = @CurrentDate.ToString("mm");
+    var todayDate = new Date( Date.UTC( preYear, preMonth, preDate, preHour, preMinute ));
+    console.log(todayDate);
+    todayDate = ((('0' + todayDate.getDate()).slice(-2)) + '' + ('0' + (todayDate.getMonth() + 1)).slice(-2) + '' + ('' + todayDate.getFullYear()).slice(-2));
+</script>
 
 <section class="site-footer-menu">
     
@@ -9,8 +19,10 @@
         <div class="row">
             <div class="col-xs-3 menu-left">
                 <img src="/Assets/images/travorama-logo.png" alt="Travorama" class="footer-logo" />
+                <!--
                 <a href="#" class="googlePlay"><img src="/Assets/images/googlePlay.png" /></a>
                 <a href="#" class="appStore"><img src="/Assets/images/appStore.png" /></a>
+                -->
             </div>
             <div class="col-xs-9 menu-right">
                 <div class="row">
@@ -37,11 +49,13 @@
                     <div class="col-xs-4 menu-flight">
                         <p class="list-title">Tiket Rute Populer</p>
                         <ul>
-                            <li><a href="/id/Flight/SearchResultList?info=CGKDPS@(CurrentDate)-100y">Tiket murah Jakarta-Bali</a></li>
-                            <li><a href="/id/Flight/SearchResultList?info=CGKSUB@(CurrentDate)-100y">Tiket murah Jakarta-Surabaya</a></li>
-                            <li><a href="/id/Flight/SearchResultList?info=CGKSIN@(CurrentDate)-100y">Tiket murah Jakarta-Singapura</a></li>
-                            <li><a href="/id/Flight/SearchResultList?info=CGKMLG@(CurrentDate)-100y">Tiket murah Jakarta-Malang</a></li>
-                            <li><a href="/id/Flight/SearchResultList?info=CGKJOG@(CurrentDate)-100y">Tiket murah Jakarta-Yogyakarta</a></li>
+                            <script type="text/javascript">
+                                document.write('<li><a href="/id/Flight/SearchResultList?info=CGKDPS' + todayDate + '-100y">Tiket murah Jakarta-Bali</a></li>');
+                                document.write('<li><a href="/id/Flight/SearchResultList?info=CGKSUB' + todayDate + '-100y">Tiket murah Jakarta-Surabaya</a></li>');
+                                document.write('<li><a href="/id/Flight/SearchResultList?info=CGKSIN' + todayDate + '-100y">Tiket murah Jakarta-Singapura</a></li>');
+                                document.write('<li><a href="/id/Flight/SearchResultList?info=CGKMLG' + todayDate + '-100y">Tiket murah Jakarta-Malang</a></li>');
+                                document.write('<li><a href="/id/Flight/SearchResultList?info=CGKJOG' + todayDate + '-100y">Tiket murah Jakarta-Yogyakarta</a></li>');
+                            </script>
                         </ul>
                     </div>
                     <div class="col-xs-2 menu-hotel hidden">
@@ -57,17 +71,19 @@
                     <div class="col-xs-3 menu-about">
                         <p class="list-title">Tentang Travorama</p>
                         <ul>
+                            <li><a href="#">Tentang Travorama</a></li>
                             <li><a href="#">Cara Pesan</a></li>
-                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Cara Bayar</a></li>
                             <li><a href="http://travelmadezy.com" target="_blank">Karir</a></li>
+                            <li><a href="#">Kontak Kami</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-3 menu-other">
                         <p class="list-title">Lainnya</p>
                         <ul>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Daftarkan Activity Anda</a></li>
-                            <li><a href="@Url.Action("Terms","StaticPage")">Terms &amp; Conditions</a></li>
+                            <li><a href="@Url.Action("Terms","StaticPage")">Syarat &amp; Ketentuan</a></li>
+                            <li><a href="@Url.Action("Privacy","StaticPage")">Kebijakan Privasi</a></li>
+                            <li><a href="@Url.Action("Question","StaticPage")">FAQs</a></li>
                         </ul>
                     </div>
                 </div>

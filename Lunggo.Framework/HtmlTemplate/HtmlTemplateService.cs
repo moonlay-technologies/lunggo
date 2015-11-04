@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Razor;
-using System.Web.UI.WebControls;
-using Lunggo.Framework.TableStorage;
-
-namespace Lunggo.Framework.HtmlTemplate
+﻿namespace Lunggo.Framework.HtmlTemplate
 {
     public class HtmlTemplateService
     {

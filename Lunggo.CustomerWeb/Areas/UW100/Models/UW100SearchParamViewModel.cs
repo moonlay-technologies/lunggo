@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Lunggo.Hotel.ViewModels;
+﻿using Lunggo.Hotel.ViewModels;
 
 namespace Lunggo.CustomerWeb.Areas.UW100.Models
 {

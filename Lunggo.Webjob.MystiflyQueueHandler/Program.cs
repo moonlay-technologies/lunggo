@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.SnowMaker;
-using Lunggo.Repository.TableRecord;
-using Lunggo.Repository.TableRepository;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.Webjob.MystiflyQueueHandler
 {

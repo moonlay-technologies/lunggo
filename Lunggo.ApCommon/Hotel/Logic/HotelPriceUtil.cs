@@ -1,5 +1,4 @@
-﻿using System;
-using Lunggo.ApCommon.Model;
+﻿using Lunggo.ApCommon.Model;
 
 namespace Lunggo.ApCommon.Hotel.Logic
 {

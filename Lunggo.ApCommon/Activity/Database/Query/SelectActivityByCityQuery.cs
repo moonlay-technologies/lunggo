@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Actifity.Model;
+﻿using System.Text;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.Framework.Database;
 

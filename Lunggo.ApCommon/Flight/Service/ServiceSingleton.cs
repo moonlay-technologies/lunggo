@@ -1,30 +1,17 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Threading;
-using System.Threading.Tasks;
-using CsQuery.ExtensionMethods;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.ApCommon.Flight.Wrapper.Citilink;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
-using Lunggo.ApCommon.Mystifly;
-using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Voucher;
-using Lunggo.Flight.Model;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Redis;
-using Microsoft.Data.OData.Query;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

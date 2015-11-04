@@ -3,11 +3,9 @@ using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
-using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {

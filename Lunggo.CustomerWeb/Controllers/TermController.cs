@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Lunggo.ApCommon.Subscriber;
-using Lunggo.ApCommon.Voucher;
+﻿using System.Web.Mvc;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
