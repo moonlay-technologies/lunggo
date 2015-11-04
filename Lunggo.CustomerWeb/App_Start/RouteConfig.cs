@@ -36,6 +36,12 @@ namespace Lunggo.CustomerWeb
             );
 
             routes.MapRoute(
+                name: "ContactPage",
+                url: "{langCode}/contact",
+                defaults: new { controller = "StaticPage", action = "Contact", langCode = "id" }
+            );
+
+            routes.MapRoute(
                 name: "HowToOrderPage",
                 url: "{langCode}/howtoorder",
                 defaults: new { controller = "StaticPage", action = "HowToOrder", langCode = "id"}
@@ -78,7 +84,7 @@ namespace Lunggo.CustomerWeb
             );
             routes.MapRoute(
                 name: "UW620OrderHistory",
-                url: "UW600/UW620OrderHistory",
+                url: "{langCode}/UW600/UW620OrderHistory",
                 defaults: new { controller = "UW620OrderHistory", action = "OrderHistory" }
             );
             routes.MapRoute(

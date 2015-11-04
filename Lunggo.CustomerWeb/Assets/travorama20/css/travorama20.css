@@ -1105,9 +1105,11 @@ file : /Assets/travorama20/css/_page_index.scss
       width: 19%;
       margin-left: 1%;
       padding: 9px; }
-  .page-index .section-subscribe .subscribe-form.subscribed {
-    display: none; }
-    .page-index .section-subscribe .subscribe-form.subscribed h2 {
+  .page-index .section-subscribe .subscribe-after {
+    display: none;
+    height: 114px;
+    padding-top: 10px; }
+    .page-index .section-subscribe .subscribe-after h2 {
       padding: 0; }
 
 .page-index .section-payment {
@@ -3954,15 +3956,15 @@ file : /Assets/travorama20/css/_page_password.scss
           display: block;
           height: auto; }
 
-.page-term ol.terms {
+.page-term ol.listing, .page-static ol.listing {
   list-style: none;
   counter-reset: main-counter;
   margin: 0;
   padding: 0; }
-  .page-term ol.terms > li {
+  .page-term ol.listing > li, .page-static ol.listing > li {
     position: relative;
     padding-left: 40px; }
-    .page-term ol.terms > li:before, .page-term .page-index ol.terms > li.section-reason:after, .page-index .page-term ol.terms > li.section-reason:after {
+    .page-term ol.listing > li:before, .page-term .page-index ol.listing > li.section-reason:after, .page-index .page-term ol.listing > li.section-reason:after, .page-static ol.listing > li:before, .page-static .page-index ol.listing > li.section-reason:after, .page-index .page-static ol.listing > li.section-reason:after {
       content: counter(main-counter);
       counter-increment: main-counter;
       background: #ffd632;
@@ -3978,16 +3980,16 @@ file : /Assets/travorama20/css/_page_password.scss
       padding-top: 6px;
       top: 0;
       left: 0; }
-    .page-term ol.terms > li h4 {
+    .page-term ol.listing > li h4, .page-static ol.listing > li h4 {
       color: #1daee4;
       font-weight: 600;
       line-height: 18px;
       padding-top: 6px; }
-    .page-term ol.terms > li ol {
+    .page-term ol.listing > li ol, .page-static ol.listing > li ol {
       list-style: lower-alpha; }
-      .page-term ol.terms > li ol > li {
+      .page-term ol.listing > li ol > li, .page-static ol.listing > li ol > li {
         color: #1daee4;
         font-weight: bold; }
-        .page-term ol.terms > li ol > li p {
+        .page-term ol.listing > li ol > li p, .page-static ol.listing > li ol > li p {
           color: #333;
           font-weight: normal; }

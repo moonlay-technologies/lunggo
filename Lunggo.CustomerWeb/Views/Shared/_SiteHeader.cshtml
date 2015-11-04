@@ -56,10 +56,20 @@ else
                                     <li class="dropdown-wrapper">
                                         <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
                                         <div class="dropdown-content my-account">
-                                            <ul>
-                                                <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
-                                                <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
-                                            </ul>
+                                            @if (@User.Identity.IsAuthenticated)
+                                            {
+                                                <ul>
+                                                    <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">My Account</a></li>
+                                                    <li><a href="@Url.Action("Logout", "Account")">Log Out</a></li>
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <ul>
+                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
+                                                    <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
+                                                </ul>
+                                            }
                                         </div>
                                     </li>
                                 </ul>

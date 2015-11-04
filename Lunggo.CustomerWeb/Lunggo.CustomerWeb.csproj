@@ -982,6 +982,7 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
+    <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
@@ -2441,6 +2442,7 @@
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
+    <Content Include="Views\StaticPage\Contact.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
