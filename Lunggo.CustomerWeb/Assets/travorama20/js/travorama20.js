@@ -163,7 +163,9 @@ function flightPageFunctions() {
         }
     });
     // toggle filter
-    $('.search-result-filter .filter-trigger span').click(function() {
+    $('.search-result-filter .filter-trigger span').click(function () {
+        $(this).parent().siblings().removeClass('active');
+        $(this).parent().addClass('active');
         var targetFilter = $(this).attr('data-target');
         $('.search-result-filter .filter-content>div').removeClass('active');
         $('.search-result-filter .filter-content>div#'+targetFilter).addClass('active');
