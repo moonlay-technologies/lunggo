@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lunggo.ApCommon.Voucher
+﻿namespace Lunggo.ApCommon.Voucher
 {
     public class VoucherEmailModel
     {

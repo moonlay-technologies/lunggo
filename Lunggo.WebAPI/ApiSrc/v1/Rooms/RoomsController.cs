@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Rooms.Logic;
 using Lunggo.WebAPI.ApiSrc.v1.Rooms.Object;

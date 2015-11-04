@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Razor.Parser;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Lunggo.CustomerWeb
@@ -38,6 +33,12 @@ namespace Lunggo.CustomerWeb
                 name: "PrivacyPage",
                 url: "{langCode}/privacy",
                 defaults: new { controller = "StaticPage", action = "Privacy", langCode = "id"}
+            );
+
+            routes.MapRoute(
+                name: "ContactPage",
+                url: "{langCode}/contact",
+                defaults: new { controller = "StaticPage", action = "Contact", langCode = "id" }
             );
 
             routes.MapRoute(
@@ -83,7 +84,7 @@ namespace Lunggo.CustomerWeb
             );
             routes.MapRoute(
                 name: "UW620OrderHistory",
-                url: "UW600/UW620OrderHistory",
+                url: "{langCode}/UW600/UW620OrderHistory",
                 defaults: new { controller = "UW620OrderHistory", action = "OrderHistory" }
             );
             routes.MapRoute(

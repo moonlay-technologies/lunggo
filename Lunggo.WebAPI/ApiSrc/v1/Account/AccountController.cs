@@ -1,10 +1,4 @@
-﻿using Lunggo.WebAPI.ApiSrc.v1.Account.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Account
 {

@@ -1,10 +1,7 @@
-﻿@using System.Globalization
-@using Lunggo.ApCommon.Autocomplete
-@using Lunggo.ApCommon.Dictionary
+﻿@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
-@using Lunggo.ApCommon.Trie
 @using Lunggo.CustomerWeb.Models
 @using Newtonsoft.Json
 @model FlightSearchData
@@ -252,7 +249,7 @@
                 </div>
                 <div class="flight-button">
                     <a href="#" class="flight-detail-trigger">Detail Penerbangan</a>
-                    <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a>
+                    <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a> -->
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
@@ -444,7 +441,7 @@
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
                                         <a class="flight-detail-trigger" ng-click="setActiveFlight('departure',flight.IndexNo)">Detail Penerbangan <span class="caret"></span></a>
-                                        <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                        <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                     </div><!-- .flight-button -->
                                     <div class="summary-bottom-right flight-duration">
                                         <div class="duration">{{msToTime(flight.Trips[0].TotalDuration)}}</div>
@@ -534,7 +531,7 @@
                 </div>
                 <div class="flight-button">
                     <a href="#" class="flight-detail-trigger">Detail Penerbangan</a>
-                    <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a>
+                    <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a> -->
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
@@ -725,7 +722,7 @@
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
                                         <a class="flight-detail-trigger" ng-click="setActiveFlight('return',flight.IndexNo)">Detail Penerbangan <span class="caret"></span></a>
-                                        <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                        <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                     </div><!-- .flight-button -->
                                     <div class="summary-bottom-right flight-duration">
                                         <div class="duration">{{msToTime(flight.Trips[0].TotalDuration)}}</div>
@@ -864,7 +861,7 @@
 
                         <section class="flight-button">
                             <a class="flight-detail-trigger" ng-click="toggleOverviewDetail()">Detail Penerbangan <span class="caret"></span></a>
-                            <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                            <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                         </section>
 
                     </div>

@@ -18,13 +18,13 @@
             <div class="col-xs-4">
                 @if (ViewBag.StaticActivePage == "privacy")
                 {
-                    <a href="#" class="privacy active">
+                    <a href="@Url.Action("Privacy","StaticPage")" class="privacy active">
                         <span>Kebijakan Privacy</span>
                     </a>
                 }
                 else
                 {
-                    <a href="#" class="privacy">
+                    <a href="@Url.Action("Privacy","StaticPage")" class="privacy">
                         <span>Kebijakan Privacy</span>
                     </a>
                 }

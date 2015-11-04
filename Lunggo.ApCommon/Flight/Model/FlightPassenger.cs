@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Flight.Model

@@ -70,8 +70,8 @@
 }
 
 // page terms
-.page-term {
-    ol.terms {list-style:none; counter-reset:main-counter; margin:0; padding:0;
+.page-term, .page-static {
+    ol.listing {list-style:none; counter-reset:main-counter; margin:0; padding:0;
         > li {position:relative; padding-left:40px;
             &:before {content:counter(main-counter); counter-increment:main-counter; background:#ffd632; color:#4f3500; position:absolute; width:30px; height:30px; text-align:center; font-weight:bold; @include border-radius(30px); padding-top:6px; top:0; left:0;}
             h4 {color:$color-main-blue; font-weight:600; line-height:18px; padding-top:6px;}

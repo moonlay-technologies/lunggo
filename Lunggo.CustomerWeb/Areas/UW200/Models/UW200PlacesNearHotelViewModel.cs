@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Lunggo.CustomerWeb.Areas.UW200.Models
+﻿namespace Lunggo.CustomerWeb.Areas.UW200.Models
 {
     public class UW200PlacesNearHotelViewModel
     {

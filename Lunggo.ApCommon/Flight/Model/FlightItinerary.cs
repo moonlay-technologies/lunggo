@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Configuration;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.Framework.Error;
 
 namespace Lunggo.ApCommon.Flight.Model
 {

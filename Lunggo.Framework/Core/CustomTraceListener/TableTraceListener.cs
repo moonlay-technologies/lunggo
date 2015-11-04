@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Services.Client;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using Microsoft.WindowsAzure.Storage.Table.DataServices;
 
 namespace Lunggo.Framework.Core.CustomTraceListener
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Activity.Constant;
-using Lunggo.ApCommon.Sequence;
+﻿using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;

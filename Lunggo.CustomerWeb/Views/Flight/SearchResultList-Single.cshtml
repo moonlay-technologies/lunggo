@@ -1,10 +1,7 @@
-﻿@using System.Globalization
-@using Lunggo.ApCommon.Autocomplete
-@using Lunggo.ApCommon.Dictionary
+﻿@using Lunggo.ApCommon.Dictionary
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Flight.Service
-@using Lunggo.ApCommon.Trie
 @using Lunggo.CustomerWeb.Models
 @using Newtonsoft.Json
 @model FlightSearchData
@@ -113,8 +110,8 @@
     <section class="page-slider">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4">
-                    <h2 class="section-title stripe small-stripe">Experience<br />The <b>Easy Way</b><br />of Flight Booking</h2>
+                <div class="col-sm-6">
+                    <h2 class="section-title stripe small-stripe">Experience The <b>Easy Way</b><br />of Flight Booking</h2>
                 </div>
             </div>
         </div>
@@ -457,7 +454,7 @@
                                     </div><!-- .flight-facilities -->
                                     <div class="summary-bottom-right flight-button">
                                         <a ng-click="setFlightActive(flight.IndexNo)" class="flight-detail-trigger">Detail Penerbangan <span class="caret"></span></a>
-                                        <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a>
+                                        <!-- <a class="flight-rules-trigger">Syarat &amp; Ketentuan <span class="caret"></span></a> -->
                                     </div><!-- .flight-button -->
                                 </div><!-- .summar-bottom -->
                             </div>

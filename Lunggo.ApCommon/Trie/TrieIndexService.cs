@@ -1,7 +1,4 @@
-﻿using System;
-using Lunggo.ApCommon.Autocomplete;
-using Lunggo.ApCommon.Dictionary;
-using Lunggo.ApCommon.Model;
+﻿using Lunggo.ApCommon.Dictionary;
 
 namespace Lunggo.ApCommon.Trie
 {

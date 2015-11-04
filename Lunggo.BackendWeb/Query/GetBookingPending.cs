@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.Framework.Database;
+﻿using Lunggo.Framework.Database;
 
 namespace Lunggo.BackendWeb.Query
 {

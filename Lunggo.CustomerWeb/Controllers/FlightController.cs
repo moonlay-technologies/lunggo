@@ -1,32 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
-using System.Web.ModelBinding;
 using System.Web.Mvc;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Flight.Database;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment;
-using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Filter;
-using Lunggo.Framework.Payment.Data;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Redis;
 using Lunggo.Framework.SharedModel;
-using Microsoft.Data.OData.Query;
 using RestSharp.Extensions;
-using RestSharp.Serializers;
 
 namespace Lunggo.CustomerWeb.Controllers
 {

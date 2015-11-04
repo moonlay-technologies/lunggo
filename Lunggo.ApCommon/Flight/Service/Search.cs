@@ -1,25 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Threading;
-using System.Threading.Tasks;
 using CsQuery.ExtensionMethods.Internal;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
-
-using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
-using Lunggo.Framework.Redis;
-using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

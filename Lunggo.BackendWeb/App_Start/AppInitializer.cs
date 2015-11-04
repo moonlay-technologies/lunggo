@@ -1,10 +1,8 @@
-﻿using System.IO;
-using System.Web;
+﻿using System.Web;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;

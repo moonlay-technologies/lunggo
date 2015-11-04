@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using CsQuery;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink

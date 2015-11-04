@@ -71,14 +71,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -96,10 +88,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -773,6 +763,7 @@
     <Content Include="Assets\images\flight-detail-active.png" />
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
+    <Content Include="Assets\images\flight-filter-title-sprite.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />
@@ -964,6 +955,13 @@
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\spin.min.js" />
     <Content Include="Assets\js\travoramaApp.js" />
+    <Content Include="Assets\mobile\css\application.css">
+      <DependentUpon>application.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
+    <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
     <Content Include="Assets\script\commonexternal-15.js" />
@@ -985,6 +983,7 @@
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\js\accountController.js" />
     <Content Include="Assets\travorama20\js\checkoutController.js" />
+    <Content Include="Assets\travorama20\js\countries.js" />
     <Content Include="Assets\travorama20\js\homeController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
@@ -1132,6 +1131,7 @@
     <Content Include="Assets\travorama20\css\_page_password.scss" />
     <Content Include="Assets\travorama20\css\_page_account.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
+    <Content Include="Assets\mobile\css\application.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1144,8 +1144,6 @@
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2345,9 +2343,6 @@
     <Content Include="Views\Shared\travorama20\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\travorama20\_SearchCalendar.cshtml" />
     <Content Include="Views\Travorama20\flightReturn.cshtml" />
-    <None Include="Views\Flight\Checkout.cshtml.bak" />
-    <None Include="Views\Flight\SearchResultList-Return.cshtml.bak" />
-    <None Include="Views\Flight\SearchResultList-Single.cshtml.bak" />
     <Content Include="Views\Travorama20\flightCheckout.cshtml" />
     <Content Include="Views\Flight\TopDestinations.cshtml" />
     <Content Include="Views\Travorama20\register.cshtml" />
@@ -2373,9 +2368,9 @@
     <Content Include="Views\StaticPage\HowToPay.cshtml" />
     <Content Include="Views\StaticPage\Privacy.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
-    <None Include="Views\Flight\Thankyou.cshtml.bak" />
     <Content Include="Views\Flight\FlightSearchForm.cshtml" />
-    <None Include="Views\UW000TopPage\Index.cshtml.bak2" />
+    <Content Include="Views\Shared\mobile\_Layout.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteHeader.cshtml" />
     <Content Include="Views\UW610ChangeProfile\ChangeProfile.cshtml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
@@ -2447,6 +2442,8 @@
     <Content Include="Views\Home\CekPemesanan.cshtml" />
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
+    <Content Include="Views\StaticPage\Contact.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2458,7 +2455,6 @@
     <Content Include="Views\UW000TopPage\HomePageCampaign.cshtml" />
     <Content Include="Views\Template\FlightSearchListReturn2.cshtml" />
     <Content Include="Views\Template\UserForgot.cshtml" />
-    <None Include="Views\UW000TopPage\Index.cshtml.bak" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2477,6 +2473,7 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
+    <Folder Include="Assets\mobile\images\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />

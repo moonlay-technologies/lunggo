@@ -1,16 +1,17 @@
-﻿using System.IO;
-using System.Web;
+﻿using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
+using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage;
 
 namespace Lunggo.WebAPI
@@ -29,7 +30,8 @@ namespace Lunggo.WebAPI
             InitFlightService();
             InitQueueService();
             InitMailService();
-            
+            InitTableStorageService();
+            InitHtmlTemplateService();
         }
 
         private static void InitConfigurationManager()
@@ -113,6 +115,19 @@ namespace Lunggo.WebAPI
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
+        }
+
+        public static void InitHtmlTemplateService()
+        {
+            var htmlTemplateService = HtmlTemplateService.GetInstance();
+            htmlTemplateService.Init();
+        }
+
+        public static void InitTableStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var table = TableStorageService.GetInstance();
+            table.Init(connString);
         }
     }
 }

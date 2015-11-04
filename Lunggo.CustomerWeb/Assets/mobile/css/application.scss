@@ -1,0 +1,77 @@
+﻿
+
+/*--------------------*/
+/* variables */
+$color-main-blue:#1daee4;
+$color-main-orange:#ff7200;
+$border-default:1px solid #ccc;
+$border-radius-default:4px;
+
+/*--------------------*/
+/* mixins */
+@mixin letter-spacing($value){
+    letter-spacing:$value;
+}
+
+@mixin border-radius($radius){
+    -webkit-border-radius:$radius;
+    -moz-border-radius:$radius;
+    border-radius:$radius;
+}
+
+@mixin box-shadow($properties){
+    -webkit-box-shadow:$properties;
+    -moz-box-shadow:$properties;
+    box-shadow:$properties;
+}
+
+@mixin skew-x($value){
+    -ms-transform: skewX($value);
+    -webkit-transform: skewX($value);
+    transform: skewX($value);
+}
+
+@mixin clearfix(){
+    display:block; width:100%; content:""; clear:both;
+}
+
+
+/*--------------------*/
+// General Styling
+
+body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px;}
+
+// site header
+.site-header {}
+
+// site content
+.site-content {min-height:100%;}
+
+// site footer
+.site-footer {background-color:#111; color:#fefefe;
+    .site-footer-menu {background-color:#303030;
+        nav {padding:0 12px;
+            ul {list-style:none; margin:0; padding:0;
+                li {
+                    a {color:#fefefe; padding:12px 0; display:block;}
+                    &+li {border-top:$border-default;}
+                }
+            }
+        }
+    }
+    .site-footer-social {text-align:center; padding:12px 0;
+        nav {margin-bottom:12px;
+            .facebook {
+                .fa-circle {color:#4a6eaa;}
+            }
+            .twitter {
+                .fa-circle {color:#28a9e0;}
+            }
+            .instagram {
+                .fa-circle {color:#9a6756;}
+            }
+        }
+        // inverse
+        .fa-inverse {color:#000;}
+    }
+}

@@ -1,5 +1,4 @@
-﻿using Lunggo.Framework.SharedModel;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Lunggo.Framework.TicketSupport.ZendeskClass
 {

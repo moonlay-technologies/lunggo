@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Identity.User;
 

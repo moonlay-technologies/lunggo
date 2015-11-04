@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
 

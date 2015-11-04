@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http;
 using System.Web;
-using System.Web.Mvc;
 using Lunggo.ApCommon.Hotel.Logic;
 using Lunggo.ApCommon.Hotel.Logic.Search;
 using Lunggo.ApCommon.Hotel.Model;

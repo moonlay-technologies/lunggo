@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Web;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
+﻿using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.CustomerWeb.Models
 {

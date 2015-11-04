@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
-using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Redis;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
-using StackExchange.Redis;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
 {

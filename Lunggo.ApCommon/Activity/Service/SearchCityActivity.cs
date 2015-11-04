@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lunggo.ApCommon.Actifity.Database.Query;
-using Lunggo.ApCommon.Actifity.Model;
 using Lunggo.ApCommon.Activity.Database.Query;
 using Lunggo.ApCommon.Activity.Model;
-using Lunggo.ApCommon.Flight.Model;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Actifity.Service
 {
