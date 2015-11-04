@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Actifity.Model;
-using Lunggo.ApCommon.Activity.Database.Query;
-using Lunggo.Framework.Database;
-
-namespace Lunggo.ApCommon.Activity.Service
+﻿namespace Lunggo.ApCommon.Activity.Service
 {
     //public static class SelectActivityByType
     //{

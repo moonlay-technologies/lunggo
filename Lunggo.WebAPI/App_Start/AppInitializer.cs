@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Web;
+﻿using System.Web;
 using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;

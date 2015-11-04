@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.Framework.Config;
 using Microsoft.Azure.WebJobs;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620.Model
 {

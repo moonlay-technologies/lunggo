@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
@@ -15,9 +12,6 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
-using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
-using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

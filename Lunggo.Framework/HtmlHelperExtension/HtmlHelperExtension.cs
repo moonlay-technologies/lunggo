@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.Framework.Constant;
 using Lunggo.Framework.Context;
-using Lunggo.Framework.Extension;
 using Lunggo.Framework.I18nMessage;
 
 namespace Lunggo.Framework.HtmlHelperExtension

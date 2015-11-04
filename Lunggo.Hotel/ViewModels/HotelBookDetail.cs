@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lunggo.Hotel.ViewModels
+﻿namespace Lunggo.Hotel.ViewModels
 {
     public class HotelBookDetail:OrderDetail
     {

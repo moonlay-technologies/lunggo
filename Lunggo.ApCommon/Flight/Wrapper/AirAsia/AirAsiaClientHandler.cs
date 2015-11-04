@@ -1,5 +1,4 @@
-﻿using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.Framework.Config;
+﻿using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Text;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;

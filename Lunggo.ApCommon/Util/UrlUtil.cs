@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations.Model;
-using System.Linq;
-using System.Net.Mime;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Util

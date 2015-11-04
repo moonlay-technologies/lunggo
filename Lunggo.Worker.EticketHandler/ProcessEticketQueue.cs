@@ -1,10 +1,5 @@
-﻿using System;
-using System.CodeDom;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
@@ -13,9 +8,6 @@ using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Schema;
-using NReco.PdfGenerator;
-using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Worker.EticketHandler

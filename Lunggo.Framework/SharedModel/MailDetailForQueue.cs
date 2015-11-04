@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.Framework.HtmlTemplate;
-using Lunggo.Framework.Mail;
+﻿using Lunggo.Framework.Mail;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 

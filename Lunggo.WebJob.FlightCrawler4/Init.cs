@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lunggo.ApCommon.Constant;
+﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
-using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 

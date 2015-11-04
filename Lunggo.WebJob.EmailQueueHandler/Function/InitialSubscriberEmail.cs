@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Subscriber;
-using Lunggo.ApCommon.Voucher;
-using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
-using Mandrill.Utilities;
-using Microsoft.AspNet.Identity;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
 

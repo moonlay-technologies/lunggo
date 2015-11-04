@@ -1,24 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Diagnostics;
 using System.Web.WebPages;
-using log4net;
-using log4net.Repository.Hierarchy;
-using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Sequence;
-using Lunggo.ApCommon.Subscriber;
 using Lunggo.Framework.Core;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.HtmlTemplate;
-using Lunggo.Framework.Mail;
-using Lunggo.Framework.Queue;
-using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.CustomerWeb.Controllers
 {

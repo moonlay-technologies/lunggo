@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.Framework.TicketSupport.ZendeskClass
 {

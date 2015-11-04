@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Identity.User
 {

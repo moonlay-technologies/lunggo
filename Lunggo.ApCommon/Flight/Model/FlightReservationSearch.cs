@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.Mvc.Routing.Constraints;
 
 namespace Lunggo.ApCommon.Flight.Model
 {

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Lunggo.ApCommon.Payment.Constant;
-
-namespace Lunggo.BackendWeb.Models
+﻿namespace Lunggo.BackendWeb.Models
 {
     public class ExchangeRateViewModel
     {

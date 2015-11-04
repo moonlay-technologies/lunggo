@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Lunggo.ApCommon.Flight.Database.Query;
-using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Database;
-using Lunggo.Repository.TableRecord;
+﻿using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
