@@ -5,13 +5,13 @@ file : /Assets/travorama20/css/_header.scss
 
 */
 
-.site-header {position:fixed; top:0; left:0; z-index:10; width:100%; height:70px; background:#fff; @include box-shadow(0 0 10px #aaa); letter-spacing:0.1px;
+.site-header {position:fixed; top:0; left:0; z-index:10; width:100%; height:70px; background:#fff; @include box-shadow(0px -2px 15px #555); letter-spacing:0.1px;
     .site-logo {padding-top:13px; display:block;
         img {height:40px;}
     }
     .menu-top {margin-bottom:3px;
         &:before, &:after {@include clearfix();}
-        nav {float:right; background:$color-main-blue; padding:5px; -webkit-border-bottom-right-radius:$border-radius-default; -webkit-border-bottom-left-radius:$border-radius-default; -moz-border-radius-bottomright:$border-radius-default; -moz-border-radius-bottomleft:$border-radius-default; border-bottom-right-radius:$border-radius-default; border-bottom-left-radius:$border-radius-default;
+        nav {float:right; background:$color-main-blue; padding:5px 12px; -webkit-border-bottom-right-radius:$border-radius-default; -webkit-border-bottom-left-radius:$border-radius-default; -moz-border-radius-bottomright:$border-radius-default; -moz-border-radius-bottomleft:$border-radius-default; border-bottom-right-radius:$border-radius-default; border-bottom-left-radius:$border-radius-default;
             ul {padding:0; margin:0;
                 li {display:inline; padding:0 5px; font-size:12px;
                     a {color:#fff;}
@@ -47,6 +47,7 @@ file : /Assets/travorama20/css/_header.scss
                     // li+li {border-left:2px solid $color-main-blue;
                     //    a {padding-right:0;}
                     // }
+                    .caret {opacity:0.5;}
                 }
             }
         }

@@ -20,7 +20,7 @@ file : /Assets/travorama20/css/_page_index.scss
                 nav {
                     ul {margin:0; padding:0;
                         li {float:left; width:33.333333334%; list-style:none; border-right:2px solid #bdbdbd;
-                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:10px 10px; font-weight:600; text-decoration:none; font-size:14px;
+                            a {color:#4f4f4f; background:#d2d2d2; display:block; padding:13px 0px; text-align:center; font-weight:600; text-decoration:none; font-size:14px;
                                 &:before {content:""; width:20px; height:20px; display:inline-block; background-image:url(/Assets/images/search-tab-sprite.png); margin-bottom:-5px; margin-right:5px;}
                             }
                             &.active {border-right:0;
@@ -43,27 +43,28 @@ file : /Assets/travorama20/css/_page_index.scss
                     }
                 }
             }
-            .tab-content {color:#fff; padding:5px 20px 5px;
+            .tab-content {color:#fff; padding:15px 20px 5px; letter-spacing:0.2px;
                 &>div {display:none;}
                 &>div.active {display:block;}
                 &:before, &:after {@include clearfix();}
                 input {color:#6a6a6a;}
+                input[type="submit"] {color:#4f3500;}
                 //*****
                 // tab flight
                 .tab-flight {
                     .form-group {margin-bottom:5px;}
-                    h3 {margin-bottom:20px; font-size:17px;}
+                    h3 {margin-bottom:15px; font-size:17px;}
                     .form-flight-type {margin-bottom:5px;}
                     label {font-weight:normal;}
                     .btn.btn-yellow {font-size:14px; letter-spacing:0.1px; padding:10px 0;}
                     // flight type
                     .form-group.flight-type {}
                     // flight destination
-                    .form-group.flight-destination {margin-bottom:5px;}
+                    .form-group.flight-destination {margin-bottom:7px;}
                     .switch-destination {background:url(/Assets/images/switch-destination.png) center center no-repeat; background-size:cover; width:25px; height:25px; display:inline-block; margin:10px 0 5px; cursor:pointer;}
-                    .form-flight-origin, .form-flight-destination {text-align:center; font-size:12px; padding:5px 5px;}
+                    .form-flight-origin, .form-flight-destination {text-align:center; font-size:12px; padding:7px 5px; height:auto;}
                     // flight date
-                    .form-group.flight-date {margin-bottom:5px;
+                    .form-group.flight-date {margin-bottom:7px;
                         &>div:first-child {padding-right:3px;}
                         &>div:last-child {padding-left:3px;}
                     }
@@ -79,7 +80,7 @@ file : /Assets/travorama20/css/_page_index.scss
                         h5 {font-size:21px; font-weight:bold; margin-top:14px;}
                     }
                     // flight class
-                    .form-group.flight-class {margin-bottom:5px; position:relative;}
+                    .form-group.flight-class {margin-bottom:7px; position:relative;}
                     .form-flight-class {display:block; padding:7px 15px; height:auto; text-decoration:none; cursor:pointer; position:relative; font-size:12px;
                         &:after {content:url(/Assets/images/select-arrow.png); position:absolute; right:15px; top:7px;}
                     }
@@ -91,15 +92,15 @@ file : /Assets/travorama20/css/_page_index.scss
                     }
                     // flight passenger
                     .form-group.flight-passenger {margin-bottom:10px;
-                        &>div {padding-left:5px; padding-right:5px;}
+                        &>div {padding-left:6px; padding-right:6px;}
                         &>div:first-child {padding-right:0px; padding-left:6px;}
                         &>div:last-child {padding-left:0px; padding-right:6px;}
                     }
-                    .form-flight-passenger {background:#fff; padding:5px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:60px; cursor:pointer;
+                    .form-flight-passenger {background:#fff; padding:5px; color:#6a6a6a; @include border-radius(4px); border:$border-default; position:relative; height:50px; cursor:pointer;
                         small {font-sizE:9px; line-height:0;
                             br {display:block; margin-top:0; margin-bottom:-5px; content:"";}
                         }
-                        .passenger-input {width:50px; position:absolute; top:30px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
+                        .passenger-input {width:50px; position:absolute; top:25px; right:5px; border:0; text-align:right; font-size:36px; padding:0; line-height:0; margin:0; letter-spacing:0; font-weight:600;}
                         .option {display:none; z-index:3; width:100%; text-align:center; padding:0; position:absolute;
                             span {}
                         }
@@ -247,16 +248,17 @@ file : /Assets/travorama20/css/_page_index.scss
 
     //*****
     // section subscribe
-    .section-subscribe {color:#18a5db; background:#d4e5ef; padding:3px 0; margin-top:80px;
+    .section-subscribe {color:#18a5db; background:#d4e5ef; padding:3px 0; margin-top:80px; height:120px;
         .container {position:relative;}
         .subscribe-bg {position:absolute; left:-50px; top:-57px; height:200px;}
 
-        h2 {padding-left:80px; line-height:150%; letter-spacing:0; padding-top:7px;}
+        h2 {padding-left:80px; line-height:145%; letter-spacing:0; padding-top:10px; font-size:22px;}
         form {padding-top:10px;
-            input[type="text"] {padding:10px 15px; height:auto;}
+            input[type="text"] {padding:8px 12px; height:auto; font-size:12px;}
             .subscribe-email {}
             .subscribe-name {width:80%; float:left;}
             .btn {width:19%; margin-left:1%; padding:9px;}
+            .form-group {margin-top:7px; margin-bottom:8px;}
         }
     
         .subscribe-after {display:none; height:114px; padding-top:10px;
@@ -287,17 +289,27 @@ file : /Assets/travorama20/css/_page_index.scss
         }
     }
 
+    //**********
+    // search location
+    .search-calendar {
+        .calendar-header {height:45px; padding:10px 27px; padding-right:16px;
+            .calendar-title {font-size:14px; padding:4px 0;}
+        }
+    }
 
     //**********
     // search location
     .search-location {width:600px;
+        .location-header {font-size:14px; height:45px; padding:10px 27px; padding-right:16px;
+            p {padding:4px 0;}
+        }
         .location-body {
             .location-recommend {
                 .tab-header {
                     nav {width:540px;
                         ul {
                             li {
-                                span {padding:0 10px;}
+                                span {padding:0 10px; padding-left:17px;}
                             }
                         }
                     }

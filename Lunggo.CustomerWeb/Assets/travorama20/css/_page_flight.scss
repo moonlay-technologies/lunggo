@@ -46,7 +46,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
     // *****
     // section slider
-    .page-slider {background:url(/Assets/images/flight-page-slider.jpg) center center no-repeat; height:250px; color:#fff;
+    .page-slider {background:url(/Assets/images/flight-page-slider.jpg) center center no-repeat; background-size:cover; height:240px; color:#fff;
         h2 {line-height:120%; padding-top:25px; background-position:left bottom;}
     }
     // *****
