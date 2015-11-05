@@ -12,6 +12,11 @@ namespace Lunggo.Framework.Context
             return (String) HttpContext.Current.Items[SystemConstant.HttpContextLangCode];
         }
 
+        public static void SetActiveLanguageCode(string langCode)
+        {
+            HttpContext.Current.Items[SystemConstant.HttpContextLangCode] = langCode;
+        }
+
         public static String GetDefaultHomePageUrl()
         {
             var host = HttpContext.Current.Request.Url.Host;

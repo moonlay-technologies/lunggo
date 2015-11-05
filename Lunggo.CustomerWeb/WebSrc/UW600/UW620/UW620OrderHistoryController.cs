@@ -9,9 +9,10 @@ using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
-    [Authorize]
+    
     public class Uw620OrderHistoryController : Controller
     {
+        [Authorize]
         // GET: UW620OrderHistory
         public ActionResult OrderHistory(Uw620OrderHistoryRespone request)
         {
@@ -34,7 +35,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             var templateService = HtmlTemplateService.GetInstance();
             var converter = new SelectPdf.HtmlToPdf();
             var reservation = flightService.GetDetails(rsvNo);
-            if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
+            if (!reservation.IsIssued)
                 return Content("ticket unavailable");
             string eticket = templateService.GenerateTemplate(reservation, "FlightEticket");
             eticket = eticket.Replace("<body class=\"eticket\">", "<body onload=\"window.print()\">");
@@ -47,7 +48,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
                 return Content("ticket unavailable");
             if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                flightService.SendInstantPaymentNotifToCustomer(rsvNo);
+                flightService.SendInstantPaymentConfirmedNotifToCustomer(rsvNo);
             else
                 flightService.SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
             return Content("Success");
