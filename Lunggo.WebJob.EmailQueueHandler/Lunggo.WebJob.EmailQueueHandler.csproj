@@ -120,8 +120,9 @@
     <Compile Include="Function\FlightEticketEmail.cs" />
     <Compile Include="Function\FlightPendingPaymentExpiredNotifEmail.cs" />
     <Compile Include="Function\FlightPendingPaymentConfirmedNotifEmail.cs" />
-    <Compile Include="Function\FlightPendingPaymentNotifEmail.cs" />
-    <Compile Include="Function\FlightInstantPaymentNotifEmail.cs" />
+    <Compile Include="Function\FlightInstantPaymentReservationNotifEmail.cs" />
+    <Compile Include="Function\FlightPendingPaymentReservationNotifEmail.cs" />
+    <Compile Include="Function\FlightInstantPaymentConfirmedNotifEmail.cs" />
     <Compile Include="Function\ForgotPasswordEmail.cs" />
     <Compile Include="Function\VoucherEmail.cs" />
     <Compile Include="Function\InitialSubscriberEmail.cs" />

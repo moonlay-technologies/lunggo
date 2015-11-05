@@ -439,8 +439,9 @@
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightInstantPaymentNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightInstantPaymentReservationNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightPendingPaymentReservationNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightInstantPaymentConfirmedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
     <None Include="HtmlTemplate\Subscribe.cshtml" />
     <None Include="HtmlTemplate\Newsletter.cshtml" />

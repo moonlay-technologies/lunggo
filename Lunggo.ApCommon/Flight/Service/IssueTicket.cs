@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         GetAndUpdateNewDetails(detailsInput);
                         SendEticketToCustomer(input.RsvNo);
                         if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                            SendInstantPaymentNotifToCustomer(input.RsvNo);
+                            SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
                         else
                             SendPendingPaymentConfirmedNotifToCustomer(input.RsvNo);
                         InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);

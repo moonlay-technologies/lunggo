@@ -29,7 +29,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 var reservation = CreateReservation(itins, input, output);
                 InsertDb.Reservation(reservation);
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
-                    SendPendingPaymentInitialNotifToCustomer(reservation.RsvNo);
+                    SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
+                else
+                    SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
                 SaveRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
             }

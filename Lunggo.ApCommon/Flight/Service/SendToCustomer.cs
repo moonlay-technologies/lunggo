@@ -21,17 +21,24 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-        public void SendInstantPaymentNotifToCustomer(string rsvNo)
+        public void SendInstantPaymentReservationNotifToCustomer(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightInstantPaymentNotifEmail");
+            var queue = queueService.GetQueueByReference("FlightInstantPaymentReservationNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
-        public void SendPendingPaymentInitialNotifToCustomer(string rsvNo)
+        public void SendInstantPaymentConfirmedNotifToCustomer(string rsvNo)
         {
             var queueService = QueueService.GetInstance();
-            var queue = queueService.GetQueueByReference("FlightPendingPaymentNotifEmail");
+            var queue = queueService.GetQueueByReference("FlightInstantPaymentConfirmedNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(rsvNo));
+        }
+
+        public void SendPendingPaymentReservationNotifToCustomer(string rsvNo)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightPendingPaymentReservationNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
             var expirationQueue = queueService.GetQueueByReference("FlightPendingPaymentExpiredNotifEmail");
             var expirationTimeoutString = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
