@@ -46,9 +46,11 @@ app.controller('checkoutController', [
                     params: {
                         token: $scope.token,
                         code: $scope.voucher.code,
-                        email: $scope.buyerInfo.email
+                        email: $scope.buyerInfo.email,
+                        price: $scope.initialPrice
                     }
-                }).then(function(returnData) {
+                }).then(function (returnData) {
+                    console.log(returnData);
                     if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.Amount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;

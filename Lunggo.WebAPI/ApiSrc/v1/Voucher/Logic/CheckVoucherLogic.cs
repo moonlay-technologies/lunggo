@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Voucher.Logic
             {
                 Email = request.Email,
                 Price = request.Price,
-                VoucherCode = request.VoucherCode
+                VoucherCode = request.Code
             };
             var response = service.ValidateVoucherRequest(voucher);
             var apiResponse = AssembleApiResponse(response, request);
