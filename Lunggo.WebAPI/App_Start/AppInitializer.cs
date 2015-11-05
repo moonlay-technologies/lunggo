@@ -3,6 +3,7 @@ using Lunggo.ApCommon.Autocomplete;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
@@ -30,6 +31,7 @@ namespace Lunggo.WebAPI
             InitFlightService();
             InitQueueService();
             InitMailService();
+            InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
         }
@@ -128,6 +130,12 @@ namespace Lunggo.WebAPI
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var table = TableStorageService.GetInstance();
             table.Init(connString);
+        }
+
+        public static void InitPaymentService()
+        {
+            var payment = PaymentService.GetInstance();
+            payment.Init();
         }
     }
 }
