@@ -31,6 +31,7 @@ namespace Lunggo.WebAPI
             InitFlightService();
             InitQueueService();
             InitMailService();
+            InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
             InitPaymentService();
@@ -136,6 +137,12 @@ namespace Lunggo.WebAPI
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var table = TableStorageService.GetInstance();
             table.Init(connString);
+        }
+
+        public static void InitPaymentService()
+        {
+            var payment = PaymentService.GetInstance();
+            payment.Init();
         }
     }
 }
