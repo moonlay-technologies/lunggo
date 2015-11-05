@@ -8,11 +8,11 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightPendingPaymentNotifEmail([QueueTrigger("flightpendingpaymentnotifemail")] string rsvNo)
+        public static void FlightInstantPaymentConfirmedNotifEmail([QueueTrigger("flightinstantpaymentconfirmednotifemail")] string rsvNo)
         {
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Pending Payment Notif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Flight Instant Payment Confirmed Notif Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
@@ -25,14 +25,14 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {reservation.Contact.Email},
-                Subject = "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
+                Subject = "[Travorama] Terima Kasih Sudah Memesan di Travorama - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(reservation, mailModel, "FlightPendingPaymentNotifEmail");
-            
-            Console.WriteLine("Done Processing Flight Pending Payment Notif Email for RsvNo " + rsvNo);
+            mailService.SendEmail(reservation, mailModel, "FlightInstantPaymentConfirmedNotifEmail");
+
+            Console.WriteLine("Done Processing Flight Instant Payment Confirmed Notif Email for RsvNo " + rsvNo);
         }
     }
 }

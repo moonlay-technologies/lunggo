@@ -47,7 +47,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
                 return Content("ticket unavailable");
             if (reservation.Payment.Method != PaymentMethod.BankTransfer)
-                flightService.SendInstantPaymentNotifToCustomer(rsvNo);
+                flightService.SendInstantPaymentConfirmedNotifToCustomer(rsvNo);
             else
                 flightService.SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
             return Content("Success");

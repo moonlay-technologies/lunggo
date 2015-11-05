@@ -102,7 +102,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (paymentUrl != null)
                 return Redirect(paymentUrl);
             else
-                return RedirectToAction("Thankyou", "Flight", new { rsvNo });
+                return RedirectToAction("Confirmation", "Flight", new { rsvNo });
         }
 
         public ActionResult Thankyou(string rsvNo)
