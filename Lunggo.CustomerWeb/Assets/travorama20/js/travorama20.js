@@ -207,13 +207,14 @@ function flightPageSearchFormFunctions() {
     // select flight type
     $('.form-flight-type').click(function() {
         flightPageSearchFormParam.type = $(this).attr('data-value');
-        if (FlightSearchConfig.flightForm.type == 'return') {
-            $('.form-flight-oneway').hide();
-            $('.form-flight-return').show();
+        hideCalendar();
+        if (flightPageSearchFormParam.type == 'return') {
+            //$('.form-flight-oneway').hide();
+            //$('.form-flight-return').show();
             $('.form-flight-return').removeClass('disabled');
         } else {
-            $('.form-flight-oneway').show();
-            $('.form-flight-return').hide();
+            //$('.form-flight-oneway').show();
+            //$('.form-flight-return').hide();
             $('.form-flight-return').addClass('disabled');
         }
     });
@@ -377,12 +378,14 @@ function flightPageSearchFormFunctions() {
         $('.date-picker').datepicker('option', 'minDate', new Date());
     });
     $('.form-flight-return').click(function () {
-        if (flightPageSearchFormParam.departureDate) {
-            $('.date-picker').datepicker('option', 'minDate', new Date(flightPageSearchFormParam.departureDate));
-        } else {
-            $('.date-picker').datepicker('option', 'minDate', new Date());
+        if (!$(this).hasClass('disabled')) {
+            if (flightPageSearchFormParam.departureDate) {
+                $('.date-picker').datepicker('option', 'minDate', new Date(flightPageSearchFormParam.departureDate));
+            } else {
+                $('.date-picker').datepicker('option', 'minDate', new Date());
+            }
+            showCalendar('return');
         }
-        showCalendar('return');
     });
     // embed date picker into page
     $('.date-picker').datepicker({
