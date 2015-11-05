@@ -1,8 +1,89 @@
-﻿@{
+﻿@using System.Collections.Specialized
+@{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-static page-contact";
 }
 
-This is Contact page
+@section PageJS{
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC3powciSUlRRkM9xsX4n-nKozXVW2yEg&callback=initMap"></script>
+    <script>
+        var map;
 
-adssadads
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -6.226352, lng: 106.808520 },
+                zoom: 15,
+                styles: [
+                      {
+                          "stylers": [
+                            { "saturation": -100 }
+                          ]
+                      }
+                ]
+            });
+        }
+    </script>
+}
+
+<section class="section-map">
+    <div id="map"></div>
+</section>
+
+<section class="section-contact">
+    
+    <h1 class="text-center section-title stripe">GET IN <span>TOUCH</span></h1>
+    <h4 class="text-center section-subtitle">We are Here to Help You</h4>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="contact-info">
+                    
+                    <div class="contact address">
+                        <h5>Address :</h5>
+                        <p>
+                            Equity Tower 25th Floor, SCBD lot 9<br/>
+                            Jl. Jenderal Sudirman kav.52-53<br/>
+                            Jakarta 12190
+                        </p>
+                    </div>
+                    <div class="contact email">
+                        <h5>Email Address :</h5>
+                        <p>
+                            <a href="#">cs@travorama.com</a>
+                        </p>
+                    </div>
+                    <div class="contact phone">
+                        <h5>Call Center :</h5>
+                        <h4>1 500 650</h4>
+                    </div>
+                    <div class="contact social">
+                        <h5>Social Media:</h5>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xs-6 contact-form-wrapper">
+                <form novalidate>
+                    <p>We are happy to answer any question you have. Just send us a message in the form below</p>
+                    <div class="form-group">
+                        <label class="control-label">Nama : </label>
+                        <input type="text" name="Name" value="" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Email : </label>
+                        <input type="email" name="Email" value="" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">subject : </label>
+                        <input type="text" name="Subject" value="" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-yellow btn-lg pull-right">KIRIM</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section><!-- .contact-form -->

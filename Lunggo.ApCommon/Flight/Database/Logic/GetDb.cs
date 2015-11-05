@@ -227,6 +227,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
+                                    BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
                                     Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
