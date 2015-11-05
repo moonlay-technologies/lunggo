@@ -220,7 +220,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                 &:before, &:after {@include clearfix();}
                 .summary-top {border-bottom:$border-default;
                     &:before, &:after {@include clearfix();}
-                    .summary-top-left {text-align:center; float:left; width:25%; border-right:$border-default; height:82px;
+                    .summary-top-left {text-align:center; float:left; width:25%; border-right:$border-default;
                         h5 {color:$color-main-blue; font-weight:bold;}
                         img {height:55px;}
                     }
@@ -333,7 +333,28 @@ file: /Assets/travorama20/css/_page_flight.scss
 // *****
 // page flight oneway
 .page-flight.page-flight-oneway {
-    .search-result-list {}
+    // flight
+    .flight {
+
+        .flight-summary-left {
+            .summary-top {border-bottom:0;
+                .summary-top-left {height:110px; padding:10px;}
+                .summary-top-right {
+                    .summary-top-right-top {
+                        &:before, &:after {@include clearfix();}
+                    }
+                    .summary-top-right-bottom {clear:both; width:100%; border-top:$border-default; text-align:right; margin-top:10px;}
+                }
+            }
+        }
+
+        .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none; cursor:pointer;
+            &:before {content:""; display:block; position:absolute; width:20px; height:20px; background:url(/Assets/images/flight-button-sprite.png) no-repeat; background-size:200%; left:-20px; top:5px;}
+        }
+        .flight-rules-trigger {@extend &.flight-detail-trigger;
+            &:before {background-position:-20px;}
+        }
+    }
 }
 
 // *****
@@ -472,20 +493,24 @@ file: /Assets/travorama20/css/_page_flight.scss
                 .filter-trigger {
                     &>div {text-align:center; padding:10px 0;
                         span {position:relative; padding-left:0;
-                            &:before {width:30px; height:30px; background:url(/Assets/images/flight-filter-sprite.png) no-repeat; content:""; display:block; margin-left:auto; margin-right:auto; position:static;}
+                            &:before {width:20px; height:20px; background:url(/Assets/images/flight-filter-title-sprite.png) no-repeat; content:""; display:block; margin-left:auto; margin-right:auto; position:static;}
                         }
                         &+div {border-left:$border-default;}
                         &.filter-stop {width:25%;
-                            span:before {}
+                            span:before {background-position:0 0;}
+                            &.active span:before {background-position:0 -20px;}
                         }
                         &.filter-price {width:20%;
-                            span:before {background-position:-30px;}
+                            span:before {background-position:-20px 0;}
+                            &.active span:before {background-position:-20px -20px;}
                         }
                         &.filter-airline {width:20%;
-                            span:before {background-position:-60px;}
+                            span:before {background-position:-40px 0;}
+                            &.active span:before {background-position:-40px -20px;}
                         }
                         &.filter-duration {width:35%;
-                            span:before {background-position:-90px; width:50px;}
+                            span:before {background-position:-60px 0; width:50px;}
+                            &.active span:before {background-position:-60px -20px;}
                         }
                     }
                 }
