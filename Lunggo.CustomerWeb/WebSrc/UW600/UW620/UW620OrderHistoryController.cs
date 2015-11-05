@@ -9,9 +9,10 @@ using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
 {
-    [Authorize]
+    
     public class Uw620OrderHistoryController : Controller
     {
+        [Authorize]
         // GET: UW620OrderHistory
         public ActionResult OrderHistory(Uw620OrderHistoryRespone request)
         {

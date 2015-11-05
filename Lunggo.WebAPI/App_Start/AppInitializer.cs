@@ -34,6 +34,7 @@ namespace Lunggo.WebAPI
             InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
+            
         }
 
         private static void InitConfigurationManager()
@@ -106,6 +107,12 @@ namespace Lunggo.WebAPI
             flight.Init();
         }
 
+        private static void InitPaymentService()
+        {
+            var payment = PaymentService.GetInstance();
+            payment.Init();
+        }
+
         private static void InitMailService()
         {
             var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
@@ -132,10 +139,5 @@ namespace Lunggo.WebAPI
             table.Init(connString);
         }
 
-        public static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
-        }
     }
 }
