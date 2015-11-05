@@ -33,6 +33,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                     return voucherRecipient!=null;
                 }
             }
+            internal static bool IsMember(string email)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    var userName = GetMemberRecordQuery.GetInstance().Execute(conn, new { Email = email }).FirstOrDefault();
+                    return string.IsNullOrEmpty(userName);
+                }
+            }
         }
     }
 }
