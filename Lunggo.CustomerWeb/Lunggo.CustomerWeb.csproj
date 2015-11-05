@@ -698,6 +698,7 @@
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
+    <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />

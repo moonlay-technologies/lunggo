@@ -411,6 +411,7 @@ function flightPageSearchFormFunctions() {
         }
     });
 
+
     // set current date as default
     $(document).ready(function () {
         // set default date for departure flight
@@ -902,6 +903,14 @@ function flightFormSearchFunctions() {
         FlightSearchConfig.flightForm.origin = 'CGK';
         $('.form-flight-destination').val('Denpasar, Bali (DPS)');
         FlightSearchConfig.flightForm.destination = 'DPS';
+
+        // navigation
+        $('.home-nav .nav-prev').click(function () {
+            $('.ui-datepicker-prev').click();
+        });
+        $('.home-nav .nav-next').click(function () {
+            $('.ui-datepicker-next').click();
+        });
     });
 
     //*****

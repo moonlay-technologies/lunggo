@@ -131,6 +131,8 @@ form label.important:after {
       cursor: pointer; }
   .search-calendar .calendar-body {
     padding-top: 15px; }
+  .search-calendar .home-nav {
+    display: none; }
 
 .date-picker {
   padding: 15px; }
@@ -182,7 +184,7 @@ form label.important:after {
           background: #fed83e; }
         .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable span, .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end.ui-datepicker-unselectable a {
           color: #666; }
-      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev {
+      .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .date-picker .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .date-picker .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
         position: absolute;
         top: -10px;
         left: 15px;
@@ -1238,6 +1240,40 @@ file : /Assets/travorama20/css/_page_index.scss
     font-size: 14px;
     padding: 4px 0; }
 
+.page-index .search-calendar .calendar-body {
+  position: relative; }
+  .page-index .search-calendar .calendar-body .home-nav {
+    background: #999;
+    height: 25px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0; }
+    .page-index .search-calendar .calendar-body .home-nav .nav-prev, .page-index .search-calendar .calendar-body .home-nav .nav-next {
+      width: 11px;
+      height: 19px;
+      background-image: url(/Assets/images/calendar-nav-sprite-sm.png);
+      background-position: 0 0;
+      display: block;
+      position: absolute;
+      top: 3px;
+      left: 10px; }
+    .page-index .search-calendar .calendar-body .home-nav .nav-next {
+      right: 10px;
+      left: auto;
+      background-position: -11px 0; }
+  .page-index .search-calendar .calendar-body .ui-datepicker-prev, .page-index .search-calendar .calendar-body .ui-datepicker-next {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline;
+    width: auto;
+    display: none; }
+  .page-index .search-calendar .calendar-body .ui-datepicker-next {
+    left: auto;
+    right: 0; }
+
 .page-index .search-location {
   width: 600px; }
   .page-index .search-location .location-header {
@@ -2033,7 +2069,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight .search-calendar .ui-datepicker-group-last {
     border-top: none !important;
     border-left: 1px solid #ccc; }
-  .page-flight .search-calendar .ui-datepicker-prev {
+  .page-flight .search-calendar .ui-datepicker-prev, .page-flight .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .page-flight .search-calendar .calendar-body .ui-datepicker-next {
     background: url(/Assets/images/calendar-sprite.png) no-repeat;
     width: 22px;
     height: 37px;
@@ -3402,7 +3438,7 @@ file : /Assets/travorama20/css/_page_checkout.scss
         color: #fed83e; }
       .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-calendar .ui-datepicker-week-end a:hover {
         background: #fed83e; }
-    .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-prev {
+    .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-prev, .page-checkout .ui-datepicker .ui-datepicker-group .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-checkout .ui-datepicker .ui-datepicker-group .ui-datepicker-next {
       position: absolute;
       top: -10px;
       left: 15px;
