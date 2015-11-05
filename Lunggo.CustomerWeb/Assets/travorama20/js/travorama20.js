@@ -694,12 +694,12 @@ function flightFormSearchFunctions() {
         $('.change-flight-class .option, .form-flight-passenger .option , .search-location, .search-calendar').hide();
 
         if (FlightSearchConfig.flightForm.type == 'return') {
-            $('.form-flight-oneway').hide();
-            $('.form-flight-return').show();
+            //$('.form-flight-oneway').hide();
+            //$('.form-flight-return').show();
             $('.form-flight-return').removeClass('disabled');
         } else {
-            $('.form-flight-oneway').show();
-            $('.form-flight-return').hide();
+            //$('.form-flight-oneway').show();
+            //$('.form-flight-return').hide();
             $('.form-flight-return').addClass('disabled');
         }
 
@@ -751,7 +751,7 @@ function flightFormSearchFunctions() {
     });
 
     //*****
-    // on switch target
+    // on swap target
     $('.switch-destination').click(function() {
         var prevOrigin = $('.form-flight-origin').val();
         var prevOriginCode = FlightSearchConfig.flightForm.origin;
@@ -841,13 +841,15 @@ function flightFormSearchFunctions() {
         showCalendar('departure');
         $('.date-picker').datepicker('option','minDate', new Date());
     });
-    $('.form-flight-return').click(function() {
-        if (FlightSearchConfig.flightForm.departureDate) {
-            $('.date-picker').datepicker('option', 'minDate', new Date(FlightSearchConfig.flightForm.departureDate));
-        } else {
-            $('.date-picker').datepicker('option', 'minDate', new Date());
+    $('.form-flight-return').click(function () {
+        if( !$(this).hasClass('disabled') ){
+            if (FlightSearchConfig.flightForm.departureDate) {
+                $('.date-picker').datepicker('option', 'minDate', new Date(FlightSearchConfig.flightForm.departureDate));
+            } else {
+                $('.date-picker').datepicker('option', 'minDate', new Date());
+            }
+            showCalendar('return');
         }
-        showCalendar('return');
     });
     // embed date picker into page
     $('.date-picker').datepicker({
