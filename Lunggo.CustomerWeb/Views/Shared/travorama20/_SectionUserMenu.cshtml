@@ -1,11 +1,12 @@
-﻿<aside class="account-menu">
+﻿@using Lunggo.ApCommon.Identity.User
+<aside class="account-menu">
 
     <header>
-        <span>Shinta Tamara</span>
+        <span>@User.Identity.GetFirstName() @User.Identity.GetLastName()</span>
     </header>
     <ul>
-        <li class="profile"><a href="#" class="@(ViewBag.PageActiveSection == "profile" ? "active" : "" )" ng-click="changeSection('profile')" ng-class="{'active': currentSection == 'profile'}">Ubah Profile</a></li>
-        <li class="order"><a href="#" class="@(ViewBag.PageActiveSection == "order" ? "active" : "" )" ng-click="changeSection('order')" ng-class="{'active': currentSection == 'order'}">Cek Pemesanan</a></li>
+        <li class="profile"><a href="@(Request.Url.AbsolutePath.Contains("OrderFlightHistoryDetail") ? Url.Action("OrderHistory", "UW620OrderHistory") : "#")" class="@(ViewBag.PageActiveSection == "profile" ? "active" : "" )" ng-click="changeSection('profile')" ng-class="{'active': currentSection == 'profile'}">Ubah Profile</a></li>
+        <li class="order"><a href="@(Request.Url.AbsolutePath.Contains("OrderFlightHistoryDetail") ? Url.Action("OrderHistory", "UW620OrderHistory") : "#")" class="@(ViewBag.PageActiveSection == "order" ? "active" : "" )" ng-click="changeSection('order')" ng-class="{'active': currentSection == 'order'}">Cek Pemesanan</a></li>
     </ul>
 
 </aside><!-- -.account-menu -->

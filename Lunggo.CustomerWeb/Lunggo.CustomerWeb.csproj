@@ -698,6 +698,7 @@
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
+    <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
@@ -796,6 +797,7 @@
     <Content Include="Assets\images\hotel-preview.jpg" />
     <Content Include="Assets\images\hotel-review-header.png" />
     <Content Include="Assets\images\hourglass.png" />
+    <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
     <Content Include="Assets\images\howtoguide.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
@@ -809,6 +811,7 @@
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo.png" />
+    <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />

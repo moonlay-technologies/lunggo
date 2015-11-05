@@ -304,6 +304,7 @@ namespace Lunggo.Configuration
         private void GenerateJsConfigFile()
         {
             var apiUrl = _configDictionary["@@.*.api.apiUrl@@"];
+            var rootUrl = _configDictionary["@@.*.general.rootUrl@@"];
             const string hotelPath = @"/api/v1/hotels";
             const string roomPath = @"/api/v1/rooms";
             const string flightPath = @"/api/v1/flights";
@@ -315,10 +316,16 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
+            const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
+            const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
+            const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
+            const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
+
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
             fileTemplate.Reset();
             fileTemplate.SetAttribute("apiUrl", apiUrl);
+            fileTemplate.SetAttribute("rootUrl", rootUrl);
             fileTemplate.SetAttribute("hotelPath", hotelPath);
             fileTemplate.SetAttribute("roomPath", roomPath);
             fileTemplate.SetAttribute("flightPath", flightPath);
@@ -330,6 +337,10 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
+            fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
+            fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
+            fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);
+            fileTemplate.SetAttribute("changeProfilePath", changeProfilePath);
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };
