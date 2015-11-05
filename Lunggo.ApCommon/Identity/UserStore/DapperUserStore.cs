@@ -190,16 +190,17 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 UserName = record.UserName,
                 FirstName = record.FirstName,
                 LastName = record.LastName,
+                Address = record.Address,
                 EmailConfirmed = record.EmailConfirmed,
                 Id = record.Id,
                 LockoutEnabled = record.LockoutEnabled,
                 LockoutEndDateUtc = record.LockoutEndDateUtc,
                 PasswordHash = record.PasswordHash,
+                CountryCd = record.CountryCd,
                 PhoneNumber = record.PhoneNumber,
                 PhoneNumberConfirmed = record.PhoneNumberConfirmed,
                 SecurityStamp = record.SecurityStamp,
                 TwoFactorEnabled = record.TwoFactorEnabled
-
             };
             return user;
         }
