@@ -35,7 +35,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             var templateService = HtmlTemplateService.GetInstance();
             var converter = new SelectPdf.HtmlToPdf();
             var reservation = flightService.GetDetails(rsvNo);
-            if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
+            if (!reservation.IsIssued)
                 return Content("ticket unavailable");
             string eticket = templateService.GenerateTemplate(reservation, "FlightEticket");
             eticket = eticket.Replace("<body class=\"eticket\">", "<body onload=\"window.print()\">");

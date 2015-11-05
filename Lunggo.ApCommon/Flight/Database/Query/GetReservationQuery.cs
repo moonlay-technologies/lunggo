@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(@"r.PaymentTime, r.PaymentStatusCd, r.PaymentTargetAccount, r.PaymentUrl, ");
             clauseBuilder.Append(@"r.RefundAmount, r.RefundTime, r.RefundTargetBank, r.RefundTargetAccount, ");
             clauseBuilder.Append(@"r.FinalPrice, r.PaidAmount, ");
-            clauseBuilder.Append(@"i.ItineraryId, i.RsvNo, ");
+            clauseBuilder.Append(@"i.ItineraryId, i.RsvNo, i.BookingStatusCd, ");
             clauseBuilder.Append(@"t.TripId, t.ItineraryId, t.OriginAirportCd, t.DestinationAirportCd, t.DepartureDate, ");
             clauseBuilder.Append(@"s.SegmentId, s.TripId, s.Pnr, s.OperatingAirlineCd, s.AirlineCd, s.FlightNumber, ");
             clauseBuilder.Append(@"s.DepartureAirportCd, s.DepartureTerminal, s.DepartureTime, ");
