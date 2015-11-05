@@ -726,9 +726,14 @@
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
+    <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
+    <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
+    <Content Include="Assets\images\email-instagram.jpg" />
     <Content Include="Assets\images\email-send-icon.png" />
+    <Content Include="Assets\images\email-social.jpg" />
+    <Content Include="Assets\images\email-twitter.jpg" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
@@ -2464,6 +2469,7 @@
     </Content>
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.cshtml" />
+    <Content Include="Views\Travorama20\emailTemplate.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
