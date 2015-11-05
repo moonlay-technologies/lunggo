@@ -243,8 +243,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                          //CultureInfo provider = CultureInfo;
                          var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
                          var arrivalDate = DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"));
-                         var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(ognAirport)));
-                         var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(arrAirport)));
+                         var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(bandara[0])));
+                         var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(bandara[1])));
                          tampungFare.Add("" + FIDsegments[i] + ":" + Rbd[i] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;");
                          tampungFareString = string.Join(";", tampungFare.ToArray());
                          segments.Add(new FlightSegment
@@ -382,8 +382,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                          //CultureInfo provider = CultureInfo;
                          var departureDate = DateTime.Parse(date + " " + departure, CultureInfo.CreateSpecificCulture("id-ID"));
                          var arrivalDate = DateTime.Parse(date + " " + arrival, CultureInfo.CreateSpecificCulture("id-ID"));
-                         var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(ognAirport)));
-                         var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(arrAirport)));
+                         var deptime = departureDate.AddHours(-(dict.GetAirportTimeZone(bandara[0])));
+                         var arrtime = arrivalDate.AddHours(-(dict.GetAirportTimeZone(bandara[1])));
                          tampungFare.Add( "" + FIDsegments[i] + ":" + Rbd[i] + ":S:" + bandara[0] + ":" + bandara[1] + ":U2s5VlVrNUZXUT09;" );
                          tampungFareString = string.Join(";", tampungFare.ToArray());
                          segments.Add(new FlightSegment

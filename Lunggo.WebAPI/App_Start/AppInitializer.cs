@@ -34,7 +34,7 @@ namespace Lunggo.WebAPI
             InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
-            InitPaymentService();
+            
         }
 
         private static void InitConfigurationManager()
@@ -139,10 +139,5 @@ namespace Lunggo.WebAPI
             table.Init(connString);
         }
 
-        public static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
-        }
     }
 }
