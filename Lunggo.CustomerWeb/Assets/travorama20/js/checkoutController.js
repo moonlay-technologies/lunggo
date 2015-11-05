@@ -19,6 +19,7 @@ app.controller('checkoutController', [
         ];
 
         $scope.currency = 'IDR';
+        $scope.language = langCode;
         $scope.token = token;
         $scope.trips = trips;
         $scope.initialPrice = price;
@@ -72,7 +73,7 @@ app.controller('checkoutController', [
                 $scope.book.booking = true;
 
                 // generate data
-                $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'"';
+                $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
                 for (var i = 0; i < $scope.passengers.length; i++) {
 
                     // check nationality

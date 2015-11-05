@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
@@ -47,7 +48,7 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en';
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
         // flight detail
         var token = @Model.Token;
@@ -476,6 +477,7 @@
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
                                             <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+                                            <input type="type" name="Language" value="" ng-model="language" />
 
                                             <p>Buyer Info</p>
                                             <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />

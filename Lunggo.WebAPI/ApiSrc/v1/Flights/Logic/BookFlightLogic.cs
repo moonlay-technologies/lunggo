@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.Framework.Context;
 using Lunggo.WebAPI.ApiSrc.v1.Flights.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
@@ -15,6 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
         {
             if (IsValid(request))
             {
+                OnlineContext.SetActiveLanguageCode(request.Language);
                 var bookServiceRequest = PreprocessServiceRequest(request);
                 var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
                 var apiResponse = AssembleApiResponse(bookServiceResponse, request);
