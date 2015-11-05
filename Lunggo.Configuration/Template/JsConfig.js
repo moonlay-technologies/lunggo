@@ -53,17 +53,17 @@ var SubscribeConfig = {
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://localhost:23321/id/ApiAccount/ResetPassword'
+    Url: '$rootUrl$$resetPasswordPath$'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://localhost:23321/id/ApiAccount/ForgotPassword'
+    Url: '$rootUrl$$forgotPasswordPath$'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://localhost:23321/id/ApiAccount/ChangePassword'
+    Url: '$rootUrl$$changePasswordPath$'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://localhost:23321/id/ApiAccount/ChangeProfile'
+    Url: '$rootUrl$$changeProfilePath$'
 };
