@@ -55,7 +55,14 @@ else
                                 <ul>
                                     <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
                                     <li class="dropdown-wrapper">
-                                        <a href="#" data-trigger="dropdown">@User.Identity.GetEmail()<span class="caret"></span></a>
+                                        @if (@User.Identity.IsAuthenticated)
+                                        {
+                                            <a href="#" data-trigger="dropdown"> @User.Identity.GetEmail() <span class="caret"></span></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
+                                        }
                                         <div class="dropdown-content my-account">
                                             @if (@User.Identity.IsAuthenticated)
                                             {

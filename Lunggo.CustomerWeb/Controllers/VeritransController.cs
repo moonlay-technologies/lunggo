@@ -34,7 +34,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {
-                var service = FlightService.GetInstance();
                 DateTime? time;
                 if (notif.transaction_time != null)
                     time = DateTime.Parse(notif.transaction_time);
@@ -54,12 +53,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
                 if (notif.order_id.IsFlightRsvNo())
                 {
-                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
-                    if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
-                    {
-                        var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
-                        service.IssueTicket(issueInput);
-                    }
+                    var flight = FlightService.GetInstance();
+                    flight.UpdateFlightPayment(notif.order_id, paymentInfo);
                 }
             }
             return null;

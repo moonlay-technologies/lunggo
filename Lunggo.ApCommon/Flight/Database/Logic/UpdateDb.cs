@@ -67,18 +67,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static void ConfirmPayment(string rsvNo, decimal paidAmount)
-            {
-                using (var conn = DbService.GetInstance().GetOpenConnection())
-                {
-                    FlightReservationTableRepo.GetInstance().Update(conn, new FlightReservationTableRecord
-                    {
-                        PaidAmount = paidAmount,
-                        RsvNo = rsvNo
-                    });
-                }
-            }
-
             internal static void ConfirmRefund(string rsvNo, RefundInfo refund)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
