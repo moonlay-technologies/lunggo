@@ -163,8 +163,8 @@ form label.important:after {content:"*"; color:#f00000;}
                     &.active {display:block;}
                     h3 {color:$color-main-blue; font-size:14px; font-weight:bold; margin-top:10px; margin-bottom:6px;}
                     ul {margin:0; padding:0; list-style:none; margin-bottom:23px;
-                        li {margin-bottom:-1px;
-                            a {color:#2f2f2f; font-weight:600;
+                        li {margin-bottom:0px;
+                            a {color:#2f2f2f; font-weight:600; font-size:13px;
                                 &:hover {text-decoration:none;
                                     &:before {content:url(/Assets/images/recommend-selector.png); position:absolute; left:0px;}
                                 }
