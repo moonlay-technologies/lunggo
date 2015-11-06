@@ -33,7 +33,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
     // *****
     // page overlay
-    .page-overlay {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(100,100,100,0.7);
+    .page-overlay {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);
         .overlay-content {width:400px; height:250px; background:#fff; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
             header {background:$color-main-blue; text-align:center; color:#fff; padding:15px;
                 h4 {margin:0; font-weight:600;}
@@ -454,7 +454,12 @@ file: /Assets/travorama20/css/_page_flight.scss
     .search-result-warning {
         .notice:after {right:80px;}
     }
-    
+
+    // page title
+    .page-title {
+        h3 {border-bottom:$border-default; margin-bottom:15px; padding-bottom:15px;}
+    }    
+
     // search result container
     .search-result-container {
         .search-result-selected {display:none;}
@@ -561,16 +566,20 @@ file: /Assets/travorama20/css/_page_flight.scss
         // search result departure
         .search-result-departure {float:left;}
         // search result return
-        .search-result-return {float:right;}
+        .search-result-return {float:right;
+            .search-result-title {
+                div h5:before {background-position:-20px;}
+            }
+        }
         
         //*****
         // search result title
         .search-result-title {color:#fff; background:#1daee4; position:relative; margin-bottom:15px;
             &:before, &:after {@include clearfix();}
-            h4 {font-size:36px; font-weight:600; position:absolute; padding:15px; background:#2d9ac6; margin:0; height:100%;}
-            div {float:left; padding:10px; margin-left:75px;
-                h5 {font-size:16px; font-weight:600; margin:0; margin-bottom:10px; position:relative; padding-left:35px;
-                    &:before {width:30px; height:30px; display:block; content:""; position:absolute; background:url(/Assets/images/plane-updown-sprite.png) no-repeat; top:0; left:0;}
+            h4 {font-size:32px; font-weight:600; position:absolute; padding:15px; background:#2d9ac6; margin:0; height:100%;}
+            div {float:left; padding:12px 10px; margin-left:75px;
+                h5 {font-size:16px; font-weight:600; margin:0; margin-bottom:5px; position:relative; padding-left:30px; padding-top:5px;
+                    &:before {width:20px; height:20px; display:block; content:""; position:absolute; background:url(/Assets/images/plane-updown-sprite.png) no-repeat; background-size:200%; top:2px; left:0;}
                 }
                 p {margin-bottom:0; font-size:12px;
                     span.separator {display:inline-block; width:30px; border-top:2px solid #fff; position:relative; top:-3px;}
@@ -665,11 +674,12 @@ file: /Assets/travorama20/css/_page_flight.scss
                         .summary-top-right {width:70%; padding:0; padding-top:20px;
                             .flight-date-departure {
                                 h4 {font-size:16px;
-                                    span {display:block; margin:0;}
+                                    span {display:block; margin:0; margin-top:4px;}
                                 }
                             }
                             .flight-date-duration {
                                 h5 {font-size:10px;}
+                                .time {margin-top:7px; margin-bottom:3px;}
                             }
                             .flight-date-arrival {@extend .flight-date-departure; text-align:left; padding-right:0;
                                 span.overday {display:inline;}
@@ -682,16 +692,18 @@ file: /Assets/travorama20/css/_page_flight.scss
                         }
                         .summary-bottom-right {width:70%;
                             a {font-size:9px; margin-left:7px;
-                                &:before {left:-13px; top:3px;}
+                                &:before {left:-13px; top:4px;}
                             }
                             &.flight-duration {display:none;}
                         }
                     }
                 }
-                .flight-summary-right {width:27.5%; padding:10px; padding-right:0; padding-bottom:0;
-                    h4 {font-size:19px;}
-                    small {font-size:8px;}
-                    a {}
+                .flight-summary-right {width:27.5%; padding:10px 0; padding-bottom:0; padding-top:17px;
+                    h4 {font-size:18px; padding-left:10px;
+                        sup {top:-5px;}
+                    }
+                    small {font-size:8px; letter-spacing:-0.1px; padding-left:10px;}
+                    a {margin-left:auto; margin-right:auto; width:100px; display:block; margin-top:10px;}
                 }
             }
             .flight-detail {
@@ -721,7 +733,7 @@ file: /Assets/travorama20/css/_page_flight.scss
 
 // **********
 // flight review wrapper
-.flight-review-wrapper {position:fixed; width:100%; height:100%; top:0; left:0; background:rgba(100,100,100,0.7); z-index:100;
+.flight-review-wrapper {position:fixed; width:100%; height:100%; top:0; left:0; background:rgba(0,0,0,0.7); z-index:100;
     .close-review {cursor:pointer;}
     // if active
     &.active {overflow:auto;

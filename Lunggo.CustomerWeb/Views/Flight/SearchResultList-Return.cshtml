@@ -123,7 +123,7 @@
 <section class="page-slider">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <h2 class="section-title stripe small-stripe">Experience The <b>Easy Way</b><br />of Flight Booking</h2>
             </div>
         </div>
@@ -213,7 +213,7 @@
         </div>
     </div><!-- .page-overlay -->
 
-    <div class="container">
+    <div class="container page-title">
         <h3><b>HASIL</b> PENCARIAN</h3>
     </div>
 
@@ -427,7 +427,7 @@
                                             <h4>{{flight.Trips[0].Segments[0].DepartureAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                                         </div>
                                         <div class="flight-date-duration">
-                                            <h5 class="time">{{msToTime(flight.Trips[0].TotalDuration)}}</h5>
+                                            <h5 class="time"><span>{{msToTime(flight.Trips[0].TotalDuration)}}</span></h5>
                                             <h5 class="transit">
                                                 <span ng-if="flight.Trips[0].TotalTransit == 0">Langsung</span>
                                                 <span ng-if="flight.Trips[0].TotalTransit > 0">{{flight.Trips[0].TotalTransit}} Transit</span>
@@ -713,7 +713,7 @@
                                             <h4>{{flight.Trips[0].OriginAirport}} <span>{{flight.Trips[0].Segments[0].DepartureTime | date :'HH:mm' : 'UTC'}}</span></h4>
                                         </div>
                                         <div class="flight-date-duration">
-                                            <h5 class="time">{{msToTime(flight.Trips[0].TotalDuration)}}</h5>
+                                            <h5 class="time"><span>{{msToTime(flight.Trips[0].TotalDuration)}}</span></h5>
                                             <h5 class="transit">
                                                 <span ng-if="flight.Trips[0].TotalTransit == 0">Langsung</span>
                                                 <span ng-if="flight.Trips[0].TotalTransit > 0">{{flight.Trips[0].TotalTransit}} Transit</span>
