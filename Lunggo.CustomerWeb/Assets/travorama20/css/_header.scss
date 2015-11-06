@@ -53,7 +53,7 @@ file : /Assets/travorama20/css/_header.scss
                 }
             }
             // dropdown content
-            .dropdown-content {background:#7fdafc; border-top:0;
+            .dropdown-content {background:#7fdafc; border-top:0; right:0; left:auto;
                 &:before {content:""; display:block; position:absolute; top:-10px; left:50%; margin-left:-4px; width:10px; height:10px; background:url(/Assets/images/hover-menu-arrow.png) bottom center no-repeat;}
                 a {color:#fff;}
                 a:hover {background:#fff; color:$color-main-blue !important;}

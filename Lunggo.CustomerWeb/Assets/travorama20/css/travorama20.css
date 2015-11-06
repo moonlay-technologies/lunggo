@@ -456,7 +456,9 @@ file : /Assets/travorama20/css/_header.scss
           opacity: 0.5; }
     .site-header .menu-bottom .menu-side .dropdown-content {
       background: #7fdafc;
-      border-top: 0; }
+      border-top: 0;
+      right: 0;
+      left: auto; }
       .site-header .menu-bottom .menu-side .dropdown-content:before, .site-header .menu-bottom .menu-side .page-index .dropdown-content.section-reason:after, .page-index .site-header .menu-bottom .menu-side .dropdown-content.section-reason:after {
         content: "";
         display: block;
