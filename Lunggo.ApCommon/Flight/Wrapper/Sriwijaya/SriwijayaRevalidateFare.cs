@@ -229,7 +229,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      var dict = DictionaryService.GetInstance();
                      for (int i = 0; i < 2; i++)
                      {
-                         int j = i*0;
+                         int j = 2*i;
                          var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (i + 1) + ")>td:nth-child(3)"];
                          bandaraRaw = tunjukSetiapBandara.Select(x => x.Cq().Text()).FirstOrDefault();
                          var bandara = bandaraRaw.Split('-').ToList();
@@ -257,7 +257,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                              DepartureTime = DateTime.SpecifyKind(departureDate,DateTimeKind.Utc),
                              ArrivalAirport = bandara[1],
                              ArrivalTime = DateTime.SpecifyKind(arrivalDate,DateTimeKind.Utc),
-                             OperatingAirlineCode = ParseFare[i],
+                             OperatingAirlineCode = ParseFare[j],
                              Duration = arrtime - deptime,
                              StopQuantity = 0
                          });
@@ -368,7 +368,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                      var dict = DictionaryService.GetInstance();
                      for (int i = 0; i < 3; i++)
                      {
-                         int j = i*0;
+                         int j = 2*i;
                          var tunjukSetiapBandara = tunjukSelectedgo.MakeRoot()[".selectedgo:nth-child(" + (i + 1) + ")>td:nth-child(3)"];
                          bandaraRaw = tunjukSetiapBandara.Select(x => x.Cq().Text()).FirstOrDefault();
                          var bandara = bandaraRaw.Split('-').ToList();
@@ -396,7 +396,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                              DepartureTime = DateTime.SpecifyKind(departureDate,DateTimeKind.Utc),
                              ArrivalAirport = bandara[1],
                              ArrivalTime = DateTime.SpecifyKind(arrivalDate,DateTimeKind.Utc),
-                             OperatingAirlineCode = ParseFare[i],
+                             OperatingAirlineCode = ParseFare[j],
                              Duration = arrtime-deptime,
                              StopQuantity = 0
                          });

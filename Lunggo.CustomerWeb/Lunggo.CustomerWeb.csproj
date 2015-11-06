@@ -224,13 +224,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AppInitializer.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\App_Start\AppInitializer.cs" />
+    <Compile Include="Areas\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\App_Start\FilterConfig.cs" />
+    <Compile Include="Areas\App_Start\IdentityConfig.cs" />
+    <Compile Include="Areas\App_Start\LunggoConfig\LunggoBundleConfig.cs" />
+    <Compile Include="Areas\App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
