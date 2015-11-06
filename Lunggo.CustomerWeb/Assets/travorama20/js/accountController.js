@@ -178,6 +178,23 @@ app.controller('passwordController', [
     }
 ]);// account controller
 
+
+// order detail controller
+app.controller('orderDetailController', [
+    '$http', '$scope', function ($http, $scope) {
+
+        $scope.getTime = function(dateTime) {
+            return new Date(dateTime);
+        }
+
+        $scope.contactDetail = contactDetail;
+        $scope.passengerDetail = passengerDetail;
+        $scope.flightDetail = flightDetail;
+        $scope.refundDetail = refundDetail;
+
+    }
+]);
+
 // Travorama reset controller
 app.controller('resetController', [
     '$http', '$scope', function ($http, $scope) {
