@@ -44,6 +44,7 @@ app.controller('returnFlightController', [
             }
         }
         $scope.departureFlightConfig = {
+            notice: true,
             name: 'departure',
             expiry: '',
             flightSearchParams: FlightSearchConfig.flightForm.departureFlightParam,
@@ -86,6 +87,7 @@ app.controller('returnFlightController', [
             validateActive: false,
         };
         $scope.returnFlightConfig = {
+            notice: true,
             name: 'return',
             expiry: '',
             flightSearchParams: FlightSearchConfig.flightForm.returnFlightParam,
@@ -130,6 +132,15 @@ app.controller('returnFlightController', [
 
         // ******************************
         // general functions
+
+        // close notice
+        $scope.closeNotice = function (target) {
+            if (target == 'departure') {
+                $scope.departureFlightConfig.notice = false;
+            } else {
+                $scope.returnFlightConfig.notice = false;
+            }
+        }
 
         // milisecond to hour
         $scope.msToTime = function (duration) {

@@ -12,6 +12,7 @@ app.controller('singleFlightController', [
         // **********
         // general variables
         $scope.pageLoaded = true;
+        $scope.notice = true;
         $scope.busy = false;
         $scope.loading = false;
         $scope.loadingFlight = false;
@@ -113,6 +114,11 @@ app.controller('singleFlightController', [
                     break;
             }
             return month;
+        }
+
+        // close notice
+        $scope.closeNotice = function() {
+            $scope.notice = false;
         }
 
         // milisecond to hour

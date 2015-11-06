@@ -189,6 +189,17 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
         }
     }
+
+    // *****
+    // flight warning
+    .search-result-warning {margin-bottom:10px;
+        .notice {background:#FF9A24; color:#fff; padding:6px 12px; font-size:13px; @include border-radius($border-radius-default); position:relative;
+            p {margin-bottom:0;}
+            .close-notice {color:#fff; font-weight:bold; cursor:pointer;}
+            &:after {width:14px; height:10px; background:url(/Assets/images/flight-notice-arrow.png) center center no-repeat; content:""; display:block; position:absolute; top:100%; right:150px;}
+        }
+    }
+
     // *****
     // flight sort
     .search-result-sort {padding:10px 0;
@@ -235,9 +246,9 @@ file: /Assets/travorama20/css/_page_flight.scss
                             h5 {font-size:12px;}
                         }
                         .flight-date-duration {float:left; width:30%; text-align:center;
-                            .time {margin-top:5px; margin-bottom:5px; font-size:11px;
+                            .time {margin-top:10px; margin-bottom:5px; font-size:11px;
                                 span {position:relative;}
-                                span:before {content:""; background-image:url(/Assets/images/sandclock.png); background-repeat:no-repeat; background-size:contain; margin-right:10px; width:10px; height:15px; position:absolute; top:0; left:-12px;}
+                                span:before {content:""; background-image:url(/Assets/images/sandclock.png); background-repeat:no-repeat; background-size:contain; margin-right:10px; width:7px; height:15px; position:absolute; top:1px; left:-13px;}
                             }
                             .transit {border-top:3px solid $color-main-blue; padding-top:5px; margin-top:0; font-size:11px;}
                         }
@@ -254,7 +265,7 @@ file: /Assets/travorama20/css/_page_flight.scss
                     }
                     .summary-bottom-right {float:right; width:75%; text-align:right;
                         .flight-detail-trigger {margin-left:30px; padding:7px; display:inline-block; position:relative; color:$color-main-blue; text-decoration:none; cursor:pointer;
-                            &:before {content:""; display:block; position:absolute; width:20px; height:20px; background:url(/Assets/images/flight-button-sprite.png) no-repeat; background-size:200%; left:-20px; top:5px;}
+                            &:before {content:""; display:block; position:absolute; width:17px; height:16px; background:url(/Assets/images/flight-button-sprite.png) no-repeat; background-size:200%; left:-13px; top:7px;}
                         }
                         .flight-rules-trigger {@extend .flight-detail-trigger;
                             &:before {background-position:-20px;}
@@ -433,6 +444,11 @@ file: /Assets/travorama20/css/_page_flight.scss
 // *****
 // page flight return
 .page-flight.page-flight-return {
+    // flight warning
+    .search-result-warning {
+        .notice:after {right:80px;}
+    }
+    
     // search result container
     .search-result-container {
         .search-result-selected {display:none;}
@@ -448,6 +464,7 @@ file: /Assets/travorama20/css/_page_flight.scss
             }
         }
         &>.inactive {width:290px; opacity:0.5;
+            .search-result-warning {display:none;}
             .search-result-filter {display:none;}
             .search-result-sort {display:none;}
             .flight {
