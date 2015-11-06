@@ -34,19 +34,19 @@
 }
 
 
-<div class="container">
+<div class="container" ng-app="travorama" ng-controller="orderDetailController">
     <div class="row">
 
         <div class="col-xs-3">
             @if (@User.Identity.IsAuthenticated)
-                {
-                    @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
-                }
+            {
+                @Html.Partial("/Views/Shared/travorama20/_SectionUserMenu.cshtml")
+            }
         </div>
         <!-- ******************** -->
 
         <div class="col-xs-9">
-            <section class="account-content" ng-app="travorama" ng-controller="orderDetailController">
+            <section class="account-content">
 
                 <div class="order-detail">
                     <header class="content-header">
@@ -63,7 +63,7 @@
                                 else
                                 {
                                     <h4><b>BUYER INFO</b> <button class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button><a style="margin-right:6px;" href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="pull-right btn btn-yellow">Confirm</a></h4>
-                                } 
+                                }
                             </header>
                             <section>
                                 <div class="form form-horizontal">
@@ -135,7 +135,7 @@
                                 <h4><b>@Html.I18NString("CW00199")</b></h4>
                             </header>
                             <section>
-                                   
+
                                 <div class="flight" ng-repeat="flight in flightDetail track by $index" ng-class="{'departure': $index == 0 , 'return' : $index != 0}">
                                     <p><img ng-src="{{flight.Segments[0].AirlineLogoUrl}}" alt="{{flight.Segments[0].AirlineName}}" /> <span>{{flight.Segments[0].AirlineName}}</span> </p>
                                     <div class="row">
@@ -163,32 +163,36 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">No Refund</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@(Model.Payment.Refund!=null?
-                                            Model.Payment.Refund.Amount.ToString():"-" )</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">@(Model.Payment.Refund != null ?
-                                            Model.Payment.Refund.Time.ToString() : "-")</p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3">Status Refund</label>
-                                        <div class="col-xs-9">
-                                            <p class="form-control-static">-</p>
-                                        </div>
+                                            <p class="form-control-static">
+                                                @(Model.Payment.Refund != null ?
+                                            Model.Payment.Refund.Amount.ToString() : "-")
+                                        </p>
                                     </div>
                                 </div>
-                            </section>
-                        </div><!-- .refund-detail -->
-
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                    <div class="col-xs-9">
+                                        <p class="form-control-static">
+                                            @(Model.Payment.Refund != null ?
+                                            Model.Payment.Refund.Time.ToString() : "-")
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-3">Status Refund</label>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static">-</p>
+                                </div>
+                            </div>
+                        </div>
                     </section>
-                </div><!-- .history-content -->
+                </div><!-- .refund-detail -->
 
-            </section><!-- .account-content -->
-        </div>
+            </section>
+        </div><!-- .history-content -->
 
-    </div>
+    </section><!-- .account-content -->
+</div>
+
+</div>
 </div>

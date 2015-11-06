@@ -1,10 +1,12 @@
 ﻿// Travorama Account controller
 app.controller('accountController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope' , function($http, $scope) {   
+
+        var hash = (location.hash);
 
         // variables
         $scope.pageLoaded = true;
-        $scope.currentSection = 'profile';
+        $scope.currentSection = '';
         $scope.profileForm = {
             active : false
         };
@@ -98,7 +100,6 @@ app.controller('accountController', [
                 });
             }
         }
-        
 
         $scope.passwordForm.submit = function () {
             $scope.passwordForm.submitting = true;
@@ -128,6 +129,13 @@ app.controller('accountController', [
                 $scope.passwordForm.submitting = false;
             });
         }
+
+        if (hash == '#order') {
+            $scope.changeSection('order');
+        } else {
+            $scope.changeSection('profile');
+        }
+
     }
 ]);// account controller
 
@@ -187,6 +195,7 @@ app.controller('orderDetailController', [
             return new Date(dateTime);
         }
 
+        $scope.currentSection = 'order';
         $scope.contactDetail = contactDetail;
         $scope.passengerDetail = passengerDetail;
         $scope.flightDetail = flightDetail;
