@@ -699,6 +699,7 @@
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
+    <Content Include="Assets\images\calendar-nav-sprite.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
@@ -770,6 +771,7 @@
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-filter-title-sprite.png" />
+    <Content Include="Assets\images\flight-notice-arrow.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />
