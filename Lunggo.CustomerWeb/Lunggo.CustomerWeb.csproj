@@ -224,13 +224,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AppInitializer.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\App_Start\AppInitializer.cs" />
+    <Compile Include="Areas\App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\App_Start\FilterConfig.cs" />
+    <Compile Include="Areas\App_Start\IdentityConfig.cs" />
+    <Compile Include="Areas\App_Start\LunggoConfig\LunggoBundleConfig.cs" />
+    <Compile Include="Areas\App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
@@ -699,6 +699,7 @@
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
+    <Content Include="Assets\images\calendar-nav-sprite.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
@@ -770,6 +771,7 @@
     <Content Include="Assets\images\flight-facilities-sprite.png" />
     <Content Include="Assets\images\flight-filter-sprite.png" />
     <Content Include="Assets\images\flight-filter-title-sprite.png" />
+    <Content Include="Assets\images\flight-notice-arrow.png" />
     <Content Include="Assets\images\flight-page-slider.jpg" />
     <Content Include="Assets\images\flight-review-title-bg.png" />
     <Content Include="Assets\images\flight-review-title-sprite.png" />

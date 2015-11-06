@@ -29,8 +29,8 @@ file : /Assets/travorama20/css/_header.scss
         .menu-main {height:40px;
             nav {height:100%;
                 ul {margin:0; padding:0; height:100%;
-                    li {display:inline-block; height:100%;
-                        a {color:$color-main-blue; font-weight:bold; font-size:14px; padding:5px 10px; display:inline-block;}
+                    li {display:inline-block; height:100%; padding-top:3px;
+                        a {color:$color-main-blue; font-weight:bold; font-size:13px; padding:5px 10px; display:inline-block;}
                     }
                     li+li {
                         a {border-left:1px solid #ddd;}
@@ -43,8 +43,8 @@ file : /Assets/travorama20/css/_header.scss
         .menu-side {float:right; margin-left:30px; height:40px;
             nav {height:100%;
                 ul {margin:0; padding:0; height:100%;
-                    li {display:inline-block; height:100%;
-                        a {color:$color-main-blue; font-weight:600; font-size:14px; padding:5px 10px; display:inline-block;}
+                    li {display:inline-block; height:100%; padding-top:3px;
+                        a {color:$color-main-blue; font-weight:600; font-size:13px; padding:5px 10px; display:inline-block;}
                     }
                     // li+li {border-left:2px solid $color-main-blue;
                     //    a {padding-right:0;}

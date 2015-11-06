@@ -5,6 +5,7 @@ using System.Linq;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Web;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
@@ -86,8 +87,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var FID = ParseFare[(ParseFare.Count() - 1)];
 
 
-                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpang, bookingParams;
+                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpangRaw, bookingParams;
                 decimal harga;
+                int jumlahSegment;
+                var penumpang = new List<string>();
                 var ParseFID1 = FID.Split(',').ToList();
                 DateTime tglBerangkat;
                 var Rbd = new List<string>();
@@ -110,13 +113,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                     var indexPenumpang1 = Fare.IndexOf('|');
                     var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpangRaw = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpang = penumpangRaw.Split('.').ToList();
                     var indextglBerangkat = Fare.IndexOf('?');
                     var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw);
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+                    jumlahSegment = 2;
 
                     bookingParams =
                         "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
@@ -144,13 +149,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                     var indexPenumpang1 = Fare.IndexOf('|');
                     var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpangRaw = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpang = penumpangRaw.Split('.').ToList();
                     var indextglBerangkat = Fare.IndexOf('?');
                     var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw);
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+                    jumlahSegment = 3;
 
                     bookingParams =
                     "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
@@ -175,13 +182,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     arrAirport = ambilOrigin.Substring((titikIndex4 + 1) + (titikIndex5 + 1), titikIndex6);
                     var indexPenumpang1 = Fare.IndexOf('|');
                     var indexPenumpang2 = Fare.Substring((indexPenumpang1 + 1)).IndexOf('|');
-                    penumpang = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpangRaw = Fare.Substring((indexPenumpang1 + 1), indexPenumpang2);
+                    penumpang = penumpangRaw.Split('.').ToList();
                     var indextglBerangkat = Fare.IndexOf('?');
                     var tglBerangkatRaw = Fare.Substring((indextglBerangkat + 1), (indexPenumpang1 - 1 - indextglBerangkat));
                     tglBerangkat = DateTime.Parse(tglBerangkatRaw, CultureInfo.CreateSpecificCulture("id-ID"));
                     var indexHarga = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2)).IndexOf('.');
                     var hargaRaw = Fare.Substring((indexPenumpang1 + 1) + (indexPenumpang2 + 1), indexHarga);
                     harga = Decimal.Parse(hargaRaw);
+                    jumlahSegment = 1;
 
                     bookingParams =
                         "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
@@ -214,6 +223,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
                 client.Expect100Continue = false;
 
+                var tahun2dgt = tglBerangkat.Year.ToString().Substring(2, 2);
                 var agentBooking =
                     "vSub=YES" +
                     "&PromoCode=" +
@@ -226,7 +236,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&INF=0" + penumpang[2] +
                     "&Submit=Search" +
                     "&action=booking" +
-                    "&2210150413=2210150413";
+                    "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
 
                 client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=booking", agentBooking);
 
@@ -281,6 +291,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     i++;
                 }
 
+                tahun2dgt = tglBerangkat.Year.ToString().Substring(2,2);
+                var featuringEncode1 = ("From:0:" + jumlahSegment + "").Base64Encode();
+                var featuringEncode2 = featuringEncode1.Base64Encode();
+
                 bookingParams +=
 
                     "&contactFName=" + bookInfo.ContactData.Name +
@@ -302,15 +316,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     "&tanggalBerangkat=" + tglBerangkat.ToString("dd-MMM-yyyy") +
                     "&tanggalTujuan=" +
                     "&ADT=" + penumpang[0] +
-                    "&CHD=" + penumpang[2] +
-                    "&INF=" + penumpang[4] +
+                    "&CHD=" + penumpang[1] +
+                    "&INF=" + penumpang[2] +
                     "&action=prosesBookingDirect" +
                     "&PromoCode=" +
                     "&features=RD%3ANO" +
-                    "&featuring=Um5KdmJUb3dPak09&2410150551=2410150551";
+                    "&featuring=" + featuringEncode2 +
+                    "&" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + "=" + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute;
+                var encode1 =
+                    ("prosesBookingDirect." +DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute+ ":prosesBookingDirect").Base64Encode();
+                var encode2 = encode1.Base64Encode();
                 client.AutoRedirect = true;
                 client.Expect100Continue = false;
-                var bookingResult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/menu_others.php?reffNo=Y0hKdmMyVnpRbTl2YTJsdVowUnBjbVZqZEM0eU5ERXdNVFV3TlRVeE9uQnliM05sYzBKdmIydHBibWRFYVhKbFkzUT0=", bookingParams);
+                var bookingResult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/menu_others.php?reffNo="+ encode2 +"", bookingParams);
                 //var bookingResult = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\mbuhlali.txt");
                 
                 if (client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check"))

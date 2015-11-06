@@ -12,6 +12,7 @@ app.controller('singleFlightController', [
         // **********
         // general variables
         $scope.pageLoaded = true;
+        $scope.notice = true;
         $scope.busy = false;
         $scope.loading = false;
         $scope.loadingFlight = false;
@@ -115,6 +116,11 @@ app.controller('singleFlightController', [
             return month;
         }
 
+        // close notice
+        $scope.closeNotice = function() {
+            $scope.notice = false;
+        }
+
         // milisecond to hour
         $scope.msToTime = function(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -124,9 +130,9 @@ app.controller('singleFlightController', [
                 // hours = parseInt((duration / (1000 * 60 * 60)) % 24);
                 // days = parseInt((duration / (1000 * 60 * 60 * 24)));
 
-            hours = (hours < 10) ? "0" + hours : hours;
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            seconds = (seconds < 10) ? "0" + seconds : seconds;
+            hours = hours;
+            minutes = minutes;
+            seconds = seconds;
 
             return hours + "h " + minutes + "m";
         }
