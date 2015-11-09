@@ -444,14 +444,15 @@ file : /Assets/travorama20/css/_header.scss
         height: 100%; }
         .site-header .menu-bottom .menu-side nav ul li {
           display: inline-block;
-          height: 100%;
-          padding-top: 3px; }
+          height: 100%; }
           .site-header .menu-bottom .menu-side nav ul li a {
             color: #1daee4;
             font-weight: 600;
             font-size: 13px;
             padding: 5px 10px;
             display: inline-block; }
+          .site-header .menu-bottom .menu-side nav ul li + li {
+            padding-top: 3px; }
         .site-header .menu-bottom .menu-side nav ul .caret {
           opacity: 0.5; }
     .site-header .menu-bottom .menu-side .dropdown-content {
@@ -2798,7 +2799,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right {
     width: 70%;
     padding: 0;
-    padding-top: 20px; }
+    padding-top: 15px; }
     .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 {
       font-size: 16px; }
       .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-departure h4 span, .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-left .summary-top .summary-top-right .flight-date-arrival h4 span {
@@ -2834,7 +2835,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   width: 27.5%;
   padding: 10px 0;
   padding-bottom: 0;
-  padding-top: 17px; }
+  padding-top: 12px; }
   .page-flight.page-flight-return .search-result-container .flight .flight-summary .flight-summary-right h4 {
     font-size: 18px;
     padding-left: 10px; }
