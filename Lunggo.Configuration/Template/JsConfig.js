@@ -52,6 +52,10 @@ var SubscribeConfig = {
     Url: '$apiUrl$$subscribePath$'
 };
 
+var RegisterConfig = {
+    Url: '$rootUrl$$registerPath$'
+};
+
 var ResetPasswordConfig = {
     Url: '$rootUrl$$resetPasswordPath$'
 };
