@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -8,6 +9,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Util;
 using Newtonsoft.Json;
 
@@ -25,9 +27,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
             var serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
             var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
-            var streamKey = new MemoryStream();
-            streamKey.WriteIntoStream(rawKey);
-            var signatureKey = SHA512.Create().ComputeHash(streamKey).ToString();
+            var signatureKey = rawKey.Sha512();
 
             if (notif.signature_key != signatureKey)
                 return null;
@@ -36,7 +36,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 DateTime? time;
                 if (notif.transaction_time != null)
-                    time = DateTime.Parse(notif.transaction_time);
+                    time = DateTime.Parse(notif.transaction_time).ToUniversalTime();
                 else
                     time = null;
 
@@ -57,7 +57,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     flight.UpdateFlightPayment(notif.order_id, paymentInfo);
                 }
             }
-            return null;
+            return new EmptyResult();
         }
 
         public ActionResult PaymentFinish(VeritransResponse response)

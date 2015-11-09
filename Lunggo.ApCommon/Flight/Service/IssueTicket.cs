@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var reservation = GetReservation(input.RsvNo);
                 var output = new IssueTicketOutput();
-                Parallel.ForEach(reservation.Itineraries, itin =>
+                foreach (var itin in reservation.Itineraries)
                 {
                     var bookingId = itin.BookingId;
                     var canHold = itin.CanHold;
@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         BookingStatusCd = BookingStatusCd.Mnemonic(orderResult.BookingStatus)
                     });
                     output.OrderResults.Add(orderResult);
-                });
+                }
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))
                 {
                     output.IsSuccess = true;

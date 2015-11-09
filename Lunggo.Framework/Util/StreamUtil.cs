@@ -5,21 +5,6 @@ namespace Lunggo.Framework.Util
 {
     public static class StreamUtil
     {
-        public static void WriteIntoStream(this Stream stream, string message)
-        {
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.Write(message);
-            }
-        }
-
-        public static string ReadStream(this Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
 
         public static byte[] StreamToByteArray(this Stream inputStream)
         {

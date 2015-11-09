@@ -17,8 +17,15 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public FlightReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
-            var rsv = GetReservation(rsvNo);
-            return ConvertToReservationForDisplay(rsv);
+            try
+            {
+                var rsv = GetReservation(rsvNo);
+                return ConvertToReservationForDisplay(rsv);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         internal FlightReservation GetReservation(string rsvNo)

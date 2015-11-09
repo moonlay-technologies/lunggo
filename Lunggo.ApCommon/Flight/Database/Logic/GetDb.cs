@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
@@ -227,7 +228,15 @@ namespace Lunggo.ApCommon.Flight.Service
                             {
                                 itinerary = new FlightItinerary
                                 {
+                                    BookingId = itineraryRecord.BookingId,
                                     BookingStatus = BookingStatusCd.Mnemonic(itineraryRecord.BookingStatusCd),
+                                    TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
+                                    Supplier = SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
+                                    TicketTimeLimit = itineraryRecord.TicketTimeLimit,
+                                    MarginId = itineraryRecord.MarginId.GetValueOrDefault(),
+                                    MarginCoefficient = itineraryRecord.MarginCoefficient.GetValueOrDefault(),
+                                    MarginConstant = itineraryRecord.MarginConstant.GetValueOrDefault(),
+                                    MarginNominal = itineraryRecord.MarginNominal.GetValueOrDefault(),
                                     Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
