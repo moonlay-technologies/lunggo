@@ -175,7 +175,9 @@ function flightPageFunctions() {
 var flightPageSearchFormParam = {
     type: 'return',
     origin: '',
+    originCity: '',
     destination: '',
+    destinationCity: '',
     cabin: 'y',
     departureDate: '',
     returnDate: '',
@@ -240,7 +242,7 @@ function flightPageSearchFormFunctions() {
     });
     $('.search-location .location-recommend .nav-click.next').click(function (evt) {
         evt.preventDefault();
-        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 4))) {
+        if (parseInt($('.search-location .location-recommend .tab-header nav ul').css('margin-left')) > -(135 * ($('.search-location .location-recommend .tab-header nav ul li').length - 6))) {
             $('.search-location .location-recommend .tab-header nav ul').css('margin-left', '-=135px');
         }
     });
@@ -256,9 +258,11 @@ function flightPageSearchFormFunctions() {
         var locationCode = $(this).attr('data-code');
         if ($('.search-location').attr('data-place') == 'origin') {
             flightPageSearchFormParam.origin = locationCode;
+            flightPageSearchFormParam.originCity = $(this).text();
             $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
         } else {
             flightPageSearchFormParam.destination = locationCode;
+            flightPageSearchFormParam.destinationCity = $(this).text();
             $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
         }
         hideLocation();
@@ -310,17 +314,20 @@ function flightPageSearchFormFunctions() {
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="' + list[i].Code + '">' + list[i].City + ' (' + list[i].Code + '), ' + list[i].Name + ', ' + list[i].Country + '</li>');
+            $('.autocomplete-result ul').append('<li data-code="' + list[i].Code + '" data-city="'+ list[i].City +'">' + list[i].City + ' (' + list[i].Code + '), ' + list[i].Name + ', ' + list[i].Country + '</li>');
         }
     }
     // select search result
     $('.autocomplete-result ul').on('click', 'li', function () {
         var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).attr('data-city');
         if ($('.search-location').attr('data-place') == 'origin') {
             flightPageSearchFormParam.origin = locationCode;
+            flightPageSearchFormParam.originCity = locationCity;
             $('.form-flight-origin').val($(this).text());
         } else {
             flightPageSearchFormParam.destination = locationCode;
+            flightPageSearchFormParam.destinationCity = locationCity;
             $('.form-flight-destination').val($(this).text());
         }
         hideLocation();
@@ -344,6 +351,13 @@ function flightPageSearchFormFunctions() {
     $('.form-flight-location').keydown(function (evt) {
         if (evt.keyCode == 9 || evt.which == 9) {
             evt.preventDefault();
+        }
+    });
+    $('.form-flight-location').focusout(function (evt) {
+        if ($(this).hasClass('form-flight-origin')) {
+            $(this).val((flightPageSearchFormParam.originCity + " (" + flightPageSearchFormParam.origin + ")"));
+        } else {
+            $(this).val((flightPageSearchFormParam.destinationCity + " (" + flightPageSearchFormParam.destination + ")"));
         }
     });
 
@@ -437,8 +451,10 @@ function flightPageSearchFormFunctions() {
         // set default flight and return flight
         $('.form-flight-origin').val('Jakarta (CGK)');
         flightPageSearchFormParam.origin = 'CGK';
+        flightPageSearchFormParam.originCity = 'Jakarta';
         $('.form-flight-destination').val('Denpasar, Bali (DPS)');
         flightPageSearchFormParam.destination = 'DPS';
+        flightPageSearchFormParam.destinationCity = 'Denpasar, Bali';
     });
 
     // show and hide search calendar
@@ -678,7 +694,9 @@ function flightFormSearchFunctions() {
         maxPassenger: 9,
         currentSelection: '',
         origin: '',
-        destination: '',
+        originCity:'',
+        destination : '',
+        destinationCity : '',
         type: 'return',
         departureDate: '',
         returnDate: '',
@@ -744,11 +762,14 @@ function flightFormSearchFunctions() {
     $('.search-location .location-recommend .tab-content a').click(function (evt) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).text();
         if ($('.search-location').attr('data-place') == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
+            FlightSearchConfig.flightForm.originCity = locationCity;
             $('.form-flight-origin').val($(this).text() + ' ('+locationCode+')' );
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
+            FlightSearchConfig.flightForm.destinationCity = locationCity;
             $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
         }
         hideLocation();
@@ -802,17 +823,20 @@ function flightFormSearchFunctions() {
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.autocomplete-result ul').append('<li data-code="'+ list[i].Code +'">'+list[i].City+' ('+list[i].Code+'), '+list[i].Name+', '+list[i].Country+'</li>');
+            $('.autocomplete-result ul').append('<li data-code="'+ list[i].Code +'" data-city="'+list[i].City+'">'+list[i].City+' ('+list[i].Code+'), '+list[i].Name+', '+list[i].Country+'</li>');
         }
     }
     // select search result
     $('.autocomplete-result ul').on('click','li',function() {
         var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).attr('data-city');
         if ( $('.search-location').attr('data-place') == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
+            FlightSearchConfig.flightForm.originCity = locationCity;
             $('.form-flight-origin').val( $(this).text() );
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
+            FlightSearchConfig.flightForm.destinationCity = locationCity;
             $('.form-flight-destination').val($(this).text());
         }
         hideLocation();
@@ -836,6 +860,13 @@ function flightFormSearchFunctions() {
     $('.form-flight-location').keydown(function(evt) {
         if (evt.keyCode == 9 || evt.which == 9) {
             evt.preventDefault();
+        }
+    });
+    $('.form-flight-location').focusout(function(evt) {
+        if ($(this).hasClass('form-flight-origin')) {
+            $(this).val((FlightSearchConfig.flightForm.originCity + " (" + FlightSearchConfig.flightForm.origin + ")"));
+        } else {
+            $(this).val((FlightSearchConfig.flightForm.destinationCity + " (" + FlightSearchConfig.flightForm.destination + ")"));
         }
     });
 
@@ -904,8 +935,10 @@ function flightFormSearchFunctions() {
         // set default flight and return flight
         $('.form-flight-origin').val('Jakarta (CGK)');
         FlightSearchConfig.flightForm.origin = 'CGK';
+        FlightSearchConfig.flightForm.originCity = 'Jakarta';
         $('.form-flight-destination').val('Denpasar, Bali (DPS)');
         FlightSearchConfig.flightForm.destination = 'DPS';
+        FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
 
         // navigation
         $('.home-nav .nav-prev').click(function () {
