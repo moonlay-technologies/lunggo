@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Lunggo.Framework.Encoder
@@ -15,6 +16,21 @@ namespace Lunggo.Framework.Encoder
         {
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public static string Sha512(this string input)
+        {
+            var data = Encoding.UTF8.GetBytes(input);
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                var hash = shaM.ComputeHash(data);
+                var stringBuilder = new StringBuilder();
+                foreach (var hashByte in hash)
+                {
+                    stringBuilder.AppendFormat("{0:x2}", hashByte);
+                }
+                return stringBuilder.ToString();
+            }
         }
 
         internal static string Hash(this string plain)
