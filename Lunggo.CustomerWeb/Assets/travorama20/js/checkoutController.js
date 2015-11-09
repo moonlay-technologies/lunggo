@@ -337,67 +337,14 @@ app.controller('checkoutController', [
         $scope.generatePassenger();
         // change page
         $scope.changePage = function (page) {
-            // check if page target is 4
-            // do validation if page target is 4
-            /*
-            if ($scope.currentPage == 3 && page == 4) {
-
-                // check each form
-                for (var i = 0; i < $scope.passengers.length; i++) {
-
-                    if ($scope.passengers[i].firstname && $scope.passengers[i].lastname && $scope.passengers[i].birthday) {
-                        $scope.passengers[i].valid = true;
-                    } else {
-                        $scope.passengers[i].valid = false;
-                    }
-
-                    // if passport required
-                    if ($scope.passportRequired) {
-                        if ($scope.passengers[i].passport.number && $scope.passengers[i].passport.expire) {
-                            $scope.passengers[i].valid = true;
-                        } else {
-                            $scope.passengers[i].valid = false;
-                        }
-                    }
-
-                    // if id required
-                    if ($scope.idRequired) {
-                        if ($scope.passengers[i].idNumber) {
-                            $scope.passengers[i].valid = true;
-                        } else {
-                            $scope.passengers[i].valid = false;
-                        }
-                    }
-
-                    // check if 
-                    if ($scope.passengers[i].valid == true) {
-                        $scope.passengersForm.valid = true;
-                    } else {
-                        $scope.passengersForm.valid = false;
-                    }
-                    $scope.passengersForm.checked = true;
-
-                }
-
-                // check all form valid
-                if ($scope.passengersForm.valid == true) {
-                    $scope.currentPage = page;
-                    $scope.stepClass = 'active-' + page;
-                }
-
-
-            } else {
-            */
-                // change current page variable
-                $scope.currentPage = page;
-                // change step class
-                $scope.stepClass = 'active-' + page;
-            // }
+            // change current page variable
+            $scope.currentPage = page;
+            // change step class
+            $scope.stepClass = 'active-' + page;
 
         }
         // change page after login
         $scope.changePage(currentPage);
-        // $scope.changePage(4); // development only
 
         // toggle Travorama Login
         $scope.toggleLogin = function() {

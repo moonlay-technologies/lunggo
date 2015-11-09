@@ -74,6 +74,7 @@
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-flight page-flight-return";
+    ViewBag.Title = "Pencarian Penerbangan Pergi Pulang";
 }
 
 @section AdditionalCSS {
@@ -94,9 +95,9 @@
             departureFlightParam: {
                 TripType: "@TripType.OneWay",
                 trips: @Html.Raw(JsonConvert.SerializeObject(departTrip)),
-                AdultCount: "@data.AdultCount",
-                ChildCount: "@data.ChildCount",
-                InfantCount: "@data.InfantCount",
+                AdultCount: @data.AdultCount,
+                ChildCount: @data.ChildCount,
+                InfantCount: @data.InfantCount,
                 CabinClass: "@data.CabinClass",
                 Requests: [],
                 Completed: [],
@@ -106,9 +107,9 @@
             returnFlightParam: {
                 TripType: "@TripType.OneWay",
                 trips: @Html.Raw(JsonConvert.SerializeObject(returnTrip)),
-                AdultCount: "@data.AdultCount",
-                ChildCount: "@data.ChildCount",
-                InfantCount: "@data.InfantCount",
+                AdultCount: @data.AdultCount,
+                ChildCount: @data.ChildCount,
+                InfantCount: @data.InfantCount,
                 CabinClass: "@data.CabinClass",
                 Requests: [],
                 Completed: [],
@@ -135,7 +136,7 @@
             <div class="col-sm-9">
                 <div class="result-form-left">
                     <h3><b>@originCityNames[0]</b> (@data.Trips[0].OriginAirport) to <b>@originCityNames[1]</b> (@data.Trips[0].DestinationAirport) </h3>
-                    <h4><b>@data.Trips[0].DepartureDate.ToString("ddd, dd-MM-yyyy") - @data.Trips[1].DepartureDate.ToString("ddd, dd-MM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) People</b> (@data.AdultCount adult, @data.ChildCount child, @data.InfantCount infant)</h4>
+                    <h4><b>@data.Trips[0].DepartureDate.ToString("dd-MMM-yyyy") - @data.Trips[1].DepartureDate.ToString("dd-MM-yyyy")</b> | <b>@(data.AdultCount + data.ChildCount + data.InfantCount) Orang</b> (@data.AdultCount Dewasa, @data.ChildCount Anak, @data.InfantCount Bayi)</h4>
                 </div>
             </div>
             <div class="col-sm-3">
@@ -248,8 +249,44 @@
                     </div>
                 </div>
                 <div class="flight-button">
-                    <a href="#" class="flight-detail-trigger">Detail Penerbangan</a>
+                    <span class="flight-detail-trigger" ng-click="toggleChosenFlightDetail('departure')">Detail Penerbangan</span>
                     <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a> -->
+                </div>
+                <div class="flight-detail" ng-show="departureFlightConfig.chosenFlightDetail">
+                    <div ng-repeat="segment in departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments track by $index">
+                        <div class="transit" ng-if="$index > 0">
+                            <p>Transit di {{segment.DepartureCity}} selama {{departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                        </div>
+                        <div class="segment">
+                            <div class="segment-number">
+                                <span ng-if="$index == 0">1<sup>st</sup></span>
+                                <span ng-if="$index == 1">2<sup>nd</sup></span>
+                                <span ng-if="$index == 2">3<sup>rd</sup></span>
+                                <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
+                            </div>
+                            <div class="segment-left">
+                                <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
+                                <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                            </div>
+                            <div class="segment-right">
+                                <div class="segment-departure">
+                                    <h5>{{segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                    <h3>{{segment.DepartureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                    <h4>{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                    <h5>{{segment.DepartureAirportName}}</h5>
+                                </div>
+                                <div class="segment-duration">
+                                    <h5><span>Duration :</span> {{segment.Duration}}</h5>
+                                </div>
+                                <div class="segment-arrival">
+                                    <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                    <h3>{{segment.ArrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                    <h4>{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                    <h5>{{segment.ArrivalAirportName}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
@@ -409,7 +446,7 @@
                 </div>
             </div><!-- .search-result-sort -->
             <div class="no-flight" ng-show="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
-                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari mengganti tangal penerbangan atau rute Anda.</h3>
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
             </div>
             <div class="search-result-list" ng-hide="!departureFlightConfig.loading && !departureFlightConfig.loadingFlight && !departureFlightConfig.flightList.length">
                 <div class="container">
@@ -535,8 +572,44 @@
                     </div>
                 </div>
                 <div class="flight-button">
-                    <a href="#" class="flight-detail-trigger">Detail Penerbangan</a>
+                    <span class="flight-detail-trigger" ng-click="toggleChosenFlightDetail('return')">Detail Penerbangan</span>
                     <!-- <a href="#" class="flight-rules-trigger">Syarat &amp; Ketentuan</a> -->
+                </div>
+                <div class="flight-detail" ng-show="returnFlightConfig.chosenFlightDetail">
+                    <div ng-repeat="segment in returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments track by $index">
+                        <div class="transit" ng-if="$index > 0">
+                            <p>Transit di {{segment.DepartureCity}} selama {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Transits[ $index - 1 ].Duration}}</p>
+                        </div>
+                        <div class="segment">
+                            <div class="segment-number">
+                                <span ng-if="$index == 0">1<sup>st</sup></span>
+                                <span ng-if="$index == 1">2<sup>nd</sup></span>
+                                <span ng-if="$index == 2">3<sup>rd</sup></span>
+                                <span ng-if="$index > 2">{{$index}}<sup>th</sup></span>
+                            </div>
+                            <div class="segment-left">
+                                <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
+                                <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                            </div>
+                            <div class="segment-right">
+                                <div class="segment-departure">
+                                    <h5>{{segment.DepartureTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                    <h3>{{segment.DepartureTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                    <h4>{{segment.DepartureCity}} ({{segment.DepartureAirport}})</h4>
+                                    <h5>{{segment.DepartureAirportName}}</h5>
+                                </div>
+                                <div class="segment-duration">
+                                    <h5><span>Duration :</span> {{segment.Duration}}</h5>
+                                </div>
+                                <div class="segment-arrival">
+                                    <h5>{{segment.ArrivalTime | date: 'dd MMM yyyy' : 'UTC'}}</h5>
+                                    <h3>{{segment.ArrivalTime | date: 'HH:mm' : 'UTC'}}</h3>
+                                    <h4>{{segment.ArrivalCity}} ({{segment.ArrivalAirport}})</h4>
+                                    <h5>{{segment.ArrivalAirportName}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="flight-price">
                     <label>Harga Total:</label>
@@ -695,7 +768,7 @@
                 </div>
             </div><!-- .search-result-sort -->
             <div class="no-flight" ng-show="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
-                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari mengganti tangal penerbangan atau rute Anda.</h3>
+                <h3 class="text-center">Penerbangan tidak ditemukan.<br /> Silahkan mencari /  mengganti tanggal penerbangan atau rute Anda.</h3>
             </div>
             <div class="search-result-list" ng-hide="!returnFlightConfig.loading && !returnFlightConfig.loadingFlight && !returnFlightConfig.flightList.length">
                 <div class="container">

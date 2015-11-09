@@ -78,6 +78,7 @@ app.controller('returnFlightController', [
             },
             activeFlight: -1,
             chosenFlight: -1,
+            chosenFlightDetail: false,
             validating: false,
             validated: false,
             validateToken: '',
@@ -121,6 +122,7 @@ app.controller('returnFlightController', [
             },
             activeFlight: -1,
             chosenFlight: -1,
+            chosenFlightDetail: false,
             validating: false,
             validated: false,
             validateToken: '',
@@ -205,6 +207,16 @@ app.controller('returnFlightController', [
                 $('body').addClass('no-scroll');
             } else {
                 $('body').removeClass('no-scroll');
+            }
+        }
+
+        // toggle chosen flight
+        $scope.toggleChosenFlightDetail = function(targetFlight) {
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
+            if (targetScope.chosenFlightDetail == true) {
+                targetScope.chosenFlightDetail = false;
+            } else {
+                targetScope.chosenFlightDetail = true;
             }
         }
 
