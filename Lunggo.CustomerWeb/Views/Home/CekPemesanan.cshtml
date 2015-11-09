@@ -18,6 +18,15 @@
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }
 
+<script type="text/javascript">
+    @{
+        if (ViewBag.ErrorInfo != null)
+        {
+            @:alert('@ViewBag.ErrorInfo.ErrorMessage');       
+        }
+    }
+</script>
+
 <section class="form-section page-loading" ng-app="travorama" ng-controller="checkController" ng-class="{'page-loaded': pageLoaded}">
 
     <h1 class="text-center section-title stripe">CEK <span>PEMESANAN</span></h1>

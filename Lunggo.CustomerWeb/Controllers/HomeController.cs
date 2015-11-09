@@ -73,7 +73,9 @@ namespace Lunggo.CustomerWeb.Controllers
             var displayReservation = flightService.GetReservationForDisplay(rsvNo);
             //Check lastName
 
-            var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
+            if (displayReservation != null)
+            {
+                var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
                 if (passengerLastName.Any())
                 {
                     var rsvNoSet = new
@@ -82,7 +84,15 @@ namespace Lunggo.CustomerWeb.Controllers
                     };
                     return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                 }
-            return RedirectToAction("CekPemesanan", "Home");
+            }
+
+            ViewBag.ErrorInfo = new
+            {
+                ErrorCd = "ER01",
+                ErrorMessage = "Pemesanan tidak dapat ditemukan"
+            };
+
+            return View();
         }
     }
 }
