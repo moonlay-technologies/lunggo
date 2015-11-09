@@ -141,14 +141,17 @@ app.controller('accountController', [
 
 
 // Travorama forgot password controller
-app.controller('passwordController', [
+app.controller('forgotController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
         $scope.form = {
             submitted: false,
             submitting: false,
-            email: ''
+            email: '',
+            found: false,
+            registered: false,
+            emailConfirmed: false
         };
         $scope.logConsole = function(data) {
             console.log(data);
@@ -165,16 +168,25 @@ app.controller('passwordController', [
                     email : $scope.form.email
                 }
             }).then(function (returnData) {
-                if (returnData.data.Status == 'Success') {
-                    console.log('Success requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                }
-                else {
-                    console.log(returnData.data.Description);
-                    console.log(returnData);
-                    $scope.form.submitting = false;
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                console.log(returnData);
+
+                switch (returnData.data.Status) {
+                    case "Success":
+                        $scope.form.found = true;
+                        $scope.form.emailConfirmed = true;
+                        break;
+                    case "NotRegistered":
+                        $scope.form.found = false;
+                        break;
+                    case "AlreadyRegisteredButUnconfirmed":
+                        $scope.form.found = true;
+                        $scope.form.emailConfirmed = false;
+                        break;
+                    case "InvalidInputData":
+                        $scope.form.found = false;
+                        break;
                 }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
@@ -184,7 +196,7 @@ app.controller('passwordController', [
         }
 
     }
-]);// account controller
+]);// forgot controller
 
 
 // order detail controller
@@ -269,10 +281,23 @@ app.controller('authController', [
     '$scope', function ($scope) {
 
         $scope.pageLoaded = true;
+        $scope.message = loginMessage;
+        if ( $scope.message ) {
+            $scope.overlay = true;
+        } else {
+            $scope.overlay = false;
+        }
+        $scope.closeOverlay = function() {
+            $scope.overlay = false;
+        }
         $scope.form = {
             email: '',
             password: '',
-            submitting: false
+            submitting: false,
+            submit: function() {
+                $scope.form.submitting = true;
+                $('.login-form').submit();
+            }
         };
 
     }

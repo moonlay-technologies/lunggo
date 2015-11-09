@@ -14,6 +14,7 @@
 @section PageJS{
     <script>
         var langCode = 'en';
+        var loginMessage = '@ViewBag.Message';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
@@ -24,7 +25,7 @@
 
         <div class="row">
             <div class="col-xs-4 col-xs-offset-7">
-                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form", name = "loginForm" }))
+                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form form form-horizontal", role = "form", name = "loginForm", ng_submit= "form.submit()" }))
                 {
                     @Html.AntiForgeryToken()
                     <hgroup>
@@ -41,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control" ng-disabled="loginForm.$invalid" />
+                        <input type="submit" value="@Html.I18NString("CW00130")" class="btn btn-yellow form-control" ng-disabled="loginForm.$invalid || form.submitting " />
                     </div>
 
                     <div class="form-group text-right">
@@ -58,6 +59,48 @@
         </div>
 
     </div>
+    
+    <div class="page-overlay" ng-show="overlay">
+        <div class="overlay-content">
+            <header>
+                <h4>LOGIN GAGAL</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/sad-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <div ng-show="message == 'NotRegistered'">
+                                    <h3>Anda belum terdaftar di Travorama</h3>
+                                    <p><a href="@Url.Action("Register", "Account")">Klik disini</a> untuk mendaftar di Travorama.</p>
+                                </div>
+                                <div ng-show="message == 'InvalidInputData'">
+                                    <h3>Email / Password Salah</h3>
+                                    <p>Cek kembali alamat email dan password Anda.</p>
+                                </div>
+                                <div ng-show="message == 'AlreadyRegisteredButUnconfirmed'">
+                                    <h3>Akun Belum Aktif</h3>
+                                    <p>Cek kembali alamat email Anda untuk mengaktifkan akun Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
 
 </section><!-- .form-section -->
 @Html.Partial("/Views/Shared/_SectionBenefit.cshtml")
