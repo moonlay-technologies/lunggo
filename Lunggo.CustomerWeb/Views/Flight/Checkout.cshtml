@@ -60,11 +60,11 @@
         var price = @Model.Itinerary.TotalFare;
         // passenger number
         var adultPassenger = @Model.Itinerary.AdultCount;
-        var adultTypeName = 'Adult';
+        var adultTypeName = 'Dewasa';
         var childPassenger = @Model.Itinerary.ChildCount;
-        var childTypeName = 'Child';
+        var childTypeName = 'Anak';
         var infantPassenger = @Model.Itinerary.InfantCount;
-        var infantTypeName = 'Infant';
+        var infantTypeName = 'Bayi';
         // passport or id requirement
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
         var idRequired = false;
@@ -514,8 +514,8 @@
                                         </div>
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")">kebijakan privasi</a></p>
-                                        <button class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</button>
-                                        <a class="btn btn-yellow" ng-click="book.send()" ng-disabled="checkoutForm.loading || !paymentMethod">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</a>
+                                        <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
+                                        <button class="btn btn-yellow" ng-click="book.send()" ng-disabled="checkoutForm.loading || !paymentMethod">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</button>
                                         
                                     </form>
                                     
