@@ -194,6 +194,18 @@ form label.important:after {content:"*"; color:#f00000;}
     .ui-slider-handle {background:#dedede; @include border-radius($border-radius-default);}
 }
 
+// page overlay
+.page-overlay {position:fixed; width:100%; height:100%; top :0; left:0; z-index:1000; background:rgba(0,0,0,0.7);
+    .overlay-content {width:400px; height:220px; background:#fff; position:absolute; margin:auto; top:0; right:0; bottom:0; left:0; @include border-radius($border-radius-default); overflow:hidden;
+        header {background:$color-main-blue; text-align:center; color:#fff; padding:15px;
+            h4 {margin:0; font-weight:600;}
+            .close {color:#fff; opacity:1;}
+        }
+        section {padding:15px;}
+        footer {position:absolute; bottom:15px; left:0; width:100%;}
+    }
+}
+
 /*--------------------*/
 /* imports */
 @import 'screenSmall';

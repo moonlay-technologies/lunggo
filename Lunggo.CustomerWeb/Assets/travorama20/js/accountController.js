@@ -276,4 +276,71 @@ app.controller('authController', [
         };
 
     }
-]);// reset controller
+]);// auth controller
+
+// Travorama Check Order Controller
+app.controller('registerController', [
+    '$scope', '$http', function ($scope, $http) {
+
+        $scope.pageLoaded = true;
+        $scope.form = {
+            email: '',
+            submitting: false,
+            submitted: false,
+            registered: false,
+            emailSent: false,
+            emailConfirmed: false
+        };
+        $scope.overlay = false;
+        $scope.closeOverlay = function() {
+            $scope.overlay = false;
+            $scope.form.submitting = false;
+            $scope.form.submitted = false;
+        }
+        $scope.form.submit = function () {
+            $scope.form.submitting = true;
+
+            $http({
+                url: RegisterConfig.Url,
+                method: 'POST',
+                data: {
+                    Email: $scope.form.email,
+                }
+            }).then(function (returnData) {
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                $scope.overlay = true;
+
+                switch (returnData.data.Status) {
+                    case "Success":
+                        $scope.form.registered = false;
+                        $scope.form.emailSent = false;
+                        $scope.form.emailConfirmed = false;
+                        break;
+                    case "AlreadyRegistered":
+                        $scope.form.registered = true;
+                        $scope.form.emailSent = true;
+                        $scope.form.emailConfirmed = true;
+                        break;
+                    case "AlreadyRegisteredButUnconfirmed":
+                        $scope.form.registered = true;
+                        $scope.form.emailSent = true;
+                        $scope.form.emailConfirmed = false;
+                        break;
+                    case "InvalidInputData":
+                        break;
+                }
+
+                $scope.form.email = '';
+
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+            });
+        }
+
+    }
+]);// register controller
+
