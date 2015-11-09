@@ -860,6 +860,7 @@
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\register-bg.jpg" />
+    <Content Include="Assets\images\sad-image.png" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\sandclock-yellow.png" />
     <Content Include="Assets\images\sandclock.png" />
@@ -875,6 +876,7 @@
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
+    <Content Include="Assets\images\smile-image.png" />
     <Content Include="Assets\images\social-facebook.png" />
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
@@ -918,6 +920,7 @@
     <Content Include="Assets\images\verisign-bg.jpg" />
     <Content Include="Assets\images\verisign-pin.png" />
     <Content Include="Assets\images\verisign.jpg" />
+    <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />

@@ -345,6 +345,47 @@ form label.important:after {
     -moz-border-radius: 2px;
     border-radius: 2px; }
 
+.page-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7); }
+  .page-overlay .overlay-content {
+    width: 400px;
+    height: 220px;
+    background: #fff;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    overflow: hidden; }
+    .page-overlay .overlay-content header {
+      background: #1daee4;
+      text-align: center;
+      color: #fff;
+      padding: 15px; }
+      .page-overlay .overlay-content header h4 {
+        margin: 0;
+        font-weight: 600; }
+      .page-overlay .overlay-content header .close {
+        color: #fff;
+        opacity: 1; }
+    .page-overlay .overlay-content section {
+      padding: 15px; }
+    .page-overlay .overlay-content footer {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%; }
+
 /*--------------------*/
 /* imports */
 @media (max-width: 1199px) {
@@ -1358,47 +1399,6 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .page-progress .progress-wrapper .plane span {
         top: 0;
         line-height: 100%; }
-
-.page-flight .page-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.7); }
-  .page-flight .page-overlay .overlay-content {
-    width: 400px;
-    height: 250px;
-    background: #fff;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    overflow: hidden; }
-    .page-flight .page-overlay .overlay-content header {
-      background: #1daee4;
-      text-align: center;
-      color: #fff;
-      padding: 15px; }
-      .page-flight .page-overlay .overlay-content header h4 {
-        margin: 0;
-        font-weight: 600; }
-      .page-flight .page-overlay .overlay-content header .close {
-        color: #fff;
-        opacity: 1; }
-    .page-flight .page-overlay .overlay-content section {
-      padding: 15px; }
-    .page-flight .page-overlay .overlay-content footer {
-      position: absolute;
-      bottom: 15px;
-      left: 0;
-      width: 100%; }
 
 .page-flight .page-slider {
   background: url(/Assets/images/flight-page-slider.jpg) center center no-repeat;
@@ -4097,48 +4097,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
       color: #1daee4;
       font-weight: bold; }
 
-.page-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.7); }
-  .page-overlay .overlay-content {
-    width: 400px;
-    height: 250px;
-    background: #fff;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    overflow: hidden; }
-    .page-overlay .overlay-content header {
-      background: #1daee4;
-      text-align: center;
-      color: #fff;
-      padding: 15px; }
-      .page-overlay .overlay-content header h4 {
-        margin: 0;
-        font-weight: 600; }
-      .page-overlay .overlay-content header .close {
-        color: #fff;
-        opacity: 1; }
-    .page-overlay .overlay-content section {
-      padding: 15px; }
-    .page-overlay .overlay-content footer {
-      position: absolute;
-      bottom: 15px;
-      left: 0;
-      width: 100%; }
-  .page-overlay.flight-expired {
-    z-index: 9999; }
+.page-overlay.flight-expired {
+  z-index: 9999; }
 
 /*
 
