@@ -2010,11 +2010,11 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-weight: 600;
         padding: 3px 10px;
         padding-right: 7px; }
-    .page-flight .flight .flight-detail .segment .segment-left, .page-flight .flight .flight-detail .segment .segment-right, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right {
+    .page-flight .flight .flight-detail .segment .segment-left, .page-flight .flight .flight-detail .segment .segment-right, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right {
       float: left;
       width: 23%;
       position: relative; }
-      .page-flight .flight .flight-detail .segment .segment-left:after, .page-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right:after {
+      .page-flight .flight .flight-detail .segment .segment-left:after, .page-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right:after, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right:after {
         content: "";
         background-image: url(/Assets/images/flight-segment-separator.png);
         background-repeat: no-repeat;
@@ -2025,17 +2025,17 @@ file: /Assets/travorama20/css/_page_flight.scss
         top: 15px;
         width: 0;
         height: 20px; }
-      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-logo, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-logo, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-logo, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-logo {
+      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-logo, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-logo, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-airline-logo, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-logo, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-logo {
         width: 50px;
         border: 1px solid #ccc;
         float: left;
         margin-right: 15px; }
-      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name {
+      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-airline-name, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-name, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-name {
         font-weight: bold;
         color: #1daee4;
         font-size: 12px;
         padding-right: 30px; }
-      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number {
+      .page-flight .flight .flight-detail .segment .segment-left .segment-airline-number, .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-number, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-airline-number, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-airline-number {
         font-weight: 600;
         color: #1daee4;
         font-size: 12px; }
@@ -2048,20 +2048,20 @@ file: /Assets/travorama20/css/_page_flight.scss
         width: 100%; }
       .page-flight .flight .flight-detail .segment .segment-right > div {
         float: left; }
-      .page-flight .flight .flight-detail .segment .segment-right .segment-departure, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival {
+      .page-flight .flight .flight-detail .segment .segment-right .segment-departure, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival {
         width: 33.33333334%;
         padding-top: 7.5px;
         padding-left: 15px; }
-        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h5, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h5 {
+        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h5, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h5, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h5 {
           margin: 0;
           margin-bottom: 5px;
           font-size: 11px; }
-        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3 {
+        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h3, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h3 {
           font-weight: bold;
           margin: 0;
           margin-bottom: 5px;
           font-size: 18px; }
-        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h4 {
+        .page-flight .flight .flight-detail .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .flight .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival h4, .page-flight .flight .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight .flight .flight-detail .segment .segment-right .segment-arrival h4 {
           font-weight: 600;
           margin: 0;
           margin-bottom: 5px;
@@ -2472,7 +2472,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight.page-flight-return .search-result-container > .selected .search-result-selected {
     border: 1px solid #ccc;
     margin-top: -15px;
-    background: #f9f9f9;
+    background: #fff;
     border-top: none;
     display: block; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected > div {
@@ -2590,7 +2590,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         display: inline-block;
         position: relative;
         color: #1daee4;
-        text-decoration: none; }
+        text-decoration: none;
+        cursor: pointer; }
         .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .flight-detail-trigger.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-detail-trigger.section-reason:after, .page-flight.page-flight-return .flight .flight-summary .flight-summary-left .summary-bottom .summary-bottom-right .page-index .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .page-index .flight-review-wrapper .flight-review .flight-review-summary .summary-left .flight-button .section-reason.flight-rules-trigger:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before {
           content: "";
           display: block;
@@ -2602,6 +2603,120 @@ file: /Assets/travorama20/css/_page_flight.scss
           left: -18px; }
       .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .page-index .flight-rules-trigger.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-button .flight-rules-trigger.section-reason:after {
         background-position: -20px; }
+    .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment {
+      position: relative; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .page-index .segment.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment.section-reason:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment:after {
+        content: "";
+        clear: both;
+        display: block;
+        width: 100%; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-number {
+        float: left;
+        width: 5%;
+        position: relative;
+        top: 18px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-number span {
+          background: #1daee4;
+          color: #fff;
+          font-weight: 600;
+          padding: 3px 9px; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right {
+        float: left;
+        width: 100%;
+        position: relative;
+        display: block;
+        padding-left: 40px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left .segment-airline-logo, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-logo {
+          width: 30px;
+          border: 1px solid #ccc;
+          float: left;
+          margin-right: 15px;
+          margin-bottom: 10px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-name {
+          font-weight: bold;
+          color: #1daee4;
+          font-size: 12px;
+          padding-right: 30px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-left .segment-airline-number, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-airline-number {
+          font-weight: 600;
+          color: #1daee4;
+          font-size: 12px; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right {
+        width: 90%;
+        display: block; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:before, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .page-index .segment-right.section-reason:after, .page-index .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right.section-reason:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after {
+          content: "";
+          clear: both;
+          display: block;
+          width: 100%; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right > div {
+          float: left; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival {
+          width: 33.33333334%;
+          padding-top: 7.5px; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h5 {
+            margin: 0;
+            margin-bottom: 5px;
+            font-size: 11px; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3 {
+            font-weight: bold;
+            margin: 0;
+            margin-bottom: 5px;
+            font-size: 18px; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-departure h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h4 {
+            font-weight: 600;
+            margin: 0;
+            margin-bottom: 5px;
+            font-size: 13px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-duration {
+          width: 33.33333334%;
+          padding-right: 5px;
+          padding-left: 5px;
+          padding-top: 20px; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-duration h5 {
+            border-bottom: 3px solid #1daee4;
+            text-align: center;
+            padding-bottom: 5px; }
+            .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-duration h5 span {
+              font-weight: bold; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival {
+          padding-left: 0; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-operator {
+        display: block;
+        clear: both;
+        padding-left: 60px;
+        padding-right: 60px;
+        padding-top: 5px; }
+        .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-operator p {
+          border-top: 1px solid #ccc;
+          margin-top: 10px;
+          padding-top: 10px;
+          margin-bottom: 0;
+          font-style: italic; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-operator p img {
+            height: 20px; }
+          .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-operator p span {
+            font-weight: 600; }
+    .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .transit {
+      text-align: center;
+      padding: 15px 0; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .transit:after {
+        border-top: 1px dashed #1daee4;
+        content: "";
+        display: block;
+        width: 100%;
+        position: relative;
+        top: -10px; }
+      .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .transit p {
+        background: #fff;
+        display: inline;
+        font-style: italic;
+        font-weight: 600;
+        color: #1daee4;
+        background: #fff;
+        position: relative;
+        z-index: 2;
+        padding: 0 10px; }
     .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-price {
       text-align: center;
       padding-top: 15px;
@@ -2862,11 +2977,11 @@ file: /Assets/travorama20/css/_page_flight.scss
     width: 7%; }
     .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-number span {
       padding: 3px 5px; }
-  .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-left, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right {
+  .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-left, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .flight .search-result-selected .flight-detail .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right {
     width: 10%;
     position: static;
     padding-top: 30px; }
-    .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-left:after, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right:after {
+    .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-left:after, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .flight .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right:after {
       content: ""; }
     .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-left .segment-airline-name, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-airline-name {
       position: absolute;
@@ -2876,7 +2991,7 @@ file: /Assets/travorama20/css/_page_flight.scss
   .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right {
     width: 83%;
     padding-top: 30px; }
-    .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival {
+    .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-return .search-result-container > .selected .flight .search-result-selected .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-arrival {
       padding-top: 0; }
     .page-flight.page-flight-return .search-result-container .flight .flight-detail .segment .segment-right .segment-duration {
       padding: 0;
@@ -3155,12 +3270,12 @@ file: /Assets/travorama20/css/_page_flight.scss
             color: #fff;
             font-weight: 600;
             padding: 3px 10px; }
-        .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right {
+        .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right {
           float: left;
           width: 23%;
           position: relative;
           padding-right: 25px; }
-          .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after {
+          .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-left:after, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right:after, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right:after {
             content: "";
             background-image: url(/Assets/images/flight-segment-separator.png);
             background-repeat: no-repeat;
@@ -3215,20 +3330,20 @@ file: /Assets/travorama20/css/_page_flight.scss
             width: 100%; }
           .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right > div {
             float: left; }
-          .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival {
+          .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival {
             width: 33.33333334%;
             padding-top: 5px;
             padding-left: 15px; }
-            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5 {
+            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h5 {
               margin: 0;
               margin-bottom: 5px;
               font-size: 12px; }
-            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3 {
+            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h3 {
               font-weight: bold;
               margin: 0;
               margin-bottom: 10px;
               font-size: 14px; }
-            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4 {
+            .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-departure h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .segment .segment-right .segment-arrival h4 {
               font-weight: 600;
               margin: 0;
               margin-bottom: 5px;
@@ -3396,17 +3511,17 @@ file : /Assets/travorama20/css/_page_checkout.scss
           color: #fff;
           font-weight: 600;
           padding: 3px 10px; }
-      .flight-detail .detail-content .segment .segment-left, .page-flight .flight .flight-detail .detail-content .segment .segment-right, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right, .flight-detail .detail-content .segment .segment-right {
+      .flight-detail .detail-content .segment .segment-left, .page-flight .flight .flight-detail .detail-content .segment .segment-right, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right, .flight-detail .detail-content .segment .segment-right {
         float: left;
         width: 10%;
         margin-left: 10%;
         position: relative; }
-        .flight-detail .detail-content .segment .segment-left .segment-airline-logo, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-airline-logo, .flight-detail .detail-content .segment .segment-right .segment-airline-logo {
+        .flight-detail .detail-content .segment .segment-left .segment-airline-logo, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-airline-logo, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-airline-logo, .flight-detail .detail-content .segment .segment-right .segment-airline-logo {
           width: 50px;
           border: 1px solid #ccc;
           float: left;
           margin-right: 15px; }
-        .flight-detail .detail-content .segment .segment-left .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-airline-number, .flight-detail .detail-content .segment .segment-right .segment-airline-number {
+        .flight-detail .detail-content .segment .segment-left .segment-airline-number, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-airline-number, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-airline-number, .flight-detail .detail-content .segment .segment-right .segment-airline-number {
           font-weight: 600;
           color: #1daee4;
           font-size: 12px; }
@@ -3420,20 +3535,20 @@ file : /Assets/travorama20/css/_page_checkout.scss
           width: 100%; }
         .flight-detail .detail-content .segment .segment-right > div {
           float: left; }
-        .flight-detail .detail-content .segment .segment-right .segment-departure, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .flight-detail .detail-content .segment .segment-right .segment-arrival {
+        .flight-detail .detail-content .segment .segment-right .segment-departure, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival, .flight-detail .detail-content .segment .segment-right .segment-arrival {
           width: 35%;
           padding-top: 7.5px;
           padding-left: 15px; }
-          .flight-detail .detail-content .segment .segment-right .segment-departure h5, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .flight-detail .detail-content .segment .segment-right .segment-arrival h5 {
+          .flight-detail .detail-content .segment .segment-right .segment-departure h5, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h5, .flight-detail .detail-content .segment .segment-right .segment-arrival h5 {
             margin: 0;
             margin-bottom: 5px;
             font-size: 11px; }
-          .flight-detail .detail-content .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-detail .detail-content .segment .segment-right .segment-arrival h3 {
+          .flight-detail .detail-content .segment .segment-right .segment-departure h3, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h3, .flight-detail .detail-content .segment .segment-right .segment-arrival h3 {
             font-weight: bold;
             margin: 0;
             margin-bottom: 5px;
             font-size: 16px; }
-          .flight-detail .detail-content .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-detail .detail-content .segment .segment-right .segment-arrival h4 {
+          .flight-detail .detail-content .segment .segment-right .segment-departure h4, .page-flight .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-oneway .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container > .selected .search-result-selected .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .page-flight.page-flight-return .search-result-container .flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-review-wrapper .flight-review .flight-review-detail .detail-flight .flight-detail .detail-content .segment .segment-right .segment-arrival h4, .flight-detail .detail-content .segment .segment-right .segment-arrival h4 {
             font-weight: bold;
             margin: 0;
             margin-bottom: 5px;
