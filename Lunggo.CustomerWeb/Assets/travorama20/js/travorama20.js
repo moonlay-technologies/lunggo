@@ -498,7 +498,7 @@ function flightPageSearchFormFunctions() {
                 optionValue = (flightPageSearchFormParam.maxPassenger - (flightPageSearchFormParam.passenger.child + flightPageSearchFormParam.passenger.infant));
             }
             if (flightPageSearchFormParam.passenger.infant > optionValue) {
-                alert(alertText.over);
+                alert(alertText.infant);
                 flightPageSearchFormParam.passenger.infant = optionValue;
                 $('.passenger-input.infant').text(optionValue);
             }
@@ -998,7 +998,7 @@ function flightFormSearchFunctions() {
                 optionValue = (FlightSearchConfig.flightForm.maxPassenger - (FlightSearchConfig.flightForm.passenger.child + FlightSearchConfig.flightForm.passenger.infant));
             }
             if (FlightSearchConfig.flightForm.passenger.infant > optionValue) {
-                alert(alertText.over);
+                alert(alertText.infant);
                 FlightSearchConfig.flightForm.passenger.infant = optionValue;
                 $('.passenger-input.infant').text(optionValue);
             }
