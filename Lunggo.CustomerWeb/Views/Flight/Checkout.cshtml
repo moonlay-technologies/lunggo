@@ -89,7 +89,7 @@
         } else {
             currentPage = 1;
         }
-        var loggedIn = @User.Identity.IsAuthenticated;
+        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
         var buyerInfo = {
             fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
             countryCode : '@User.Identity.GetCountryCd()',
