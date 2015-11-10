@@ -4640,3 +4640,20 @@ file : /Assets/travorama20/css/_page_password.scss
         padding: 20px;
         padding-top: 5px;
         right: 100%; }
+    .page-howtopay .list-wrapper .list .list-detail {
+      background: #061c38;
+      color: #fff;
+      display: none; }
+      .page-howtopay .list-wrapper .list .list-detail .detail-title {
+        color: #00deff;
+        font-weight: 600; }
+      .page-howtopay .list-wrapper .list .list-detail .container {
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 30px; }
+      .page-howtopay .list-wrapper .list .list-detail .close-list {
+        position: absolute;
+        right: 0;
+        top: -2px; }
+    .page-howtopay .list-wrapper .list.active .list-detail {
+      display: block; }

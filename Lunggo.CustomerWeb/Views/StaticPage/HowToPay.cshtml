@@ -4,10 +4,23 @@
     ViewBag.Title = "Cara Pembayaran";
 }
 
+@section PageJS{
+    
+    <script>
+        // toggle list detail
+        $('.list-summary .btn').click(function() {
+            $(this).closest('.list').toggleClass('active');
+        });
+        $('.close-list').click(function() {
+            $(this).closest('.list').removeClass('active');
+        });
+    </script>
+
+}
 
 <section class="section-howtopay">
 
-    <h1 class="text-center section-title stripe">CAYA <span>PEMBAYARAN</span></h1>
+    <h1 class="text-center section-title stripe">CARA <span>PEMBAYARAN</span></h1>
 
     <div class="list-wrapper">
 
@@ -17,9 +30,45 @@
                     <h4>TRANFER BANK</h4>
                     <p>Travorama menerima pembayaran via Transfer melalui Teller Bank dan melalui ATM.</p>
                     <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
+                    <div class="text-center list-image">
+                        <img src="/Assets/images/howtopay-1.jpg" alt="How To Pay 1" />
+                    </div>
                 </div>
             </div>
-            <div class="list-detail"></div>
+            <div class="list-detail">
+                
+                <div class="container">
+                    
+                    <a href="#" class="close-list"><img src="/Assets/images/list-detail-close.png" alt="Close" /></a>
+                    
+                    <h3 class="detail-title">Detail: Transfer Bank</h3>
+
+                    <p>Metode pembayaran transfer dapat digunakan setiap hari pada pukul xx hingga xx. Pilih metode pembayaran transfer dan pastikan Anda melakukan transfer pembayaran dengan nominal yang sesuai dengan jumlah tagihan ke salah satu rekening kami dibawah ini:</p>
+                    
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <img src="/Assets/images/bca-logo.jpg" alt="BCA" />
+                            <p>
+                                Bank : Bank Central Asia<br/>
+                                Pemilik Rekening : PT Travel Madezy Internasional <br/>
+                                No. Rekening : 0063982307 <br/>
+                                Cabang : KCU SCBD
+                            </p>
+                        </div>
+                        <div class="col-xs-6">
+                            <img src="/Assets/images/mandiri-logo.jpg" alt="Bank Mandiri" />
+                            <p>
+                                Bank		 : Bank Mandiri<br/>
+                                Pemilik Rekening : PT Travel Madezy Internasional<br/>
+                                No. Rekening	 : 1020077088999<br/>
+                                Cabang		 : KC Jakarta Sudirman
+                            </p>  
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
         <div class="list">
@@ -27,7 +76,10 @@
                 <div class="container">
                     <h4>KARTU KREDIT</h4>
                     <p>Travorama menerima pembayaran dengan kartu kredit berlogo Visa dan Mastercard.</p>
-                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
+                    
+                    <div class="text-center list-image">
+                        <img src="/Assets/images/howtopay-2.jpg" alt="How To Pay 2" />
+                    </div>
                 </div>
             </div>
             <div class="list-detail"></div>
@@ -38,18 +90,10 @@
                 <div class="container">
                     <h4>DIRECT DEBIT</h4>
                     <p>Travorama menerima pembayaran dengan fasilitas internet banking seperti Mandiri Clickpay, CIMB Clicks & BCA Klikpay.</p>
-                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
-                </div>
-            </div>
-            <div class="list-detail"></div>
-        </div>
-
-        <div class="list">
-            <div class="list-summary">
-                <div class="container">
-                    <h4>E WALLET</h4>
-                    <p>Travorama menerima pembayaran dengan sistem e-wallet dari mandiri e-cash, t-cash, xl tunai & indosat dompetku.</p>
-                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
+                    
+                    <div class="text-center list-image">
+                        <img src="/Assets/images/howtopay-3.jpg" alt="How To Pay 3" />
+                    </div>
                 </div>
             </div>
             <div class="list-detail"></div>
