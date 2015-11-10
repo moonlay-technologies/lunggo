@@ -1,4 +1,5 @@
-﻿using Lunggo.Framework.Database;
+﻿using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.Framework.Database;
 using System.Text;
 
 namespace Lunggo.ApCommon.Campaign.Database.Query
@@ -25,7 +26,8 @@ namespace Lunggo.ApCommon.Campaign.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("WHERE [VoucherCode] = @VoucherCode ");
-            clauseBuilder.Append("AND [ContactEmail] = @Email");
+            clauseBuilder.Append("AND [ContactEmail] = @Email ");
+            clauseBuilder.Append("AND [PaymentStatusCd] <> '" + PaymentStatusCd.Mnemonic(PaymentStatus.Expired) + "'");
             return clauseBuilder.ToString();
         }
     }
