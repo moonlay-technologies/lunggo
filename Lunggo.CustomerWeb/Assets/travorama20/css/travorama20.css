@@ -318,7 +318,7 @@ form label.important:after {
                 left: 0px; }
   .search-location .location-body .location-search {
     padding: 10px;
-    height: 480px;
+    height: 475px;
     overflow: auto;
     display: none; }
     .search-location .location-body .location-search .autocomplete-result ul {
@@ -380,6 +380,10 @@ form label.important:after {
         opacity: 1; }
     .page-overlay .overlay-content section {
       padding: 15px; }
+      .page-overlay .overlay-content section h3 {
+        margin-top: 0; }
+      .page-overlay .overlay-content section a {
+        cursor: pointer; }
     .page-overlay .overlay-content footer {
       position: absolute;
       bottom: 15px;

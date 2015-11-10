@@ -52,13 +52,13 @@
 
     </div>
     
-    <div class="page-overlay" ng-show="overlay">
+    <div class="page-overlay" ng-show="overlay && !form.registered">
         <div class="overlay-content">
             <header>
                 <h4>Terima Kasih</h4>
             </header>
             <section>
-                <div ng-if="!form.registered">
+                <div>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-4 text-align">
@@ -66,33 +66,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <h3>Terima kasih sudah mendaftar di Travorama</h3>
-                                <p>Silahkan cek email Anda untuk verifikasi akun.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="form.registered && form.emailSent && form.emailConfirmed">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/smile-image.png" alt="Smile" />
-                            </div>
-                            <div class="col-sm-8">
-                                <h3>Anda telah terdaftar di Travorama</h3>
-                                <p>Silahkan login untuk memasukin halaman akun Anda.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="form.registered && form.emailSent && !form.emailConfirmed">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4 text-align">
-                                <img src="/Assets/images/smile-image.png" alt="Smile" />
-                            </div>
-                            <div class="col-sm-8">
-                                <h3>Anda telah terdaftar di Travorama</h3>
-                                <p>Silahkan cek email Anda untuk mengkonfirmasi alamat email Anda.</p>
+                                <p>Silahkan cek email Anda untuk verifikasi alamat email Anda.</p>
                             </div>
                         </div>
                     </div>
@@ -109,6 +83,75 @@
             </footer>
         </div>
     </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && !form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8" ng-hide="form.resubmitted">
+                                <h3>Email belum terkonfirmasi</h3>
+                                <p>Silahkan cek email Anda untuk mengkonfirmasi alamat email Anda.<br /><a ng-click="form.resubmit()">Klik disini</a> untuk mengirim kembali email konfirmasi.</p>
+                            </div>
+                            <div class="col-sm-8" ng-show="form.resubmitted">
+                                <h3>Email verifikasi telah dikirim</h3>
+                                <p>Silahkan cek email Anda untuk verifikasi alamat email Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>Anda telah terdaftar di Travorama</h3>
+                                <p>Silahkan login untuk memasukin halaman akun Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
 
 </section><!-- .form-section -->
 @Html.Partial("/Views/Shared/_SectionBenefit.cshtml")

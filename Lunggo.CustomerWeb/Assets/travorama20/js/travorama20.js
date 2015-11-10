@@ -337,7 +337,7 @@ function flightPageSearchFormFunctions() {
         if (evt.keyCode == 27) {
             hideLocation();
         } else {
-            if ($(this).val().length > 0) {
+            if ($(this).val().length >= 3) {
                 $('.search-location .location-recommend').hide();
                 $('.search-location .location-search').show();
                 FlightSearchConfig.autocomplete.keyword = $(this).val();
@@ -846,7 +846,7 @@ function flightFormSearchFunctions() {
         if (evt.keyCode == 27) {
             hideLocation();
         } else {
-            if ($(this).val().length > 0) {
+            if ($(this).val().length >= 3) {
                 $('.search-location .location-recommend').hide();
                 $('.search-location .location-search').show();
                 FlightSearchConfig.autocomplete.keyword = $(this).val();

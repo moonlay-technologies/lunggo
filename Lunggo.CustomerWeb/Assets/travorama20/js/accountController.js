@@ -342,7 +342,9 @@ app.controller('registerController', [
             submitted: false,
             registered: false,
             emailSent: false,
-            emailConfirmed: false
+            emailConfirmed: false,
+            resubmitted: false,
+            resubmitting: false
         };
         $scope.overlay = false;
         $scope.closeOverlay = function() {
@@ -369,11 +371,13 @@ app.controller('registerController', [
                         $scope.form.registered = false;
                         $scope.form.emailSent = false;
                         $scope.form.emailConfirmed = false;
+                        $scope.form.email = '';
                         break;
                     case "AlreadyRegistered":
                         $scope.form.registered = true;
                         $scope.form.emailSent = true;
                         $scope.form.emailConfirmed = true;
+                        $scope.form.email = '';
                         break;
                     case "AlreadyRegisteredButUnconfirmed":
                         $scope.form.registered = true;
@@ -381,10 +385,32 @@ app.controller('registerController', [
                         $scope.form.emailConfirmed = false;
                         break;
                     case "InvalidInputData":
+                        $scope.form.email = '';
                         break;
                 }
 
-                $scope.form.email = '';
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+            });
+        }
+        $scope.form.resubmit = function () {
+            $scope.form.resubmitting = true;
+            $http({
+                url: ResendConfirmationEmailConfig.Url,
+                method: 'POST',
+                data: {
+                    Email: $scope.form.email,
+                }
+            }).then(function (returnData) {
+                $scope.form.resubmitting = false;
+                $scope.form.resubmitted = true;
+
+                if (returnData.data.Status == "Success") {
+                    $scope.form.email = '';
+                }
 
             }, function (returnData) {
                 console.log('Failed requesting reset password');
