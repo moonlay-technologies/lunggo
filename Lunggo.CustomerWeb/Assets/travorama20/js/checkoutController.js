@@ -182,7 +182,6 @@ app.controller('checkoutController', [
         $scope.flightDetail.passportYear = -1;
         $scope.flightDetail.generateDepartureDate = function(fullDate) {
             fullDate = new Date(fullDate);
-            console.log(fullDate);
             $scope.flightDetail.departureDate = fullDate.getDate();
             $scope.flightDetail.departureMonth = fullDate.getMonth();
             $scope.flightDetail.departureYear = fullDate.getFullYear();

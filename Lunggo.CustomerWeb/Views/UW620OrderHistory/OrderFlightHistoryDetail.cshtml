@@ -4,6 +4,7 @@
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
+    ViewBag.Title = "Detail Pemesanan";
     ViewBag.PageActiveSection = "order";
 }
 
@@ -145,8 +146,8 @@
                                             <p ng-if="$index == 1">Pulang : </p>
                                         </div>
                                         <div class="col-xs-9">
-                                            <p>{{flight.Segments[0].DepartureCity}} - {{flight.Segments[0].ArrivalCity}}</p>
-                                            <p>{{flight.Segments[0].DepartureTime}}</p>
+                                            <p>{{flight.Segments[0].DepartureCity}} - {{flight.Segments[ flight.Segments.length - 1 ].ArrivalCity}}</p>
+                                            <p>{{flight.Segments[0].DepartureTime | date:'dd - MMM -yyyy':'UTC'}}</p>
                                         </div>
                                     </div>
                                 </div>
