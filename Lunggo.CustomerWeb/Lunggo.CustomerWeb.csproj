@@ -805,6 +805,7 @@
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
     <Content Include="Assets\images\howtoguide.jpg" />
+    <Content Include="Assets\images\howtoorder.jpg" />
     <Content Include="Assets\images\howtopay-1.jpg" />
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
