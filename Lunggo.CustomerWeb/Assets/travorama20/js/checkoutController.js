@@ -245,7 +245,7 @@ app.controller('checkoutController', [
             if (year % 4 == 0 &&  month == 1) {
                 maxDate = 29;
             } else {
-                if (month == 2) {
+                if (month == 1) {
                     maxDate = 28;
                 } else if (month == 3 || month == 5 || month == 8 || month == 10 || month == 12 ) {
                     maxDate = 30;
