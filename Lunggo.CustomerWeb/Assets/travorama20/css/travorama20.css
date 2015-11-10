@@ -1771,6 +1771,8 @@ file: /Assets/travorama20/css/_page_flight.scss
       .page-flight .search-result-sort .container > div span:before, .page-flight .search-result-sort .container > div .page-index span.section-reason:after, .page-index .page-flight .search-result-sort .container > div span.section-reason:after {
         content: url(/Assets/images/flight-sort-switch.png);
         margin-right: 5px; }
+      .page-flight .search-result-sort .container > div span.active {
+        color: #1daee4; }
     .page-flight .search-result-sort .container > div.sort-airline {
       width: 18.2%; }
     .page-flight .search-result-sort .container > div.sort-departure {

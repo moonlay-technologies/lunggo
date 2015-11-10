@@ -345,19 +345,19 @@
             <div class="search-result-sort" ng-hide="!flightList.length">
                 <div class="container">
                     <div class="sort-airline">
-                        <span ng-click="setSort('airline')">Maskapai</span>
+                        <span ng-click="setSort('airline')" ng-class="{'active' : sort.label == 'airline'}">Maskapai</span>
                     </div>
                     <div class="sort-departure">
-                        <span ng-click="setSort('departure')">Berangkat</span>
+                        <span ng-click="setSort('departure')" ng-class="{'active' : sort.label == 'departure'}">Berangkat</span>
                     </div>
                     <div class="sort-duration">
-                        <span ng-click="setSort('duration')">Durasi</span>
+                        <span ng-click="setSort('duration')" ng-class="{'active' : sort.label == 'duration'}">Durasi</span>
                     </div>
                     <div class="sort-arrival">
-                        <span ng-click="setSort('arrival')">Tiba</span>
+                        <span ng-click="setSort('arrival')" ng-class="{'active' : sort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('price')">Harga Total</span>
+                        <span ng-click="setSort('price')" ng-class="{'active' : sort.label == 'price'}">Harga Total</span>
                     </div>
                 </div>
             </div><!-- .flight-result-sort -->
