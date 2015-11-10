@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Error;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -86,12 +87,12 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
             }
 
-            ViewBag.ErrorInfo = new
+            ViewBag.ErrorInfo = new Error
             {
-                ErrorCd = "ER01",
-                ErrorMessage = "Pemesanan tidak dapat ditemukan"
+                Code = "ER01",
+                Message = "Pemesanan tidak dapat ditemukan"
             };
-
+                
             return View();
         }
     }
