@@ -138,7 +138,9 @@ app.controller('checkoutController', [
             checked: false
         };
 
-        if (loggedIn) {
+        $scope.loggedIn = loggedIn;
+
+        if ($scope.loggedIn) {
             $scope.buyerInfo = buyerInfo;
         } else {
             $scope.buyerInfo = {};

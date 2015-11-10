@@ -236,7 +236,7 @@
 
                                 <h3><b>DETAIL</b> PEMESAN</h3>
 
-                                <div class="travorama-login" ng-class="{'active' : loginShown}">
+                                <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
                                     <div class="login-content">
                                         @using (Html.BeginForm("Login", "Account", new{returnUrl = HttpContext.Current.Request.Url},FormMethod.Post, new {@class = "form form-horizontal"}))
