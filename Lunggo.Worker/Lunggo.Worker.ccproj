@@ -12,6 +12,7 @@
     <AssemblyName>Lunggo.Worker</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Lunggo.Worker</Name>
+    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +55,7 @@
     <DiagnosticsConfiguration Include="Lunggo.Worker.EticketHandlerContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\lunggoworkerdv1Production.azurePubxml" />
+    <PublishProfile Include="Profiles\qa.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

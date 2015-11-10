@@ -92,10 +92,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -487,17 +483,15 @@
     <Folder Include="Views\ExchangeRateViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
       <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
       <Name>Lunggo.ApCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lunggo.Flight\Lunggo.Flight.csproj">
-      <Project>{db1d6df9-aca2-41a0-8e5f-513a376de8d3}</Project>
-      <Name>Lunggo.Flight</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
       <Project>{e0624ffe-a4c2-44f5-9f9f-8c71f3b32aed}</Project>

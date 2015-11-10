@@ -138,6 +138,8 @@
     <Content Include="application.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />

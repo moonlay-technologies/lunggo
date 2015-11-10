@@ -1,10 +1,6 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Lunggo.Framework.BrowserDetection;
-using Lunggo.Framework.Config;
 
 namespace Lunggo.CustomerWeb
 {
@@ -19,7 +15,8 @@ namespace Lunggo.CustomerWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
+        
+        /*
         void Session_Start(object sender, EventArgs e)
         {
             // Redirect mobile users to the mobile home page
@@ -47,6 +44,8 @@ namespace Lunggo.CustomerWeb
                     HttpContext.Current.Response.Redirect(redirectTo);
                 }
             }
+            
         }
+        */
     }
 }

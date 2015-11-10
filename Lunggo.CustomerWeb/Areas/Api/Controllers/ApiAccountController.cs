@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.WebAPI.ApiSrc.v1.Account.Model;
-using RestSharp;
 
 
 namespace Lunggo.CustomerWeb.Areas.Api.Controllers

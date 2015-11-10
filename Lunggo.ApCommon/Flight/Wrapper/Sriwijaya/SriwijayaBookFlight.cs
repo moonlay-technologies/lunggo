@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var FID = ParseFare[(ParseFare.Count() - 1)];
 
 
-                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpangRaw, bookingParams;
+                string FIDsegment1, FIDsegment2, FIDsegment3, ognAirport, arrAirport, penumpangRaw, bookingParams, unknownCode;
                 decimal harga;
                 int jumlahSegment;
                 var penumpang = new List<string>();
@@ -105,6 +105,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var titikIndex2 = titikIndex11.IndexOf(":");
                     var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
                     Rbd = rbdRaw.Split(',').ToList();
+                    var findUnknownCode = FID.Substring(titikIndex1 + 1, (titikIndex2 + 2));
+                    var titikU1 = findUnknownCode.IndexOf(":");
+                    unknownCode = findUnknownCode.Substring(titikU1 + 1);
                     var ambilOrigin = FID.Substring((titikIndex2 + 1) + (titikIndex1 + 1));
                     var titikIndex4 = ambilOrigin.IndexOf(":");
                     var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
@@ -124,9 +127,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 2;
 
                     bookingParams =
-                        "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09" +
-                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09";
 
                 }
@@ -140,7 +143,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var titikIndex2 = titikIndex11.IndexOf(":");
                     var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
                     Rbd = rbdRaw.Split(',').ToList();
-
+                    var findUnknownCode = FID.Substring(titikIndex1 + 1, (titikIndex2 + 2));
+                    var titikU1 = findUnknownCode.IndexOf(":");
+                    unknownCode = findUnknownCode.Substring(titikU1 + 1);
                     var ambilOrigin = FID.Substring((titikIndex2 + 1) + (titikIndex1 + 1));
                     var titikIndex4 = ambilOrigin.IndexOf(":");
                     var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
@@ -160,9 +165,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 3;
 
                     bookingParams =
-                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
-                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3AS%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
+                    "radioFrom0_0=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_1=" + FIDsegment2 + "%3A" + Rbd[1] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09" +
+                    "&radioFrom0_2=" + FIDsegment3 + "%3A" + Rbd[2] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport + "%3AU2s5VlVrNUZXUT09";
                 }
                 else if (ParseFID1.Count == 1)
                 {
@@ -174,6 +179,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var titikIndex2 = titikIndex11.IndexOf(":");
                     var rbdRaw = FID.Substring(titikIndex1 + 1, (titikIndex2));
                     Rbd = rbdRaw.Split(',').ToList();
+                    var findUnknownCode = FID.Substring(titikIndex1 + 1, (titikIndex2 + 2));
+                    var titikU1 = findUnknownCode.IndexOf(":");
+                    unknownCode = findUnknownCode.Substring(titikU1 + 1);
                     var ambilOrigin = FID.Substring((titikIndex2 + 1) + (titikIndex1 + 1));
                     var titikIndex4 = ambilOrigin.IndexOf(":");
                     var titikIndex5 = ambilOrigin.Substring(titikIndex4 + 1).IndexOf(":");
@@ -193,7 +201,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     jumlahSegment = 1;
 
                     bookingParams =
-                        "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3AS%3A" + ognAirport + "%3A" + arrAirport +
+                        "radioFrom=" + FIDsegment1 + "%3A" + Rbd[0] + "%3A" +unknownCode+ "%3A" + ognAirport + "%3A" + arrAirport +
                         "%3AU2s5VlVrNUZXUT09";
 
                 }

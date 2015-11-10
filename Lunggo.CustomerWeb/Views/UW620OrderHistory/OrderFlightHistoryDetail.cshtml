@@ -61,9 +61,9 @@
                                     <b>BUYER INFO</b>
                                     <button class="pull-right btn btn-yellow" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</button>
                                     @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
-                                    {
+                                {
                                         <a style="margin-right: 6px;" href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
-                                    }
+                                }
                                 </h4>
                             </header>
                             <section>

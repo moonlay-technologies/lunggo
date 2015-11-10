@@ -1,5 +1,4 @@
 ﻿@using Lunggo.ApCommon.Identity.User
-@using Microsoft.AspNet.Identity
 @if (ViewBag.SiteHeader == "checkout")
 {
     <header class="site-header">
@@ -67,7 +66,7 @@ else
                                         }
                                         else
                                         {
-                                            <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
+                                            <a href="#" data-trigger="dropdown">Member <span class="caret"></span></a>
                                         }
                                         <div class="dropdown-content my-account">
                                             @if (@User.Identity.IsAuthenticated)
@@ -92,7 +91,7 @@ else
                         <div class="menu-main pull-left">
                             <nav>
                                 <ul>
-                                    <li class="active"><a href="#">FLIGHT</a></li>
+                                    <li class="active"><a href="@Url.Action("Index", "UW000TopPage")">PENERBANGAN</a></li>
                                     <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
                                     <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
                                     <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>
