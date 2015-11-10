@@ -57,7 +57,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
                 clauseBuilder.Append(
                         @"WHEN @PaymentStatusCd = 'SET' THEN ");
                 clauseBuilder.Append(
-                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'TRC') OR (PaymentStatusCd = 'CHA') OR (PaymentStatusCd = 'RCP')) ");
+                            @"CASE WHEN ((PaymentStatusCd = 'PEN') OR (PaymentStatusCd = 'VER') OR (PaymentStatusCd = 'CHA')) ");
                 clauseBuilder.Append(
                                 @"THEN @PaymentStatusCd ");
                 clauseBuilder.Append(

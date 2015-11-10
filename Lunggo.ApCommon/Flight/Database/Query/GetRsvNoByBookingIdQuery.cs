@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE BookingId = @BookingId");
+            clauseBuilder.Append("WHERE BookingId IN @BookingIds");
             return clauseBuilder.ToString();
         }
     }

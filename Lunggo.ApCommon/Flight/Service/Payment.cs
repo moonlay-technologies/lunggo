@@ -1,17 +1,19 @@
-﻿using Lunggo.ApCommon.Payment.Model;
+﻿using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public bool UpdateFlightPayment(string rsvNo, PaymentInfo payment)
+        public void UpdateFlightPayment(string rsvNo, PaymentInfo payment)
         {
-            return UpdateDb.Payment(rsvNo, payment);
-        }
-
-        public void ConfirmReservationPayment(string rsvNo, decimal paidAmount)
-        {
-            UpdateDb.ConfirmPayment(rsvNo, paidAmount);
+            var isUpdated = UpdateDb.Payment(rsvNo, payment);
+            if (isUpdated && payment.Status == PaymentStatus.Settled)
+            {
+                var issueInput = new IssueTicketInput { RsvNo = rsvNo };
+                IssueTicket(issueInput);
+            }
         }
     }
 }

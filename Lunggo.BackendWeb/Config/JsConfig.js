@@ -52,6 +52,10 @@ var SubscribeConfig = {
     Url: 'http://localhost:1147/api/v1/newsletter/subscribe'
 };
 
+var RegisterConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/Register'
+};
+
 var ResetPasswordConfig = {
     Url: 'http://localhost:23321/id/ApiAccount/ResetPassword'
 };
@@ -66,4 +70,8 @@ var ChangePasswordConfig = {
 
 var ChangeProfileConfig = {
     Url: 'http://localhost:23321/id/ApiAccount/ChangeProfile'
+};
+
+var ResendConfirmationEmailConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ResendConfirmationEmail'
 };

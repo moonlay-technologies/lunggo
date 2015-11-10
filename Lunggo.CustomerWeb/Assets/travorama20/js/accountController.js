@@ -1,10 +1,12 @@
 ﻿// Travorama Account controller
 app.controller('accountController', [
-    '$http', '$scope', function($http, $scope) {
+    '$http', '$scope' , function($http, $scope) {   
+
+        var hash = (location.hash);
 
         // variables
         $scope.pageLoaded = true;
-        $scope.currentSection = 'profile';
+        $scope.currentSection = '';
         $scope.profileForm = {
             active : false
         };
@@ -12,16 +14,28 @@ app.controller('accountController', [
             active: false
         };
         
+        $scope.printScope = function() {
+            console.log($scope);
+        }
+
         $scope.userProfile = userProfile;
         $scope.userProfile.edit = false;
         $scope.userProfile.updating = false;
 
+        $scope.editProfile = {
+            address: userProfile.address,
+            firstname: userProfile.firstname,
+            lastname: userProfile.lastname,
+            phone: userProfile.phone,
+            country: userProfile.country
+        };
+
         $scope.password = {}
         $scope.password.edit = false;
         $scope.password.updating = false;
+        $scope.password.failed = false;
 
-        // $scope.countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
-        $scope.countries = [{ name: "AFGHANISTAN", twoLetter: "AF", threeLetter: "AFG", phone: "004" }, { name: "ALBANIA", twoLetter: "AL", threeLetter: "ALB", phone: "008" }, { name: "ALGERIA", twoLetter: "DZ", threeLetter: "DZA", phone: "012" }, { name: "AMERICAN SAMOA", twoLetter: "AS", threeLetter: "ASM", phone: "016" }, { name: "ANDORRA", twoLetter: "AD", threeLetter: "AND", phone: "020" }, { name: "ANGOLA", twoLetter: "AO", threeLetter: "AGO", phone: "024" }, { name: "ANGUILLA", twoLetter: "AI", threeLetter: "AIA", phone: "660" }, { name: "ANTARCTICA", twoLetter: "AQ", threeLetter: "ATA", phone: "010" }, { name: "ANTIGUA AND BARBUDA", twoLetter: "AG", threeLetter: "ATG", phone: "028" }, { name: "ARGENTINA", twoLetter: "AR", threeLetter: "ARG", phone: "032" }, { name: "ARMENIA", twoLetter: "AM", threeLetter: "ARM", phone: "051" }, { name: "ARUBA", twoLetter: "AW", threeLetter: "ABW", phone: "533" }, { name: "AUSTRALIA", twoLetter: "AU", threeLetter: "AUS", phone: "036" }, { name: "AUSTRIA", twoLetter: "AT", threeLetter: "AUT", phone: "040" }, { name: "AZERBAIJAN", twoLetter: "AZ", threeLetter: "AZE", phone: "031" }, { name: "BAHAMAS", twoLetter: "BS", threeLetter: "BHS", phone: "044" }, { name: "BAHRAIN", twoLetter: "BH", threeLetter: "BHR", phone: "048" }, { name: "BANGLADESH", twoLetter: "BD", threeLetter: "BGD", phone: "050" }, { name: "BARBADOS", twoLetter: "BB", threeLetter: "BRB", phone: "052" }, { name: "BELARUS", twoLetter: "BY", threeLetter: "BLR", phone: "112" }, { name: "BELGIUM", twoLetter: "BE", threeLetter: "BEL", phone: "056" }, { name: "BELIZE", twoLetter: "BZ", threeLetter: "BLZ", phone: "084" }, { name: "BENIN", twoLetter: "BJ", threeLetter: "BEN", phone: "204" }, { name: "BERMUDA", twoLetter: "BM", threeLetter: "BMU", phone: "060" }, { name: "BHUTAN", twoLetter: "BT", threeLetter: "BTN", phone: "064" }, { name: "BOLIVIA", twoLetter: "BO", threeLetter: "BOL", phone: "068" }, { name: "BOSNIA AND HERZEGOVINA", twoLetter: "BA", threeLetter: "BIH", phone: "070" }, { name: "BOTSWANA", twoLetter: "BW", threeLetter: "BWA", phone: "072" }, { name: "BOUVET ISLAND", twoLetter: "BV", threeLetter: "BVT", phone: "074" }, { name: "BRAZIL", twoLetter: "BR", threeLetter: "BRA", phone: "076" }, { name: "BRITISH INDIAN OCEAN TERRITORY", twoLetter: "IO", threeLetter: "IOT", phone: "086" }, { name: "BRUNEI DARUSSALAM", twoLetter: "BN", threeLetter: "BRN", phone: "096" }, { name: "BULGARIA", twoLetter: "BG", threeLetter: "BGR", phone: "100" }, { name: "BURKINA FASO", twoLetter: "BF", threeLetter: "BFA", phone: "854" }, { name: "BURUNDI", twoLetter: "BI", threeLetter: "BDI", phone: "108" }, { name: "CAMBODIA", twoLetter: "KH", threeLetter: "KHM", phone: "116" }, { name: "CAMEROON", twoLetter: "CM", threeLetter: "CMR", phone: "120" }, { name: "CANADA", twoLetter: "CA", threeLetter: "CAN", phone: "124" }, { name: "CAPE VERDE", twoLetter: "CV", threeLetter: "CPV", phone: "132" }, { name: "CAYMAN ISLANDS", twoLetter: "KY", threeLetter: "CYM", phone: "136" }, { name: "CENTRAL AFRICAN REPUBLIC", twoLetter: "CF", threeLetter: "CAF", phone: "140" }, { name: "CHAD", twoLetter: "TD", threeLetter: "TCD", phone: "148" }, { name: "CHILE", twoLetter: "CL", threeLetter: "CHL", phone: "152" }, { name: "CHINA", twoLetter: "CN", threeLetter: "CHN", phone: "156" }, { name: "CHRISTMAS ISLAND", twoLetter: "CX", threeLetter: "CXR", phone: "162" }, { name: "COCOS (KEELING) ISLANDS", twoLetter: "CC", threeLetter: "CCK", phone: "166" }, { name: "COLOMBIA", twoLetter: "CO", threeLetter: "COL", phone: "170" }, { name: "COMOROS", twoLetter: "KM", threeLetter: "COM", phone: "174" }, { name: "CONGO", twoLetter: "CG", threeLetter: "COG", phone: "178" }, { name: "COOK ISLANDS", twoLetter: "CK", threeLetter: "COK", phone: "184" }, { name: "COSTA RICA", twoLetter: "CR", threeLetter: "CRI", phone: "188" }, { name: "COTE D'IVOIRE", twoLetter: "CI", threeLetter: "CIV", phone: "384" }, { name: "CROATIA (local name: Hrvatska)", twoLetter: "HR", threeLetter: "HRV", phone: "191" }, { name: "CUBA", twoLetter: "CU", threeLetter: "CUB", phone: "192" }, { name: "CYPRUS", twoLetter: "CY", threeLetter: "CYP", phone: "196" }, { name: "CZECH REPUBLIC", twoLetter: "CZ", threeLetter: "CZE", phone: "203" }, { name: "DENMARK", twoLetter: "DK", threeLetter: "DNK", phone: "208" }, { name: "DJIBOUTI", twoLetter: "DJ", threeLetter: "DJI", phone: "262" }, { name: "DOMINICA", twoLetter: "DM", threeLetter: "DMA", phone: "212" }, { name: "DOMINICAN REPUBLIC", twoLetter: "DO", threeLetter: "DOM", phone: "214" }, { name: "EAST TIMOR", twoLetter: "TL", threeLetter: "TLS", phone: "626" }, { name: "ECUADOR", twoLetter: "EC", threeLetter: "ECU", phone: "218" }, { name: "EGYPT", twoLetter: "EG", threeLetter: "EGY", phone: "818" }, { name: "EL SALVADOR", twoLetter: "SV", threeLetter: "SLV", phone: "222" }, { name: "EQUATORIAL GUINEA", twoLetter: "GQ", threeLetter: "GNQ", phone: "226" }, { name: "ERITREA", twoLetter: "ER", threeLetter: "ERI", phone: "232" }, { name: "ESTONIA", twoLetter: "EE", threeLetter: "EST", phone: "233" }, { name: "ETHIOPIA", twoLetter: "ET", threeLetter: "ETH", phone: "210" }, { name: "FALKLAND ISLANDS (MALVINAS)", twoLetter: "FK", threeLetter: "FLK", phone: "238" }, { name: "FAROE ISLANDS", twoLetter: "FO", threeLetter: "FRO", phone: "234" }, { name: "FIJI", twoLetter: "FJ", threeLetter: "FJI", phone: "242" }, { name: "FINLAND", twoLetter: "FI", threeLetter: "FIN", phone: "246" }, { name: "FRANCE", twoLetter: "FR", threeLetter: "FRA", phone: "250" }, { name: "FRANCE, METROPOLITAN", twoLetter: "FX", threeLetter: "FXX", phone: "249" }, { name: "FRENCH GUIANA", twoLetter: "GF", threeLetter: "GUF", phone: "254" }, { name: "FRENCH POLYNESIA", twoLetter: "PF", threeLetter: "PYF", phone: "258" }, { name: "FRENCH SOUTHERN TERRITORIES", twoLetter: "TF", threeLetter: "ATF", phone: "260" }, { name: "GABON", twoLetter: "GA", threeLetter: "GAB", phone: "266" }, { name: "GAMBIA", twoLetter: "GM", threeLetter: "GMB", phone: "270" }, { name: "GEORGIA", twoLetter: "GE", threeLetter: "GEO", phone: "268" }, { name: "GERMANY", twoLetter: "DE", threeLetter: "DEU", phone: "276" }, { name: "GHANA", twoLetter: "GH", threeLetter: "GHA", phone: "288" }, { name: "GIBRALTAR", twoLetter: "GI", threeLetter: "GIB", phone: "292" }, { name: "GREECE", twoLetter: "GR", threeLetter: "GRC", phone: "300" }, { name: "GREENLAND", twoLetter: "GL", threeLetter: "GRL", phone: "304" }, { name: "GRENADA", twoLetter: "GD", threeLetter: "GRD", phone: "308" }, { name: "GUADELOUPE", twoLetter: "GP", threeLetter: "GLP", phone: "312" }, { name: "GUAM", twoLetter: "GU", threeLetter: "GUM", phone: "316" }, { name: "GUATEMALA", twoLetter: "GT", threeLetter: "GTM", phone: "320" }, { name: "GUINEA", twoLetter: "GN", threeLetter: "GIN", phone: "324" }, { name: "GUINEA-BISSAU", twoLetter: "GW", threeLetter: "GNB", phone: "624" }, { name: "GUYANA", twoLetter: "GY", threeLetter: "GUY", phone: "328" }, { name: "HAITI", twoLetter: "HT", threeLetter: "HTI", phone: "332" }, { name: "HEARD ISLAND & MCDONALD ISLANDS", twoLetter: "HM", threeLetter: "HMD", phone: "334" }, { name: "HONDURAS", twoLetter: "HN", threeLetter: "HND", phone: "340" }, { name: "HONG KONG", twoLetter: "HK", threeLetter: "HKG", phone: "344" }, { name: "HUNGARY", twoLetter: "HU", threeLetter: "HUN", phone: "348" }, { name: "ICELAND", twoLetter: "IS", threeLetter: "ISL", phone: "352" }, { name: "INDIA", twoLetter: "IN", threeLetter: "IND", phone: "356" }, { name: "INDONESIA", twoLetter: "ID", threeLetter: "IDN", phone: "360" }, { name: "IRAN, ISLAMIC REPUBLIC OF", twoLetter: "IR", threeLetter: "IRN", phone: "364" }, { name: "IRAQ", twoLetter: "IQ", threeLetter: "IRQ", phone: "368" }, { name: "IRELAND", twoLetter: "IE", threeLetter: "IRL", phone: "372" }, { name: "ISRAEL", twoLetter: "IL", threeLetter: "ISR", phone: "376" }, { name: "ITALY", twoLetter: "IT", threeLetter: "ITA", phone: "380" }, { name: "JAMAICA", twoLetter: "JM", threeLetter: "JAM", phone: "388" }, { name: "JAPAN", twoLetter: "JP", threeLetter: "JPN", phone: "392" }, { name: "JORDAN", twoLetter: "JO", threeLetter: "JOR", phone: "400" }, { name: "KAZAKHSTAN", twoLetter: "KZ", threeLetter: "KAZ", phone: "398" }, { name: "KENYA", twoLetter: "KE", threeLetter: "KEN", phone: "404" }, { name: "KIRIBATI", twoLetter: "KI", threeLetter: "KIR", phone: "296" }, { name: "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF", twoLetter: "KP", threeLetter: "PRK", phone: "408" }, { name: "KOREA, REPUBLIC OF", twoLetter: "KR", threeLetter: "KOR", phone: "410" }, { name: "KUWAIT", twoLetter: "KW", threeLetter: "KWT", phone: "414" }, { name: "KYRGYZSTAN", twoLetter: "KG", threeLetter: "KGZ", phone: "417" }, { name: "LAO PEOPLE'S DEMOCRATIC REPUBLIC", twoLetter: "LA", threeLetter: "LAO", phone: "418" }, { name: "LATVIA", twoLetter: "LV", threeLetter: "LVA", phone: "428" }, { name: "LEBANON", twoLetter: "LB", threeLetter: "LBN", phone: "422" }, { name: "LESOTHO", twoLetter: "LS", threeLetter: "LSO", phone: "426" }, { name: "LIBERIA", twoLetter: "LR", threeLetter: "LBR", phone: "430" }, { name: "LIBYAN ARAB JAMAHIRIYA", twoLetter: "LY", threeLetter: "LBY", phone: "434" }, { name: "LIECHTENSTEIN", twoLetter: "LI", threeLetter: "LIE", phone: "438" }, { name: "LITHUANIA", twoLetter: "LT", threeLetter: "LTU", phone: "440" }, { name: "LUXEMBOURG", twoLetter: "LU", threeLetter: "LUX", phone: "442" }, { name: "MACAU", twoLetter: "MO", threeLetter: "MAC", phone: "446" }, { name: "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF", twoLetter: "MK", threeLetter: "MKD", phone: "807" }, { name: "MADAGASCAR", twoLetter: "MG", threeLetter: "MDG", phone: "450" }, { name: "MALAWI", twoLetter: "MW", threeLetter: "MWI", phone: "454" }, { name: "MALAYSIA", twoLetter: "MY", threeLetter: "MYS", phone: "458" }, { name: "MALDIVES", twoLetter: "MV", threeLetter: "MDV", phone: "462" }, { name: "MALI", twoLetter: "ML", threeLetter: "MLI", phone: "466" }, { name: "MALTA", twoLetter: "MT", threeLetter: "MLT", phone: "470" }, { name: "MARSHALL ISLANDS", twoLetter: "MH", threeLetter: "MHL", phone: "584" }, { name: "MARTINIQUE", twoLetter: "MQ", threeLetter: "MTQ", phone: "474" }, { name: "MAURITANIA", twoLetter: "MR", threeLetter: "MRT", phone: "478" }, { name: "MAURITIUS", twoLetter: "MU", threeLetter: "MUS", phone: "480" }, { name: "MAYOTTE", twoLetter: "YT", threeLetter: "MYT", phone: "175" }, { name: "MEXICO", twoLetter: "MX", threeLetter: "MEX", phone: "484" }, { name: "MICRONESIA, FEDERATED STATES OF", twoLetter: "FM", threeLetter: "FSM", phone: "583" }, { name: "MOLDOVA, REPUBLIC OF", twoLetter: "MD", threeLetter: "MDA", phone: "498" }, { name: "MONACO", twoLetter: "MC", threeLetter: "MCO", phone: "492" }, { name: "MONGOLIA", twoLetter: "MN", threeLetter: "MNG", phone: "496" }, { name: "MONTSERRAT", twoLetter: "MS", threeLetter: "MSR", phone: "500" }, { name: "MOROCCO", twoLetter: "MA", threeLetter: "MAR", phone: "504" }, { name: "MOZAMBIQUE", twoLetter: "MZ", threeLetter: "MOZ", phone: "508" }, { name: "MYANMAR", twoLetter: "MM", threeLetter: "MMR", phone: "104" }, { name: "NAMIBIA", twoLetter: "NA", threeLetter: "NAM", phone: "516" }, { name: "NAURU", twoLetter: "NR", threeLetter: "NRU", phone: "520" }, { name: "NEPAL", twoLetter: "NP", threeLetter: "NPL", phone: "524" }, { name: "NETHERLANDS", twoLetter: "NL", threeLetter: "NLD", phone: "528" }, { name: "NETHERLANDS ANTILLES", twoLetter: "AN", threeLetter: "ANT", phone: "530" }, { name: "NEW CALEDONIA", twoLetter: "NC", threeLetter: "NCL", phone: "540" }, { name: "NEW ZEALAND", twoLetter: "NZ", threeLetter: "NZL", phone: "554" }, { name: "NICARAGUA", twoLetter: "NI", threeLetter: "NIC", phone: "558" }, { name: "NIGER", twoLetter: "NE", threeLetter: "NER", phone: "562" }, { name: "NIGERIA", twoLetter: "NG", threeLetter: "NGA", phone: "566" }, { name: "NIUE", twoLetter: "NU", threeLetter: "NIU", phone: "570" }, { name: "NORFOLK ISLAND", twoLetter: "NF", threeLetter: "NFK", phone: "574" }, { name: "NORTHERN MARIANA ISLANDS", twoLetter: "MP", threeLetter: "MNP", phone: "580" }, { name: "NORWAY", twoLetter: "NO", threeLetter: "NOR", phone: "578" }, { name: "OMAN", twoLetter: "OM", threeLetter: "OMN", phone: "512" }, { name: "PAKISTAN", twoLetter: "PK", threeLetter: "PAK", phone: "586" }, { name: "PALAU", twoLetter: "PW", threeLetter: "PLW", phone: "585" }, { name: "PANAMA", twoLetter: "PA", threeLetter: "PAN", phone: "591" }, { name: "PAPUA NEW GUINEA", twoLetter: "PG", threeLetter: "PNG", phone: "598" }, { name: "PARAGUAY", twoLetter: "PY", threeLetter: "PRY", phone: "600" }, { name: "PERU", twoLetter: "PE", threeLetter: "PER", phone: "604" }, { name: "PHILIPPINES", twoLetter: "PH", threeLetter: "PHL", phone: "608" }, { name: "PITCAIRN", twoLetter: "PN", threeLetter: "PCN", phone: "612" }, { name: "POLAND", twoLetter: "PL", threeLetter: "POL", phone: "616" }, { name: "PORTUGAL", twoLetter: "PT", threeLetter: "PRT", phone: "620" }, { name: "PUERTO RICO", twoLetter: "PR", threeLetter: "PRI", phone: "630" }, { name: "QATAR", twoLetter: "QA", threeLetter: "QAT", phone: "634" }, { name: "REUNION", twoLetter: "RE", threeLetter: "REU", phone: "638" }, { name: "ROMANIA", twoLetter: "RO", threeLetter: "ROU", phone: "642" }, { name: "RUSSIAN FEDERATION", twoLetter: "RU", threeLetter: "RUS", phone: "643" }, { name: "RWANDA", twoLetter: "RW", threeLetter: "RWA", phone: "646" }, { name: "SAINT KITTS AND NEVIS", twoLetter: "KN", threeLetter: "KNA", phone: "659" }, { name: "SAINT LUCIA", twoLetter: "LC", threeLetter: "LCA", phone: "662" }, { name: "SAINT VINCENT AND THE GRENADINES", twoLetter: "VC", threeLetter: "VCT", phone: "670" }, { name: "SAMOA", twoLetter: "WS", threeLetter: "WSM", phone: "882" }, { name: "SAN MARINO", twoLetter: "SM", threeLetter: "SMR", phone: "674" }, { name: "SAO TOME AND PRINCIPE", twoLetter: "ST", threeLetter: "STP", phone: "678" }, { name: "SAUDI ARABIA", twoLetter: "SA", threeLetter: "SAU", phone: "682" }, { name: "SENEGAL", twoLetter: "SN", threeLetter: "SEN", phone: "686" }, { name: "SERBIA", twoLetter: "RS", threeLetter: "SRB", phone: "688" }, { name: "SEYCHELLES", twoLetter: "SC", threeLetter: "SYC", phone: "690" }, { name: "SIERRA LEONE", twoLetter: "SL", threeLetter: "SLE", phone: "694" }, { name: "SINGAPORE", twoLetter: "SG", threeLetter: "SGP", phone: "702" }, { name: "SLOVAKIA (Slovak Republic)", twoLetter: "SK", threeLetter: "SVK", phone: "703" }, { name: "SLOVENIA", twoLetter: "SI", threeLetter: "SVN", phone: "705" }, { name: "SOLOMON ISLANDS", twoLetter: "SB", threeLetter: "SLB", phone: "90" }, { name: "SOMALIA", twoLetter: "SO", threeLetter: "SOM", phone: "706" }, { name: "SOUTH AFRICA", twoLetter: "ZA", threeLetter: "ZAF", phone: "710" }, { name: "SPAIN", twoLetter: "ES", threeLetter: "ESP", phone: "724" }, { name: "SRI LANKA", twoLetter: "LK", threeLetter: "LKA", phone: "144" }, { name: "SAINT HELENA", twoLetter: "SH", threeLetter: "SHN", phone: "654" }, { name: "SAINT PIERRE AND MIQUELON", twoLetter: "PM", threeLetter: "SPM", phone: "666" }, { name: "SUDAN", twoLetter: "SD", threeLetter: "SDN", phone: "736" }, { name: "SURINAME", twoLetter: "SR", threeLetter: "SUR", phone: "740" }, { name: "SVALBARD AND JAN MAYEN ISLANDS", twoLetter: "SJ", threeLetter: "SJM", phone: "744" }, { name: "SWAZILAND", twoLetter: "SZ", threeLetter: "SWZ", phone: "748" }, { name: "SWEDEN", twoLetter: "SE", threeLetter: "SWE", phone: "752" }, { name: "SWITZERLAND", twoLetter: "CH", threeLetter: "CHE", phone: "756" }, { name: "SYRIAN ARAB REPUBLIC", twoLetter: "SY", threeLetter: "SYR", phone: "760" }, { name: "TAIWAN, PROVINCE OF CHINA", twoLetter: "TW", threeLetter: "TWN", phone: "158" }, { name: "TAJIKISTAN", twoLetter: "TJ", threeLetter: "TJK", phone: "762" }, { name: "TANZANIA, UNITED REPUBLIC OF", twoLetter: "TZ", threeLetter: "TZA", phone: "834" }, { name: "THAILAND", twoLetter: "TH", threeLetter: "THA", phone: "764" }, { name: "TOGO", twoLetter: "TG", threeLetter: "TGO", phone: "768" }, { name: "TOKELAU", twoLetter: "TK", threeLetter: "TKL", phone: "772" }, { name: "TONGA", twoLetter: "TO", threeLetter: "TON", phone: "776" }, { name: "TRINIDAD AND TOBAGO", twoLetter: "TT", threeLetter: "TTO", phone: "780" }, { name: "TUNISIA", twoLetter: "TN", threeLetter: "TUN", phone: "788" }, { name: "TURKEY", twoLetter: "TR", threeLetter: "TUR", phone: "792" }, { name: "TURKMENISTAN", twoLetter: "TM", threeLetter: "TKM", phone: "795" }, { name: "TURKS AND CAICOS ISLANDS", twoLetter: "TC", threeLetter: "TCA", phone: "796" }, { name: "TUVALU", twoLetter: "TV", threeLetter: "TUV", phone: "798" }, { name: "UGANDA", twoLetter: "UG", threeLetter: "UGA", phone: "800" }, { name: "UKRAINE", twoLetter: "UA", threeLetter: "UKR", phone: "804" }, { name: "UNITED ARAB EMIRATES", twoLetter: "AE", threeLetter: "ARE", phone: "784" }, { name: "UNITED KINGDOM", twoLetter: "GB", threeLetter: "GBR", phone: "826" }, { name: "UNITED STATES", twoLetter: "US", threeLetter: "USA", phone: "840" }, { name: "UNITED STATES MINOR OUTLYING ISLANDS", twoLetter: "UM", threeLetter: "UMI", phone: "581" }, { name: "URUGUAY", twoLetter: "UY", threeLetter: "URY", phone: "858" }, { name: "UZBEKISTAN", twoLetter: "UZ", threeLetter: "UZB", phone: "860" }, { name: "VANUATU", twoLetter: "VU", threeLetter: "VUT", phone: "548" }, { name: "VATICAN CITY STATE (HOLY SEE)", twoLetter: "VA", threeLetter: "VAT", phone: "336" }, { name: "VENEZUELA", twoLetter: "VE", threeLetter: "VEN", phone: "862" }, { name: "VIET NAM", twoLetter: "VN", threeLetter: "VNM", phone: "704" }, { name: "VIRGIN ISLANDS (BRITISH)", twoLetter: "VG", threeLetter: "VGB", phone: "92" }, { name: "VIRGIN ISLANDS (U.S.)", twoLetter: "VI", threeLetter: "VIR", phone: "850" }, { name: "WALLIS AND FUTUNA ISLANDS", twoLetter: "WF", threeLetter: "WLF", phone: "876" }, { name: "WESTERN SAHARA", twoLetter: "EH", threeLetter: "ESH", phone: "732" }, { name: "YEMEN", twoLetter: "YE", threeLetter: "YEM", phone: "887" }, { name: "YUGOSLAVIA", twoLetter: "YU", threeLetter: "YUG", phone: "891" }, { name: "ZAIRE", twoLetter: "ZR", threeLetter: "ZAR", phone: "180" }, { name: "ZAMBIA", twoLetter: "ZM", threeLetter: "ZMB", phone: "894" }, { name: "ZIMBABWE", twoLetter: "ZW", threeLetter: "ZWE", phone: "716" }];
+        $scope.countries = [{ "name": "Afghanistan", "dial_code": "93", "code": "AF" }, { "name": "Aland Islands", "dial_code": "358", "code": "AX" }, { "name": "Albania", "dial_code": "355", "code": "AL" }, { "name": "Algeria", "dial_code": "213", "code": "DZ" }, { "name": "AmericanSamoa", "dial_code": "1 684", "code": "AS" }, { "name": "Andorra", "dial_code": "376", "code": "AD" }, { "name": "Angola", "dial_code": "244", "code": "AO" }, { "name": "Anguilla", "dial_code": "1 264", "code": "AI" }, { "name": "Antarctica", "dial_code": "672", "code": "AQ" }, { "name": "Antigua and Barbuda", "dial_code": "1268", "code": "AG" }, { "name": "Argentina", "dial_code": "54", "code": "AR" }, { "name": "Armenia", "dial_code": "374", "code": "AM" }, { "name": "Aruba", "dial_code": "297", "code": "AW" }, { "name": "Australia", "dial_code": "61", "code": "AU" }, { "name": "Austria", "dial_code": "43", "code": "AT" }, { "name": "Azerbaijan", "dial_code": "994", "code": "AZ" }, { "name": "Bahamas", "dial_code": "1 242", "code": "BS" }, { "name": "Bahrain", "dial_code": "973", "code": "BH" }, { "name": "Bangladesh", "dial_code": "880", "code": "BD" }, { "name": "Barbados", "dial_code": "1 246", "code": "BB" }, { "name": "Belarus", "dial_code": "375", "code": "BY" }, { "name": "Belgium", "dial_code": "32", "code": "BE" }, { "name": "Belize", "dial_code": "501", "code": "BZ" }, { "name": "Benin", "dial_code": "229", "code": "BJ" }, { "name": "Bermuda", "dial_code": "1 441", "code": "BM" }, { "name": "Bhutan", "dial_code": "975", "code": "BT" }, { "name": "Bolivia, Plurinational State of", "dial_code": "591", "code": "BO" }, { "name": "Bosnia and Herzegovina", "dial_code": "387", "code": "BA" }, { "name": "Botswana", "dial_code": "267", "code": "BW" }, { "name": "Brazil", "dial_code": "55", "code": "BR" }, { "name": "British Indian Ocean Territory", "dial_code": "246", "code": "IO" }, { "name": "Brunei Darussalam", "dial_code": "673", "code": "BN" }, { "name": "Bulgaria", "dial_code": "359", "code": "BG" }, { "name": "Burkina Faso", "dial_code": "226", "code": "BF" }, { "name": "Burundi", "dial_code": "257", "code": "BI" }, { "name": "Cambodia", "dial_code": "855", "code": "KH" }, { "name": "Cameroon", "dial_code": "237", "code": "CM" }, { "name": "Canada", "dial_code": "1", "code": "CA" }, { "name": "Cape Verde", "dial_code": "238", "code": "CV" }, { "name": "Cayman Islands", "dial_code": " 345", "code": "KY" }, { "name": "Central African Republic", "dial_code": "236", "code": "CF" }, { "name": "Chad", "dial_code": "235", "code": "TD" }, { "name": "Chile", "dial_code": "56", "code": "CL" }, { "name": "China", "dial_code": "86", "code": "CN" }, { "name": "Christmas Island", "dial_code": "61", "code": "CX" }, { "name": "Cocos (Keeling) Islands", "dial_code": "61", "code": "CC" }, { "name": "Colombia", "dial_code": "57", "code": "CO" }, { "name": "Comoros", "dial_code": "269", "code": "KM" }, { "name": "Congo", "dial_code": "242", "code": "CG" }, { "name": "Congo, The Democratic Republic of the Congo", "dial_code": "243", "code": "CD" }, { "name": "Cook Islands", "dial_code": "682", "code": "CK" }, { "name": "Costa Rica", "dial_code": "506", "code": "CR" }, { "name": "Cote d'Ivoire", "dial_code": "225", "code": "CI" }, { "name": "Croatia", "dial_code": "385", "code": "HR" }, { "name": "Cuba", "dial_code": "53", "code": "CU" }, { "name": "Cyprus", "dial_code": "357", "code": "CY" }, { "name": "Czech Republic", "dial_code": "420", "code": "CZ" }, { "name": "Denmark", "dial_code": "45", "code": "DK" }, { "name": "Djibouti", "dial_code": "253", "code": "DJ" }, { "name": "Dominica", "dial_code": "1 767", "code": "DM" }, { "name": "Dominican Republic", "dial_code": "1 849", "code": "DO" }, { "name": "Ecuador", "dial_code": "593", "code": "EC" }, { "name": "Egypt", "dial_code": "20", "code": "EG" }, { "name": "El Salvador", "dial_code": "503", "code": "SV" }, { "name": "Equatorial Guinea", "dial_code": "240", "code": "GQ" }, { "name": "Eritrea", "dial_code": "291", "code": "ER" }, { "name": "Estonia", "dial_code": "372", "code": "EE" }, { "name": "Ethiopia", "dial_code": "251", "code": "ET" }, { "name": "Falkland Islands (Malvinas)", "dial_code": "500", "code": "FK" }, { "name": "Faroe Islands", "dial_code": "298", "code": "FO" }, { "name": "Fiji", "dial_code": "679", "code": "FJ" }, { "name": "Finland", "dial_code": "358", "code": "FI" }, { "name": "France", "dial_code": "33", "code": "FR" }, { "name": "French Guiana", "dial_code": "594", "code": "GF" }, { "name": "French Polynesia", "dial_code": "689", "code": "PF" }, { "name": "Gabon", "dial_code": "241", "code": "GA" }, { "name": "Gambia", "dial_code": "220", "code": "GM" }, { "name": "Georgia", "dial_code": "995", "code": "GE" }, { "name": "Germany", "dial_code": "49", "code": "DE" }, { "name": "Ghana", "dial_code": "233", "code": "GH" }, { "name": "Gibraltar", "dial_code": "350", "code": "GI" }, { "name": "Greece", "dial_code": "30", "code": "GR" }, { "name": "Greenland", "dial_code": "299", "code": "GL" }, { "name": "Grenada", "dial_code": "1 473", "code": "GD" }, { "name": "Guadeloupe", "dial_code": "590", "code": "GP" }, { "name": "Guam", "dial_code": "1 671", "code": "GU" }, { "name": "Guatemala", "dial_code": "502", "code": "GT" }, { "name": "Guernsey", "dial_code": "44", "code": "GG" }, { "name": "Guinea", "dial_code": "224", "code": "GN" }, { "name": "Guinea-Bissau", "dial_code": "245", "code": "GW" }, { "name": "Guyana", "dial_code": "595", "code": "GY" }, { "name": "Haiti", "dial_code": "509", "code": "HT" }, { "name": "Holy See (Vatican City State)", "dial_code": "379", "code": "VA" }, { "name": "Honduras", "dial_code": "504", "code": "HN" }, { "name": "Hong Kong", "dial_code": "852", "code": "HK" }, { "name": "Hungary", "dial_code": "36", "code": "HU" }, { "name": "Iceland", "dial_code": "354", "code": "IS" }, { "name": "India", "dial_code": "91", "code": "IN" }, { "name": "Indonesia", "dial_code": "62", "code": "ID" }, { "name": "Iran, Islamic Republic of Persian Gulf", "dial_code": "98", "code": "IR" }, { "name": "Iraq", "dial_code": "964", "code": "IQ" }, { "name": "Ireland", "dial_code": "353", "code": "IE" }, { "name": "Isle of Man", "dial_code": "44", "code": "IM" }, { "name": "Israel", "dial_code": "972", "code": "IL" }, { "name": "Italy", "dial_code": "39", "code": "IT" }, { "name": "Jamaica", "dial_code": "1 876", "code": "JM" }, { "name": "Japan", "dial_code": "81", "code": "JP" }, { "name": "Jersey", "dial_code": "44", "code": "JE" }, { "name": "Jordan", "dial_code": "962", "code": "JO" }, { "name": "Kazakhstan", "dial_code": "7 7", "code": "KZ" }, { "name": "Kenya", "dial_code": "254", "code": "KE" }, { "name": "Kiribati", "dial_code": "686", "code": "KI" }, { "name": "Korea, Democratic People's Republic of Korea", "dial_code": "850", "code": "KP" }, { "name": "Korea, Republic of South Korea", "dial_code": "82", "code": "KR" }, { "name": "Kuwait", "dial_code": "965", "code": "KW" }, { "name": "Kyrgyzstan", "dial_code": "996", "code": "KG" }, { "name": "Laos", "dial_code": "856", "code": "LA" }, { "name": "Latvia", "dial_code": "371", "code": "LV" }, { "name": "Lebanon", "dial_code": "961", "code": "LB" }, { "name": "Lesotho", "dial_code": "266", "code": "LS" }, { "name": "Liberia", "dial_code": "231", "code": "LR" }, { "name": "Libyan Arab Jamahiriya", "dial_code": "218", "code": "LY" }, { "name": "Liechtenstein", "dial_code": "423", "code": "LI" }, { "name": "Lithuania", "dial_code": "370", "code": "LT" }, { "name": "Luxembourg", "dial_code": "352", "code": "LU" }, { "name": "Macao", "dial_code": "853", "code": "MO" }, { "name": "Macedonia", "dial_code": "389", "code": "MK" }, { "name": "Madagascar", "dial_code": "261", "code": "MG" }, { "name": "Malawi", "dial_code": "265", "code": "MW" }, { "name": "Malaysia", "dial_code": "60", "code": "MY" }, { "name": "Maldives", "dial_code": "960", "code": "MV" }, { "name": "Mali", "dial_code": "223", "code": "ML" }, { "name": "Malta", "dial_code": "356", "code": "MT" }, { "name": "Marshall Islands", "dial_code": "692", "code": "MH" }, { "name": "Martinique", "dial_code": "596", "code": "MQ" }, { "name": "Mauritania", "dial_code": "222", "code": "MR" }, { "name": "Mauritius", "dial_code": "230", "code": "MU" }, { "name": "Mayotte", "dial_code": "262", "code": "YT" }, { "name": "Mexico", "dial_code": "52", "code": "MX" }, { "name": "Micronesia, Federated States of Micronesia", "dial_code": "691", "code": "FM" }, { "name": "Moldova", "dial_code": "373", "code": "MD" }, { "name": "Monaco", "dial_code": "377", "code": "MC" }, { "name": "Mongolia", "dial_code": "976", "code": "MN" }, { "name": "Montenegro", "dial_code": "382", "code": "ME" }, { "name": "Montserrat", "dial_code": "1664", "code": "MS" }, { "name": "Morocco", "dial_code": "212", "code": "MA" }, { "name": "Mozambique", "dial_code": "258", "code": "MZ" }, { "name": "Myanmar", "dial_code": "95", "code": "MM" }, { "name": "Namibia", "dial_code": "264", "code": "NA" }, { "name": "Nauru", "dial_code": "674", "code": "NR" }, { "name": "Nepal", "dial_code": "977", "code": "NP" }, { "name": "Netherlands", "dial_code": "31", "code": "NL" }, { "name": "Netherlands Antilles", "dial_code": "599", "code": "AN" }, { "name": "New Caledonia", "dial_code": "687", "code": "NC" }, { "name": "New Zealand", "dial_code": "64", "code": "NZ" }, { "name": "Nicaragua", "dial_code": "505", "code": "NI" }, { "name": "Niger", "dial_code": "227", "code": "NE" }, { "name": "Nigeria", "dial_code": "234", "code": "NG" }, { "name": "Niue", "dial_code": "683", "code": "NU" }, { "name": "Norfolk Island", "dial_code": "672", "code": "NF" }, { "name": "Northern Mariana Islands", "dial_code": "1 670", "code": "MP" }, { "name": "Norway", "dial_code": "47", "code": "NO" }, { "name": "Oman", "dial_code": "968", "code": "OM" }, { "name": "Pakistan", "dial_code": "92", "code": "PK" }, { "name": "Palau", "dial_code": "680", "code": "PW" }, { "name": "Palestinian Territory, Occupied", "dial_code": "970", "code": "PS" }, { "name": "Panama", "dial_code": "507", "code": "PA" }, { "name": "Papua New Guinea", "dial_code": "675", "code": "PG" }, { "name": "Paraguay", "dial_code": "595", "code": "PY" }, { "name": "Peru", "dial_code": "51", "code": "PE" }, { "name": "Philippines", "dial_code": "63", "code": "PH" }, { "name": "Pitcairn", "dial_code": "872", "code": "PN" }, { "name": "Poland", "dial_code": "48", "code": "PL" }, { "name": "Portugal", "dial_code": "351", "code": "PT" }, { "name": "Puerto Rico", "dial_code": "1 939", "code": "PR" }, { "name": "Qatar", "dial_code": "974", "code": "QA" }, { "name": "Romania", "dial_code": "40", "code": "RO" }, { "name": "Russia", "dial_code": "7", "code": "RU" }, { "name": "Rwanda", "dial_code": "250", "code": "RW" }, { "name": "Reunion", "dial_code": "262", "code": "RE" }, { "name": "Saint Barthelemy", "dial_code": "590", "code": "BL" }, { "name": "Saint Helena, Ascension and Tristan Da Cunha", "dial_code": "290", "code": "SH" }, { "name": "Saint Kitts and Nevis", "dial_code": "1 869", "code": "KN" }, { "name": "Saint Lucia", "dial_code": "1 758", "code": "LC" }, { "name": "Saint Martin", "dial_code": "590", "code": "MF" }, { "name": "Saint Pierre and Miquelon", "dial_code": "508", "code": "PM" }, { "name": "Saint Vincent and the Grenadines", "dial_code": "1 784", "code": "VC" }, { "name": "Samoa", "dial_code": "685", "code": "WS" }, { "name": "San Marino", "dial_code": "378", "code": "SM" }, { "name": "Sao Tome and Principe", "dial_code": "239", "code": "ST" }, { "name": "Saudi Arabia", "dial_code": "966", "code": "SA" }, { "name": "Senegal", "dial_code": "221", "code": "SN" }, { "name": "Serbia", "dial_code": "381", "code": "RS" }, { "name": "Seychelles", "dial_code": "248", "code": "SC" }, { "name": "Sierra Leone", "dial_code": "232", "code": "SL" }, { "name": "Singapore", "dial_code": "65", "code": "SG" }, { "name": "Slovakia", "dial_code": "421", "code": "SK" }, { "name": "Slovenia", "dial_code": "386", "code": "SI" }, { "name": "Solomon Islands", "dial_code": "677", "code": "SB" }, { "name": "Somalia", "dial_code": "252", "code": "SO" }, { "name": "South Africa", "dial_code": "27", "code": "ZA" }, { "name": "South Georgia and the South Sandwich Islands", "dial_code": "500", "code": "GS" }, { "name": "Spain", "dial_code": "34", "code": "ES" }, { "name": "Sri Lanka", "dial_code": "94", "code": "LK" }, { "name": "Sudan", "dial_code": "249", "code": "SD" }, { "name": "Suriname", "dial_code": "597", "code": "SR" }, { "name": "Svalbard and Jan Mayen", "dial_code": "47", "code": "SJ" }, { "name": "Swaziland", "dial_code": "268", "code": "SZ" }, { "name": "Sweden", "dial_code": "46", "code": "SE" }, { "name": "Switzerland", "dial_code": "41", "code": "CH" }, { "name": "Syrian Arab Republic", "dial_code": "963", "code": "SY" }, { "name": "Taiwan", "dial_code": "886", "code": "TW" }, { "name": "Tajikistan", "dial_code": "992", "code": "TJ" }, { "name": "Tanzania, United Republic of Tanzania", "dial_code": "255", "code": "TZ" }, { "name": "Thailand", "dial_code": "66", "code": "TH" }, { "name": "Timor-Leste", "dial_code": "670", "code": "TL" }, { "name": "Togo", "dial_code": "228", "code": "TG" }, { "name": "Tokelau", "dial_code": "690", "code": "TK" }, { "name": "Tonga", "dial_code": "676", "code": "TO" }, { "name": "Trinidad and Tobago", "dial_code": "1 868", "code": "TT" }, { "name": "Tunisia", "dial_code": "216", "code": "TN" }, { "name": "Turkey", "dial_code": "90", "code": "TR" }, { "name": "Turkmenistan", "dial_code": "993", "code": "TM" }, { "name": "Turks and Caicos Islands", "dial_code": "1 649", "code": "TC" }, { "name": "Tuvalu", "dial_code": "688", "code": "TV" }, { "name": "Uganda", "dial_code": "256", "code": "UG" }, { "name": "Ukraine", "dial_code": "380", "code": "UA" }, { "name": "United Arab Emirates", "dial_code": "971", "code": "AE" }, { "name": "United Kingdom", "dial_code": "44", "code": "GB" }, { "name": "United States", "dial_code": "1", "code": "US" }, { "name": "Uruguay", "dial_code": "598", "code": "UY" }, { "name": "Uzbekistan", "dial_code": "998", "code": "UZ" }, { "name": "Vanuatu", "dial_code": "678", "code": "VU" }, { "name": "Venezuela, Bolivarian Republic of Venezuela", "dial_code": "58", "code": "VE" }, { "name": "Vietnam", "dial_code": "84", "code": "VN" }, { "name": "Virgin Islands, British", "dial_code": "1 284", "code": "VG" }, { "name": "Virgin Islands, U.S.", "dial_code": "1 340", "code": "VI" }, { "name": "Wallis and Futuna", "dial_code": "681", "code": "WF" }, { "name": "Yemen", "dial_code": "967", "code": "YE" }, { "name": "Zambia", "dial_code": "260", "code": "ZM" }, { "name": "Zimbabwe", "dial_code": "263", "code": "ZW" }];
 
         // functions
         $scope.changeSection = function (name) {
@@ -29,44 +43,57 @@ app.controller('accountController', [
         }
 
         $scope.editForm = function (name) {
+
             // edit profile form
             if (name == 'profile') {
                 $scope.userProfile.edit = !($scope.userProfile.edit);
             }
             else if (name == 'profileSave') {
                 console.log('submitting form');
+                $scope.userProfile.updating = true;
                 // submit form to URL
                 $http({
                     url: ChangeProfileConfig.Url,
                     method: 'POST',
                     data: {
-                        Address: $scope.userProfile.address,
-                        FirstName: $scope.userProfile.firstname,
-                        LastName: $scope.userProfile.lastname,
-                        PhoneNumber: $scope.userProfile.phone,
-                        CountryCd: $scope.userProfile.country
+                        Address: $scope.editProfile.address,
+                        FirstName: $scope.editProfile.firstname,
+                        LastName: $scope.editProfile.lastname,
+                        PhoneNumber: $scope.editProfile.phone,
+                        CountryCd: $scope.editProfile.country
                     }
                 }).then(function (returnData) {
+                    console.log(returnData);
                     if (returnData.data.Status == 'Success') {
                         console.log('Success requesting change profile');
-                        console.log(returnData);
-                        $scope.profileForm.edit = false;
+                        $scope.userProfile.address = returnData.config.data.Address;
+                        $scope.userProfile.firstname = returnData.config.data.FirstName;
+                        $scope.userProfile.lastname = returnData.config.data.LastName;
+                        $scope.userProfile.phonenumber = returnData.config.data.PhoneNumber;
+                        $scope.userProfile.country = returnData.config.data.CountryCd;
+                        $scope.userProfile.edit = false;
+                        $scope.userProfile.updating = false;
                     }
                     else {
                         console.log(returnData.data.Description);
-                        console.log(returnData);
-                        $scope.profileForm.edit = true;
+                        $scope.userProfile.edit = true;
+                        $scope.userProfile.updating = false;
                     }
                 }, function (returnData) {
                     console.log('Failed requesting change profile');
                     console.log(returnData);
                     $scope.profileForm.edit = true;
+                    $scope.userProfile.updating = false;
                 });
             }
             if (name == 'password') {
                 $scope.password.edit = !($scope.password.edit);
             }
             else if (name == 'passwordSave') {
+
+                $scope.password.updating = true;
+                $scope.password.failed = false;
+
                 console.log('submitting form');
                 // submit form to URL
                 $http({
@@ -85,20 +112,22 @@ app.controller('accountController', [
                         console.log('Success requesting reset password');
                         console.log(returnData);
                         $scope.password.edit = false;
+                        $scope.password.updating = false;
                     }
                     else {
                         console.log(returnData.data.Description);
                         console.log(returnData);
-                        $scope.password.edit = true;
+                        $scope.password.updating = false;
+                        $scope.password.failed = true;
                     }
                 }, function (returnData) {
                     console.log('Failed requesting reset password');
                     console.log(returnData);
                     $scope.password.edit = true;
+                    $scope.password.updating = false;
                 });
             }
         }
-        
 
         $scope.passwordForm.submit = function () {
             $scope.passwordForm.submitting = true;
@@ -128,19 +157,29 @@ app.controller('accountController', [
                 $scope.passwordForm.submitting = false;
             });
         }
+
+        if (hash == '#order') {
+            $scope.changeSection('order');
+        } else {
+            $scope.changeSection('profile');
+        }
+
     }
 ]);// account controller
 
 
 // Travorama forgot password controller
-app.controller('passwordController', [
+app.controller('forgotController', [
     '$http', '$scope', function ($http, $scope) {
 
         $scope.pageLoaded = true;
         $scope.form = {
             submitted: false,
             submitting: false,
-            email: ''
+            email: '',
+            found: false,
+            registered: false,
+            emailConfirmed: false
         };
         $scope.logConsole = function(data) {
             console.log(data);
@@ -157,16 +196,25 @@ app.controller('passwordController', [
                     email : $scope.form.email
                 }
             }).then(function (returnData) {
-                if (returnData.data.Status == 'Success') {
-                    console.log('Success requesting reset password');
-                    console.log(returnData);
-                    $scope.form.submitting = false;
-                    $scope.form.submitted = true;
-                }
-                else {
-                    console.log(returnData.data.Description);
-                    console.log(returnData);
-                    $scope.form.submitting = false;
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                console.log(returnData);
+
+                switch (returnData.data.Status) {
+                    case "Success":
+                        $scope.form.found = true;
+                        $scope.form.emailConfirmed = true;
+                        break;
+                    case "NotRegistered":
+                        $scope.form.found = false;
+                        break;
+                    case "AlreadyRegisteredButUnconfirmed":
+                        $scope.form.found = true;
+                        $scope.form.emailConfirmed = false;
+                        break;
+                    case "InvalidInputData":
+                        $scope.form.found = false;
+                        break;
                 }
             }, function (returnData) {
                 console.log('Failed requesting reset password');
@@ -176,7 +224,25 @@ app.controller('passwordController', [
         }
 
     }
-]);// account controller
+]);// forgot controller
+
+
+// order detail controller
+app.controller('orderDetailController', [
+    '$http', '$scope', function ($http, $scope) {
+
+        $scope.getTime = function(dateTime) {
+            return new Date(dateTime);
+        }
+
+        $scope.currentSection = 'order';
+        $scope.contactDetail = contactDetail;
+        $scope.passengerDetail = passengerDetail;
+        $scope.flightDetail = flightDetail;
+        $scope.refundDetail = refundDetail;
+
+    }
+]);
 
 // Travorama reset controller
 app.controller('resetController', [
@@ -243,11 +309,117 @@ app.controller('authController', [
     '$scope', function ($scope) {
 
         $scope.pageLoaded = true;
+        $scope.message = loginMessage;
+        if ( $scope.message ) {
+            $scope.overlay = true;
+        } else {
+            $scope.overlay = false;
+        }
+        $scope.closeOverlay = function() {
+            $scope.overlay = false;
+        }
         $scope.form = {
             email: '',
             password: '',
-            submitting: false
+            submitting: false,
+            submit: function() {
+                $scope.form.submitting = true;
+                $('.login-form').submit();
+            }
         };
 
     }
-]);// reset controller
+]);// auth controller
+
+// Travorama Check Order Controller
+app.controller('registerController', [
+    '$scope', '$http', function ($scope, $http) {
+
+        $scope.pageLoaded = true;
+        $scope.form = {
+            email: '',
+            submitting: false,
+            submitted: false,
+            registered: false,
+            emailSent: false,
+            emailConfirmed: false,
+            resubmitted: false,
+            resubmitting: false
+        };
+        $scope.overlay = false;
+        $scope.closeOverlay = function() {
+            $scope.overlay = false;
+            $scope.form.submitting = false;
+            $scope.form.submitted = false;
+        }
+        $scope.form.submit = function () {
+            $scope.form.submitting = true;
+
+            $http({
+                url: RegisterConfig.Url,
+                method: 'POST',
+                data: {
+                    Email: $scope.form.email,
+                }
+            }).then(function (returnData) {
+                $scope.form.submitting = false;
+                $scope.form.submitted = true;
+                $scope.overlay = true;
+
+                switch (returnData.data.Status) {
+                    case "Success":
+                        $scope.form.registered = false;
+                        $scope.form.emailSent = false;
+                        $scope.form.emailConfirmed = false;
+                        $scope.form.email = '';
+                        break;
+                    case "AlreadyRegistered":
+                        $scope.form.registered = true;
+                        $scope.form.emailSent = true;
+                        $scope.form.emailConfirmed = true;
+                        $scope.form.email = '';
+                        break;
+                    case "AlreadyRegisteredButUnconfirmed":
+                        $scope.form.registered = true;
+                        $scope.form.emailSent = true;
+                        $scope.form.emailConfirmed = false;
+                        break;
+                    case "InvalidInputData":
+                        $scope.form.email = '';
+                        break;
+                }
+
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+            });
+        }
+        $scope.form.resubmit = function () {
+            $scope.form.resubmitting = true;
+            $http({
+                url: ResendConfirmationEmailConfig.Url,
+                method: 'POST',
+                data: {
+                    Email: $scope.form.email,
+                }
+            }).then(function (returnData) {
+                $scope.form.resubmitting = false;
+                $scope.form.resubmitted = true;
+
+                if (returnData.data.Status == "Success") {
+                    $scope.form.email = '';
+                }
+
+            }, function (returnData) {
+                console.log('Failed requesting reset password');
+                console.log(returnData);
+                $scope.form.submitting = false;
+                $scope.form.submitted = false;
+            });
+        }
+
+    }
+]);// register controller
+

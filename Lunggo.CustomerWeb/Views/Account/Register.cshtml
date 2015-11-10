@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-register";
-    ViewBag.Title = "Hotel Detail";
+    ViewBag.Title = "Registrasi Akun Travorama";
     var loginProviders = Context.GetOwinContext().Authentication.GetAuthenticationTypes();
     var facebookProvider = loginProviders.First();
 }
@@ -19,7 +19,7 @@
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }
-<section class="form-section" ng-app="travorama" ng-controller="authController">
+<section class="form-section page-loading" ng-app="travorama" ng-controller="registerController" ng-class="{'page-loaded' : pageLoaded}">
 
     <div class="container">
 
@@ -34,23 +34,124 @@
 
         <div class="row">
             <div class="col-xs-4 col-xs-offset-7">
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "register-form form form-horizontal", role = "form", name="registerForm" }))
-                {
-                @Html.AntiForgeryToken()
+
+                <form class="form register-form form-horizontal" name="registerForm" novalidate ng-submit="form.submit()">
+
                     <div class="form-group">
-                        <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" class="form-control" ng-model="form.email" required />
+                        <input type="email" name="Email" value="" placeholder="@Html.I18NString("CW00123")" class="form-control" ng-model="form.email" required ng-disabled="form.submitting || form.submitted" />
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" value="@Html.I18NString("CW00127")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid" />
+                        <input type="submit" value="@Html.I18NString("CW00127")" class="btn btn-yellow form-control" ng-disabled="registerForm.$invalid || form.submitting" />
                     </div>
 
-                }
+                </form>
 
             </div>
         </div>
 
     </div>
+    
+    <div class="page-overlay" ng-show="overlay && !form.registered">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>Terima kasih sudah mendaftar di Travorama</h3>
+                                <p>Silahkan cek email Anda untuk verifikasi alamat email Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && !form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8" ng-hide="form.resubmitted">
+                                <h3>Email belum terkonfirmasi</h3>
+                                <p>Silahkan cek email Anda untuk mengkonfirmasi alamat email Anda.<br /><a ng-click="form.resubmit()">Klik disini</a> untuk mengirim kembali email konfirmasi.</p>
+                            </div>
+                            <div class="col-sm-8" ng-show="form.resubmitted">
+                                <h3>Email verifikasi telah dikirim</h3>
+                                <p>Silahkan cek email Anda untuk verifikasi alamat email Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" ng-click="closeOverlay()">TUTUP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+    
+    <div class="page-overlay" ng-show="overlay && form.registered && form.emailSent && form.emailConfirmed">
+        <div class="overlay-content">
+            <header>
+                <h4>Terima Kasih</h4>
+            </header>
+            <section>
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 text-align">
+                                <img src="/Assets/images/smile-image.png" alt="Smile" />
+                            </div>
+                            <div class="col-sm-8">
+                                <h3>Anda telah terdaftar di Travorama</h3>
+                                <p>Silahkan login untuk memasukin halaman akun Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div><!-- .page-overlay -->
+
 
 </section><!-- .form-section -->
 @Html.Partial("/Views/Shared/_SectionBenefit.cshtml")

@@ -224,13 +224,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\App_Start\AppInitializer.cs" />
-    <Compile Include="Areas\App_Start\BundleConfig.cs" />
-    <Compile Include="Areas\App_Start\FilterConfig.cs" />
-    <Compile Include="Areas\App_Start\IdentityConfig.cs" />
-    <Compile Include="Areas\App_Start\LunggoConfig\LunggoBundleConfig.cs" />
-    <Compile Include="Areas\App_Start\RouteConfig.cs" />
-    <Compile Include="Areas\App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\AppInitializer.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\LunggoConfig\LunggoBundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\ApiAccountController.cs" />
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
@@ -503,7 +503,6 @@
     <Content Include="Assets\images\airlines\FZ.png" />
     <Content Include="Assets\images\airlines\G3.png" />
     <Content Include="Assets\images\airlines\GA.png" />
-    <Content Include="Assets\images\airlines\garuda-indonesia.png" />
     <Content Include="Assets\images\airlines\GE.png" />
     <Content Include="Assets\images\airlines\GF.png" />
     <Content Include="Assets\images\airlines\GK.png" />
@@ -523,6 +522,7 @@
     <Content Include="Assets\images\airlines\ID.png" />
     <Content Include="Assets\images\airlines\IG.png" />
     <Content Include="Assets\images\airlines\IL.png" />
+    <Content Include="Assets\images\airlines\IN.png" />
     <Content Include="Assets\images\airlines\IR.png" />
     <Content Include="Assets\images\airlines\IT.png" />
     <Content Include="Assets\images\airlines\IW.png" />
@@ -736,8 +736,12 @@
     <Content Include="Assets\images\email-social.jpg" />
     <Content Include="Assets\images\email-twitter.jpg" />
     <Content Include="Assets\images\email\facebook-icon.png" />
+    <Content Include="Assets\images\email\flight-departure-icon.png" />
+    <Content Include="Assets\images\email\flight-return-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
+    <Content Include="Assets\images\email\no-1.png" />
+    <Content Include="Assets\images\email\no-2.png" />
     <Content Include="Assets\images\email\phone-icon.png" />
     <Content Include="Assets\images\email\specialrelease\mail-bottom.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
@@ -860,6 +864,7 @@
     <Content Include="Assets\images\rapidSsl.jpg" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\register-bg.jpg" />
+    <Content Include="Assets\images\sad-image.png" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\sandclock-yellow.png" />
     <Content Include="Assets\images\sandclock.png" />
@@ -875,6 +880,7 @@
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
+    <Content Include="Assets\images\smile-image.png" />
     <Content Include="Assets\images\social-facebook.png" />
     <Content Include="Assets\images\social-googlePlus.png" />
     <Content Include="Assets\images\social-instagram.png" />
@@ -918,6 +924,7 @@
     <Content Include="Assets\images\verisign-bg.jpg" />
     <Content Include="Assets\images\verisign-pin.png" />
     <Content Include="Assets\images\verisign.jpg" />
+    <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />

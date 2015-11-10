@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -8,6 +10,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Util;
 using Newtonsoft.Json;
 
@@ -25,19 +28,16 @@ namespace Lunggo.CustomerWeb.Controllers
 
             var serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
             var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
-            var streamKey = new MemoryStream();
-            streamKey.WriteIntoStream(rawKey);
-            var signatureKey = SHA512.Create().ComputeHash(streamKey).ToString();
+            var signatureKey = rawKey.Sha512();
 
             if (notif.signature_key != signatureKey)
                 return null;
 
             if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {
-                var service = FlightService.GetInstance();
                 DateTime? time;
                 if (notif.transaction_time != null)
-                    time = DateTime.Parse(notif.transaction_time);
+                    time = DateTime.Parse(notif.transaction_time).ToUniversalTime();
                 else
                     time = null;
 
@@ -54,15 +54,11 @@ namespace Lunggo.CustomerWeb.Controllers
 
                 if (notif.order_id.IsFlightRsvNo())
                 {
-                    var isUpdated = service.UpdateFlightPayment(notif.order_id, paymentInfo);
-                    if (isUpdated && paymentInfo.Status == PaymentStatus.Settled)
-                    {
-                        var issueInput = new IssueTicketInput {RsvNo = notif.order_id};
-                        service.IssueTicket(issueInput);
-                    }
+                    var flight = FlightService.GetInstance();
+                    Task.Run(() => flight.UpdateFlightPayment(notif.order_id, paymentInfo));
                 }
             }
-            return null;
+            return new EmptyResult();
         }
 
         public ActionResult PaymentFinish(VeritransResponse response)

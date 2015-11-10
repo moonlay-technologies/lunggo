@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Error;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -73,7 +74,9 @@ namespace Lunggo.CustomerWeb.Controllers
             var displayReservation = flightService.GetReservationForDisplay(rsvNo);
             //Check lastName
 
-            var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
+            if (displayReservation != null)
+            {
+                var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
                 if (passengerLastName.Any())
                 {
                     var rsvNoSet = new
@@ -82,7 +85,15 @@ namespace Lunggo.CustomerWeb.Controllers
                     };
                     return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                 }
-            return RedirectToAction("CekPemesanan", "Home");
+            }
+
+            ViewBag.ErrorInfo = new Error
+            {
+                Code = "ER01",
+                Message = "Pemesanan tidak dapat ditemukan"
+            };
+                
+            return View();
         }
     }
 }

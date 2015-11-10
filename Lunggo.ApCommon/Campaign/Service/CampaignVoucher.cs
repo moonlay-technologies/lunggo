@@ -111,5 +111,19 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return VoucherValidationStatusType.UpdateError;
             }
         }
+        private VoucherValidationStatusType VoucherIncrement(string voucherCode)
+        {
+            try
+            {
+                if (UpdateDb.VoucherIncrement(voucherCode))
+                    return VoucherValidationStatusType.Success;
+                else
+                    return VoucherValidationStatusType.UpdateError;
+            }
+            catch (Exception)
+            {
+                return VoucherValidationStatusType.UpdateError;
+            }
+        }
     }
 }

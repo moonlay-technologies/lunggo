@@ -316,10 +316,13 @@ namespace Lunggo.Configuration
             const string autocompleteAirlinePath = @"/api/v1/autocomplete/airline/";
             const string checkVoucherPath = @"/api/v1/voucher/check";
             const string subscribePath = @"/api/v1/newsletter/subscribe";
+            const string registerPath = @"/id/ApiAccount/Register";
             const string resetPasswordPath = @"/id/ApiAccount/ResetPassword";
             const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
             const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
             const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
+            const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
+
 
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
@@ -337,10 +340,13 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("autocompleteAirlinePath", autocompleteAirlinePath);
             fileTemplate.SetAttribute("checkVoucherPath", checkVoucherPath);
             fileTemplate.SetAttribute("subscribePath", subscribePath);
+            fileTemplate.SetAttribute("registerPath", registerPath);
             fileTemplate.SetAttribute("resetPasswordPath", resetPasswordPath);
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
             fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);
             fileTemplate.SetAttribute("changeProfilePath", changeProfilePath);
+            fileTemplate.SetAttribute("resendConfirmationEmailPath", resendConfirmationEmailPath);
+
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };

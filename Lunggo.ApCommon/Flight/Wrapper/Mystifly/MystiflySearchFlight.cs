@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
-        private static string[] _airlinesExclude = {"SJ", "IN", "AK", "QZ", "D7", "XT", "QG"};
+        private static readonly string[] AirlinesExclude = {"SJ", "IN", "AK", "QZ", "D7", "XT", "QG"};
 
         internal override SearchFlightResult SearchFlight(SearchFlightConditions conditions)
         {
@@ -131,7 +131,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 AirTripType = airTripType,
                 CabinPreference = cabinType,
                 MaxStopsQuantity = MaxStopsQuantity.All,
-                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : _airlinesExclude,
+                VendorExcludeCodes = conditions.AirlineExcludes != null ? conditions.AirlineExcludes.ToArray() : AirlinesExclude,
                 VendorPreferenceCodes = conditions.AirlinePreferences != null ? conditions.AirlinePreferences.ToArray() : null,
                 ExtensionData = null
             };
@@ -339,6 +339,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             var segmentCountries = segmentAirports.Select(dict.GetAirportCountryCode).Distinct();
             if (segmentCountries.Count() > 1)
                 flightItinerary.RequirePassport = true;
+            else if (flightItinerary.RequirePassport)
+            {
+                flightItinerary.RequirePassport = false;
+                flightItinerary.RequireNationality = true;
+            }
         }
 
         private static List<FlightTrip> MapFlightTrips(PricedItinerary pricedItinerary, ConditionsBase conditions)

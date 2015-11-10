@@ -16,7 +16,7 @@
                         <div class="image-wrapper">
                             <img src="/Assets/images/ssl-image.png" alt="SSL Secured" />
                         </div>
-                        <p>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi memalui Travorama.com dijamin 100% aman.</p> 
+                        <p>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi memalui Travorama.com dijamin 100% aman.</p>
                     </div>
 
                 </div>
@@ -62,28 +62,28 @@ else
                                     <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
                                     <li class="dropdown-wrapper">
                                         @if (@User.Identity.IsAuthenticated)
-                                            {
-                                                <a href="#" data-trigger="dropdown"> @User.Identity.GetEmail() <span class="caret"></span></a>
-                                            }
+                                        {
+                                            <a href="#" data-trigger="dropdown"> @User.Identity.GetEmail() <span class="caret"></span></a>
+                                        }
                                         else
                                         {
-                                                <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
-                                            }
-                                        <div class="dropdown-content my-account"> 
+                                            <a href="#" data-trigger="dropdown">Account <span class="caret"></span></a>
+                                        }
+                                        <div class="dropdown-content my-account">
                                             @if (@User.Identity.IsAuthenticated)
-                                                {
-                                                    <ul>
-                                                        <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">My Account</a></li>
-                                                        <li><a href="@Url.Action("Logout", "Account")">Log Out</a></li>
-                                                    </ul>
-                                                }
+                                            {
+                                                <ul>
+                                                    <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">My Account</a></li>
+                                                    <li><a href="@Url.Action("Logout", "Account")">Log Out</a></li>
+                                                </ul>
+                                            }
                                             else
-                                                {
-                                                    <ul>
-                                                        <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
-                                                        <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
-                                                    </ul>
-                                                }
+                                            {
+                                                <ul>
+                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
+                                                    <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
+                                                </ul>
+                                            }
                                         </div>
                                     </li>
                                 </ul>
