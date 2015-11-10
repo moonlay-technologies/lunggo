@@ -52,7 +52,7 @@ app.controller('checkoutController', [
                 }).then(function (returnData) {
                     console.log(returnData);
                     if (returnData.data.Discount > 0) {
-                        $scope.voucher.amount = returnData.Amount;
+                        $scope.voucher.amount = returnData.data.Discount;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                     }
                     $scope.voucher.checked = true;
