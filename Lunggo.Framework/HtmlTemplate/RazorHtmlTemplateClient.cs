@@ -53,10 +53,9 @@ namespace Lunggo.Framework.HtmlTemplate
 
         private string GetTemplateByPartitionKey(string partitionKey)
         {
-            var partitionKeyName = PreprocessTemplateType(partitionKey);
             var table = TableStorageService.GetInstance().GetTableByReference("HtmlTemplate");
             var query = (from tabel in table.CreateQuery<MailTemplateModel>()
-                         where tabel.PartitionKey == partitionKeyName && tabel.RowKey == RowKey
+                         where tabel.PartitionKey == partitionKey && tabel.RowKey == RowKey
                          select tabel).FirstOrDefault();
             var mailTemplate = (query != null) ? query.Template : null;
 
