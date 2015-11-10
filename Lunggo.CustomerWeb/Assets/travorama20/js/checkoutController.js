@@ -36,6 +36,7 @@ app.controller('checkoutController', [
             confirmedCode: '',
             code: '',
             amount: 0,
+            status: '',
             checking: false,
             checked: false,
             check: function() {
@@ -53,6 +54,7 @@ app.controller('checkoutController', [
                     console.log(returnData);
                     if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.data.Discount;
+                        $scope.voucher.status = returnData.data.ValidationStatus;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                     }
                     $scope.voucher.checked = true;
