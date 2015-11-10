@@ -62,20 +62,20 @@ namespace Lunggo.CustomerWeb.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Message = "InvalidInputData";
-                return View(model);
+                return View(new {model, returnUrl});
             }
 
             var foundUser = await UserManager.FindByEmailAsync(model.Email);
             if (foundUser == null)
             {
                 ViewBag.Message = "NotRegistered";
-                return View(model);
+                return View(new { model, returnUrl });
             }
 
             if (!foundUser.EmailConfirmed)
             {
                 ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                return View(model);
+                return View(new { model, returnUrl });
             }
 
             var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
@@ -91,11 +91,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                    return View(model);
+                    return View(new { model, returnUrl });
                 case SignInStatus.Failure:
                 default:
                     ViewBag.Message = "Failed";
-                    return View(model);
+                    return View(new { model, returnUrl });
             }
 
         }
