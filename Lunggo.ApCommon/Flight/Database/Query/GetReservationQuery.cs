@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"SELECT r.RsvNo, r.RsvTime, r.InvoiceNo, r.OverallTripTypeCd, ");
             clauseBuilder.Append(@"r.ContactName, r.ContactEmail, r.ContactCountryCd, r.ContactPhone, ");
-            clauseBuilder.Append(@"r.PaymentId, r.PaymentMediumCd, r.PaymentMethodCd, ");
+            clauseBuilder.Append(@"r.PaymentId, r.PaymentMediumCd, r.PaymentMethodCd, r.PaymentTimeLimit, ");
             clauseBuilder.Append(@"r.PaymentTime, r.PaymentStatusCd, r.PaymentTargetAccount, r.PaymentUrl, ");
             clauseBuilder.Append(@"r.RefundAmount, r.RefundTime, r.RefundTargetBank, r.RefundTargetAccount, ");
             clauseBuilder.Append(@"r.FinalPrice, r.PaidAmount, ");

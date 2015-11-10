@@ -17,8 +17,8 @@
 
 @section PageJS{
     <script>
-    var langCode = 'en';
-    // order history content
+        var langCode = 'en';
+        // order history content
         var contactDetail = {
             email: '@Model.Contact.Email',
             name: '@Model.Contact.Name',
@@ -60,11 +60,11 @@
                             <header>
                                 <h4>
                                     <b>BUYER INFO</b>
-                                    <button class="pull-right btn btn-yellow" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</button>
+                                    <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new {rsvNo = Model.RsvNo})" class="pull-right btn btn-yellow" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</a>
                                     @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
-                                {
-                                        <a style="margin-right: 6px;" href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
-                                }
+                                    {
+                                        <a style="margin-right: 6px;" href="@Url.Action("Confirmation", "Flight", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
+                                    }
                                 </h4>
                             </header>
                             <section>
@@ -168,33 +168,33 @@
                                             <p class="form-control-static">
                                                 @(Model.Payment.Refund != null ?
                                             Model.Payment.Refund.Amount.ToString() : "-")
-                                        </p>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Tgl Pengajuan</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">
+                                                @(Model.Payment.Refund != null ?
+                                            Model.Payment.Refund.Time.ToString() : "-")
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-3">Status Refund</label>
+                                        <div class="col-xs-9">
+                                            <p class="form-control-static">-</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label col-xs-3">Tgl Pengajuan</label>
-                                    <div class="col-xs-9">
-                                        <p class="form-control-static">
-                                            @(Model.Payment.Refund != null ?
-                                            Model.Payment.Refund.Time.ToString() : "-")
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-xs-3">Status Refund</label>
-                                <div class="col-xs-9">
-                                    <p class="form-control-static">-</p>
-                                </div>
-                            </div>
-                        </div>
+                            </section>
+                        </div><!-- .refund-detail -->
+
                     </section>
-                </div><!-- .refund-detail -->
+                </div><!-- .history-content -->
 
-            </section>
-        </div><!-- .history-content -->
+            </section><!-- .account-content -->
+        </div>
 
-    </section><!-- .account-content -->
-</div>
-
-</div>
+    </div>
 </div>

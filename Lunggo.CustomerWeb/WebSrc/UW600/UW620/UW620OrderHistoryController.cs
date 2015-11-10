@@ -4,6 +4,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.CustomerWeb.WebSrc.UW600.UW620.Object;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.ApCommon.Payment.Constant;
 
@@ -28,22 +29,26 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             return View(reservation);
         }
 
+        [AllowAnonymous]
         public ActionResult OrderFlightHistoryDetailPrint(string rsvNo)
         {
-            var flightService = FlightService.GetInstance();
-            var templateService = HtmlTemplateService.GetInstance();
-            var converter = new SelectPdf.HtmlToPdf();
-            var reservation = flightService.GetDetails(rsvNo);
-            if (!reservation.IsIssued)
-                return Content("ticket unavailable");
-            string eticket = templateService.GenerateTemplate(reservation, "FlightEticket");
-            eticket = eticket.Replace("<body class=\"eticket\">", "<body onload=\"window.print()\">");
-            return Content(eticket);
+            //var flightService = FlightService.GetInstance();
+            //var templateService = HtmlTemplateService.GetInstance();
+            //var converter = new SelectPdf.HtmlToPdf();
+            //var reservation = flightService.GetDetails(rsvNo);
+            //if (!reservation.IsIssued)
+            //    return Content("ticket unavailable");
+            //string eticket = templateService.GenerateTemplate(reservation, "FlightEticket");
+            ////eticket = eticket.Replace("<body class=\"eticket\">", "<body onload=\"window.print()\">");
+            //return Content(eticket);
+
+            return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
+
         public ActionResult OrderFlightHistoryDetailResendTicket(string rsvNo)
         {
             var flightService = FlightService.GetInstance();
-            var reservation = flightService.GetDetails(rsvNo); 
+            var reservation = flightService.GetDetails(rsvNo);
             if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
                 return Content("ticket unavailable");
             if (reservation.Payment.Method != PaymentMethod.BankTransfer)

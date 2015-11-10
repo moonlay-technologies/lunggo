@@ -39,7 +39,6 @@
             <tr width="100%">
                 <td width="5%"></td>
                 <td width="90%">
-                <td width="90%">
 
                     <!-- CONTENT  -->
                     <p>
@@ -51,35 +50,36 @@
                                     <td width="5%">
                                         <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
-                                    <td width="30%" style="padding-left: 0px"></td>
+                                    <td width="30%" style="padding-left: 0px">
+                                    </td>
                                 </tr>
                             </table>
                         </p>
-                            <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
-                        </td>
-                            <td width="28%"></td>
-                            <td width="5%">
-                                <hr style="border-color: #15b1e4" />
-                            </td>
-                            @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
-                            <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
-                        </tr>
-                            <tr width="100%">
-                                <td width="5%">
-                                    <img src="/Assets/images/email/flight-return-icon.png" />
-                                </td>
-                                <td width="30%" style="padding-left: 0px">
-                                    <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
-                                </td>
-                                <td width="28%"></td>
-                                <td width="5%">
-                                    <hr style="border-color: #15b1e4" />
-                                </td>
-                                @{var jamKembali = @Model.Itinerary.Trips[1].DepartureDate.AddHours(7)}
-                                <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.Hour.ToString("hh:mm")</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                    </td>
+                    <td width="28%"></td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
+                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
+                </tr>
+                <tr width="100%">
+                    <td width="5%">
+                        <img src="/Assets/images/email/flight-return-icon.png" />
+                    </td>
+                    <td width="30%" style="padding-left: 0px">
+                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
+                    </td>
+                    <td width="28%"></td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{var jamKembali = @Model.Itinerary.Trips[1].DepartureDate.AddHours(7)}
+                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.Hour.ToString("hh:mm")</td>
+                </tr>
+            </tbody>
+        </table>
                         }
                         else
                         {
@@ -200,7 +200,8 @@
 
                                 </td>
 
-                                <td></td>
+                                <td>
+                                </td>
                                 <td></td>
                             </tr>
                         </tfoot>

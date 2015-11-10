@@ -1,12 +1,6 @@
 ﻿@using System.Globalization
 @using Lunggo.Framework.Config
-@using Microsoft.Ajax.Utilities
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
-@{
-    Layout = "";
-}
-
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -49,27 +43,26 @@
                     <!-- CONTENT  -->
                     <p>
                         Terima kasih, Anda baru saja memesan penerbangan dari:
-                        @if (@Model.Itinerary.Trips.Count > 1)
-                        {
-                            <table width="100%" style="margin-bottom: 3%;">
-                                <tr width="100%">
-                                    <td width="5%">
-                                        <img src="/Assets/images/email/flight-departure-icon.png" />
-                                    </td>
-                                    <td width="30%" style="padding-left: 0px">
-                                    </td>
-                                </tr>
-                            </table>
-                        </p>
-                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
-                    </td>
-                    <td width="28%"></td>
-                    <td width="5%">
-                        <hr style="border-color: #15b1e4" />
-                    </td>
-                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
-                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
-                </tr>
+                        <table width="100%" style="margin-bottom: 3%;">
+                            <tr width="100%">
+                                <td width="5%">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                </td>
+                                <td width="30%" style="padding-left: 0px"></td>
+                            </tr>
+                        </table>
+                    </p>
+                    <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                </td>
+                <td width="28%"></td>
+                <td width="5%">
+                    <hr style="border-color: #15b1e4" />
+                </td>
+                @{ var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7);}
+                <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
+            </tr>
+            @if (@Model.Itinerary.Trips.Count > 1)
+            {
                 <tr width="100%">
                     <td width="5%">
                         <img src="/Assets/images/email/flight-return-icon.png" />
@@ -81,138 +74,117 @@
                     <td width="5%">
                         <hr style="border-color: #15b1e4" />
                     </td>
-                    @{var jamKembali = @Model.Itinerary.Trips[1].DepartureDate.AddHours(7)}
+                    @{ var jamKembali = @Model.Itinerary.Trips[1].DepartureDate.AddHours(7); }
                     <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.Hour.ToString("hh:mm")</td>
                 </tr>
-            </tbody>
-        </table>
-                        }
-                        else
-                        {
-                            <table width="100%" style="margin-bottom: 3%;">
-                                <tr width="100%">
-                                    <td width="5%">
-                                        <img src="/Assets/images/email/flight-departure-icon.png" />
-                                    </td>
-                                    <td width="30%" style="padding-left: 0px">
-                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
-                                    </td>
-                                    <td width="28%"></td>
-                                    <td width="5%">
-                                        <hr style="border-color: #15b1e4" />
-                                    </td>
-                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
-                                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
-                                </tr>
-                            </table>
-                        }
+            }
+        </tbody>
+    </table>
 
-                        <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 4% ">
-                            <tr>
-                                <td>
-                                    <p style="color: #15b1e4; text-align: center">Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</p>
-                                </td>
-                            </tr>
-                        </table>
+    <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 4% ">
+        <tr>
+            <td>
+                <p style="color: #15b1e4; text-align: center">Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</p>
+            </td>
+        </tr>
+    </table>
 
-                        <p>Untuk mendapatkan e-ticket, lakukan pembayaran lalu konfirmasikan pembayaran sesuai 2 langkah berikut:</p>
+    <p>Untuk mendapatkan e-ticket, lakukan pembayaran lalu konfirmasikan pembayaran sesuai 2 langkah berikut:</p>
 
-                        <table width="100%" style="margin-bottom: 3%">
-                            <tr>
-                                <td width="5%">
-                                    <img src="/Assets/images/email/no-1.png" />
-                                </td>
-                                <td>
-                                    <p>Transfer tepat sejumlah total tagihan : <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b> ke salah satu rekening di bawah ini :</p>
-                                </td>
-                            </tr>
-                        </table>
+    <table width="100%" style="margin-bottom: 3%">
+        <tr>
+            <td width="5%">
+                <img src="/Assets/images/email/no-1.png" />
+            </td>
+            <td>
+                <p>Transfer tepat sejumlah total tagihan : <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b> ke salah satu rekening di bawah ini :</p>
+            </td>
+        </tr>
+    </table>
 
-                        <table width="94%" style="margin-left: 6%" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td>
-                                    <hr style="border-color: #333333; opacity: 0.2" />
-                                </td>
-                                <td width="5%"></td>
-                                <td>
-                                    <hr style="border-color: #333333; opacity: 0.2" />
-                                </td>
-                                <td width="5%"></td>
-                                <td>
-                                    <hr style="border-color: #333333; opacity: 0.2" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="20%">
-                                    <p style="opacity: 0.5">Bank,</p>
-                                    <p style="margin-top: -5%">Bank Central Asia</p>
-                                </td>
-                                <td width="5%"></td>
-                                <td width="20%">
-                                    <p style="opacity: 0.5">No Rekening,</p>
-                                    <p style="margin-top: -5%">084 777 8800</p>
-                                </td>
-                                <td width="5%"></td>
-                                <td width="20%">
-                                    <p style="opacity: 0.5">Atas Nama,</p>
-                                    <p style="margin-top: -5%">PT Travelmadezy</p>
-                                </td>
-                            </tr>
-                        </table>
+    <table width="94%" style="margin-left: 6%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <hr style="border-color: #333333; opacity: 0.2" />
+            </td>
+            <td width="5%"></td>
+            <td>
+                <hr style="border-color: #333333; opacity: 0.2" />
+            </td>
+            <td width="5%"></td>
+            <td>
+                <hr style="border-color: #333333; opacity: 0.2" />
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">
+                <p style="opacity: 0.5">Bank,</p>
+                <p style="margin-top: -5%">Bank Central Asia</p>
+            </td>
+            <td width="5%"></td>
+            <td width="20%">
+                <p style="opacity: 0.5">No Rekening,</p>
+                <p style="margin-top: -5%">084 777 8800</p>
+            </td>
+            <td width="5%"></td>
+            <td width="20%">
+                <p style="opacity: 0.5">Atas Nama,</p>
+                <p style="margin-top: -5%">PT Travelmadezy</p>
+            </td>
+        </tr>
+    </table>
 
-                        @{var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7)}
-                        <p style="font-style: italic; font-size: 11px; margin-left: 6%">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd"), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.Hour.ToString("hh:mm")</span>.</p>
-                        <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: -1%; margin-bottom: 10%">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
+    @{ var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
+    <p style="font-style: italic; font-size: 11px; margin-left: 6%">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd"), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.Hour.ToString("hh:mm")</span>.</p>
+    <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: -1%; margin-bottom: 10%">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
 
-                        <table width="100%" style="margin-bottom: -1%">
-                            <tr>
-                                <td width="5%">
-                                    <img src="/Assets/images/email/no-2.png" />
-                                </td>
-                                <td>
-                                    <p>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</p>
-                                </td>
-                            </tr>
-                        </table>
+    <table width="100%" style="margin-bottom: -1%">
+        <tr>
+            <td width="5%">
+                <img src="/Assets/images/email/no-2.png" />
+            </td>
+            <td>
+                <p>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</p>
+            </td>
+        </tr>
+    </table>
 
-                        <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
-                        <p style="margin-left: 6%; margin-bottom: 4%">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
-                        <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-038 </span>dengan </p>
-                        <p style="margin-top: -1%; opacity: 0.8; margin-bottom: 7%; margin-left: 6%; font-size: 10px; font-style: italic;">mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 99999999</span></p>
-                        <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
-                        <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
-                        <p style="margin-top: -1%; font-size: 11px; font-style: italic; margin-bottom: 5%;">Email ini ditujukan hanya untuk @Model.Contact.Name, karna Anda telah melakukan pemesanan melalui Travorama</p>
+    <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
+    <p style="margin-left: 6%; margin-bottom: 4%">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
+    <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-038 </span>dengan </p>
+    <p style="margin-top: -1%; opacity: 0.8; margin-bottom: 7%; margin-left: 6%; font-size: 10px; font-style: italic;">mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 99999999</span></p>
+    <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
+    <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+    <p style="margin-top: -1%; font-size: 11px; font-style: italic; margin-bottom: 5%;">Email ini ditujukan hanya untuk @Model.Contact.Name, karna Anda telah melakukan pemesanan melalui Travorama</p>
 
-                        </td>
-                        <td width="5%"></td>
-                        </tr>
-                        </tbody>
-                        <tfoot width="100%">
-                            <tr>
-                                <td></td>
-                                <td style="padding-bottom:30px;">
+    <table width="100%" style="margin-bottom: 3%">
+        <td width="5%"></td>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="padding-bottom:30px;">
 
-                                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
-                                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
-                                        <p style="margin-top:0; margin-bottom:5px;">
-                                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
-                                        </p>
-                                        <p style="margin-top:0;">
-                                            <span style="color:#1daee5;">T.</span> 021 724 808 48
-                                        </p>
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;">
+                            <span style="color:#1daee5;">T.</span> 021 724 808 48
+                        </p>
 
-                                    </address>
+                    </address>
 
-                                </td>
+                </td>
 
-                                <td>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                        </table>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+
+    </table>
 
 
-                    </body>
-                </html>
+</body>
+</html>

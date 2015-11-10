@@ -68,7 +68,7 @@
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Waktu.</p>
-                                @{ var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault().AddHours(7); }
+                                @{var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault().AddHours(7)}
                                 <p style="margin-top: -4%"><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.Hour.ToString("hh.mm") WIB</b></p>
                             </td>
                             <td width="5%"></td>
@@ -157,9 +157,9 @@
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                         </tr>
-                        @{ var i = @Model.Passengers.Count; }
-                        @{ var j = 1; }
-                        <tr rowspan="@i">
+                        @{var i = @Model.Passengers.Count}
+                        @{var j = 1}
+                        <tr rowspan="i">
                             @foreach (var penumpang in @Model.Passengers)
                             {
                                 <td width="25%">
@@ -222,14 +222,14 @@
                                     <img src="/Assets/images/email/flight-return-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[1].Segments[1].AirlineLogoUrl)" />
                                     <p style="color: #15b1e4;">Kembali</p>
                                 </td>
                                 <td width="6%">
                                     <p style="text-align: center">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AircraftCode-@Model.Itinerary.Trips[1].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[1].AirlineName - @Model.Itinerary.Trips[1].Segments[1].AircraftCode-@Model.Itinerary.Trips[1].Segments[1].AirlineCode</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
@@ -261,7 +261,7 @@
                     }
 
 
-                    @{ var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9); }
+                    @{var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9)}
 
                     <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
                     <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.Hour.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
@@ -289,7 +289,8 @@
 
                 </td>
 
-                <td></td>
+                <td>
+                </td>
                 <td></td>
             </tr>
         </tfoot>

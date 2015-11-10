@@ -1,53 +1,300 @@
-﻿@model Lunggo.CustomerWeb.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Create";
-}
+﻿@using System.Globalization
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
-<h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-error" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-2 control-label">
-            Select User Role
-        </label>
-        <div class="col-md-10">
-            @foreach (var item in (SelectList)ViewBag.RoleId)
-            {
-                <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
-                @Html.Label(item.Value, new { @class = "control-label" })
-            }
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create" />
-        </div>
-    </div>
-}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td width="90%">
+
+                    <!-- CONTENT  -->
+
+                    <p>Dear, <span style="color: #15b1e4">@Model.Contact.Name</span></p>
+                    <p><b>Travorama.com</b>telah mengkonfirmasi pembayaran untuk transaksi berikut : </p>
+
+                    <table width="100%" style="margin-bottom: 4%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <hr style="border-color: #333333; opacity: 0.2" />
+                            </td>
+                            <td width="5%"></td>
+                            <td>
+                                <hr style="border-color: #333333; opacity: 0.2" />
+                            </td>
+                            <td width="5%"></td>
+                            <td>
+                                <hr style="border-color: #333333; opacity: 0.2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%">
+                                <p style="opacity: 0.5">No. Pemesanan</p>
+                                <p style="margin-top: -4%; font-size: 15px"><b>@Model.RsvNo</b></p>
+                            </td>
+                            <td width="5%"></td>
+                            <td width="20%">
+                                <p style="opacity: 0.5">Waktu.</p>
+                                @{ var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault().AddHours(7); }
+                                <p style="margin-top: -4%"><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.Hour.ToString("hh.mm") WIB</b></p>
+                            </td>
+                            <td width="5%"></td>
+                            <td width="20%">
+                                <p style="opacity: 0.5">Metode Pembayaran.</p>
+                                <p style="margin-top: -4%"><b>@Model.Payment.Method</b></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
+                        <thead>
+                            <tr>
+                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                    <p style="color: #15b1e4; text-align: left"><b>Detail Order</b></p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">User ID</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">@Model.Contact.Email</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Order Date</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">@Model.RsvTime.ToString("dd MMMM yyyy")</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Order Type</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Flight</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Order Price</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Rp @Model.Payment.FinalPrice</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">Order By</p>
+                            </td>
+                            <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: center">:</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; ">
+                                <p style="color: #15b1e4; text-align: left">@Model.Contact.Name</p>
+                            </td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                            <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
+                        </tr>
+                        @{ var i = @Model.Passengers.Count; }
+                        @{ var j = 1; }
+                        <tr rowspan="@i">
+                            @foreach (var penumpang in @Model.Passengers)
+                            {
+                                <td width="25%">
+                                    <p style="color: #15b1e4; text-align: left">Guest Name</p>
+                                </td>
+                                <td width="8%">
+                                    <p style="color: #15b1e4; text-align: center">:</p>
+                                </td>
+                                <td>
+                                    <p style="color: #15b1e4; text-align: left">@j. @penumpang.FirstName</p>
+                                </td>
+                                <td width="20%"></td>
+                                <td width="5%" style="padding-right: 1%">
+                                    <hr style="border-color:#15b1e4" />
+                                </td>
+                                <td width="7%">
+                                    @penumpang.Type
+                                </td>
+                                j++;
+                            }
+
+                        </tr>
+                    </table>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
+                        <thead>
+                            <tr>
+                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                    <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    @if (@Model.Itinerary.Trips.Count > 1)
+                    {
+                        <p style="color: #15b1e4;">(Roundtrip)</p>
+
+                        <table width="100%" border="1px" solid=solid>
+                            <tr>
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                </td>
+                                <td width="8%">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4;">Berangkat</p>
+                                </td>
+                                <td width="6%">
+                                    <p style="text-align: center">:</p>
+                                </td>
+                                <td width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AircraftCode-@Model.Itinerary.Trips[0].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" border="1px" solid=solid>
+                            <tr>
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                    <img src="/Assets/images/email/flight-return-icon.png" />
+                                </td>
+                                <td width="8%">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4;">Kembali</p>
+                                </td>
+                                <td width="6%">
+                                    <p style="text-align: center">:</p>
+                                </td>
+                                <td width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AircraftCode-@Model.Itinerary.Trips[1].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                    else
+                    {
+                        <table width="100%" border="1px" solid=solid>
+                            <tr>
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                </td>
+                                <td width="8%">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4;">Berangkat</p>
+                                </td>
+                                <td width="6%">
+                                    <p style="text-align: center">:</p>
+                                </td>
+                                <td width="40%">
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AircraftCode-@Model.Itinerary.Trips[0].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
+                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    }
+
+
+                    @{ var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9); }
+
+                    <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
+                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.Hour.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="padding-bottom:30px;">
+
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;">
+                            <span style="color:#1daee5;">T.</span> 021 724 808 48
+                        </p>
+
+                    </address>
+
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+</body>
+</html>

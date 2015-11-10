@@ -24,7 +24,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             Init();
 
             JobHostConfiguration configuration = new JobHostConfiguration();
-            configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(30);
+            configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
             configuration.Queues.MaxDequeueCount = 10;
             configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");

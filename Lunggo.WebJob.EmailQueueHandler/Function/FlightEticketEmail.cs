@@ -57,15 +57,6 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             };
             Console.WriteLine("Sending Flight Eticket Email...");
             mailService.SendEmail(summary, mailModel, "FlightEticketEmail");
-
-            Console.WriteLine("Deleting Data in Storage...");
-            sw.Start();
-            blobService.DeleteBlob(rsvNo, "Eticket");
-            blobService.DeleteBlob(rsvNo, "Invoice");
-            blobService.DeleteBlob(rsvNo, "Reservation");
-            sw.Stop();
-            Console.WriteLine("Done Deleting Data in Storage. (" + sw.Elapsed.TotalSeconds + "s)");
-            sw.Reset();
             
             Console.WriteLine("Done Processing Flight Eticket Email for RsvNo " + rsvNo);
         }

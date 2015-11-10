@@ -1,40 +1,6 @@
 ﻿@using System.Globalization
 @model Lunggo.CustomerWeb.Models.FlightPaymentConfirmationData
 
-@{
-    Layout = "/Views/shared/_layout_20150506.cshtml";
-    ViewBag.Title = "Konfirmasi Pembayaran";
-    var beneficiaryBankList = new List<SelectListItem>
-    {
-        new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
-        new SelectListItem {Text = "BCA", Value = "BCA"},
-    };
-    
-}
-
-@section AdditionalPageJavascript {
-    <script src="/Assets/js/jquery.countdown.min.js"></script>
-}
-@section PageJavascript {
-<script>
-    $('.date-picker').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        minDate: new Date()
-    });
-</script>
-}
-
-<script>
-
-    $('.payment-countdown').countdown('@Model.TimeLimit.ToString("o")', function (event) {
-        $(this).html(event.strftime('%M:%S'));
-    });
-
-</script>
-
-
-
 <div class="confirmation-page">
     
     <div class="container">
@@ -166,3 +132,211 @@
 
 </div><!-- .confirmation-page -->
 
+
+
+
+
+
+
+
+
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-checkout page-confirmation";
+
+    ViewBag.SiteHeader = "checkout";
+
+    var beneficiaryBankList = new List<SelectListItem>
+    {
+        new SelectListItem {Text = "Mandiri", Value = "Mandiri"},
+        new SelectListItem {Text = "BCA", Value = "BCA"},
+    };
+}
+
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+}
+@section PageJS{
+    <script>
+        var langCode = 'en';
+        var paymentTimeout = '';
+
+        // development only start
+        paymentTimeout = new Date();
+        paymentTimeout.setMinutes(paymentTimeout.getMinutes() + 15);
+        // development only end
+
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function (event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
+
+    </script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/checkoutController.js"></script>
+}
+
+<div ng-app="travorama" ng-controller="confirmationController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+
+    <section class="checkout-step {{stepClass}} hidden">
+        <div class="container">
+            <div class="step step-1" ng-class="{'active' : currentPage == 1, 'inactive' : currentPage > 1}"><span>01. <b>Data Pesanan</b></span></div>
+            <div class="step step-2" ng-class="{'active' : currentPage == 2, 'inactive' : currentPage > 2}"><span>02. <b>Data Kontak</b></span></div>
+            <div class="step step-3" ng-class="{'active' : currentPage == 3, 'inactive' : currentPage > 3}"><span>03. <b>Data Penumpang</b></span></div>
+            <div class="step step-4" ng-class="{'active' : currentPage == 4}"><span>04. <b>Pembayaran</b></span></div>
+        </div>
+    </section><!-- .checkout-step -->
+
+    <div class="confirmation-content">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8">
+
+                    <div class="instruction">
+                        <h3>PANDUAN <b>TRANSFER</b></h3>
+                        <header>
+                            <h4 class="text-right">No. Pesanan: <b>@Model.RsvNo</b></h4>
+                        </header>
+                        <section class="text">
+                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima eTicket akan dikirimkan ke Email Anda dalam waktu max <b>60 menit</b></p>
+                            <p>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></p>
+                        </section>
+                        <section class="bank-detail">
+                            <div class="bank">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <img src="/Assets/images/bank-bca.png" alt="BANK BCA" />
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <dl>
+                                            <dt>Nama Bank</dt>
+                                            <dd>: Bank Central Asia</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Cabang</dt>
+                                            <dd>: Equity Tower</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Atas Nama</dt>
+                                            <dd>: PT. Travel Madezy</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Nomor Rekening</dt>
+                                            <dd>: 123456789012</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Jumlah</dt>
+                                            <dd>: Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="confirmation-form">
+                        <h3><b>KONFIRMASI</b> PEMBAYARAN - <b>TRANSFER</b></h3>
+                        <section>
+
+                            @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                            {
+                                <div class="form-group">
+                                    <label class="important control-label">Nama Pemilik Rekening:</label>
+                                    <input type="text" name="Model.Report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="important control-label">Nama Bank:</label>
+                                    <input type="text" name="Model.Report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="important control-label">Nomor Rekening:</label>
+                                    <input type="text" name="Model.Report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="important control-label">Jumlah Transfer:</label>
+                                    <input type="text" name="Model.Report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="important control-label">Tanggal Transfer:</label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control">
+                                                <option>1</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control">
+                                                <option>January</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control">
+                                                <option>2015</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input class="btn btn-yellow" type="submit" value="KONFIRMASI" />
+                                </div>
+                            }
+
+                        </section>
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+                    <div class="widget-container">
+                        <div class="widget price-detail">
+                            <h3 class="widget-title"><b>RINCIAN</b> HARGA</h3>
+                            <div class="widget-content">
+                                <dl>
+                                    <dt>Total Tiket</dt>
+                                    <dd><sup>Rp</sup> @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                </dl>
+                                <dl class="total-price">
+                                    <dt>Total</dt>
+                                    <dd><sup>Rp</sup> @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                </dl>
+                            </div>
+                            <footer>
+                                <small>* Harga ini masih bisa berubah, harga final maskapai akan dikonfirmasi kembali pada proses pembayaran</small>
+                            </footer>
+                        </div><!-- .widget.price-detail -->
+                        <div class="widget countdown">
+                            <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
+                            <div class="widget-content">
+                                <p>Sisa waktu Anda untuk melakukan pembayaran</p>
+                                <div class="timer">
+                                    <div>
+                                        <h5 class="hour">00</h5>
+                                        <span>jam</span>
+                                    </div>
+                                    <div class="separator"><h5>:</h5></div>
+                                    <div>
+                                        <h5 class="minute">00</h5>
+                                        <span>menit</span>
+                                    </div>
+                                    <div class="separator"><h5>:</h5></div>
+                                    <div>
+                                        <h5 class="second">00</h5>
+                                        <span>detik</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .widget.countdown -->
+                    </div><!-- .widget-container -->
+                </div>
+            </div>
+        </div>
+
+    </div><!-- .confirmation-content -->
+
+</div>

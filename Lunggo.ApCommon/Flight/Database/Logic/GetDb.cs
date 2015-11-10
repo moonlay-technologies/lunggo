@@ -77,6 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                         FinalPrice = reservationRecord.FinalPrice.GetValueOrDefault(),
                                         Currency = reservationRecord.CurrencyCd,
                                         Time = reservationRecord.PaymentTime,
+                                        TimeLimit = reservationRecord.PaymentTimeLimit,
                                         Url = reservationRecord.PaymentUrl
                                     },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),

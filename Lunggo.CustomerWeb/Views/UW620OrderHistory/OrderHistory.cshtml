@@ -5,6 +5,8 @@
     Layout = "/Views/Shared/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.PageActiveSection = "profile";
+
+    var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
 
 @section AdditionalJS{
@@ -66,7 +68,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="address" ng-rsvs="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -75,7 +77,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
-                                    <input type="text" name="firstname" ng-model="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="firstname" ng-rsvs="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,7 +86,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
-                                    <input type="text" name="lastname" ng-model="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="lastname" ng-rsvs="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -93,7 +95,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
-                                    <input type="text" name="phone" ng-model="editProfile.phone" value="" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                    <input type="text" name="phone" ng-rsvs="editProfile.phone" value="" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,7 +104,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
-                                    <select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
+                                    <select class="form-control" ng-show="userProfile.edit" ng-rsvs="editProfile.country" ng-disabled="userProfile.updating">
                                         <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
                                     </select>
                                 </div>
@@ -133,7 +135,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordCurrent" ng-rsvs="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
                                 </div>
                             </div>
                             <div class="form-group" ng-show="password.edit">
@@ -142,7 +144,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordNew" ng-rsvs="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
                                 </div>
                             </div>
                             <div class="form-group" ng-show="password.edit">
@@ -151,7 +153,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordConfirmation" ng-rsvs="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
                                 </div>
                             </div>
                         </form>
@@ -166,13 +168,13 @@
                     </header>
                     <section class="content-body">
                         
-                        @if (Model.Count == 0)
+                        @if (rsvs.Count == 0)
                         {
                             <h3>Belum ada pemesanan.</h3>
                         }
                         else
                         {
-                            foreach (var flight in Model)
+                            foreach (var flight in rsvs)
                              {
                                  <div class="order-wrapper">
                                      <div class="order flight">

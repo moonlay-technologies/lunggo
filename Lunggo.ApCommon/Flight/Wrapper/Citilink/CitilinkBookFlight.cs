@@ -442,7 +442,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var status = new BookingStatusInfo();
                 status.BookingId = NomorBooking;
                 status.BookingStatus = BookingStatus.Booked;
-                status.TimeLimit = timelimit.ToUniversalTime();
+                status.TimeLimit = DateTime.SpecifyKind(timelimit, DateTimeKind.Utc);
 
                 hasil.Status = status;
                 hasil.IsSuccess = true;
