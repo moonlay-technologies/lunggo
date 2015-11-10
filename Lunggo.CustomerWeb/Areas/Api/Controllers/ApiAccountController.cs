@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.WebAPI.ApiSrc.v1.Account.Model;
+using RestSharp;
 
 
 namespace Lunggo.CustomerWeb.Areas.Api.Controllers
@@ -43,7 +44,7 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
         [AllowAnonymous]
         public async Task<JsonResult> Register(RegisterViewModel model)
         {
-            AccountResponseModel response = new AccountResponseModel();
+            var response = new AccountResponseModel();
             if (!ModelState.IsValid)
             {
                 response.Description = response.Status = "InvalidInputData";
@@ -78,8 +79,46 @@ namespace Lunggo.CustomerWeb.Areas.Api.Controllers
                 response.Description = response.Status = "Failed";
                 return Json(response);
             }
-
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonResult> ResendConfirmationEmail(RegisterViewModel model)
+        {
+            var response = new AccountResponseModel();
+            
+            if (!ModelState.IsValid)
+            {
+                response.Description = response.Status = "InvalidInputData";
+                return Json(response);
+            }
+
+            var foundUser = await UserManager.FindByEmailAsync(model.Email);
+            if (foundUser != null)
+            {
+                if (foundUser.EmailConfirmed)
+                {
+                    response.Description = response.Status = "AlreadyRegisteredAndConfirmed";
+                    return Json(response);
+                }
+                else
+                {
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(foundUser.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = foundUser.Id, code = code },
+                        protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(foundUser.Id, "UserConfirmationEmail", callbackUrl);
+                    response.Status = "Success";
+                    response.Description = "ConfirmationEmailSent";
+                    return Json(response);
+                }
+            }
+            else
+            {
+                response.Description = "NotYetRegistered";
+                return Json(response);
+            }
+        }
+
 
         [HttpPost]
         public async Task<JsonResult> ChangeProfile(ChangeProfileViewModel model)

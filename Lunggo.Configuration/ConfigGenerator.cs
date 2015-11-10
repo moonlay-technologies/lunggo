@@ -321,6 +321,8 @@ namespace Lunggo.Configuration
             const string forgotPasswordPath = @"/id/ApiAccount/ForgotPassword";
             const string changePasswordPath = @"/id/ApiAccount/ChangePassword";
             const string changeProfilePath = @"/id/ApiAccount/ChangeProfile";
+            const string resendConfirmationEmailPath = @"/id/ApiAccount/ResendConfirmationEmail";
+
 
 
             var fileTemplate = new StringTemplate(ReadFileToEnd(JsConfigTemplatePath));
@@ -343,6 +345,8 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("forgotPasswordPath", forgotPasswordPath);
             fileTemplate.SetAttribute("changePasswordPath", changePasswordPath);
             fileTemplate.SetAttribute("changeProfilePath", changeProfilePath);
+            fileTemplate.SetAttribute("resendConfirmationEmailPath", resendConfirmationEmailPath);
+
 
             var fileContent = fileTemplate.ToString();
             string[] projectList = { "BackendWeb", "CustomerWeb" };
