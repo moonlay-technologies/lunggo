@@ -1218,8 +1218,8 @@ file : /Assets/travorama20/css/_page_index.scss
     padding-left: 80px;
     line-height: 145%;
     letter-spacing: 0;
-    padding-top: 10px;
-    font-size: 22px; }
+    padding-top: 15px;
+    font-size: 18px; }
   .page-index .section-subscribe form {
     padding-top: 10px; }
     .page-index .section-subscribe form input[type="text"] {
@@ -1227,10 +1227,10 @@ file : /Assets/travorama20/css/_page_index.scss
       height: auto;
       font-size: 12px; }
     .page-index .section-subscribe form .subscribe-name {
-      width: 80%;
+      width: 69%;
       float: left; }
     .page-index .section-subscribe form .btn {
-      width: 19%;
+      width: 30%;
       margin-left: 1%;
       padding: 9px; }
     .page-index .section-subscribe form .form-group {
@@ -1241,7 +1241,8 @@ file : /Assets/travorama20/css/_page_index.scss
     height: 114px;
     padding-top: 10px; }
     .page-index .section-subscribe .subscribe-after h2 {
-      padding: 0; }
+      padding: 0;
+      font-size: 22px; }
 
 .page-index .section-payment {
   padding: 40px 0 50px; }
@@ -4617,3 +4618,22 @@ file : /Assets/travorama20/css/_page_password.scss
   .page-contact .section-contact .contact-form-wrapper {
     background-color: #eaeaea;
     padding: 24px; }
+
+.page-howtopay .list-wrapper {
+  counter-reset: list-item; }
+  .page-howtopay .list-wrapper .list {
+    counter-increment: list-item; }
+    .page-howtopay .list-wrapper .list .list-summary h4 {
+      font-weight: bold;
+      color: #1daee4;
+      position: relative; }
+      .page-howtopay .list-wrapper .list .list-summary h4:before, .page-howtopay .list-wrapper .list .list-summary .page-index h4.section-reason:after, .page-index .page-howtopay .list-wrapper .list .list-summary h4.section-reason:after {
+        content: "0" counter(list-item);
+        position: absolute;
+        font-size: 32px;
+        color: #fff;
+        background: url(/Assets/images/list-bg.png) top center no-repeat;
+        background-size: contain;
+        padding: 15px;
+        padding-top: 0;
+        right: 100%; }
