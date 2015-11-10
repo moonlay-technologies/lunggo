@@ -138,7 +138,13 @@ app.controller('checkoutController', [
             checked: false
         };
 
-        $scope.buyerInfo = {};
+        $scope.loggedIn = loggedIn;
+
+        if ($scope.loggedIn) {
+            $scope.buyerInfo = buyerInfo;
+        } else {
+            $scope.buyerInfo = {};
+        }
         $scope.adultPassenger = [];
         $scope.childPassenger = [];
         $scope.infantPassenger = [];
