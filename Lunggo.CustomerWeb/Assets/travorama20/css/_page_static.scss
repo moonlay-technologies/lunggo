@@ -118,13 +118,16 @@
 }
 
 // page how to pay
-.page-howtopay {
+.page-howtopay, .page-howtoorder {
     .list-wrapper {counter-reset:list-item;
         .list {counter-increment:list-item;
             .list-summary {
                 .container {padding-left:85px;}
                 h4 {font-weight:bold; color:$color-main-blue;  position:relative;
                     &:before {content:"0" counter(list-item); position:absolute; font-size:32px; color:#fff; background:url(/Assets/images/list-bg.png) top center no-repeat; background-size:contain; padding:20px; padding-top:5px; right:100%;}
+                }
+                .list-image {text-align:center;
+                    img {}
                 }
             }
             .list-detail {background:#061c38; color:#fff; display:none;
@@ -137,5 +140,10 @@
                 .list-detail {display:block;}
             }
         }
+    }
+}
+.page-howtoorder {
+    .list-image {height:420px;
+        img {width:742px; margin-left:-160px;}
     }
 }
