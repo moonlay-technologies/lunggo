@@ -66,11 +66,11 @@ app.controller('accountController', [
                     console.log(returnData);
                     if (returnData.data.Status == 'Success') {
                         console.log('Success requesting change profile');
-                        $scope.userProfile.address = returnData.config.data.Address;
-                        $scope.userProfile.firstname = returnData.config.data.FirstName;
-                        $scope.userProfile.lastname = returnData.config.data.LastName;
-                        $scope.userProfile.phonenumber = returnData.config.data.PhoneNumber;
-                        $scope.userProfile.country = returnData.config.data.CountryCd;
+                        $scope.userProfile.address = $scope.editProfile.address;
+                        $scope.userProfile.firstname = $scope.editProfile.firstname;
+                        $scope.userProfile.lastname = $scope.editProfile.lastname;
+                        $scope.userProfile.phonenumber = $scope.editProfile.phonenumber;
+                        $scope.userProfile.country = $scope.editProfile.country;
                         $scope.userProfile.edit = false;
                         $scope.userProfile.updating = false;
                     }
