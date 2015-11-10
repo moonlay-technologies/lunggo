@@ -60,6 +60,11 @@
                                     </span>
                                 </h4>
                             </header>
+                            <div class="form-group has-error" ng-show="userProfile.updated">
+                                <div class="col-xs-12">
+                                    <label>Profil Anda telah berhasil diperbaharui.</label>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
                                     <p class="control-label">Alamat</p>
@@ -124,7 +129,7 @@
                             </header>
                             <div class="form-group has-error" ng-show="password.failed">
                                 <div class="col-xs-12">
-                                    <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda sesuai.</label>
+                                    <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda.</label>
                                 </div>
                             </div>
                             <div class="form-group">
