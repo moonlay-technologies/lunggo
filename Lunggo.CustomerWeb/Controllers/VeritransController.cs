@@ -1,17 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
-using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
-using Lunggo.Framework.Util;
 using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Controllers
