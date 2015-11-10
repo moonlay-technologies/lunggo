@@ -71,3 +71,7 @@ var ChangePasswordConfig = {
 var ChangeProfileConfig = {
     Url: '$rootUrl$$changeProfilePath$'
 };
+
+var ResendConfirmationEmailConfig = {
+    Url: '$rootUrl$$resendConfirmationEmailPath$'
+};
