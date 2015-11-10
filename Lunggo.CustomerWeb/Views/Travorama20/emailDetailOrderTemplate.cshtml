@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.Framework.Config
 @using Microsoft.Ajax.Utilities
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
@@ -53,7 +54,7 @@
                             <table width="100%" style="margin-bottom: 3%;">
                                 <tr width="100%">
                                     <td width="5%">
-                                        <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                        <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
                                         <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
@@ -67,7 +68,7 @@
                                 </tr>
                                 <tr width="100%">
                                     <td width="5%">
-                                        <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                        <img src="/Assets/images/email/flight-return-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
                                         <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
@@ -86,7 +87,7 @@
                             <table width="100%" style="margin-bottom: 3%;">
                                 <tr width="100%">
                                     <td width="5%">
-                                        <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                        <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
                                         <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
@@ -114,7 +115,7 @@
                                 <table width="100%" style="margin-bottom: 3%">
                                     <tr>
                                         <td width="5%">
-                                            <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                            <img src="/Assets/images/email/no-1.png" />
                                         </td>
                                         <td>
                                             <p>Transfer tepat sejumlah total tagihan : <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b> ke salah satu rekening di bawah ini :</p>
@@ -161,7 +162,7 @@
                                 <table width="100%" style="margin-bottom: -1%">
                                     <tr>
                                         <td width="5%">
-                                            <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                            <img src="/Assets/images/email/no-2.png" />
                                         </td>
                                         <td>
                                             <p>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</p>
@@ -169,7 +170,7 @@
                                     </tr>
                                 </table>
 
-                                <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="ini ceritanya link">www.ini-ini-ceritanya-link</a>
+    <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
                                 <p style="margin-left: 6%; margin-bottom: 4%">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
                                 <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-038 </span>dengan </p>
                                 <p style="margin-top: -1%; opacity: 0.8; margin-bottom: 7%; margin-left: 6%; font-size: 10px; font-style: italic;">mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 99999999</span></p>

@@ -1,71 +1,102 @@
 ﻿@model Microsoft.AspNet.Identity.IdentityMessage
+@{
+    Layout = "";
+}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Travorama </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
 </head>
-<body style="font-size:14px;">
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:14px;">
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="600px" style="text-align:center; border-bottom:1px solid #ccc;">
-                <br />
-                <img src="http://travorama.com/Assets/images/email/travorama-logo.jpg" alt="Travorama" />
-                <br />
-                <br />
-            </td>
-        </tr>
+
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td width="90%">
+
+                    <!-- CONTENT  -->
+
+                    <p style="font-size: 12px;">Dear, <span style="color: #15b1e4">@Model.Destination</span></p>
+                    <p style="font-size: 12px; margin-bottom: -10px;">Anda baru saja mendaftar untuk menjadi member di <a href="travorama.com" style="color: #15b1e4;">Travorama</a></p>
+                    <p style="font-size: 12px">Untuk mengkonfirmasi bahwa email ini adalah email Anda, silahkan masukkan kode verifikasi :</p>
+
+                    <table width="100%" style="border-top:1px solid #15b1e4 ; margin-top: 30px; margin-bottom: 20px">
+                        <tr></tr>
+                    </table>
+
+                    <p style="font-size: 12px">Klik tombol berikut untuk mengonfirmasi email Anda :</p>
+
+                    <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:20%; text-decoration: none; font-family:arial, helvetica, sans-serif;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       width: 60%; padding-top: 17px; padding-bottom: 17px; text-align: center; margin-top: 18px; margin-bottom: 18px; font-size: 11px; color: #333333;"
+                       href="@Model.Body" target="_blank"><b>KONFIRMASI EMAIL</b></a>
+
+                    <p style="font-size: 10px; margin-left: 18.5%; margin-top: -3px; margin-bottom: 30px; opacity: 0.7">Jika konfirmasi bermasalah, Anda dapat meminta ulang e-mail konfirmasi di <a style="color: #15b1e4">halaman ini</a></p>
+
+                    <table width="100%" style="border-bottom:1px solid #15b1e4 ; margin-top: 10px; margin-bottom: 20px;">
+                        <tr></tr>
+                    </table>
+
+                    <p style="font-size: 12px; margin-bottom: -10px; opacity: 0.7">Jika Anda merasa tidak pernah meminta untuk menghubungkan akun tersebut, mohon abaikan email ini.</p>
+                    <p style="font-size: 11px; font-style: italic; opacity: 0.7; margin-bottom: 40px">Harap tidak menginformasikan nomor kontak, alamat e-mail, atau password Anda kepada siapapun, termasuk pihak yang mengatasnamakan <b style="opacity: 0.9">Travorama</b>.</p>
+
+                </td>
+                <td width="5%"></td>
+            </tr>
+        </tbody>
+        <tfoot width="100%">
+            <tr>
+                <td></td>
+                <td style="padding-bottom:30px;">
+
+                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+
+                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                        <p style="margin-top:0; margin-bottom:5px;">
+                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                        </p>
+                        <p style="margin-top:0;">
+                            <span style="color:#1daee5;">T.</span> 021 724 808 48
+                        </p>
+
+                    </address>
+
+                </td>
+
+                <td>
+                </td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td colspan="3" width="600px">
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td width="50px"></td>
-            <td width="500px" style="vertical-align:top;">
-
-                <p>Hi Traveler!</p>
-                <p>Terima kasih telah melakukan registrasi di Travorama.</p>
-                <p>Lakukan konfirmasi dengan mengklik link dibawah ini :</p>
-                <p><a href="@Model.Body">LINK TO CONFIRM EMAIL</a></p>
-                <p>Anda akan mendapatkan voucher Rp 50.000 untuk berbelanja di Travorama setelah melakukan konfirmasi.</p>
-                <p>Jika ada pertanyaan, kirimkan email ke <a href="mailto:customercare@travorama.com">customercare@travorama.com</a> atau hubungi CS kami di <b>1 500 650</b>.</p>
-
-
-
-            </td>
-            <td width="50px"></td>
-        </tr>
-        <tr>
-            <td colspan="3" width="500px" style="padding-bottom:10px;">
-                &nbsp;
-            </td>
-        </tr>
-
-    </table>
-
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-            <td width="500px" style="background-color:#f2f2f2; background:#f2f2f2;">
-                <p style="text-align:center; font-size:12px; padding-top:10px; padding-right:0; padding-bottom:10px; padding-left:0;">Travorama, equity tower 25th floor, scbd lot 9, jl. jendral sudirman kav 52 -53</p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Layanan Customer:</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;"><a href="mailto:customercare@travorama.com" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/mail-icon.png" alt="M" /> customercare@travorama.com</a>  | <img src="http://travorama.com/Assets/images/email/phone-icon.png" alt="F" /> 1500650</p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Follow kami di :</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;">
-                    <a href="http://www.facebook.com/travorama" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/facebook-icon.png" alt="F" /> www.facebook.com/travorama</a>  | <a href="http://twitter.com/travoramaid" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/twitter-icon.png" alt="T" /> &#64;travoramaid</a>  | <a href="http://instagram.com/travorama" style="color:#0050ef; text-decoration:none;"><img src="http://travorama.com/Assets/images/email/instagram-icon.png" alt="I" /> &#64;travorama</a>
-                </p>
-            </td>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-        </tr>
-    </table>
 
 </body>
 </html>

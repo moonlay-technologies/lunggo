@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.Framework.Config
 @using Microsoft.Ajax.Utilities
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 @{
@@ -203,10 +204,10 @@
                         <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=120%C3%9740&w=120&h=40">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)">
                                     <p style="color: #15b1e4;">Berangkat</p>
                                 </td>
                                 <td width="6%">
@@ -222,10 +223,10 @@
                         <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                    <img src="/Assets/images/email/flight-return-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=120%C3%9740&w=120&h=40">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[1].Segments[1].AirlineLogoUrl)" />
                                     <p style="color: #15b1e4;">Kembali</p>
                                 </td>
                                 <td width="6%">
@@ -244,10 +245,10 @@
                         <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=5&txt=20%C3%9720&w=20&h=20&txtpad=1">
+                                    <img src="/Assets/images/email/flight-departure-icon.png">
                                 </td>
                                 <td width="8%">
-                                    <img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=120%C3%9740&w=120&h=40">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
                                     <p style="color: #15b1e4;">Berangkat</p>
                                 </td>
                                 <td width="6%">
