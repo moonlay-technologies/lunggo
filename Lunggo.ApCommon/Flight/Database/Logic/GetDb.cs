@@ -373,7 +373,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    return GetRsvNoByBookingIdQuery.GetInstance().Execute(conn, bookingIds).Distinct().ToList();
+                    return GetRsvNoByBookingIdQuery.GetInstance().Execute(conn, new {BookingIds = bookingIds}).Distinct().ToList();
                 }
             }
 

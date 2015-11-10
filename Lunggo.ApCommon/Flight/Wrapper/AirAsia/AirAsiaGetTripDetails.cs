@@ -9,9 +9,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
     {
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
-            var rsvNo = FlightService.GetDb.RsvNoByBookingId(new List<string> {conditions.BookingId}).Single();
+            var bookingId = "AIRAPUB" + conditions.BookingId;
+            var rsvNo = FlightService.GetDb.RsvNoByBookingId(new List<string> { bookingId }).Single();
             var reservation = FlightService.GetDb.Reservation(rsvNo);
-            var itinerary = reservation.Itineraries.Single(itin => itin.BookingId == conditions.BookingId);
+            var itinerary = reservation.Itineraries.Single(itin => itin.BookingId == bookingId);
             var segments = itinerary.Trips.SelectMany(trip => trip.Segments).ToList();
             segments.ForEach(segment => segment.Pnr = conditions.BookingId);
             return new GetTripDetailsResult
