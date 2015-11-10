@@ -473,7 +473,7 @@
 
                                 <div class="step-button">
                                     
-                                    <form action="" method="post" name="finalForm" id="finalForm" ng-submit="book.send()">
+                                    <form name="finalForm" id="finalForm" ng-submit="book.send()">
                                         
                                         <div class="hidden">
                                             <input type="text" name="Token" value="" ng-model="token" />
@@ -515,7 +515,7 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")">kebijakan privasi</a></p>
                                         <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
-                                        <button class="btn btn-yellow" ng-click="book.send()" ng-disabled="checkoutForm.loading || !paymentMethod">{{ !checkoutForm.loading ? "Bayar" : "MEMPROSES" }}</button>
+                                        <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'bayar' : 'MEMPROSES' }}" ng-disabled="checkoutForm.loading || !paymentMethod">
                                         
                                     </form>
                                     

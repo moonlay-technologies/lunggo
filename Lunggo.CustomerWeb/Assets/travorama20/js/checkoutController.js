@@ -277,6 +277,7 @@ app.controller('checkoutController', [
             if (passenger.type != 'adult') {
                 // set minimum date for passenger
                 var minYear = -1;
+                var currentDate = new Date() ;
                 if (passenger.type == 'child') {
                     minYear = $scope.flightDetail.minYearChild;
                 } else if (passenger.type == 'infant') {
@@ -290,6 +291,8 @@ app.controller('checkoutController', [
                             passenger.birth.date = $scope.flightDetail.departureDate;
                         }
                     }
+                } else if (passenger.birth.year >= currentDate.getFullYear()) {
+                    console.log('JEMPING BERLEBIHAN');
                 }
             }
         }
@@ -375,4 +378,4 @@ app.controller('confirmationController', [
         $scope.pageLoaded = true;
 
     }
-]);// checkout controller
+]);// confirmation controller
