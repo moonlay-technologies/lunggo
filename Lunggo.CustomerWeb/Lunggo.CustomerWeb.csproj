@@ -729,8 +729,12 @@
     <Content Include="Assets\images\email-social.jpg" />
     <Content Include="Assets\images\email-twitter.jpg" />
     <Content Include="Assets\images\email\facebook-icon.png" />
+    <Content Include="Assets\images\email\flight-departure-icon.png" />
+    <Content Include="Assets\images\email\flight-return-icon.png" />
     <Content Include="Assets\images\email\instagram-icon.png" />
     <Content Include="Assets\images\email\mail-icon.png" />
+    <Content Include="Assets\images\email\no-1.png" />
+    <Content Include="Assets\images\email\no-2.png" />
     <Content Include="Assets\images\email\phone-icon.png" />
     <Content Include="Assets\images\email\specialrelease\mail-bottom.jpg" />
     <Content Include="Assets\images\email\specialrelease\mail-left.jpg" />
@@ -2467,7 +2471,10 @@
     </Content>
     <Content Include="Views\UW620OrderHistory\OrderHistory.cshtml" />
     <Content Include="Views\UW620OrderHistory\OrderFlightHistoryDetail.cshtml" />
-    <Content Include="Views\Travorama20\emailTemplate.cshtml" />
+    <Content Include="Views\Travorama20\emailResetTemplate.cshtml" />
+    <Content Include="Views\Travorama20\emailConfirmationTemplate.cshtml" />
+    <Content Include="Views\Travorama20\emailDetailOrderTemplate.cshtml" />
+    <Content Include="Views\Travorama20\emailConfirmPayment.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

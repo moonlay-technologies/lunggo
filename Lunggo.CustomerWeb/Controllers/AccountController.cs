@@ -204,6 +204,14 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "UW000TopPage");
             }
+
+            var isConfirmed = await UserManager.IsEmailConfirmedAsync(userId);
+            if (isConfirmed)
+            {
+                ViewBag.Message = "AlreadyConfirmed";
+                return RedirectToAction("Login", "Account");
+            }
+
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             var email = await UserManager.GetEmailAsync(userId);
             if (result.Succeeded)
@@ -259,7 +267,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var code = await UserManager.GeneratePasswordResetTokenAsync(foundUser.Id);
             var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code, email = model.Email },
                 protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
+            await UserManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl);
             ViewBag.Message = "Success";
             return View(model);
         }
@@ -279,6 +287,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (email == null)
                 return Redirect("/");
+
             var model = new ResetPasswordViewModel { Email = email, Code = code };
             return View(model);
         }

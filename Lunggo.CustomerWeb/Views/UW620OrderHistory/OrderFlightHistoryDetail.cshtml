@@ -1,4 +1,6 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+﻿@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Extension
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
@@ -24,8 +26,8 @@
             paymentMethod: '@Model.Payment.Method',
             paymentStatus: '@Model.Payment.Status'
         };
-        var passengerDetail = @Html.Raw(Json.Encode(Model.Passengers));
-        var flightDetail = @Html.Raw(Json.Encode(Model.Itinerary.Trips));
+        var passengerDetail = @Html.Raw(Model.Passengers.Serialize());
+        var flightDetail = @Html.Raw(Model.Itinerary.Trips.Serialize());
         var refundDetail = '';
     </script>
     <!-- angular controller -->
@@ -55,14 +57,14 @@
 
                         <div class="info-buyer">
                             <header>
-                                @if (@Model.IsIssued)
+                                <h4>
+                                    <b>BUYER INFO</b>
+                                    <button class="pull-right btn btn-yellow" @(Model.IsIssued ? "" : "disabled")>@Html.I18NString("CW00198")</button>
+                                    @if (Model.Payment.Method == PaymentMethod.BankTransfer && Model.Payment.Status == PaymentStatus.Pending)
                                 {
-                                    <h4><b>BUYER INFO</b> <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="pull-right btn btn-yellow">@Html.I18NString("CW00198")</a> </h4>
+                                        <a style="margin-right: 6px;" href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new {rsvNo = Model.RsvNo})" target="_blank" class="pull-right btn btn-yellow">Confirm</a>
                                 }
-                                else
-                                {
-                                    <h4><b>BUYER INFO</b> <button class="pull-right btn btn-yellow" disabled>@Html.I18NString("CW00198")</button><a style="margin-right:6px;" href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="pull-right btn btn-yellow">Confirm</a></h4>
-                                }
+                                </h4>
                             </header>
                             <section>
                                 <div class="form form-horizontal">

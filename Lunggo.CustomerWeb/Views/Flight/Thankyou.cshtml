@@ -41,14 +41,14 @@
     </script>
 }
 
-@if (ViewBag.BookingFailed)
+@if (ViewBag.BookingFailed || Model.Payment.Status == PaymentStatus.Expired)
 {
     <div>
 
-        <h2 class="section-title stripe text-center">BOOKING <span>FAILED</span></h2>
+        <h2 class="section-title stripe text-center">PEMESANAN <span>GAGAL</span></h2>
 
         <div class="container">
-            <p>Mohon maaf, transaksi Anda gagal. Silahkan mengulang transaksi atau gunakan metode pembayaran yang lain. Payment Gateway Authentication Failed.</p>
+            <p>Mohon maaf, pesanan no. @Model.RsvNo telah dibatalkan. Silahkan membuat pesanan baru.</p>
         </div>
         <div class="container text-center">
             <a href="/" class="btn btn-yellow">KEMBALI KE HALAMAN DEPAN</a>
@@ -89,7 +89,7 @@ else
                     </div>
                     <div class="col-xs-4">
                         <div class="print">
-                            <a href="#" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
+                            <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
                         </div>
                     </div>
                 </div>

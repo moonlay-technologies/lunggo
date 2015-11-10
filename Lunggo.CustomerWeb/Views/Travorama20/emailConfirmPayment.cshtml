@@ -49,19 +49,19 @@
 
                     <p>Dear, <span style="color: #15b1e4">@Model.Contact.Name</span></p>
                     <p><b>Travorama.com</b>telah mengkonfirmasi pembayaran untuk transaksi berikut : </p>
-
+                    
                     <table width="100%" style="margin-bottom: 4%" cellpadding="0" cellspacing="0">
                         <tr>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #333333; opacity: 0.2">
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #333333; opacity: 0.2">
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #333333; opacity: 0.2">
                             </td>
                         </tr>
                         <tr>
@@ -82,17 +82,17 @@
                             </td>
                         </tr>
                     </table>
-
+                    
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
                         <thead>
                             <tr>
-                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                <th colspan="6" solid style="color: #15b1e4; border-bottom: 3px solid; ">
                                     <p style="color: #15b1e4; text-align: left"><b>Detail Order</b></p>
                                 </th>
                             </tr>
                         </thead>
                         <tr>
-                            <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
+                            <td width="25%"  style="color: #15b1e4; border-bottom: 1px solid; ">
                                 <p style="color: #15b1e4; text-align: left">User ID</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
@@ -177,37 +177,37 @@
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%">
-                                    <hr style="border-color:#15b1e4" />
+                                    <hr style="border-color:#15b1e4">
                                 </td>
                                 <td width="7%">
                                     @penumpang.Type
                                 </td>
                                 j++;
                             }
-
+                            
                         </tr>
                     </table>
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
                         <thead>
                             <tr>
-                                <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
+                                <th colspan="6" solid style="color: #15b1e4; border-bottom: 3px solid; ">
                                     <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
                                 </th>
                             </tr>
                         </thead>
                     </table>
-
+                    
                     @if (@Model.Itinerary.Trips.Count > 1)
                     {
                         <p style="color: #15b1e4;">(Roundtrip)</p>
 
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
                                     <img src="/Assets/images/email/flight-departure-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)">
                                     <p style="color: #15b1e4;">Berangkat</p>
                                 </td>
                                 <td width="6%">
@@ -220,7 +220,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
                                     <img src="/Assets/images/email/flight-return-icon.png" />
@@ -242,10 +242,10 @@
                     }
                     else
                     {
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%" border="1px" solid>
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%">
-                                    <img src="/Assets/images/email/flight-departure-icon.png" />
+                                    <img src="/Assets/images/email/flight-departure-icon.png">
                                 </td>
                                 <td width="8%">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
@@ -263,10 +263,10 @@
                         </table>
 
                     }
-
+                    
 
                     @{var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9)}
-
+                    
                     <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
                     <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.Hour.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
 
@@ -291,10 +291,7 @@
 
                     </address>
 
-                </td>
-
                 <td>
-                </td>
                 <td></td>
             </tr>
         </tfoot>

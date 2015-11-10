@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Payment.Constant
+﻿@using Lunggo.ApCommon.Identity.User
+@using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
@@ -73,21 +74,28 @@
         @if (Model.Itinerary.Trips != null)
         {
             if (Model.Itinerary.Trips.Count == 2)
-             {
-                 @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-             }
-             else
-             {
-                 @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-             }
+            {
+                @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate.ToString("dd/MM/yyyy")';
+            }
+            else
+            {
+                @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate.ToString("dd/MM/yyyy")';
+            }
         }
-        
+
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
         } else {
             currentPage = 1;
         }
+        var loggedIn = @User.Identity.IsAuthenticated;
+        var buyerInfo = {
+            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode : '@User.Identity.GetCountryCd()',
+            phone: '@User.Identity.GetPhoneNumber()',
+            email: '@User.Identity.GetEmail()'
+        };
 
     </script>
     <!-- angular controller -->
@@ -228,16 +236,18 @@
 
                                 <h3><b>DETAIL</b> PEMESAN</h3>
 
-                                <div class="travorama-login" ng-class="{'active' : loginShown}">
+                                <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
                                     <div class="login-content">
-                                        <form class="form form-horizontal">
+                                        @using (Html.BeginForm("Login", "Account", new{returnUrl = HttpContext.Current.Request.Url},FormMethod.Post, new {@class = "form form-horizontal"}))
+                                        {
+                                            @Html.AntiForgeryToken()
                                             <div class="form-group">
                                                 <div class="col-xs-5">
-                                                    <input type="text" class="form-control" id="login-username" value="" placeholder="Email Address" />
+                                                    <input type="text" class="form-control" name="Email" id="login-username" value="" placeholder="Email Address" />
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <input type="password" class="form-control" id="login-password" value="" placeholder="Password" />
+                                                    <input type="password" class="form-control" name="Password" id="login-password" value="" placeholder="Password" />
                                                 </div>
                                                 <div class="col-xs-2">
                                                     <input type="submit" value="LOG IN" class="btn btn-yellow form-control" />
@@ -245,10 +255,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-xs-10 text-right">
-                                                    <a href="#">Lupa Password?</a>
+                                                    <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password?</a>
                                                 </div>
                                             </div>
-                                        </form>
+                                        }
                                     </div>
                                 </div><!-- .travorama-login -->
 
@@ -265,7 +275,7 @@
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
                                         <div>
-                                            <input type="text" class="form-control" value="" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
+                                            <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
@@ -273,18 +283,18 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <p>Country Code</p>
-                                                <input type="number" name="countryCode" value="" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
+                                                <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                         <label class="control-label important">Masukan Alamat Email Anda:</label>
                                         <div>
-                                            <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
+                                            <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
                                         </div>
                                     </div>
 
@@ -303,7 +313,6 @@
                                 <div class="passenger-detail">
                                 
                                 <form novalidate name="passengersForm">
-
                                     <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
                                         <header>
                                             <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
@@ -330,14 +339,16 @@
                                                     <div class="row">
                                                         <div class="col-xs-4">
                                                             <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" required ng-change="validateBirthday(passenger)">
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'adult'">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child' && !( passenger.birth.year == flightDetail.minYearChild && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant' && !( (passenger.birth.year == flightDetail.minYearInfant && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
                                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && !(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth)">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && !(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth)">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
@@ -525,7 +536,7 @@
                                             <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                                         </div>
 
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")">kebijakan privasi</a></p>
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
                                         <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="checkoutForm.loading || !paymentMethod">
                                         
@@ -614,7 +625,7 @@
                                     </div><!-- .widget.flight-detail -->
                                     <div class="flight-detail" id="return-flight" ng-if="trips[1]">
                                         <div>
-                                            <header><span>PENERBANGAN PERGI</span></header>
+                                            <header><span>PENERBANGAN PULANG</span></header>
                                             <div class="widget-content">
                                                 <div class="airline">
                                                     <img ng-src="{{trips[1].Segments[0].AirlineLogoUrl}}" alt="{{trips[1].Segments[0].AirlineName}}" class="airline-image" />

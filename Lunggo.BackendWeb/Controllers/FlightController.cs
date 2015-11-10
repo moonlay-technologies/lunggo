@@ -4,6 +4,8 @@ using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.BackendWeb.Models;
 
 namespace Lunggo.BackendWeb.Controllers
@@ -63,6 +65,12 @@ namespace Lunggo.BackendWeb.Controllers
             foreach (var listPayment in payments)
             {
                 usePayment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
+                if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
+                    FlightService.GetInstance().UpdateFlightPayment(listPayment.RsvNo, new PaymentInfo
+                    {
+                        PaidAmount = listPayment.Amount,
+                        Status = PaymentStatus.Settled
+                    });
             }
             return RedirectToAction("Index", "Home");
         }

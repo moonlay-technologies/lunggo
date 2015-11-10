@@ -1,131 +1,218 @@
 ﻿@using System.Globalization
+@using Lunggo.Framework.Config
+@using Microsoft.Ajax.Utilities
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@{
+    Layout = "";
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Travorama </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
 </head>
-<body style="font-size:14px;">
+<body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="600px" style="text-align:center; border-bottom:1px solid #ccc;">
-                <br />
-                <img src="http://travorama.com/Assets/images/email/travorama-logo.jpg" alt="Travorama" />
-                <br />
-                <br />
-            </td>
-        </tr>
-    </table>
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td colspan="3" width="600px">
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td width="50px"></td>
-            <td width="500px" style="vertical-align:top;">
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+        <thead width="100%">
+            <tr width="100%">
+                <th width="5%"></th>
+                <th width="90%" style="padding-top:30px;">
+                    <p style="text-align:right;">
+                        <a href="http://travorama.com" style="text-decoration:none;">
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
+                        </a>
+                        <br />
+                        <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
+                        </a>
+                        <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
+                        </a>
+                        <a href="https://instagram.com/travorama" style="text-decoration:none;">
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
+                        </a>
+                    </p>
+                </th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody width="100%">
+            <tr width="100%">
+                <td width="5%"></td>
+                <td width="90%">
 
-                <p style="text-align:right;">NO. PESANAN : @Model.RsvNo</p>
+                    <!-- CONTENT  -->
+                    <p>
+                        Terima kasih, Anda baru saja memesan penerbangan dari:
+                        @if (@Model.Itinerary.Trips.Count > 1)
+                        {
+                            <table width="100%" style="margin-bottom: 3%;">
+                                <tr width="100%">
+                                    <td width="5%">
+                                        <img src="/Assets/images/email/flight-departure-icon.png" />
+                                    </td>
+                                    <td width="30%" style="padding-left: 0px">
+                                    </td>
+                                </tr>
+                            </table>
+                        </p>
+                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                    </td>
+                    <td width="28%"></td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
+                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
+                </tr>
+                <tr width="100%">
+                    <td width="5%">
+                        <img src="/Assets/images/email/flight-return-icon.png" />
+                    </td>
+                    <td width="30%" style="padding-left: 0px">
+                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
+                    </td>
+                    <td width="28%"></td>
+                    <td width="5%">
+                        <hr style="border-color: #15b1e4" />
+                    </td>
+                    @{var jamKembali = @Model.Itinerary.Trips[1].DepartureDate.AddHours(7)}
+                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.Hour.ToString("hh:mm")</td>
+                </tr>
+            </tbody>
+        </table>
+                        }
+                        else
+                        {
+                            <table width="100%" style="margin-bottom: 3%;">
+                                <tr width="100%">
+                                    <td width="5%">
+                                        <img src="/Assets/images/email/flight-departure-icon.png" />
+                                    </td>
+                                    <td width="30%" style="padding-left: 0px">
+                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                                    </td>
+                                    <td width="28%"></td>
+                                    <td width="5%">
+                                        <hr style="border-color: #15b1e4" />
+                                    </td>
+                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
+                                    <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
+                                </tr>
+                            </table>
+                        }
 
-                <p>Dear @Model.Contact.Name</p>
-                <p>Terima kasih atas pemesanan tiket pesawat Anda melalui Travorama. </p>
-                <p>Lakukan pembayaran sebesar total tagihan: <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> ke nomor <b>virtual account : @Model.Payment.TargetAccount</b></p>
-                <p>Setelah melakukan pembayaran, e-tiket Anda akan diterbitkan dan dikirimkan ke email Anda.</p>
-                <p><b>Penting!</b></p>
-                <p>Lakukan pembayaran sebelum melewati batas waktu. Jika melewati batas waktu maka booking Anda akan dibatalkan otomatis oleh sistem kami. Anda harus melakukan pemesanan ulang dan terdapat kemungkinan perubahan harga.</p>
-                <p>Jika ada pertanyaan, kirimkan email ke <a href="mailto:customercare@travorama.com" style="color:#0050ef; text-decoration:none;">customercare@travorama.com</a> atau hubungi CS kami di <b>1 500 650</b> dengan mencantumkan no. pesanan Anda.</p>
-                <p>Email ini adalah email tagihan, BUKAN merupakan bukti pembayaran dan tidak dapat ditukar menjadi tiket penerbangan.</p>
+                        <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 4% ">
+                            <tr>
+                                <td>
+                                    <p style="color: #15b1e4; text-align: center">Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</p>
+                                </td>
+                            </tr>
+                        </table>
 
-                <hr />
-                <p>Berikut adalah cara pembayaran melalui jaringan ATM :</p>
-                <p>Cara Pembayaran melalui <b>ATM Mandiri/Jaringan ATM Bersama :</b></p>
-                <ol>
-                    <li>Masukkan PIN Anda.</li>
-                    <li>Di Menu utama, pilih <b>Transaksi Lainnya.</b></li>
-                    <li>Pilih <b>Transfer.</b></li>
-                    <li>Pilih <b>Antar Bank Online.</b></li>
-                    <li>Masukkan nomor <b>@Model.Payment.TargetAccount</b> (kode 013 dan 16 digit <i>Virtual account</i>).</li>
-                    <li>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</li>
-                    <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua kode booking harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
-                    <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
-                    <li>Transaksi Berhasil.</li>
-                </ol>
-                <p>Cara Pembayaran melalui <b>ATM BCA/Jaringan ATM PRIMA </b>:</p>
-                <ol>
-                    <li>Masukkan PIN Anda.</li>
-                    <li>Di Menu utama, pilih <b>Transaksi Lainnya.</b></li>
-                    <li>Pilih <b>Transfer.</b></li>
-                    <li>Pilih <b>ke Rek Bank Lain.</b></li>
-                    <li>Masukkan kode <b>013</b> untuk Bank Permata lalu tekan <b>Benar</b>.</li>
-                    <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua atau lebih pesanan harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
-                    <li>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
-                    <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
-                    <li>Transaksi berhasil.</li>
-                </ol>
-                <p>Cara Pembayaran melalui <b>ATM Bank Permata</b>:</p>
-                <ol>
-                    <li>Masukkan PIN Anda.</li>
-                    <li>Di Menu utama, pilih <b>Transaksi Lainnya.</b></li>
-                    <li>Pilih <b>Transaksi Pembayaran.</b></li>
-                    <li>Pilih <b>Lain-lain</b>.</li>
-                    <li>Pilih <b>Pembayaran Virtual Account</b>.</li>
-                    <li>Masukkan 16 digit no. Virtual Account <b>@Model.Payment.TargetAccount</b></li>
-                    <li>Di halaman konfirmasi akan muncul no. <i>virtual account</i>, lalu tekan <b>Benar</b>.</li>
-                    <li>Pilih rekening pembayaran Anda dan tekan <b>Benar</b>.</li>
-                    <li>Transaksi Berhasil.</li>
-                </ol>
-                <p>Cara Pembayaran melalui <b>ATM Alto</b> :</p>
-                <ol>
-                    <li>Masukkan PIN Anda.</li>
-                    <li>Di Menu utama, pilih <b>Transaksi Lainnya.</b></li>
-                    <li>Pilih <b>Transfer</b>.</li>
-                    <li>Pilih Ke <b>Rek Bank Lain</b>.</li>
-                    <li>Masukkan kode <b>013</b> untuk Bank Permata lalu tekan <b>Benar</b>.</li>
-                    <li>Masukkan jumlah harga tiket yang akan Anda bayar secara lengkap (tanpa pembulatan). Pembayaran untuk dua atau lebih pesanan harus dilakukan secara terpisah. Setelah itu tekan <b>Benar</b>.</li>
-                    <li>Masukkan <b>@Model.Payment.TargetAccount</b> (16 digit no. <i>virtual account</i> pembayaran) lalu tekan <b>Benar</b>.</li>
-                    <li>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</li>
-                    <li>Transaksi berhasil.</li>
-                </ol>
-            </td>
-            <td width="50px"></td>
-        </tr>
-        <tr>
-            <td colspan="3" width="500px" style="padding-bottom:10px;">
-                &nbsp;
-            </td>
-        </tr>
+                        <p>Untuk mendapatkan e-ticket, lakukan pembayaran lalu konfirmasikan pembayaran sesuai 2 langkah berikut:</p>
 
-    </table>
+                        <table width="100%" style="margin-bottom: 3%">
+                            <tr>
+                                <td width="5%">
+                                    <img src="/Assets/images/email/no-1.png" />
+                                </td>
+                                <td>
+                                    <p>Transfer tepat sejumlah total tagihan : <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b> ke salah satu rekening di bawah ini :</p>
+                                </td>
+                            </tr>
+                        </table>
 
-    <table style="border-collapse:collapse; width:600px; margin-left:auto; margin-right:auto; font-family:helvetica, 'myriad pro', arial, sans-serif;" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-            <td width="500px" style="background-color:#f2f2f2; background:#f2f2f2;">
-                <p style="font-size:12px;">Email ini ditujukan untuk @Model.Contact.Name karena Anda telah melakukan pemesanan dari PT Travel Madezy Internasional melalui Travorama © 2015.</p>
-            </td>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-        </tr>
-        <tr>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-            <td width="500px" style="background-color:#f2f2f2; background:#f2f2f2;">
-                <p style="text-align:center; font-size:12px; padding-top:10px; padding-right:0; padding-bottom:10px; padding-left:0;">Travorama, equity tower 25th floor, scbd lot 9, jl. jendral sudirman kav 52 -53</p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Layanan Customer:</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;"><a href="#" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/mail-icon.png" alt="M" /> customercare@travorama.com</a>  | <img src="http://travorama.com/Assets/images/email/phone-icon.png" alt="F" /> 1500650</p>
-                <p style="text-align:center; font-size:12px; margin-bottom:5px;"><b>Follow kami di :</b></p>
-                <p style="text-align:center; font-size:12px; margin-top:0;">
-                    <a href="http://www.facebook.com/travorama" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/facebook-icon.png" alt="F" /> www.facebook.com/travorama</a>  | <a href="http://twitter.com/travoramaid" style="color:#0050ef; text-decoration:none;"> <img src="http://travorama.com/Assets/images/email/twitter-icon.png" alt="T" /> &#64;travoramaid</a>  | <a href="http://instagram.com/travorama" style="color:#0050ef; text-decoration:none;"><img src="http://travorama.com/Assets/images/email/instagram-icon.png" alt="I" /> &#64;travorama</a>
-                </p>
-            </td>
-            <td width="50px" style="background-color:#f2f2f2; background:#f2f2f2;">&nbsp;</td>
-        </tr>
-    </table>
+                        <table width="94%" style="margin-left: 6%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <hr style="border-color: #333333; opacity: 0.2" />
+                                </td>
+                                <td width="5%"></td>
+                                <td>
+                                    <hr style="border-color: #333333; opacity: 0.2" />
+                                </td>
+                                <td width="5%"></td>
+                                <td>
+                                    <hr style="border-color: #333333; opacity: 0.2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%">
+                                    <p style="opacity: 0.5">Bank,</p>
+                                    <p style="margin-top: -5%">Bank Central Asia</p>
+                                </td>
+                                <td width="5%"></td>
+                                <td width="20%">
+                                    <p style="opacity: 0.5">No Rekening,</p>
+                                    <p style="margin-top: -5%">084 777 8800</p>
+                                </td>
+                                <td width="5%"></td>
+                                <td width="20%">
+                                    <p style="opacity: 0.5">Atas Nama,</p>
+                                    <p style="margin-top: -5%">PT Travelmadezy</p>
+                                </td>
+                            </tr>
+                        </table>
 
-</body>
-</html>
+                        @{var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7)}
+                        <p style="font-style: italic; font-size: 11px; margin-left: 6%">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd"), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.Hour.ToString("hh:mm")</span>.</p>
+                        <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: -1%; margin-bottom: 10%">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
+
+                        <table width="100%" style="margin-bottom: -1%">
+                            <tr>
+                                <td width="5%">
+                                    <img src="/Assets/images/email/no-2.png" />
+                                </td>
+                                <td>
+                                    <p>Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
+                        <p style="margin-left: 6%; margin-bottom: 4%">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
+                        <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-038 </span>dengan </p>
+                        <p style="margin-top: -1%; opacity: 0.8; margin-bottom: 7%; margin-left: 6%; font-size: 10px; font-style: italic;">mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 99999999</span></p>
+                        <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%" />
+                        <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
+                        <p style="margin-top: -1%; font-size: 11px; font-style: italic; margin-bottom: 5%;">Email ini ditujukan hanya untuk @Model.Contact.Name, karna Anda telah melakukan pemesanan melalui Travorama</p>
+
+                        </td>
+                        <td width="5%"></td>
+                        </tr>
+                        </tbody>
+                        <tfoot width="100%">
+                            <tr>
+                                <td></td>
+                                <td style="padding-bottom:30px;">
+
+                                    <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
+
+                                        <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
+                                        <p style="margin-top:0; margin-bottom:5px;">
+                                            <span style="color:#1daee5;">A.</span> Equity Tower 25th Floor, SCBD lot 9<br />Jl. Jenderal Sudirman Kav.52-53<br />Jakarta 12190
+                                        </p>
+                                        <p style="margin-top:0;">
+                                            <span style="color:#1daee5;">T.</span> 021 724 808 48
+                                        </p>
+
+                                    </address>
+
+                                </td>
+
+                                <td>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                        </table>
+
+
+                    </body>
+                </html>
