@@ -140,8 +140,12 @@ app.controller('checkoutController', [
 
         $scope.loggedIn = loggedIn;
 
+        $scope.buyerInfo = {};
         if ($scope.loggedIn) {
-            $scope.buyerInfo = buyerInfo;
+            $scope.buyerInfo.fullname = buyerInfo.fullname;
+            $scope.buyerInfo.countryCode = buyerInfo.countryCode;
+            $scope.buyerInfo.phone = buyerInfo.phone;
+            $scope.buyerInfo.email = buyerInfo.email;
         } else {
             $scope.buyerInfo = {};
         }
