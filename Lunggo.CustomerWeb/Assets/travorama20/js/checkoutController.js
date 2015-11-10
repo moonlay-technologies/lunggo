@@ -160,7 +160,7 @@ app.controller('checkoutController', [
 
         $scope.flightDetail = {};
 
-        $scope.flightDetail.departureFullDate = '2016-10-12'; // development only. Please change the value to actual date on production
+        $scope.flightDetail.departureFullDate = departureDate; // development only. Please change the value to actual date on production
         $scope.flightDetail.departureDate = -1;
         $scope.flightDetail.departureMonth = -1;
         $scope.flightDetail.departureYear = -1;

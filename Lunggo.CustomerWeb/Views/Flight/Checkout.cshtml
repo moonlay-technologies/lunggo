@@ -70,7 +70,19 @@
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
-
+        var departureDate;
+        @if (Model.Itinerary.Trips != null)
+        {
+            if (Model.Itinerary.Trips.Count == 2)
+             {
+                 @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
+             }
+             else
+             {
+                 @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
+             }
+        }
+        
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
@@ -518,7 +530,7 @@
 
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")">kebijakan privasi</a></p>
                                         <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
-                                        <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'bayar' : 'MEMPROSES' }}" ng-disabled="checkoutForm.loading || !paymentMethod">
+                                        <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="checkoutForm.loading || !paymentMethod">
                                         
                                     </form>
                                     
