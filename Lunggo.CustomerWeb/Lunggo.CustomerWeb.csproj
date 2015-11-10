@@ -730,6 +730,7 @@
     <Content Include="Assets\images\email-send-icon.png" />
     <Content Include="Assets\images\email-social.jpg" />
     <Content Include="Assets\images\email-twitter.jpg" />
+    <Content Include="Assets\images\email\email-footer.png" />
     <Content Include="Assets\images\email\facebook-icon.png" />
     <Content Include="Assets\images\email\flight-departure-icon.png" />
     <Content Include="Assets\images\email\flight-return-icon.png" />
