@@ -257,11 +257,11 @@ namespace Lunggo.ApCommon.Flight.Service
                         if (savedPassengers.Any(
                             saved => saved.FirstName == passenger.FirstName && saved.LastName == passenger.LastName))
                         {
-                            FlightSavedPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
+                            FlightSavedPassengerTableRepo.GetInstance().Update(conn, passengerRecord);
                         }
                         else
                         {
-                            FlightSavedPassengerTableRepo.GetInstance().Update(conn, passengerRecord);
+                            FlightSavedPassengerTableRepo.GetInstance().Insert(conn, passengerRecord);
                         }
                     }
                 }

@@ -53,9 +53,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.IsSuccess = true;
                     //TODO voucher code di sini? no.
                     //TODO rapiin juga ini biar ga ada akses query lgsg
-                    var usedVoucherCode =
-                        GetVoucherCodeQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
-                    VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
                     if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
                     {
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
@@ -73,11 +70,6 @@ namespace Lunggo.ApCommon.Flight.Service
                     if (output.OrderResults.Any(set => set.IsSuccess))
                     {
                         output.PartiallySucceed();
-                        //TODO voucher code di sini? no.
-                        //TODO rapiin juga ini biar ga ada akses query lgsg
-                        var usedVoucherCode =
-                            GetVoucherCodeQuery.GetInstance().Execute(conn, new { input.RsvNo }).Single();
-                        VoucherService.GetInstance().InvalidateVoucher(usedVoucherCode);
                     }
                     output.IsSuccess = false;
                     output.Errors = output.Errors.Distinct().ToList();

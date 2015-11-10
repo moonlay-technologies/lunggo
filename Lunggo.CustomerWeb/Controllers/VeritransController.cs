@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -54,7 +55,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (notif.order_id.IsFlightRsvNo())
                 {
                     var flight = FlightService.GetInstance();
-                    flight.UpdateFlightPayment(notif.order_id, paymentInfo);
+                    Task.Run(() => flight.UpdateFlightPayment(notif.order_id, paymentInfo));
                 }
             }
             return new EmptyResult();
