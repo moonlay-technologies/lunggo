@@ -36,12 +36,12 @@ namespace Lunggo.WebJob.EmailQueueHandler
         public static void Init()
         {
             InitConfigurationManager();
+            InitTableStorageService();
             InitDatabaseService();
             InitQueueService();
             InitHtmlTemplateService();
             InitMailService();
             InitBlobStorageService();
-            InitTableStorageService();
             //InitTraceListener();
         }
 
