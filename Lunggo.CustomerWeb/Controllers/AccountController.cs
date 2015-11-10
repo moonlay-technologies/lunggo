@@ -59,23 +59,25 @@ namespace Lunggo.CustomerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Message = "InvalidInputData";
-                return View(new {model, returnUrl});
+                return View(model);
             }
 
             var foundUser = await UserManager.FindByEmailAsync(model.Email);
             if (foundUser == null)
             {
                 ViewBag.Message = "NotRegistered";
-                return View(new { model, returnUrl });
+                return View(model);
             }
 
             if (!foundUser.EmailConfirmed)
             {
                 ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                return View(new { model, returnUrl });
+                return View(model);
             }
 
             var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
@@ -91,11 +93,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                    return View(new { model, returnUrl });
+                    return View(model);
                 case SignInStatus.Failure:
                 default:
                     ViewBag.Message = "Failed";
-                    return View(new { model, returnUrl });
+                    return View(model);
             }
 
         }
