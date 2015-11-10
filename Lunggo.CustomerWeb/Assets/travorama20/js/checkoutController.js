@@ -36,6 +36,7 @@ app.controller('checkoutController', [
             confirmedCode: '',
             code: '',
             amount: 0,
+            status: '',
             checking: false,
             checked: false,
             check: function() {
@@ -52,7 +53,8 @@ app.controller('checkoutController', [
                 }).then(function (returnData) {
                     console.log(returnData);
                     if (returnData.data.Discount > 0) {
-                        $scope.voucher.amount = returnData.Amount;
+                        $scope.voucher.amount = returnData.data.Discount;
+                        $scope.voucher.status = returnData.data.ValidationStatus;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                     }
                     $scope.voucher.checked = true;
@@ -245,7 +247,7 @@ app.controller('checkoutController', [
             if (year % 4 == 0 &&  month == 1) {
                 maxDate = 29;
             } else {
-                if (month == 2) {
+                if (month == 1) {
                     maxDate = 28;
                 } else if (month == 3 || month == 5 || month == 8 || month == 10 || month == 12 ) {
                     maxDate = 30;
