@@ -162,6 +162,9 @@
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\general.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>

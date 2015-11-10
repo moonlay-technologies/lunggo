@@ -86,7 +86,7 @@ namespace Lunggo.CustomerWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return Redirect(String.IsNullOrEmpty(returnUrl) ? defaultReturnUrl : returnUrl);
+                    return Redirect(String.IsNullOrEmpty(returnUrl) || returnUrl.Contains("/Account/") ? defaultReturnUrl : returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -217,8 +217,6 @@ namespace Lunggo.CustomerWeb.Controllers
             if (result.Succeeded)
             {
                 UserManager.AddToRole(userId, "Customer");
-                var voucherCode = VoucherService.GetInstance().GenerateVoucherCode(email);
-                VoucherService.GetInstance().SendVoucherEmailToCustomer(email, voucherCode);
                 var model = new ResetPasswordViewModel
                 {
                     Email = await UserManager.GetEmailAsync(userId)

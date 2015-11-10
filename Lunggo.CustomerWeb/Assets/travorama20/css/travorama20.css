@@ -4620,21 +4620,48 @@ file : /Assets/travorama20/css/_page_password.scss
     background-color: #eaeaea;
     padding: 24px; }
 
-.page-howtopay .list-wrapper {
+.page-howtopay .list-wrapper, .page-howtoorder .list-wrapper {
   counter-reset: list-item; }
-  .page-howtopay .list-wrapper .list {
+  .page-howtopay .list-wrapper .list, .page-howtoorder .list-wrapper .list {
     counter-increment: list-item; }
-    .page-howtopay .list-wrapper .list .list-summary h4 {
+    .page-howtopay .list-wrapper .list .list-summary .container, .page-howtoorder .list-wrapper .list .list-summary .container {
+      padding-left: 85px; }
+    .page-howtopay .list-wrapper .list .list-summary h4, .page-howtoorder .list-wrapper .list .list-summary h4 {
       font-weight: bold;
       color: #1daee4;
       position: relative; }
-      .page-howtopay .list-wrapper .list .list-summary h4:before, .page-howtopay .list-wrapper .list .list-summary .page-index h4.section-reason:after, .page-index .page-howtopay .list-wrapper .list .list-summary h4.section-reason:after {
+      .page-howtopay .list-wrapper .list .list-summary h4:before, .page-howtopay .list-wrapper .list .list-summary .page-index h4.section-reason:after, .page-index .page-howtopay .list-wrapper .list .list-summary h4.section-reason:after, .page-howtoorder .list-wrapper .list .list-summary h4:before, .page-howtoorder .list-wrapper .list .list-summary .page-index h4.section-reason:after, .page-index .page-howtoorder .list-wrapper .list .list-summary h4.section-reason:after {
         content: "0" counter(list-item);
         position: absolute;
         font-size: 32px;
         color: #fff;
         background: url(/Assets/images/list-bg.png) top center no-repeat;
         background-size: contain;
-        padding: 15px;
-        padding-top: 0;
+        padding: 20px;
+        padding-top: 5px;
         right: 100%; }
+    .page-howtopay .list-wrapper .list .list-summary .list-image, .page-howtoorder .list-wrapper .list .list-summary .list-image {
+      text-align: center; }
+    .page-howtopay .list-wrapper .list .list-detail, .page-howtoorder .list-wrapper .list .list-detail {
+      background: #061c38;
+      color: #fff;
+      display: none; }
+      .page-howtopay .list-wrapper .list .list-detail .detail-title, .page-howtoorder .list-wrapper .list .list-detail .detail-title {
+        color: #00deff;
+        font-weight: 600; }
+      .page-howtopay .list-wrapper .list .list-detail .container, .page-howtoorder .list-wrapper .list .list-detail .container {
+        position: relative;
+        padding-top: 30px;
+        padding-bottom: 30px; }
+      .page-howtopay .list-wrapper .list .list-detail .close-list, .page-howtoorder .list-wrapper .list .list-detail .close-list {
+        position: absolute;
+        right: 0;
+        top: -2px; }
+    .page-howtopay .list-wrapper .list.active .list-detail, .page-howtoorder .list-wrapper .list.active .list-detail {
+      display: block; }
+
+.page-howtoorder .list-image {
+  height: 420px; }
+  .page-howtoorder .list-image img {
+    width: 742px;
+    margin-left: -160px; }

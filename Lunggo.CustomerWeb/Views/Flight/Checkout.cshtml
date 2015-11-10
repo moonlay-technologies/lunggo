@@ -89,7 +89,7 @@
         } else {
             currentPage = 1;
         }
-        var loggedIn = @User.Identity.IsAuthenticated;
+        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
         var buyerInfo = {
             fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
             countryCode : '@User.Identity.GetCountryCd()',
@@ -283,11 +283,11 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <p>Country Code</p>
-                                                <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
+                                                <input type="text" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
@@ -347,8 +347,8 @@
                                                         <div class="col-xs-4">
                                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth))">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth))">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">

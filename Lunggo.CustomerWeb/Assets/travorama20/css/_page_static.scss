@@ -118,15 +118,32 @@
 }
 
 // page how to pay
-.page-howtopay {
+.page-howtopay, .page-howtoorder {
     .list-wrapper {counter-reset:list-item;
         .list {counter-increment:list-item;
             .list-summary {
+                .container {padding-left:85px;}
                 h4 {font-weight:bold; color:$color-main-blue;  position:relative;
-                    &:before {content:"0" counter(list-item); position:absolute; font-size:32px; color:#fff; background:url(/Assets/images/list-bg.png) top center no-repeat; background-size:contain; padding:15px; padding-top:0; right:100%;}
+                    &:before {content:"0" counter(list-item); position:absolute; font-size:32px; color:#fff; background:url(/Assets/images/list-bg.png) top center no-repeat; background-size:contain; padding:20px; padding-top:5px; right:100%;}
+                }
+                .list-image {text-align:center;
+                    img {}
                 }
             }
-            .list-detail {}
+            .list-detail {background:#061c38; color:#fff; display:none;
+                .detail-title {color:#00deff; font-weight:600;}
+                .container {position:relative; padding-top:30px; padding-bottom:30px;}
+                .close-list {position:absolute; right:0; top:-2px;}
+            }
+            // if active
+            &.active {
+                .list-detail {display:block;}
+            }
         }
+    }
+}
+.page-howtoorder {
+    .list-image {height:420px;
+        img {width:742px; margin-left:-160px;}
     }
 }
