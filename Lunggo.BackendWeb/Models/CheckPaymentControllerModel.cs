@@ -6,5 +6,6 @@ namespace Lunggo.BackendWeb.Models
     {
         public string RsvNo { get; set; }
         public TransferConfirmationReportStatus Status { get; set; }
+        public decimal Amount { get; set; }
     }
 }

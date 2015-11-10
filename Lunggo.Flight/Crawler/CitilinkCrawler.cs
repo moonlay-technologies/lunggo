@@ -1,7 +1,6 @@
 ﻿using CsQuery;
 using Lunggo.Flight.Model;
 using Lunggo.Framework.Web;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

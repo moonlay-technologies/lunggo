@@ -12,7 +12,6 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Voucher;
-using Lunggo.Framework.Context;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
