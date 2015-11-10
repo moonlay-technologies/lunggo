@@ -268,7 +268,7 @@
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.fullname.$touched && buyerForm.fullname.$invalid}">
                                         <label class="control-label important">Nama Lengkap :</label>
                                         <div>
-                                            <input type="text" class="form-control" value="" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
+                                            <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" id="buyer-fullname" placeholder="Full Name" name="fullname" ng-model="buyerInfo.fullname" required />
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : (buyerForm.phone.$touched && buyerForm.phone.$invalid) || (buyerForm.countryCode.$touched && buyerForm.countryCode.$invalid)}">
@@ -276,18 +276,18 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <p>Country Code</p>
-                                                <input type="number" name="countryCode" value="" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
+                                                <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="3" />
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="number" class="form-control" value="" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group" ng-class="{'has-error' : buyerForm.email.$touched && buyerForm.email.$invalid}">
                                         <label class="control-label important">Masukan Alamat Email Anda:</label>
                                         <div>
-                                            <input type="email" class="form-control" value="" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
+                                            <input type="email" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" id="buyer-email" placeholder="Ex: Email@travelmadezy.com" name="email" ng-model="buyerInfo.email" required />
                                         </div>
                                     </div>
 
@@ -496,10 +496,10 @@
                                             <input type="type" name="Language" value="" ng-model="language" />
 
                                             <p>Buyer Info</p>
-                                            <input type="text" name="Contact.Name" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" ng-model="buyerInfo.fullname" />
-                                            <input type="text" name="Contact.CountryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" ng-model="buyerInfo.countryCode" />
-                                            <input type="text" name="Contact.Phone" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" ng-model="buyerInfo.phone" />
-                                            <input type="text" name="Contact.Email" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" ng-model="buyerInfo.email" />
+                                            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
+                                            <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
+                                            <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
+                                            <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
 
                                             <p>Passenger Info</p>
                                             <div ng-repeat="passenger in passengers track by $index">
