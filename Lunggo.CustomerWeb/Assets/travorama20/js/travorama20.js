@@ -114,7 +114,7 @@ function subscribeFormFunctions() {
         if ($('form.subscribe-form input.subscribe-name').val()) {
             SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
         } else {
-            $('form.subscribe-form input.subscribe-name').attr('placeholder', 'Mohon masukan Alamat Nama Anda');
+            $('form.subscribe-form input.subscribe-name').attr('placeholder', 'Mohon masukan Nama Anda');
             $('form.subscribe-form input.subscribe-name').parent().addClass('has-error');
         }
 
