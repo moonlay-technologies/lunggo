@@ -429,19 +429,19 @@
             <div class="search-result-sort" ng-hide="!departureFlightConfig.flightList.length">
                 <div class="container">
                     <div class="sort-airline">
-                        <span ng-click="setSort('departure','airline')">Maskapai</span>
+                        <span ng-click="setSort('departure','airline')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'airline'}">Maskapai</span>
                     </div>
                     <div class="sort-departure">
-                        <span ng-click="setSort('departure','departure')">Berangkat</span>
+                        <span ng-click="setSort('departure','departure')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'departure'}">Berangkat</span>
                     </div>
                     <div class="sort-duration">
-                        <span ng-click="setSort('departure','duration')">Durasi</span>
+                        <span ng-click="setSort('departure','duration')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'duration'}">Durasi</span>
                     </div>
                     <div class="sort-arrival">
-                        <span ng-click="setSort('departure','arrival')">Tiba</span>
+                        <span ng-click="setSort('departure','arrival')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('departure','price')">Harga Total</span>
+                        <span ng-click="setSort('departure','price')" ng-class="{'active' : departureFlightConfig.flightSort.label == 'price'}">Harga Total</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->
@@ -751,19 +751,19 @@
             <div class="search-result-sort" ng-hide="!returnFlightConfig.flightList.length">
                 <div class="container">
                     <div class="sort-airline">
-                        <span ng-click="setSort('return','airline')">Maskapai</span>
+                        <span ng-click="setSort('return','airline')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'airline'}">Maskapai</span>
                     </div>
                     <div class="sort-departure">
-                        <span ng-click="setSort('return','departure')">Berangkat</span>
+                        <span ng-click="setSort('return','departure')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'departure'}">Berangkat</span>
                     </div>
                     <div class="sort-duration">
-                        <span ng-click="setSort('return','duration')">Durasi</span>
+                        <span ng-click="setSort('return','duration')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'duration'}">Durasi</span>
                     </div>
                     <div class="sort-arrival">
-                        <span ng-click="setSort('return','arrival')">Tiba</span>
+                        <span ng-click="setSort('return','arrival')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'arrival'}">Tiba</span>
                     </div>
                     <div class="sort-price">
-                        <span ng-click="setSort('return','price')">Harga Total</span>
+                        <span ng-click="setSort('return','price')" ng-class="{'active' : returnFlightConfig.flightSort.label == 'price'}">Harga Total</span>
                     </div>
                 </div>
             </div><!-- .search-result-sort -->

@@ -47,6 +47,7 @@ app.controller('accountController', [
             // edit profile form
             if (name == 'profile') {
                 $scope.userProfile.edit = !($scope.userProfile.edit);
+                $scope.userProfile.updated = false;
             }
             else if (name == 'profileSave') {
                 console.log('submitting form');
@@ -73,6 +74,7 @@ app.controller('accountController', [
                         $scope.userProfile.country = $scope.editProfile.country;
                         $scope.userProfile.edit = false;
                         $scope.userProfile.updating = false;
+                        $scope.userProfile.updated = true;
                     }
                     else {
                         console.log(returnData.data.Description);
@@ -88,6 +90,7 @@ app.controller('accountController', [
             }
             if (name == 'password') {
                 $scope.password.edit = !($scope.password.edit);
+                $scope.password.failed = false;
             }
             else if (name == 'passwordSave') {
 

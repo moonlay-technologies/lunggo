@@ -198,6 +198,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         .container>div {float:left; text-align:center;
             span {font-weight:bold; font-size:14px; cursor:pointer;
                 &:before {content:url(/Assets/images/flight-sort-switch.png); margin-right:5px;}
+                &.active {color:$color-main-blue;}
             }
             &.sort-airline {width:18.2%;}
             &.sort-departure {width:17.5%;}
