@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
-using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Error;
 

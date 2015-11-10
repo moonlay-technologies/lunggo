@@ -117,4 +117,16 @@
     }
 }
 
-
+// page how to pay
+.page-howtopay {
+    .list-wrapper {counter-reset:list-item;
+        .list {counter-increment:list-item;
+            .list-summary {
+                h4 {font-weight:bold; color:$color-main-blue;  position:relative;
+                    &:before {content:"0" counter(list-item); position:absolute; font-size:32px; color:#fff; background:url(/Assets/images/list-bg.png) top center no-repeat; background-size:contain; padding:15px; padding-top:0; right:100%;}
+                }
+            }
+            .list-detail {}
+        }
+    }
+}
