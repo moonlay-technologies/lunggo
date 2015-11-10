@@ -256,17 +256,17 @@ file : /Assets/travorama20/css/_page_index.scss
         .container {position:relative;}
         .subscribe-bg {position:absolute; left:-50px; top:-57px; height:200px;}
 
-        h2 {padding-left:80px; line-height:145%; letter-spacing:0; padding-top:10px; font-size:22px;}
+        h2 {padding-left:80px; line-height:145%; letter-spacing:0; padding-top:15px; font-size:18px;}
         form {padding-top:10px;
             input[type="text"] {padding:8px 12px; height:auto; font-size:12px;}
             .subscribe-email {}
-            .subscribe-name {width:80%; float:left;}
-            .btn {width:19%; margin-left:1%; padding:9px;}
+            .subscribe-name {width:69%; float:left;}
+            .btn {width:30%; margin-left:1%; padding:9px;}
             .form-group {margin-top:7px; margin-bottom:8px;}
         }
     
         .subscribe-after {display:none; height:114px; padding-top:10px;
-            h2 {padding:0;}
+            h2 {padding:0; font-size:22px; padding-top:15px;}
         }
 
     }

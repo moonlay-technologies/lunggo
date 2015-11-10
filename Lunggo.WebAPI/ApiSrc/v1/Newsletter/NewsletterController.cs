@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Lunggo.ApCommon.Subscriber;
 using Lunggo.Framework.Cors;
-using Lunggo.Framework.Database;
-using Lunggo.Framework.Extension;
-using Lunggo.Framework.Mail;
-using Lunggo.Framework.Queue;
-using Lunggo.Repository.TableRecord;
-using Lunggo.Repository.TableRepository;
 using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
-using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Query;
-using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
 {
@@ -23,36 +18,95 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
         [HttpPost]
         public bool NewsletterSubscribe(HttpRequestMessage httpRequest, [FromBody] NewsletterSubscribeInput input)
         {
-            input.Address = input.Address.ToLower();
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            if (!ModelState.IsValid)
             {
-                var found = CheckEmailQuery.GetInstance().Execute(conn, new {Email = input.Address}).Single();
-                if (Convert.ToBoolean(found))
+                return false;
+            }
+            var client = CreateApiClient();
+            var request = CreateApiRequest();
+            var jsonBody = CreateApiJsonBody(input);
+            request.AddJsonBody(jsonBody);
+            var response = client.Execute(request);
+            return IsApiResponseValid(response);
+
+        }
+
+        private bool IsApiResponseValid(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(response.Content))
                 {
-                    return false;
+                    var jObject = JObject.Parse(response.Content);
+                    var errorReason = (String) jObject["title"];
+                    return errorReason == "Member Exists";
                 }
                 else
                 {
-                    var mailService = MailService.GetInstance();
-                    var mailModel = new MailModel
-                    {
-                        RecipientList = new[] { "travorama.newsletter@gmail.com" },
-                        FromMail = "newsletter@travorama.com",
-                        FromName = "Newsletter Travorama",
-                        Subject = input.Address
-                    };
-                    mailService.SendEmail(input.Address, mailModel, "Newsletter");
-                    var queue = QueueService.GetInstance().GetQueueByReference("InitialSubscriberEmail");
-                    var message = new SubscriberEmailModel
-                    {
-                        Email = input.Address
-                    };
-                    queue.AddMessage(new CloudQueueMessage(message.Serialize()));
-                    NewsletterSubscriberTableRepo.GetInstance()
-                        .Insert(conn, new NewsletterSubscriberTableRecord {Email = input.Address});
-                    return true;
+                    return false;
                 }
             }
         }
+
+        //TODO Bikin di Lunggo.Config
+        private RestClient CreateApiClient()
+        {
+            var path = "http://us11.api.mailchimp.com";
+            //
+            var client = new RestClient(path)
+            {
+                Authenticator = new HttpBasicAuthenticator("travorama", "ad2872c0ab96857c93f3d69fdc88026f-us11")
+            };
+            return client;
+        }
+
+        //TODO bikin di Lunggo.CONFIG
+        private RestRequest CreateApiRequest()
+        {
+            var path = "3.0/lists/4997f6c614/members";
+            //
+            var request = new RestRequest(path, Method.POST);
+            return request;
+        }
+
+        private MailchimpSubscriberJson CreateApiJsonBody(NewsletterSubscribeInput input)
+        {
+            var nameSplitted = input.Name.Trim().Split((char[]) null);
+            var firstName = nameSplitted[0];
+            var lastName = nameSplitted.Length > 1 ? String.Join(" ", nameSplitted.Skip(1)) : nameSplitted[0];
+
+            var jsonBody = new MailchimpSubscriberJson
+            {
+                status = "subscribed",
+                email_address = input.Address.Trim().ToLowerInvariant(),
+                merge_fields = new MergeFields
+                {
+                    FNAME = firstName,
+                    LNAME = lastName
+                }
+            };
+            return jsonBody;
+        }
+        
     }
+
+    
+
+    public class MailchimpSubscriberJson
+    {
+        public String email_address { get; set; }
+        public String status { get; set; }
+        public MergeFields merge_fields { get; set; }
+    }
+
+    public class MergeFields
+    {
+        public String FNAME { get; set; }
+        public String LNAME { get; set; }
+    }
+
 }

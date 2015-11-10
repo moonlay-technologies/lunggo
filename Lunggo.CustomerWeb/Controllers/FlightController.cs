@@ -11,7 +11,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
 using Lunggo.Framework.SharedModel;
-using RestSharp.Extensions;
+using Lunggo.Framework.Util;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -112,21 +112,6 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(summary);
         }
 
-        public ActionResult Confirmation(string rsvNo)
-        {
-            if (rsvNo == null)
-                return RedirectToAction("Index", "UW100TopPage");
-            var flightService = FlightService.GetInstance();
-            var reservation = flightService.GetReservationForDisplay(rsvNo);
-            var viewModel = new FlightPaymentConfirmationData
-            {
-                RsvNo = rsvNo,
-                TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault(),
-                FinalPrice = reservation.Payment.FinalPrice
-            };
-            return View(viewModel);
-        }
-
         [HttpPost]
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
@@ -135,7 +120,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var fileInfo = file.ContentLength > 0
                 ? new FileInfo
                 {
-                    FileData = file.InputStream.ReadAsBytes(),
+                    FileData = file.InputStream.StreamToByteArray(),
                     ContentType = file.ContentType,
                     FileName = file.FileName
                 }
