@@ -12,6 +12,7 @@
     <AssemblyName>Lunggo.Worker</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Lunggo.Worker</Name>
+    <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
