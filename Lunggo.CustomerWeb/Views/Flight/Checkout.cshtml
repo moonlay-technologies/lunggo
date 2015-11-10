@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Payment.Constant
+﻿@using Lunggo.ApCommon.Identity.User
+@using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
@@ -219,13 +220,15 @@
                                 <div class="travorama-login" ng-class="{'active' : loginShown}">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
                                     <div class="login-content">
-                                        <form class="form form-horizontal">
+                                        @using (Html.BeginForm("Login", "Account", new{returnUrl = HttpContext.Current.Request.Url},FormMethod.Post, new {@class = "form form-horizontal"}))
+                                        {
+                                            @Html.AntiForgeryToken()
                                             <div class="form-group">
                                                 <div class="col-xs-5">
-                                                    <input type="text" class="form-control" id="login-username" value="" placeholder="Email Address" />
+                                                    <input type="text" class="form-control" name="Email" id="login-username" value="" placeholder="Email Address" />
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <input type="password" class="form-control" id="login-password" value="" placeholder="Password" />
+                                                    <input type="password" class="form-control" name="Password" id="login-password" value="" placeholder="Password" />
                                                 </div>
                                                 <div class="col-xs-2">
                                                     <input type="submit" value="LOG IN" class="btn btn-yellow form-control" />
@@ -233,10 +236,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-xs-10 text-right">
-                                                    <a href="#">Lupa Password?</a>
+                                                    <a href="@Url.Action("ForgotPassword", "Account")">Lupa Password?</a>
                                                 </div>
                                             </div>
-                                        </form>
+                                        }
                                     </div>
                                 </div><!-- .travorama-login -->
 
@@ -481,10 +484,10 @@
                                             <input type="type" name="Language" value="" ng-model="language" />
 
                                             <p>Buyer Info</p>
-                                            <input type="text" name="Contact.Name" value="" ng-model="buyerInfo.fullname" />
-                                            <input type="text" name="Contact.CountryCode" value="" ng-model="buyerInfo.countryCode" />
-                                            <input type="text" name="Contact.Phone" value="" ng-model="buyerInfo.phone" />
-                                            <input type="text" name="Contact.Email" value="" ng-model="buyerInfo.email" />
+                                            <input type="text" name="Contact.Name" value="@(User.Identity.IsAuthenticated ? User.Identity.GetFirstName() + User.Identity.GetLastName() : "")" ng-model="buyerInfo.fullname" />
+                                            <input type="text" name="Contact.CountryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" ng-model="buyerInfo.countryCode" />
+                                            <input type="text" name="Contact.Phone" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" ng-model="buyerInfo.phone" />
+                                            <input type="text" name="Contact.Email" value="@(User.Identity.IsAuthenticated ? User.Identity.GetEmail() : "")" ng-model="buyerInfo.email" />
 
                                             <p>Passenger Info</p>
                                             <div ng-repeat="passenger in passengers track by $index">

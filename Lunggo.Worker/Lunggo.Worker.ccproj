@@ -54,8 +54,7 @@
     <DiagnosticsConfiguration Include="Lunggo.Worker.EticketHandlerContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\qa.azurePubxml" />
-    <PublishProfile Include="Profiles\dv11.azurePubxml" />
+    <PublishProfile Include="Profiles\lunggoworkerdv1Production.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
