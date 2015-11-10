@@ -74,21 +74,28 @@
         @if (Model.Itinerary.Trips != null)
         {
             if (Model.Itinerary.Trips.Count == 2)
-             {
-                 @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
-             }
-             else
-             {
-                 @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
-             }
+            {
+                @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate.ToString("dd/MM/yyyy")';
+            }
+            else
+            {
+                @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate.ToString("dd/MM/yyyy")';
+            }
         }
-        
+
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');
         } else {
             currentPage = 1;
         }
+        var loggedIn = @User.Identity.IsAuthenticated;
+        var buyerInfo = {
+            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode : '@User.Identity.GetCountryCd()',
+            phone: '@User.Identity.GetPhoneNumber()',
+            email: '@User.Identity.GetEmail()'
+        };
 
     </script>
     <!-- angular controller -->
@@ -229,7 +236,7 @@
 
                                 <h3><b>DETAIL</b> PEMESAN</h3>
 
-                                <div class="travorama-login" ng-class="{'active' : loginShown}">
+                                <div class="travorama-login" ng-class="{'active' : loginShown}" ng-if="!loggedIn">
                                     <a class="login-toggle" ng-click="toggleLogin()"><b>Login</b> with your <b>TRAVORAMA</b> Account <span class="caret"></span></a>
                                     <div class="login-content">
                                         @using (Html.BeginForm("Login", "Account", new{returnUrl = HttpContext.Current.Request.Url},FormMethod.Post, new {@class = "form form-horizontal"}))
@@ -306,7 +313,6 @@
                                 <div class="passenger-detail">
                                 
                                 <form novalidate name="passengersForm">
-
                                     <div class="passenger-form" id="passenger-{{$index}}" ng-repeat="passenger in passengers track by $index" ng-init="initPassenger(passenger)">
                                         <header>
                                             <span>Penumpang {{$index + 1}} ({{passenger.typeName}}) <span ng-show="passenger.firstname || passenger.lastname"> : {{ passenger.title + ' ' + passenger.firstname + ' ' + passenger.lastname}}</span></span>
@@ -333,14 +339,16 @@
                                                     <div class="row">
                                                         <div class="col-xs-4">
                                                             <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="passenger.birth.date" required ng-change="validateBirthday(passenger)">
-                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'adult'">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'child' && !( passenger.birth.year == flightDetail.minYearChild && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate )">{{date}}</option>
+                                                                <option value="{{date}}" ng-repeat="date in dates(passenger.birth.month, passenger.birth.year)" ng-selected="date == passenger.birth.date" ng-if="passenger.type == 'infant' && !( (passenger.birth.year == flightDetail.minYearInfant && passenger.birth.month == flightDetail.departureMonth && date < flightDetail.departureDate))">{{date}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
                                                             <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="passenger.birth.month" required ng-change="validateBirthday(passenger)">
                                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'adult'">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && !(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth)">{{month.name}}</option>
-                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && !(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth)">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'child' && (!(passenger.birth.year == flightDetail.minYearChild && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
+                                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == passenger.birth.month" ng-if="passenger.type == 'infant' && (!(passenger.birth.year == flightDetail.minYearInfant && month.value < flightDetail.departureMonth) && !(passenger.birth.year == bookingDate.getFullYear() && month.value > bookingDate.getMonth()))">{{month.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-xs-4">
@@ -409,6 +417,7 @@
                                 <div class="step-button">
                                     <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                                     <button class="btn btn-yellow" ng-click="changePage(4)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
+                                    <a class="btn btn-yellow" ng-click="printScope()">$SCOPE</a>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
@@ -617,7 +626,7 @@
                                     </div><!-- .widget.flight-detail -->
                                     <div class="flight-detail" id="return-flight" ng-if="trips[1]">
                                         <div>
-                                            <header><span>PENERBANGAN PERGI</span></header>
+                                            <header><span>PENERBANGAN PULANG</span></header>
                                             <div class="widget-content">
                                                 <div class="airline">
                                                     <img ng-src="{{trips[1].Segments[0].AirlineLogoUrl}}" alt="{{trips[1].Segments[0].AirlineName}}" class="airline-image" />

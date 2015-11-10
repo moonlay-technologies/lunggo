@@ -15,6 +15,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                     return rowAffected > 0;
                 }
             }
+            internal static bool VoucherIncrement(string voucherCode)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    int rowAffected = VoucherIncrementQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode });
+                    return rowAffected > 0;
+                }
+            }
         }
     }
 }
