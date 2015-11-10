@@ -1,4 +1,4 @@
-﻿AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Timezone
+AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Timezone
 0|0A7|Hendersonville Arpt.|0A7|Hendersonville|US|United States|99
 1|AAA|AnaaTest|AAA|Anaa|PF|French Polynesia|-10
 2|AAB|Arrabury|AAB|Arrabury|AU|Australia|99
@@ -193,7 +193,7 @@
 191|AIZ|Lee C Fine Memorial|AIZ|Kaiser/Lake Ozark|US|United States|-6
 192|AJA|Campo Dell Oro|AJA|Ajaccio|FR|France|1
 193|AJF|Jouf|AJF|Sakaka Al Jouf|SA|Saudi Arabia|3
-194|AJI|AÄŸri|AJI|Agri|TR|Turkey|2
+194|AJI|Ağri|AJI|Agri|TR|Turkey|2
 195|AJJ|Akjoujt|AJJ|Akjoujt|MR|Mauritania|99
 196|AJK|Araak|AJK|Araak|IR|Iran|99
 197|AJL|Aizawl|AJL|Aizawl|IN|India|5.5
@@ -520,7 +520,7 @@
 518|AZO|Kalamazoo/Battle Creek Intl|AZO|Kalamazoo|US|United States|-5
 519|AZP|Atizapan|AZP|Mexico City|MX|Mexico|99
 520|AZR|Adrar|AZR|Adrar|DZ|Algeria|1
-521|AZS|SamanÃ¡ El Catey Intl.|AZS|El Catey|DO|Dominican Republic|-4
+521|AZS|Samaná El Catey Intl.|AZS|El Catey|DO|Dominican Republic|-4
 522|AZT|Zapatoca|AZT|Zapatoca|CO|Colombia|99
 523|AZZ|Ambriz|AZZ|Ambriz|AO|Angola|99
 524|BAA|Bialla|BAA|Bialla|PG|Papua New Guinea|99
@@ -770,7 +770,7 @@
 768|BJU|Bajura Arpt|BJU|Bajura|NP|Nepal|5.75
 769|BJV|Milas|BJV|Milas|TR|Turkey|2
 770|BJW|Bajawa|BJW|Bajawa|ID|Indonesia|99
-771|BJX|Del BajÃ­o Intl.|BJX|LeÃ³n|MX|Mexico|-6
+771|BJX|Del Bajío Intl.|BJX|León|MX|Mexico|-6
 772|BJY|Batajnica|BJY|Belgrade|RS|Serbia|99
 773|BJZ|Talaveral La Real|BJZ|Badajoz|ES|Spain|1
 774|BKA|Bykovo|MOW|Moscow|RU|Russian Federation|4
@@ -878,7 +878,7 @@
 876|BOA|Boma|BOA|Boma|ZR|Zaire|1
 877|BOB|Motu-mute|BOB|Bora Bora|PF|French Polynesia|-10
 878|BOC|Bocas Del Toro|BOC|Bocas Del Toro|PA|Panama|-5
-879|BOD|MÃ©rignac|BOD|Bordeaux|FR|France|1
+879|BOD|Mérignac|BOD|Bordeaux|FR|France|1
 880|BOE|Boundji|BOE|Boundji|CG|Congo|99
 881|BOF|Bolling AFB|BOF|Washington|US|United States|99
 882|BOG|Eldorado Intl.|BOG|Bogota|CO|Colombia|-5
@@ -957,7 +957,7 @@
 955|BRY|Samuels Field|BRY|Bardstown|||99
 956|BRZ|Borotou|BRZ|Borotou|CI|Cote D'Ivoire|99
 957|BSA|Bossaso|BSA|Bossaso|SO|Somalia|3
-958|BSB|Presidente Juscelino Kubitschek|BSB|BrasÃ­lia|||-3
+958|BSB|Presidente Juscelino Kubitschek|BSB|Brasília|||-3
 959|BSC|Bahia Solano|BSC|Bahia Solano|CO|Colombia|-5
 960|BSD|Baoshan|BSD|Baoshan|CN|China|8
 961|BSE|Sematan|BSE|Sematan|MY|Malaysia|99
@@ -982,7 +982,7 @@
 980|BSX|Bassein|BSX|Bassein|MM|Myanmar|6.5
 981|BSY|Bardera|BSY|Bardera|SO|Somalia|99
 982|BSZ|Bartletts|BSZ|Bartletts|US|United States|99
-983|BTA|YaoundÃ©|BTA|YaoundÃ©|CM|Cameroon|99
+983|BTA|Yaoundé|BTA|Yaoundé|CM|Cameroon|99
 984|BTB|Betou|BTB|Betou|CG|Congo|99
 985|BTC|Batticaloa|BTC|Batticaloa|LK|Sri Lanka|99
 986|BTD|Brunette Downs|BTD|Brunette Downs|AU|Australia|99
@@ -1000,7 +1000,7 @@
 998|BTP|Butler County - Kenny Scholter Field|BTP|Butler|US|United States|99
 999|BTQ|Butare|BTQ|Butare|RW|Rwanda|99
 1000|BTR|Ryan|BTR|Baton Rouge|US|United States|-6
-1001|BTS|M. R. Å tefÃ¡nika|BTS|Bratislava|SK|Slovakia|1
+1001|BTS|M. R. Štefánika|BTS|Bratislava|SK|Slovakia|1
 1002|BTT|Bettles|BTT|Bettles|US|United States|-9
 1003|BTU|Bintulu|BTU|Bintulu|MY|Malaysia|8
 1004|BTV|Burlington Intl.|BTV|Burlington|US|United States|-5
@@ -1592,7 +1592,7 @@
 1590|CUK|Caye Caulker|CUK|Caye Caulker|BZ|Belize|-6
 1591|CUL|Fedl De Bachigualato|CUL|Culiacan|MX|Mexico|-7
 1592|CUM|Cumana|CUM|Cumana|VE|Venezuela|-4.5
-1593|CUN|CancÃºn Intl.|CUN|Cancun|MX|Mexico|-6
+1593|CUN|Cancún Intl.|CUN|Cancun|MX|Mexico|-6
 1594|CUO|Caruru|CUO|Caruru|CO|Colombia|99
 1595|CUP|Carupano|CUP|Carupano|VE|Venezuela|-4.5
 1596|CUQ|Coen|CUQ|Coen|AU|Australia|10
@@ -1806,7 +1806,7 @@
 1804|DJU|Djupivogur|DJU|Djupivogur|IS|Iceland|99
 1805|DKI|Dunk Island|DKI|Dunk Island|AU|Australia|10
 1806|DKK|Dunkirk|DKK|Dunkirk|US|United States|-5
-1807|DKR|Dakar-Yoff-LÃ©opold SÃ©dar Senghor Intl.|DKR|Dakar|SN|Senegal|0
+1807|DKR|Dakar-Yoff-Léopold Sédar Senghor Intl.|DKR|Dakar|SN|Senegal|0
 1808|DKS|Dikson|DKS|Dikson|RU|Russian Federation|8
 1809|DKV|Docker River|DKV|Docker River|AU|Australia|99
 1810|DLA|Douala|DLA|Douala|CM|Cameroon|1
@@ -1889,7 +1889,7 @@
 1887|DPK|Deer Park|DPK|Deer Park|US|United States|99
 1888|DPL|Dipolog|DPL|Dipolog|PH|Philippines|8
 1889|DPO|Devonport|DPO|Devonport|AU|Australia|10
-1890|DPS|Ngurah Rai Intl.|DPS|Denpasar|||8
+1890|DPS|Ngurah Rai Intl.|DPS|Denpasar|ID|Indonesia|8
 1891|DPU|Dumpu|DPU|Dumpu|PG|Papua New Guinea|99
 1892|DQA|Daqing Saertu|DQA|Daqing|CN|China|99
 1893|DRA|Desert Rock|DRA|Mercury|US|United States|99
@@ -1940,7 +1940,7 @@
 1938|DUN|Dundas|DUN|Dundas|GL|Greenland|99
 1939|DUQ|Duncan/Quam|DUQ|Duncan/Quam|CA|Canada|99
 1940|DUR|Durban Intl.|DUR|Durban|ZA|South Africa|2
-1941|DUS|DÃ¼sseldorf Intl. Arpt.|DUS|Dusseldorf|DE|Germany|1
+1941|DUS|Düsseldorf Intl. Arpt.|DUS|Dusseldorf|DE|Germany|1
 1942|DUT|Emergency Field|DUT|Dutch Harbor|US|United States|-9
 1943|DVA|Deva|DVA|Deva|RO|Romania|2
 1944|DVK|Diavik|DVK|Diavik|CA|Canada|99
@@ -2123,7 +2123,7 @@
 2121|ENU|Enugu|ENU|Enugu|NG|Nigeria|1
 2122|ENV|Wendover|ENV|Wendover|US|United States|-7
 2123|ENW|Kenosha Regional Arpt.|ENW|Kenosha|US|United States|-6
-2124|EOH|Enrique Olaya Herrera Intl. Arpt.|EOH|MedellÃ­n|CO|Colombia|-5
+2124|EOH|Enrique Olaya Herrera Intl. Arpt.|EOH|Medellín|CO|Colombia|-5
 2125|EOI|Eday|EOI|Eday|GB|United Kingdom|0
 2126|EOK|Keokuk|EOK|Keokuk|US|United States|-6
 2127|EOR|El Dorado|EOR|El Dorado|VE|Venezuela|99
@@ -2226,7 +2226,7 @@
 2224|FAA|Faranah|FAA|Faranah|GN|Guinea|0
 2225|FAB|Farnborough|FAB|Farnborough|GB|United Kingdom|0
 2226|FAC|Faaite|FAC|Faaite|PF|French Polynesia|99
-2227|FAE|Vagar|FAE|SorvÃ¡gur|FO|Faroe Islands|0
+2227|FAE|Vagar|FAE|Sorvágur|FO|Faroe Islands|0
 2228|FAF|Felker AAF|FAF|Fort Eustis|US|United States|-5
 2229|FAG|Fagurholsmyri|FAG|Fagurholsmyri|IS|Iceland|99
 2230|FAH|Farah|FAH|Farah|AF|Afghanistan|99
@@ -2344,7 +2344,7 @@
 2342|FMG|Flamingo|FMG|Flamingo|CR|Costa Rica|99
 2343|FMH|Otis AFB|FMH|Falmouth|US|United States|-5
 2344|FMI|Kalemie|FMI|Kalemie|ZR|Zaire|2
-2345|FMM|Memmingen-AllgÃ¤u|FMM|Memmingen|DE|Germany|1
+2345|FMM|Memmingen-Allgäu|FMM|Memmingen|DE|Germany|1
 2346|FMN|Municipal|FMN|Farmington|US|United States|-7
 2347|FMO|Greven|FMO|Muenster/Osnabrueck|DE|Germany|1
 2348|FMS|Municipal|FMS|Fort Madison|US|United States|99
@@ -2578,7 +2578,7 @@
 2576|GIC|Boigu Island|GIC|Boigu Island|AU|Australia|10
 2577|GID|Gitega|GID|Gitega|BI|Burundi|99
 2578|GIF|Gilbert Field|GIF|Winter Haven|US|United States|-5
-2579|GIG|GaleÃ£oâ€“antonio Carlos Jobim Intl. Arpt.|RIO|Rio De Janeiro|BR|Brazil|-3
+2579|GIG|Galeão–antonio Carlos Jobim Intl. Arpt.|RIO|Rio De Janeiro|BR|Brazil|-3
 2580|GII|Siguiri|GII|Siguiri|GN|Guinea|99
 2581|GIL|Gilgit|GIL|Gilgit|PK|Pakistan|5
 2582|GIM|Miele Mimbale|GIM|Miele Mimbale|GA|Gabon|99
@@ -3854,7 +3854,7 @@
 3852|KNL|Kelanoa|KNL|Kelanoa|PG|Papua New Guinea|99
 3853|KNM|Kaniama|KNM|Kaniama|ZR|Zaire|99
 3854|KNN|Kankan|KNN|Kankan|GN|Guinea|0
-3855|KNO|Kuala Namu International Airport|KNO|Kuala Namu|ID|Indonesia|1
+3855|KNO|Kuala Namu International Airport|KNO|Kuala Namu|ID|Indonesia|7
 3856|KNP|Capanda|KNP|Capanda|AO|Angola|1
 3857|KNQ|Kone|KNQ|Kone|NC|New Caledonia|11
 3858|KNR|Jam|KNR|Kangan|IR|Iran|99
@@ -3869,7 +3869,7 @@
 3867|KOA|Kona Intl. Arpt.|KOA|Kona|||-10
 3868|KOB|Koutaba|KOB|Koutaba|CM|Cameroon|99
 3869|KOC|Koumac|KOC|Koumac|NC|New Caledonia|11
-3870|KOD|Sabiha GÃ¶kÃ§en HavaalanÄ±|KOD|Kotabangun|ID|Indonesia|99
+3870|KOD|Sabiha Gökçen Havaalanı|KOD|Kotabangun|ID|Indonesia|99
 3871|KOE|Eltari|KOE|Kupang|ID|Indonesia|8
 3872|KOF|Komatipoort|KOF|Komatipoort|ZA|South Africa|99
 3873|KOG|Khong|KOG|Khong|LA|Laos|99
@@ -4025,7 +4025,7 @@
 4023|KVU|Korolevu|KVU|Korolevu|FJ|Fiji|99
 4024|KVX|Kirov|KVX|Kirov|RU|Russian Federation|4
 4025|KWA|Kwajalein|KWA|Kwajalein|MH|Marshall Islands|12
-4026|KWB|Karimunjawa|KWB|Karimunjawa|ID|Indonesia|99
+4026|KWB|Karimunjawa|KWB|Karimunjawa|ID|Indonesia|7
 4027|KWD|Kawadjia|KWD|Kawadjia|CF|Central African Republic|99
 4028|KWE|Guiyang|KWE|Guiyang|CN|China|8
 4029|KWF|Waterfall SPB|KWF|Waterfall|US|United States|99
@@ -4085,7 +4085,7 @@
 4083|LAE|Nadzab|LAE|Lae|PG|Papua New Guinea|10
 4084|LAF|Purdue University|LAF|Lafayette|US|United States|-5
 4085|LAG|La Guaira|LAG|La Guaira|VE|Venezuela|99
-4086|LAH|Labuha|LAH|Labuha|ID|Indonesia|99
+4086|LAH|Labuha|LAH|Labuha|ID|Indonesia|9
 4087|LAI|Servel|LAI|Lannion|FR|France|1
 4088|LAJ|Lages|LAJ|Lages|BR|Brazil|99
 4089|LAK|Aklavik|LAK|Aklavik|CA|Canada|-7
@@ -4093,7 +4093,7 @@
 4091|LAM|Los Alamos|LAM|Los Alamos|US|United States|-7
 4092|LAN|Capital City|LAN|Lansing|US|United States|-5
 4093|LAO|Laoag Intl. Arpt.|LAO|Laoag|PH|Philippines|8
-4094|LAP|General Manuel MÃ¡rquez De LeÃ³n Intl. Arpt.|LAP|La Paz|MX|Mexico|-7
+4094|LAP|General Manuel Márquez De León Intl. Arpt.|LAP|La Paz|MX|Mexico|-7
 4095|LAQ|La Braq|LAQ|Beida|LY|Libya|2
 4096|LAR|General Brees Field|LAR|Laramie|US|United States|-7
 4097|LAS|Mc Carran Intl|LAS|Las Vegas|US|United States|-8
@@ -4106,7 +4106,7 @@
 4104|LAZ|Bom Jesus Da Lapa|LAZ|Bom Jesus Da Lapa|BR|Brazil|-3
 4105|LBA|Leeds/bradford|LBA|Leeds|GB|United Kingdom|0
 4106|LBB|Intl.|LBB|Lubbock|US|United States|-6
-4107|LBC|LÃ¼beck Blankensee|LBC|LÃ¼beck|DE|Germany|1
+4107|LBC|Lübeck Blankensee|LBC|Lübeck|DE|Germany|1
 4108|LBD|Khudzhand|LBD|Khudzhand|TJ|Tajikistan|5
 4109|LBE|Westmoreland County|LBE|Latrobe|US|United States|-5
 4110|LBF|Lee Bird Field|LBF|North Platte|US|United States|-6
@@ -4231,7 +4231,7 @@
 4229|LHB|Lost Harbor Sea Port|LHB|Lost Harbor|US|United States|99
 4230|LHE|Alama Iqbal Intl.|LHE|Lahore|PK|Pakistan|5
 4231|LHG|Lightning Ridge|LHG|Lightning Ridge|AU|Australia|10
-4232|LHI|Lereh|LHI|Lereh|ID|Indonesia|99
+4232|LHI|Lereh|LHI|Lereh|ID|Indonesia|9
 4233|LHK|Guanghua|LHK|Guanghua|CN|China|99
 4234|LHM|Lincoln Regional Arpt.|LHM|Lincoln|||-8
 4235|LHN|Lishan|LHN|Lishan|TW|Taiwan|99
@@ -4269,7 +4269,7 @@
 4267|LJG|Lijiang|LJG|Lijiang City|CN|China|8
 4268|LJN|Brazoria County|LJN|Lake Jackson|US|United States|99
 4269|LJU|Brnik|LJU|Ljubljana|SI|Slovenia|1
-4270|LKA|Larantuka|LKA|Larantuka|ID|Indonesia|99
+4270|LKA|Larantuka|LKA|Larantuka|ID|Indonesia|8
 4271|LKB|Lakeba|LKB|Lakeba|FJ|Fiji|12
 4272|LKC|Lekana|LKC|Lekana|CG|Congo|99
 4273|LKD|Lakeland Downs|LKD|Lakeland Downs|AU|Australia|99
@@ -4352,7 +4352,7 @@
 4350|LOE|Loei|LOE|Loei|TH|Thailand|7
 4351|LOF|Loen|LOF|Loen|MH|Marshall Islands|99
 4352|LOG|Longview|LOG|Longview|US|United States|99
-4353|LOH|Camilo Ponce EnrÃ­quez Arpt.|LOH|Catamayo|||-5
+4353|LOH|Camilo Ponce Enríquez Arpt.|LOH|Catamayo|||-5
 4354|LOI|Helmuth Baungartem|LOI|Lontras|BR|Brazil|99
 4355|LOK|Lodwar|LOK|Lodwar|KE|Kenya|3
 4356|LOL|Derby Field|LOL|Lovelock|US|United States|99
@@ -4758,7 +4758,7 @@
 4756|MIN|Minnipa|MIN|Minnipa|AU|Australia|99
 4757|MIO|Miami|MIO|Miami|US|United States|99
 4758|MIP|Mitspeh Ramon|MIP|Mitspeh Ramon|IL|Israel|99
-4759|MIQ|SimÃ³n BolÃ­var Intl.|MIQ|MaiquetÃ­a|VE|Venezuela|99
+4759|MIQ|Simón Bolívar Intl.|MIQ|Maiquetía|VE|Venezuela|99
 4760|MIR|Habib Bourguiba|MIR|Monastir|TN|Tunisia|1
 4761|MIS|Misima Island|MIS|Misima Island|PG|Papua New Guinea|10
 4762|MIT|Kern County|MIT|Shafter|US|United States|99
@@ -4930,7 +4930,7 @@
 4928|MPI|Mamitupo|MPI|Mamitupo|PA|Panama|-8
 4929|MPJ|Petit Jean Park|MPJ|Morrilton|US|United States|99
 4930|MPK|Mokpo|MPK|Mokpo|KR|Korea|9
-4931|MPL|Montpellier MÃ©diterranÃ©e|MPL|Montpellier|FR|France|1
+4931|MPL|Montpellier Méditerranée|MPL|Montpellier|FR|France|1
 4932|MPM|Maputo Intl.|MPM|Maputo|MZ|Mozambique|2
 4933|MPN|Mount Pleasant|MPN|Mount Pleasant|FK|Falkland Islands|-3
 4934|MPO|Mt Pocono|MPO|Mt Pocono|US|United States|99
@@ -5289,7 +5289,7 @@
 5287|NGC|North Rim|NGC|Grand Canyon|US|United States|99
 5288|NGD|Anegada|NGD|Anegada|VG|Virgin Islands|99
 5289|NGE|Ngaoundere|NGE|Ngaoundere|CM|Cameroon|1
-5290|NGI|Zürich-Klote|NGI|Ngau Island|FJ|Fiji|12
+5290|NGI|Z�rich-Klote|NGI|Ngau Island|FJ|Fiji|12
 5291|NGL|Ngala Airfield|NGL|Ngala|ZA|South Africa|99
 5292|NGM|Agana NAS|NGM|Agana|GU|Guam|99
 5293|NGN|Nargana|NGN|Nargana|PA|Panama|99
@@ -5677,7 +5677,7 @@
 5675|OPF|Opa Locka|OPF|Miami|US|United States|-5
 5676|OPI|Oenpelli|OPI|Oenpelli|AU|Australia|99
 5677|OPL|St Landry Parish|OPL|Opelousas|US|United States|99
-5678|OPO|Francisco SÃ¡ Carneiro|OPO|Porto|PT|Portugal|0
+5678|OPO|Francisco Sá Carneiro|OPO|Porto|PT|Portugal|0
 5679|OPS|Sinop|OPS|Sinop|BR|Brazil|-4
 5680|OPU|Balimo|OPU|Balimo|PG|Papua New Guinea|10
 5681|OPW|Opuwa|OPW|Opuwa|NA|Namibia|99
@@ -6225,7 +6225,7 @@
 6223|PUC|Carbon County|PUC|Price|US|United States|-7
 6224|PUD|Puerto Deseado|PUD|Puerto Deseado|AR|Argentina|-3
 6225|PUE|Puerto Obaldia|PUE|Puerto Obaldia|PA|Panama|-5
-6226|PUF|Pau-PyrÃ©nÃ©es|PUF|Pau|FR|France|1
+6226|PUF|Pau-Pyrénées|PUF|Pau|FR|France|1
 6227|PUG|Port Augusta|PUG|Port Augusta|AU|Australia|9.5
 6228|PUH|Pochutla|PUH|Pochutla|MX|Mexico|99
 6229|PUI|Pureni|PUI|Pureni|PG|Papua New Guinea|99
@@ -6256,7 +6256,7 @@
 6254|PVK|Aktion|PVK|Preveza/Lefkas|GR|Greece|2
 6255|PVN|Pleven|PVN|Pleven|BG|Bulgaria|99
 6256|PVO|Reales Tamarindos|PVO|Portoviejo|EC|Ecuador|-5
-6257|PVR|Licenciado Gustavo DÃ­az Ordaz Intl.|PVR|Puerto Vallarta|MX|Mexico|-6
+6257|PVR|Licenciado Gustavo Díaz Ordaz Intl.|PVR|Puerto Vallarta|MX|Mexico|-6
 6258|PVS|Provideniya|PVS|Provideniya|RU|Russian Federation|12
 6259|PVU|Provo|PVU|Provo|US|United States|-7
 6260|PVW|Hale County|PVW|Plainview|US|United States|99
@@ -6969,7 +6969,7 @@
 6967|SLW|Saltillo|SLW|Saltillo|MX|Mexico|-6
 6968|SLX|Salt Cay|SLX|Salt Cay|TC|Turks and Caicos Islands|-5
 6969|SLY|Salekhard|SLY|Salekhard|RU|Russian Federation|6
-6970|SLZ|Marechal Cunha Machado|SLZ|SÃ£o Luis|BR|Brazil|-3
+6970|SLZ|Marechal Cunha Machado|SLZ|São Luis|BR|Brazil|-3
 6971|SMA|Vila Do Porto|SMA|Santa Maria|PT|Portugal|-1
 6972|SMB|Cerro Sombrero|SMB|Cerro Sombrero|CL|Chile|99
 6973|SMC|Santa Maria|SMC|Santa Maria|CO|Colombia|99
@@ -7079,7 +7079,7 @@
 7077|SQI|Whiteside County|SQI|Sterling Rockfalls|US|United States|99
 7078|SQK|Sidi Barani|SQK|Sidi Barani|EG|Egypt|99
 7079|SQL|San Carlos|SQL|San Carlos|US|United States|-8
-7080|SQM|SÃ£o Miguel de Aragao|SQM|SÃ£o Miguel de Aragao|BR|Brazil|99
+7080|SQM|São Miguel de Aragao|SQM|São Miguel de Aragao|BR|Brazil|99
 7081|SQN|Sanana|SQN|Sanana|ID|Indonesia|99
 7082|SQO|Gunnarn|SQO|Storuman|SE|Sweden|1
 7083|SQP|Starcke|SQP|Starcke|AU|Australia|99
@@ -7283,7 +7283,7 @@
 7281|SYN|Carleton|SYN|Stanton|US|United States|99
 7282|SYO|Shonai|SYO|Shonai|JP|Japan|9
 7283|SYP|Santiago|SYP|Santiago|PA|Panama|99
-7284|SYQ|Tobias BolaÃ±os Intl.|SYQ|San JosÃ©|CR|Costa Rica|-6
+7284|SYQ|Tobias Bolaños Intl.|SYQ|San José|CR|Costa Rica|-6
 7285|SYR|Syracuse Hancock Intl. Arpt.|SYR|Syracuse|US|United States|-5
 7286|SYS|Yeosu|SYS|Suncheon|KR|Korea|99
 7287|SYT|Charolais Bourgogne S.|SYT|Saint Yan|FR|France|99
@@ -7460,7 +7460,7 @@
 7458|THA|Tullahoma/William Northern Field|THA|Tullahoma|||99
 7459|THB|Thaba-Tseka|THB|Thaba-Tseka|LS|Lesotho|99
 7460|THC|Tchien|THC|Tchien|LR|Liberia|99
-7461|THE|Senador PetrÃ´nio Portella|THE|Teresina|BR|Brazil|-3
+7461|THE|Senador Petrônio Portella|THE|Teresina|BR|Brazil|-3
 7462|THF|Tempelhof|THF|Berlin|DE|Germany|1
 7463|THG|Thangool|THG|Thangool|AU|Australia|10
 7464|THH|Taharoa|THH|Taharoa|NZ|New Zealand|99
@@ -7652,7 +7652,7 @@
 7650|TRA|Tarama|TRA|Taramajima|JP|Japan|99
 7651|TRB|Gonzalo|TRB|Turbo|CO|Colombia|99
 7652|TRC|Francisco Sarabia|TRC|Torreon|MX|Mexico|-6
-7653|TRD|VÃ¦rnes|TRD|Trondheim|NO|Norway|1
+7653|TRD|Værnes|TRD|Trondheim|NO|Norway|1
 7654|TRE|Tiree|TRE|Tiree|GB|United Kingdom|0
 7655|TRF|Sandefjord|OSL|Oslo|NO|Norway|1
 7656|TRG|Tauranga City|TRG|Tauranga|NZ|New Zealand|12
@@ -8139,7 +8139,7 @@
 8137|VVZ|Illizi|VVZ|Illizi|DZ|Algeria|1
 8138|VXC|Lichinga|VXC|Lichinga|MZ|Mozambique|2
 8139|VXE|San Pedro|VXE|Sao Vicente|CV|Cape Verde|-1
-8140|VXO|Smaland Arpt.|VXO|VÃ¤xjÃ¶|SE|Sweden|1
+8140|VXO|Smaland Arpt.|VXO|Växjö|SE|Sweden|1
 8141|VYD|Vryheid|VYD|Vryheid|ZA|South Africa|99
 8142|VYS|Illinois Valley Regnl|VYS|Peru|US|United States|-6
 8143|WAA|Wales|WAA|Wales|US|United States|-9
@@ -9007,7 +9007,7 @@
 9005|YYN|Swift Current|YYN|Swift Current|CA|Canada|-6
 9006|YYQ|Metropolitan Area|YYQ|Churchill|||-6
 9007|YYR|Goose Bay|YYR|Goose Bay|CA|Canada|-4
-9008|YYT|St. JohnÂ´s Intl.|YYT|St. John's|||-3.5
+9008|YYT|St. John´s Intl.|YYT|St. John's|||-3.5
 9009|YYU|Kapuskasing|YYU|Kapuskasing|CA|Canada|-5
 9010|YYW|Armstrong|YYW|Armstrong|CA|Canada|-5
 9011|YYY|Mont Joli|YYY|Mont Joli|CA|Canada|-5

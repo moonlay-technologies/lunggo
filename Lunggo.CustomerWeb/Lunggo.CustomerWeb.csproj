@@ -503,7 +503,6 @@
     <Content Include="Assets\images\airlines\FZ.png" />
     <Content Include="Assets\images\airlines\G3.png" />
     <Content Include="Assets\images\airlines\GA.png" />
-    <Content Include="Assets\images\airlines\garuda-indonesia.png" />
     <Content Include="Assets\images\airlines\GE.png" />
     <Content Include="Assets\images\airlines\GF.png" />
     <Content Include="Assets\images\airlines\GK.png" />
@@ -523,6 +522,7 @@
     <Content Include="Assets\images\airlines\ID.png" />
     <Content Include="Assets\images\airlines\IG.png" />
     <Content Include="Assets\images\airlines\IL.png" />
+    <Content Include="Assets\images\airlines\IN.png" />
     <Content Include="Assets\images\airlines\IR.png" />
     <Content Include="Assets\images\airlines\IT.png" />
     <Content Include="Assets\images\airlines\IW.png" />
