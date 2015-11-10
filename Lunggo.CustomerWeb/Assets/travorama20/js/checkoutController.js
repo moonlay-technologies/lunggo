@@ -52,17 +52,21 @@ app.controller('checkoutController', [
                     }
                 }).then(function (returnData) {
                     console.log(returnData);
+                    $scope.voucher.checking = false;
+                    $scope.voucher.checked = true;
+                    $scope.voucher.status = returnData.data.ValidationStatus;
                     if (returnData.data.Discount > 0) {
                         $scope.voucher.amount = returnData.data.Discount;
-                        $scope.voucher.status = returnData.data.ValidationStatus;
                         $scope.voucher.confirmedCode = $scope.voucher.code;
                     }
-                    $scope.voucher.checked = true;
-                    $scope.voucher.checking = false;
                 }, function(returnData) {
                     $scope.voucher.checked = true;
                     $scope.voucher.checking = false;
                 });
+            },
+            reset: function () {
+                $scope.voucher.code = '';
+                $scope.voucher.checked = false;
             }
         };
 
