@@ -75,11 +75,11 @@
         {
             if (Model.Itinerary.Trips.Count == 2)
             {
-                @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate.ToString("dd/MM/yyyy")';
+                @:departureDate = '@Model.Itinerary.Trips[1].DepartureDate';
             }
             else
             {
-                @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate.ToString("dd/MM/yyyy")';
+                @:departureDate = '@Model.Itinerary.Trips[0].DepartureDate';
             }
         }
 
@@ -417,6 +417,7 @@
                                 <div class="step-button">
                                     <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                                     <button class="btn btn-yellow" ng-click="changePage(4)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
+                                    <a href="#" ng-click="printScope()">$SCOPE</a>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
