@@ -156,39 +156,47 @@
                         <h2><b>@Html.I18NString("CW00195")</b> @Html.I18NString("CW00196")</h2>
                     </header>
                     <section class="content-body">
-
-                        @foreach(var flight in Model)
-                        { 
-                            <div class="order-wrapper">
-                                <div class="order flight">
-                                    <header>
-                                        <span>Order ID : @flight.RsvNo</span>
-                                    </header>
-                                    <section class="container">
-                                        <div class="row">
-                                            <div class="col-xs-10">
-                                                <div class="detail">
-                                                    <p>@Html.I18NString("CW00197") : <b>@flight.Itinerary.Trips[0].OriginAirport</b> to <b>@flight.Itinerary.Trips[0].DestinationAirport</b> (@flight.TripType.ToString())</p>
-                                                    @if (flight.Itinerary.Trips.Count > 1)
-                                                    {
-                                                        <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy") | @Html.I18NString("CW00058"): @flight.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy")</p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy")</p>
-                                                    }
-                                                    <p>Status : <span class="success">@flight.Payment.Status</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <div class="action">
-                                                    <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new {rsvNo = flight.RsvNo})" class="btn btn-yellow">@Html.I18NString("CW00175")</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div><!-- .order-wrapper -->
+                        
+                        @if (Model.Count == 0)
+                        {
+                            <h3>Belum ada pemesanan.</h3>
+                        }
+                        else
+                        {
+                            foreach (var flight in Model)
+                             {
+                                 <div class="order-wrapper">
+                                     <div class="order flight">
+                                         <header>
+                                             <span>Order ID : @flight.RsvNo</span>
+                                         </header>
+                                         <section class="container">
+                                             <div class="row">
+                                                 <div class="col-xs-10">
+                                                     <div class="detail">
+                                                         <p>@Html.I18NString("CW00197") : <b>@flight.Itinerary.Trips[0].OriginAirport</b> to <b>@flight.Itinerary.Trips[0].DestinationAirport</b> (@flight.TripType.ToString())</p>
+                                                         @if (flight.Itinerary.Trips.Count > 1)
+                                                         {
+                                                             <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy") | @Html.I18NString("CW00058"): @flight.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy")</p>
+                                                         }
+                                                         else
+                                                         {
+                                                             <p>@Html.I18NString("CW00057"): @flight.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy")</p>
+                                                         }
+                                                         <p>Status : <span class="success">@flight.Payment.Status</span></p>
+                                                     </div>
+                                                 </div>
+                                                 <div class="col-xs-2">
+                                                     <div class="action">
+                                                         <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new {rsvNo = flight.RsvNo})" class="btn btn-yellow">@Html.I18NString("CW00175")</a>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </section>
+                                     </div>
+                                 </div>
+                                 <!-- .order-wrapper -->
+                             }
                         }
 
                     </section>
