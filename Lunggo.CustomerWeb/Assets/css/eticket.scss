@@ -26,11 +26,11 @@ ver 0.1 Alpha
 /**
 General Styling
 */
-body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%;}
+body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%; -webkit-print-color-adjust: exact; }
 
 p {margin-bottom:0;}
 
-.page {width:21cm; height:29.6cm; position:absolute; background:url(/Assets/images/eticket-background.png) left 60% no-repeat; background-size:cover;
+.page {width:21cm; height:29.6cm; position:absolute; background:url(/Assets/images/eticket-background.png) left 60% no-repeat; -webkit-print-color-adjust:exact;
     &:before, &:after {@include clearfix;}
 }
 .page.page-2 {top:29.6cm;}
@@ -61,8 +61,9 @@ Site Content
 
 /* flight list detail */
 .flight-list-wrapper {width:100%; margin-bottom:25px;
-    .flight-title {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666;
-        span {background:#fff; z-index:2; position:relative; padding:0 20px;}
+    .flight-title {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666; -webkit-print-color-adjust:exact;
+        &>span {background:url(/Assets/images/white-bg.png) top center repeat #fff; z-index:2; position:relative; padding:0 20px; overflow:hidden; z-index:2; -webkit-print-color-adjust:exact;
+        }
         &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
     }
     .flight-list {
@@ -112,54 +113,5 @@ Site Content
 /**
 Site Footer
 */
-.page-footer {background:#303030 url(/Assets/images/gray-bg.png) center center repeat; color:#fff; padding:20px; position:absolute; bottom:0;}
+.page-footer {background:#303030 url(/Assets/images/gray-bg.png) center center repeat; color:#fff; padding:20px; position:absolute; bottom:0; -webkit-print-color-adjust:exact;}
 
-
-
-/* previous eTicket styling
-.din, body {font-family: 'din', helvetica, arial, sans-serif;}
-
-h2 {font-size:18px;}
-h3 {font-size:14px; margin:5px 0;}
-h4 {font-size:12px;}
-h5 {font-size:11px;}
-p {font-size:11px;}
-
-.ticket-wrapper {
-    .doc-header {
-        .doc-logo {text-align:right;}
-    }
-    .doc-content {}
-    .doc-footer {}
-}
-
-.flight-section {
-    .section-title {}
-    .flight-detail {border:1px solid #2CB3E6; padding:5px;
-        .booking-code {text-align:center;
-            img {height:50px;}
-        }
-        .flight-number {margin:0; padding:5px 0; border-bottom:1px solid #ddd;}
-        .flight-origin {
-            h3 {font-weight:bold}
-            h4 {margin:5px 0;}
-        }
-        .flight-destination {
-            h3 {font-weight:bold;}
-            h4 {margin:5px 0;}
-        }
-    }
-    .flight-note {
-        p {margin-bottom:0;}
-    }
-}
-
-.passenger-detail {
-    table {border:1px solid #2CB3E6; font-size:11px;
-        thead {
-            th {border-color:#2CB3E6; background-color:#2CB3E6 !important; color:#fff; -webkit-print-color-adjust: exact; }
-        }
-        tbody {}
-    }
-}
-*/

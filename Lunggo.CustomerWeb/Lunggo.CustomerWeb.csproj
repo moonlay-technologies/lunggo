@@ -689,6 +689,7 @@
     <Content Include="Assets\images\benefit\discount.png" />
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
+    <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\cal-bg.png" />
@@ -838,6 +839,8 @@
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
+    <Content Include="Assets\images\penerbangan-pergi.jpg" />
+    <Content Include="Assets\images\penerbangan-pulang.jpg" />
     <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\payment-veritrans.png" />
