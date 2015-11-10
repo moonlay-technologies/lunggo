@@ -71,3 +71,7 @@ var ChangePasswordConfig = {
 var ChangeProfileConfig = {
     Url: 'http://localhost:23321/id/ApiAccount/ChangeProfile'
 };
+
+var ResendConfirmationEmailConfig = {
+    Url: 'http://localhost:23321/id/ApiAccount/ResendConfirmationEmail'
+};

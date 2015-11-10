@@ -174,7 +174,7 @@ form label.important:after {content:"*"; color:#f00000;}
                 }
             }
         }
-        .location-search {padding:10px; height:480px; overflow:auto; display:none;
+        .location-search {padding:10px; height:475px; overflow:auto; display:none;
             .autocomplete-no-result {}
             .autocomplete-result {
                 ul {margin:0; padding:0;
@@ -201,7 +201,10 @@ form label.important:after {content:"*"; color:#f00000;}
             h4 {margin:0; font-weight:600;}
             .close {color:#fff; opacity:1;}
         }
-        section {padding:15px;}
+        section {padding:15px;
+            h3 {margin-top:0;}
+            a {cursor:pointer;}
+        }
         footer {position:absolute; bottom:15px; left:0; width:100%;}
     }
 }
