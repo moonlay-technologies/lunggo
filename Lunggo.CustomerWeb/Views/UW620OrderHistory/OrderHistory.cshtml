@@ -47,7 +47,7 @@
                     </header>
                     <section class="content-body">
 
-                        <form name="profileForm" class="form form-horizontal" novalidate="">
+                        <form name="profileForm" class="form form-horizontal" novalidate>
                             <header>
                                 <h4>
                                     <b>LOGIN ID</b>
@@ -55,8 +55,8 @@
                                         <a class="btn btn-yellow" ng-click="editForm('profile')">@Html.I18NString("CW00194")</a>
                                     </span>
                                     <span class="pull-right" ng-show="userProfile.edit">
-                                        <a class="btn btn-grey" ng-click="editForm('profile')">CANCEL</a>
-                                        <a class="btn btn-yellow" ng-click="editForm('profileSave')">SIMPAN</a>
+                                        <a class="btn btn-grey" ng-click="editForm('profile')" ng-hide="userProfile.updating">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('profileSave')">{{userProfile.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
                                     </span>
                                 </h4>
                             </header>
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                                    <input type="text" name="address" ng-model="userProfile.address" class="form-control" ng-show="userProfile.edit" required />
+                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
-                                    <input type="text" name="firstname" ng-model="userProfile.firstname" class="form-control" ng-show="userProfile.edit" required />
+                                    <input type="text" name="firstname" ng-model="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
-                                    <input type="text" name="lastname" ng-model="userProfile.lastname" class="form-control" ng-show="userProfile.edit" required />
+                                    <input type="text" name="lastname" ng-model="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
-                                    <input type="text" name="phone" ng-model="userProfile.phone" value="" class="form-control" ng-show="userProfile.edit" />
+                                    <input type="text" name="phone" ng-model="editProfile.phone" value="" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,8 +102,8 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
-                                    <select class="form-control" ng-show="userProfile.edit" ng-model="userProfile.country">
-                                        <option ng-repeat="country in countries" value="{{country.twoLetter}}" ng-selected="country.twoLetter == userProfile.country">{{country.name}}</option>
+                                    <select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
+                                        <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -117,32 +117,41 @@
                                         <a class="btn btn-yellow" ng-click="editForm('password')">@Html.I18NString("CW00194")</a>
                                     </span>
                                     <span class="pull-right" ng-show="password.edit">
-                                        <a class="btn btn-grey" ng-click="editForm('password')">CANCEL</a>
-                                        <a class="btn btn-yellow" ng-click="editForm('passwordSave')">SIMPAN</a>
+                                        <a class="btn btn-grey" ng-click="editForm('password')" ng-hide="password.updating">CANCEL</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('passwordSave')">{{password.updating? 'MENYIMPAN' : 'SIMPAN'}}</a>
                                     </span>
                                 </h4>
                             </header>
+                            <div class="form-group has-error" ng-show="password.failed">
+                                <div class="col-xs-12">
+                                    <label>Gagal menyimpan password baru Anda. Silahkan cek kembali password lama, password baru dan konfirmasi password Anda sesuai.</label>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
                                     <p class="control-label">@Html.I18NString("CW00165")</p>
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
                                 </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
                                 <div class="col-xs-3">
                                     <p class="control-label">@Html.I18NString("CW00166")</p>
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
                                 </div>
+                            </div>
+                            <div class="form-group" ng-show="password.edit">
                                 <div class="col-xs-3">
                                     <p class="control-label">@Html.I18NString("CW00167")</p>
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Input your new password" />
+                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
                                 </div>
                             </div>
                         </form>
