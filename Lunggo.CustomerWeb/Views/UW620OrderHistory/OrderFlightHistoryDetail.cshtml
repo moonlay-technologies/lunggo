@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Extension
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
@@ -25,8 +26,8 @@
             paymentMethod: '@Model.Payment.Method',
             paymentStatus: '@Model.Payment.Status'
         };
-        var passengerDetail = @Html.Raw(Json.Encode(Model.Passengers));
-        var flightDetail = @Html.Raw(Json.Encode(Model.Itinerary.Trips));
+        var passengerDetail = @Html.Raw(Model.Passengers.Serialize());
+        var flightDetail = @Html.Raw(Model.Itinerary.Trips.Serialize());
         var refundDetail = '';
     </script>
     <!-- angular controller -->
