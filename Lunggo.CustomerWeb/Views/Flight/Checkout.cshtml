@@ -417,7 +417,6 @@
                                 <div class="step-button">
                                     <a class="btn btn-grey" ng-click="changePage(2)">KEMBALI</a>
                                     <button class="btn btn-yellow" ng-click="changePage(4)" ng-disabled="passengersForm.$invalid">LANJUTKAN</button>
-                                    <a class="btn btn-yellow" ng-click="printScope()">$SCOPE</a>
                                 </div>
                                 <h4 style="padding:15px;" class="bg-danger" ng-show="!passengersForm.valid && passengersForm.checked">Perika kembali form Anda.</h4>
 
@@ -537,7 +536,7 @@
                                             <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                                         </div>
 
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")">kebijakan privasi</a></p>
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a></p>
                                         <a class="btn btn-grey" ng-click="changePage(3)" ng-disabled="checkoutForm.loading">KEMBALI</a>
                                         <input type="submit" class="btn btn-yellow" value="{{ !checkoutForm.loading? 'BAYAR' : 'MEMPROSES' }}" ng-disabled="checkoutForm.loading || !paymentMethod">
                                         

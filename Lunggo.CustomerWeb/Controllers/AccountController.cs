@@ -208,6 +208,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var isConfirmed = await UserManager.IsEmailConfirmedAsync(userId);
             if (isConfirmed)
             {
+                ViewBag.Message = "AlreadyConfirmed";
                 return RedirectToAction("Login", "Account");
             }
 
