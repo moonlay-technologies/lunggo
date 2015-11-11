@@ -68,8 +68,8 @@ namespace Lunggo.Worker.EticketHandler
                     {
                         FileInfo = new FileInfo
                         {
-                            FileName = rsvNo,
-                            ContentType = "PDF",
+                            FileName = rsvNo + ".pdf",
+                            ContentType = "application/pdf",
                             FileData = fileContent
                         },
                         Container = "Eticket"
@@ -91,7 +91,7 @@ namespace Lunggo.Worker.EticketHandler
                         FileInfo = new FileInfo
                         {
                             FileName = rsvNo,
-                            ContentType = "JSON",
+                            ContentType = "application/json",
                             FileData = reservationContent
                         },
                         Container = "Reservation"

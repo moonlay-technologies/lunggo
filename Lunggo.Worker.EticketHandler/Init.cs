@@ -6,6 +6,7 @@ using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.TableStorage;
 
 namespace Lunggo.Worker.EticketHandler
 {
@@ -18,6 +19,7 @@ namespace Lunggo.Worker.EticketHandler
             InitDatabaseService();
             InitDictionaryService();
             InitQueueService();
+            InitTableStorageService();
             InitHtmlTemplateService();
             InitMailService();
             InitBlobStorageService();
@@ -46,7 +48,7 @@ namespace Lunggo.Worker.EticketHandler
         private static void InitDictionaryService()
         {
             var dict = DictionaryService.GetInstance();
-            dict.Init("~");
+            dict.Init("Config/");
         }
 
         private static void InitQueueService()
@@ -54,6 +56,13 @@ namespace Lunggo.Worker.EticketHandler
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
+        }
+
+        private static void InitTableStorageService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var table = TableStorageService.GetInstance();
+            table.Init(connString);
         }
 
         private static void InitMailService()
