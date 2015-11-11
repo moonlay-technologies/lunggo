@@ -21,7 +21,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var file = blobService.GetByteArrayByFileInContainer(rsvNo, "Eticket");
+            var file = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
             var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);

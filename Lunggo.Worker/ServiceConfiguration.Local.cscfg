@@ -3,7 +3,7 @@
   <Role name="Lunggo.Worker.EticketHandler">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lunggostorageqa;AccountKey=ECUAdynBjM6ttLekJLBMNCoXHEUEulWkLwT5r8iTDXeW9GuHCD7sx5IOF9CtdI6/vyJbfX6XHxPbgiao8a2Umw==" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

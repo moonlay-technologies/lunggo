@@ -112,6 +112,17 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(summary);
         }
 
+        public ActionResult Confirmation(string rsvNo)
+        {
+            var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            return View(new FlightPaymentConfirmationData
+                {
+                    RsvNo = rsvNo,
+                    FinalPrice = reservation.Payment.FinalPrice,
+                    TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
+                });
+        }
+
         [HttpPost]
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
