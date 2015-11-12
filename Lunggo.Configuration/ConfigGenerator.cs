@@ -19,7 +19,8 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.QA;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
+        private const bool DeployHtmlTemplte = false;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -63,7 +64,8 @@ namespace Lunggo.Configuration
 
             var generator = ConfigGenerator.GetInstance();
             generator.StartConfig(Environment, projectList);
-            HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
+            if (DeployHtmlTemplte)
+                HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
 

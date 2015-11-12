@@ -154,10 +154,13 @@
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\Airline.csv" />
+    <None Include="Config\WebJob.EmailQueueHandler\Airport.csv" />
     <None Include="Config\WebJob.EmailQueueHandler\azureStorage.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\Country.csv" />
     <None Include="Config\WebJob.EmailQueueHandler\db.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
@@ -165,6 +168,7 @@
     <None Include="Config\WebJob.EmailQueueHandler\general.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\HotelLocation.csv" />
     <None Include="Config\WebJob.EmailQueueHandler\mystifly.properties">
       <SubType>Designer</SubType>
     </None>

@@ -42,6 +42,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitHtmlTemplateService();
             InitMailService();
             InitBlobStorageService();
+            InitDictionaryService();
             //InitTraceListener();
         }
 

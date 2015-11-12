@@ -127,8 +127,8 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("Confirmation", "Flight", report.RsvNo);
-            var fileInfo = file.ContentLength > 0
+                return RedirectToAction("Confirmation", "Flight", new {report.RsvNo});
+            var fileInfo = file != null && file.ContentLength > 0
                 ? new FileInfo
                 {
                     FileData = file.InputStream.StreamToByteArray(),

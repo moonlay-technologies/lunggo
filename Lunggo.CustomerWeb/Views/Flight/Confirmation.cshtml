@@ -108,41 +108,26 @@
 
                             @using (@Html.BeginForm("Confirmation", "Flight", FormMethod.Post, new {enctype = "multipart/form-data"}))
                             {
+                                <input type="hidden" name="report.RsvNo" value="@Model.RsvNo"/>
                                 <div class="form-group">
                                     <label class="important control-label">Nama Pemilik Rekening:</label>
-                                    <input type="text" name="Model.Report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" />
+                                    <input type="text" name="report.RemitterName" value="" class="form-control" placeholder="Nama Pengirim" />
                                 </div>
                                 <div class="form-group">
                                     <label class="important control-label">Nama Bank:</label>
-                                    <input type="text" name="Model.Report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" />
+                                    <input type="text" name="report.RemitterBank" value="" class="form-control" placeholder="Bank Pengirim" />
                                 </div>
                                 <div class="form-group">
                                     <label class="important control-label">Nomor Rekening:</label>
-                                    <input type="text" name="Model.Report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" />
+                                    <input type="text" name="report.RemitterAccount" value="" class="form-control" placeholder="Nomor Rekening" />
                                 </div>
                                 <div class="form-group">
                                     <label class="important control-label">Jumlah Transfer:</label>
-                                    <input type="text" name="Model.Report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" />
+                                    <input type="text" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" />
                                 </div>
                                 <div class="form-group">
                                     <label class="important control-label">Tanggal Transfer:</label>
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <select class="form-control">
-                                                <option>1</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <select class="form-control">
-                                                <option>January</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <select class="form-control">
-                                                <option>2015</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <input type="date" name="report.PaymentTime" class="form-control" />
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-yellow" type="submit" value="KONFIRMASI" />

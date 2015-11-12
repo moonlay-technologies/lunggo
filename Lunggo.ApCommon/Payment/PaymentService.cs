@@ -61,7 +61,7 @@ namespace Lunggo.ApCommon.Payment
 
         public void SubmitTransferConfirmationReport(TransferConfirmationReport report, FileInfo file)
         {
-            var receiptUrl = SaveTransferReceipt(report.RsvNo, file);
+            var receiptUrl = file != null ? SaveTransferReceipt(report.RsvNo, file) : null;
             report.Status = TransferConfirmationReportStatus.Unchecked;
             var reportRecord = new TransferConfirmationReportTableRecord
             {

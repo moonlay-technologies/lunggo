@@ -22,11 +22,19 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
             return View(reservations ?? new List<FlightReservationForDisplay>());
         }
 
+        [AllowAnonymous]
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-            var flight = FlightService.GetInstance();
-            var reservation = flight.GetReservationForDisplay(rsvNo);
-            return View(reservation);
+            if ((bool) TempData["AllowThisReservationCheck"] || User.Identity.IsAuthenticated)
+            {
+                var flight = FlightService.GetInstance();
+                var reservation = flight.GetReservationForDisplay(rsvNo);
+                return View(reservation);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         [AllowAnonymous]
