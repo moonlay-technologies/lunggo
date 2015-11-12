@@ -65,7 +65,7 @@ namespace Lunggo.Configuration
             var generator = ConfigGenerator.GetInstance();
             generator.StartConfig(Environment, projectList);
             if (DeployHtmlTemplte)
-                HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
+            HtmlTemplateGenerator.StartHtmlGenerator(_azureStorageConnString);
             Console.WriteLine("####################Config Generation is Finished");
         }
 
