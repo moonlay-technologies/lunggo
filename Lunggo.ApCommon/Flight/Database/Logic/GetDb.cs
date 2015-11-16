@@ -329,7 +329,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static List<MarginRule> PriceMarginRules()
+            internal static List<MarginRule> ActivePriceMarginRules()
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {

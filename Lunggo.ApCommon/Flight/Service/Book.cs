@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     SendPendingPaymentReservationNotifToCustomer(reservation.RsvNo);
                 else
                     SendInstantPaymentReservationNotifToCustomer(reservation.RsvNo);
-                SaveRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
+                SavePaymentRedirectionUrlInCache(reservation.RsvNo, reservation.Payment.Url, reservation.Payment.TimeLimit);
                 output.RsvNo = reservation.RsvNo;
             }
             else
@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetBookingRedirectionUrl(string rsvNo)
         {
-            return GetRedirectionUrlInCache(rsvNo);
+            return GetPaymentRedirectionUrlInCache(rsvNo);
         }
 
         #region Helpers

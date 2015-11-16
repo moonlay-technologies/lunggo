@@ -271,9 +271,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {
-                    var allRules = FlightPriceMarginRuleTableRepo.GetInstance().FindAll(conn).ToList();
-                    var activeRules = allRules.Where(rule => rule.IsActive.GetValueOrDefault()).ToList();
-                    var inactiveRules = allRules.Where(rule => !rule.IsActive.GetValueOrDefault()).ToList();
+                    var activeRules = GetActivePriceMarginRuleQuery.GetInstance().Execute(conn, null).ToList();
                     foreach (var rule in rules)
                     {
                         if (activeRules.Any(activeRule => activeRule.RuleId == rule.RuleId))
@@ -330,12 +328,13 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                     foreach (var deletedRule in deletedRules)
                     {
-                        if (inactiveRules.Any(inactiveRule => inactiveRule.RuleId == deletedRule.RuleId))
+                        if (activeRules.Any(activeRule => activeRule.RuleId == deletedRule.RuleId))
                         {
                             FlightPriceMarginRuleTableRepo.GetInstance()
                                 .Update(conn, new FlightPriceMarginRuleTableRecord
                                 {
                                     RuleId = deletedRule.RuleId,
+                                    Priority = deletedRule.Priority,
                                     IsActive = false
                                 });
                         }

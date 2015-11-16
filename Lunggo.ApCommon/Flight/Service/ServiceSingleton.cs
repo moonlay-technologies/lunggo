@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Currency.Service;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Flight.Wrapper.AirAsia;
@@ -69,15 +70,9 @@ namespace Lunggo.ApCommon.Flight.Service
             result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
             if (result.IsSuccess)
             {
+                AddPriceMargin(result.Itineraries, supplier);
                 foreach (var itin in result.Itineraries)
                 {
-                    var currency = CurrencyService.GetInstance();
-                    itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
-                    itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
-                    AddPriceMargin(itin);
-                    itin.LocalCurrency = "IDR";
-                    itin.LocalRate = 1;
-                    itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                 }
             }
@@ -96,19 +91,12 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = IdUtil.GetSupplier(conditions.FareId);
             conditions.FareId = IdUtil.GetCoreId(conditions.FareId);
-            RevalidateFareResult result;
-            var currency = CurrencyService.GetInstance();
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
 
-            result = supplier.RevalidateFare(conditions);
+            var result = supplier.RevalidateFare(conditions);
             if (result.Itinerary != null)
             {
-                result.Itinerary.SupplierRate = currency.GetSupplierExchangeRate(supplierName);
-                result.Itinerary.OriginalIdrPrice = result.Itinerary.SupplierPrice * result.Itinerary.SupplierRate;
-                AddPriceMargin(result.Itinerary);
-                result.Itinerary.LocalCurrency = "IDR";
-                result.Itinerary.LocalRate = 1;
-                result.Itinerary.LocalPrice = result.Itinerary.FinalIdrPrice * result.Itinerary.LocalRate;
+                AddPriceMargin(new List<FlightItinerary> {result.Itinerary}, supplier);
                 result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, supplierName, result.Itinerary.FareType);
             }
             return result;

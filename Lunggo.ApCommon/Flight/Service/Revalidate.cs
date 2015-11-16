@@ -60,7 +60,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.Sets.TrueForAll(set => set.IsSuccess))
                 {
                     output.IsSuccess = true;
-                    output.IsValid = output.Sets.TrueForAll(set => set.IsValid);
+                    var itinsPriceDifference = itins.Zip(newItins,
+                        (oldItin, newItin) => newItin.FinalIdrPrice - oldItin.FinalIdrPrice);
+                    output.IsValid = output.Sets.TrueForAll(set => set.IsValid) && itinsPriceDifference.All(diff => diff == 0);
                     if (output.Sets.Any(set => set.Itinerary == null))
                         output.NewFare = null;
                     else

@@ -39,7 +39,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     FromName = "Travorama"
                 };
                 Console.WriteLine("Sending Notification Email...");
-                mailService.SendEmail(reservation, mailModel, "FlightPendingPaymentNotifEmail");
+                mailService.SendEmail(reservation, mailModel, "FlightPendingPaymentExpiredNotifEmail");
             }
             else
             {

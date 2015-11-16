@@ -164,7 +164,6 @@
     <Compile Include="ApiSrc\v1\Flights\FlightsController.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\IssueFlightLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\BookFlightLogic.cs" />
-    <Compile Include="ApiSrc\v1\Flights\Logic\SyncFlightMarginRulesLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\ExpireReservationsLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\CancelBookingLogic.cs" />
     <Compile Include="ApiSrc\v1\Flights\Logic\GetRulesLogic.cs" />

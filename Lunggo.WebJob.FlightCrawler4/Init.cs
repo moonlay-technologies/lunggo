@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 
@@ -12,6 +13,7 @@ namespace Lunggo.WebJob.FlightCrawler
         public static void Init()
         {
             InitConfigurationManager();
+            InitDatabaseService();
             InitRedisService();
             InitQueueService();
             InitFlightService();
@@ -61,6 +63,13 @@ namespace Lunggo.WebJob.FlightCrawler
         {
             var dict = DictionaryService.GetInstance();
             dict.Init("");
+        }
+
+        private static void InitDatabaseService()
+        {
+            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var database = DbService.GetInstance();
+            database.Init(connString);
         }
     }
 }
