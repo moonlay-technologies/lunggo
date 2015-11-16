@@ -1,61 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Wrapper;
 using Lunggo.ApCommon.Sequence;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        private static readonly List<MarginRule> MarginRules = new List<MarginRule>();
-        private static readonly List<MarginRule> DeletedMarginRules = new List<MarginRule>();
         private const decimal RoundingOrder = 100M;
 
         internal void InitPriceMarginRules()
         {
-            MarginRules.Add(new MarginRule
-            {
-                Name = "Default",
-                Description = "This is the default margin rules",
-                ConstraintCount = 0,
-                Coefficient = 0.07M,
-                Constant = 0
-            });
+            PullPriceMarginRulesFromDatabaseToCache();
         }
 
-        internal void AddPriceMargin(FlightItinerary fare)
+        internal void AddPriceMargin(List<FlightItinerary> itins, FlightSupplierWrapperBase supplier)
         {
-            var rule = GetFirstMatchingRule(fare);
-            ApplyMarginRule(fare, rule);
+            var rules = GetAllActiveMarginRulesFromCache();
+            foreach (var itin in itins)
+            {
+                AddPriceMargin(itin, supplier, rules);
+            }
+        }
+
+        internal void AddPriceMargin(FlightItinerary itin, FlightSupplierWrapperBase supplier, List<MarginRule> rules)
+        {
+            var currency = CurrencyService.GetInstance();
+            var rule = GetFirstMatchingRule(itin, rules);
+            
+            itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
+            itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
+            ApplyMarginRule(itin, rule);
+            itin.LocalCurrency = "IDR";
+            itin.LocalRate = 1;
+            itin.LocalPrice = itin.FinalIdrPrice * itin.LocalRate;
         }
 
         public MarginRule GetPriceMarginRule(long ruleId)
         {
-            return MarginRules.Single(rule => rule.RuleId == ruleId);
+            var rules = GetAllActiveMarginRulesFromCache();
+            return rules.Single(rule => rule.RuleId == ruleId);
         }
 
         public List<MarginRule> GetAllPriceMarginRules()
         {
-            return MarginRules;
+            var rules = GetAllActiveMarginRulesFromCache();
+            return rules;
         }
 
         public List<MarginRule> InsertPriceMarginRuleAndRetrieveConflict(MarginRule newRule)
         {
             AssignRuleId(newRule);
             InsertMarginRule(newRule);
-            var isConflicting = CheckForConflict(newRule);
-            return isConflicting ? RetrieveConflict(newRule) : null;
+            var conflictingRules = RetrieveConflict(newRule);
+            return conflictingRules;
         }
 
         public void DeletePriceMarginRule(long ruleId)
         {
-            var obsoleteRule = MarginRules.Single(rule => rule.RuleId == ruleId);
-            MarginRules.Remove(obsoleteRule);
-            DeletedMarginRules.Add(obsoleteRule);
+            var rules = GetActiveMarginRulesFromBufferCache();
+            var deletedRules = GetDeletedMarginRulesFromBufferCache();
+            var obsoleteRule = rules.Single(rule => rule.RuleId == ruleId);
+            rules.Remove(obsoleteRule);
+            deletedRules.Add(obsoleteRule);
+            SaveActiveMarginRulesInBufferCache(rules);
+            SaveDeletedMarginRulesInBufferCache(deletedRules);
         }
 
         public List<MarginRule> UpdatePriceMarginRuleAndRetrieveConflict(MarginRule updatedRule)
@@ -69,15 +85,20 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateConflictingPriceMarginRules(updatedRules);
         }
 
-        public void PullRemotePriceMarginRules()
+        public void PullPriceMarginRulesFromDatabaseToCache()
         {
-            MarginRules.Clear();
-            MarginRules.AddRange(GetDb.PriceMarginRules());
+            var dbRules = GetDb.ActivePriceMarginRules();
+            SaveActiveMarginRulesToCache(dbRules);
+            SaveActiveMarginRulesInBufferCache(dbRules);
+            SaveDeletedMarginRulesInBufferCache(new List<MarginRule>());
         }
 
-        public void PushRemotePriceMarginRules()
+        public void PushPriceMarginRulesFromCacheBufferToDatabase()
         {
-            InsertDb.PriceMarginRules(MarginRules, DeletedMarginRules);
+            var rules = GetActiveMarginRulesFromBufferCache();
+            var deletedRules = GetDeletedMarginRulesFromBufferCache();
+            InsertDb.PriceMarginRules(rules, deletedRules);
+            PullPriceMarginRulesFromDatabaseToCache();
         }
 
         #region HelperMethods
@@ -87,30 +108,31 @@ namespace Lunggo.ApCommon.Flight.Service
             newRule.RuleId = FlightPriceMarginRuleIdSequence.GetInstance().GetNext();
         }
 
-        private static void UpdateConflictingPriceMarginRules(List<MarginRule> updatedRules)
+        private void UpdateConflictingPriceMarginRules(List<MarginRule> updatedRules)
         {
+            var rules = GetActiveMarginRulesFromBufferCache();
             var constraintCount = updatedRules.First().ConstraintCount;
             var updatedRulesCount = updatedRules.Count();
             var orderedUpdatedRules = updatedRules.OrderBy(rule => rule.Priority);
-            var targetIndex = MarginRules.FindIndex(rule => rule.ConstraintCount == constraintCount);
-            MarginRules.RemoveRange(targetIndex, updatedRulesCount);
-            MarginRules.InsertRange(targetIndex, orderedUpdatedRules);
+            var targetIndex = rules.FindIndex(rule => rule.ConstraintCount == constraintCount);
+            rules.RemoveRange(targetIndex, updatedRulesCount);
+            rules.InsertRange(targetIndex, orderedUpdatedRules);
+            SaveActiveMarginRulesInBufferCache(rules);
+            PullPriceMarginRulesFromDatabaseToCache();
         }
 
-        private static List<MarginRule> RetrieveConflict(MarginRule newRule)
+        private List<MarginRule> RetrieveConflict(MarginRule newRule)
         {
-            return MarginRules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
+            var rules = GetActiveMarginRulesFromBufferCache();
+            return rules.Where(rule => rule.ConstraintCount == newRule.ConstraintCount).ToList();
         }
 
-        private static void InsertMarginRule(MarginRule newRule)
+        private void InsertMarginRule(MarginRule newRule)
         {
-            var index = MarginRules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
-            MarginRules.Insert(index + 1, newRule);
-        }
-
-        private static bool CheckForConflict(MarginRule newRule)
-        {
-            return MarginRules.Count(rule => rule.ConstraintCount == newRule.ConstraintCount) > 1;
+            var rules = GetAllActiveMarginRulesFromCache();
+            var index = rules.FindLastIndex(rule => rule.ConstraintCount > newRule.ConstraintCount);
+            rules.Insert(index + 1, newRule);
+            SaveActiveMarginRulesInBufferCache(rules);
         }
 
         private static void ApplyMarginRule(FlightItinerary fare, MarginRule rule)
@@ -125,12 +147,12 @@ namespace Lunggo.ApCommon.Flight.Service
             fare.FinalIdrPrice = finalFare;
         }
 
-        private static MarginRule GetFirstMatchingRule(FlightItinerary fare)
+        private static MarginRule GetFirstMatchingRule(FlightItinerary fare, List<MarginRule> rules)
         {
             var rule = new MarginRule();
-            for (var i = 0; i < MarginRules.Count; i++)
+            for (var i = 0; i < rules.Count; i++)
             {
-                rule = MarginRules[i];
+                rule = rules[i];
                 if (!BookingDateMatches(rule)) continue;
                 if (!FareTypeMatches(rule, fare)) continue;
                 if (!CabinClassMatches(rule, fare)) continue;

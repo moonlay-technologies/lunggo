@@ -75,13 +75,14 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (displayReservation != null)
             {
-                var passengerLastName = displayReservation.Passengers.Where(x => x.LastName == lastName);
+                var passengerLastName = displayReservation.Passengers.Where(x => x.LastName.ToLower() == lastName.ToLower());
                 if (passengerLastName.Any())
                 {
                     var rsvNoSet = new
                     {
                         RsvNo = displayReservation.RsvNo
                     };
+                    TempData["AllowThisReservationCheck"] = true;
                     return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                 }
             }

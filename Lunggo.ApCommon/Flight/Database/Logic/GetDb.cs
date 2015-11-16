@@ -78,6 +78,8 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Currency = reservationRecord.CurrencyCd,
                                         Time = reservationRecord.PaymentTime,
                                         TimeLimit = reservationRecord.PaymentTimeLimit,
+                                        Medium = PaymentMediumCd.Mnemonic(reservationRecord.PaymentMediumCd),
+                                        Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
                                         Url = reservationRecord.PaymentUrl
                                     },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
@@ -327,7 +329,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 }
             }
 
-            internal static List<MarginRule> PriceMarginRules()
+            internal static List<MarginRule> ActivePriceMarginRules()
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
                 {

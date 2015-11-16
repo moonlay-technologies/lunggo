@@ -115,14 +115,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Route("api/v1/flights/sync")]
-        public void SyncPriceMarginRules(HttpRequestMessage httpRequest)
-        {
-            FlightLogic.SyncFlightMarginRules();
-        }
-
-        [HttpPost]
-        [LunggoCorsPolicy]
         [Route("api/v1/flights/topdestinations")]
         public TopDestinations TopDestinations(HttpRequestMessage httpRequest)
         {

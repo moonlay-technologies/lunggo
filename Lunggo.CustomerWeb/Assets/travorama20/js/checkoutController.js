@@ -91,7 +91,6 @@ app.controller('checkoutController', [
                         $scope.passengers[i].passport.expire.month = '';
                         $scope.passengers[i].passport.expire.year = '';
                         $scope.passengers[i].passport.expire.full = '';
-                        $scope.passengers[i].passport.country = '';
                     }
                     if (!$scope.idRequired) {
                         $scope.passengers[i].idNumber = '';

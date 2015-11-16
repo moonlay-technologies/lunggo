@@ -641,7 +641,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Flight\Interface\" />
     <Folder Include="Identity\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
