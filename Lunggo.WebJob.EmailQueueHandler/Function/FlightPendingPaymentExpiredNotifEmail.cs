@@ -14,7 +14,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
         {
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Pending Payment ExpiredNotif Email for RsvNo " + rsvNo + "...");
+            Console.WriteLine("Processing Flight Pending Payment Expired Notif Email for RsvNo " + rsvNo + "...");
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
