@@ -43,38 +43,38 @@
 
                     <!-- CONTENT  -->
 
-                    <p>Dear, <span style="color: #15b1e4">@Model.Contact.Name</span></p>
-                    <p><b>Travorama.com</b>telah mengkonfirmasi pembayaran untuk transaksi berikut : </p>
+                    <p>Dear, <span style="color: #15b1e4;">@Model.Contact.Name</span></p>
+                    <p><b>Travorama.com</b> telah mengkonfirmasi pembayaran untuk transaksi berikut : </p>
 
-                    <table width="100%" style="margin-bottom: 4%" cellpadding="0" cellspacing="0">
+                    <table width="100%" style="margin-bottom: 4%;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #333333; opacity: 0.2" />
+                                <hr style="border-color: #f5f5f5; opacity: 0.2;" />
                             </td>
                         </tr>
                         <tr>
                             <td width="20%">
-                                <p style="opacity: 0.5">No. Pemesanan</p>
-                                <p style="margin-top: -4%; font-size: 15px"><b>@Model.RsvNo</b></p>
+                                <p style="opacity: 0.5;">No. Pemesanan</p>
+                                <p style="margin-top: -4%; font-size: 15px;"><b>@Model.RsvNo</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
-                                <p style="opacity: 0.5">Waktu.</p>
-                                @{ var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault().AddHours(7); }
-                                <p style="margin-top: -4%"><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.Hour.ToString("hh.mm") WIB</b></p>
+                                <p style="opacity: 0.5;">Waktu.</p>
+                                @{ var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault(); }
+                                <p style="margin-top: -4%;"><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.ToString("HH:mm") WIB</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
-                                <p style="opacity: 0.5">Metode Pembayaran.</p>
-                                <p style="margin-top: -4%"><b>@Model.Payment.Method</b></p>
+                                <p style="opacity: 0.5;">Metode Pembayaran.</p>
+                                <p style="margin-top: -4%;"><b>@Model.Payment.Method</b></p>
                             </td>
                         </tr>
                     </table>
@@ -83,19 +83,19 @@
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
-                                    <p style="color: #15b1e4; text-align: left"><b>Detail Order</b></p>
+                                    <p style="color: #15b1e4; text-align: left;"><b>Detail Order</b></p>
                                 </th>
                             </tr>
                         </thead>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">User ID</p>
+                                <p style="color: #15b1e4; text-align: left;">User ID</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: center">:</p>
+                                <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">@Model.Contact.Email</p>
+                                <p style="color: #15b1e4; text-align: left;">@Model.Contact.Email</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -103,13 +103,13 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Order Date</p>
+                                <p style="color: #15b1e4; text-align: left;">Order Date</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: center">:</p>
+                                <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">@Model.RsvTime.ToString("dd MMMM yyyy")</p>
+                                <p style="color: #15b1e4; text-align: left;">@Model.RsvTime.ToString("dd MMMM yyyy")</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -117,13 +117,13 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Order Type</p>
+                                <p style="color: #15b1e4; text-align: left;">Order Type</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: center">:</p>
+                                <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Flight</p>
+                                <p style="color: #15b1e4; text-align: left;">Flight</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -131,13 +131,13 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Order Price</p>
+                                <p style="color: #15b1e4; text-align: left;">Order Price</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: center">:</p>
+                                <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Rp @Model.Payment.FinalPrice</p>
+                                <p style="color: #15b1e4; text-align: left;">Rp @Model.Payment.FinalPrice</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -145,13 +145,13 @@
                         </tr>
                         <tr>
                             <td width="25%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">Order By</p>
+                                <p style="color: #15b1e4; text-align: left;">Order By</p>
                             </td>
                             <td width="8%" style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: center">:</p>
+                                <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left">@Model.Contact.Name</p>
+                                <p style="color: #15b1e4; text-align: left;">@Model.Contact.Name</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -159,31 +159,44 @@
                         </tr>
                         @{ var i = @Model.Passengers.Count; }
                         @{ var j = 1; }
-                        <tr rowspan="@i">
-                            @foreach (var penumpang in @Model.Passengers)
-                            {
-                                <td width="25%">
-                                    <p style="color: #15b1e4; text-align: left">Guest Name</p>
-                                </td>
+                        <tr>
+                            <td width="25%" rowspan="@i">
+                                <p style="color: #15b1e4; text-align: left;">Guest Name</p>
+                            </td>
+                            <td width="8%">
+                                <p style="color: #15b1e4; text-align: center;">:</p>
+                            </td>
+                            <td>
+                                <p style="color: #15b1e4; text-align: left;">1. @Model.Passengers[0].FirstName</p>
+                            </td>
+                            <td width="20%"></td>
+                            <td width="5%" style="padding-right: 1%;">
+                                <hr style="border-color:#15b1e4;" />
+                            </td>
+                            <td width="7%">
+                                @Model.Passengers[0].Type
+                            </td>
+                        </tr>
+                        @for (int k = 1; k < i; k++)
+                        {
+                            <tr>
                                 <td width="8%">
-                                    <p style="color: #15b1e4; text-align: center">:</p>
+                                    <p style="color: #15b1e4; text-align: center;">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left">@j. @penumpang.FirstName</p>
+                                    <p style="color: #15b1e4; text-align: left;">@(k+1). @Model.Passengers[k].FirstName</p>
                                 </td>
                                 <td width="20%"></td>
-                                <td width="5%" style="padding-right: 1%">
-                                    <hr style="border-color:#15b1e4" />
+                                <td width="5%" style="padding-right: 1%;">
+                                    <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @penumpang.Type
+                                    @Model.Passengers[k].Type
                                 </td>
-                                j++;
-                            }
-
-                        </tr>
+                            </tr>
+                        }
                     </table>
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4%; ">
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
@@ -197,39 +210,39 @@
                     {
                         <p style="color: #15b1e4;">(Roundtrip)</p>
 
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%">
                             <tr>
-                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top;">
                                     <img src="http://travorama-qa-cw.azurewebsites.net/Assets/images/email/flight-departure-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4;">Berangkat</p>
+                                    <img width="90%" height="40%" src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%;">Berangkat</p>
                                 </td>
                                 <td width="6%">
-                                    <p style="text-align: center">:</p>
+                                    <p style="text-align: center;">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AircraftCode-@Model.Itinerary.Trips[0].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
                             </tr>
                         </table>
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%">
                             <tr>
-                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top;">
                                     <img src="http://travorama-qa-cw.azurewebsites.net/Assets/images/email/flight-return-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4;">Kembali</p>
+                                    <img width="90%" height="40%" src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%;">Kembali</p>
                                 </td>
                                 <td width="6%">
-                                    <p style="text-align: center">:</p>
+                                    <p style="text-align: center;">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AircraftCode-@Model.Itinerary.Trips[1].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
@@ -238,20 +251,20 @@
                     }
                     else
                     {
-                        <table width="100%" border="1px" solid=solid>
+                        <table width="100%">
                             <tr>
-                                <td width="3%" style="padding-top: 1%; padding-left: 1%">
+                                <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top;">
                                     <img src="http://travorama-qa-cw.azurewebsites.net/Assets/images/email/flight-departure-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4;">Berangkat</p>
+                                    <img width="90%" height="40%" src="http://travorama-qa-cw.azurewebsites.net@(Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%;">Berangkat</p>
                                 </td>
                                 <td width="6%">
-                                    <p style="text-align: center">:</p>
+                                    <p style="text-align: center;">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].FlightNumber-@Model.Itinerary.Trips[0].Segments[0].AirlineCode</b></p>
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
@@ -261,10 +274,10 @@
                     }
 
 
-                    @{ var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9); }
+                    @{ var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(2); }
 
                     <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
-                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.Hour.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
+                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
 
                 </td>
                 <td width="5%"></td>

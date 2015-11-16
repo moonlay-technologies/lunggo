@@ -2487,6 +2487,8 @@
     <Content Include="Views\Travorama20\emailConfirmationTemplate.cshtml" />
     <Content Include="Views\Travorama20\emailDetailOrderTemplate.cshtml" />
     <Content Include="Views\Travorama20\emailConfirmPayment.cshtml" />
+    <Content Include="Views\Template\invoice - Copy.cshtml" />
+    <Content Include="Views\Travorama20\emailExpire.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

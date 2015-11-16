@@ -3,9 +3,6 @@
 @using Microsoft.Ajax.Utilities
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
-@{
-    Layout = "";
-}
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -57,13 +54,13 @@
                                         <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
-                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments[0].ArrivalAirportName</b></p>
                                     </td>
                                     <td width="28%"></td>
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
-                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
+                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime.AddHours(7)}
                                     <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
                                 </tr>
                                 <tr width="100%">
@@ -71,7 +68,7 @@
                                         <img src="/Assets/images/email/flight-return-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
-                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
+                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[1]. - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
                                     </td>
                                     <td width="28%"></td>
                                     <td width="5%">
@@ -96,7 +93,7 @@
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
-                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].DepartureDate.AddHours(7)}
+                                    @{var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].ArrivalTime.AddHours(7)}
                                     <td style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.Hour.ToString("hh:mm")</td>
                                 </tr>
                             </table>
@@ -105,7 +102,7 @@
                                 <table width="100%" style="border-top: 2px #15b1e4 solid; border-bottom: 2px #15b1e4 solid; margin-bottom: 4% ">
                                     <tr>
                                         <td>
-                                            <p style="color: #15b1e4; text-align: center">Metode Pembayaran : Transfer (SMS/Internet Banking/Teller Bank)</p>
+                                            <p style="color: #15b1e4; text-align: center">Metode Pembayaran : @Model.Payment.Method (SMS/Internet Banking/Teller Bank)</p>
                                         </td>
                                     </tr>
                                 </table>
@@ -170,7 +167,7 @@
                                     </tr>
                                 </table>
 
-    <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
+                                <a style="margin-left: 6%; margin-bottom: -1%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
                                 <p style="margin-left: 6%; margin-bottom: 4%">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
                                 <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-038 </span>dengan </p>
                                 <p style="margin-top: -1%; opacity: 0.8; margin-bottom: 7%; margin-left: 6%; font-size: 10px; font-style: italic;">mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama 99999999</span></p>

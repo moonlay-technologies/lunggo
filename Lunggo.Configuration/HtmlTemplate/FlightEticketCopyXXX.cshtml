@@ -1,0 +1,335 @@
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+
+@{
+    Layout = "/Views/Shared/_layout_eticket.cshtml";
+}
+
+<div class="page">
+    <header class="page-header">
+        <div class="row">
+            <div class="col-xs-4">
+                <img src="/Assets/images/logo-color.png" alt="Travorama" />
+            </div>
+            <div class="col-xs-8">
+                <div class="page-header-right">
+                    <div class="page-title"><h3>E-TICKET</h3></div>
+                    <div class="page-help">
+                        <p>Any Problem? Contact Us :</p>
+                        <p><span>T.</span>0838 7808 1993 <span>E.</span>help@travorama.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header><!-- .page-header -->
+    <section class="page-content">
+        <div class="flight-list-wrapper departure-flight">
+
+            <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pergi.jpg" alt="PENERBANGAN PERGI" /></span></h2>
+            @foreach (var segment in @Model.Itinerary.Trips[0].Segments)
+            {
+                <div class="flight-list">
+                    <div class="flight">
+                        <div class="flight-icon">
+                            <img src="http://travorama-qa-cw.azurewebsites.net/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                            <h5 class="flight-pnr">PNR : </h5>
+                        </div><!-- .flight-icon -->
+                        <div class="flight-detail">
+                            <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                            <div class="flight-route">
+                                <div class="departure-airline">
+                                    <h3>SIN</h3>
+                                    <h3>Singapore</h3>
+                                    <h3>Changi</h3>
+                                </div>
+                                <div class="departure-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="duration">
+                                    <h3>Duration - 1:00:00</h3>
+                                </div>
+                                <div class="arrival-date">
+                                    <h3>22:15</h3>
+                                    <h3>2 July 2015</h3>
+                                </div>
+                                <div class="arrival-airline">
+                                    <h3>SIN</h3>
+                                    <h3>Singapore</h3>
+                                    <h3>Changi</h3>
+                                </div>
+                            </div><!-- .flight-route -->
+                        </div><!-- .flight-detail -->
+                    </div><!-- .flight -->
+                    <div class="transit">
+                        <p><b>Transit Duration :</b> 5h 42m</p>
+                    </div><!-- .transit -->
+                </div>
+            }
+
+
+            <!--<div class="flight">
+                <div class="flight-icon">
+                    <img src="/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                    <h5 class="flight-pnr">PNR : 1234567</h5>
+                </div><!-- .flight-icon -->
+            <!--<div class="flight-detail">
+                    <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                    <div class="flight-route">
+                        <div class="departure-airline">
+                            <h3>SIN</h3>
+                            <h3>Singapore</h3>
+                            <h3>Changi</h3>
+                        </div>
+                        <div class="departure-date">
+                            <h3>22:15</h3>
+                            <h3>2 July 2015</h3>
+                        </div>
+                        <div class="duration">
+                            <h3>Duration - 1:00:00</h3>
+                        </div>
+                        <div class="arrival-date">
+                            <h3>22:15</h3>
+                            <h3>2 July 2015</h3>
+                        </div>
+                        <div class="arrival-airline">
+                            <h3>SIN</h3>
+                            <h3>Singapore</h3>
+                            <h3>Changi</h3>
+                        </div>
+                    </div><!-- .flight-route
+                </div><!-- .flight-detail
+            </div><!-- .flight -->
+            <!--<div class="flight">
+                <div class="flight-icon">
+                    <img src="/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                    <h5 class="flight-pnr">PNR : 1234567</h5>
+                </div><!-- .flight-icon -->
+            <!--<div class="flight-detail">
+                        <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                        <div class="flight-route">
+                            <div class="departure-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                            <div class="departure-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="duration">
+                                <h3>Duration - 1:00:00</h3>
+                            </div>
+                            <div class="arrival-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="arrival-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                        </div><!-- .flight-route
+                    </div><!-- .flight-detail
+                </div><!-- .flight
+            </div>-->
+
+        </div><!-- .flight.flight-list.departure-flight -->
+
+        <table class="passenger-wrapper">
+            <thead>
+                <tr>
+                    <th class="no">NO</th>
+                    <th class="name">NAMA PENUMPANG</th>
+                    <th class="type">JENIS TIKET</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="no">1</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+                <tr>
+                    <td class="no">2</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+                <tr>
+                    <td class="no">3</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+            </tbody>
+        </table><!-- .passenger-wrapper -->
+    </section><!-- .page-content -->
+    <footer class="page-footer">
+        <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
+    </footer>
+</div><!-- .page -->
+
+<div class="page page-2">
+    <header class="page-header">
+        <div class="row">
+            <div class="col-xs-4">
+                <img src="/Assets/images/logo-color.png" alt="Travorama" />
+            </div>
+            <div class="col-xs-8">
+                <div class="page-header-right">
+                    <div class="page-title"><h3>E-TICKET</h3></div>
+                    <div class="page-help">
+                        <p>Any Problem? Contact Us :</p>
+                        <p><span>T.</span>0838 7808 1993 <span>E.</span>help@travorama.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header><!-- .page-header -->
+    <section class="page-content">
+
+        <div class="flight-list-wrapper departure-flight">
+
+            <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pulang.jpg" alt="Penerbangan Pulang" /></span></h2>
+            <div class="flight-list">
+                <div class="flight">
+                    <div class="flight-icon">
+                        <img src="/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                        <h5 class="flight-pnr">PNR : 1234567</h5>
+                    </div><!-- .flight-icon -->
+                    <div class="flight-detail">
+                        <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                        <div class="flight-route">
+                            <div class="departure-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                            <div class="departure-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="duration">
+                                <h3>Duration - 1:00:00</h3>
+                            </div>
+                            <div class="arrival-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="arrival-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                        </div><!-- .flight-route -->
+                    </div><!-- .flight-detail -->
+                </div><!-- .flight -->
+                <div class="transit">
+                    <p><b>Transit Duration :</b> 5h 42m</p>
+                </div><!-- .transit -->
+                <div class="flight">
+                    <div class="flight-icon">
+                        <img src="/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                        <h5 class="flight-pnr">PNR : 1234567</h5>
+                    </div><!-- .flight-icon -->
+                    <div class="flight-detail">
+                        <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                        <div class="flight-route">
+                            <div class="departure-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                            <div class="departure-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="duration">
+                                <h3>Duration - 1:00:00</h3>
+                            </div>
+                            <div class="arrival-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="arrival-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                        </div><!-- .flight-route -->
+                    </div><!-- .flight-detail -->
+                </div><!-- .flight -->
+                <div class="flight">
+                    <div class="flight-icon">
+                        <img src="/Assets/images/airlines/AK.png" alt="Air Asia" class="flight-airline" />
+                        <h5 class="flight-pnr">PNR : 1234567</h5>
+                    </div><!-- .flight-icon -->
+                    <div class="flight-detail">
+                        <div class="flight-number"><p>Air Asia TJ1234 <span>Subclass B (Economy)</span></p></div>
+                        <div class="flight-route">
+                            <div class="departure-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                            <div class="departure-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="duration">
+                                <h3>Duration - 1:00:00</h3>
+                            </div>
+                            <div class="arrival-date">
+                                <h3>22:15</h3>
+                                <h3>2 July 2015</h3>
+                            </div>
+                            <div class="arrival-airline">
+                                <h3>SIN</h3>
+                                <h3>Singapore</h3>
+                                <h3>Changi</h3>
+                            </div>
+                        </div><!-- .flight-route -->
+                    </div><!-- .flight-detail -->
+                </div><!-- .flight -->
+            </div>
+
+        </div><!-- .flight.flight-list.departure-flight -->
+
+        <table class="passenger-wrapper">
+            <thead>
+                <tr>
+                    <th class="no">NO</th>
+                    <th class="name">NAMA PENUMPANG</th>
+                    <th class="type">JENIS TIKET</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="no">1</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+                <tr>
+                    <td class="no">2</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+                <tr>
+                    <td class="no">3</td>
+                    <td class="name">Miss Dwi Agustina</td>
+                    <td class="type">Dewasa</td>
+                </tr>
+            </tbody>
+        </table><!-- .passenger-wrapper -->
+    </section><!-- .page-content -->
+    <footer class="page-footer">
+        <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
+    </footer>
+    <footer class="page-footer hidden">
+        <div class="row">
+            <div class="col-xs-10">
+                <h4>Lorem ipsum dolor sit amet</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero, nec vulputate erat. Mauris venenatis nibh sed tortor congue, eu volutpat diam luctus. Suspendisse non mauris tristique, vehicula nisl sit amet, sodales nisl. Integer dapibus sapien augue, in accumsan orci ornare vel. Integer a ultricies augue. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </footer><!-- .page-footer -->
+</div><!-- .page -->

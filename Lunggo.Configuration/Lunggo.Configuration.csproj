@@ -448,6 +448,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\FlightEticketCopyXXX.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmailxxxxxxxxxx.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />

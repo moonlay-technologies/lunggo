@@ -1,7 +1,4 @@
-﻿@using System.Globalization
-@using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
+﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -65,7 +62,7 @@
                             </tr>
                         </thead>
                     </table>
-
+                    
                     @if (@Model.Itinerary.Trips.Count > 1)
                     {
                         <p style="color: #15b1e4;">(Roundtrip)</p>
@@ -102,7 +99,7 @@
                                     <p style="text-align: center">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
+                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[1].AirlineName - @Model.Itinerary.Trips[1].Segments[1].AirlineCode-@Model.Itinerary.Trips[1].Segments[1].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
@@ -154,10 +151,7 @@
 
                     </address>
 
-                </td>
-
                 <td>
-                </td>
                 <td></td>
             </tr>
         </tfoot>
