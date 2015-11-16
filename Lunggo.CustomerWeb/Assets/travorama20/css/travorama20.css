@@ -110,6 +110,11 @@ form label.important:after {
 .text-main-color {
   color: #1daee4; }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
 .search-calendar {
   width: 320px;
   height: 520px;
