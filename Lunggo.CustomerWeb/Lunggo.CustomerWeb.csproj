@@ -675,6 +675,7 @@
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <None Include="Assets\images\backtotop.jpg.bak" />
+    <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
@@ -806,11 +807,14 @@
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
+    <Content Include="Assets\images\howto-sprite.png" />
     <Content Include="Assets\images\howtoguide.jpg" />
+    <Content Include="Assets\images\howtoorder-header.jpg" />
     <Content Include="Assets\images\howtoorder.jpg" />
     <Content Include="Assets\images\howtopay-1.jpg" />
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
+    <Content Include="Assets\images\howtopay-header.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
@@ -2467,6 +2471,7 @@
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
     <Content Include="Views\StaticPage\Contact.cshtml" />
+    <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />

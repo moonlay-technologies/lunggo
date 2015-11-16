@@ -4662,8 +4662,116 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-howtopay .list-wrapper .list.active .list-detail, .page-howtoorder .list-wrapper .list.active .list-detail {
       display: block; }
 
+.page-howtopay .howto-header, .page-howtoorder .howto-header {
+  height: 250px;
+  padding-top: 70px; }
+  .page-howtopay .howto-header .line, .page-howtoorder .howto-header .line {
+    display: block;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative; }
+    .page-howtopay .howto-header .line span, .page-howtoorder .howto-header .line span {
+      width: 30px;
+      height: 30px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-image: url(/Assets/images/howto-sprite.png); }
+    .page-howtopay .howto-header .line:before, .page-howtopay .howto-header .page-index .line.section-reason:after, .page-index .page-howtopay .howto-header .line.section-reason:after, .page-howtoorder .howto-header .line:before, .page-howtoorder .howto-header .page-index .line.section-reason:after, .page-index .page-howtoorder .howto-header .line.section-reason:after {
+      width: 43%;
+      height: 100%;
+      left: 0;
+      top: 50%;
+      content: "";
+      border-top: 1px solid #fff;
+      display: block;
+      position: absolute; }
+    .page-howtopay .howto-header .line:after, .page-howtoorder .howto-header .line:after {
+      width: 43%;
+      height: 100%;
+      right: 0;
+      top: 50%;
+      content: "";
+      border-top: 1px solid #fff;
+      display: block;
+      position: absolute; }
+  .page-howtopay .howto-header hgroup, .page-howtoorder .howto-header hgroup {
+    text-align: center;
+    color: #fff; }
+    .page-howtopay .howto-header hgroup h2, .page-howtoorder .howto-header hgroup h2 {
+      margin: 0;
+      margin-bottom: 12px;
+      padding-top: 12px;
+      font-size: 32px; }
+    .page-howtopay .howto-header hgroup h4, .page-howtoorder .howto-header hgroup h4 {
+      margin: 0;
+      font-size: 14px; }
+
+.page-howtopay .howto-menu, .page-howtoorder .howto-menu {
+  background: #787878;
+  position: relative; }
+  .page-howtopay .howto-menu:before, .page-howtopay .page-index .howto-menu.section-reason:after, .page-index .page-howtopay .howto-menu.section-reason:after, .page-howtoorder .howto-menu:before, .page-howtoorder .page-index .howto-menu.section-reason:after, .page-index .page-howtoorder .howto-menu.section-reason:after {
+    position: absolute;
+    width: 50%;
+    right: 50%;
+    top: 0;
+    height: 100%;
+    content: "";
+    display: block; }
+  .page-howtopay .howto-menu:after, .page-howtoorder .howto-menu:after {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    content: "";
+    display: block; }
+  .page-howtopay .howto-menu .row, .page-howtoorder .howto-menu .row {
+    text-align: center;
+    position: relative;
+    z-index: 2; }
+  .page-howtopay .howto-menu a, .page-howtoorder .howto-menu a {
+    display: block;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 0; }
+    .page-howtopay .howto-menu a.active, .page-howtoorder .howto-menu a.active {
+      background: url(/Assets/images/arrow-white.png) bottom center no-repeat; }
+    .page-howtopay .howto-menu a span:before, .page-howtopay .howto-menu a .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a span.section-reason:after, .page-howtoorder .howto-menu a span:before, .page-howtoorder .howto-menu a .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a span.section-reason:after {
+      content: "";
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: url(/Assets/images/howto-sprite.png);
+      vertical-align: middle;
+      margin-right: 12px; }
+  .page-howtopay .howto-menu a.button-howtoorder span:before, .page-howtopay .howto-menu a.button-howtoorder .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a.button-howtoorder span.section-reason:after, .page-howtoorder .howto-menu a.button-howtoorder span:before, .page-howtoorder .howto-menu a.button-howtoorder .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a.button-howtoorder span.section-reason:after {
+    background-position: 0 0; }
+  .page-howtopay .howto-menu a.button-howtopay span:before, .page-howtopay .howto-menu a.button-howtopay .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a.button-howtopay span.section-reason:after, .page-howtoorder .howto-menu a.button-howtopay span:before, .page-howtoorder .howto-menu a.button-howtopay .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a.button-howtopay span.section-reason:after {
+    background-position: -30px 0; }
+  .page-howtopay .howto-menu.order:before, .page-howtopay .page-index .howto-menu.order.section-reason:after, .page-index .page-howtopay .howto-menu.order.section-reason:after, .page-howtoorder .howto-menu.order:before, .page-howtoorder .page-index .howto-menu.order.section-reason:after, .page-index .page-howtoorder .howto-menu.order.section-reason:after {
+    background: #032e55; }
+  .page-howtopay .howto-menu.pay:after, .page-howtoorder .howto-menu.pay:after {
+    background: #032e55; }
+
+.page-howtoorder .line span {
+  background-position: 0; }
+
 .page-howtoorder .list-image {
   height: 420px; }
   .page-howtoorder .list-image img {
     width: 742px;
     margin-left: -160px; }
+
+.page-howtoorder .howto-header {
+  background: url(/Assets/images/howtoorder-header.jpg) top center no-repeat;
+  background-size: cover; }
+
+.page-howtopay .line span {
+  background-position: -30px 0; }
+
+.page-howtopay .howto-header {
+  background: url(/Assets/images/howtopay-header.jpg) top center no-repeat;
+  background-size: cover; }

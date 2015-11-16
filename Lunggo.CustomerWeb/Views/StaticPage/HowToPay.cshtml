@@ -2,6 +2,7 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-static page-howtopay";
     ViewBag.Title = "Cara Pembayaran";
+    ViewBag.ActiveSection = "pay";
 }
 
 @section PageJS{
@@ -17,6 +18,16 @@
     </script>
 
 }
+
+<section class="howto-header">
+    <div class="line"><span></span></div>
+    <hgroup>
+        <h2>Metode Pembayaran di <b>Travorama</b></h2>
+        <h4>Mudah dan Cepat! Cukup 5 menit</h4>
+    </hgroup>
+</section><!-- .howto-header -->
+
+@Html.Partial("/Views/StaticPage/_SectionHowTo.cshtml")
 
 <section class="section-howtopay">
 
