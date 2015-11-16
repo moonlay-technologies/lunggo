@@ -69,15 +69,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <p class="control-label">Alamat</p>
-                                </div>
-                                <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                                    <input type="text" name="address" ng-rsvs="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-3">
                                     <p class="control-label">@Html.I18NString("CW00100")</p>
                                 </div>
                                 <div class="col-xs-9">
@@ -105,6 +96,15 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-3">
+                                    <p class="control-label">Alamat</p>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
+                                    <input type="text" name="address" ng-rsvs="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-3">
                                     <p class="control-label">@Html.I18NString("CW00193")</p>
                                 </div>
                                 <div class="col-xs-9">
@@ -121,7 +121,7 @@
                                 <h4>
                                     <b>@Html.I18NString("CW00164")</b>
                                     <span class="pull-right" ng-hide="password.edit">
-                                        <a class="btn btn-yellow" ng-click="editForm('password')">@Html.I18NString("CW00194")</a>
+                                        <a class="btn btn-yellow" ng-click="editForm('password')">UBAH PASSWORD</a>
                                     </span>
                                     <span class="pull-right" ng-show="password.edit">
                                         <a class="btn btn-grey" ng-click="editForm('password')" ng-hide="password.updating">CANCEL</a>
