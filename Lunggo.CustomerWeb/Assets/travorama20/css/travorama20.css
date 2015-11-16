@@ -4769,9 +4769,15 @@ file : /Assets/travorama20/css/_page_password.scss
   background: url(/Assets/images/howtoorder-header.jpg) top center no-repeat;
   background-size: cover; }
 
+.page-howtoorder .section-howtoorder {
+  padding-top: 30px; }
+
 .page-howtopay .line span {
   background-position: -30px 0; }
 
 .page-howtopay .howto-header {
   background: url(/Assets/images/howtopay-header.jpg) top center no-repeat;
   background-size: cover; }
+
+.page-howtopay .section-howtopay {
+  padding-top: 30px; }
