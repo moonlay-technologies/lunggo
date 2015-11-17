@@ -142,7 +142,7 @@ input[type=number]::-webkit-outer-spin-button {
     .location-header {height:40px; background:#4e4e4e; color:#fff; font-weight:600; font-size:17px; padding:10px 15px;
         .close-location {float:right; cursor:pointer;}
     }
-    .location-body {
+    .location-body {color:#333;
         .location-recommend {
             .tab-header {background:#eaeaea; width:100%; padding:0 30px; position:relative;
                 a.nav-click {width:30px; height:60px; display:block; background-color:#999999; position:absolute; background-image:url(/Assets/images/nav-sprite.png); background-repeat:no-repeat;
@@ -181,7 +181,11 @@ input[type=number]::-webkit-outer-spin-button {
             }
         }
         .location-search {padding:10px; height:475px; overflow:auto; display:none;
-            .autocomplete-no-result {}
+            .autocomplete-pre {
+                .text-pre {display:none;}
+                .text-loading {display:none;}
+            }
+            .autocomplete-no-result {display:none;}
             .autocomplete-result {
                 ul {margin:0; padding:0;
                     li {padding:10px; list-style:none; cursor:pointer;
