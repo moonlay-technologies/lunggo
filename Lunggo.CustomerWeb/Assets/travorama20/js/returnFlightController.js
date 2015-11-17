@@ -172,6 +172,20 @@ app.controller('returnFlightController', [
                 return dateTime;
             }
         }
+        $scope.getOverdayDate = function (departureDate, arrivalDate) {
+            if (departureDate && arrivalDate) {
+                departureDate = new Date(departureDate);
+                departureDate = new Date((departureDate.getFullYear() + ' ' + (departureDate.getUTCMonth() + 1) + ' ' + departureDate.getUTCDate()));
+                arrivalDate = new Date(arrivalDate);
+                arrivalDate = new Date((arrivalDate.getFullYear() + ' ' + (arrivalDate.getUTCMonth() + 1) + ' ' + arrivalDate.getUTCDate()));
+                var overday = arrivalDate - departureDate;
+                overday = overday / 1000 / 60 / 60 / 24;
+                if (overday > 0) {
+                    overday = '+' + overday;
+                }
+                return overday;
+            }
+        }
 
         // set active flight
         $scope.setActiveFlight = function (target, flightSequence) {
