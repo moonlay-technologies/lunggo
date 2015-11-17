@@ -292,24 +292,44 @@ function flightPageSearchFormFunctions() {
     // autocomplete function
     function getLocation(keyword) {
         FlightSearchConfig.autocomplete.loading = true;
-        $('autocomplete-pre .text-pre').addClass('hidden');
-        $('autocomplete-pre .text-loading').removeClass('hidden');
-        $.ajax({
-            url: FlightAutocompleteConfig.Url + keyword
-        }).done(function (returnData) {
-            $('.autocomplete-pre').addClass('hidden');
-            FlightSearchConfig.autocomplete.loading = false;
-            FlightSearchConfig.autocomplete.result = returnData;
-            // development start
-            console.log(returnData);
-            // development end
+        $('autocomplete-pre .text-pre').hide();
+        $('autocomplete-pre .text-loading').show();
+        if (typeof (FlightSearchConfig.autocomplete.cache[keyword]) != "undefined") {
+            FlightSearchConfig.autocomplete.result = FlightSearchConfig.autocomplete.cache[keyword];
+            console.log('from cache : ');
+            console.log(FlightSearchConfig.autocomplete.result);
             generateSearchResult(FlightSearchConfig.autocomplete.result);
-            if (returnData.length > 0) {
-                $('.autocomplete-no-result').addClass('hidden');
+            if (FlightSearchConfig.autocomplete.result.length > 0) {
+                $('.autocomplete-no-result').hide();
+                $('.autocomplete-pre .text-loading').hide();
+                $('.autocomplete-result').show();
             } else {
-                $('.autocomplete-no-result').removeClass('hidden');
+                $('.autocomplete-pre .text-loading').hide();
+                $('.autocomplete-result').hide();
+                $('.autocomplete-no-result').show();
             }
-        });
+        } else {
+            $.ajax({
+                url: FlightAutocompleteConfig.Url + keyword
+            }).done(function (returnData) {
+                $('.autocomplete-pre .text-pre').hide();
+                $('.autocomplete-pre .text-loading').hide();
+                FlightSearchConfig.autocomplete.loading = false;
+                FlightSearchConfig.autocomplete.result = returnData;
+                FlightSearchConfig.autocomplete.cache[keyword] = returnData;
+                console.log(returnData);
+                generateSearchResult(FlightSearchConfig.autocomplete.result);
+                if (returnData.length > 0) {
+                    $('.autocomplete-no-result').hide();
+                    $('.autocomplete-pre .text-loading').hide();
+                    $('.autocomplete-result').show();
+                } else {
+                    $('.autocomplete-pre .text-loading').hide();
+                    $('.autocomplete-result').hide();
+                    $('.autocomplete-no-result').show();
+                }
+            });
+        }
     }
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
@@ -343,8 +363,11 @@ function flightPageSearchFormFunctions() {
                 FlightSearchConfig.autocomplete.keyword = $(this).val();
                 getLocation(FlightSearchConfig.autocomplete.keyword);
             } else {
-                $('.search-location .location-recommend').show();
-                $('.search-location .location-search').hide();
+                $('.search-location .location-recommend').hide();
+                $('.search-location .location-search').show();
+                $('.search-location .location-search .autocomplete-pre .text-pre').show();
+                $('.search-location .location-search .autocomplete-result').hide();
+                $('.search-location .location-search .autocomplete-no-result').hide();
             }
         }
     });
@@ -801,24 +824,44 @@ function flightFormSearchFunctions() {
     // autocomplete function
     function getLocation(keyword) {
         FlightSearchConfig.autocomplete.loading = true;
-        $('autocomplete-pre .text-pre').addClass('hidden');
-        $('autocomplete-pre .text-loading').removeClass('hidden');
-        $.ajax({
-            url: FlightAutocompleteConfig.Url + keyword
-        }).done(function (returnData) {
-            $('.autocomplete-pre').addClass('hidden');
-            FlightSearchConfig.autocomplete.loading = false;
-            FlightSearchConfig.autocomplete.result = returnData;
-            // development start
-            console.log(returnData);
-            // development end
+        $('autocomplete-pre .text-pre').hide();
+        $('autocomplete-pre .text-loading').show();
+        if (typeof (FlightSearchConfig.autocomplete.cache[keyword]) != "undefined") {
+            FlightSearchConfig.autocomplete.result = FlightSearchConfig.autocomplete.cache[keyword];
+            console.log('from cache : ');
+            console.log(FlightSearchConfig.autocomplete.result);
             generateSearchResult(FlightSearchConfig.autocomplete.result);
-            if (returnData.length > 0) {
-                $('.autocomplete-no-result').addClass('hidden');
+            if (FlightSearchConfig.autocomplete.result.length > 0) {
+                $('.autocomplete-no-result').hide();
+                $('.autocomplete-pre .text-loading').hide();
+                $('.autocomplete-result').show();
             } else {
-                $('.autocomplete-no-result').removeClass('hidden');
+                $('.autocomplete-pre .text-loading').hide();
+                $('.autocomplete-result').hide();
+                $('.autocomplete-no-result').show();
             }
-        });
+        } else {
+            $.ajax({
+                url: FlightAutocompleteConfig.Url + keyword
+            }).done(function (returnData) {
+                $('.autocomplete-pre .text-pre').hide();
+                $('.autocomplete-pre .text-loading').hide();
+                FlightSearchConfig.autocomplete.loading = false;
+                FlightSearchConfig.autocomplete.result = returnData;
+                FlightSearchConfig.autocomplete.cache[keyword] = returnData;
+                console.log(returnData);
+                generateSearchResult(FlightSearchConfig.autocomplete.result);
+                if (returnData.length > 0) {
+                    $('.autocomplete-no-result').hide();
+                    $('.autocomplete-pre .text-loading').hide();
+                    $('.autocomplete-result').show();
+                } else {
+                    $('.autocomplete-pre .text-loading').hide();
+                    $('.autocomplete-result').hide();
+                    $('.autocomplete-no-result').show();
+                }
+            });
+        }
     }
     function generateSearchResult(list) {
         $('.autocomplete-result ul').empty();
@@ -852,8 +895,11 @@ function flightFormSearchFunctions() {
                 FlightSearchConfig.autocomplete.keyword = $(this).val();
                 getLocation(FlightSearchConfig.autocomplete.keyword);
             } else {
-                $('.search-location .location-recommend').show();
-                $('.search-location .location-search').hide();
+                $('.search-location .location-recommend').hide();
+                $('.search-location .location-search').show();
+                $('.search-location .location-search .autocomplete-pre .text-pre').show();
+                $('.search-location .location-search .autocomplete-result').hide();
+                $('.search-location .location-search .autocomplete-no-result').hide();
             }
         }
     });

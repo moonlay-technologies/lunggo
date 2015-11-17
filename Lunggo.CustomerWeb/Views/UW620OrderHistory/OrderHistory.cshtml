@@ -2,10 +2,11 @@
 @model List<Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay>
 
 @{
-    Layout = "/Views/Shared/_Layout20150929.cshtml";
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-account page-account-profile";
     ViewBag.PageActiveSection = "profile";
-
+    ViewBag.Title = "My Account";
+    
     var rsvs = Model.OrderByDescending(rsv => rsv.RsvTime).ToList();
 }
 
@@ -23,10 +24,17 @@
         address: '@User.Identity.GetAddress()',
         firstname: '@User.Identity.GetFirstName()',
         lastname: '@User.Identity.GetLastName()',
-        phone: '@User.Identity.GetPhoneNumber()',
+        phone: @User.Identity.GetPhoneNumber(),
         country: '@User.Identity.GetCountryCd()'
-    };
-</script>
+        };
+    var editProfile = {
+        address: '@User.Identity.GetAddress()',
+        firstname: '@User.Identity.GetFirstName()',
+        lastname: '@User.Identity.GetLastName()',
+        phone: @User.Identity.GetPhoneNumber(),
+        country: '@User.Identity.GetCountryCd()'
+    }
+    </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
 }
@@ -73,7 +81,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.firstname}}</p>
-                                    <input type="text" name="firstname" ng-rsvs="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="firstname" ng-model="editProfile.firstname" class="form-control" placeholder="Nama Depan" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,7 +90,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.lastname}}</p>
-                                    <input type="text" name="lastname" ng-rsvs="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="lastname" ng-model="editProfile.lastname" class="form-control" placeholder="Nama Belakang" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -91,7 +99,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.phone}}</p>
-                                    <input type="text" name="phone" ng-rsvs="editProfile.phone" value="" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
+                                    <input type="number" name="phone" ng-model="editProfile.phone" value="" class="form-control" placeholder="Nomor Telepon" ng-show="userProfile.edit" ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -100,7 +108,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.address}}</p>
-                                    <input type="text" name="address" ng-rsvs="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
+                                    <input type="text" name="address" ng-model="editProfile.address" class="form-control" placeholder="Alamat" ng-show="userProfile.edit" required ng-disabled="userProfile.updating" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -108,8 +116,8 @@
                                     <p class="control-label">@Html.I18NString("CW00193")</p>
                                 </div>
                                 <div class="col-xs-9">
-                                    <p class="form-control-static" ng-hide="userProfile.edit">{{userProfile.country}}</p>
-                                    <select class="form-control" ng-show="userProfile.edit" ng-rsvs="editProfile.country" ng-disabled="userProfile.updating">
+                                    <p class="form-control-static" ng-hide="userProfile.edit">{{getCountries(userProfile.country)}}</p>
+                                    <select class="form-control" ng-show="userProfile.edit" ng-model="editProfile.country" ng-disabled="userProfile.updating">
                                         <option ng-repeat="country in countries" value="{{country.dial_code}}" ng-selected="country.dial_code == userProfile.country">{{country.name}}</option>
                                     </select>
                                 </div>
