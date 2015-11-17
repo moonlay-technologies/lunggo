@@ -10,6 +10,7 @@
 @{
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Flight Search Page";
+    ViewBag.BodyClass = "page page-flight single-flight";
 }
 
 @{
@@ -75,571 +76,89 @@
     <input type="text" name="Token" id="fareToken" value="" />
 </form>
 
-<section class="page flight-search-page" ng-controller="flightController" data-flight-search-params='{ "TripType": "@data.TripType" , "trips" : @JsonConvert.SerializeObject(trips), "AdultCount" : "@data.AdultCount" , "ChildCount" : "@data.ChildCount" , "InfantCount" : "@data.InfantCount", "CabinClass" : "@data.CabinClass", "Currency" : "IDR" }'>
-    <section class="flight-search-param">
-        <div class="param">
-            <b>(@data.Trips[0].OriginAirport) @originCityNames[0]</b> to <b>(@data.Trips[0].DestinationAirport) @destinationCityNames[0]</b> <br />
-            <span><b>Departure Date : </b>@data.Trips[0].DepartureDate.ToString("dd-MMMM-yyyy")</span> @if (data.TripType == TripType.Return)
-            {
-                <span><b>Return Flight : </b>@data.Trips[1].DepartureDate.ToString("dd-MMMM-yyyy")</span>
-            } <b>Passenger : </b> @data.AdultCount Adult, @data.ChildCount Child, @data.InfantCount Infant
-        </div>
-        <a href="#" class="change-hotel-param" data-function="toggle" data-target=".flight-search-form-wrapper">CHANGE</a>
-        <!-- .flight-search form start -->
-        <section class="flight-search-form-wrapper container">
-            <form class="search-flight-form form-horizontal" action="/id/flight/SearchResultList">
-                <h1><b>FLIGHT</b> SEARCH</h1>
-                <div class="form-group">
-                    <span class="fa fa-plane col-xs-2"></span>
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span class="form-control flight-origin" data-trigger="show-formset" data-target=".flight-origin">Start Here</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span class="fa fa-plane col-xs-2"></span>
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span class="form-control flight-destination" data-trigger="show-formset" data-target=".flight-destination">Destination</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span class="fa fa-calendar col-xs-2"></span>
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span class="form-control flight-departure-date" data-trigger="show-formset" data-target=".flight-departure-date">Departure Date</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span>Roundtrip ?</span>
+<section class="flight-summary">
+    <div class="summary-left">
+        <p><b>Penerbangan Pergi</b><br />
+            <b>JKT</b> to <b>DPS</b> - Selasa, 15 Feb 2016
+        </p>
+    </div>
+    <a href="#" class="summary-right"><span>GANTI</span></a>
+</section><!-- .flight-summary -->
 
-                        <div class="flighttype-select">
-                            <label for="flighttype-return" class="active">
-                                <input type="radio" name="flightType" value="RoundTrip" id="flighttype-return" checked /> <span>Yes</span>
-                            </label>
-                            <label for="flighttype-oneway">
-                                <input type="radio" name="flightType" value="OneWay" id="flighttype-oneway" /> <span>No</span>
-                            </label>
-                        </div>
+<section class="flight-sort-filter">
+    <div class="flight-sort-filter-action">
+        <a href="#">FILTER</a>
+        <a href="#">SORT</a>
+    </div>
+</section><!-- .flight-sort -->
 
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span class="fa fa-calendar col-xs-2"></span>
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span class="form-control flight-return-date" data-trigger="show-formset" data-target=".flight-departure-date">Return Date</span>
-                        <span class="form-control flight-oneway hidden">One Way Flight</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <span class="fa fa-user col-xs-2"></span>
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <span class="form-control flight-passenger" data-trigger="show-formset" data-target=".flight-passenger"><span class="flight-passenger-adult">1</span> <img src="/Assets/images/adult-icon.png" alt="Adult" /> <span class="flight-passenger-child">0</span> <img src="/Assets/images/child-icon.png" alt="Child" /> <span class="flight-passenger-infant">0</span> <img src="/Assets/images/infant-icon.png" alt="Infant" /></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <input type="text" name="info" value="" class="flight-info hidden" />
-                        <input type="submit" class="btn btn-yellow" value="SEARCH">
-                    </div>
-                </div>
-            </form>
-        </section><!-- .flight-search-form-wrapper -->
-    </section><!-- .flight-serach-param -->
-
-    <section class="flight-search-filter">
-        <div class="flight-search-trigger">
-            <a class="flight-filter-trigger" data-function="toggle" data-target=".flight-filter-wrapper">FILTER</a>
-            <a class="flight-sort-trigger" data-function="toggle" data-target=".flight-sort-wrapper">SORT</a>
-        </div><!-- .flight-search-filter-trigger -->
-        <div class="flight-search-content">
-            <div class="flight-filter-wrapper">
-                <div class="close-search-filter">
-                    <a href="#" class="close-filter">CLOSE</a>
-                </div>
-                <div class="filter-group filter-transit">
-                    <h4 class="filter-title">Filter by Transit:</h4>
-                    <h3 ng-if="flightSearchParams.TripType == 'Return'">Onward Flight</h3>
-                    <div class="filter-content">
-                        <label ng-class="{active:flightSearchFilter.stop.onward[0]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[0]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
-                        </label>
-                        <label ng-class="{active:flightSearchFilter.stop.onward[1]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[1]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
-                        </label>
-                        <label ng-class="{active:flightSearchFilter.stop.onward[2]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.onward[2]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
-                        </label>
-                    </div>
-                    <h3 ng-if="flightSearchParams.TripType == 'Return'">Return Flight</h3>
-                    <div class="filter-content" ng-if="flightSearchParams.TripType == 'Return'">
-                        <label ng-class="{active:flightSearchFilter.stop.return[0]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[0]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>Direct Flight</span>
-                        </label>
-                        <label ng-class="{active:flightSearchFilter.stop.return[1]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[1]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>1 Stop</span>
-                        </label>
-                        <label ng-class="{active:flightSearchFilter.stop.return[2]}">
-                            <input type="checkbox" ng-model="flightSearchFilter.stop.return[2]" /> <img src="//placehold.it/50" alt="Alternate Text" /> <span>more than 1 stop</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="filter-group filter-price">
-                    <h4 class="filter-title">by Price:</h4>
-                    <div class="filter-content">
-                        <div class="slider-wrapper">
-                            <div class="price-slider"></div>
-                        </div>
-                        <div class="price-slider-value hidden">
-                            <input type="text" value="" class="price-filter-min" ng-model="flightSearchFilter.priceFilter[0]" />
-                            <input type="text" value="" class="price-filter-max" ng-model="flightSearchFilter.priceFilter[1]" />
-                        </div>
-                        <div class="slider-text">
-                            <br />
-                            <span>Min Price</span>
-                            <span class="pull-right">Max Price</span>
-                        </div>
-                        <div class="slider-text">
-                            <span>IDR {{flightSearchFilter.priceFilterDisplay[0] | number:0}}</span>
-                            <span class="pull-right">IDR {{flightSearchFilter.priceFilterDisplay[1] | number:0}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-group filter-airline">
-                    <h4 class="filter-title">by Airline:</h4>
-                    <div class="filter-content">
-                        <div>
-                            <label class="airline" ng-repeat="airline in flightSearchFilter.airlines">
-                                <input type="checkbox" value="{{airline.Code}}" ng-model="airline.checked" ng-init="airline.checked = true" ng-click="checkAirline()" />
-                                <img ng-src="{{airline.LogoUrl}}" alt="{{airline.Name}}" />
-                                <span>{{airline.Name}}</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-group filter-onward">
-                    <h4 class="filter-title">by Onward flight time:</h4>
-                    <div class="filter-content">
-                        <h5>Departure time</h5>
-                        <div class="slider-wrapper">
-                            <div class="onward-departure-slider"></div>
-                        </div>
-                        <div class="onward-departure-value hidden">
-                            <input type="number" class="onward-departure-min" ng-model="flightSearchFilter.onwardDeparture[0]" />
-                            <input type="number" class="onward-departure-max" ng-model="flightSearchFilter.onwardDeparture[1]" />
-                        </div>
-                        <div class="slider-text">
-                            <br />
-                            <span><span class="onward-departure-min-display">00</span>:00</span>
-                            <span class="pull-right"><span class="onward-departure-max-display">00</span>:00</span>
-                        </div>
-                        <h5>Arrival time</h5>
-                        <div class="slider-wrapper">
-                            <div class="onward-arrival-slider"></div>
-                        </div>
-                        <div class="onward-arrival-value hidden">
-                            <input class="onward-arrival-min" type="number" ng-model="flightSearchFilter.onwardArrival[0]" />
-                            <input class="onward-arrival-max" type="number" ng-model="flightSearchFilter.onwardArrival[1]" />
-                        </div>
-                        <div class="slider-text">
-                            <br />
-                            <span><span class="onward-arrival-min-display">00</span>:00</span>
-                            <span class="pull-right"><span class="onward-arrival-max-display">00</span>:00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-group filter-return" ng-if="flightSearchParams.TripType == 'Return'">
-                    <h4 class="filter-title">by Return flight time:</h4>
-                    <div class="filter-content">
-                        <h5>Departure time</h5>
-                        <div class="slider-wrapper">
-                            <div class="return-departure-slider"></div>
-                        </div>
-                        <div class="return-departure-value hidden">
-                            <input class="return-departure-min" type="number" ng-model="flightSearchFilter.returnDeparture[0]" />
-                            <input class="return-departure-max" type="number" ng-model="flightSearchFilter.returnDeparture[1]" />
-                        </div>
-                        <div class="slider-text">
-                            <br />
-                            <span><span class="return-departure-min-display">00</span>:00</span>
-                            <span class="pull-right"><span class="return-departure-max-display">00</span>:00</span>
-                        </div>
-                        <h5>Arrival time</h5>
-                        <div class="slider-wrapper">
-                            <div class="return-arrival-slider"></div>
-                        </div>
-                        <div class="return-arrival-value hidden">
-                            <input class="return-arrival-min" type="number" ng-model="flightSearchFilter.returnArrival[0]" />
-                            <input class="return-arrival-max" type="number" ng-model="flightSearchFilter.returnArrival[1]" />
-                        </div>
-                        <div class="slider-text">
-                            <br />
-                            <span><span class="return-arrival-min-display">00</span>:00</span>
-                            <span class="pull-right"><span class="return-arrival-max-display">00</span>:00</span>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .flight-filter-wrapper -->
-            <div class="flight-sort-wrapper">
-                <div class="close-search-filter">
-                    <a href="#" class="close-filter">CLOSE</a>
-                </div>
-                <a ng-click="order('price', false)">by Price - Lowest to Highest</a>
-                <a ng-click="order('price', true)">by Price - Highest to Lowest</a>
-                <a ng-click="order('departDuration', false)" >by Duration - Shortest to Longest</a>
-                <a ng-click="order('departDuration', true)">by Duration - Longest to Shortest</a>
-                <a ng-click="order('departDeparture', false)">by Departure - Earliest to Latest</a>
-                <a ng-click="order('departDeparture', true)">by Departure - Latest to Earliest</a>
-                <a ng-click="order('departArrival', false)">by Arrival - Earliest to Latest</a>
-                <a ng-click="order('departArrival', true)">by Arrival - Latest to Earliest</a>
-            </div><!-- .flight-sort-wrapper -->
-        </div><!-- .flight-search-content -->
-    </section><!-- .flight-search-filter -->
-
-
-    <section class="flight-search-result">
-
-        <div class="loading-wrapper" ng-if="!loaded">
-            <h1 class="text-center">Getting Flight</h1>
-        </div>
-        <div class="flight-wrapper" ng-if="loaded">
-            <div class="no-flight container" ng-show="filteredFlight.length < 1">
-                <h2 class="text-center">No flight result found. Please refine your search filter.</h2>
+<section class="flight-list">
+    
+    @for (var i = 1; i <= 10; i++)
+    {
+        <div class="flight">
+            <div class="flight-header">
+                <h4 class="flight-airline">
+                    <img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="flight-airline-image" />
+                    <span>Garuda Indonesia</span>
+                </h4>
             </div>
-            <div class="flight" ng-class="{'hidden' : flight.hidden == true}" ng-repeat="flight in filteredFlight = (flightSearchResult.FlightList | filter:priceFilter | filter:stopFilterOnward | filter:stopFilterReturn | filter:airlineFilter | filter:timeFilterOnward | filter:timeFilterReturn | orderBy:sort.value:reverse )">
-                <div class="flight-header">
-                    <span class="flight-airline"><img ng-src="{{flight.Trips[0].Airlines[0].LogoUrl}}" alt="{{flight.Trips[0].Airlines[0].Name}}" /> {{flight.Trips[0].Airlines[0].Name}}</span>
-                    <span class="flight-price pull-right">IDR {{flight.TotalFare | number:0}}</span>
-                </div><!-- .flight-header -->
-                <div class="flight-content">
-                    <div class="flight-origin">
-                        <span class="time">{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'HH : MM' : 'UTC'}}</span>
-                        <span class="time">{{getDateTime( flight.Trips[0].Segments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                        <span class="airport">{{flight.Trips[0].OriginCity}}</span>
-                    </div>
-                    <div class="flight-destination">
-                        <span class="time">{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'HH : MM' : 'UTC'}}</span>
-                        <span class="time">{{getDateTime( flight.Trips[0].Segments[(flight.Trips[0].Segments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                        <span class="airport">{{flight.Trips[0].DestinationCity}}</span>
-                    </div>
-                    <div class="flight-duration">
-                        <span class="time">{{flight.Trips[0].TotalDuration}}</span>
-                        <span class="transit" ng-if="flight.Trips[0].TotalTransit == 0">Direct Flight</span>
-                        <span class="transit" ng-if="flight.Trips[0].TotalTransit > 0">{{flight.Trips[0].TotalTransit}} stop</span>
-                    </div>
-                </div><!-- .flight-content -->
-                <div class="flight-return" ng-if="flightSearchParams.TripType == 'Return'">
-                    <div class="flight-header">
-                        <span class="flight-airline"><img ng-src="{{flight.Trips[1].Airlines[0].LogoUrl}}" alt="{{flight.Trips[1].Airlines[0].Name}}" /> {{flight.Trips[1].Airlines[0].Name}}</span>
-                    </div><!-- .flight-header -->
-                    <div class="flight-content">
-                        <div class="flight-origin">
-                            <span class="time">{{getDateTime( flight.Trips[1].Segments[0].DepartureTime ) | date: 'HH : MM' : 'UTC'}}</span>
-                            <span class="time">{{getDateTime( flight.Trips[1].Segments[0].DepartureTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                            <span class="airport">{{flight.Trips[1].OriginCity}}</span>
-                        </div>
-                        <div class="flight-destination">
-                            <span class="time">{{getDateTime( flight.Trips[1].Segments[(flight.Trips[1].Segments.length-1)].ArrivalTime ) | date: 'HH : MM' : 'UTC'}}</span>
-                            <span class="time">{{getDateTime( flight.Trips[1].Segments[(flight.Trips[1].Segments.length-1)].ArrivalTime ) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                            <span class="airport">{{flight.Trips[1].DestinationCity}}</span>
-                        </div>
-                        <div class="flight-duration">
-                            <span class="time">{{flight.Trips[1].TotalDuration}}</span>
-                            <span class="transit" ng-if="flight.Trips[1].TotalTransit == 0">Direct Flight</span>
-                            <span class="transit" ng-if="flight.Trips[1].TotalTransit > 0">{{flight.Trips[1].TotalTransit}} stop</span>
-                        </div>
-                    </div><!-- .flight-content -->
+            <div class="flight-content">
+                <div class="content-left">
+                    <h4 class="flight-time">
+                        <span class="departure">21:35</span>
+                        <span class="separator"></span>
+                        <span class="arrival">22:35</span>
+                        <span class="overday">+1</span>
+                    </h4>
+                    <h5 class="flight-duration">9h 51m, 1 transit</h5>
                 </div>
-                <a class="flight-link" ng-click="getCtrlScope().flightDetailActive = true; getCtrlScope().flightCurrent = flight.FlightIndex; getCtrlScope().updateActiveFlight()"></a>
-            </div><!-- .flight.return-flight -->
-        </div>
-
-    </section><!-- .flight-search-result -->
-    <!-- .flight-detail -->
-    <div class="flight-detail" ng-if="flightDetailActive">
-        <header class="flight-detail-header">
-            <h3>Flight Detail</h3>
-            <span class="flight-detail-close fa fa-times" ng-click="getCtrlScope().flightDetailActive = false; getCtrlScope().hideDetailActive();"></span>
-        </header><!-- .flight-detail-header -->
-        <section class="flight-detail-content">
-
-            <div class="details">
-
-                <h1 class="text-center">Flight Detail</h1>
-
-                <div class="trip-list onward">
-                    <h3 class="text-center">Onward Flight</h3>
-                    <span class="trip-general">{{flightCurrentDetail.Trips[0].OriginAirport}} to {{flightCurrentDetail.Trips[0].DestinationAirport}}: {{getDateTime(flightCurrentDetail.Trips[0].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br />(Duration:{{flightCurrentDetail.Trips[0].TotalDuration}})</span>
-                    <div class="trip" ng-repeat="trip in flightCurrentDetail.Trips[0].Segments">
-                        <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
-                        <div class="trip-wrapper">
-                            <div class="trip-origin">
-                                <span>Departure</span>
-                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm' : 'UTC'}}</span>
-                                <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                                <span class="airport">{{trip.DepartureAirport}}</span>
-                                <span class="city">{{trip.DepartureCity}}</span>
-                            </div>
-                            <div class="trip-destination">
-                                <span>Arrival</span>
-                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm' : 'UTC'}}</span>
-                                <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                                <span class="airport">{{trip.ArrivalAirport}}</span>
-                                <span class="city">{{trip.ArrivalCity}}</span>
-                            </div>
-                            <div class="trip-duration">
-                                <span>Duration</span>
-                                <span class="time">{{trip.Duration}}</span>
-                                <span>{{trip.CabinClass}}</span>
-                            </div>
-                        </div>
-                        <!-- if flight operator is different-->
-                        <div class="trip-operator" ng-if=" trip.OperatingAirlineCode != trip.AirlineCode ">
-                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}" /> {{trip.OperatingAirlineName}} </span>
-                        </div><!-- .flight-operator -->
-                    </div>
-                </div>
-                <div class="trip-list return" ng-if="flightSearchParams.TripType == 'Return'">
-                    <h3 class="text-center">Return Flight</h3>
-                    <span class="trip-general">{{flightCurrentDetail.Trips[1].OriginAirport}} to {{flightCurrentDetail.Trips[1].DestinationAirport}}: {{getDateTime(flightCurrentDetail.Trips[1].DepartureDate) | date: 'dd MMM yyyy' : 'UTC'}}<br />(Duration:{{flightCurrentDetail.Trips[1].TotalDuration}})</span>
-                    <div class="trip" ng-repeat="trip in flightCurrentDetail.Trips[1].Segments">
-                        <h5 class="airline-name"><img ng-src="{{trip.AirlineLogoUrl}}" alt="{{trip.AirlineName}}" /> {{trip.AirlineName}} : {{trip.AirlineCode}} {{trip.AircraftCode}} </h5>
-                        <div class="trip-wrapper">
-                            <div class="trip-origin">
-                                <span>Departure</span>
-                                <span class="time">{{getDateTime(trip.DepartureTime) | date: 'HH:mm' : 'UTC'}}</span>
-                                <span class="date">{{getDateTime(trip.DepartureTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                                <span class="airport">{{trip.DepartureAirport}}</span>
-                                <span class="city">{{trip.DepartureCity}}</span>
-                            </div>
-                            <div class="trip-destination">
-                                <span>Arrival</span>
-                                <span class="time">{{getDateTime(trip.ArrivalTime) | date: 'HH:mm' : 'UTC'}}</span>
-                                <span class="date">{{getDateTime(trip.ArrivalTime) | date: 'dd MMM yyyy' : 'UTC'}}</span>
-                                <span class="airport">{{trip.ArrivalAirport}}</span>
-                                <span class="city">{{trip.ArrivalCity}}</span>
-                            </div>
-                            <div class="trip-duration">
-                                <span>Duration</span>
-                                <span class="time">{{trip.Duration}}</span>
-                                <span>{{trip.CabinClass}}</span>
-                            </div>
-                        </div>
-                        <!-- if flight operator is different-->
-                        <div class="trip-operator" ng-if=" trip.OperatingAirlineCode != trip.AirlineCode ">
-                            <span>This flight is operated by : <img ng-src="{{trip.OperatingAirlineLogoUrl}}" alt="{{trip.OperatingAirlineName}}" /> {{trip.OperatingAirlineName}} </span>
-                        </div><!-- .flight-operator -->
-                    </div>
-                </div>
-
-            </div><!-- .details -->
-
-        </section><!-- .flight-detail-content -->
-        <footer class="flight-detail-footer container">
-            <div class="row">
-                <div class="col-xs-6 footer-left">
-                    <span>Total Fare</span>
-                    <h3 class="footer-price">IDR {{flightCurrentDetail.TotalFare | number:0}}</h3>
-                    <span>Fee and tax included</span>
-                </div>
-                <div class="col-xs-6 footer-right">
-                    <a ng-click="revalidate(flightCurrentDetail.SequenceNo)" class="btn btn-yellow btn-block-lg">BOOK FLIGHT</a>
+                <div class="content-right">
+                    <label>Harga Total :</label>
+                    <h4 class="flight-price">Rp 123.456.789</h4>
                 </div>
             </div>
-        </footer><!-- .flight-detail-footer -->
-
-    </div><!-- .flight-detail -->
-
-</section><!-- .flight-search-page -->
-
-<!-- hotel search form set -->
-<div class="form-set hotel-set">
-    <!-- group set for hotel start -->
-    <div class="form hotel-locationid">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <input type="text" value="" class="form-control hotel-location autocomplete initialize" placeholder="Search your destination" />
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
+            <div class="flight-footer">
+                <a href="#" class="flight-detail-button">Lihat Detail &gt;</a>
+                <a href="#" class="btn btn-yellow pull-right flight-order">PESAN</a>
             </div>
+        </div>
+    }
+
+</section><!-- .flight-list -->
+
+<!--  -->
+
+<!-- popup -->
+<div class="popup-wrapper">
+    <div class="popup">
+        <header class="popup-header">
+            <h4 class="popup-title">Roundtrip Flight <span class="close-modal pull-right">X</span></h4>
         </header>
-        <div class="form-content">
-            <ul class="hotel-location autocomplete-result">
-                <li>Masukan kata kunci pencarian</li>
-            </ul>
-        </div>
-    </div><!-- .hotel-location -->
-    <div class="form hotel-checkin-date hotel-date">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Checkin Date</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="checkin-calendar"></div>
-        </div>
-    </div><!-- .hotel-checkin-date-->
-    <div class="form hotel-checkout-date hotel-date">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Checkout Date</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="checkout-calendar"></div>
-        </div>
-    </div><!-- .hotel-checkout-date -->
-    <div class="form hotel-room">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Room Count</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="room-count row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div class="btn decrease">-</div>
-                        </div>
-                        <div class="col-xs-8">
-                            <span class="room-count-number">1 Room</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <div class="btn increase">-</div>
-                        </div>
+        <div class="popup-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-4 text-center" style="padding-top:12px;">
+                        <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
+                    </div>
+                    <div class="col-xs-8">
+                        <p>Anda telah memilih penerbangan pergi. <b>Silahkan lanjutkan dengan memilih penerbangan pulang</b></p>
                     </div>
                 </div>
             </div>
-            <span class="btn btn-lg text-center close-formset">UPDATE</span>
         </div>
-    </div><!-- .hotel-room -->
-    <!-- group set for hotel end -->
-    <!-- group set for flight start -->
-    <div class="form flight-origin">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <input type="text" value="" class="form-control flight-airport autocomplete initialize" data-airporttarget="origin" placeholder="Search your origin" />
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <ul class="flight-airport autocomplete-result" data-target="origin">
-                <li>Masukan kata kunci pencarian</li>
-            </ul>
-        </div>
-    </div><!-- .flight-origin -->
-    <div class="form flight-destination">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <input type="text" value="" class="form-control flight-airport autocomplete initialize" data-airporttarget="destination" placeholder="Search your destination" />
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <ul class="flight-airport autocomplete-result" data-target="destination">
-                <li>Masukan kata kunci pencarian</li>
-            </ul>
-        </div>
-    </div><!-- .flight-destination -->
-    <div class="form flight-departure-date">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Departure Date</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="departure-calendar"></div>
-        </div>
-    </div><!-- .flight-departure-date -->
-    <div class="form flight-return-date">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Return Date</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="return-calendar"></div>
-        </div>
-    </div><!-- .flight-return-date -->
-    <div class="form flight-passenger">
-        <header class="form-header container">
-            <div class="row">
-                <div class="col-xs-10">
-                    <span>Passenger</span>
-                </div>
-                <span class="fa fa-times col-xs-2 close-formset"></span>
-            </div>
-        </header>
-        <div class="form-content">
-            <div class="adult-passenger row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div class="btn decrease" data-target="adult">-</div>
-                        </div>
-                        <div class="col-xs-8">
-                            <span>1 Adult</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <div class="btn increase" data-target="adult">+</div>
-                        </div>
+        <footer class="popup-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="btn btn-grey btn-block">KEMBALI</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#" class="btn btn-yellow btn-block">LANJUT</a>
                     </div>
                 </div>
             </div>
-            <div class="child-passenger row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div class="btn decrease" data-target="child">-</div>
-                        </div>
-                        <div class="col-xs-8">
-                            <span>0 Child</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <div class="btn increase" data-target="child">+</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="infant-passenger row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div class="btn decrease" data-target="infant">-</div>
-                        </div>
-                        <div class="col-xs-8">
-                            <span>0 Infant</span>
-                        </div>
-                        <div class="col-xs-2">
-                            <div class="btn increase" data-target="infant">+</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <span class="btn btn-lg text-center close-formset">UPDATE</span>
-        </div>
-    </div><!-- .flight-passenger -->
-    <!-- group set for flight end -->
-</div><!-- .form-set.hotel-->
-
-
+        </footer>
+    </div>
+</div><!-- .modal-wrapper -->
 

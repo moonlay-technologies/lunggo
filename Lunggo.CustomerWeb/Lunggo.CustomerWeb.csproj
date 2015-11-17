@@ -671,6 +671,7 @@
     <Content Include="Assets\images\airlines\ZH.png" />
     <Content Include="Assets\images\airlines\ZI.png" />
     <Content Include="Assets\images\airlines\ZL.png" />
+    <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
@@ -987,6 +988,7 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
@@ -1158,6 +1160,7 @@
     <Content Include="Assets\travorama20\css\_page_account.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\application.scss" />
+    <Content Include="Assets\mobile\css\_page_flight.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2472,6 +2475,7 @@
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
     <Content Include="Views\StaticPage\Contact.cshtml" />
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
+    <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2507,7 +2511,6 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
-    <Folder Include="Assets\mobile\images\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />
