@@ -172,6 +172,13 @@ app.controller('returnFlightController', [
                 return dateTime;
             }
         }
+        $scope.overlapDate = function(onwardArrival, returnDeparture) {
+            if (onwardArrival && returnDeparture) {
+                onwardArrival = new Date(onwardArrival);
+                returnDeparture = new Date(returnDeparture);
+                return (returnDeparture <= onwardArrival);
+            }
+        }
         $scope.getOverdayDate = function (departureDate, arrivalDate) {
             if (departureDate && arrivalDate) {
                 departureDate = new Date(departureDate);
