@@ -2472,6 +2472,7 @@
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
     <Content Include="Views\StaticPage\Contact.cshtml" />
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
+    <Content Include="Views\Template\eticketRaw.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2495,6 +2496,7 @@
     <Content Include="Views\Template\invoice - Copy.cshtml" />
     <Content Include="Views\Travorama20\emailExpire.cshtml" />
     <Content Include="Views\Travorama20\emailDetailOrderTemplateRaw.cshtml" />
+    <Content Include="Views\Travorama20\emailConfirmPaymentTemplateRaw.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
