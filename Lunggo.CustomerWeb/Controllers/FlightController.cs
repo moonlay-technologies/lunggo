@@ -18,7 +18,7 @@ namespace Lunggo.CustomerWeb.Controllers
     public class FlightController : Controller
     {
         [DeviceDetectionFilter]
-        public ActionResult SearchResultList(FlightSearchData search)
+        public ActionResult Search(FlightSearchData search)
         {
             try
             {
@@ -35,19 +35,22 @@ namespace Lunggo.CustomerWeb.Controllers
                         int.Parse(info.Substring(6, 2)))
                 }).ToList();
                 var tripType = FlightService.ParseTripType(trips);
+                var requestId = Guid.NewGuid().ToString();
+                FlightService.GetInstance().SetFlightRequestTripType(requestId, tripType == TripType.Return);
+                ViewBag.RequestId = requestId;
                 switch (tripType)
                 {
                     case TripType.OneWay:
-                        return View("SearchResultList-Single", search);
+                        return View("Search-Single", search);
                     case TripType.Return:
-                        return View("SearchResultList-Return", search);
+                        return View("Search-Return", search);
                     default:
-                        return View("SearchResultList-Single", search);
+                        return View("Search-Single", search);
                 }
             }
             catch
             {
-                return View("SearchResultList-Single", search);
+                return View("Search-Single", search);
             }
         }
 

@@ -81,7 +81,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 Conditions = searchConditions,
                 RequestedSupplierIds = request.Requests,
-                IsDateFlexible = false
+                IsDateFlexible = false,
+                RequestId = request.SecureCode
             };
             return searchServiceRequest;
         }

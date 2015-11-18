@@ -121,5 +121,12 @@ namespace Lunggo.BackendWeb.Controllers
             currencyService.SetCurrencyExchangeRate(checkRate.CurrencyCode, checkRate.Rate);
             return RedirectToAction("ExchangeRate", "Flight");
         }
+
+        public ActionResult PriceMarginList()
+        {
+            var flight = FlightService.GetInstance();
+            var rules = flight.GetAllPriceMarginRules();
+            return View(rules);
+        }
     }
 }

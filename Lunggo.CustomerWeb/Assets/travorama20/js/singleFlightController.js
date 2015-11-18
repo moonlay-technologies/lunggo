@@ -28,8 +28,9 @@ app.controller('singleFlightController', [
             Requests: FlightSearchConfig.flightForm.Requests,
             Completed: [],
             Progress: 0,
-            FinalProgress: 0
-        };
+            FinalProgress: 0,
+            SecureCode: FlightSearchConfig.flightForm.SecureCode
+    };
         $scope.expiry = {
             expired: false,
             time: '',
@@ -343,7 +344,8 @@ app.controller('singleFlightController', [
                 $http.get(RevalidateConfig.Url, {
                     params: {
                         SearchId: RevalidateConfig.SearchId,
-                        ItinIndex: $scope.flightList[indexNo].RegisterNumber
+                        ItinIndex: $scope.flightList[indexNo].RegisterNumber,
+                        SecureCode: $scope.flightRequest.SecureCode
                     }
                 }).success(function(returnData) {
                     $scope.revalidateFlightParam.validated = true;

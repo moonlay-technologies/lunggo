@@ -25,7 +25,8 @@ namespace Lunggo.ApCommon.Flight.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE IsActive = 1");
+            clauseBuilder.Append("WHERE IsActive = 1 ");
+            clauseBuilder.Append("ORDER BY ConstraintCount DESC, Priority ASC");
             return clauseBuilder.ToString();
         }
     }

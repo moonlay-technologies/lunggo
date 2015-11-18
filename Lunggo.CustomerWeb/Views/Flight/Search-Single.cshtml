@@ -98,9 +98,10 @@
             },
             type: '@data.TripType',
             trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
-            Requests:[]
+            Requests:[],
+            SecureCode: '@ViewBag.RequestId'
         };
-    </script>
+</script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
 }

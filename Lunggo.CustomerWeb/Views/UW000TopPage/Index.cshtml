@@ -115,7 +115,7 @@
 
             <section class="tab-content">
                 <div class="tab-flight active">
-                    <form class="form form-horizontal form-flight" action="/id/Flight/SearchResultList" method="GET">
+                    <form class="form form-horizontal form-flight" action="/id/Flight/Search" method="GET">
                         <h3 class="text-center">Cari <b>Tiket Pesawat</b></h3>
 
                         <div class="form-group flight-type">
@@ -450,7 +450,7 @@ else
                             <section>
                                 <h4><b>{{destination.name}}</b> ke <b>{{flightDestination.name}}</b></h4>
                                 <p>Harga mulai dari <b>Rp {{destination.price | number}}</b></p>
-                                <a class="btn btn-yellow" href="@Url.Action("SearchResultList","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
+                                <a class="btn btn-yellow" href="@Url.Action("Search","Flight")?info={{ destination.origin + '' + flightDestination.code + '' + departureDate  }}-100y">LIHAT SEKARANG</a>
                             </section>
                         </div>
                     </div>
