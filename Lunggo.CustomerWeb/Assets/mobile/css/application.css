@@ -6,7 +6,55 @@
 body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px; }
+  font-size: 12px;
+  padding-top: 60px; }
+
+.no-scroll {
+  overflow: hidden; }
+
+.btn.btn-yellow {
+  background: #ffd632;
+  border: 2px solid #ebb600;
+  color: #4f3500;
+  font-weight: bold; }
+
+.btn.btn-grey, .btn.btn-gray {
+  background: #adadad;
+  color: #fff;
+  font-weight: bold;
+  border: 2px solid #adadad; }
+
+.btn.block {
+  display: block;
+  width: 100%; }
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 999; }
+  .site-header .header-display {
+    background: #fff;
+    text-align: center;
+    height: 60px; }
+    .site-header .header-display .site-menu, .site-header .header-display .user-menu {
+      width: 30px;
+      height: 30px;
+      background: url(/Assets/mobile/images/mobile-header-sprite.png) no-repeat;
+      background-position: -30px 0;
+      display: block;
+      position: absolute;
+      top: 15px;
+      left: 10px; }
+    .site-header .header-display .site-logo {
+      height: 30px;
+      margin-top: 15px; }
+    .site-header .header-display .user-menu {
+      background-position: 0 0;
+      left: auto;
+      right: 10px; }
 
 .site-content {
   min-height: 100%; }
@@ -41,3 +89,159 @@ body {
         color: #9a6756; }
     .site-footer .site-footer-social .fa-inverse {
       color: #000; }
+
+.popup-wrapper {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: none; }
+  .popup-wrapper .popup {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 300px;
+    height: 200px;
+    background: #fff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px; }
+    .popup-wrapper .popup .popup-header {
+      background: #1daee5;
+      color: #fff;
+      padding: 12px; }
+      .popup-wrapper .popup .popup-header .popup-title {
+        text-align: center;
+        margin: 0;
+        font-weight: bold; }
+    .popup-wrapper .popup .popup-content {
+      padding: 12px 0; }
+
+/*--------------------*/
+.page.page-flight .flight-summary {
+  background-color: #2eb4e7;
+  color: #fff;
+  position: relative; }
+  .page.page-flight .flight-summary p {
+    margin-bottom: 0; }
+  .page.page-flight .flight-summary:before, .page.page-flight .flight-summary:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-flight .flight-summary .summary-left, .page.page-flight .flight-summary .summary-right {
+    float: left;
+    width: 77%;
+    padding: 12px; }
+  .page.page-flight .flight-summary .summary-right {
+    padding: 0;
+    width: 25%;
+    color: #fff;
+    height: 100%;
+    background-color: #0b84b1;
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    right: 0; }
+    .page.page-flight .flight-summary .summary-right span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      height: auto;
+      width: auto;
+      width: 50px;
+      height: 20px; }
+
+.page.page-flight .flight-sort-filter .flight-sort-filter-action {
+  background: #616161; }
+  .page.page-flight .flight-sort-filter .flight-sort-filter-action:before, .page.page-flight .flight-sort-filter .flight-sort-filter-action:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-flight .flight-sort-filter .flight-sort-filter-action a {
+    float: left;
+    color: #fff;
+    text-align: center;
+    display: block;
+    width: 50%;
+    font-weight: bold;
+    padding: 15px 0; }
+  .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
+    border-left: 1px solid #8f8f8f; }
+
+.page.page-flight .flight-list .flight {
+  padding: 12px; }
+  .page.page-flight .flight-list .flight + .flight {
+    border-top: 1px solid #ccc; }
+  .page.page-flight .flight-list .flight:before, .page.page-flight .flight-list .flight:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-flight .flight-list .flight .flight-header .flight-airline {
+    margin-top: 0;
+    margin-bottom: 0; }
+    .page.page-flight .flight-list .flight .flight-header .flight-airline .flight-airline-image {
+      height: 30px; }
+    .page.page-flight .flight-list .flight .flight-header .flight-airline span {
+      color: #2ca3e1;
+      font-weight: bold; }
+  .page.page-flight .flight-list .flight .flight-content:before, .page.page-flight .flight-list .flight .flight-content:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-flight .flight-list .flight .flight-content .content-left, .page.page-flight .flight-list .flight .flight-content .content-right {
+    float: left;
+    width: 50%; }
+    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time:before, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time:before, .page.page-flight .flight-list .flight .flight-content .content-left .flight-time:after, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time span, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time span {
+      font-weight: bold;
+      float: left;
+      display: block; }
+    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time .separator, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time .separator {
+      width: 10%;
+      border-top: 2px solid #1daee4;
+      height: 10px;
+      position: relative;
+      top: 7px;
+      margin-left: 5px;
+      margin-right: 5px; }
+    .page.page-flight .flight-list .flight .flight-content .content-left .flight-time .overday, .page.page-flight .flight-list .flight .flight-content .content-right .flight-time .overday {
+      background: #aaaaaa;
+      color: #fff;
+      font-weight: normal;
+      margin-left: 5px;
+      padding: 3px;
+      font-size: 12px; }
+  .page.page-flight .flight-list .flight .flight-content .content-right {
+    text-align: right;
+    color: #ff7200; }
+    .page.page-flight .flight-list .flight .flight-content .content-right label {
+      font-weight: normal; }
+    .page.page-flight .flight-list .flight .flight-content .content-right .flight-price {
+      margin-top: 0;
+      font-weight: bold;
+      font-size: 16px; }
+  .page.page-flight .flight-list .flight .flight-footer .flight-detail-button {
+    display: inline-block;
+    padding: 3px 0; }
+  .page.page-flight .flight-list .flight .flight-footer .flight-order {
+    padding-top: 3px;
+    padding-bottom: 3px; }

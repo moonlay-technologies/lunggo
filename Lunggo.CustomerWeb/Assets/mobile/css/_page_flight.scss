@@ -1,0 +1,59 @@
+﻿// --------------------
+// flight page
+
+.page.page-flight {
+    // flight summary
+    .flight-summary {background-color:#2eb4e7; color:#fff; position:relative;
+        p {margin-bottom:0;}
+        &:before, &:after {@include clearfix();}
+        .summary-left {float:left; width:77%; padding:12px;}
+        .summary-right {@extend & .summary-left; padding:0; width:25%; color:#fff; height:100%; background-color:#0b84b1; display:block; vertical-align:middle; text-align:center; font-weight:bold; position:absolute; right:0;
+            span {position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; height:auto; width:auto; width:50px; height:20px;}
+        }
+    }
+    // flight sort and filter
+    .flight-sort-filter {
+        .flight-sort-filter-action {background:#616161;
+            &:before, &:after {@include clearfix();}
+            a {float:left; color:#fff; text-align:center; display:block; width:50%; font-weight:bold; padding:15px 0;}
+            a+a {border-left:1px solid #8f8f8f;}
+        }
+    }
+    // flight list
+    .flight-list {
+        // flight
+        .flight {padding:12px;
+            &+.flight {border-top:1px solid #ccc;}
+            &:before, &:after {@include clearfix();}
+            .flight-header {
+                .flight-airline {margin-top:0; margin-bottom:0;
+                    .flight-airline-image {height:30px;}
+                    span {color:#2ca3e1; font-weight:bold;}
+                }
+            }
+            .flight-content {
+                &:before, &:after {@include clearfix();}
+                .content-left {float:left; width:50%;
+                    .flight-time {
+                        &:before, &:after {@include clearfix();}
+                        span {font-weight:bold; float:left; display:block;}
+                        .departure {}
+                        .separator {width:10%; border-top:2px solid $color-main-blue; height:10px; position:relative; top:7px; margin-left:5px; margin-right:5px;}
+                        .arrival {}
+                        .overday {background:#aaaaaa; color:#fff; font-weight:normal; margin-left:5px; padding:3px; font-size:12px;}
+                    }
+                    .flight-duration {}
+                }
+                .content-right {@extend & .content-left; text-align:right; color:#ff7200;
+                    label {font-weight:normal;}
+                    .flight-price {margin-top:0; font-weight:bold; font-size:16px;}
+                }
+            }
+            .flight-footer {
+                .flight-detail-button {display:inline-block; padding:3px 0;}
+                .flight-order {padding-top:3px; padding-bottom:3px;}
+            }
+        }
+    }
+
+}
