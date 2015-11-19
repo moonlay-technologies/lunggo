@@ -63,7 +63,7 @@
                         <tr>
                             <td width="20%">
                                 <p style="">No. Pemesanan</p>
-                                <p style="margin-top: -8px; font-size: 15px;"><b>@Model.RsvNo</b></p>
+                                <p style="margin-top: -8px;"><b>@Model.RsvNo</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
@@ -95,7 +95,7 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">@Model.Contact.Email</p>
+                                <p style="color: #15b1e4; text-align: left; text-decoration:none;">@Model.Contact.Email</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -212,39 +212,46 @@
 
                         <table width="100%">
                             <tr>
-                                <td width="3%" style="padding-top: 15px; padding-left: 1%; vertical-align: top;">
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                 </td>
-                                <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -4px;">Berangkat</p>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    Berangkat
                                 </td>
-                                <td width="6%">
+                                <td rowspan="2" width="6%">
                                     <p style="text-align: center;">:</p>
                                 </td>
-                                <td width="40%">
+                                <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
                             </tr>
-                        
                             <tr>
-                                <td width="3%" style="padding-top: 15px; padding-left: 1%; vertical-align: top;">
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
                                 </td>
-                                <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -4px;">Kembali</p>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    Kembali
                                 </td>
-                                <td width="6%">
+                                <td rowspan="2" width="6%">
                                     <p style="text-align: center;">:</p>
                                 </td>
-                                <td width="40%">
+                                <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
                             </tr>
                         </table>
                     }
@@ -252,21 +259,25 @@
                     {
                         <table width="100%">
                             <tr>
-                                <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top;">
+                                <td width="3%" style="padding-top: 15px; vertical-align: top;">
                                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                 </td>
-                                <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -4px;">Berangkat</p>
+                                <td style="color: #15b1e4; text-align: center;" width="2%">
+                                    <img width="100%" height="auto" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    Berangkat
                                 </td>
-                                <td width="6%">
+                                <td rowspan="2" width="6%">
                                     <p style="text-align: center;">:</p>
                                 </td>
-                                <td width="40%">
+                                <td rowspan="2" width="40%">
                                     <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
                                     <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                                <td style="height: 10px;"></td>
                             </tr>
                         </table>
 
