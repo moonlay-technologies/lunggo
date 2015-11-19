@@ -11,7 +11,7 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Flight Search Page";
     ViewBag.BodyClass = "page page-flight single-flight";
-    ViewBag.AngularController = "singleFlightController";
+    ViewBag.AngularController = "SingleFlightController";
 }
 
 @{
@@ -73,10 +73,14 @@
 
 }
 
-@section pageJS {
+@section AdditionalJS {
     <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
 }
-
+@section PageJS{
+    <script src="/Assets/mobile/js/singleFlightController.js"></script>
+}
 <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
     <input type="text" name="Token" id="fareToken" value="" />
 </form>
@@ -87,13 +91,13 @@
             <b>JKT</b> to <b>DPS</b> - Selasa, 15 Feb 2016
         </p>
     </div>
-    <a href="#" class="summary-right"><span>GANTI</span></a>
+    <a ng-click="SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
 </section><!-- .flight-summary -->
 
 <section class="flight-sort-filter">
     <div class="flight-sort-filter-action">
-        <a href="#">FILTER</a>
-        <a href="#">SORT</a>
+        <a ng-click="SetOverlay('flight-filter')">FILTER</a>
+        <a ng-click="SetOverlay('flight-sort')">SORT</a>
     </div>
 </section><!-- .flight-sort -->
 
@@ -132,15 +136,15 @@
 
 </section><!-- .flight-list -->
 
-<!-- fullpage popup - flight detail -->
-<div class="fullpage-popup fullpage-popup--theme--blue fullpage-popup--flight-detail">
-    <header class="fullpage-popup__header">
-        <h3 class="fullpage-popup__title">
+<!-- overlay - flight detail -->
+<div class="overlay overlay--theme--blue overlay--flight-detail">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
             DETAIL PENERBANGAN
-            <span class="fullpage-popup__close">X</span>
+            <span class="overlay__close">X</span>
         </h3>
-    </header><!-- .fullpage-popup__header -->
-    <section class="fullpage-popup__content">
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
         <div class="flight-title flight-title--departure">
             <div class="flight-info">
                 <h4><b>Jakarta</b> to <b>Bali</b></h4>
@@ -186,8 +190,8 @@
             </div>
         }
 
-    </section><!-- .fullpage=popup__content -->
-    <footer class="fullpage-popup__footer">
+    </section><!-- .overlay__content -->
+    <footer class="overlay__footer">
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
@@ -199,18 +203,18 @@
                 </div>
             </div>
         </div>
-    </footer><!-- .fullpage-popup__footer -->
+    </footer><!-- .overlay__footer -->
 </div>
 
-<!-- fullpage popup - filter -->
-<div class="fullpage-popup fullpage-popup--flight-filter">
-    <header class="fullpage-popup__header">
-        <h3 class="fullpage-popup__title">
-            FILTER
-            <span class="fullpage-popup__close">X</span>
+<!-- overlay - filter -->
+<div class="overlay overlay--flight-filter" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-filter')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            FILTER PENERBANGAN
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
         </h3>
-    </header><!-- .fullpagePopup__header -->
-    <section class="fullpage-popup__content">
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
         <div class="filter-group filter-group--price">
             <div class="filter-group__header">
                 <h4 class="filter-group__title">Berdasarkan Harga</h4>
@@ -293,18 +297,18 @@
                 </label>
             </div>
         </div>
-    </section><!-- .fullpagePopup__content -->
-</div><!-- .fullpage-popup -->
+    </section><!-- .overlay__content -->
+</div><!-- .overlay -->
 
-<!-- .fullpage-popup - sort -->
-<div class="fullpage-popup fullpage-popup--flight-sort">
-    <header class="fullpage-popup__header">
-        <h3 class="fullpage-popup__title">
-            FILTER
-            <span class="fullpage-popup__close">X</span>
+<!-- .overlay - sort -->
+<div class="overlay overlay--flight-sort" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-sort')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            SORTIR PENERBANGAN
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
         </h3>
-    </header><!-- .fullpagePopup__header -->
-    <section class="fullpage-popup__content">
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
         <label>
             Harga - Rendah ke Tinggi
             <input type="radio" name="name" value="" />
@@ -329,18 +333,18 @@
             Durasi - Lama ke Singkat
             <input type="radio" name="name" value="" />
         </label>
-    </section><!-- .fullpage-popup__content -->
+    </section><!-- .overlay__content -->
 </div>
 
-<!-- .fullpage-popup - sort -->
-<div class="fullpage-popup fullpage-popup--theme--blue fullpage-popup--flight-form">
-    <header class="fullpage-popup__header">
-        <h3 class="fullpage-popup__title">
+<!-- .overlay - sort -->
+<div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
             GANTI PENERBANGAN
-            <span class="fullpage-popup__close">X</span>
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
         </h3>
-    </header><!-- .fullpagePopup__header -->
-    <section class="fullpage-popup__content">
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
         <form>
             <div class="form-group origin">
                 <input type="text" value="" class="form-control" placeholder="Asal" />
@@ -368,8 +372,8 @@
                 <button class="btn btn-yellow btn-block">CARI PENERBANGAN</button>
             </div>
         </form>
-    </section><!-- .fullpage-popup__content -->
-</div><!-- .fullpage-popup--flight-form-->
+    </section><!-- .overlay__content -->
+</div><!-- .overlay--flight-form-->
 
 <!-- popup -->
 <div class="popup-wrapper">
