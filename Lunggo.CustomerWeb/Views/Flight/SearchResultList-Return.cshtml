@@ -913,7 +913,7 @@
                             <header class="flight-header">
                                 <h3>
                                     Penerbangan Pulang
-                                    <span class="warning" ng-if="!pageConfig.flightsValidated && overlapDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime,returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime)">Penerbangan pulang lebih awal daripada jadwal sampai. </span>
+                                    <span class="warning" ng-if="!pageConfig.flightsValidated && overlapDate(departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments[ departureFlightConfig.flightList[departureFlightConfig.chosenFlight].Trips[0].Segments.length - 1 ].ArrivalTime,returnFlightConfig.flightList[returnFlightConfig.chosenFlight].Trips[0].Segments[0].DepartureTime)">Penerbangan pulang lebih awal daripada penerbangan pergi. </span>
                                     <span class="warning" ng-if="pageConfig.flightsValidated && returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Harga Pulang Berubah - Harga Baru Rp. {{returnFlightConfig.flightList[returnFlightConfig.chosenFlight].TotalFare | number}}</span>
                                     <span class="warning" ng-if="pageConfig.flightsValidated && !returnFlightConfig.validateNewfare && !returnFlightConfig.validateAvailable">Penerbangan Pulang Tidak Tersedia</span>
                                 </h3>
