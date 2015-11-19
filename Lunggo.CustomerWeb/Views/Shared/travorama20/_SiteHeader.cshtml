@@ -60,7 +60,7 @@ else
                                 <ul>
                                     <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
                                     <li class="dropdown-wrapper">
-                                        @if (@User.Identity.IsAuthenticated)
+                                        @if (User.Identity.IsAuthenticated)
                                         {
                                             <a href="#" data-trigger="dropdown"> @User.Identity.GetEmail() <span class="caret"></span></a>
                                         }
@@ -69,7 +69,7 @@ else
                                             <a href="#" data-trigger="dropdown">Member <span class="caret"></span></a>
                                         }
                                         <div class="dropdown-content my-account">
-                                            @if (@User.Identity.IsAuthenticated)
+                                            @if (User.Identity.IsAuthenticated)
                                             {
                                                 <ul>
                                                     <li><a href="@Url.Action("OrderHistory", "UW620OrderHistory")">My Account</a></li>

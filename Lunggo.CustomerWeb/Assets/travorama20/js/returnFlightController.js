@@ -325,7 +325,8 @@ app.controller('returnFlightController', [
                 $http.get(RevalidateConfig.Url, {
                     params: {
                         SearchId: $scope.departureFlightConfig.searchId,
-                        ItinIndex: $scope.departureFlightConfig.flightList[departureFlightIndexNo].RegisterNumber
+                        ItinIndex: $scope.departureFlightConfig.flightList[departureFlightIndexNo].RegisterNumber,
+                        SecureCode: $scope.departureFlightConfig.flightSearchParams.SecureCode
                     }
                 }).success(function (returnData) {
                     $scope.departureFlightConfig.validating = false;
@@ -369,7 +370,8 @@ app.controller('returnFlightController', [
                 $http.get(RevalidateConfig.Url, {
                     params: {
                         SearchId: $scope.returnFlightConfig.searchId,
-                        ItinIndex: $scope.returnFlightConfig.flightList[returnFlightIndexNo].RegisterNumber
+                        ItinIndex: $scope.returnFlightConfig.flightList[returnFlightIndexNo].RegisterNumber,
+                        SecureCode: $scope.returnFlightConfig.flightSearchParams.SecureCode
                     }
                 }).success(function (returnData) {
                     $scope.returnFlightConfig.validating = false;

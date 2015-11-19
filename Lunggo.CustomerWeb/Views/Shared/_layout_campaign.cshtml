@@ -72,7 +72,7 @@
                     </div><!-- .form-hotel-search -->
                     <div class="form-flight-search active">
                             <h3>@Html.I18NString("CW00081")</h3>
-                            <form action="@Url.Action("SearchResultList", "Flight")" class="homepage-form" method="GET" data-flighttype="round-trip">
+                            <form action="@Url.Action("Search", "Flight")" class="homepage-form" method="GET" data-flighttype="round-trip">
                                 <div class="flight-type-wrapper form-group">
                                     <label for="round-trip" class="active"><input type="radio" name="flight-type" value="RET" id="round-trip" checked /> @Html.I18NString("CW00052")</label>
                                     <label for="one-way"><input type="radio" name="flight-type" value="ONE" id="one-way" /> @Html.I18NString("CW00053")</label>

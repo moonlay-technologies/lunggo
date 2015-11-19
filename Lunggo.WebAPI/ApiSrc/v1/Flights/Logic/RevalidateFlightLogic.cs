@@ -21,7 +21,8 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             {
                 SearchId = request.SearchId,
                 ItinIndex = request.ItinIndex,
-                Token = request.Token
+                Token = request.Token,
+                RequestId = request.SecureCode
             };
         }
 

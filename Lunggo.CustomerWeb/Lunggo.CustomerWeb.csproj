@@ -2423,7 +2423,7 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Flight\SearchResultList-Single.cshtml" />
+    <Content Include="Views\Flight\Search-Single.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Template\FlightSearchListNew.cshtml" />
     <Content Include="Views\Shared\_layout_20150506.cshtml" />
@@ -2451,7 +2451,7 @@
     <Content Include="Views\MobileTemplate\FlightCheckout4.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout5.cshtml" />
     <Content Include="Views\MobileTemplate\FlightCheckout.cshtml" />
-    <Content Include="Views\Flight\SearchResultList-Single.mobile.cshtml" />
+    <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <Content Include="Views\Flight\Thankyou.mobile.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Template\LandingPage.cshtml" />
@@ -2467,10 +2467,10 @@
     <Content Include="Views\Template\invoice.cshtml" />
     <Content Include="Views\Shared\_layout_invoice.cshtml" />
     <Content Include="Views\Shared\_Feedback.cshtml" />
-    <Content Include="Views\Flight\SearchResultList-Return.cshtml" />
+    <Content Include="Views\Flight\Search-Return.cshtml" />
     <Content Include="Views\Template\CheckOrder.cshtml" />
     <Content Include="Views\Home\Dummy.cshtml" />
-    <Content Include="Views\Flight\SearchResultList-Return.mobile.cshtml" />
+    <Content Include="Views\Flight\Search-Return.mobile.cshtml" />
     <Content Include="Views\Home\CekPemesanan.cshtml" />
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
@@ -2505,6 +2505,7 @@
     <Content Include="Views\Template\eticketRaw.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Travorama20\emailExpireRaw.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

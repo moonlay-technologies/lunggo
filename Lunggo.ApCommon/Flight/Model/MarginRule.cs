@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
 
-        public bool Includes(TimeSpan time)
+        public bool Contains(TimeSpan time)
         {
             return time >= Start && time <= End;
         }
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public bool Includes(DateTime date)
+        public bool Contains(DateTime date)
         {
             return date >= Start && date <= End;
         }

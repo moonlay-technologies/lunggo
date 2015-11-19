@@ -69,13 +69,10 @@ namespace Lunggo.ApCommon.Flight.Service
             var result = supplier.SearchFlight(conditions);
             result.Itineraries = result.Itineraries ?? new List<FlightItinerary>();
             if (result.IsSuccess)
-            {
-                AddPriceMargin(result.Itineraries, supplier);
                 foreach (var itin in result.Itineraries)
                 {
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
                 }
-            }
             SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }
@@ -95,10 +92,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
             var result = supplier.RevalidateFare(conditions);
             if (result.Itinerary != null)
-            {
-                AddPriceMargin(new List<FlightItinerary> {result.Itinerary}, supplier);
                 result.Itinerary.FareId = IdUtil.ConstructIntegratedId(result.Itinerary.FareId, supplierName, result.Itinerary.FareType);
-            }
             return result;
         }
 
@@ -112,6 +106,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
+            var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
+            result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
+                ? defaultTimeout
+                : result.Status.TimeLimit;
             return result;
         }
 

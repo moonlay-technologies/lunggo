@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var output = new RevalidateFlightOutput();
             if (input.Token == null)
-                input.Token = SelectFlight(input.SearchId, input.ItinIndex);
+                input.Token = SelectFlight(input.SearchId, input.ItinIndex, input.RequestId);
             if (input.Token == null)
             {
                 output.IsSuccess = true;
@@ -53,6 +53,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 });
 
                 var newItins = output.Sets.Select(set => set.Itinerary).ToList();
+                var itinsPriceDifference = itins.Zip(newItins,
+                        (oldItin, newItin) => newItin.FinalIdrPrice - oldItin.FinalIdrPrice);
+                var asReturn = GetFlightRequestTripType(input.RequestId);
+                if (asReturn == null)
+                    newItins = new List<FlightItinerary>();
+                else
+                    newItins.ForEach(itin => itin.AsReturn = (bool)asReturn);
+                AddPriceMargin(newItins);
                 if (IsItinBundleCacheId(input.Token))
                     SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
                 else
@@ -60,8 +68,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.Sets.TrueForAll(set => set.IsSuccess))
                 {
                     output.IsSuccess = true;
-                    var itinsPriceDifference = itins.Zip(newItins,
-                        (oldItin, newItin) => newItin.FinalIdrPrice - oldItin.FinalIdrPrice);
                     output.IsValid = output.Sets.TrueForAll(set => set.IsValid) && itinsPriceDifference.All(diff => diff == 0);
                     if (output.Sets.Any(set => set.Itinerary == null))
                         output.NewFare = null;

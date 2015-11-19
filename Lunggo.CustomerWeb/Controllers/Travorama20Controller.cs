@@ -95,8 +95,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+        public ActionResult emailExpireRaw()
+        {
+            return View();
+        }
 
-        public ActionResult emailConfirmationTemplateRaw()
+        public ActionResult emailConfirmPaymentTemplateRaw()
         {
             return View();
         }

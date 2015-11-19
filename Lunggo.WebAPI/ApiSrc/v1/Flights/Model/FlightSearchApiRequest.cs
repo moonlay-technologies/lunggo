@@ -13,5 +13,6 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Model
         public TripType TripType { get; set; }
         public CabinClass CabinClass { get; set; }
         public List<int> Requests { get; set; }
+        public string SecureCode { get; set; }
     }
 }
