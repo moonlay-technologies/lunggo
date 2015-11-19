@@ -1,6 +1,8 @@
 ﻿// travorama angular app - checkout controller
 app.controller('checkoutController', [
-    '$http', '$scope', '$interval',function($http, $scope, $interval) {
+    '$http', '$scope', '$interval','$location',function($http, $scope, $interval, $location) {
+
+        $scope.returnUrl = document.referrer;
 
         //********************
         // variables
@@ -368,6 +370,7 @@ app.controller('checkoutController', [
         $scope.generatePassenger();
         // change page
         $scope.changePage = function (page) {
+            $location.hash("page-"+page);
             // change current page variable
             $scope.currentPage = page;
             // change step class
@@ -376,6 +379,17 @@ app.controller('checkoutController', [
         }
         // change page after login
         $scope.changePage(currentPage);
+
+        $scope.$watch(function () {
+            return location.hash;
+        }, function(value) {
+            value = value.split('-');
+            value = value[1];
+            if (value > 0) {
+                $scope.changePage(value);
+            }
+        });
+
 
         // toggle Travorama Login
         $scope.toggleLogin = function() {

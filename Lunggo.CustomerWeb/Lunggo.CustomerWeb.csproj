@@ -671,10 +671,12 @@
     <Content Include="Assets\images\airlines\ZH.png" />
     <Content Include="Assets\images\airlines\ZI.png" />
     <Content Include="Assets\images\airlines\ZL.png" />
+    <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <None Include="Assets\images\backtotop.jpg.bak" />
+    <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
@@ -806,11 +808,14 @@
     <Content Include="Assets\images\hourglass.png" />
     <Content Include="Assets\images\hover-menu-arrow.png" />
     <Content Include="Assets\images\howto-bg.jpg" />
+    <Content Include="Assets\images\howto-sprite.png" />
     <Content Include="Assets\images\howtoguide.jpg" />
+    <Content Include="Assets\images\howtoorder-header.jpg" />
     <Content Include="Assets\images\howtoorder.jpg" />
     <Content Include="Assets\images\howtopay-1.jpg" />
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
+    <Content Include="Assets\images\howtopay-header.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\list-bg.png" />
@@ -983,6 +988,7 @@
     <Content Include="Assets\mobile\css\application.min.css">
       <DependentUpon>application.css</DependentUpon>
     </Content>
+    <Content Include="Assets\mobile\images\mobile-header-sprite.png" />
     <Content Include="Assets\mobile\js\application.js" />
     <Content Include="Assets\script\angularApp.js" />
     <Content Include="Assets\script\common-15.js" />
@@ -1154,6 +1160,7 @@
     <Content Include="Assets\travorama20\css\_page_account.scss" />
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\mobile\css\application.scss" />
+    <Content Include="Assets\mobile\css\_page_flight.scss" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2467,6 +2474,8 @@
     <Content Include="Views\Account\ForgotPassword.mobile.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
     <Content Include="Views\StaticPage\Contact.cshtml" />
+    <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
+    <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
@@ -2487,6 +2496,10 @@
     <Content Include="Views\Travorama20\emailConfirmationTemplate.cshtml" />
     <Content Include="Views\Travorama20\emailDetailOrderTemplate.cshtml" />
     <Content Include="Views\Travorama20\emailConfirmPayment.cshtml" />
+    <Content Include="Views\Template\invoice - Copy.cshtml" />
+    <Content Include="Views\Travorama20\emailExpire.cshtml" />
+    <Content Include="Views\Travorama20\emailDetailOrderTemplateRaw.cshtml" />
+    <Content Include="Views\Travorama20\emailConfirmPaymentTemplateRaw.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2500,7 +2513,6 @@
     <Folder Include="Areas\UW100\Views\Shared\" />
     <Folder Include="Areas\UW100\Views\UW100Router\" />
     <Folder Include="Areas\UW300\Models\" />
-    <Folder Include="Assets\mobile\images\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Helper\" />
     <Folder Include="Views\Upload\" />

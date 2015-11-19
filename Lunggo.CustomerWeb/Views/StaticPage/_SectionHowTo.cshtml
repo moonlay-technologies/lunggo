@@ -1,0 +1,16 @@
+﻿<section class="howto-menu @ViewBag.ActiveSection">
+    <div class="container">
+        <div class="row">
+            @if (ViewBag.ActiveSection == "order")
+            {
+                <a href="@Url.Action("HowToOrder","StaticPage")" class="button-howtoorder col-xs-6 active"><span>Cara Pesan Tiket Pesawat</span></a>
+                <a href="@Url.Action("HowToPay","StaticPage")" class="button-howtopay col-xs-6"><span>Cara Bayar Pesanan</span></a>
+            }
+            else
+            {
+                <a href="@Url.Action("HowToOrder","StaticPage")" class="button-howtoorder col-xs-6"><span>Cara Pesan Tiket Pesawat</span></a>
+                <a href="@Url.Action("HowToPay","StaticPage")" class="button-howtopay col-xs-6 active"><span>Cara Bayar Pesanan</span></a>
+            }
+        </div>
+    </div>
+</section>

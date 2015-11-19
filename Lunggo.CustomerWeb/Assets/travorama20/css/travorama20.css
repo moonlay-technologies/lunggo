@@ -110,6 +110,11 @@ form label.important:after {
 .text-main-color {
   color: #1daee4; }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
 .search-calendar {
   width: 320px;
   height: 520px;
@@ -220,118 +225,126 @@ form label.important:after {
     .search-location .location-header .close-location {
       float: right;
       cursor: pointer; }
-  .search-location .location-body .location-recommend .tab-header {
-    background: #eaeaea;
-    width: 100%;
-    padding: 0 30px;
-    position: relative; }
-    .search-location .location-body .location-recommend .tab-header a.nav-click {
-      width: 30px;
-      height: 60px;
-      display: block;
-      background-color: #999999;
-      position: absolute;
-      background-image: url(/Assets/images/nav-sprite.png);
-      background-repeat: no-repeat; }
-      .search-location .location-body .location-recommend .tab-header a.nav-click.prev {
-        left: 0;
-        top: 0; }
-      .search-location .location-body .location-recommend .tab-header a.nav-click.next {
-        right: 0;
-        top: 0;
-        background-position: -30px 0; }
-    .search-location .location-body .location-recommend .tab-header:before, .search-location .location-body .location-recommend .page-index .tab-header.section-reason:after, .page-index .search-location .location-body .location-recommend .tab-header.section-reason:after, .search-location .location-body .location-recommend .tab-header:after {
-      display: block;
+  .search-location .location-body {
+    color: #333; }
+    .search-location .location-body .location-recommend .tab-header {
+      background: #eaeaea;
       width: 100%;
-      content: "";
-      clear: both; }
-    .search-location .location-body .location-recommend .tab-header nav {
-      width: 790px;
-      height: 60px;
-      overflow: hidden; }
-      .search-location .location-body .location-recommend .tab-header nav ul {
-        margin: 0;
-        padding: 0;
+      padding: 0 30px;
+      position: relative; }
+      .search-location .location-body .location-recommend .tab-header a.nav-click {
+        width: 30px;
+        height: 60px;
         display: block;
-        width: 945px; }
-        .search-location .location-body .location-recommend .tab-header nav ul:before, .search-location .location-body .location-recommend .tab-header nav .page-index ul.section-reason:after, .page-index .search-location .location-body .location-recommend .tab-header nav ul.section-reason:after, .search-location .location-body .location-recommend .tab-header nav ul:after {
+        background-color: #999999;
+        position: absolute;
+        background-image: url(/Assets/images/nav-sprite.png);
+        background-repeat: no-repeat; }
+        .search-location .location-body .location-recommend .tab-header a.nav-click.prev {
+          left: 0;
+          top: 0; }
+        .search-location .location-body .location-recommend .tab-header a.nav-click.next {
+          right: 0;
+          top: 0;
+          background-position: -30px 0; }
+      .search-location .location-body .location-recommend .tab-header:before, .search-location .location-body .location-recommend .page-index .tab-header.section-reason:after, .page-index .search-location .location-body .location-recommend .tab-header.section-reason:after, .search-location .location-body .location-recommend .tab-header:after {
+        display: block;
+        width: 100%;
+        content: "";
+        clear: both; }
+      .search-location .location-body .location-recommend .tab-header nav {
+        width: 790px;
+        height: 60px;
+        overflow: hidden; }
+        .search-location .location-body .location-recommend .tab-header nav ul {
+          margin: 0;
+          padding: 0;
           display: block;
-          width: 100%;
-          content: "";
-          clear: both; }
-        .search-location .location-body .location-recommend .tab-header nav ul li {
-          display: table;
-          width: 135px;
-          float: left;
-          border-right: 1px solid #ccc;
-          cursor: pointer; }
-          .search-location .location-body .location-recommend .tab-header nav ul li span {
+          width: 945px; }
+          .search-location .location-body .location-recommend .tab-header nav ul:before, .search-location .location-body .location-recommend .tab-header nav .page-index ul.section-reason:after, .page-index .search-location .location-body .location-recommend .tab-header nav ul.section-reason:after, .search-location .location-body .location-recommend .tab-header nav ul:after {
             display: block;
-            color: #626262;
-            background: #eaeaea;
-            font-size: 14px;
-            font-weight: bold;
-            height: 60px;
-            padding: 0 20px;
-            display: table-cell;
-            vertical-align: middle;
-            line-height: 120%; }
-          .search-location .location-body .location-recommend .tab-header nav ul li.active {
-            border-right-color: #fff; }
-            .search-location .location-body .location-recommend .tab-header nav ul li.active span {
-              color: #21afe5;
-              background: #fff; }
-          .search-location .location-body .location-recommend .tab-header nav ul li:last-child {
-            border-right: none; }
-  .search-location .location-body .location-recommend .tab-content {
-    padding: 0 30px;
-    padding-bottom: 15px;
-    padding-top: 30px; }
-    .search-location .location-body .location-recommend .tab-content .col-xs-3 {
-      padding: 0 12px; }
-    .search-location .location-body .location-recommend .tab-content > div {
+            width: 100%;
+            content: "";
+            clear: both; }
+          .search-location .location-body .location-recommend .tab-header nav ul li {
+            display: table;
+            width: 135px;
+            float: left;
+            border-right: 1px solid #ccc;
+            cursor: pointer; }
+            .search-location .location-body .location-recommend .tab-header nav ul li span {
+              display: block;
+              color: #626262;
+              background: #eaeaea;
+              font-size: 14px;
+              font-weight: bold;
+              height: 60px;
+              padding: 0 20px;
+              display: table-cell;
+              vertical-align: middle;
+              line-height: 120%; }
+            .search-location .location-body .location-recommend .tab-header nav ul li.active {
+              border-right-color: #fff; }
+              .search-location .location-body .location-recommend .tab-header nav ul li.active span {
+                color: #21afe5;
+                background: #fff; }
+            .search-location .location-body .location-recommend .tab-header nav ul li:last-child {
+              border-right: none; }
+    .search-location .location-body .location-recommend .tab-content {
+      padding: 0 30px;
+      padding-bottom: 15px;
+      padding-top: 30px; }
+      .search-location .location-body .location-recommend .tab-content .col-xs-3 {
+        padding: 0 12px; }
+      .search-location .location-body .location-recommend .tab-content > div {
+        display: none; }
+        .search-location .location-body .location-recommend .tab-content > div.active {
+          display: block; }
+        .search-location .location-body .location-recommend .tab-content > div h3 {
+          color: #1daee4;
+          font-size: 14px;
+          font-weight: bold;
+          margin-top: 10px;
+          margin-bottom: 6px; }
+        .search-location .location-body .location-recommend .tab-content > div ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          margin-bottom: 23px; }
+          .search-location .location-body .location-recommend .tab-content > div ul li {
+            margin-bottom: 0px; }
+            .search-location .location-body .location-recommend .tab-content > div ul li a {
+              color: #2f2f2f;
+              font-weight: 600;
+              font-size: 13px; }
+              .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
+                text-decoration: none; }
+                .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before, .search-location .location-body .location-recommend .tab-content > div ul li .page-index a.section-reason:hover:after, .page-index .search-location .location-body .location-recommend .tab-content > div ul li a.section-reason:hover:after {
+                  content: url(/Assets/images/recommend-selector.png);
+                  position: absolute;
+                  left: 0px; }
+    .search-location .location-body .location-search {
+      padding: 10px;
+      height: 475px;
+      overflow: auto;
       display: none; }
-      .search-location .location-body .location-recommend .tab-content > div.active {
-        display: block; }
-      .search-location .location-body .location-recommend .tab-content > div h3 {
-        color: #1daee4;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 6px; }
-      .search-location .location-body .location-recommend .tab-content > div ul {
+      .search-location .location-body .location-search .autocomplete-pre .text-pre {
+        display: none; }
+      .search-location .location-body .location-search .autocomplete-pre .text-loading {
+        display: none; }
+      .search-location .location-body .location-search .autocomplete-no-result {
+        display: none; }
+      .search-location .location-body .location-search .autocomplete-result ul {
         margin: 0;
-        padding: 0;
-        list-style: none;
-        margin-bottom: 23px; }
-        .search-location .location-body .location-recommend .tab-content > div ul li {
-          margin-bottom: 0px; }
-          .search-location .location-body .location-recommend .tab-content > div ul li a {
-            color: #2f2f2f;
-            font-weight: 600;
-            font-size: 13px; }
-            .search-location .location-body .location-recommend .tab-content > div ul li a:hover {
-              text-decoration: none; }
-              .search-location .location-body .location-recommend .tab-content > div ul li a:hover:before, .search-location .location-body .location-recommend .tab-content > div ul li .page-index a.section-reason:hover:after, .page-index .search-location .location-body .location-recommend .tab-content > div ul li a.section-reason:hover:after {
-                content: url(/Assets/images/recommend-selector.png);
-                position: absolute;
-                left: 0px; }
-  .search-location .location-body .location-search {
-    padding: 10px;
-    height: 475px;
-    overflow: auto;
-    display: none; }
-    .search-location .location-body .location-search .autocomplete-result ul {
-      margin: 0;
-      padding: 0; }
-      .search-location .location-body .location-search .autocomplete-result ul li {
-        padding: 10px;
-        list-style: none;
-        cursor: pointer; }
-        .search-location .location-body .location-search .autocomplete-result ul li:hover {
-          background: #1daee4; }
-      .search-location .location-body .location-search .autocomplete-result ul li + li {
-        border-top: 1px solid #ccc; }
+        padding: 0; }
+        .search-location .location-body .location-search .autocomplete-result ul li {
+          padding: 10px;
+          list-style: none;
+          cursor: pointer; }
+          .search-location .location-body .location-search .autocomplete-result ul li:hover {
+            background: #1daee4; }
+        .search-location .location-body .location-search .autocomplete-result ul li + li {
+          border-top: 1px solid #ccc; }
 
 .slider {
   margin-top: 10px;
@@ -4662,8 +4675,122 @@ file : /Assets/travorama20/css/_page_password.scss
     .page-howtopay .list-wrapper .list.active .list-detail, .page-howtoorder .list-wrapper .list.active .list-detail {
       display: block; }
 
+.page-howtopay .howto-header, .page-howtoorder .howto-header {
+  height: 250px;
+  padding-top: 70px; }
+  .page-howtopay .howto-header .line, .page-howtoorder .howto-header .line {
+    display: block;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative; }
+    .page-howtopay .howto-header .line span, .page-howtoorder .howto-header .line span {
+      width: 30px;
+      height: 30px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      background-image: url(/Assets/images/howto-sprite.png); }
+    .page-howtopay .howto-header .line:before, .page-howtopay .howto-header .page-index .line.section-reason:after, .page-index .page-howtopay .howto-header .line.section-reason:after, .page-howtoorder .howto-header .line:before, .page-howtoorder .howto-header .page-index .line.section-reason:after, .page-index .page-howtoorder .howto-header .line.section-reason:after {
+      width: 43%;
+      height: 100%;
+      left: 0;
+      top: 50%;
+      content: "";
+      border-top: 1px solid #fff;
+      display: block;
+      position: absolute; }
+    .page-howtopay .howto-header .line:after, .page-howtoorder .howto-header .line:after {
+      width: 43%;
+      height: 100%;
+      right: 0;
+      top: 50%;
+      content: "";
+      border-top: 1px solid #fff;
+      display: block;
+      position: absolute; }
+  .page-howtopay .howto-header hgroup, .page-howtoorder .howto-header hgroup {
+    text-align: center;
+    color: #fff; }
+    .page-howtopay .howto-header hgroup h2, .page-howtoorder .howto-header hgroup h2 {
+      margin: 0;
+      margin-bottom: 12px;
+      padding-top: 12px;
+      font-size: 32px; }
+    .page-howtopay .howto-header hgroup h4, .page-howtoorder .howto-header hgroup h4 {
+      margin: 0;
+      font-size: 14px; }
+
+.page-howtopay .howto-menu, .page-howtoorder .howto-menu {
+  background: #787878;
+  position: relative; }
+  .page-howtopay .howto-menu:before, .page-howtopay .page-index .howto-menu.section-reason:after, .page-index .page-howtopay .howto-menu.section-reason:after, .page-howtoorder .howto-menu:before, .page-howtoorder .page-index .howto-menu.section-reason:after, .page-index .page-howtoorder .howto-menu.section-reason:after {
+    position: absolute;
+    width: 50%;
+    right: 50%;
+    top: 0;
+    height: 100%;
+    content: "";
+    display: block; }
+  .page-howtopay .howto-menu:after, .page-howtoorder .howto-menu:after {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    content: "";
+    display: block; }
+  .page-howtopay .howto-menu .row, .page-howtoorder .howto-menu .row {
+    text-align: center;
+    position: relative;
+    z-index: 2; }
+  .page-howtopay .howto-menu a, .page-howtoorder .howto-menu a {
+    display: block;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 0; }
+    .page-howtopay .howto-menu a.active, .page-howtoorder .howto-menu a.active {
+      background: url(/Assets/images/arrow-white.png) bottom center no-repeat; }
+    .page-howtopay .howto-menu a span:before, .page-howtopay .howto-menu a .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a span.section-reason:after, .page-howtoorder .howto-menu a span:before, .page-howtoorder .howto-menu a .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a span.section-reason:after {
+      content: "";
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: url(/Assets/images/howto-sprite.png);
+      vertical-align: middle;
+      margin-right: 12px; }
+  .page-howtopay .howto-menu a.button-howtoorder span:before, .page-howtopay .howto-menu a.button-howtoorder .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a.button-howtoorder span.section-reason:after, .page-howtoorder .howto-menu a.button-howtoorder span:before, .page-howtoorder .howto-menu a.button-howtoorder .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a.button-howtoorder span.section-reason:after {
+    background-position: 0 0; }
+  .page-howtopay .howto-menu a.button-howtopay span:before, .page-howtopay .howto-menu a.button-howtopay .page-index span.section-reason:after, .page-index .page-howtopay .howto-menu a.button-howtopay span.section-reason:after, .page-howtoorder .howto-menu a.button-howtopay span:before, .page-howtoorder .howto-menu a.button-howtopay .page-index span.section-reason:after, .page-index .page-howtoorder .howto-menu a.button-howtopay span.section-reason:after {
+    background-position: -30px 0; }
+  .page-howtopay .howto-menu.order:before, .page-howtopay .page-index .howto-menu.order.section-reason:after, .page-index .page-howtopay .howto-menu.order.section-reason:after, .page-howtoorder .howto-menu.order:before, .page-howtoorder .page-index .howto-menu.order.section-reason:after, .page-index .page-howtoorder .howto-menu.order.section-reason:after {
+    background: #032e55; }
+  .page-howtopay .howto-menu.pay:after, .page-howtoorder .howto-menu.pay:after {
+    background: #032e55; }
+
+.page-howtoorder .line span {
+  background-position: 0; }
+
 .page-howtoorder .list-image {
   height: 420px; }
   .page-howtoorder .list-image img {
     width: 742px;
     margin-left: -160px; }
+
+.page-howtoorder .howto-header {
+  background: url(/Assets/images/howtoorder-header.jpg) top center no-repeat;
+  background-size: cover; }
+
+.page-howtoorder .section-howtoorder {
+  padding-top: 30px; }
+
+.page-howtopay .line span {
+  background-position: -30px 0; }
+
+.page-howtopay .howto-header {
+  background: url(/Assets/images/howtopay-header.jpg) top center no-repeat;
+  background-size: cover; }
+
+.page-howtopay .section-howtopay {
+  padding-top: 30px; }

@@ -1,0 +1,164 @@
+﻿@using Lunggo.ApCommon.Dictionary
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Flight.Service
+@using Lunggo.CustomerWeb.Models
+@using Newtonsoft.Json
+@model FlightSearchData
+
+
+@{
+    Layout = "/Views/Shared/mobile/_Layout.cshtml";
+    ViewBag.Title = "Flight Search Page";
+    ViewBag.BodyClass = "page page-flight single-flight";
+}
+
+@{
+    bool isValid;
+
+    List<FlightTrip> trips = null;
+    FlightSearchData.Complete data = null;
+    var originAirportNames = new List<string>();
+    var destinationAirportNames = new List<string>();
+    var originCityNames = new List<string>();
+    var destinationCityNames = new List<string>();
+    var originCountryNames = new List<string>();
+    var destinationCountryNames = new List<string>();
+
+    String tripType = "aaa";
+    try
+    {
+        var parts = Model.info.Split('-');
+        var tripPart = parts.First();
+        var infoPart = parts.Last();
+        isValid = ((tripPart.Length + 1) % 13 == 0) && (infoPart.Length == 4);
+
+        trips = tripPart.Split('.').Select(info => new FlightTrip
+        {
+            OriginAirport = info.Substring(0, 3),
+            DestinationAirport = info.Substring(3, 3),
+            DepartureDate = new DateTime(
+                2000 + int.Parse(info.Substring(10, 2)),
+                int.Parse(info.Substring(8, 2)),
+                int.Parse(info.Substring(6, 2)))
+        }).ToList();
+
+        foreach (var trip in trips)
+        {
+            originAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.OriginAirport));
+            destinationAirportNames.Add(DictionaryService.GetInstance().GetAirportName(trip.DestinationAirport));
+            originCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.OriginAirport));
+            destinationCityNames.Add(DictionaryService.GetInstance().GetAirportCity(trip.DestinationAirport));
+            originCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.OriginAirport));
+            destinationCountryNames.Add(DictionaryService.GetInstance().GetAirportCountry(trip.DestinationAirport));
+        }
+
+        data = new FlightSearchData.Complete
+        {
+            AdultCount = int.Parse(infoPart.Substring(0, 1)),
+            ChildCount = int.Parse(infoPart.Substring(1, 1)),
+            InfantCount = int.Parse(infoPart.Substring(2, 1)),
+            CabinClass = FlightService.ParseCabinClass(infoPart.Substring(3, 1)),
+            Trips = trips,
+            TripType = FlightService.ParseTripType(trips)
+        };
+
+        tripType = data.TripType == TripType.OneWay ? "single" : "return";
+    }
+    catch
+    {
+        isValid = false;
+    }
+
+}
+
+<form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
+    <input type="text" name="Token" id="fareToken" value="" />
+</form>
+
+<section class="flight-summary">
+    <div class="summary-left">
+        <p><b>Penerbangan Pergi</b><br />
+            <b>JKT</b> to <b>DPS</b> - Selasa, 15 Feb 2016
+        </p>
+    </div>
+    <a href="#" class="summary-right"><span>GANTI</span></a>
+</section><!-- .flight-summary -->
+
+<section class="flight-sort-filter">
+    <div class="flight-sort-filter-action">
+        <a href="#">FILTER</a>
+        <a href="#">SORT</a>
+    </div>
+</section><!-- .flight-sort -->
+
+<section class="flight-list">
+    
+    @for (var i = 1; i <= 10; i++)
+    {
+        <div class="flight">
+            <div class="flight-header">
+                <h4 class="flight-airline">
+                    <img src="/Assets/images/airlines/GA.png" alt="Alternate Text" class="flight-airline-image" />
+                    <span>Garuda Indonesia</span>
+                </h4>
+            </div>
+            <div class="flight-content">
+                <div class="content-left">
+                    <h4 class="flight-time">
+                        <span class="departure">21:35</span>
+                        <span class="separator"></span>
+                        <span class="arrival">22:35</span>
+                        <span class="overday">+1</span>
+                    </h4>
+                    <h5 class="flight-duration">9h 51m, 1 transit</h5>
+                </div>
+                <div class="content-right">
+                    <label>Harga Total :</label>
+                    <h4 class="flight-price">Rp 123.456.789</h4>
+                </div>
+            </div>
+            <div class="flight-footer">
+                <a href="#" class="flight-detail-button">Lihat Detail &gt;</a>
+                <a href="#" class="btn btn-yellow pull-right flight-order">PESAN</a>
+            </div>
+        </div>
+    }
+
+</section><!-- .flight-list -->
+
+<!--  -->
+
+<!-- popup -->
+<div class="popup-wrapper">
+    <div class="popup">
+        <header class="popup-header">
+            <h4 class="popup-title">Roundtrip Flight <span class="close-modal pull-right">X</span></h4>
+        </header>
+        <div class="popup-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-4 text-center" style="padding-top:12px;">
+                        <img src="/Assets/images/airplane-image.jpg" alt="Airplane" />
+                    </div>
+                    <div class="col-xs-8">
+                        <p>Anda telah memilih penerbangan pergi. <b>Silahkan lanjutkan dengan memilih penerbangan pulang</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="popup-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="btn btn-grey btn-block">KEMBALI</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#" class="btn btn-yellow btn-block">LANJUT</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div><!-- .modal-wrapper -->
+

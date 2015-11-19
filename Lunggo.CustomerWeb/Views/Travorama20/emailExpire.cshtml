@@ -1,7 +1,6 @@
-﻿@using System.Globalization
-@using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
+﻿@{
+    Layout = "";
+}
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -20,17 +19,17 @@
                 <th width="90%" style="padding-top:30px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                            <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
                         </a>
                         <br />
                         <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
+                            <img src="/Assets/images/email-facebook.jpg" alt="Travorama on Facebook" />
                         </a>
                         <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
+                            <img src="/Assets/images/email-twitter.jpg" alt="Travorama on Twitter" />
                         </a>
                         <a href="https://instagram.com/travorama" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
+                            <img src="/Assets/images/email-instagram.jpg" alt="Travorama on Instagram" />
                         </a>
                     </p>
                 </th>
@@ -60,78 +59,54 @@
                                     <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
                                 </th>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; padding-left: 5% ">
-                                    <p style="color: #15b1e4; text-align: left"><b>No. Pemesanan : @Model.RsvNo</b></p>
+                                    <p style="color: #15b1e4; text-align: left"><b>No. Pemesanan : </b></p>
                                 </th>
                             </tr>
                         </thead>
                     </table>
 
-                    @if (@Model.Itinerary.Trips.Count > 1)
-                    {
+                   
                         <p style="color: #15b1e4;">(Roundtrip)</p>
 
                         <table width="100%">
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
+                                    <img src="/Assets/images/email/flight-departure-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
+                                    <img width="90%" height="40%" src="" />
                                     <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%">Berangkat</p>
                                 </td>
                                 <td width="6%">
                                     <p style="text-align: center">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                    <p style="color: #15b1e4;"><b>Sriwijaya - SJ-204</b></p>
+                                    <p style="color: #15b1e4;">CGK - DPS</p>
+                                    <p style="color: #15b1e4;">Selasa, 17 November 2015</p>
                                 </td>
                             </tr>
                         </table>
                         <table width="100%">
                             <tr>
                                 <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
+                                    <img src="/Assets/images/email/flight-return-icon.png" />
                                 </td>
                                 <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[1].Segments[0].AirlineLogoUrl)" />
+                                    <img width="90%" height="40%" src="" />
                                     <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%">Kembali</p>
                                 </td>
                                 <td width="6%">
                                     <p style="text-align: center">:</p>
                                 </td>
                                 <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName - @Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber</b></p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+                                    <p style="color: #15b1e4;"><b>Sriwijaya - SJ-250</b></p>
+                                    <p style="color: #15b1e4;">DPS - CGK</p>
+                                    <p style="color: #15b1e4;">Selasa, 17 November 2015</p>
                                 </td>
                             </tr>
                         </table>
-                    }
-                    else
-                    {
-                        <table width="100%">
-                            <tr>
-                                <td width="3%" style="padding-top: 1%; padding-left: 1%; vertical-align: top;">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
-                                </td>
-                                <td width="8%">
-                                    <img width="90%" height="40%" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + Model.Itinerary.Trips[0].Segments[0].AirlineLogoUrl)" />
-                                    <p style="color: #15b1e4; margin-left: 12%; margin-top: -5%">Berangkat</p>
-                                </td>
-                                <td width="6%">
-                                    <p style="text-align: center">:</p>
-                                </td>
-                                <td width="40%">
-                                    <p style="color: #15b1e4;"><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName - @Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber</b></p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</p>
-                                    <p style="color: #15b1e4;">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd"), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</p>
-                                </td>
-                            </tr>
-                        </table>
-
-                    }
+                   
 
                 </td>
                 <td width="5%"></td>
@@ -156,8 +131,7 @@
 
                 </td>
 
-                <td>
-                </td>
+                <td></td>
                 <td></td>
             </tr>
         </tfoot>

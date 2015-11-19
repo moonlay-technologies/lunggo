@@ -2,8 +2,18 @@
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-static page-howtoorder";
     ViewBag.Title = "Cara Pemesanan";
+    ViewBag.ActiveSection = "order";
 }
 
+<section class="howto-header">
+    <div class="line"><span></span></div>
+    <hgroup>
+        <h2>Cara Pesan Tiket Pesawat di <b>Travorama</b></h2>
+        <h4>Mudah dan Cepat! Cukup 5 menit</h4>
+    </hgroup>
+</section><!-- .howto-header -->
+
+@Html.Partial("/Views/StaticPage/_SectionHowTo.cshtml")
 
 <section class="section-howtoorder">
     

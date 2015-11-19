@@ -163,7 +163,7 @@
                         </tr>
                         @{var i = @Model.Passengers.Count}
                         @{var j = 1}
-                        <tr rowspan="i">
+                        <tr rowspan="@i">
                             @foreach (var penumpang in @Model.Passengers)
                             {
                                 <td width="25%">
@@ -173,7 +173,7 @@
                                     <p style="color: #15b1e4; text-align: center">:</p>
                                 </td>
                                 <td>
-                                    <p style="color: #15b1e4; text-align: left">@j. @penumpang.FirstName</p>
+                                    <p style="color: #15b1e4; text-align: left">@j. @Model.Passengers[0].FirstName</p>
                                 </td>
                                 <td width="20%"></td>
                                 <td width="5%" style="padding-right: 1%">
@@ -185,6 +185,7 @@
                                 j++;
                             }
                             
+
                         </tr>
                     </table>
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4% ">
@@ -268,7 +269,7 @@
                     @{var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(9)}
                     
                     <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
-                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.Hour.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
+                    <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">blabla@bla.com</span> atau Hotine CS kami di <span style="color: #15b1e4;">1500650</span></p>
 
                 </td>
                 <td width="5%"></td>
