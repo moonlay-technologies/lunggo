@@ -11,6 +11,7 @@
     Layout = "/Views/Shared/mobile/_Layout.cshtml";
     ViewBag.Title = "Flight Search Page";
     ViewBag.BodyClass = "page page-flight single-flight";
+    ViewBag.AngularController = "SingleFlightController";
 }
 
 @{
@@ -72,6 +73,14 @@
 
 }
 
+@section AdditionalJS {
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <script src="/Assets/mobile/js/singleFlightController.js"></script>
+}
 <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
     <input type="text" name="Token" id="fareToken" value="" />
 </form>
@@ -82,13 +91,13 @@
             <b>JKT</b> to <b>DPS</b> - Selasa, 15 Feb 2016
         </p>
     </div>
-    <a href="#" class="summary-right"><span>GANTI</span></a>
+    <a ng-click="SetOverlay('flight-form')" class="summary-right"><span>GANTI</span></a>
 </section><!-- .flight-summary -->
 
 <section class="flight-sort-filter">
     <div class="flight-sort-filter-action">
-        <a href="#">FILTER</a>
-        <a href="#">SORT</a>
+        <a ng-click="SetOverlay('flight-filter')">FILTER</a>
+        <a ng-click="SetOverlay('flight-sort')">SORT</a>
     </div>
 </section><!-- .flight-sort -->
 
@@ -127,7 +136,244 @@
 
 </section><!-- .flight-list -->
 
-<!--  -->
+<!-- overlay - flight detail -->
+<div class="overlay overlay--theme--blue overlay--flight-detail">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            DETAIL PENERBANGAN
+            <span class="overlay__close">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="flight-title flight-title--departure">
+            <div class="flight-info">
+                <h4><b>Jakarta</b> to <b>Bali</b></h4>
+                <h5>15 Feb 2015</h5>
+            </div>
+            <a href="#" class="flight-change"><span>GANTI</span></a>
+        </div>
+        @for (var i = 0; i < 3; i++)
+        {
+            <div class="flight-wrapper">
+                <div class="transit">
+                    <span>Transit di Singapore selama <b>02:55:00</b></span>
+                </div>
+                <div class="flight">
+                    <div class="flight__number">
+                        <span>1</span>
+                    </div>
+                    <div class="flight__content">
+                        <div class="flight__summary">
+                            <img src="/Assets/images/airlines/GA.png" alt="Garuda Indonesia" class="flight__image" />
+                            <div class="flight__airline">
+                                <h4><b>SINGAPORE AIRLINES</b></h4>
+                                <h5>ABC-1234</h5>
+                            </div>
+                        </div>
+                        <div class="flight__detail">
+                            <div class="flight__departure">
+                                <h5>15 Feb 2015</h5>
+                                <h4><b>15:00</b></h4>
+                                <h5><b>(BLP) Bandar Lampung</b></h5>
+                                <h5>Bandara Hang Sukarno Hattar</h5>
+                            </div>
+                            <div class="flight__separator"></div>
+                            <div class="flight__arrival">
+                                <h5>15 Feb 2015</h5>
+                                <h4><b>15:00</b></h4>
+                                <h5><b>(BLP) Bandar Lampung</b></h5>
+                                <h5>Bandara Hang Sukarno Hattar</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </section><!-- .overlay__content -->
+    <footer class="overlay__footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h5>Harga Total:</h5>
+                    <h4><b>Rp 123.456.789</b></h4>
+                </div>
+                <div class="col-xs-6">
+                    <a href="#" class="btn btn-yellow btn-block">PESAN</a>
+                </div>
+            </div>
+        </div>
+    </footer><!-- .overlay__footer -->
+</div>
+
+<!-- overlay - filter -->
+<div class="overlay overlay--flight-filter" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-filter')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            FILTER PENERBANGAN
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="filter-group filter-group--price">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Berdasarkan Harga</h4>
+            </div>
+            <div class="filter-group__content"></div>
+        </div>
+        <div class="filter-group filter-group--transit">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Berdasarkan Transit</h4>
+            </div>
+            <div class="filter-group__content">
+                <label>
+                    Langsung
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    1 kali Transit
+                    <input type="checkbox" value="true" />
+                </label>
+                <label class="control-label">
+                    Lebih dari 1
+                    <input type="checkbox" value="true" />
+                </label>
+            </div>
+        </div>
+        <div class="filter-group filter-group--departure">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Berdasarkan Jam Berangkat</h4>
+            </div>
+            <div class="filter-group__content">
+                <label>
+                    Pagi &nbsp; (04.00 - 11:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Siang &nbsp; (11.00 - 15:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Sore &nbsp; (15.00 - 19:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Malam &nbsp; (19.00 - 04:00)
+                    <input type="checkbox" value="true" />
+                </label>
+            </div>
+        </div>
+        <div class="filter-group filter-group--arrival">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Berdasarkan Jam Tiba</h4>
+            </div>
+            <div class="filter-group__content">
+                <label>
+                    Pagi &nbsp; (04.00 - 11:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Siang &nbsp; (11.00 - 15:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Sore &nbsp; (15.00 - 19:00)
+                    <input type="checkbox" value="true" />
+                </label>
+                <label>
+                    Malam &nbsp; (19.00 - 04:00)
+                    <input type="checkbox" value="true" />
+                </label>
+            </div>
+        </div>
+        <div class="filter-group filter-group--airline">
+            <div class="filter-group__header">
+                <h4 class="filter-group__title">Berdasarkan Maskapai</h4>
+            </div>
+            <div class="filter-group__content">
+                <label>
+                    <span><img src="/Assets/images/airlines/GA.png" alt="" /> Garuda Indonesia</span>
+                    <input type="checkbox" value="true" />
+                </label>
+            </div>
+        </div>
+    </section><!-- .overlay__content -->
+</div><!-- .overlay -->
+
+<!-- .overlay - sort -->
+<div class="overlay overlay--flight-sort" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-sort')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            SORTIR PENERBANGAN
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <label>
+            Harga - Rendah ke Tinggi
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Harga - Tinggi ke Rendah
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Nama Maskapai - A ke Z
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Nama Maskapai - Z ke A
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Durasi - Singkat ke Lama
+            <input type="radio" name="name" value="" />
+        </label>
+        <label>
+            Durasi - Lama ke Singkat
+            <input type="radio" name="name" value="" />
+        </label>
+    </section><!-- .overlay__content -->
+</div>
+
+<!-- .overlay - sort -->
+<div class="overlay overlay--theme--blue overlay--flight-form" ng-class="{'active' : (PageConfig.ActiveOverlay == 'flight-form')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            GANTI PENERBANGAN
+            <span class="overlay__close" ng-click="SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <form>
+            <div class="form-group origin">
+                <input type="text" value="" class="form-control" placeholder="Asal" />
+            </div>
+            <div class="form-group destination">
+                <input type="text" value="" class="form-control" placeholder="Tujuan" />
+            </div>
+            <div class="form-group departure">
+                <input type="text" value="" class="form-control" placeholder="Tanggal Pergi" />
+            </div>
+            <div class="form-group switch-wrapper">
+                <span>Pulang Pergi?</span>
+                <div class="switch">
+                    <label class="control-label active">Ya</label>
+                    <label class="control-label">Tidak</label>
+                </div>
+            </div>
+            <div class="form-group return">
+                <input type="text" value="" class="form-control" placeholder="Tanggal Pulang" />
+            </div>
+            <div class="form-group passenger">
+                <input type="text" value="" class="form-control" placeholder="Penumpang" />
+            </div>
+            <div class="form-group submit">
+                <button class="btn btn-yellow btn-block">CARI PENERBANGAN</button>
+            </div>
+        </form>
+    </section><!-- .overlay__content -->
+</div><!-- .overlay--flight-form-->
 
 <!-- popup -->
 <div class="popup-wrapper">

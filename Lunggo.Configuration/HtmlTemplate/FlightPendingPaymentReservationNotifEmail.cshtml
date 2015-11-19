@@ -25,13 +25,13 @@
                         <br />
                         <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
-                         /></a>
+                         </a>
                         <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
-                         /></a>
+                         </a>
                         <a href="https://instagram.com/travorama" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
-                         /></a>
+                         </a>
                     </p>
                 </th>
                 <th width="5%"></th>
@@ -60,7 +60,7 @@
                                         <hr style="border-color: #15b1e4">
                                     </td>
                                     @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
                                 </tr>
                                 <tr width="100%">
                                     <td width="5%">
@@ -74,7 +74,7 @@
                                         <hr style="border-color: #15b1e4">
                                     </td>
                                     @{ var jamKembali = @Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -93,7 +93,7 @@
                                         <hr style="border-color: #15b1e4" />
                                     </td>
                                     @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -168,7 +168,7 @@
 
                         <a style="margin-left: 6%; color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
                         <p style="margin-left: 6%; margin-bottom: 30px;">Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
-                        <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> customercare@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-650 </span>dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
+                        <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> customercare@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-650 </span>dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                         <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
                         <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
                         <p style="margin-top: -7px; font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk @Model.Contact.Name, karna Anda telah melakukan pemesanan melalui Travorama</p>

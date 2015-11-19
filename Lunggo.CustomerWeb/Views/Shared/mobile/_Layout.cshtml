@@ -25,41 +25,40 @@
     <link rel="stylesheet" href="/Assets/mobile/css/application.css">
 
 </head>
-<body class="@ViewBag.BodyClass">
-    @Html.Partial("/Views/Shared/_googleTag.cshtml")
+    <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=Travorama" : "")>
+        @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
-    <!--********************-->
-    @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
-    
-    <!--********************-->
-    <section class="site-content">
-        
-        @RenderBody()
+        <!--********************-->
+        @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
 
-    </section><!-- .site-content -->
-    
-    <!--********************-->
-    <!-- footer group start -->
-    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
-   
-    <!--********************-->
-    <!-- Javascripts -->
-    <script src="/Assets/js/jquery.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script src="/Config/JsConfig.js"></script>
+        <!--********************-->
+        <section class="site-content" @(ViewBag.AngularController != null ? "ng-controller="+ViewBag.AngularController : "")>
 
-    @if (IsSectionDefined("AdditionalJS"))
+            @RenderBody()
+
+        </section><!-- .site-content -->
+        <!--********************-->
+        <!-- footer group start -->
+        @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+
+        <!--********************-->
+        <!-- Javascripts -->
+        <script src="/Assets/js/jquery.min.js"></script>
+        <script src="/Assets/js/jquery-ui.min.js"></script>
+        <script src="/Config/JsConfig.js"></script>
+
+        @if (IsSectionDefined("AdditionalJS"))
     {
-        @RenderSection("AdditionalJS");
-    }
-    
-    <script src="/Assets/mobile/js/application.js"></script>
-
-    @if (IsSectionDefined("PageJS"))
-    {
-        @RenderSection("PageJS");
+            @RenderSection("AdditionalJS");
     }
 
+        <script src="/Assets/mobile/js/application.js"></script>
 
-</body>
+        @if (IsSectionDefined("PageJS"))
+    {
+            @RenderSection("PageJS");
+    }
+
+
+    </body>
 </html>
