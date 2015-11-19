@@ -57,3 +57,123 @@
     }
 
 }
+
+// --------------------
+// fullpage-popup--flight-form
+.fullpage-popup--flight-form {
+    .fullpage-popup__content {background:$color-main-blue;
+        form {color:#fff;
+            // form group
+            .form-group {
+                &.origin {}
+                &.destination {}
+                &.departure {}
+                &.return {}
+                &.passenger {}
+                &.submit {}
+            }
+            // switch
+            .switch-wrapper {
+                &:before, &:after {@include clearfix();}
+                span {line-height:24px; padding:3px 0; display:inline-block;}
+                .switch {float:right; background:#fff; @include border-radius($border-radius-default); padding:3px;
+                    label {color:#000; width:50px; text-align:center; display:block; float:left; margin-bottom:0; line-height:24px;
+                        &.active {background:$color-main-blue; color:#fff; @include border-radius($border-radius-default);}
+                    }
+                }
+            }
+        }
+    }
+}
+
+// --------------------
+// fullpage-popup--flight-filter
+.fullpage-popup--flight-filter {
+    //fullpage-popup content
+    .fullpage-popup__content {
+        // filter group
+        .filter-group {padding:12px;
+            label {font-weight:normal;}
+            &+.filter-group {border-top:$border-default;}
+            .filter-group__header {margin-bottom:12px;
+                .filter-group__title {margin:0; font-weight:bold;}
+            }
+            .filter-group__content {
+                label {display:block; padding:12px 0;
+                    &+label {border-top:$border-default;}
+                }
+                input[type="checkbox"] {float:right;}
+            }
+            // airline filter
+            &.filter-group--airline {
+                label {
+                    img {height:30px; margin-right:10px;}
+                }
+            }
+        }
+    }
+}
+
+// --------------------
+// fullpage-popup--flight-sort
+.fullpage-popup--flight-sort {
+    .fullpage-popup__content {
+        label {display:block; width:100%; padding:12px 0;
+            &+label {border-top:$border-default;}
+            input[type="radio"] {float:right;}
+        }
+    }
+}
+
+// --------------------
+// fullpage-popup--flight-detail
+.fullpage-popup--flight-detail {
+    .fullpage-popup__content {padding:0;
+        .flight-title {background:#e5e3e4; position:relative;
+            &:before,&:after {@include clearfix();}
+            &>div, &>a {float:left; display:block;}
+            .flight-info {width:75%; padding-left:50px; position:relative;
+                &:before {content:""; position:absolute; top:50%; margin-top:-10px; left:15px; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat;}
+            }
+            .flight-change {width:25%; position:absolute; height:100%; background:#b7b7b7; color:#fff; text-align:center; right:0; top:0;
+                span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; font-weight:bold;}
+            }
+            // departure and arrival
+            .flight-title--departure {}
+            .flight-title--arrival {
+                .flight-info:before {background-position:-22px 0;}
+            }
+        }
+        .flight-wrapper {
+            .flight {position:relative;
+                &:before, &:after {@include clearfix();}
+                .flight__number {width:15px; left:5px; position:absolute;
+                    span {background:$color-main-blue; color:#fff; width:16px; height:16px; display:block; text-align:center; line-height:16px; font-size:12px;}
+                }
+                .flight__content {padding-left:25px;
+                    .flight__summary {
+                        &:before, &:after {@include clearfix();}
+                        .flight__image {width:35px; height:auto; float:left;}
+                        .flight__airline {color:$color-main-blue;}
+                    }
+                    .flight__detail {position:relative;
+                        &:before, &:after {@include clearfix();}
+                        &>div {float:left;}
+                        .flight__departure {width:45%;}
+                        .flight__separator {width:10%; height:100%; position:absolute; background:url(/Assets/mobile/images/flight-separator.png) center center no-repeat; left:45%;}
+                        .flight__arrival {@extend & .flight__departure; margin-left:10%;}
+                    }
+                }
+
+            }
+            .transit {display:block; width:100%; text-align:center; padding:12px 0; margin-bottom:12px;
+                &:after {content:""; display:block; width:100%; border-bottom:1px dashed $color-main-blue; margin-top:-9px;}
+                span {color:$color-main-blue; font-style:italic; background:#fff; display:inline-block; position:relative; margin-left:auto; margin-right:auto; font-weight:600;}
+            }
+        }
+    }// fullpage-popup__content
+    .fullpage-popup__footer {
+        h5 {margin-top:0; margin-bottom:0;}
+        h4 {margin-top:0;}
+    }// fullpage-popup__footer
+}
