@@ -2500,6 +2500,9 @@
     <Content Include="Views\Travorama20\emailExpire.cshtml" />
     <Content Include="Views\Travorama20\emailDetailOrderTemplateRaw.cshtml" />
     <Content Include="Views\Travorama20\emailConfirmPaymentTemplateRaw.cshtml" />
+    <Content Include="Views\Template\eticketRaw.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
