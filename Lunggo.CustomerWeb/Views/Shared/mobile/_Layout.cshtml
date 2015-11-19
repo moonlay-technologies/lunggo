@@ -25,40 +25,35 @@
     <link rel="stylesheet" href="/Assets/mobile/css/application.css">
 
 </head>
-    <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=Travorama" : "")>
+    <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=Travorama ng-controller="+ViewBag.AngularController+" ng-class={'no-scroll':PageConfig.BodyNoScroll}" : "")>
         @Html.Partial("/Views/Shared/_googleTag.cshtml")
 
         <!--********************-->
         @Html.Partial("/Views/Shared/mobile/_SiteHeader.cshtml")
-
         <!--********************-->
-        <section class="site-content" @(ViewBag.AngularController != null ? "ng-controller="+ViewBag.AngularController : "")>
-
+        <section class="site-content">
             @RenderBody()
-
         </section><!-- .site-content -->
         <!--********************-->
-        <!-- footer group start -->
         @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
-
         <!--********************-->
+
         <!-- Javascripts -->
         <script src="/Assets/js/jquery.min.js"></script>
         <script src="/Assets/js/jquery-ui.min.js"></script>
         <script src="/Config/JsConfig.js"></script>
 
         @if (IsSectionDefined("AdditionalJS"))
-    {
+        {
             @RenderSection("AdditionalJS");
-    }
+        }
 
         <script src="/Assets/mobile/js/application.js"></script>
 
         @if (IsSectionDefined("PageJS"))
-    {
+        {
             @RenderSection("PageJS");
-    }
-
+        }
 
     </body>
 </html>

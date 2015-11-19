@@ -128,7 +128,7 @@
 // --------------------
 // overlay--flight-detail
 .overlay--flight-detail {
-    .overlay__content {padding:0;
+    .overlay__content {padding:0; padding-bottom:$header-height;
         .flight-title {background:#e5e3e4; position:relative;
             &:before,&:after {@include clearfix();}
             &>div, &>a {float:left; display:block;}

@@ -51,6 +51,9 @@ $header-height:60px;
 
 body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; padding-top:$header-height;}
 
+.page-loading {display:none;}
+.page-loaded {display:block;}
+
 .no-scroll {overflow:hidden;}
 
 .display-block {display:block !important;}
@@ -69,7 +72,7 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
 }
 
 // site content
-.site-content {min-height:100%;}
+.site-content {min-height:300px;}
 
 // site footer
 .site-footer {background-color:#111; color:#fefefe;
@@ -113,14 +116,16 @@ body {background:#f9f9f9; font-family:'Open Sans', sans-serif; font-size:12px; p
 
 // overlay
 .overlay {position:fixed; width:100%; height:100%; top:100%; left:0; z-index:1000; background:#fff; padding-top:$header-height; overflow:auto; @include transition($transition-default);
-    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%;
+    .overlay__header {background:#878787; color:#fff; padding:18px; height:$header-height; position:fixed; z-index:1; top:0; left:0; width:100%; display:none;
         .overlay__title {margin:0;}
         .overlay__close {float:right;}
     }
-    .overlay__content {background:#fff; min-height:100%; padding:12px;}
-    .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff;}
+    .overlay__content {background:#fff; min-height:100%; padding:12px; padding-bottom:$header-height;}
+    .overlay__footer {position:fixed; width:100%; bottom:0; left:0; background:#616161; padding:12px; color:#fff; height:$header-height;}
     // if active
-    &.active {top:0;}
+    &.active {top:0;
+        .overlay__header {display:block;}
+    }
     // themes
     &.overlay--theme--blue {
         .overlay__header {background:$color-main-blue;}
