@@ -32,6 +32,7 @@
                 Trips: FlightSearchConfig.flightForm.trips,
                 Requests: [],
                 Completed: [],
+                SecureCode: FlightSearchConfig.flightForm.SecureCode,
                 Progress: 0,
                 FinalProgress: 0,
                 Pristine: true

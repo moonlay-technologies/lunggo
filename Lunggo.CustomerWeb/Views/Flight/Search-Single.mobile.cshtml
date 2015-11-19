@@ -92,7 +92,8 @@
             },
             type: '@data.TripType',
             trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
-            Requests:[]
+            Requests:[],
+            SecureCode: '@ViewBag.RequestId'
         };
     </script>
 
