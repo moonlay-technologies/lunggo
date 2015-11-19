@@ -16,10 +16,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
         [Route("api/v1/flights")]
         public FlightSearchApiResponse SearchFlights(HttpRequestMessage httpRequest, [FromUri] string request)
         {
+            FlightSearchApiRequest structuredRequest;
             try
             {
-                var apiResponse = FlightLogic.SearchFlights(request.Deserialize<FlightSearchApiRequest>());
-                return apiResponse;
+                structuredRequest = request.Deserialize<FlightSearchApiRequest>();
             }
             catch
             {
@@ -34,6 +34,10 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights
                     MaxRequest = 0
                 };
             }
+
+            var apiResponse = FlightLogic.SearchFlights(structuredRequest);
+            return apiResponse;
+
             /*
             try
             {

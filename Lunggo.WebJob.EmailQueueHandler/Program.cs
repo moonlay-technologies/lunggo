@@ -52,12 +52,6 @@ namespace Lunggo.WebJob.EmailQueueHandler
             configManager.Init(@"");
         }
 
-        private static void InitFlightService()
-        {
-            var flight = FlightService.GetInstance();
-            flight.Init();
-        }
-
         private static void InitDatabaseService()
         {
             var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");

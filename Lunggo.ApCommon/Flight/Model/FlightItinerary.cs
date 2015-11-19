@@ -34,6 +34,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal LocalRate { get; set; }
         public FareType FareType { get; set; }
         public Supplier Supplier { get; set; }
+        public bool AsReturn { get; set; }
+        public TripType RequestedTripType { get; set; }
     }
 
     public class FlightItineraryBase

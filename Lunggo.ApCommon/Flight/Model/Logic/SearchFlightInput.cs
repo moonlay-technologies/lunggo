@@ -7,5 +7,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public SearchFlightConditions Conditions { get; set; }
         public List<int> RequestedSupplierIds { get; set; }
         public bool IsDateFlexible { get; set; }
+        public string RequestId { get; set; }
     }
 }

@@ -1,0 +1,54 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Payment.Constant
+@model List<MarginRule>
+
+@{
+    ViewBag.Title = "Flight Reservation List";
+}
+
+<h3><i class="fa fa-angle-right"></i> Flight Reservation</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Flight Reservation List</h4>
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>Departure Date Spans</th>
+                        <th>Airlines</th>
+                        <th>Coefficient</th>
+                        <th>Constant</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rule in Model)
+                    {
+                        <tr>
+                            <td>
+                                @foreach (var span in rule.DepartureDateSpans)
+                                {
+                                    @:@span.Start -- @span.End<br/>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var airline in rule.Airlines)
+                                {
+                                    @:@airline
+                                }
+                            </td>
+                            <td>@rule.Coefficient</td>
+                            <td>@rule.Constant</td>
+                            <td>@rule.Priority</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->

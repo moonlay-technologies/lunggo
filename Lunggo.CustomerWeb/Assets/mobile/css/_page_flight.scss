@@ -59,9 +59,9 @@
 }
 
 // --------------------
-// fullpage-popup--flight-form
-.fullpage-popup--flight-form {
-    .fullpage-popup__content {background:$color-main-blue;
+// overlay--flight-form
+.overlay--flight-form {
+    .overlay__content {background:$color-main-blue;
         form {color:#fff;
             // form group
             .form-group {
@@ -87,10 +87,10 @@
 }
 
 // --------------------
-// fullpage-popup--flight-filter
-.fullpage-popup--flight-filter {
-    //fullpage-popup content
-    .fullpage-popup__content {
+// overlay--flight-filter
+.overlay--flight-filter {
+    //overlay content
+    .overlay__content {
         // filter group
         .filter-group {padding:12px;
             label {font-weight:normal;}
@@ -115,9 +115,9 @@
 }
 
 // --------------------
-// fullpage-popup--flight-sort
-.fullpage-popup--flight-sort {
-    .fullpage-popup__content {
+// overlay--flight-sort
+.overlay--flight-sort {
+    .overlay__content {
         label {display:block; width:100%; padding:12px 0;
             &+label {border-top:$border-default;}
             input[type="radio"] {float:right;}
@@ -126,9 +126,9 @@
 }
 
 // --------------------
-// fullpage-popup--flight-detail
-.fullpage-popup--flight-detail {
-    .fullpage-popup__content {padding:0;
+// overlay--flight-detail
+.overlay--flight-detail {
+    .overlay__content {padding:0;
         .flight-title {background:#e5e3e4; position:relative;
             &:before,&:after {@include clearfix();}
             &>div, &>a {float:left; display:block;}
@@ -171,9 +171,9 @@
                 span {color:$color-main-blue; font-style:italic; background:#fff; display:inline-block; position:relative; margin-left:auto; margin-right:auto; font-weight:600;}
             }
         }
-    }// fullpage-popup__content
-    .fullpage-popup__footer {
+    }// overlay__content
+    .overlay__footer {
         h5 {margin-top:0; margin-bottom:0;}
         h4 {margin-top:0;}
-    }// fullpage-popup__footer
+    }// overlay__footer
 }

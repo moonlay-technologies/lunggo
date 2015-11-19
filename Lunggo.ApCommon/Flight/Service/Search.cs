@@ -25,8 +25,8 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
-                var searchedItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
-                var searchedSuppliers = searchedItins.Keys.ToList();
+                var searchedSupplierItins = GetSearchedSupplierItineraries(searchId, input.RequestedSupplierIds);
+                var searchedSuppliers = searchedSupplierItins.Keys.ToList();
                 var missingSuppliers = input.RequestedSupplierIds.Except(searchedSuppliers).ToList();
                 foreach (var missingSupplier in missingSuppliers)
                 {
@@ -38,8 +38,15 @@ namespace Lunggo.ApCommon.Flight.Service
                     }
                 }
 
-                var itinsForDisplay =
-                    searchedItins.SelectMany(dict => dict.Value).Select(ConvertToItineraryForDisplay).ToList();
+                var searchedItins = searchedSupplierItins.SelectMany(dict => dict.Value).ToList();
+
+                var asReturn = GetFlightRequestTripType(input.RequestId);
+                if (asReturn == null)
+                    searchedItins = new List<FlightItinerary>();
+                else 
+                    searchedItins.ForEach(itin => itin.AsReturn = (bool) asReturn);
+                AddPriceMargin(searchedItins);
+                var itinsForDisplay = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
                 itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
 
                 var expiry = searchedSuppliers.Select(supplier => GetSearchedItinerariesExpiry(searchId, supplier)).Min();

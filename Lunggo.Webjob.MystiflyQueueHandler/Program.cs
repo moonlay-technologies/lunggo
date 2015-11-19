@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Microsoft.WindowsAzure.Storage;
 
@@ -61,6 +63,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         {
             InitConfigurationManager();
             InitDatabaseService();
+            InitRedisService();
             InitUniqueIdGenerator();
             InitFlightService();
             InitQueueService();
@@ -103,6 +106,26 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
+        }
+
+        private static void InitRedisService()
+        {
+            var redisService = RedisService.GetInstance();
+            redisService.Init(new RedisConnectionProperty[]
+            {
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                },
+                
+                new RedisConnectionProperty
+                {
+                    ConnectionName = ApConstant.MasterDataCacheName,
+                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                }, 
+                 
+            });
         }
     }
 }

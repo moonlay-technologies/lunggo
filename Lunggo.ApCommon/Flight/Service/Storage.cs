@@ -143,7 +143,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return searchedSupplierItins;
         }
 
-        private string SaveItineraryFromSearchToCache(string searchId, int registerNumber)
+        private string SaveItineraryFromSearchToCache(string searchId, int registerNumber, string requestId)
         {
             try
             {
@@ -387,6 +387,23 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 return new List<MarginRule>();
             }
+        }
+
+        public void SetFlightRequestTripType(string requestId, bool asReturn)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightRequestAsReturn:" + requestId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            redisDb.StringSet(redisKey, asReturn, new TimeSpan(0, 2*timeout, 0));
+        }
+
+        public bool? GetFlightRequestTripType(string requestId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightRequestAsReturn:" + requestId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            return (bool?) redisDb.StringGet(redisKey);
         }
 
         private bool IsItinBundleCacheId(string cacheId)

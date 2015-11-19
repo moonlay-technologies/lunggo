@@ -21,21 +21,21 @@ namespace Lunggo.ApCommon.Flight.Service
             PullPriceMarginRulesFromDatabaseToCache();
         }
 
-        internal void AddPriceMargin(List<FlightItinerary> itins, FlightSupplierWrapperBase supplier)
+        internal void AddPriceMargin(List<FlightItinerary> itins)
         {
             var rules = GetAllActiveMarginRulesFromCache();
             foreach (var itin in itins)
             {
-                AddPriceMargin(itin, supplier, rules);
+                AddPriceMargin(itin, rules);
             }
         }
 
-        internal void AddPriceMargin(FlightItinerary itin, FlightSupplierWrapperBase supplier, List<MarginRule> rules)
+        internal void AddPriceMargin(FlightItinerary itin, List<MarginRule> rules)
         {
             var currency = CurrencyService.GetInstance();
             var rule = GetFirstMatchingRule(itin, rules);
             
-            itin.SupplierRate = currency.GetSupplierExchangeRate(supplier.SupplierName);
+            itin.SupplierRate = currency.GetSupplierExchangeRate(itin.Supplier);
             itin.OriginalIdrPrice = itin.SupplierPrice * itin.SupplierRate;
             ApplyMarginRule(itin, rule);
             itin.LocalCurrency = "IDR";
@@ -170,7 +170,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static bool BookingDateMatches(MarginRule rule)
         {
             var nowDate = DateTime.UtcNow.Date;
-            var dateSpanOk = !rule.BookingDateSpans.Any() || rule.BookingDateSpans.Any(dateSpan => dateSpan.Includes(nowDate));
+            var dateSpanOk = !rule.BookingDateSpans.Any() || rule.BookingDateSpans.Any(dateSpan => dateSpan.Contains(nowDate));
             var dayOk = !rule.BookingDays.Any() || rule.BookingDays.Contains(nowDate.DayOfWeek);
             var dateOk = !rule.BookingDates.Any() || rule.BookingDates.Contains(nowDate);
             return dateSpanOk && dayOk && dateOk;
@@ -187,10 +187,10 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var dates = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.Date).ToList();
             var times = fare.Trips.First().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
-            var dateSpanOk = !rule.DepartureDateSpans.Any() || dates.All(date => rule.DepartureDateSpans.Any(dateSpan => dateSpan.Includes(date)));
+            var dateSpanOk = !rule.DepartureDateSpans.Any() || dates.All(date => rule.DepartureDateSpans.Any(dateSpan => dateSpan.Contains(date)));
             var dayOk = !rule.DepartureDays.Any() || dates.All(date => rule.DepartureDays.Contains(date.DayOfWeek));
             var dateOk = !rule.DepartureDates.Any() || dates.All(date => rule.DepartureDates.Contains(date));
-            var timeSpanOk = !rule.DepartureTimeSpans.Any() || times.All(time => rule.DepartureTimeSpans.Any(timeSpan => timeSpan.Includes(time)));
+            var timeSpanOk = !rule.DepartureTimeSpans.Any() || times.All(time => rule.DepartureTimeSpans.Any(timeSpan => timeSpan.Contains(time)));
             return dateSpanOk && dayOk && dateOk && timeSpanOk;
         }
 
@@ -202,17 +202,18 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 var dates = fare.Trips.Last().Segments.Select(segment => segment.DepartureTime.Date).ToList();
                 var times = fare.Trips.Last().Segments.Select(segment => segment.DepartureTime.TimeOfDay).ToList();
-                var dateSpanOk = !rule.ReturnDateSpans.Any() || dates.All(date => rule.ReturnDateSpans.Any(dateSpan => dateSpan.Includes(date)));
+                var dateSpanOk = !rule.ReturnDateSpans.Any() || dates.All(date => rule.ReturnDateSpans.Any(dateSpan => dateSpan.Contains(date)));
                 var dayOk = !rule.ReturnDays.Any() || dates.All(date => rule.ReturnDays.Contains(date.DayOfWeek));
                 var dateOk = !rule.ReturnDates.Any() || dates.All(date => rule.ReturnDates.Contains(date));
-                var timeSpanOk = !rule.ReturnTimeSpans.Any() || times.All(time => rule.ReturnTimeSpans.Any(timeSpan => timeSpan.Includes(time)));
+                var timeSpanOk = !rule.ReturnTimeSpans.Any() || times.All(time => rule.ReturnTimeSpans.Any(timeSpan => timeSpan.Contains(time)));
                 return dateSpanOk && dayOk && dateOk && timeSpanOk;
             }
         }
 
         private static bool TripTypeMatches(MarginRule rule, FlightItinerary fare)
         {
-            return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.TripType);
+            return !rule.TripTypes.Any() || rule.TripTypes.Contains(fare.TripType) ||
+                   (rule.TripTypes.Contains(TripType.Return) && fare.AsReturn);
         }
 
         private static bool FareTypeMatches(MarginRule rule, FlightItinerary fare)
