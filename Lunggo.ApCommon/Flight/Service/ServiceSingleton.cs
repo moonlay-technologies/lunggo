@@ -106,6 +106,10 @@ namespace Lunggo.ApCommon.Flight.Service
             if (result.Status.BookingId != null)
                 result.Status.BookingId = IdUtil.ConstructIntegratedId(result.Status.BookingId,
                     supplierName, fareType);
+            var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
+            result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
+                ? defaultTimeout
+                : result.Status.TimeLimit;
             return result;
         }
 

@@ -92,7 +92,8 @@
             },
             type: '@data.TripType',
             trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
-            Requests:[]
+            Requests:[],
+            SecureCode: '@ViewBag.RequestId'
         };
     </script>
 
@@ -213,7 +214,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h5>Harga Total:</h5>
-                        <h4><b>Rp {{Flight in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
+                        <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
                         <a href="#" class="btn btn-yellow btn-block">PESAN</a>

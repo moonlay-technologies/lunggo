@@ -9,6 +9,12 @@ body {
   font-size: 12px;
   padding-top: 60px; }
 
+.page-loading {
+  display: none; }
+
+.page-loaded {
+  display: block; }
+
 .no-scroll {
   overflow: hidden; }
 
@@ -60,7 +66,7 @@ body {
       right: 10px; }
 
 .site-content {
-  min-height: 100%; }
+  min-height: 300px; }
 
 .site-footer {
   background-color: #111;
@@ -149,7 +155,8 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
-    width: 100%; }
+    width: 100%;
+    display: none; }
     .overlay .overlay__header .overlay__title {
       margin: 0; }
     .overlay .overlay__header .overlay__close {
@@ -157,7 +164,8 @@ body {
   .overlay .overlay__content {
     background: #fff;
     min-height: 100%;
-    padding: 12px; }
+    padding: 12px;
+    padding-bottom: 60px; }
   .overlay .overlay__footer {
     position: fixed;
     width: 100%;
@@ -165,9 +173,12 @@ body {
     left: 0;
     background: #616161;
     padding: 12px;
-    color: #fff; }
+    color: #fff;
+    height: 60px; }
   .overlay.active {
     top: 0; }
+    .overlay.active .overlay__header {
+      display: block; }
   .overlay.overlay--theme--blue .overlay__header {
     background: #1daee4; }
 
@@ -361,7 +372,8 @@ body {
     float: right; }
 
 .overlay--flight-detail .overlay__content {
-  padding: 0; }
+  padding: 0;
+  padding-bottom: 60px; }
   .overlay--flight-detail .overlay__content .flight-title {
     background: #e5e3e4;
     position: relative; }
