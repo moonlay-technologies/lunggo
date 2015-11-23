@@ -132,11 +132,9 @@ app.controller('singleFlightController', [
                 hours = parseInt((duration / (1000 * 60 * 60)));
                 // hours = parseInt((duration / (1000 * 60 * 60)) % 24);
                 // days = parseInt((duration / (1000 * 60 * 60 * 24)));
-
             hours = hours;
             minutes = minutes;
             seconds = seconds;
-
             return hours + "h " + minutes + "m";
         }
 
@@ -429,9 +427,8 @@ app.controller('singleFlightController', [
             // console.log('Getting flight list with parameter');
             // console.log(FlightSearchConfig.flightForm);
 
-            if ($scope.pristine || $scope.flightRequest.Requests.length) {
-                console.log('request : ' + $scope.flightRequest.Requests);
-            }
+            console.log('request : ' + $scope.flightRequest.Requests);
+            
 
             if ($scope.flightRequest.Progress < 100) {
                 // **********
@@ -488,9 +485,6 @@ app.controller('singleFlightController', [
                     }
 
                     //console.log(returnData);
-
-                    
-
                     // loop the function
                     setTimeout(function () {
                         $scope.getFlight();
@@ -499,6 +493,18 @@ app.controller('singleFlightController', [
                 }).error(function(returnData) {
                     console.log('Failed to get flight list');
                     console.log(returnData);
+                    for (var i = 0; i < $scope.flightRequest.Requests.length; i++) {
+                        // add to completed
+                        if ($scope.flightRequest.Completed.indexOf($scope.flightRequest.Requests[i] < 0)) {
+                            $scope.flightRequest.Completed.push($scope.flightRequest.Requests[i]);
+                        }
+                        // check current request. Remove if completed
+                        if ($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i] < 0)) {
+                            $scope.flightRequest.Requests.splice($scope.flightRequest.Requests.indexOf($scope.flightRequest.Requests[i]), 1);
+                        }
+                    }
+                    $scope.flightRequest.Progress = 100;
+                    $scope.flightRequest.FinalProgress = 100;
                 });
 
             } else {
