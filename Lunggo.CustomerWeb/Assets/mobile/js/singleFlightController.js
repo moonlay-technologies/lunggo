@@ -59,10 +59,10 @@
     $scope.SetOverlay = function(overlay) {
         if (!overlay) {
             $scope.PageConfig.ActiveOverlay = '';
-            $scope.PageConfig.NoScroll = false;
+            $scope.PageConfig.BodyNoScroll = false;
         } else {
             $scope.PageConfig.ActiveOverlay = overlay;
-            $scope.PageConfig.NoScroll = true;
+            $scope.PageConfig.BodyNoScroll = true;
         }
     }
 
@@ -88,6 +88,20 @@
             }
             return overday;
         }
+    }
+
+    // ms to time
+    $scope.msToTime = function (duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = parseInt((duration / 1000) % 60),
+            minutes = parseInt((duration / (1000 * 60)) % 60),
+            hours = parseInt((duration / (1000 * 60 * 60)));
+        // hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+        // days = parseInt((duration / (1000 * 60 * 60 * 24)));
+        hours = hours;
+        minutes = minutes;
+        seconds = seconds;
+        return hours + "h " + minutes + "m";
     }
 
     // ********************
@@ -171,14 +185,12 @@
 
     // generate flight list
     $scope.FlightFunctions.GenerateFlightList = function(data) {
-        
         var startNo = $scope.FlightConfig[0].FlightList.length;
         for (var i = 0; i < data.length; i++) {
             data[i].Available = true;
             data[i].IndexNo = (startNo + i);
             $scope.FlightConfig[0].FlightList.push(data[i]);
         }
-
     }
 
     // revalidate flight
@@ -189,10 +201,10 @@
     // set active flight
     $scope.FlightFunctions.SetActiveFlight = function (FlightNumber) {
         if (FlightNumber >= 0) {
-            $scope.FlightConfig.ActiveFlight = FlightNumber;
+            $scope.FlightConfig[0].ActiveFlight = FlightNumber;
             $scope.SetOverlay('flight-detail');
         } else {
-            $scope.FlightConfig.ActiveFlight = -1;
+            $scope.FlightConfig[0].ActiveFlight = -1;
             $scope.SetOverlay();
         }
     }
