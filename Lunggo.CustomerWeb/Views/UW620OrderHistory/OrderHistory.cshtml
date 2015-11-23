@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordCurrent" ng-rsvs="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordCurrent" ng-model="passwordForm.currentPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password Anda saat ini" ng-disabled="password.updating" />
                                 </div>
                             </div>
                             <div class="form-group" ng-show="password.edit">
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordNew" ng-rsvs="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordNew" ng-model="passwordForm.newPassword" value="" class="form-control" ng-show="password.edit" placeholder="Masukan password baru Anda" ng-disabled="password.updating" />
                                 </div>
                             </div>
                             <div class="form-group" ng-show="password.edit">
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="col-xs-9">
                                     <p class="form-control-static" ng-hide="password.edit">**********</p>
-                                    <input type="password" name="passwordConfirmation" ng-rsvs="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
+                                    <input type="password" name="passwordConfirmation" ng-model="passwordForm.confirmationPassword" value="" class="form-control" ng-show="password.edit" placeholder="Konfirmasi password baru Anda" ng-disabled="password.updating" />
                                 </div>
                             </div>
                         </form>
