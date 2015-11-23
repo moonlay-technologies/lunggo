@@ -139,7 +139,7 @@
                         <span class="overday" ng-show="(getOverdayDate(Flight.Trips[0].Segments[0].DepartureTime,Flight.Trips[0].Segments[ Flight.Trips[0].Segments.length - 1 ].ArrivalTime) != 0)">{{getOverdayDate(Flight.Trips[0].Segments[0].DepartureTime,Flight.Trips[0].Segments[ Flight.Trips[0].Segments.length - 1 ].ArrivalTime)}}</span>
                     </h4>
                     <h5 class="flight-duration">
-                        9h 51m, 
+                        {{FlightFunctions.msToTime( Flight.Trips[0].TotalDuration )}},
                         <span ng-show="Flight.Trips[0].TotalTransit == 0">Langsung</span>
                         <span ng-show="Flight.Trips[0].TotalTransit > 0">{{Flight.Trips[0].TotalTransit}} Transit</span>
                     </h5>
@@ -175,7 +175,7 @@
             
             <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
                 <div class="transit" ng-if="$index > 0">
-                    <span>Transit di Singapore selama <b>02:55:00</b></span>
+                    <span>Transit di {{Segment.DepartureCity}} selama <b>{{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Transits[$index-1].Duration}}</b></span>
                 </div>
                 <div class="flight">
                     <div class="flight__number">

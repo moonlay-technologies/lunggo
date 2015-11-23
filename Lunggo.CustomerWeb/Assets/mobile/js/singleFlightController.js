@@ -188,13 +188,28 @@
 
     // set active flight
     $scope.FlightFunctions.SetActiveFlight = function (FlightNumber) {
+        console.log(FlightNumber);
         if (FlightNumber >= 0) {
-            $scope.FlightConfig.ActiveFlight = FlightNumber;
+            $scope.FlightConfig[0].ActiveFlight = FlightNumber;
             $scope.SetOverlay('flight-detail');
         } else {
-            $scope.FlightConfig.ActiveFlight = -1;
+            $scope.FlightConfig[0].ActiveFlight = -1;
             $scope.SetOverlay();
         }
+    }
+
+    // ms to time
+    $scope.FlightFunctions.msToTime = function (duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = parseInt((duration / 1000) % 60),
+            minutes = parseInt((duration / (1000 * 60)) % 60),
+            hours = parseInt((duration / (1000 * 60 * 60)));
+        // hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+        // days = parseInt((duration / (1000 * 60 * 60 * 24)));
+        hours = hours;
+        minutes = minutes;
+        seconds = seconds;
+        return hours + "h " + minutes + "m";
     }
 
 
