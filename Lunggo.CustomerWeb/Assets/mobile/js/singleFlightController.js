@@ -174,6 +174,7 @@
             }).error(function (returnData) {
                 console.log('Failed to get flight list');
                 console.log(returnData);
+                console.log($scope.FlightConfig[0].FlightRequest);
             });
 
         } else {
