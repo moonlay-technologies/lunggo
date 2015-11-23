@@ -119,6 +119,17 @@
                 SecureCode: '@ViewBag.RequestId'
             }
         };
+        FlightData = {
+            Cabin: '@data.CabinClass',
+            Origin: '@trips[0].OriginAirport',
+            OriginCity: '@originCityNames[0]',
+            Destination: '@trips[0].DestinationAirport',
+            DestinationCity: '@destinationCityNames[0]',
+            Type: 'Return',
+            Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
+            DepartureDate: '@trips[0].DepartureDate.ToString("dd/MMM/yyyy")',
+            ReturnDate: '@trips[1].DepartureDate.ToString("dd/MMM/yyyy")'
+        };
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/returnFlightController.js"></script>

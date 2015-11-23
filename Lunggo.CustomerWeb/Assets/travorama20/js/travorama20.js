@@ -455,29 +455,53 @@ function flightPageSearchFormFunctions() {
     // set current date as default
     $(document).ready(function () {
         // set default date for departure flight
-        var tomorrowDate = new Date();
-        tomorrowDate = tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-        tomorrowDate = new Date(tomorrowDate);
-        $('.form-flight-departure .date').html(('0' + tomorrowDate.getDate()).slice(-2));
-        $('.form-flight-departure .month').html(translateMonth(tomorrowDate.getMonth()));
-        $('.form-flight-departure .year').html(tomorrowDate.getFullYear());
-        flightPageSearchFormParam.departureDate = tomorrowDate;
+        var DepartureDate = new Date(FlightData.DepartureDate);
+        $('.form-flight-departure .date').html(('0' + DepartureDate.getDate()).slice(-2));
+        $('.form-flight-departure .month').html(translateMonth(DepartureDate.getMonth()));
+        $('.form-flight-departure .year').html(DepartureDate.getFullYear());
+        flightPageSearchFormParam.departureDate = DepartureDate;
         // set default date for return flight
-        var afterTomorrow = new Date();
-        afterTomorrow = afterTomorrow.setDate(afterTomorrow.getDate() + 2);
-        afterTomorrow = new Date(afterTomorrow);
-        $('.form-flight-return .date').html(('0' + (afterTomorrow.getDate())).slice(-2));
-        $('.form-flight-return .month').html(translateMonth(afterTomorrow.getMonth()));
-        $('.form-flight-return .year').html(afterTomorrow.getFullYear());
-        flightPageSearchFormParam.returnDate = afterTomorrow;
+        var ReturnDate = FlightData.ReturnDate || DepartureDate.setDate(DepartureDate.getDate() + 2);
+        ReturnDate = new Date(ReturnDate);
+        console.log(ReturnDate);
+        $('.form-flight-return .date').html(('0' + (ReturnDate.getDate())).slice(-2));
+        $('.form-flight-return .month').html(translateMonth(ReturnDate.getMonth()));
+        $('.form-flight-return .year').html(ReturnDate.getFullYear());
+        flightPageSearchFormParam.returnDate = ReturnDate;
 
         // set default flight and return flight
-        $('.form-flight-origin').val('Jakarta (CGK)');
-        flightPageSearchFormParam.origin = 'CGK';
-        flightPageSearchFormParam.originCity = 'Jakarta';
-        $('.form-flight-destination').val('Denpasar, Bali (DPS)');
-        flightPageSearchFormParam.destination = 'DPS';
-        flightPageSearchFormParam.destinationCity = 'Denpasar, Bali';
+        $('.form-flight-origin').val(FlightData.OriginCity+' ('+FlightData.Origin+')');
+        flightPageSearchFormParam.origin = FlightData.Origin;
+        flightPageSearchFormParam.originCity = FlightData.OriginCity;
+        $('.form-flight-destination').val(FlightData.DestinationCity+' ('+FlightData.Destination+')');
+        flightPageSearchFormParam.destination = FlightData.Destination;
+        flightPageSearchFormParam.destinationCity = FlightData.DestinationCity;
+
+        // set flight type
+        if (FlightData.Type == 'Return') {
+            $('.form-flight-type:first-child').click();
+        } else {
+            $('.form-flight-type:last-child').click();
+        }
+
+        // set flight cabin
+        switch (FlightData.Cabin) {
+            case 'Economy':
+                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(1)').text());
+                break;
+            case 'Business':
+                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(2)').text());
+                break;
+            case 'First':
+                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(3)').text());
+                break;
+        }
+        
+        // set passenger
+        $('.change-flight-adult .passenger-input').text(FlightData.Passenger[0]);
+        $('.change-flight-child .passenger-input').text(FlightData.Passenger[1]);
+        $('.change-flight-infant .passenger-input').text(FlightData.Passenger[2]);
+
     });
 
     // show and hide search calendar
@@ -1058,7 +1082,7 @@ function flightFormSearchFunctions() {
     $('.form-flight-passenger').click(function (evt) {
         evt.stopPropagation();
         $('.change-flight-class .option').hide();
-        $(this).siblings().children('.option').hide();
+        $(this).parent().siblings().children('div').children('.option').hide();
         $(this).children('.option').toggle();
         $('.search-location, .search-calendar').hide();
     });
@@ -1066,7 +1090,7 @@ function flightFormSearchFunctions() {
         var alertText = {
             over: "Jumlah total penumpang tidak boleh lebih dari 9 orang",
             infant: "Jumlah penumpang bayi tidak boleh lebih dari penumpang dewasa"
-    };
+        };
         evt.preventDefault();
         evt.stopPropagation();
         var parentClass = $(this).closest('.form-flight-passenger');

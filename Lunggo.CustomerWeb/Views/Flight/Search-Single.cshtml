@@ -98,10 +98,20 @@
             },
             type: '@data.TripType',
             trips: @Html.Raw(JsonConvert.SerializeObject(trips)),
-            Requests:[],
+            Requests: [],
             SecureCode: '@ViewBag.RequestId'
         };
-</script>
+        FlightData = {
+            Cabin: '@data.CabinClass',
+            Origin: '@trips[0].OriginAirport',
+            OriginCity: '@originCityNames[0]',
+            Destination: '@trips[0].DestinationAirport',
+            DestinationCity: '@destinationCityNames[0]',
+            Type: 'OneWay',
+            Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
+            DepartureDate: '@trips[0].DepartureDate.ToString("dd/MMM/yyyy")'
+        };
+    </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/singleFlightController.js"></script>
 }
