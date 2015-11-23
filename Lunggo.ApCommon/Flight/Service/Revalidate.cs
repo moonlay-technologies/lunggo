@@ -54,21 +54,22 @@ namespace Lunggo.ApCommon.Flight.Service
                     output.Sets.Add(outputSet);
                 });
 
-                var newItins = output.Sets.Select(set => set.Itinerary).ToList();
-                var asReturn = GetFlightRequestTripType(input.RequestId);
-                if (asReturn == null)
-                    newItins = new List<FlightItinerary>();
-                else
-                    newItins.ForEach(itin => itin.AsReturn = (bool)asReturn);
-                AddPriceMargin(newItins);
-                var searchedPrices = GetFlightRequestPrices(input.RequestId, input.SearchId);
-                var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);
-                if (IsItinBundleCacheId(input.Token))
-                    SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
-                else
-                    SaveItineraryToCache(newItins.Single(), input.Token);
                 if (output.Sets.TrueForAll(set => set.IsSuccess))
                 {
+                    var newItins = output.Sets.Select(set => set.Itinerary).ToList();
+                    var asReturn = GetFlightRequestTripType(input.RequestId);
+                    if (asReturn == null)
+                        newItins = new List<FlightItinerary>();
+                    else
+                        newItins.ForEach(itin => itin.AsReturn = (bool)asReturn);
+                    AddPriceMargin(newItins);
+                    var searchedPrices = GetFlightRequestPrices(input.RequestId, input.SearchId);
+                    var itinsPriceDifference = newItins.Select(itin => itin.LocalPrice - searchedPrices[itin.RegisterNumber]);
+                    if (IsItinBundleCacheId(input.Token))
+                        SaveItinerarySetAndBundleToCache(newItins, BundleItineraries(newItins), input.Token);
+                    else
+                        SaveItineraryToCache(newItins.Single(), input.Token);
+
                     output.IsSuccess = true;
                     output.IsValid = output.Sets.TrueForAll(set => set.IsValid) && itinsPriceDifference.All(diff => diff == 0);
                     if (output.Sets.Any(set => set.Itinerary == null))
