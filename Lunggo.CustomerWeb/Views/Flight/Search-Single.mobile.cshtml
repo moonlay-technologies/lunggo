@@ -100,7 +100,7 @@
     <script src="/Assets/mobile/js/singleFlightController.js"></script>
 }
 <div class="page-loading" ng-class="{'page-loaded':PageConfig.Loaded}">
-    <form class="hidden" id="pushToken" action="/id/Flight/Select" method="post">
+    <form class="hidden push-token" id="pushToken" action="/id/Flight/Select" method="post">
         <input type="text" name="Token" id="fareToken" value="" />
     </form>
 
@@ -168,7 +168,7 @@
         <header class="overlay__header">
             <h3 class="overlay__title">
                 DETAIL PENERBANGAN
-                <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight()">X</span>
+                <span class="overlay__close" ng-click="FlightFunctions.SetActiveFlight()" ng-hide="PageConfig.Validating">X</span>
             </h3>
         </header><!-- .overlay__header -->
         <section class="overlay__content">
@@ -177,7 +177,7 @@
                     <h4><b>{{FlightConfig[0].FlightRequest.Trips[0].OriginAirport}}</b> to <b>{{FlightConfig[0].FlightRequest.Trips[0].DestinationAirport}}</b></h4>
                     <h5>{{FlightConfig[0].FlightRequest.Trips[0].DepartureDate | date:'dd MMM yyyy'}}</h5>
                 </div>
-                <a href="#" class="flight-change"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
+                <a href="#" class="flight-change" ng-hide="PageConfig.Validating"><span ng-click="FlightFunctions.SetActiveFlight()">GANTI</span></a>
             </div>
             
             <div class="flight-wrapper" ng-repeat="Segment in FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].Trips[0].Segments track by $index">
@@ -224,7 +224,7 @@
                         <h4><b>Rp {{FlightConfig[0].FlightList[ FlightConfig[0].ActiveFlight ].TotalFare | number}}</b></h4>
                     </div>
                     <div class="col-xs-6">
-                        <a href="#" class="btn btn-yellow btn-block">PESAN</a>
+                        <a ng-click="FlightFunctions.Revalidate(FlightConfig[0].ActiveFlight)" class="btn btn-yellow btn-block" ng-disabled="PageConfig.Validating">{{PageConfig.Validating ? 'MEMESAN' : 'PESAN'}}</a>
                     </div>
                 </div>
             </div>
@@ -398,13 +398,28 @@
             </form>
         </section><!-- .overlay__content -->
     </div><!-- .overlay--flight-form-->
-    <!-- popup -->
-    <div class="popup-wrapper">
+    
+    <!-- popup revalidate -->
+    <div class="popup__wrapper" ng-class="{'active':PageConfig.Validating}">
         <div class="popup">
-            <header class="popup-header">
-                <h4 class="popup-title">Roundtrip Flight <span class="close-modal pull-right">X</span></h4>
+            <header class="popup__header">
+                <h4 class="popup__title">Membooking Penerbangan</h4>
             </header>
-            <div class="popup-content">
+            <div class="popup__body">
+                <div class="container">
+                    <p>Membooking penerbangan Anda. Mohon tunggu.</p>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup -->
+    <div class="popup__wrapper">
+        <div class="popup">
+            <header class="popup__header">
+                <h4 class="popup__title">Roundtrip Flight <span class="close-modal pull-right">X</span></h4>
+            </header>
+            <div class="popup__body">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-4 text-center" style="padding-top:12px;">
@@ -416,7 +431,7 @@
                     </div>
                 </div>
             </div>
-            <footer class="popup-footer">
+            <footer class="popup__footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-6">
