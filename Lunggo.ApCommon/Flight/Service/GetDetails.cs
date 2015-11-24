@@ -38,8 +38,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         detailsResult = MapDetails(response);
                         detailsResult.IsSuccess = true;
 
-                        DeleteTripsPerItineraryQuery.GetInstance().Execute(conn, new {response.BookingId});
-                        InsertDb.Details(response);
+                        UpdateDb.Details(response);
                     }
                     else
                     {
