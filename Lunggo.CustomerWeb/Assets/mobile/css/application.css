@@ -99,7 +99,7 @@ body {
     .site-footer .site-footer-social .fa-inverse {
       color: #000; }
 
-.popup-wrapper {
+.popup__wrapper {
   background: rgba(0, 0, 0, 0.7);
   position: fixed;
   top: 0;
@@ -108,7 +108,7 @@ body {
   height: 100%;
   z-index: 1000;
   display: none; }
-  .popup-wrapper .popup {
+  .popup__wrapper .popup {
     position: absolute;
     top: 0;
     right: 0;
@@ -121,16 +121,18 @@ body {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px; }
-    .popup-wrapper .popup .popup-header {
+    .popup__wrapper .popup .popup__header {
       background: #1daee5;
       color: #fff;
       padding: 12px; }
-      .popup-wrapper .popup .popup-header .popup-title {
+      .popup__wrapper .popup .popup__header .popup__title {
         text-align: center;
         margin: 0;
         font-weight: bold; }
-    .popup-wrapper .popup .popup-content {
+    .popup__wrapper .popup .popup__content {
       padding: 12px 0; }
+  .popup__wrapper.active {
+    display: block; }
 
 .overlay {
   position: fixed;

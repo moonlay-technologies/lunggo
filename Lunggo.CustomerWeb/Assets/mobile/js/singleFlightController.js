@@ -15,7 +15,8 @@
         ActiveSection: 'departure',
         ActiveOverlay: '',
         Busy: false,
-        Loading: 0
+        Loading: 0,
+        Validating: false
     };
 
     $scope.FlightConfig = [
@@ -195,8 +196,66 @@
     }
 
     // revalidate flight
-    $scope.FlightFunctions.Revalidate = function() {
-        
+    $scope.FlightFunctions.Revalidate = function(indexNo) {
+
+        $scope.PageConfig.Validating = true;
+
+        console.log('Validating flight no : '+indexNo);
+
+        // AJAX revalidate
+        if (!RevalidateConfig.Validated) {
+
+            // revalidate flight
+            $http.get(RevalidateConfig.Url, {
+                params: {
+                    SearchId: RevalidateConfig.SearchId,
+                    ItinIndex: $scope.FlightConfig[0].FlightList[indexNo].RegisterNumber,
+                    SecureCode: $scope.FlightConfig[0].FlightRequest.SecureCode
+                }
+            }).success(function (returnData) {
+                RevalidateConfig.Validated = true;
+                console.log(indexNo);
+                if (returnData.IsValid == true) {
+                    console.log('departure flight available');
+                    RevalidateConfig.Available = true;
+                    RevalidateConfig.Token = returnData.Token;
+
+                    $('.push-token input').val(RevalidateConfig.token);
+                    $('.push-token').submit();
+
+                } else if (returnData.IsValid == false) {
+                    RevalidateConfig.Available = false;
+                    $scope.PageConfig.Validating = false;
+
+                    if (returnData.IsOtherFareAvailable == true) {
+                        console.log('departure flight has new price');
+                        RevalidateConfig.NewFare = true;
+                        RevalidateConfig.Token = returnData.Token;
+                        // update price
+                        $scope.FlightConfig[0].FlightList[indexNo].TotalFare = returnData.NewFare;
+                        $('.push-token input').val(RevalidateConfig.token);
+
+                    } else if (returnData.IsOtherFareAvailable == false) {
+                        console.log('departure flight is gone');
+                        RevalidateConfig.NewFare = false;
+                        $scope.FlightConfig[0].FlightList[indexNo].Available = false;
+
+                    }
+                }
+            }).error(function (returnData) {
+                $scope.PageConfig.Validating = false;
+                console.log('ERROR Validating Flight');
+                console.log(returnData);
+                console.log('--------------------');
+            });
+
+        } else {
+
+            // skip to book
+
+        }
+
+
     }
 
     // set active flight
