@@ -9,10 +9,12 @@
     
     <script>
         // toggle list detail
-        $('.list-summary .btn').click(function() {
+        $('.list-summary .btn').click(function (evt) {
+            evt.preventDefault();
             $(this).closest('.list').toggleClass('active');
         });
-        $('.close-list').click(function() {
+        $('.close-list').click(function (evt) {
+            evt.preventDefault();
             $(this).closest('.list').removeClass('active');
         });
     </script>
@@ -54,8 +56,14 @@
                     
                     <h3 class="detail-title">Detail: Transfer Bank</h3>
 
-                    <p>Metode pembayaran transfer dapat digunakan setiap hari pada pukul xx hingga xx. Pilih metode pembayaran transfer dan pastikan Anda melakukan transfer pembayaran dengan nominal yang sesuai dengan jumlah tagihan ke salah satu rekening kami dibawah ini:</p>
+                    <p>Travorama melayani pembayaran tiket Anda melalui Transfer ke Bank Mandiri, BCA, ataupun BNI yang dapat dilakuan baik dari mesin ATM, Internet Banking, SMS Banking, maupun Teller Bank.</p>
                     
+                    <ol>
+                        <li><p>Pilih metode pembayaran Transfer, pastikan Anda dapat melakukan transfer ke salah satu rekening Travorama, dimana informasi rekening akan ditampilkan di halaman pembayaran. Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</p></li>
+                        <li><p>E-tiket akan dikirimkan ke email Anda dalam waktu 30 menit – 1 jam setelah pembayaran. Setelah melakukan pembayaran, Anda dapat melakukan konfirmasi dengan meng-klik link yang ada di email Petunjuk Pembayaran yang Anda terima.</p></li>
+                    </ol>
+                    <p>Apabila pembayaran yang Anda transfer tidak tepat seperti yang tertera di total keseluruhan harga, hubungi kami di contact center kami di nomor 1500-650.</p>
+
                     <div class="row">
                         <div class="col-xs-6">
                             <img src="/Assets/images/bca-logo.jpg" alt="BCA" />
@@ -87,13 +95,22 @@
                 <div class="container">
                     <h4>KARTU KREDIT</h4>
                     <p>Travorama menerima pembayaran dengan kartu kredit berlogo Visa dan Mastercard.</p>
-                    
+                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
                     <div class="text-center list-image">
                         <img src="/Assets/images/howtopay-2.jpg" alt="How To Pay 2" />
                     </div>
                 </div>
             </div>
-            <div class="list-detail"></div>
+            <div class="list-detail">
+                <div class="container">
+                    <h3 class="detail-title">Detail: Kartu Kredit</h3>
+                    <a href="#" class="close-list"><img src="/Assets/images/list-detail-close.png" alt="Close" /></a>
+                    
+                    <p>Travorama menerima pembayaran via Kartu Kredit berlogo Visa dan MasterCard dari seluruh dunia. Transaksi kartu kredit di Travorama dilakukan secara aman. </p>
+                    <p>Anda dapat memilih metode pembayaran Kartu Kredit. Anda perlu untuk mengisi setiap kolom dengan informasi yang dibutuhkan. Kemudian klik Pay. Anda akan mendapatkan konfirmasi secara langsung setelah Anda melakukan pembayaran, dan e-tiket yang berisi dokumen yang berhubungan dengan booking akan dikirimkan ke email Anda dalam waktu 30 menit – 1 jam setelah pembayaran dilakukan.</p>
+
+                </div>
+            </div>
         </div>
 
         <div class="list">
@@ -101,13 +118,20 @@
                 <div class="container">
                     <h4>DIRECT DEBIT</h4>
                     <p>Travorama menerima pembayaran dengan fasilitas internet banking seperti Mandiri Clickpay, CIMB Clicks & BCA Klikpay.</p>
-                    
+                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
                     <div class="text-center list-image">
                         <img src="/Assets/images/howtopay-3.jpg" alt="How To Pay 3" />
                     </div>
                 </div>
             </div>
-            <div class="list-detail"></div>
+            <div class="list-detail">
+                <div class="container">
+                    <a href="#" class="close-list"><img src="/Assets/images/list-detail-close.png" alt="Close" /></a>
+                    <h3 class="detail-title">Detail: Transfer Bank</h3>
+                    
+                    <p>Travorama menerima pembayaran tiket mudah dan aman via Internet Banking Mandiri Clickpay. Anda dapat langsung mengisi form Mandiri Clickpay dengan menyiapkan token PIN Anda. Transaksi dilakukan dengan Mandiri secara real time dan aman.</p>
+                </div>
+            </div>
         </div>
 
     </div><!-- .list-wrapper -->
