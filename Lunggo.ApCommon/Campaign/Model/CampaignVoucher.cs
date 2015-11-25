@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Campaign.Model
         public String CampaignDescription { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public short? ValuePercentage { get; set; }
+        public Decimal? ValuePercentage { get; set; }
         public Decimal? ValueConstant { get; set; }
         public Decimal? MaxDiscountValue { get; set; }
         public Decimal? MinSpendValue { get; set; }

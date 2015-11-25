@@ -54,7 +54,7 @@
                                         <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
-                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments[0].ArrivalAirportName</b></p>
+                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirportName - @Model.Itinerary.Trips[0].DestinationAirportName</b></p>
                                     </td>
                                     <td width="28%"></td>
                                     <td width="5%">
@@ -87,7 +87,7 @@
                                         <img src="/Assets/images/email/flight-departure-icon.png" />
                                     </td>
                                     <td width="30%" style="padding-left: 0px">
-                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
+                                        <p style="font-size: 13px;"><b>@Model.Itinerary.Trips[0].Segments.Last().ArrivalCity - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
                                     </td>
                                     <td width="28%"></td>
                                     <td width="5%">

@@ -9,6 +9,7 @@ namespace Lunggo.ApCommon.Campaign.Model
         public decimal OriginalPrice { get; set; }
         public decimal DiscountedPrice { get; set; }
         public decimal TotalDiscount { get; set; }
+        public CampaignVoucher CampaignVoucher { get; set; }
         public String UpdateStatus { get; set; }
     }
 }

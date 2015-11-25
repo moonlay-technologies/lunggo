@@ -448,6 +448,9 @@
     </None>
     <None Include="Config\WebJob.TicketQueueHandler\zendesk.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\zendesk.properties" />
+    <None Include="Config\Worker.EticketHandler\redis.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Worker.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
