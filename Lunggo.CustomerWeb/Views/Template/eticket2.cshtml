@@ -1,8 +1,9 @@
-﻿@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+﻿@using Lunggo.ApCommon.Flight.Model
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
     Layout = "/Views/Shared/_layout_eticket.cshtml";
-    FlightSegmentDetails prevSegment = null;
+    FlightSegment prevSegment = null;
 }
 
 @for (var i = 0; i < Model.Itinerary.Trips.Count; i++)
