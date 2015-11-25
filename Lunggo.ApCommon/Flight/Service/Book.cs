@@ -86,15 +86,22 @@ namespace Lunggo.ApCommon.Flight.Service
                 Price = originalPrice,
                 VoucherCode = input.DiscountCode
             });
-            reservation.Payment.FinalPrice = campaign.DiscountedPrice;
-            reservation.Discount = new DiscountData
+            if (campaign.CampaignVoucher != null)
             {
-                Code = input.DiscountCode,
-                Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
-                Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
-                Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
-                Nominal = campaign.TotalDiscount
-            };
+                reservation.Payment.FinalPrice = campaign.DiscountedPrice;
+                reservation.Discount = new DiscountData
+                {
+                    Code = input.DiscountCode,
+                    Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
+                    Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
+                    Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
+                    Nominal = campaign.TotalDiscount
+                };
+            }
+            else
+            {
+                reservation.Payment.FinalPrice = originalPrice;
+            }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
             reservation.Payment.Url = PaymentService.GetInstance()
