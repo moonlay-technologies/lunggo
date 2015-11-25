@@ -11,11 +11,11 @@
         // toggle list detail
         $('.list-summary .btn').click(function (evt) {
             evt.preventDefault();
-            $(this).closest('.list').toggleClass('active');
+            $(this).closest('.list').children('.list-detail').stop().slideToggle();
         });
         $('.close-list').click(function (evt) {
             evt.preventDefault();
-            $(this).closest('.list').removeClass('active');
+            $(this).closest('.list').children('.list-detail').slideUp('active');
         });
     </script>
 
