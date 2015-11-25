@@ -658,7 +658,20 @@ app.controller('returnFlightController', [
                     // if error     
                 }).error(function (returnData) {
                     console.log('Failed to get ' + targetScope.name + ' flight list');
-                    console.log('ERROR :' + returnData);
+                    console.log('ERROR :');
+                    console.log(returnData);
+                    for (var i = 0; i < targetScope.flightSearchParams.Requests.length; i++) {
+                        // add to completed
+                        if (targetScope.flightSearchParams.Completed.indexOf(returnData.GrantedRequests[i] < 0)) {
+                            targetScope.flightSearchParams.Completed.push(returnData.GrantedRequests[i]);
+                        }
+                        // check current request. Remove if completed
+                        if (targetScope.flightSearchParams.Requests.indexOf(returnData.GrantedRequests[i] < 0)) {
+                            targetScope.flightSearchParams.Requests.splice(targetScope.flightSearchParams.Requests.indexOf(returnData.GrantedRequests[i]), 1);
+                        }
+                    }
+                    targetScope.flightSearchParams.Progress = 100;
+                    targetScope.flightSearchParams.FinalProgress = 100;
                 });
             } else {
                 console.log('complete getting flight for '+targetScope.name);

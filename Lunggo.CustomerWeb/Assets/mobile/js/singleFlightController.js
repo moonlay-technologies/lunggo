@@ -7,7 +7,7 @@
     });
 
     // ********************
-    // general variables
+    // variables
 
     $scope.PageConfig = {
         Loaded: true,
@@ -16,7 +16,23 @@
         ActiveOverlay: '',
         Busy: false,
         Loading: 0,
-        Validating: false
+        Validating: false,
+        ExpiryDate: {
+            Expired: false,
+            Time: '',
+            Start: function () {
+                var ExpiryTime = new Date($scope.PageConfig.ExpiryDate.Time);
+                if ($scope.PageConfig.ExpiryDate.Expired || $scope.PageConfig.ExpiryDate.Starting) return;
+                $interval(function () {
+                    $scope.PageConfig.ExpiryDate.Starting = true;
+                    var NowTime = new Date();
+                    if (NowTime > ExpiryTime) {
+                        $scope.PageConfig.ExpiryDate.Expired = true;
+                    }
+                }, 1000);
+            },
+            Starting: false
+        }
     };
 
     $scope.FlightConfig = [
@@ -54,7 +70,7 @@
 
 
     // ********************
-    // general functions
+    // functions
 
     // set overlay
     $scope.SetOverlay = function(overlay) {
@@ -175,7 +191,18 @@
             }).error(function (returnData) {
                 console.log('Failed to get flight list');
                 console.log(returnData);
-                console.log($scope.FlightConfig[0].FlightRequest);
+                for (var i = 0; i < $scope.FlightConfig[0].FlightRequest.Requests.length; i++) {
+                    // add to completed
+                    if ($scope.FlightConfig[0].FlightRequest.Completed.indexOf($scope.FlightConfig[0].FlightRequest.Requests[i] < 0)) {
+                        $scope.FlightConfig[0].FlightRequest.Completed.push($scope.FlightConfig[0].FlightRequest.Requests[i]);
+                    }
+                    // check current request. Remove if completed
+                    if ($scope.FlightConfig[0].FlightRequest.Requests.indexOf($scope.FlightConfig[0].FlightRequest.Requests[i] < 0)) {
+                        $scope.FlightConfig[0].FlightRequest.Requests.splice($scope.FlightConfig[0].FlightRequest.Requests.indexOf($scope.FlightConfig[0].FlightRequest.Requests[i]), 1);
+                    }
+                }
+                $scope.FlightConfig[0].FlightRequest.Progress = 100;
+                $scope.FlightConfig[0].FlightRequest.FinalProgress = 100;
             });
 
         } else {
