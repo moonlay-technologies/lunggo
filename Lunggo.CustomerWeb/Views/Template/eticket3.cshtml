@@ -26,9 +26,9 @@
         </div>
     </header><!-- .page-header -->
     <section class="page-content">
-
+   
         <div class="flight-list-wrapper departure-flight">
-
+        
             @if (@Model.Itinerary.Trips.Count > 1)
             {
                 <!--PERGI-->
@@ -81,7 +81,7 @@
                         @{prevSegment = segment;}
                     </div>
                 }
-
+                
                 <!--PULANG-->
                 <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pulang.jpg" alt="PENERBANGAN PULANG" /></span></h2>
                 foreach (var segment in @Model.Itinerary.Trips[1].Segments)
@@ -183,13 +183,14 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
+                       
                         @{prevSegment = segment;}
                     </div>
                 }
 
             }
 
-
+            
 
         </div><!-- .flight.flight-list.departure-flight -->
 
@@ -199,7 +200,7 @@
                     <th class="no">NO</th>
                     <th class="name">NAMA PENUMPANG</th>
                     <th class="type">JENIS TIKET</th>
-                </tr>
+                </tr> 
             </thead>
             <tbody>
                 @for (var j = 0; j < Model.Passengers.Count; j++)
@@ -218,3 +219,4 @@
         <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
     </footer>
 </div><!-- .page -->
+
