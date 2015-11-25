@@ -101,6 +101,7 @@ namespace Lunggo.ApCommon.Flight.Service
             else
             {
                 reservation.Payment.FinalPrice = originalPrice;
+                reservation.Discount = new DiscountData();
             }
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);
