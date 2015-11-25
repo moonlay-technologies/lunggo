@@ -1,12 +1,7 @@
-﻿@{
+﻿
+@{
     Layout = "";
 }
-
-
-@using System.Globalization
-@using Lunggo.Framework.Config
-@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
-
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -18,11 +13,11 @@
 <body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:12px;">
 
 
-    <table border="0" style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
+    <table style="margin-left:auto; margin-right:auto; width:100%; max-width:700px; display:block; background:#ffffff;">
         <thead width="100%">
             <tr width="100%">
                 <th width="5%"></th>
-                <th colspan="2" width="90%" style="padding-top:30px;">
+                <th width="90%" style="padding-top:30px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
                             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" />
@@ -45,123 +40,74 @@
         <tbody width="100%">
             <tr width="100%">
                 <td width="5%"></td>
-                <td colspan="2" width="90%">
+                <td width="90%">
 
                     <!-- CONTENT  -->
-                    <p style="">Dear, <span style="color: #15b1e4">God</span></p>
-                    <p style="margin-bottom: 20px;">Terima kasih telah mempercayai Travorama. Status pemesanan Anda :</p>
-                    <table border="0" width="50%" style="margin-left: 27%;">
-                        <tr>
-                            <td>
-                                
-                                <p style="color: #15b1e4; margin-bottom: 0px; font-size: 18px; display: inline-block; vertical-align: middle;"><img style="margin-right: 10px; vertical-align: middle;" src="/Assets/images/email/close-email-button.jpg" /><b>PEMESANAN DIBATALKAN</b></p>
-                            </td>
-                        </tr>
-                    </table>
-                    <p style="color: #15b1e4; font-size: 12px; text-align: center; margin-bottom: 40px; line-height: 23px;">Anda telah melewati batas waktu pembayaran, <br>silahkan kunjungi www.travorama.com untuk membuat pemesanan baru</p>
-                   
-                    <p>Rincian pemesanan Anda sebagai berikut :</p>
+
+                    <p style="font-size: 12px">Dear, <span style="color: #15b1e4">Juliana</span></p>
+                    <p style="font-size: 12px">Terima Kasih telah mempercayai <b>Travorama</b> dalam pemesanan tiket pesawat Anda.  <br> Pemesanan Anda telah dikonfirmasi dengan sukses.</p>
+                    <p style="font-size: 12px">E-tiket Anda terdapat di attachment atau klik tombol berikut untuk mendownload e-ticket Anda :</p>
+
+                    <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;
+                            width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
+                       href="https://lunggostorageqa.blob.core.windows.net/eticket/188026534580.pdf" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
+
+                    <p style="font-size: 9px; text-align: center;"><b>Print e-tiket Anda di atas kertas ukuran A4 untuk ditunjukkan pada proses check-in di bandara.</b></p>
+                    <p style="font-size: 9px; text-align: center; margin-bottom: 30px;">*(Invoice / kwitansi pembayaran juga telah disertakan sebagai attachment)</p>
+                    <p style="font-size: 12px;">Ringkasan penerbangan Anda sebagai berikut :</p>
                     <table width="100%" style="margin-bottom: 10px;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td>
-                                <hr style="border-color: #f5f5f5; " />
+                                <hr style="border-color: #f5f5f5; ">
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #f5f5f5; " />
+                                <hr style="border-color: #f5f5f5; ">
                             </td>
                         </tr>
                         <tr>
                             <td width="20%">
-                                <p style="opacity: 0.5">Metode Pembayaran</p>
-                                <p style=""><b>BCA ATM Payment</b></p>
+                                <p style="opacity: 0.5">Maskapai</p>
+                                <p style=""><b>AirAsia (QZ-201)</b></p>
+                                <p style=""><b>AirAsia (QZ-201)</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
-                                <p style="opacity: 0.5">Jumlah Total</p>
-                                <p style=""><b>Rp 999.999.999</b></p>
+                                <p style="opacity: 0.5">Rute</p>
+                                <p style=""><b>CGK - DPS</b></p>
                             </td>
                         </tr>
                     </table>
                     <table width="100%" style="margin-bottom: 30px;" cellpadding="0" cellspacing="0">
                         <tr>
                             <td>
-                                <hr style="border-color: #f5f5f5; " />
+                                <hr style="border-color: #f5f5f5; ">
                             </td>
                             <td width="5%"></td>
                             <td>
-                                <hr style="border-color: #f5f5f5; " />
+                                <hr style="border-color: #f5f5f5; ">
                             </td>
                         </tr>
                         <tr>
                             <td width="20%">
-                                <p style="opacity: 0.5">Jatuh Tempo</p>
+                                <p style="opacity: 0.5">Waktu Penerbangan</p>
                                 <p style=""><b>Senin, 23 November 2015, 07:00</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
-                                <p style="opacity: 0.5">Sudah dibayar</p>
-                                <p style=""><b>Rp 0</b></p>
+                                <p style="opacity: 0.5">Kode Booking Maskpai (PNR)</p>
+                                <p style=""><b>ABCD1</b></p>
                             </td>
                         </tr>
                     </table>
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 4%; ">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 3px #15b1e4 solid; margin-bottom: 10px; ">
                         <thead>
                             <tr>
                                 <th colspan="6" solid=solid style="color: #15b1e4; border-bottom: 3px solid; ">
-                                    <p style="color: #15b1e4; text-align: left"><b>Flight Details</b></p>
+                                    <p style="color: #15b1e4; text-align: left"><b>Penumpang yang terdaftar :</b></p>
                                 </th>
                             </tr>
                         </thead>
-                    </table>
-
-                    <p style="color: #15b1e4;">(Roundtrip)</p>
-
-                    <table width="100%">
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; padding-left: 1%; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-departure-icon.png" />
-                            </td>
-                            <td style="text-align: center" width="2%">
-                                <img width="100%" height="auto" src="/Assets/images/airlines/AK.png" />
-                                Berangkat
-                            </td>
-                            <td rowspan="2" width="6%">
-                                <p style="text-align: center;">:</p>
-                            </td>
-                            <td rowspan="2" width="40%">
-                                <p style="color: #15b1e4;"><b>Sriwijaya - SJ-204</b></p>
-                                <p style="color: #15b1e4;">CGK - DPS</p>
-                                <p style="color: #15b1e4;">Selasa, 17 November 2015</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                        <tr>
-                            <td width="3%" style="padding-top: 15px; padding-left: 1%; vertical-align: top;">
-                                <img src="/Assets/images/email/flight-return-icon.png" />
-                            </td>
-                            <td style="text-align: center" width="2%">
-                                <img width="100%" height="auto" src="/Assets/images/airlines/SJ.png" />
-                                Kembali
-                            </td>
-                            <td rowspan="2" width="6%">
-                                <p style="text-align: center;">:</p>
-                            </td>
-                            <td rowspan="2" width="40%">
-                                <p style="color: #15b1e4;"><b>Sriwijaya - SJ-204</b></p>
-                                <p style="color: #15b1e4;">DPS - CGK</p>
-                                <p style="color: #15b1e4;">Selasa, 17 November 2015</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="height: 10px;"></td>
-                            <td style="height: 10px;"></td>
-                        </tr>
-                    </table>
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom: 1px dotted #15b1e4;margin-bottom: 20px; ">
                         <tr>
                             <td width="25%" rowspan="2">
                                 <p style="color: #15b1e4; text-align: left;">Guest Name</p>
@@ -196,11 +142,12 @@
                                 Adult
                             </td>
                         </tr>
-                        <tr>
-                            <td style="height: 30px;"></td>
-                        </tr>
                     </table>
+                    <p style="color: #15b1e4; font-size: 10px; font-style: italic;">*Sertakan juga dokumen yang diperlukan, seperti kartu identitas Anda berupa KTP/SIM (rute domestik), Paspor (rute Internasional).</p>
+                    <p style="color: #15b1e4; font-size: 10px; margin-bottom: 20px; font-style: italic;">*Harap tiba di bandara 1 jam sebelum waktu keberangkatan. Waktu yang tertera adalah waktu lokal bandara setempat..</p>
+                    <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 3%;" width="100%">
                     <p style="font-size: 10px; font-style: italic; margin-bottom: 30px;">Email ini ditujukan hanya untuk Juliana, karena Anda telah melakukan pemesanan melalui Travorama</p>
+
                 </td>
                 <td width="5%"></td>
             </tr>
@@ -208,9 +155,8 @@
         <tfoot width="100%">
             <tr>
                 <td></td>
-                <td style="width: 60%;"><img style="width: 100%;" src="/Assets/images/email/plane-email-bg.jpg"/></td>
-                <td style="padding-bottom:40px;">
-                    
+                <td style="padding-bottom:30px;">
+
                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
                         <h4 style="color:#1daee5; margin-bottom:5px;">PT. Travel Madezy International</h4>
@@ -223,9 +169,7 @@
 
                     </address>
 
-                </td>
-
-                <td></td>
+                <td>
                 <td></td>
             </tr>
         </tfoot>

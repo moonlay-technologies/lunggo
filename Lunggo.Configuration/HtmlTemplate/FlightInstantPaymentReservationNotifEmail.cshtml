@@ -17,7 +17,7 @@
         <thead width="100%">
             <tr width="100%">
                 <th width="5%"></th>
-                <th width="90%" style="padding-top:30px;">
+                <th colspan="2" width="90%" style="padding-top:30px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
                             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
@@ -40,7 +40,7 @@
         <tbody width="100%">
             <tr width="100%">
                 <td width="5%"></td>
-                <td width="90%">
+                <td colspan="2" width="90%">
 
                     <!-- CONTENT  -->
                     <p>
@@ -52,27 +52,27 @@
                                     <td width="5%">
                                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                     </td>
-                                    <td width="50%" style="padding-left: 0px">
-                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments[0].ArrivalCity</b></p>
+                                    <td width="60%" style="padding-left: 0px">
+                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
                                     </td>
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
                                     @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
                                 </tr>
                                 <tr width="100%">
                                     <td width="5%">
                                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-return-icon.png")" />
                                     </td>
-                                    <td width="50%" style="padding-left: 0px">
-                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments[0].ArrivalCity</b></p>
+                                    <td width="60%" style="padding-left: 0px">
+                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[1].Segments[0].DepartureCity - @Model.Itinerary.Trips[1].Segments.Last().ArrivalCity</b></p>
                                     </td>
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4">
                                     </td>
                                     @{ var jamKembali = @Model.Itinerary.Trips[1].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -83,14 +83,14 @@
                                     <td width="5%">
                                         <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flight-departure-icon.png")" />
                                     </td>
-                                    <td width="50%" style="padding-left: 0px">
-                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments[0].ArrivalCity</b></p>
+                                    <td width="60%" style="padding-left: 0px">
+                                        <p style="font-size: 12px;"><b>@Model.Itinerary.Trips[0].Segments[0].DepartureCity - @Model.Itinerary.Trips[0].Segments.Last().ArrivalCity</b></p>
                                     </td>
                                     <td width="5%">
                                         <hr style="border-color: #15b1e4" />
                                     </td>
                                     @{ var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;}
-                                    <td width="40%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
+                                    <td width="30%" style="padding-left: 10px; text-align: left">@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</td>
                                 </tr>
                             </table>
                         }
@@ -149,8 +149,8 @@
                         </table>
 
                         @{ var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
-                        <p style="font-style: italic; font-size: 11px; margin-left: 6%">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm")</span>.</p>
-                        <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: -5px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
+                        <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm")</span>.</p>
+                        <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
 
                         <table width="100%" style="margin-bottom: 30px">
                             <tr>
@@ -187,7 +187,8 @@
                         <tfoot width="100%">
                             <tr>
                                 <td></td>
-                                <td style="padding-bottom:30px;">
+                                <td style="width: 60%;"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/plane-email-bg.jpg")" /></td>
+                                <td style="padding-bottom:40px;">
 
                                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">
 
