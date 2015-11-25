@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Database.Query;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
@@ -17,6 +18,27 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         internal class UpdateDb
         {
+            internal static void Details(GetTripDetailsResult details)
+            {
+                using (var conn = DbService.GetInstance().GetOpenConnection())
+                {
+                    foreach (var segment in details.Itinerary.Trips.SelectMany(trip => trip.Segments))
+                    {
+                        UpdateDetailsQuery.GetInstance().Execute(conn, new
+                        {
+                            details.Itinerary.BookingId,
+                            segment.DepartureAirport,
+                            segment.ArrivalAirport,
+                            segment.DepartureTime,
+                            segment.Pnr,
+                            segment.DepartureTerminal,
+                            segment.ArrivalTerminal,
+                            segment.Baggage
+                        });
+                    }
+                }
+            }
+
             internal static void CancelReservation(string rsvNo, CancellationType type)
             {
                 using (var conn = DbService.GetInstance().GetOpenConnection())
