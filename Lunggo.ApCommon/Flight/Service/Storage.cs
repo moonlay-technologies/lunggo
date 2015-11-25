@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Caching;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 
@@ -145,24 +146,17 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private string SaveItineraryFromSearchToCache(string searchId, int registerNumber, string requestId)
         {
-            try
-            {
-                var plainItinCacheId =
-                    FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
-                var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
-                var itin = GetItineraryFromSearchCache(searchId, registerNumber);
-                var redisService = RedisService.GetInstance();
-                var redisKey = "flightItinerary:" + itinCacheId;
-                var cacheObject = itin.ToCacheObject();
-                var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
-                return itinCacheId;
-            }
-            catch
-            {
-                return null;
-            }
+            var plainItinCacheId =
+                FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
+            var itinCacheId = CacheIdentifier.Flight + SingleItinKeyPrefix + plainItinCacheId;
+            var itin = GetItineraryFromSearchCache(searchId, registerNumber);
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightItinerary:" + itinCacheId;
+            var cacheObject = itin.ToCacheObject();
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, cacheObject, TimeSpan.FromMinutes(timeout));
+            return itinCacheId;
         }
 
         private string SaveItineraryToCache(FlightItinerary itin)
@@ -318,7 +312,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 redisDb.StringSet(redisKey, cacheObject);
             }
             catch { }
-        } 
+        }
 
         private List<MarginRule> GetAllActiveMarginRulesFromCache()
         {
@@ -395,7 +389,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "flightRequestAsReturn:" + requestId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
-            redisDb.StringSet(redisKey, asReturn, new TimeSpan(0, 2*timeout, 0));
+            redisDb.StringSet(redisKey, asReturn, new TimeSpan(0, 2 * timeout, 0));
         }
 
         public bool? GetFlightRequestTripType(string requestId)
@@ -403,7 +397,35 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "flightRequestAsReturn:" + requestId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            return (bool?) redisDb.StringGet(redisKey);
+            return (bool?)redisDb.StringGet(redisKey);
+        }
+
+        public void SaveFlightRequestPrices(string requestId, string searchId, List<FlightItinerary> itins)
+        {
+            var cacheContent = GetFlightRequestPrices(requestId, searchId).ToDictionary(e => e.Key, e => e.Value);
+            itins.ForEach(itin =>
+            {
+                try
+                {
+                    cacheContent.Add(itin.RegisterNumber, itin.LocalPrice);
+                }
+                catch { }
+            });
+
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightRequestPrices:" + searchId + ":" + requestId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var timeout = Int32.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            redisDb.StringSet(redisKey, cacheContent.ToCacheObject(), new TimeSpan(0, 2 * timeout, 0));
+        }
+
+        public Dictionary<int, decimal> GetFlightRequestPrices(string requestId, string searchId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "flightRequestPrices:" + searchId + ":" + requestId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var cache = redisDb.StringGet(redisKey);
+            return cache.IsNull ? new Dictionary<int, decimal>() : cache.DeconvertTo<Dictionary<int, decimal>>();
         }
 
         private bool IsItinBundleCacheId(string cacheId)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Campaign.Model;
+using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
@@ -78,23 +80,20 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
             reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
-            var discountRuleIds = VoucherService.GetInstance()
-                .GetFlightDiscountRules(input.DiscountCode, input.Contact.Email);
-            var discountRule = GetMatchingDiscountRule(discountRuleIds) ??
-                               new DiscountRule
-                               {
-                                   Coefficient = 0,
-                                   Constant = 0
-                               };
-            var discountNominal = originalPrice * discountRule.Coefficient + discountRule.Constant;
-            reservation.Payment.FinalPrice = originalPrice - discountNominal;
+            var campaign = CampaignService.GetInstance().ValidateVoucherRequest(new VoucherRequest
+            {
+                Email = input.Contact.Email,
+                Price = originalPrice,
+                VoucherCode = input.DiscountCode
+            });
+            reservation.Payment.FinalPrice = campaign.DiscountedPrice;
             reservation.Discount = new DiscountData
             {
                 Code = input.DiscountCode,
-                Id = discountRule.RuleId,
-                Coefficient = discountRule.Coefficient,
-                Constant = discountRule.Constant,
-                Nominal = discountNominal
+                Id = campaign.CampaignVoucher.CampaignId.GetValueOrDefault(),
+                Percentage = campaign.CampaignVoucher.ValuePercentage.GetValueOrDefault(),
+                Constant = campaign.CampaignVoucher.ValueConstant.GetValueOrDefault(),
+                Nominal = campaign.TotalDiscount
             };
             var transactionDetails = ConstructTransactionDetails(reservation);
             var itemDetails = ConstructItemDetails(reservation);

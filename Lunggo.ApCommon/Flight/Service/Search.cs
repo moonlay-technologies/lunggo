@@ -46,6 +46,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 else 
                     searchedItins.ForEach(itin => itin.AsReturn = (bool) asReturn);
                 AddPriceMargin(searchedItins);
+                SaveFlightRequestPrices(input.RequestId, searchId, searchedItins);
                 var itinsForDisplay = searchedItins.Select(ConvertToItineraryForDisplay).ToList();
                 itinsForDisplay.ForEach(itin => itin.SearchId = output.SearchId);
 

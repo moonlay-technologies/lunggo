@@ -80,7 +80,7 @@ app.controller('checkoutController', [
             rsvNo: '',
             isSuccess: false,
             send: function () {
-                $scope.book.booking = true;
+                $scope.book.booking = true; 
 
                 // generate data
                 $scope.book.postData = '"Token":"'+$scope.token+'", "Payment.Currency":"'+$scope.currency+'", "DiscountCode":"'+$scope.voucher.confirmedCode+'", "Payment.Method":"'+$scope.paymentMethod+'", "Contact.Title" :"'+$scope.buyerInfo.title+'","Contact.Name":"'+$scope.buyerInfo.fullname+'", "Contact.CountryCode":"'+$scope.buyerInfo.countryCode+'", "Contact.Phone":"'+$scope.buyerInfo.phone+'","Contact.Email":"'+$scope.buyerInfo.email+'","Language":"'+$scope.language+'"';
@@ -93,6 +93,9 @@ app.controller('checkoutController', [
                         $scope.passengers[i].passport.expire.month = '';
                         $scope.passengers[i].passport.expire.year = '';
                         $scope.passengers[i].passport.expire.full = '';
+                        if (!$scope.nationalityRequired) {
+                            $scope.passengers[i].passport.country = '';
+                        }
                     }
                     if (!$scope.idRequired) {
                         $scope.passengers[i].idNumber = '';
