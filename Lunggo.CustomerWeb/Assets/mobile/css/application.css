@@ -129,8 +129,8 @@ body {
         text-align: center;
         margin: 0;
         font-weight: bold; }
-    .popup__wrapper .popup .popup__content {
-      padding: 12px 0; }
+    .popup__wrapper .popup .popup__body {
+      padding: 20px 0; }
   .popup__wrapper.active {
     display: block; }
 
@@ -254,6 +254,42 @@ body {
     padding: 15px 0; }
   .page.page-flight .flight-sort-filter .flight-sort-filter-action a + a {
     border-left: 1px solid #8f8f8f; }
+
+.page.page-flight .flight-selection {
+  background: #e5e3e4;
+  position: relative;
+  font-weight: bold; }
+  .page.page-flight .flight-selection .flight-info {
+    padding: 15px;
+    padding-left: 50px; }
+    .page.page-flight .flight-selection .flight-info:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      margin-top: -10px;
+      left: 15px;
+      width: 22px;
+      height: 20px;
+      background: url(/Assets/images/flight-review-title-sprite.png) no-repeat; }
+  .page.page-flight .flight-selection .change-departure {
+    width: 25%;
+    position: absolute;
+    height: 100%;
+    background: #b7b7b7;
+    color: #fff;
+    text-align: center;
+    right: 0;
+    top: 0; }
+    .page.page-flight .flight-selection .change-departure span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      width: 50px;
+      height: 20px;
+      font-weight: bold; }
 
 .page.page-flight .flight-list .flight {
   padding: 12px; }
@@ -432,7 +468,7 @@ body {
         width: 50px;
         height: 20px;
         font-weight: bold; }
-    .overlay--flight-detail .overlay__content .flight-title .flight-title--arrival .flight-info:before {
+    .overlay--flight-detail .overlay__content .flight-title.flight-title--return .flight-info:before {
       background-position: -22px 0; }
   .overlay--flight-detail .overlay__content .flight-wrapper .flight {
     position: relative; }
