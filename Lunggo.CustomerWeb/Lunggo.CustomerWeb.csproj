@@ -2513,6 +2513,7 @@
     <Content Include="Views\Travorama20\emailExpireRaw.cshtml" />
     <Content Include="Views\Travorama20\emailEticketTemplateRaw.cshtml" />
     <Content Include="Views\Travorama20\EmailEticketTemplate.cshtml" />
+    <Content Include="Views\Travorama20\emailSubscribeRaw.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

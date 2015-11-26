@@ -33,17 +33,18 @@
             {
                 <!--PERGI-->
                 <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pergi.jpg" alt="PENERBANGAN PERGI" /></span></h2>
-                foreach (var segment in @Model.Itinerary.Trips[0].Segments)
-                {
-                    if (segment != Model.Itinerary.Trips[0].Segments.First())
+                <div class="flight-list">
+                    @foreach (var segment in @Model.Itinerary.Trips[0].Segments)
                     {
-                        var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                        <div class="transit">
-                            <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
-                        </div>
-                             <!-- .transit -->
-                    }
-                    <div class="flight-list">
+                        if (segment != Model.Itinerary.Trips[0].Segments.First())
+                        {
+                            var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                            <div class="transit">
+                                <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
+                            </div>
+                            <!-- .transit -->
+                        }
+
                         <div class="flight">
                             <div class="flight-icon">
                                 <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
@@ -78,23 +79,24 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                        @{prevSegment = segment;}
-                    </div>
-                }
+                     prevSegment = segment;
+                    }
+                </div>
 
                 <!--PULANG-->
                 <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pulang.jpg" alt="PENERBANGAN PULANG" /></span></h2>
-                foreach (var segment in @Model.Itinerary.Trips[1].Segments)
-                {
-                    if (segment != Model.Itinerary.Trips[1].Segments.First())
+                <div class="flight-list">
+                    @foreach (var segment in @Model.Itinerary.Trips[1].Segments)
                     {
-                        var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                        <div class="transit">
-                            <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
-                        </div>
+                        if (segment != Model.Itinerary.Trips[1].Segments.First())
+                        {
+                            var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                            <div class="transit">
+                                <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
+                            </div>
                              <!-- .transit -->
-                    }
-                    <div class="flight-list">
+                        }
+
                         <div class="flight">
                             <div class="flight-icon">
                                 <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
@@ -129,26 +131,24 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                        @{prevSegment = segment;}
-                    </div>
-                }
-
-
+                     prevSegment = segment;
+                    }
+                </div><!--.flight-list-->
             }
             else
             {
                 <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pergi.jpg" alt="PENERBANGAN PERGI" /></span></h2>
-                foreach (var segment in @Model.Itinerary.Trips[0].Segments)
-                {
-                    if (segment != Model.Itinerary.Trips[0].Segments.First())
+                <div class="flight-list">
+                    @foreach (var segment in @Model.Itinerary.Trips[0].Segments)
                     {
-                        var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                        <div class="transit">
-                            <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
-                        </div>
+                        if (segment != Model.Itinerary.Trips[0].Segments.First())
+                        {
+                            var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                            <div class="transit">
+                                <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
+                            </div>
                              <!-- .transit -->
-                    }
-                    <div class="flight-list">
+                        }
                         <div class="flight">
                             <div class="flight-icon">
                                 <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
@@ -183,14 +183,10 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                        @{prevSegment = segment;}
-                    </div>
-                }
-
+                     prevSegment = segment;
+                    }
+                </div><!--.flight-list-->
             }
-
-
-
         </div><!-- .flight.flight-list.departure-flight -->
 
         <table class="passenger-wrapper">

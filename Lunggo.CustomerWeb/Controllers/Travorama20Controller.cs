@@ -109,6 +109,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
-
+        public ActionResult emailSubscribeRaw()
+        {
+            return View();
+        }
     }
 }
