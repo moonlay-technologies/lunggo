@@ -8,6 +8,7 @@ using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
+using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Worker.EticketHandler
@@ -35,7 +36,9 @@ namespace Lunggo.Worker.EticketHandler
                 var templateService = HtmlTemplateService.GetInstance();
                 var blobService = BlobStorageService.GetInstance();
                 var converter = new SelectPdf.HtmlToPdf();
-                var reservation = flightService.GetDetails(rsvNo);
+                converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
+                converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
+                var reservation = flightService.GetReservationForDisplay(rsvNo);
 
                 Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
                 sw.Start();

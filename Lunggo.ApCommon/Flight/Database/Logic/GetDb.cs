@@ -138,6 +138,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
                                     ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                     ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
+                                    CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
                                     Baggage = segmentRecord.Baggage
                                 };
                                 segmentLookup.Add(segmentRecord.SegmentId.GetValueOrDefault(), segment);
@@ -284,6 +285,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
                                     ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                     ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
+                                    CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
                                     Baggage = segmentRecord.Baggage,
                                     Pnr = segmentRecord.Pnr
                                 };

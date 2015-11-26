@@ -30,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Database.Query
             clauseBuilder.Append(@"s.SegmentId, s.TripId, s.Pnr, s.OperatingAirlineCd, s.AirlineCd, s.FlightNumber, ");
             clauseBuilder.Append(@"s.DepartureAirportCd, s.DepartureTerminal, s.DepartureTime, ");
             clauseBuilder.Append(@"s.ArrivalAirportCd, s.ArrivalTerminal, s.ArrivalTime, ");
-            clauseBuilder.Append(@"s.Baggage, ");
+            clauseBuilder.Append(@"s.Duration, s.CabinClassCd, s.Baggage, ");
             clauseBuilder.Append(@"p.PassengerId, p.RsvNo, p.TitleCd, p.FirstName, p.LastName, p.PassengerTypeCd ");
             clauseBuilder.Append(@"FROM FlightReservation AS r ");
             clauseBuilder.Append(@"INNER JOIN FlightItinerary AS i ON i.RsvNo = r.RsvNo ");
