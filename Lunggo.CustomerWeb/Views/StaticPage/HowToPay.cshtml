@@ -11,11 +11,11 @@
         // toggle list detail
         $('.list-summary .btn').click(function (evt) {
             evt.preventDefault();
-            $(this).closest('.list').toggleClass('active');
+            $(this).closest('.list').children('.list-detail').stop().slideToggle();
         });
         $('.close-list').click(function (evt) {
             evt.preventDefault();
-            $(this).closest('.list').removeClass('active');
+            $(this).closest('.list').children('.list-detail').slideUp('active');
         });
     </script>
 
@@ -40,7 +40,7 @@
         <div class="list">
             <div class="list-summary">
                 <div class="container">
-                    <h4>TRANFER BANK</h4>
+                    <h4>TRANSFER BANK</h4>
                     <p>Travorama menerima pembayaran via Transfer melalui Teller Bank dan melalui ATM.</p>
                     <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
                     <div class="text-center list-image">
@@ -84,6 +84,666 @@
                             </p>  
                         </div>
                     </div>
+
+                </div>
+
+            </div>
+        </div>
+    
+        <div class="list">
+            <div class="list-summary">
+                <div class="container">
+                    <h4>ATM / VIRTUAL ACCOUNT</h4>
+                    <p>Travorama melayani pembayaran tiket Anda melalui mesin ATM berlogo ATM Bersama, Prima, dan Alto.</p>
+                    <a href="#" class="btn btn-yellow">SELENGKAPNYA</a>
+                    <div class="text-center list-image">
+                        <img src="/Assets/images/howtopay-1.jpg" alt="How To Pay 1" />
+                    </div>
+                </div>
+            </div>
+            <div class="list-detail">
+
+                <div class="container">
+
+                    <a href="#" class="close-list"><img src="/Assets/images/list-detail-close.png" alt="Close" /></a>
+
+                    <h3 class="detail-title">Detail: Virtual Account</h3>
+
+                    <ol>
+                        <li>Pada halaman pembayaran, pilih metode Pembayaran ATM. Perlu untuk diketahui bahwa pembayaran melalui Internet atau Mobile Banking, harap memilih mode lainnya.</li>
+                        <li>Cek rincian harga, pastikan semuanya telah benar, lalu klik tombol bayar.</li>
+                        <li>Anda akan menuju ke halaman Overview untuk melihat nomor order dan biaya yang perlu untuk ditransfer.</li>
+                        <li>Untuk menyelesaikan pembayaran, Anda akan diminta untuk mentransfer ke 16 digit akun virtual yang berbeda untuk setiap transaksi.</li>
+                        <li>Cari ATM terdekat bertandakan ATM Bersama / Prima / ALTO. Anda perlu untuk melakukan transfer sebelum melewati batas waktu untuk menghindari pembatalan tiket oleh pihak maskapai penerbangan. </li>
+                        <li>Setelah melakukan pembayaran sesuai total harga, e-tiket akan dikirimkan ke email Anda dalam waktu hingga 60 menit.</li>
+                    </ol>
+                    
+                    <p>Cara pembayaran dengan ATM BCA dan Prima:</p>
+                    <ol>
+                        <li>Pada menu utama, pilih Transaksi lainnya (Other transaction).</li>
+                        <li>Pilih Transfer.</li>
+                        <li>Pilih Bank Lainnya / Other Bank Account.</li>
+                        <li>Ketik kode Bank dan pilih Benar / Correct.</li>
+                        <li>Masukkan jumlah biaya yang perlu untuk ditransfer.</li>
+                        <li>Ketik 16 digit nomor akun virtual dan pilih Benar / Correct.</li>
+                        <li>Jumlah yang dibayar, nomor akun, dan nama perusahaan Travorama akan muncul. Apabila informasi sudah benar, pilih Benar / Correct</li>
+                    </ol>
+                    <p>Cara pembayaran dengan Permata Bank / ALTO:</p>
+                    <ol>
+                        <li>Pada menu utama, pilih Transaksi lainnya (Other transaction).</li>
+                        <li>Pilih Pembayaran / Payment.</li>
+                        <li>Pilih Pembayaran Lainnya / Other Payment.</li>
+                        <li>Pilih Virtual Account.</li>
+                        <li>Ketik 16 digit nomor akun virtual dan pilih Benar / Correct.</li>
+                        <li>Jumlah yang dibayar, nomor akun, dan nama perusahaan Travorama akan muncul. Apabila informasi sudah benar, pilih Benar / Correct.</li>
+                    </ol>
+                    <p>Cara pembayaran dengan Mandiri dan ATM Bersama:</p>
+                    <ol>
+                        <li>Pada menu utama, pilih Lainnya (Other).</li>
+                        <li>Pilih Transfer.</li>
+                        <li>Pilih Online Transfer.</li>
+                        <li>Ketik 16 digit nomor akun virtual dan pilih Benar / Correct.</li>
+                        <li>Masukkan jumlah biaya yang perlu untuk ditransfer.</li>
+                        <li>Kosongkan bagian transfer reference number dan pilih Benar / Correct</li>
+                    </ol>
+                    <p>Daftar Bank yang tergabung dalam jaringan Prima / Banks within the Prima ATM network:</p>
+                    
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        Bank Agris
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        BRI
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Hana
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Muamalat
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Royal
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        Bank ANDA
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        BRI Syariah
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Jasa Jakarta
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Mutiara
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Sahabat Sampoerna
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        Bank ANZ
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        BTN
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Jateng
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Nasional Nobu
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank SBI Indonesia
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        Bank Artha Graha
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        BTPN
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Jatim
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Nagari
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Sinarmas
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BCA
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Bukopin
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Kalbar
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank OCBC NISP
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Sumselbabel
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BCA Syariah
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Bumi Arta
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Kaltim
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Tokyo – Mitsubishi
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Sulselbar
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BII
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Chinatrust Indonesia
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Mandiri
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Papua
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Syariah Mandiri
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BJB
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        CIMB Niaga
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Maspion
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Permata
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank UOB Indonesia
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BNI
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Commonwealth
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Mayapada
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Pundi Indonesia
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Victoria
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BNP
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank DKI
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Mega
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Rabobank
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Victoria Syariah
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p align="center">
+                                        BPD DIY
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Ekonomi
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Mega Syariah
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Riaukepri
+                                    </p>
+                                </td>
+                                <td>
+                                    <p align="center">
+                                        Bank Windu
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>Daftar Bank yang tergabung dalam jaringan ATM Bersama / Banks within the ATM Bersama network:</p>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Bank Mandiri</p>
+                                </td>
+                                <td>
+                                    <p>Bank BTPN</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sinarmas</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sulselbar</p>
+                                </td>
+                                <td>
+                                    <p>Bank Kalteng</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>BRI</p>
+                                </td>
+                                <td>
+                                    <p>Bank Syariah Mandiri</p>
+                                </td>
+                                <td>
+                                    <p>Bank Papua</p>
+                                </td>
+                                <td>
+                                    <p>ICBC</p>
+                                </td>
+                                <td>
+                                    <p>Bank Jambi</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>BNI</p>
+                                </td>
+                                <td>
+                                    <p>Standard Chartered Bank</p>
+                                </td>
+                                <td>
+                                    <p>Commonwealth Bank</p>
+                                </td>
+                                <td>
+                                    <p>Bank Mestika</p>
+                                </td>
+                                <td>
+                                    <p>Bank Kesejahteraan</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank CIMB Niaga</p>
+                                </td>
+                                <td>
+                                    <p>Bank Muamalat</p>
+                                </td>
+                                <td>
+                                    <p>Bank Nagari</p>
+                                </td>
+                                <td>
+                                    <p>Bank NTT</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sultra</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Panin Bank</p>
+                                </td>
+                                <td>
+                                    <p>Bank DBS</p>
+                                </td>
+                                <td>
+                                    <p>BRI Syariah</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sulut</p>
+                                </td>
+                                <td>
+                                    <p>Bank Bengkulu</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank Permata</p>
+                                </td>
+                                <td>
+                                    <p>Bank Kaltim</p>
+                                </td>
+                                <td>
+                                    <p>Bank Rabobank</p>
+                                </td>
+                                <td>
+                                    <p>Bank Capital</p>
+                                </td>
+                                <td>
+                                    <p>Bank of India</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank Danamon</p>
+                                </td>
+                                <td>
+                                    <p>Bank Jatim</p>
+                                </td>
+                                <td>
+                                    <p>Bank of China</p>
+                                </td>
+                                <td>
+                                    <p>Bank BPD DIY</p>
+                                </td>
+                                <td>
+                                    <p>Bank Mayora</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>BII</p>
+                                </td>
+                                <td>
+                                    <p>ANZ</p>
+                                </td>
+                                <td>
+                                    <p>Bank Aceh</p>
+                                </td>
+                                <td>
+                                    <p>Bank Lampung</p>
+                                </td>
+                                <td>
+                                    <p>Bank Ganesha</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank BTN</p>
+                                </td>
+                                <td>
+                                    <p>Bank DKI</p>
+                                </td>
+                                <td>
+                                    <p>Bank BPD Bali</p>
+                                </td>
+                                <td>
+                                    <p>Bank QNB Kesawan</p>
+                                </td>
+                                <td>
+                                    <p>Bank INA</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank OCBC NISP</p>
+                                </td>
+                                <td>
+                                    <p>Bank Jateng</p>
+                                </td>
+                                <td>
+                                    <p>Bank Kalsel</p>
+                                </td>
+                                <td>
+                                    <p>Bank Maluku</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sulteng</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank Jabar</p>
+                                </td>
+                                <td>
+                                    <p>Bank Ekonomi</p>
+                                </td>
+                                <td>
+                                    <p>Bank ICB Bumiputera</p>
+                                </td>
+                                <td>
+                                    <p>Bank BJB</p>
+                                </td>
+                                <td>
+                                    <p>Bank Nasional Nobu</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank Mega</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sumut</p>
+                                </td>
+                                <td>
+                                    <p>Bank Kalbar</p>
+                                </td>
+                                <td>
+                                    <p>Bank Index</p>
+                                </td>
+                                <td>
+                                    <p>Panin Bank Syariah</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank Bukopin</p>
+                                </td>
+                                <td>
+                                    <p>Bank Riaukepri</p>
+                                </td>
+                                <td>
+                                    <p>Bank BNP</p>
+                                </td>
+                                <td>
+                                    <p>Bank NTB</p>
+                                </td>
+                                <td>
+                                    <p>Bank Artos</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank HSBC</p>
+                                </td>
+                                <td>
+                                    <p>Bank Mayapada</p>
+                                </td>
+                                <td>
+                                    <p>Bank Syariah Mega</p>
+                                </td>
+                                <td>
+                                    <p>Bank Agro</p>
+                                </td>
+                                <td>
+                                    <p>BPR Bank Supra</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Citibank</p>
+                                </td>
+                                <td>
+                                    <p>Bank Sumselbabel</p>
+                                </td>
+                                <td>
+                                    <p>Bank Pundi</p>
+                                </td>
+                                <td>
+                                    <p>Bank Eka</p>
+                                </td>
+                                <td>
+                                    <p>BPR Semoga Jaya Artha</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Bank UOB</p>
+                                </td>
+                                <td>
+                                    <p>Bank Mutiara</p>
+                                </td>
+                                <td>
+                                    <p>Bank Saudara</p>
+                                </td>
+                                <td>
+                                    <p>BPR KS</p>
+                                </td>
+                                <td>
+                                    <p>Bank Andara</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>Daftar Bank yang tergabung dalam jaringan ALTO / Banks within the Alto ATM network:</p>
+                    <ol>
+                        <li>Bank Artha Graha</li>
+                        <li>Bank Bukopin</li>
+                        <li>Bank Danamon</li>
+                        <li>Bank Ekonomi</li>
+                        <li>Bank Rabobank</li>
+                        <li>Bank Hana</li>
+                        <li>Bank Harda</li>
+                        <li>BII</li>
+                        <li>Bank Nusantara Parahyangan</li>
+                        <li>Panin Bank</li>
+                        <li>Bank Permata</li>
+                        <li>BPR Eka Bumi Artha</li>
+                        <li>Citibank</li>
+                    </ol>
 
                 </div>
 
