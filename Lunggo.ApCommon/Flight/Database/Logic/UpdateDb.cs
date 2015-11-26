@@ -30,6 +30,8 @@ namespace Lunggo.ApCommon.Flight.Service
                             segment.DepartureAirport,
                             segment.ArrivalAirport,
                             segment.DepartureTime,
+                            segment.ArrivalTime,
+                            segment.Duration,
                             segment.Pnr,
                             segment.DepartureTerminal,
                             segment.ArrivalTerminal,

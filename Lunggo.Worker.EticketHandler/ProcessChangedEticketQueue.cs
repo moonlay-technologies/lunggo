@@ -35,7 +35,7 @@ namespace Lunggo.Worker.EticketHandler
                 var flightService = FlightService.GetInstance();
                 var templateService = HtmlTemplateService.GetInstance();
                 var converter = new NReco.PdfGenerator.HtmlToPdfConverter();
-                var reservation = flightService.GetDetails(rsvNo);
+                var reservation = flightService.GetReservationForDisplay(rsvNo);
 
                 Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
                 sw.Start();
