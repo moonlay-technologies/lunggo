@@ -23,6 +23,15 @@
             a+a {border-left:1px solid #8f8f8f;}
         }
     }
+    // flight selection
+    .flight-selection {background:#e5e3e4; position:relative; font-weight:bold;
+        .flight-info {padding:15px; padding-left:50px;
+            &:before {content:""; position:absolute; top:50%; margin-top:-10px; left:15px; width:22px; height:20px; background:url(/Assets/images/flight-review-title-sprite.png) no-repeat;}
+        }
+        .change-departure {width:25%; position:absolute; height:100%; background:#b7b7b7; color:#fff; text-align:center; right:0; top:0;
+            span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; font-weight:bold;}
+        }
+    }
     // flight list
     .flight-list {
         // flight
@@ -143,8 +152,8 @@
                 span {position:absolute; top:0; right:0; bottom:0; left:0; margin:auto; width:50px; height:20px; font-weight:bold;}
             }
             // departure and arrival
-            .flight-title--departure {}
-            .flight-title--arrival {
+            &.flight-title--departure {}
+            &.flight-title--return {
                 .flight-info:before {background-position:-22px 0;}
             }
         }

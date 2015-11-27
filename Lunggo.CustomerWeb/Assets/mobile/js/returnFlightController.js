@@ -18,13 +18,7 @@
         Busy: false,
         Loading: 0,
         Validating: false,
-        FlightList: function() {
-            if ($scope.PageConfig.ActiveSection == 'departure') {
-                return $scope.FlightConfig[0].FlightList;
-            } else {
-                return $scope.FlightConfig[1].FlightList;
-            }
-        },
+        FlightList: [],
         ExpiryDate: {
             Expired: false,
             Time: '',
@@ -133,6 +127,7 @@
         if (section) {
             $scope.PageConfig.ActiveSection = section;
         }
+        console.log('Changing section to : '+section);
     }
 
     // get full date time
@@ -183,8 +178,7 @@
         } else {
             targetScope = $scope.FlightConfig[1];
         }
-        console.log('Getting flight for : ' + targetScope.Name);
-        console.log('Request : '+ targetScope.FlightRequest.Requests);
+        console.log('Getting flight for : ' + targetScope.Name + ' . Request : '+targetScope.FlightRequest.Requests);
         if (targetScope.FlightRequest.Progress < 100) {
 
             // **********
@@ -293,11 +287,14 @@
     }
 
     // set active flight
-    $scope.FlightFunctions.SetActiveFlight = function(FlightNumber) {
-        if ($scope.PageConfig.ActiveSection == 'departure') {
-            $scope.FlightConfig[0].ActiveFlight = FlightNumber;
-        } else {
-            $scope.FlightConfig[1].ActiveFlight = FlightNumber;
+    $scope.FlightFunctions.SetActiveFlight = function (targetScope, flightNumber) {
+        if (targetScope) {
+            targetScope = targetScope == 'departure' ? $scope.FlightConfig[0] : $scope.FlightConfig[1];
+            if (flightNumber >= 0) {
+                targetScope.ActiveFlight = flightNumber;
+            } else {
+                targetScope.ActiveFlight = -1;
+            }
         }
     }
 
