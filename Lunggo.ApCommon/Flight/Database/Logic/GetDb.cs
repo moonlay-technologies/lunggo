@@ -285,6 +285,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     ArrivalCity = dict.GetAirportCity(segmentRecord.ArrivalAirportCd),
                                     ArrivalTerminal = segmentRecord.ArrivalTerminal,
                                     ArrivalTime = segmentRecord.ArrivalTime.GetValueOrDefault(),
+                                    Duration = segmentRecord.Duration.GetValueOrDefault(),
                                     CabinClass = CabinClassCd.Mnemonic(segmentRecord.CabinClassCd),
                                     Baggage = segmentRecord.Baggage,
                                     Pnr = segmentRecord.Pnr

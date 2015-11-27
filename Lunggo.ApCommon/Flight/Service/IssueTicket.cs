@@ -49,8 +49,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))
                 {
                     output.IsSuccess = true;
-                    //TODO voucher code di sini? no.
-                    //TODO rapiin juga ini biar ga ada akses query lgsg
                     if (output.OrderResults.TrueForAll(result => result.IsInstantIssuance))
                     {
                         var detailsInput = new GetDetailsInput { RsvNo = input.RsvNo };
