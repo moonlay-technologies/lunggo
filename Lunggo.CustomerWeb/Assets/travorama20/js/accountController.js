@@ -200,8 +200,9 @@ app.controller('forgotController', [
             $scope.form.submitting = true;
             console.log('submitting form');
             // submit form to URL
-            $http.post({
+            $http({
                 url: ForgotPasswordConfig.Url,
+                method: 'POST',
                 data: {
                     email : $scope.form.email
                 }

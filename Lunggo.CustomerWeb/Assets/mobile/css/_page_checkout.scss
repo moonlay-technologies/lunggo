@@ -1,0 +1,26 @@
+﻿.page.page-checkout {
+
+    .page__header {margin:0; padding:0;
+        &:before, &:after {@include clearfix();}
+        .step {float:left; width:33.3333334%; background:#2eb4e7; color:#fff; border-right:1px solid #1c99c7;
+            span {font-size:14px; font-weight:600; padding:10px 15px; display:block;}
+            // if active
+            &.active {background:#032f56;}
+            // if inactive
+            &.inactive {background:#a6a6a6;}
+            // if last child
+            &:last-child {border-right:0;}
+        }
+    }
+
+    .page__body {padding:10px;}
+
+    // passenger
+    .passenger {background:#fff; border:$border-default;
+        .passenger__header {background:#2eb4e7; color:#fff; font-weight:bold; padding:10px 15px;
+            .passenger__title {margin:0;}
+        }
+        .passenger__body {padding:10px;}
+    }
+
+}

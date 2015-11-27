@@ -550,3 +550,45 @@ body {
 
 .overlay--flight-detail .overlay__footer h4 {
   margin-top: 0; }
+
+.page.page-checkout .page__header {
+  margin: 0;
+  padding: 0; }
+  .page.page-checkout .page__header:before, .page.page-checkout .page__header:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-checkout .page__header .step {
+    float: left;
+    width: 33.3333334%;
+    background: #2eb4e7;
+    color: #fff;
+    border-right: 1px solid #1c99c7; }
+    .page.page-checkout .page__header .step span {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 15px;
+      display: block; }
+    .page.page-checkout .page__header .step.active {
+      background: #032f56; }
+    .page.page-checkout .page__header .step.inactive {
+      background: #a6a6a6; }
+    .page.page-checkout .page__header .step:last-child {
+      border-right: 0; }
+
+.page.page-checkout .page__body {
+  padding: 10px; }
+
+.page.page-checkout .passenger {
+  background: #fff;
+  border: 1px solid #ccc; }
+  .page.page-checkout .passenger .passenger__header {
+    background: #2eb4e7;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px; }
+    .page.page-checkout .passenger .passenger__header .passenger__title {
+      margin: 0; }
+  .page.page-checkout .passenger .passenger__body {
+    padding: 10px; }
