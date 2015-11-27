@@ -65,6 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("FlightNumber");
 		    }
 		}
+		public String CabinClassCd
+		{
+		    get { return _CabinClassCd; }
+		    set
+		    {
+		        _CabinClassCd = value;
+		        IncrementLog("CabinClassCd");
+		    }
+		}
 		public String AircraftCd
 		{
 		    get { return _AircraftCd; }
@@ -217,6 +226,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _OperatingAirlineCd;
 		private String _AirlineCd;
 		private String _FlightNumber;
+		private String _CabinClassCd;
 		private String _AircraftCd;
 		private String _DepartureAirportCd;
 		private String _DepartureTerminal;
@@ -270,6 +280,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("OperatingAirlineCd", false),
 				new ColumnMetadata("AirlineCd", false),
 				new ColumnMetadata("FlightNumber", false),
+				new ColumnMetadata("CabinClassCd", false),
 				new ColumnMetadata("AircraftCd", false),
 				new ColumnMetadata("DepartureAirportCd", false),
 				new ColumnMetadata("DepartureTerminal", false),

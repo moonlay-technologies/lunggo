@@ -53,25 +53,25 @@ var SubscribeConfig = {
 };
 
 var RegisterConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/Register'
+    Url: 'http://qa.travorama.com/id/ApiAccount/Register'
 };
 
 var ResetPasswordConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/ResetPassword'
+    Url: 'http://qa.travorama.com/id/ApiAccount/ResetPassword'
 };
 
 var ForgotPasswordConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/ForgotPassword'
+    Url: 'http://qa.travorama.com/id/ApiAccount/ForgotPassword'
 };
 
 var ChangePasswordConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/ChangePassword'
+    Url: 'http://qa.travorama.com/id/ApiAccount/ChangePassword'
 };
 
 var ChangeProfileConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/ChangeProfile'
+    Url: 'http://qa.travorama.com/id/ApiAccount/ChangeProfile'
 };
 
 var ResendConfirmationEmailConfig = {
-    Url: 'http://www.qa.travorama.com/id/ApiAccount/ResendConfirmationEmail'
+    Url: 'http://qa.travorama.com/id/ApiAccount/ResendConfirmationEmail'
 };

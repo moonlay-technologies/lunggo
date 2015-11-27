@@ -30,26 +30,26 @@
 
 @if (@Model.Itinerary.Trips.Count > 1)
 {
-    <div class="page">
-        <header class="page-header">
-            <div class="row">
-                <div class="col-xs-4">
+<div class="page">
+    <header class="page-header">
+        <div class="row">
+            <div class="col-xs-4">
                     <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
-                </div>
-                <div class="col-xs-8">
-                    <div class="page-header-right">
-                        <div class="page-title"><h3>E-TICKET</h3></div>
-                        <div class="page-help">
-                            <p>Any Problem? Contact Us :</p>
-                            <p><span>T.</span>0838 7808 1993 <span>E.</span>help@travorama.com</p>
-                        </div>
+            </div>
+            <div class="col-xs-8">
+                <div class="page-header-right">
+                    <div class="page-title"><h3>E-TICKET</h3></div>
+                    <div class="page-help">
+                        <p>Any Problem? Contact Us :</p>
+                        <p><span>T.</span>0838 7808 1993 <span>E.</span>help@travorama.com</p>
                     </div>
                 </div>
             </div>
-        </header><!-- .page-header -->
-        <section class="page-content">
+        </div>
+    </header><!-- .page-header -->
+    <section class="page-content">
 
-            <div class="flight-list-wrapper departure-flight">
+        <div class="flight-list-wrapper departure-flight">
 
                 <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                 <div class="flight-list">
@@ -98,7 +98,7 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                                         prevSegment = segment;
+                     prevSegment = segment;
                     }
                 </div>
 
@@ -161,7 +161,7 @@
                             <div class="transit">
                                 <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
                             </div>
-                                <!-- .transit -->
+                             <!-- .transit -->
                         }
 
                         <div class="flight">
@@ -198,7 +198,7 @@
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                                         prevSegment = segment;
+                     prevSegment = segment;
                     }
                 </div>
 
@@ -239,9 +239,9 @@
         </footer><!-- .page-footer -->
     </div><!-- .page -->
 
-}
-else
-{
+            }
+            else
+            {
     <div class="page">
         <header class="page-header">
             <div class="row">
@@ -273,7 +273,7 @@ else
                             <div class="transit">
                                 <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
                             </div>
-                            <!-- .transit -->
+                             <!-- .transit -->
                         }
 
                         <div class="flight">
@@ -310,37 +310,37 @@ else
                                 </div><!-- .flight-route -->
                             </div><!-- .flight-detail -->
                         </div><!-- .flight -->
-                                         prevSegment = segment;
+                     prevSegment = segment;
                     }
                 </div>
 
-            </div><!-- .flight.flight-list.departure-flight -->
+        </div><!-- .flight.flight-list.departure-flight -->
 
-            <table class="passenger-wrapper">
-                <thead>
+        <table class="passenger-wrapper">
+            <thead>
+                <tr>
+                    <th class="no">NO</th>
+                    <th class="name">NAMA PENUMPANG</th>
+                    <th class="type">JENIS TIKET</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var j = 0; j < Model.Passengers.Count; j++)
+                {
+                    var passenger = Model.Passengers[j];
                     <tr>
-                        <th class="no">NO</th>
-                        <th class="name">NAMA PENUMPANG</th>
-                        <th class="type">JENIS TIKET</th>
+                        <td class="no">@(j + 1)</td>
+                        <td class="name">@passenger.Title @passenger.FirstName @passenger.LastName</td>
+                        <td class="type">@passenger.Type</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @for (var j = 0; j < Model.Passengers.Count; j++)
-                    {
-                        var passenger = Model.Passengers[j];
-                        <tr>
-                            <td class="no">@(j + 1)</td>
-                            <td class="name">@passenger.Title @passenger.FirstName @passenger.LastName</td>
-                            <td class="type">@passenger.Type</td>
-                        </tr>
-                    }
-                </tbody>
+                }
+            </tbody>
             </table>
-        </section><!-- .page-content -->
-        <footer class="page-footer">
+    </section><!-- .page-content -->
+    <footer class="page-footer">
             <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
-        </footer>
-    </div><!-- .page -->
+    </footer>
+</div><!-- .page -->
 }    
 
     <!-- ****************************** -->

@@ -25,7 +25,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
         [AllowAnonymous]
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
-            if ((bool) TempData["AllowThisReservationCheck"] || User.Identity.IsAuthenticated)
+            if ((TempData["AllowThisReservationCheck"] as bool?).GetValueOrDefault() || User.Identity.IsAuthenticated)
             {
                 var flight = FlightService.GetInstance();
                 var reservation = flight.GetReservationForDisplay(rsvNo);
@@ -56,7 +56,7 @@ namespace Lunggo.CustomerWeb.WebSrc.UW600.UW620
         public ActionResult OrderFlightHistoryDetailResendTicket(string rsvNo)
         {
             var flightService = FlightService.GetInstance();
-            var reservation = flightService.GetDetails(rsvNo);
+            var reservation = flightService.GetReservationForDisplay(rsvNo);
             if (reservation.Payment.Status != ApCommon.Payment.Constant.PaymentStatus.Settled)
                 return Content("ticket unavailable");
             if (reservation.Payment.Method != PaymentMethod.BankTransfer)
