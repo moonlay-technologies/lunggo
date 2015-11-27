@@ -4,29 +4,9 @@
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
-
+    Layout = "/Views/Shared/_layout_eticket.cshtml";
     FlightSegment prevSegment = null;
 }
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
-
-    <title>Travorama - eTicket</title>
-
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/bootstrap.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/eticket.css")">
-
-</head>
-<body class="eticket">
 
 @if (@Model.Itinerary.Trips.Count > 1)
 {
@@ -34,7 +14,7 @@
         <header class="page-header">
             <div class="row">
                 <div class="col-xs-4">
-                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                    <img src="/Assets/images/logo-color.png" alt="Travorama" />
                 </div>
                 <div class="col-xs-8">
                     <div class="page-header-right">
@@ -51,7 +31,7 @@
 
             <div class="flight-list-wrapper departure-flight">
 
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pergi.jpg" alt="PENERBANGAN PERGI" /></span></h2>
                 <div class="flight-list">
                     @foreach (var segment in @Model.Itinerary.Trips[0].Segments)
                     {
@@ -126,7 +106,7 @@
             </table>
         </section><!-- .page-content -->
         <footer class="page-footer">
-            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
+            <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
         </footer>
     </div><!-- .page -->
 
@@ -134,7 +114,7 @@
         <header class="page-header">
             <div class="row">
                 <div class="col-xs-4">
-                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                    <img src="/Assets/images/logo-color.png" alt="Travorama" />
                 </div>
                 <div class="col-xs-8">
                     <div class="page-header-right">
@@ -151,55 +131,55 @@
 
             <div class="flight-list-wrapper departure-flight">
 
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pulang.jpg" alt="Penerbangan Pulang" /></span></h2>
                 <div class="flight-list">
                     @foreach (var segment in @Model.Itinerary.Trips[1].Segments)
-                    {
-                        if (segment != Model.Itinerary.Trips[1].Segments.First())
                         {
-                            var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
-                            <div class="transit">
-                                <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
-                            </div>
+                            if (segment != Model.Itinerary.Trips[1].Segments.First())
+                            {
+                                var transitDuration = prevSegment.DepartureTime - segment.ArrivalTime;
+                                <div class="transit">
+                                    <p><b>Transit Duration :</b> @transitDuration.ToString(@"h\h m\m")</p>
+                                </div>
                                 <!-- .transit -->
-                        }
+                            }
 
-                        <div class="flight">
-                            <div class="flight-icon">
-                                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
-                                <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
-                            </div><!-- .flight-icon -->
-                            <div class="flight-detail">
-                                <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber <span>@segment.CabinClass</span></p></div>
-                                <div class="flight-route">
-                                    <div class="departure-airline">
-                                        <h3>@segment.DepartureAirport</h3>
-                                        <h3>@segment.DepartureCity</h3>
-                                        <h3>@segment.DepartureAirportName</h3>
-                                    </div>
-                                    <div class="departure-date">
-                                        @{ var jamBerangkat = @segment.DepartureTime;}
-                                        <h3>@jamBerangkat.ToString("hh:mm")</h3>
-                                        <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                    </div>
-                                    <div class="duration">
-                                        <h3>Duration - @segment.Duration</h3>
-                                    </div>
-                                    <div class="arrival-date">
-                                        @{ var jamKembali = @segment.ArrivalTime;}
-                                        <h3>@jamKembali.ToString("hh:mm")</h3>
-                                        <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
-                                    </div>
-                                    <div class="arrival-airline">
-                                        <h3>@segment.ArrivalAirport</h3>
-                                        <h3>@segment.ArrivalCity</h3>
-                                        <h3>@segment.ArrivalAirportName</h3>
-                                    </div>
-                                </div><!-- .flight-route -->
-                            </div><!-- .flight-detail -->
-                        </div><!-- .flight -->
-                                         prevSegment = segment;
-                    }
+                            <div class="flight">
+                                <div class="flight-icon">
+                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + segment.AirlineLogoUrl)" alt="@segment.AirlineName" class="flight-airline" />
+                                    <h5 class="flight-pnr">PNR : @segment.Pnr</h5>
+                                </div><!-- .flight-icon -->
+                                <div class="flight-detail">
+                                    <div class="flight-number"><p>@segment.AirlineName @segment.AirlineCode@segment.FlightNumber <span>@segment.CabinClass</span></p></div>
+                                    <div class="flight-route">
+                                        <div class="departure-airline">
+                                            <h3>@segment.DepartureAirport</h3>
+                                            <h3>@segment.DepartureCity</h3>
+                                            <h3>@segment.DepartureAirportName</h3>
+                                        </div>
+                                        <div class="departure-date">
+                                            @{ var jamBerangkat = @segment.DepartureTime;}
+                                            <h3>@jamBerangkat.ToString("hh:mm")</h3>
+                                            <h3>@segment.DepartureTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
+                                        </div>
+                                        <div class="duration">
+                                            <h3>Duration - @segment.Duration</h3>
+                                        </div>
+                                        <div class="arrival-date">
+                                            @{ var jamKembali = @segment.ArrivalTime;}
+                                            <h3>@jamKembali.ToString("hh:mm")</h3>
+                                            <h3>@segment.ArrivalTime.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</h3>
+                                        </div>
+                                        <div class="arrival-airline">
+                                            <h3>@segment.ArrivalAirport</h3>
+                                            <h3>@segment.ArrivalCity</h3>
+                                            <h3>@segment.ArrivalAirportName</h3>
+                                        </div>
+                                    </div><!-- .flight-route -->
+                                </div><!-- .flight-detail -->
+                            </div><!-- .flight -->
+                                             prevSegment = segment;
+                        }
                 </div>
 
             </div><!-- .flight.flight-list.departure-flight -->
@@ -226,7 +206,7 @@
             </table><!-- .passenger-wrapper -->
         </section><!-- .page-content -->
         <footer class="page-footer">
-            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
+            <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
         </footer>
         <footer class="page-footer hidden">
             <div class="row">
@@ -246,7 +226,7 @@ else
         <header class="page-header">
             <div class="row">
                 <div class="col-xs-4">
-                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                    <img src="/Assets/images/logo-color.png" alt="Travorama" />
                 </div>
                 <div class="col-xs-8">
                     <div class="page-header-right">
@@ -263,7 +243,7 @@ else
 
             <div class="flight-list-wrapper departure-flight">
 
-                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                <h2 class="flight-title"><span><img src="/Assets/images/penerbangan-pergi.jpg" alt="PENERBANGAN PERGI" /></span></h2>
                 <div class="flight-list">
                     @foreach (var segment in @Model.Itinerary.Trips[0].Segments)
                     {
@@ -338,14 +318,7 @@ else
             </table>
         </section><!-- .page-content -->
         <footer class="page-footer">
-            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
+            <img src="/Assets/images/email/email-footer.png" alt="Email Foter" />
         </footer>
     </div><!-- .page -->
-}    
-
-    <!-- ****************************** -->
-    <!-- javascripts -->
-    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
-
-</body>
-</html>
+}
