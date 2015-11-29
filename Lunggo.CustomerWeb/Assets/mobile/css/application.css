@@ -550,3 +550,112 @@ body {
 
 .overlay--flight-detail .overlay__footer h4 {
   margin-top: 0; }
+
+.page.page-checkout .page__header {
+  margin: 0;
+  padding: 0; }
+  .page.page-checkout .page__header:before, .page.page-checkout .page__header:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-checkout .page__header .step {
+    float: left;
+    width: 33.3333334%;
+    background: #2eb4e7;
+    color: #fff;
+    border-right: 1px solid #1c99c7; }
+    .page.page-checkout .page__header .step span {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 15px;
+      display: block; }
+    .page.page-checkout .page__header .step.active {
+      background: #032f56; }
+    .page.page-checkout .page__header .step.inactive {
+      background: #a6a6a6; }
+    .page.page-checkout .page__header .step:last-child {
+      border-right: 0; }
+
+.page.page-checkout .page__body {
+  padding: 10px; }
+
+.page.page-checkout .passenger {
+  background: #fff;
+  border: 1px solid #ccc; }
+  .page.page-checkout .passenger .passenger__header {
+    background: #2eb4e7;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px; }
+    .page.page-checkout .passenger .passenger__header .passenger__title {
+      margin: 0; }
+  .page.page-checkout .passenger .passenger__body {
+    padding: 10px; }
+
+.page.page-checkout .summary.summary--price dl:before, .page.page-checkout .summary.summary--price dl:after {
+  display: block;
+  width: 100%;
+  content: "";
+  clear: both; }
+
+.page.page-checkout .summary.summary--price dl dt {
+  float: left;
+  width: 50%;
+  font-weight: normal;
+  position: relative;
+  padding-left: 12px; }
+  .page.page-checkout .summary.summary--price dl dt:before {
+    position: absolute;
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: #ff7200;
+    top: 3px;
+    left: 0; }
+
+.page.page-checkout .summary.summary--price dl dd {
+  float: left;
+  width: 50%;
+  text-align: right;
+  font-weight: bold; }
+
+.page.page-checkout .summary.summary--price dl.total-price {
+  border-top: 1px solid #ccc;
+  padding-top: 10px; }
+  .page.page-checkout .summary.summary--price dl.total-price dt {
+    width: 35%; }
+    .page.page-checkout .summary.summary--price dl.total-price dt:before {
+      display: none; }
+  .page.page-checkout .summary.summary--price dl.total-price dd {
+    width: 65%;
+    color: #ff7200;
+    font-size: 16px; }
+
+.page.page-checkout .summary.summary--passenger h4 {
+  color: #63c6ec;
+  font-weight: bold; }
+
+.page.page-checkout .summary.summary--passenger ol {
+  padding-left: 20px; }
+
+.page.page-checkout .summary.summary--passenger dl {
+  margin-bottom: 5px; }
+  .page.page-checkout .summary.summary--passenger dl:before, .page.page-checkout .summary.summary--passenger dl:after {
+    display: block;
+    width: 100%;
+    content: "";
+    clear: both; }
+  .page.page-checkout .summary.summary--passenger dl dt {
+    float: left;
+    width: 50%;
+    font-weight: normal;
+    position: relative; }
+    .page.page-checkout .summary.summary--passenger dl dt:after {
+      position: absolute;
+      content: ':';
+      right: 10px; }
+  .page.page-checkout .summary.summary--passenger dl dd {
+    float: left;
+    width: 50%;
+    font-weight: bold; }
