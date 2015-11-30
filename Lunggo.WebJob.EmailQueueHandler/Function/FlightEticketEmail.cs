@@ -45,14 +45,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                         FileName = "E-tiket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = eticketFile
                     },
-                    /*
                     new FileInfo
                     {
                         ContentType = "PDF",
                         FileName = "Invoice Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = invoiceFile
                     }
-                    */
                 }
             };
             Console.WriteLine("Sending Flight Eticket Email...");

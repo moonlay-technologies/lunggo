@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Database.Query;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
@@ -38,12 +40,16 @@ namespace Lunggo.ApCommon.Flight.Service
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
                     }
-                    UpdateBookingStatusQuery.GetInstance().Execute(conn, new
+                    UpdateBookingIdQuery.GetInstance().Execute(conn, new
                     {
                         BookingId = bookingId,
                         NewBookingId = orderResult.BookingId,
-                        BookingStatusCd = BookingStatusCd.Mnemonic(orderResult.BookingStatus)
                     });
+                    UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
+                    {
+                        BookingId = orderResult.BookingId,
+                        BookingStatus = orderResult.BookingStatus
+                    }});
                     output.OrderResults.Add(orderResult);
                 }
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))

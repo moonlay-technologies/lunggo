@@ -183,6 +183,7 @@
     <Compile Include="Flight\Database\Query\GetUnpaidReservationQuery.cs" />
     <Compile Include="Flight\Database\Query\GetVoucherCodeQuery.cs" />
     <Compile Include="Flight\Database\Query\SearchReservationQuery.cs" />
+    <Compile Include="Flight\Database\Query\UpdateBookingIdQuery.cs" />
     <Compile Include="Flight\Model\BookFlightResult.cs" />
     <Compile Include="Flight\Model\BookingStatusInfo.cs" />
     <Compile Include="Flight\Model\Conditions.cs" />

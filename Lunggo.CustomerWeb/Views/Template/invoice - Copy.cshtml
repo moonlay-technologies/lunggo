@@ -105,7 +105,7 @@
                             <th class="item">JENIS ITEM</th>
                             <th class="description">DESKRIPSI</th>
                             <th class="qty">QTY</th>
-                            <th class="price">HARGA/SATUAN</th>
+                            <th class="price"></th>
                             <th class="total-price">TOTAL</th>
                         </tr>
                     </thead>
@@ -114,40 +114,39 @@
                         @for (int k = 0; k < i; k++)
                         {
                                 <tr>
-                                    <td class="no">1.</td>
-                                    <td class="item">TIket Pesawat</td>
+                                    <td class="no">@k.</td>
+                                    <td class="item">Tiket Pesawat</td>
                                     <td class="description">@Model.Itinerary.Trips[k].Segments[k].AirlineName @Model.Itinerary.Trips[k].OriginCity-@Model.Itinerary.Trips[k].DestinationCity @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                                    <td class="qty">1</td>
-                                    <td class="price">@Model.Itinerary.Trips[k].</td>
-                                    <td class="total">@Model.Itinerary.Trips[k].</td>
-                                    i++;
+                                    <td class="qty">@Model.Passengers.Count</td>
+                                    <td class="price"></td>
+                                    <td class="total">@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    @{ k++; }
                                 </tr>
-                        }
-                        
-                        <!--<tr>
-                                <td class="no">2.</td>
-                                <td class="item">TIket Pesawat</td>
-                                <td class="description">Lion Air (Dewasa) DPS-CGK 2 Juni 2015</td>
+                        }                      
+                            <tr>
+                                <td class="no"></td>
+                                <td class="item">Voucher</td>
+                                <td class="description">@Model.VoucherCode</td>
                                 <td class="qty">1</td>
-                                <td class="price">123.456.789</td>
-                                <td class="total">123.456.789</td>
-                            </tr>-->
+                                <td class="price"></td>
+                                <td class="total">-@Model.Discount</td>
+                            </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2"><strong>TOTAL</strong></td>
-                            <td>123.456.789</td>
+                            <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2"><strong>ADMINISTRATION FEE</strong></td>
-                            <td>123.456.789</td>
+                            <td>0</td>
                         </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2"><strong>PAYMENT AMOUNT</strong></td>
-                            <td>123.456.789</td>
+                            <td>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                         </tr>
                     </tfoot>
                 </table>

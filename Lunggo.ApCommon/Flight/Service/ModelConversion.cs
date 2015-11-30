@@ -23,7 +23,9 @@ namespace Lunggo.ApCommon.Flight.Service
                     Itinerary = ConvertToItineraryForDisplay(BundleItineraries(reservation.Itineraries)),
                     Contact = reservation.Contact,
                     Passengers = reservation.Passengers,
-                    Payment = reservation.Payment
+                    Payment = reservation.Payment,
+                    Discount = reservation.Discount.Nominal,
+                    VoucherCode = reservation.Discount.Code
                 };
             }
             else

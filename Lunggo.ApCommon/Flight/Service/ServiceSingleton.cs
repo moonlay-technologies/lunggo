@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 foreach (var itin in result.Itineraries)
                 {
                     itin.FareId = IdUtil.ConstructIntegratedId(itin.FareId, supplier.SupplierName, itin.FareType);
-                }
+                }   
             SaveSearchedItinerariesToCache(result.Itineraries, EncodeConditions(conditions), timeout, supplierIndex);
             InvalidateSearchingStatusInCache(searchId, supplierIndex);
         }

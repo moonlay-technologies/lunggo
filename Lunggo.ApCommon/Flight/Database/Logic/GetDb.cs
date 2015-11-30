@@ -83,6 +83,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Url = reservationRecord.PaymentUrl
                                     },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
+                                    Discount = new DiscountData
+                                    {
+                                        Code = reservationRecord.VoucherCode,
+                                        Id = reservationRecord.DiscountId.GetValueOrDefault(),
+                                        Percentage = reservationRecord.DiscountPercentage.GetValueOrDefault(),
+                                        Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
+                                        Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()
+                                    },
                                     Itineraries = new List<FlightItinerary>(),
                                     Passengers = new List<FlightPassenger>()
                                 };
@@ -237,6 +245,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
                                     Supplier = SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
                                     TicketTimeLimit = itineraryRecord.TicketTimeLimit,
+                                    CanHold = itineraryRecord.CanHold.GetValueOrDefault(),
                                     MarginId = itineraryRecord.MarginId.GetValueOrDefault(),
                                     MarginCoefficient = itineraryRecord.MarginCoefficient.GetValueOrDefault(),
                                     MarginConstant = itineraryRecord.MarginConstant.GetValueOrDefault(),

@@ -7,6 +7,6 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonProperty("order_id")]
         public string OrderId { get; set; }
         [JsonProperty("gross_amount")]
-        public decimal Amount { get; set; }
+        public long Amount { get; set; }
     }
 }

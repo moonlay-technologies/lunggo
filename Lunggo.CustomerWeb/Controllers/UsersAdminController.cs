@@ -1,7 +1,6 @@
 ﻿using Lunggo.ApCommon.Identity.User;
 using Lunggo.CustomerWeb.Models;
 using Microsoft.AspNet.Identity.Owin;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -77,7 +76,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public async Task<ActionResult> Create()
         {
             //Get the list of Roles
-            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
+            ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
             return View();
         }
 
@@ -100,7 +99,7 @@ namespace Lunggo.CustomerWeb.Controllers
                         if (!result.Succeeded)
                         {
                             ModelState.AddModelError("", result.Errors.First());
-                            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Name", "Name");
+                            ViewBag.RoleId = new SelectList(RoleManager.Roles, "Name", "Name");
                             return View();
                         }
                     }

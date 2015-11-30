@@ -102,7 +102,9 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var flight = FlightService.GetInstance();
             var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
-            if (paymentUrl != null)
+            if (paymentUrl == null)
+                return RedirectToAction("Checkout");
+            if (paymentUrl != "DIRECT")
                 return Redirect(paymentUrl);
             else
                 return RedirectToAction("Confirmation", "Flight", new { rsvNo });

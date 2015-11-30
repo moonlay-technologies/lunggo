@@ -83,7 +83,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                 {
                     IsSuccess = true,
                     Status = new BookingStatusInfo
-                    { 
+                    {
                         BookingId = bookingId,
                         BookingStatus = BookingStatus.Booked,
                         TimeLimit = DateTime.UtcNow.AddHours(2)
@@ -207,21 +207,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 
         private static Passport MapPassport(FlightPassenger passenger)
         {
-            if (passenger.PassportNumber != null)
+            var passport = new Passport
             {
-                var passport = new Passport
-                {
-                    PassportNumber = passenger.PassportNumber,
-                    ExpiryDate = passenger.PassportExpiryDate.GetValueOrDefault(),
-                    Country = passenger.PassportCountry,
-                    ExtensionData = null
-                };
-                return passport;
-            }
-            else
-            {
-                return null;
-            }
+                PassportNumber = passenger.PassportNumber ?? " ",
+                ExpiryDate = passenger.PassportExpiryDate.GetValueOrDefault(DateTime.Now.AddYears(5)),
+                Country = passenger.PassportCountry ?? "XX",
+                ExtensionData = null
+            };
+            return passport;
         }
 
         private static TravelerInfo MapTravelerInfo(ContactData contactData, List<AirTraveler> airTravelers)
@@ -247,7 +240,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
                     {
                         BookingStatus = BookingStatus.Booked,
                         BookingId = response.UniqueID,
-                        TimeLimit = response.TktTimeLimit.HasValue ? DateTime.SpecifyKind(response.TktTimeLimit.Value, DateTimeKind.Utc) : (DateTime?) null
+                        TimeLimit = response.TktTimeLimit.HasValue ? DateTime.SpecifyKind(response.TktTimeLimit.Value, DateTimeKind.Utc) : (DateTime?)null
                     }
                 };
             else
