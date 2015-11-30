@@ -16,6 +16,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public PaymentInfo Payment { get; set; }
         public ContactData Contact { get; set; }
         public string InvoiceNo { get; set; }
+        public decimal Discount { get; set; }
+        public string VoucherCode { get; set; }
         public TripType TripType { get; set; }
     }
 
