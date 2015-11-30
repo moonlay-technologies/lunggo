@@ -82,6 +82,14 @@ namespace Lunggo.ApCommon.Flight.Service
                                         Method = PaymentMethodCd.Mnemonic(reservationRecord.PaymentMethodCd),
                                         Url = reservationRecord.PaymentUrl
                                     },
+                                    Discount = new DiscountData
+                                    {
+                                        Code = reservationRecord.VoucherCode,
+                                        Id = reservationRecord.DiscountId.GetValueOrDefault(),
+                                        Percentage = reservationRecord.DiscountPercentage.GetValueOrDefault(),
+                                        Constant = reservationRecord.DiscountConstant.GetValueOrDefault(),
+                                        Nominal = reservationRecord.DiscountNominal.GetValueOrDefault()
+                                    },
                                     TripType = TripTypeCd.Mnemonic(reservationRecord.OverallTripTypeCd),
                                     Itineraries = new List<FlightItinerary>(),
                                     Passengers = new List<FlightPassenger>()
