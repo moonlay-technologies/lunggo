@@ -101,7 +101,7 @@ app.controller('checkoutController', [
                         $scope.passengers[i].idNumber = '';
                     }
                     // birthdate
-                    $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '/' + ('0' + $scope.passengers[i].birth.month).slice(-2) + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
+                    $scope.passengers[i].birth.full = $scope.passengers[i].birth.year + '/' + ('0' + ($scope.passengers[i].birth.month + 1)).slice(-2) + '/' + ('0' + $scope.passengers[i].birth.date).slice(-2);
                     // passport expiry date
                     $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0' + $scope.passengers[i].passport.expire.month).slice(-2) + '/' + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
 
