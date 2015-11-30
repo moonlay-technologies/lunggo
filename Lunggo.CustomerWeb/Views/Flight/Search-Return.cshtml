@@ -280,6 +280,11 @@
                             <div class="segment-left">
                                 <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
                                 <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                                <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
+                                    <span ng-show="segment.Meal" class="flight-meal"></span>
+                                    <span ng-show="segment.Baggage" class="flight-baggage">{{segment.Baggage}}</span>
+                                    <span ng-show="segment.Tax" class="flight-tax"></span>
+                                </div>
                             </div>
                             <div class="segment-right">
                                 <div class="segment-departure">
@@ -529,6 +534,11 @@
                                     <div class="segment-left">
                                         <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
                                         <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                                        <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
+                                            <span ng-show="segment.Meal" class="flight-meal"></span>
+                                            <span ng-show="segment.Baggage" class="flight-baggage">{{segment.Baggage}}</span>
+                                            <span ng-show="segment.Tax" class="flight-tax"></span>
+                                        </div>
                                     </div>
                                     <div class="segment-right">
                                         <div class="segment-departure">
@@ -603,6 +613,11 @@
                             <div class="segment-left">
                                 <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
                                 <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                                <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
+                                    <span ng-show="segment.Meal" class="flight-meal"></span>
+                                    <span ng-show="segment.Baggage" class="flight-baggage">{{segment.Baggage}}</span>
+                                    <span ng-show="segment.Tax" class="flight-tax"></span>
+                                </div>
                             </div>
                             <div class="segment-right">
                                 <div class="segment-departure">
@@ -851,6 +866,11 @@
                                     <div class="segment-left">
                                         <img ng-src="{{segment.AirlineLogoUrl}}" alt="{{segment.AirlineName}}" class="segment-airline-logo" />
                                         <h5 class="segment-airline-name">{{segment.AirlineName}} {{segment.AirlineCode}}-{{segment.FlightNumber}}</h5>
+                                        <div class="segment-detail flight-facility" ng-show="{{segment.Meal || segment.Baggage || segment.Tax}}">
+                                            <span ng-show="segment.Meal" class="flight-meal"></span>
+                                            <span ng-show="segment.Baggage" class="flight-baggage">{{segment.Baggage}}</span>
+                                            <span ng-show="segment.Tax" class="flight-tax"></span>
+                                        </div>
                                     </div>
                                     <div class="segment-right">
                                         <div class="segment-departure">

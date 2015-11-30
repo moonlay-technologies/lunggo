@@ -499,8 +499,11 @@ function flightPageSearchFormFunctions() {
         
         // set passenger
         $('.change-flight-adult .passenger-input').text(FlightData.Passenger[0]);
+        flightPageSearchFormParam.passenger.adult = FlightData.Passenger[0];
         $('.change-flight-child .passenger-input').text(FlightData.Passenger[1]);
+        flightPageSearchFormParam.passenger.child = FlightData.Passenger[1];
         $('.change-flight-infant .passenger-input').text(FlightData.Passenger[2]);
+        flightPageSearchFormParam.passenger.infant = FlightData.Passenger[2];
 
     });
 
@@ -713,15 +716,28 @@ function indexPageFunctions() {
 function staticPageFunctions() {
     // *****
     // toggle FAQ question
-    $('.toggle-all').click(function() {
-        $(this).closest('li').children('ol').children('li').removeClass('active');
-
-
-        
+    $('.toggle-all').on('click',function() {
+        if ($(this).hasClass('active')) {
+            $(this).closest('li').children('ol').children('li').removeClass('active');
+        } else {
+            $(this).closest('li').children('ol').children('li').addClass('active');
+        }
+        checkQuestion();
     });
-    $('.question-wrapper ol li ol li header').click(function() {
+    $('.question-wrapper ol li ol li header').on('click',function() {
         $(this).closest('li').toggleClass('active');
+        checkQuestion();
     });
+    // check faqs
+    var checkQuestion = function() {
+        $('.question-wrapper>ol>li').each(function() {
+            if ($(this).children('ol').find('.active').length > 0) {
+                $(this).find('.toggle-all').addClass('active').text('Hide All');
+            } else {
+                $(this).find('.toggle-all').removeClass('active').text('Show All');
+            }
+        });
+    }
 
 
 }

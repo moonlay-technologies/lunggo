@@ -289,6 +289,13 @@ file: /Assets/travorama20/css/_page_flight.scss
                     .segment-airline-logo {width:50px; border:$border-default; float:left; margin-right:15px;}
                     .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px; padding-right:30px;}
                     .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
+                    .flight-facility {display:block; padding-top:12px;
+                        span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px;
+                            &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
+                            &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
+                            &.flight-meal {width:30px; padding-bottom:30px;}
+                        }
+                    }
                 }
                 .segment-right {@extend .segment-left; width:72%;
                     &:before,&:after {content:""; clear:both; display:block; width:100%;}
@@ -864,8 +871,8 @@ file: /Assets/travorama20/css/_page_flight.scss
                             .segment-airline-logo {height:50px; border:$border-default; float:left; margin-right:15px;}
                             .segment-airline-name {font-weight:bold; color:$color-main-blue; font-size:12px;}
                             .segment-airline-number {font-weight:600; color:$color-main-blue; font-size:12px;}
-                            .flight-facilities {padding-right:5px; padding-top:5px;
-                                span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0;
+                            .flight-facility {display:block; padding-top:12px;
+                                span {background:url(/Assets/images/flight-facilities-sprite.png) no-repeat; display:inline-block; margin:0 5px;
                                     &.flight-baggage {width:35px; background-position:-64px; text-align:center; color:#fff; position:relative; padding-top:5px; margin-top:-10px; top:-7px;}
                                     &.flight-tax {width:35px; background-position:-30px; padding-bottom:30px;}
                                     &.flight-meal {width:30px; padding-bottom:30px;}
