@@ -2,7 +2,7 @@
 app.controller('checkoutController', [
     '$http', '$scope', '$interval','$location',function($http, $scope, $interval, $location) {
 
-        $scope.returnUrl = document.referrer;
+        $scope.returnUrl = document.referrer  == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
         //********************
         // variables
