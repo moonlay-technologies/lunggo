@@ -499,8 +499,11 @@ function flightPageSearchFormFunctions() {
         
         // set passenger
         $('.change-flight-adult .passenger-input').text(FlightData.Passenger[0]);
+        flightPageSearchFormParam.passenger.adult = FlightData.Passenger[0];
         $('.change-flight-child .passenger-input').text(FlightData.Passenger[1]);
+        flightPageSearchFormParam.passenger.child = FlightData.Passenger[1];
         $('.change-flight-infant .passenger-input').text(FlightData.Passenger[2]);
+        flightPageSearchFormParam.passenger.infant = FlightData.Passenger[2];
 
     });
 
