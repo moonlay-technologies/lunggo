@@ -68,6 +68,8 @@ app.controller('checkoutController', [
             },
             reset: function () {
                 $scope.voucher.code = '';
+                $scope.voucher.amount = 0;
+                $scope.voucher.confirmedCode = '';
                 $scope.voucher.checked = false;
             }
         };

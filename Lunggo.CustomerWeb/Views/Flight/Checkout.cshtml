@@ -583,7 +583,7 @@
                                         <p>Masukan disini</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
-                                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking" />
+                                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah di gunakan</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Voucher tidak dapat di gunakan</p>
