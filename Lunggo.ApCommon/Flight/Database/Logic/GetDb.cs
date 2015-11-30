@@ -237,6 +237,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     TripType = TripTypeCd.Mnemonic(itineraryRecord.TripTypeCd),
                                     Supplier = SupplierCd.Mnemonic(itineraryRecord.SupplierCd),
                                     TicketTimeLimit = itineraryRecord.TicketTimeLimit,
+                                    CanHold = itineraryRecord.CanHold.GetValueOrDefault(),
                                     MarginId = itineraryRecord.MarginId.GetValueOrDefault(),
                                     MarginCoefficient = itineraryRecord.MarginCoefficient.GetValueOrDefault(),
                                     MarginConstant = itineraryRecord.MarginConstant.GetValueOrDefault(),

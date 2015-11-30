@@ -73,6 +73,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             result.BookingNotes = response.TravelItinerary.BookingNotes.ToList();
             result.Itinerary = new FlightItinerary
             {
+                BookingId = response.TravelItinerary.UniqueID,
                 Trips = MapDetailsFlightTrips(response, conditions),
             };
             result.Passengers = MapDetailsPassengerInfo(response);

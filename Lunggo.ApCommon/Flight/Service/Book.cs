@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -129,7 +130,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Id = "1",
                 Name = itemName,
-                Price = reservation.Itineraries.Sum(itin => itin.LocalPrice),
+                Price = (long) reservation.Itineraries.Sum(itin => itin.LocalPrice),
                 Quantity = 1
             });
             if (reservation.Discount.Nominal != 0)
@@ -137,7 +138,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     Id = "2",
                     Name = "Discount",
-                    Price = -reservation.Discount.Nominal,
+                    Price = (long) -reservation.Discount.Nominal,
                     Quantity = 1
                 });
             return itemDetails;
@@ -148,7 +149,7 @@ namespace Lunggo.ApCommon.Flight.Service
             return new TransactionDetails
             {
                 OrderId = reservation.RsvNo,
-                Amount = reservation.Payment.FinalPrice
+                Amount = (long) reservation.Payment.FinalPrice
             };
         }
 

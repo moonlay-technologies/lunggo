@@ -73,6 +73,7 @@ namespace Lunggo.ApCommon.Flight.Service
                             BookingStatusCd = BookingStatusCd.Mnemonic(BookingStatus.Booked),
                             TicketTimeLimit = itin.TicketTimeLimit,
                             FareTypeCd = FareTypeCd.Mnemonic(IdUtil.GetFareType(itin.BookingId)),
+                            CanHold = itin.CanHold,
                             SupplierCd = SupplierCd.Mnemonic(IdUtil.GetSupplier(itin.BookingId)),
                             SupplierPrice = itin.SupplierPrice,
                             SupplierCurrencyCd = itin.SupplierCurrency,
