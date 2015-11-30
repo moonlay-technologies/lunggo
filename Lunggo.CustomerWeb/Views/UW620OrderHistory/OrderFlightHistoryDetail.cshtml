@@ -132,7 +132,7 @@
                             <section>
                                 @foreach (var trip in Model.Itinerary.Trips)
                                 {
-                                    <div class="flight" ng-class="@(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "departure" : "return")">
+                                    <div class="flight @(Model.Itinerary.Trips.IndexOf(trip) == 0 ? "departure" : "return")">
                                         <p><img src="@trip.Segments[0].AirlineLogoUrl" alt="@trip.Segments[0].AirlineName" /> <span>@trip.Segments[0].AirlineName</span> </p>
                                         <div class="row">
                                             <div class="col-xs-2">
