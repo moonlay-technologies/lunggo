@@ -63,18 +63,18 @@
                         <tr>
                             <td width="20%">
                                 <p style="">No. Pemesanan</p>
-                                <p style="margin-top: -8px;"><b>@Model.RsvNo</b></p>
+                                <p style=""><b>@Model.RsvNo</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="">Waktu.</p>
                                 @{ var jamKonfirmasi = @Model.Payment.Time.GetValueOrDefault(); }
-                                <p style="margin-top: -8px;"><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.ToString("HH:mm") WIB</b></p>
+                                <p style=""><b>@Model.Payment.Time.GetValueOrDefault().ToString("dd MMM yy") - Pk @jamKonfirmasi.ToString("HH:mm") WIB</b></p>
                             </td>
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5;">Metode Pembayaran.</p>
-                                <p style="margin-top: -8px;"><b>@Model.Payment.Method</b></p>
+                                <p style=""><b>@Model.Payment.Method</b></p>
                             </td>
                         </tr>
                     </table>
@@ -137,7 +137,7 @@
                                 <p style="color: #15b1e4; text-align: center;">:</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; ">
-                                <p style="color: #15b1e4; text-align: left;">Rp @Model.Payment.FinalPrice</p>
+                                <p style="color: #15b1e4; text-align: left;">Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
                             </td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
                             <td style="color: #15b1e4; border-bottom: 1px solid; "></td>
@@ -286,7 +286,7 @@
 
                     @{ var jamMaxEtiket = @Model.Payment.Time.GetValueOrDefault().AddHours(2); }
 
-                    <p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>
+                    @*<p>Kuitansi pembayaran Anda telah disertakan sebagai attachment.</p>*@
                     <p>E-tiket Anda akan dikirimkan secara otomatis ke email Anda Maksimal <span style="color: #15b1e4;">@Model.Payment.Time.GetValueOrDefault().ToString("dd MMMM yyyy") </span>,  pukul <span style="color: #15b1e4;"> @jamMaxEtiket.ToString("hh:mm")</span> , jika sampai saat tersebut Anda belum menerima E-tiket, mohon hubungi kami melalui email <span style="color: #15b1e4;">customercare@travorama.com</span> atau Hotline CS kami di <span style="color: #15b1e4;">1500650</span></p>
 
                 </td>

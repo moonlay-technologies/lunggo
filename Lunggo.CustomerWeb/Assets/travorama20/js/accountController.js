@@ -26,7 +26,7 @@ app.controller('accountController', [
             address: userProfile.address,
             firstname: userProfile.firstname,
             lastname: userProfile.lastname,
-            phone: userProfile.phone,
+            phone: parseInt(userProfile.phone),
             country: userProfile.country
         };
 
@@ -78,7 +78,7 @@ app.controller('accountController', [
                         $scope.userProfile.address = $scope.editProfile.address;
                         $scope.userProfile.firstname = $scope.editProfile.firstname;
                         $scope.userProfile.lastname = $scope.editProfile.lastname;
-                        $scope.userProfile.phonenumber = $scope.editProfile.phonenumber;
+                        $scope.userProfile.phone = $scope.editProfile.phone;
                         $scope.userProfile.country = $scope.editProfile.country;
                         $scope.userProfile.edit = false;
                         $scope.userProfile.updating = false;
@@ -200,8 +200,9 @@ app.controller('forgotController', [
             $scope.form.submitting = true;
             console.log('submitting form');
             // submit form to URL
-            $http.post({
+            $http({
                 url: ForgotPasswordConfig.Url,
+                method: 'POST',
                 data: {
                     email : $scope.form.email
                 }
