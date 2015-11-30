@@ -155,7 +155,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         {
             return new OrderTicketResult
             {
-                BookingId = response.UniqueID
+                BookingId = response.UniqueID,
+                IsInstantIssuance = true
             };
         }
 

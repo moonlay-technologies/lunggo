@@ -7,7 +7,7 @@ namespace Lunggo.ApCommon.Payment.Model
         [JsonProperty("id")]
         public string Id { get; set; }
         [JsonProperty("price")]
-        public decimal Price { get; set; }
+        public long Price { get; set; }
         [JsonProperty("quantity")]
         public int Quantity { get; set; }
         [JsonProperty("name")]

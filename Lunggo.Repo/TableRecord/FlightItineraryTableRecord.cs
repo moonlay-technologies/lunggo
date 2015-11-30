@@ -74,6 +74,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("FareTypeCd");
 		    }
 		}
+		public Boolean? CanHold
+		{
+		    get { return _CanHold; }
+		    set
+		    {
+		        _CanHold = value;
+		        IncrementLog("CanHold");
+		    }
+		}
 		public String SupplierCd
 		{
 		    get { return _SupplierCd; }
@@ -254,6 +263,7 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _TicketTimeLimit;
 		private String _TripTypeCd;
 		private String _FareTypeCd;
+		private Boolean? _CanHold;
 		private String _SupplierCd;
 		private Decimal? _SupplierPrice;
 		private String _SupplierCurrencyCd;
@@ -311,6 +321,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("TicketTimeLimit", false),
 				new ColumnMetadata("TripTypeCd", false),
 				new ColumnMetadata("FareTypeCd", false),
+				new ColumnMetadata("CanHold", false),
 				new ColumnMetadata("SupplierCd", false),
 				new ColumnMetadata("SupplierPrice", false),
 				new ColumnMetadata("SupplierCurrencyCd", false),

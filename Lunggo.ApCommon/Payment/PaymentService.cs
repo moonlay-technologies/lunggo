@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Payment
         public string GetPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
         {
             return method == PaymentMethod.BankTransfer 
-                ? null
+                ? "DIRECT"
                 : GetThirdPartyPaymentUrl(transactionDetails, itemDetails, method);
         }
 

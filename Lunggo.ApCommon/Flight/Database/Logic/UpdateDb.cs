@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     {
                         UpdateDetailsQuery.GetInstance().Execute(conn, new
                         {
-                            details.Itinerary.BookingId,
+                            details.BookingId,
                             segment.DepartureAirport,
                             segment.ArrivalAirport,
                             segment.DepartureTime,
