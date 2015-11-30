@@ -632,30 +632,31 @@ body {
     color: #ff7200;
     font-size: 16px; }
 
-.page.page-checkout .summary.summary--passenger h4 {
-  color: #63c6ec;
-  font-weight: bold; }
-
-.page.page-checkout .summary.summary--passenger ol {
-  padding-left: 20px; }
-
-.page.page-checkout .summary.summary--passenger dl {
-  margin-bottom: 5px; }
-  .page.page-checkout .summary.summary--passenger dl:before, .page.page-checkout .summary.summary--passenger dl:after {
-    display: block;
-    width: 100%;
-    content: "";
-    clear: both; }
-  .page.page-checkout .summary.summary--passenger dl dt {
-    float: left;
-    width: 50%;
-    font-weight: normal;
-    position: relative; }
-    .page.page-checkout .summary.summary--passenger dl dt:after {
-      position: absolute;
-      content: ':';
-      right: 10px; }
-  .page.page-checkout .summary.summary--passenger dl dd {
-    float: left;
-    width: 50%;
+.page.page-checkout .summary.summary--passenger {
+  color: #63c6ec; }
+  .page.page-checkout .summary.summary--passenger h4 {
+    color: #63c6ec;
     font-weight: bold; }
+  .page.page-checkout .summary.summary--passenger ol {
+    padding-left: 20px; }
+  .page.page-checkout .summary.summary--passenger dl {
+    margin-bottom: 5px;
+    color: #333; }
+    .page.page-checkout .summary.summary--passenger dl:before, .page.page-checkout .summary.summary--passenger dl:after {
+      display: block;
+      width: 100%;
+      content: "";
+      clear: both; }
+    .page.page-checkout .summary.summary--passenger dl dt {
+      float: left;
+      width: 50%;
+      font-weight: normal;
+      position: relative; }
+      .page.page-checkout .summary.summary--passenger dl dt:after {
+        position: absolute;
+        content: ':';
+        right: 10px; }
+    .page.page-checkout .summary.summary--passenger dl dd {
+      float: left;
+      width: 50%;
+      font-weight: bold; }
