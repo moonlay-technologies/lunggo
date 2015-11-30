@@ -283,11 +283,11 @@
                                         <div class="row">
                                             <div class="col-xs-3">
                                                 <p>Country Code</p>
-                                                <input type="text" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="5" />
+                                                <input type="number" name="countryCode" value="@(User.Identity.IsAuthenticated ? User.Identity.GetCountryCd() : "")" class="form-control" placeholder="ex : 62 for Indoneisa" required ng-model="buyerInfo.countryCode" maxlength="5" />
                                             </div>
                                             <div class="col-xs-9">
                                                 <p>Nomor Telepon (Tanpa Kode Negara)</p>
-                                                <input type="text" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
+                                                <input type="number" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.GetPhoneNumber() : "")" id="buyer-phone" placeholder="Ex: 821 2345 6789 (without Country Code)" name="phone" ng-model="buyerInfo.phone" required />
                                             </div>
                                         </div>
                                     </div>
@@ -583,7 +583,7 @@
                                         <p>Masukan disini</p>
                                         <form class="form" name="voucherForm" novalidate>
                                             <div class="form-group">
-                                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking" />
+                                                <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode" />
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah di gunakan</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Voucher tidak dapat di gunakan</p>
