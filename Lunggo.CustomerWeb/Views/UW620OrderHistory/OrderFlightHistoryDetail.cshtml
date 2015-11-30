@@ -74,7 +74,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Date</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.RsvTime.ToString("d - MMMM - yyyy . H:mm")</p>
+                                            <p class="form-control-static">@Model.RsvTime.AddHours(7).ToString("d - MMMM - yyyy . H:mm")</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -170,7 +170,7 @@
                                         <div class="col-xs-9">
                                             <p class="form-control-static">
                                                 @(Model.Payment.Refund != null ?
-                                            Model.Payment.Refund.Time.ToString() : "-")
+                                            Model.Payment.Refund.Time.AddHours(7).ToString() : "-")
                                             </p>
                                         </div>
                                     </div>
