@@ -1,0 +1,24 @@
+﻿@using System.Globalization
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Reservation Complete Notice
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>Nomor Pesanan : @Model.RsvNo</p>
+    <p>Nama Pemesan : @Model.Contact.Name</p>
+    <p>Rute : @Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport | @Model.Itinerary.Trips[0].DepartureDate.ToString("d MMM yyyy")</p>
+    @if (Model.Itinerary.Trips.Count > 1)
+    {
+        <p>Rute Pulang : @Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport | @Model.Itinerary.Trips[1].DepartureDate.ToString("d MMM yyyy")</p>
+    }
+    <p>Harga : @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+    <p>Metode Pembayaran : @Model.Payment.Method</p>
+</body>
+
+</html>
