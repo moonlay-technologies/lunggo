@@ -587,6 +587,8 @@
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherNotFound'">Kode voucher salah</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'VoucherAlreadyUsed'">Voucher sudah di gunakan</p>
                                                 <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'BelowMinimumSpend'">Voucher tidak dapat di gunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignNotStartedYet'">Voucher tidak dapat di gunakan</p>
+                                                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'CampaignHasEnded'">Voucher tidak dapat di gunakan</p>
                                             </div>
                                             <div class="form-group">
                                                 <div class="row">

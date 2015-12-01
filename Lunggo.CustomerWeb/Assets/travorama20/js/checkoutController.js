@@ -4,6 +4,11 @@ app.controller('checkoutController', [
 
         $scope.returnUrl = document.referrer  == (window.location.origin + window.location.pathname + window.location.search) ? '/' : document.referrer;
 
+        // set hash to page 1
+        angular.element(document).ready(function () {
+            $location.hash('page-1');
+        });
+
         //********************
         // variables
         $scope.currentPage = 1;
