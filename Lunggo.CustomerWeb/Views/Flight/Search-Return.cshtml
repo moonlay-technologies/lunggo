@@ -127,8 +127,8 @@
             DestinationCity: '@destinationCityNames[0]',
             Type: 'Return',
             Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
-            DepartureDate: '@trips[0].DepartureDate.ToString("dd/MMM/yyyy")',
-            ReturnDate: '@trips[1].DepartureDate.ToString("dd/MMM/yyyy")'
+            DepartureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")',
+            ReturnDate: '@trips[1].DepartureDate.ToString("yyyy/MM/dd")'
         };
     </script>
     <!-- angular controller -->

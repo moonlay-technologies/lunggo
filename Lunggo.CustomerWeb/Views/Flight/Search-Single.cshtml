@@ -88,7 +88,7 @@
         flightPageFunctions();
         FlightSearchConfig.flightForm = {
             cabin: '@data.CabinClass',
-            departureDate: '@trips[0].DepartureDate',
+            departureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")',
             origin: '@trips[0].OriginAirport',
             destination: '@trips[0].DestinationAirport',
             passenger: {
@@ -109,7 +109,7 @@
             DestinationCity: '@destinationCityNames[0]',
             Type: 'OneWay',
             Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
-            DepartureDate: '@trips[0].DepartureDate.ToString("dd/MMM/yyyy")'
+            DepartureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")'
         };
     </script>
     <!-- angular controller -->
