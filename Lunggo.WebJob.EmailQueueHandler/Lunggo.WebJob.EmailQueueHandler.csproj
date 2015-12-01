@@ -11,6 +11,9 @@
     <AssemblyName>Lunggo.WebJob.EmailQueueHandler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,11 +26,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -124,6 +124,7 @@
     <Compile Include="Function\FlightInstantPaymentReservationNotifEmail.cs" />
     <Compile Include="Function\FlightPendingPaymentReservationNotifEmail.cs" />
     <Compile Include="Function\FlightInstantPaymentConfirmedNotifEmail.cs" />
+    <Compile Include="Function\TransferConfirmationEmail.cs" />
     <Compile Include="Function\ForgotPasswordEmail.cs" />
     <Compile Include="Function\VoucherEmail.cs" />
     <Compile Include="Function\InitialSubscriberEmail.cs" />
@@ -155,6 +156,7 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>

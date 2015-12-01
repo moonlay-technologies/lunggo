@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 
@@ -29,8 +30,17 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var mailModel2 = new MailModel
+            {
+                RecipientList = new[] { "rama.adhitia@travelmadezy.com", "developer@travelmadezy.com" },
+                Subject = env == "production" ? "Pelunasan Reservasi No. " + rsvNo : "[TEST] Ignore This Email",
+                FromMail = "booking@travorama.com",
+                FromName = "Travorama"
+            };
             Console.WriteLine("Sending Notification Email...");
             mailService.SendEmail(reservation, mailModel, "FlightInstantPaymentConfirmedNotifEmail");
+            mailService.SendEmail(reservation, mailModel2, "ReservationNotice");
 
             Console.WriteLine("Done Processing Flight Instant Payment Confirmed Notif Email for RsvNo " + rsvNo);
         }
