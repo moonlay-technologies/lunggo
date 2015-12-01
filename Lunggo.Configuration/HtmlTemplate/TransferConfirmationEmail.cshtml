@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Payment.Model.TransferConfirmationReport
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Bank Transfer Confirmation Report
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>Nomor Pemesanan : @Model.RsvNo</p>
+    <p>Nama Pemilik Rekening : @Model.RemitterName</p>
+    <p>Nama Bank : @Model.RemitterBank</p>
+    <p>Nomor Rekening : @Model.RemitterAccount</p>
+    <p>Jumlah Transfer : Rp @Model.Amount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</p>
+    <p>Tanggal Transfer : @Model.PaymentTime.ToString("d MMM yyyy")</p>
+</body>
+
+</html>

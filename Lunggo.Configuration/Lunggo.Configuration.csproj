@@ -457,6 +457,8 @@
     <None Include="Config\Worker.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HtmlTemplate\ReservationNotice.cshtml" />
+    <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />
