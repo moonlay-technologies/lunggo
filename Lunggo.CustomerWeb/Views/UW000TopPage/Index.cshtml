@@ -93,7 +93,7 @@
         var indexPageDestination = '@ViewBag.DestinationName' || '';
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
         var topDestinations = @Html.Raw(ViewBag.LocationList);
-        var departureDate = '@(DateTime.Now.ToString("ddMMyy"))';
+        var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
