@@ -62,6 +62,7 @@
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

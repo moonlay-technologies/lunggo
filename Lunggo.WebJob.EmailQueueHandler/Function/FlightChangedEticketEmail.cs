@@ -41,7 +41,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "Eticket Baru Anda - No. Reservasi " + summary.RsvNo + ".pdf",
+                        FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = file
                     }
                 }

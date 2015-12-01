@@ -42,7 +42,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "E-tiket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
+                        FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = eticketFile
                     },
                     new FileInfo

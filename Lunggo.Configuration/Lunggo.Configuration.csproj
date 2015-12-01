@@ -455,14 +455,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightEticketCopyXXX.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmailxxxxxxxxxx.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentExpiredNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentConfirmedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightInstantPaymentReservationNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightPendingPaymentReservationNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightPendingPaymentReservationNotifEmailxxxxxxxxx.cshtml" />
     <None Include="HtmlTemplate\FlightInstantPaymentConfirmedNotifEmail.cshtml" />
     <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
     <None Include="HtmlTemplate\Subscribe.cshtml" />

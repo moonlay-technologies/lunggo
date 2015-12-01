@@ -79,7 +79,7 @@ else
                                             else
                                             {
                                                 <ul>
-                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url})">Log In</a></li>
+                                                    <li><a href="@Url.Action("Login", "Account", new {ReturnUrl = Context.Request.Url.PathAndQuery})">Log In</a></li>
                                                     <li><a href="@Url.Action("Register", "Account")">Sign Up</a></li>
                                                 </ul>
                                             }

@@ -22,9 +22,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {address},
-                FromMail = "jangan-balas-ke-sini@travorama.com",
-                FromName = "Travorama.com",
-                Subject = "Forgotten Password"
+                FromMail = "no-reply@travorama.com",
+                FromName = "Travorama",
+                Subject = "[Travorama] Forgotten Password"
             };
             mailService.SendEmail(message, mailModel, "ForgotPasswordEmail");
             sw.Stop();
