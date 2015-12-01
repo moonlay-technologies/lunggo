@@ -127,8 +127,8 @@
             DestinationCity: '@destinationCityNames[0]',
             Type: 'Return',
             Passenger: [@data.AdultCount, @data.ChildCount, @data.InfantCount],
-            DepartureDate: '@trips[0].DepartureDate.ToString("dd/MMM/yyyy")',
-            ReturnDate: '@trips[1].DepartureDate.ToString("dd/MMM/yyyy")'
+            DepartureDate: '@trips[0].DepartureDate.ToString("yyyy/MM/dd")',
+            ReturnDate: '@trips[1].DepartureDate.ToString("yyyy/MM/dd")'
         };
     </script>
     <!-- angular controller -->
@@ -419,7 +419,7 @@
                                                 <h5>Waktu kedatangan</h5>
                                                 <div class="slider-value">
                                                     <span>{{departureFlightConfig.flightFilter.time.arrival[0]}}:00</span>
-                                                    <span class="pull-right">{{departuerFlightConfig.flightFilter.time.arrival[1]}}:00</span>
+                                                    <span class="pull-right">{{departureFlightConfig.flightFilter.time.arrival[1]}}:00</span>
                                                 </div>
                                                 <div class="slider departure-arrival-slider"></div>
                                                 <div class="slider-minmax">

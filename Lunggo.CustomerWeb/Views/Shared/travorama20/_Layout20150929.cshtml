@@ -4,7 +4,7 @@
         
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta id="viewport" name="viewport" content="width=1200, initial-scale=1">
+        <meta id="viewport" name="viewport" content="width=1200, initial-scale=1, user-scalable=yes">
         <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
         
         @{ Html.RenderPartial("_openGraph"); }
@@ -64,13 +64,13 @@
     <script type="text/javascript">
     $(function () {
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-            var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width; //get proper width
-            var mw = 1000; // min width of site
-            var ratio = ww / mw; //calculate ratio
-            if (ww < mw) { //smaller than minimum size
-                $('#viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
-            } else { //regular size
-                $('#viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+            var ww = ($(window).width() < window.screen.width) ? $(window).width() : window.screen.width;
+            var mw = 1000;
+            var ratio = ww / mw;
+            if (ww < mw) {
+                $('#viewport').attr('content', 'initial-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+            } else {
+                $('#viewport').attr('content', 'initial-scale=1, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
             }
         }
     });
