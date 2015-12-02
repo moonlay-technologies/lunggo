@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.AspNet.Identity;
 using Microsoft.Azure.WebJobs;
@@ -11,6 +12,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void UserConfirmationEmail([QueueTrigger("userconfirmationemail")] string messageJson)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var sw = new Stopwatch();
             var message = JsonConvert.DeserializeObject<IdentityMessage>(messageJson);
             var address = message.Destination;
@@ -24,7 +28,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] {address},
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
-                Subject = "[Travorama] Verifikasikan E-mail Anda"
+                Subject = envPrefix + "[Travorama] Verifikasikan E-mail Anda"
             };
             mailService.SendEmail(message, mailModel, "UserConfirmationEmail");
             sw.Stop();

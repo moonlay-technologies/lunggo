@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 
@@ -10,6 +11,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightPendingPaymentReservationNotifEmail([QueueTrigger("flightpendingpaymentreservationnotifemail")] string rsvNo)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
             Console.WriteLine("Processing Flight Pending Payment Reservation Notif Email for RsvNo " + rsvNo + "...");
@@ -25,7 +29,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {reservation.Contact.Email},
-                Subject = "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
+                Subject = envPrefix + "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };

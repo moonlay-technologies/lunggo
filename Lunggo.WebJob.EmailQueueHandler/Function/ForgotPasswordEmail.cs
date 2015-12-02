@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.AspNet.Identity;
 using Microsoft.Azure.WebJobs;
@@ -11,6 +12,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void ForgotPasswordEmail([QueueTrigger("forgotpasswordemail")] string messageJson)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var sw = new Stopwatch();
             var message = JsonConvert.DeserializeObject<IdentityMessage>(messageJson);
             var address = message.Destination;
@@ -24,7 +28,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] {address},
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama",
-                Subject = "[Travorama] Forgotten Password"
+                Subject = envPrefix + "[Travorama] Forgotten Password"
             };
             mailService.SendEmail(message, mailModel, "ForgotPasswordEmail");
             sw.Stop();
