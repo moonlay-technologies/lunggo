@@ -72,6 +72,18 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult Checkout(string token)
         {
+            if (TempData["FlightCheckoutOrBookingError"] != null)
+            {
+                ViewBag.Message = "BookFailed";
+                return View();
+            }
+
+            if (token == null)
+            {
+                ViewBag.Message = "BookExpired";
+                return View();
+            }
+
             try
             {
                 var service = FlightService.GetInstance();
@@ -103,7 +115,10 @@ namespace Lunggo.CustomerWeb.Controllers
             var flight = FlightService.GetInstance();
             var paymentUrl = flight.GetBookingRedirectionUrl(rsvNo);
             if (paymentUrl == null)
+            {
+                TempData["FlightCheckoutOrBookingError"] = true;
                 return RedirectToAction("Checkout");
+            }
             if (paymentUrl != "DIRECT")
                 return Redirect(paymentUrl);
             else

@@ -52,6 +52,17 @@
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
+        // messages
+        var message = @ViewBag.Message;
+        // possible values : 
+        //      InvalidInputData
+        //      NotRegistered
+        //      AlreadyRegisteredButUnconfirmed
+        //      AlreadyConfirmed
+        //      Failed
+        //      BookExpired
+        //      BookFailed
+
         // flight detail
         var token = @Model.Token;
         var paymentDetail = '';
@@ -754,6 +765,9 @@
         break;
     case "BookExpired":
         @:[Ini ceritanya page booking expired]
+        break;
+    case "BookError":
+        @:[Ini ceritanya page kalo input datanya ga bener]
         break;
     case "NoLongerAvailable":
         @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
