@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.v1.Newsletter.Model;
 using Newtonsoft.Json.Linq;
@@ -52,23 +53,22 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Newsletter
             }
         }
 
-        //TODO Bikin di Lunggo.Config
         private RestClient CreateApiClient()
         {
-            var path = "http://us11.api.mailchimp.com";
-            //
+            var path = ConfigManager.GetInstance().GetConfigValue("mailchimp", "addMemberApiRootUrl").Trim();
+            var basicAuthUserName = ConfigManager.GetInstance().GetConfigValue("mailchimp", "basicAuthUserName").Trim();
+            var basicAuthPassword = ConfigManager.GetInstance().GetConfigValue("mailchimp", "basicAuthPassword").Trim();
+            
             var client = new RestClient(path)
             {
-                Authenticator = new HttpBasicAuthenticator("travorama", "ad2872c0ab96857c93f3d69fdc88026f-us11")
+                Authenticator = new HttpBasicAuthenticator(basicAuthUserName, basicAuthPassword)
             };
             return client;
         }
 
-        //TODO bikin di Lunggo.CONFIG
         private RestRequest CreateApiRequest()
         {
-            var path = "3.0/lists/4997f6c614/members";
-            //
+            var path = ConfigManager.GetInstance().GetConfigValue("mailchimp", "addMemberApiPath").Trim();
             var request = new RestRequest(path, Method.POST);
             return request;
         }
