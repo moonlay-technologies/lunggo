@@ -104,7 +104,7 @@ file : /Assets/travorama20/css/_page_password.scss
         .order {
             // flight order
             &.flight {background:#f1f1f1; padding:24px; background-image:url(/Assets/images/order-flight-list-bg.png); background-position:top left; background-repeat:no-repeat; padding-left:50px;
-                header {
+                header {padding:5px; font-size:12px; font-weight:bold;
                     .row {margin-bottom:3px;}
                     span {color:$color-main-blue;}
                 }
