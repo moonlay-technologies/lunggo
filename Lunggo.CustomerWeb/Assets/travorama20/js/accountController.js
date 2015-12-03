@@ -247,11 +247,13 @@ app.controller('orderDetailController', [
         }
 
         $scope.currentSection = 'order';
+        $scope.orderDate = new Date(orderDate);
+        /*
         $scope.contactDetail = contactDetail;
         $scope.passengerDetail = passengerDetail;
         $scope.flightDetail = flightDetail;
         $scope.refundDetail = refundDetail;
-
+        */
     }
 ]);
 

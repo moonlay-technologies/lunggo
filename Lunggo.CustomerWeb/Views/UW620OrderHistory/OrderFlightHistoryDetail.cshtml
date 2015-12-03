@@ -20,6 +20,7 @@
 @section PageJS{
     <script>
         var langCode = 'en';
+        var orderDate = '@Model.RsvTime.AddHours(7).ToString("u")';
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/accountController.js"></script>
@@ -74,7 +75,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Order Date</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.RsvTime.AddHours(7).ToString("d - MMMM - yyyy . H:mm")</p>
+                                            <p class="form-control-static">{{orderDate | date : 'dd - MMMM - yyyy HH:mm' :'UTC'}}</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
