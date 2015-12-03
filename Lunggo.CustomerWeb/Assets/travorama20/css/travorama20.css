@@ -4270,7 +4270,10 @@ file : /Assets/travorama20/css/_page_password.scss
       margin-right: 12px; }
     .page-account-profile .account-menu header span {
       font-weight: 600;
-      font-size: 12px; }
+      font-size: 12px;
+      display: inline-block;
+      width: 110px;
+      vertical-align: middle; }
   .page-account-profile .account-menu ul {
     margin: 0;
     padding: 0; }
@@ -4345,10 +4348,14 @@ file : /Assets/travorama20/css/_page_password.scss
     background-position: top left;
     background-repeat: no-repeat;
     padding-left: 50px; }
-    .page-account-profile .order-wrapper .order.flight header .row {
-      margin-bottom: 3px; }
-    .page-account-profile .order-wrapper .order.flight header span {
-      color: #1daee4; }
+    .page-account-profile .order-wrapper .order.flight header {
+      padding: 5px;
+      font-size: 12px;
+      font-weight: bold; }
+      .page-account-profile .order-wrapper .order.flight header .row {
+        margin-bottom: 3px; }
+      .page-account-profile .order-wrapper .order.flight header span {
+        color: #1daee4; }
     .page-account-profile .order-wrapper .order.flight section .row {
       margin-bottom: 3px; }
     .page-account-profile .order-wrapper .order.flight section .detail .col-xs-4 {

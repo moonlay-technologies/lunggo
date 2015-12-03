@@ -6,7 +6,16 @@ app.controller('checkoutController', [
 
         // set hash to page 1
         angular.element(document).ready(function () {
-            $location.hash('page-1');
+            if ( getParam('page') == 2 ) {
+                $location.hash('page-2');
+            } else {
+                $location.hash('page-1');
+            }
+        });
+
+        $(window).on('hashchange', function () {
+            if ( $location.hash() != 'page-1' || $location.hash() != 'page-2' ) {
+            }
         });
 
         //********************
