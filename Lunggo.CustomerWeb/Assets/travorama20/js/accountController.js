@@ -248,6 +248,7 @@ app.controller('orderDetailController', [
 
         $scope.currentSection = 'order';
         $scope.orderDate = new Date(orderDate);
+        $scope.refundDate = refundDate ? (new Date(refundDate)) : '-';
         /*
         $scope.contactDetail = contactDetail;
         $scope.passengerDetail = passengerDetail;
