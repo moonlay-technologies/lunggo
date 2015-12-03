@@ -4,7 +4,8 @@
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-checkout page-confirmation";
-
+    ViewBag.Title = "Konfirmasi Pembayaran";
+    
     ViewBag.SiteHeader = "checkout";
 
     var beneficiaryBankList = new List<SelectListItem>
@@ -27,8 +28,8 @@
         var paymentTimeout = '';
 
         // development only start
-        paymentTimeout = new Date();
-        paymentTimeout.setMinutes(paymentTimeout.getMinutes() + 15);
+        paymentTimeout = new Date('@Model.TimeLimit');
+        //paymentTimeout.setMinutes(paymentTimeout.getMinutes() + 15);
         // development only end
 
         // countdown timer
