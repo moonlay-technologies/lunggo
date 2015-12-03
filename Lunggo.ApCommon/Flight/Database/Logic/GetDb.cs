@@ -258,6 +258,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                     MarginCoefficient = itineraryRecord.MarginCoefficient.GetValueOrDefault(),
                                     MarginConstant = itineraryRecord.MarginConstant.GetValueOrDefault(),
                                     MarginNominal = itineraryRecord.MarginNominal.GetValueOrDefault(),
+                                    MarginIsFlat = itineraryRecord.MarginIsFlat.GetValueOrDefault(),
                                     Trips = new List<FlightTrip>()
                                 };
                                 itineraryLookup.Add(itineraryRecord.ItineraryId.GetValueOrDefault(), itinerary);
@@ -384,7 +385,8 @@ namespace Lunggo.ApCommon.Flight.Service
                         CountryPairs = record.CountryPairs.Deserialize<List<AirportPairRule>>(),
                         CountryPairsIsExclusion = record.CountryPairsIsExclusion.GetValueOrDefault(),
                         Coefficient = record.Coefficient.GetValueOrDefault(),
-                        Constant = record.ConstraintCount.GetValueOrDefault(),
+                        Constant = record.Constant.GetValueOrDefault(),
+                        IsFlat = record.IsFlat.GetValueOrDefault(),
                         ConstraintCount = record.ConstraintCount.GetValueOrDefault(),
                         Priority = record.Priority.GetValueOrDefault(),
                     });

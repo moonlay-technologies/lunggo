@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
@@ -33,6 +34,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 {
                     Status = PaymentStatus.Expired
                 });
+                PaymentService.GetInstance().UpdateTransferConfirmationReportStatus(rsvNo, TransferConfirmationReportStatus.Invalid);
                 var mailService = MailService.GetInstance();
                 var mailModel = new MailModel
                 {

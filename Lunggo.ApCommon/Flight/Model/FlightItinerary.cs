@@ -28,6 +28,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public decimal MarginCoefficient { get; set; }
         public decimal MarginConstant { get; set; }
         public decimal MarginNominal { get; set; }
+        public bool MarginIsFlat { get; set; }
         public decimal FinalIdrPrice { get; set; }
         public decimal LocalPrice { get; set; }
         public string LocalCurrency { get; set; }

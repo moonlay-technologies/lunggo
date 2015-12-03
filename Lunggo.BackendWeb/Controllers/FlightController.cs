@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Currency.Service;
 using Lunggo.ApCommon.Flight.Model;
@@ -38,10 +39,13 @@ namespace Lunggo.BackendWeb.Controllers
         {
             var reports = PaymentService.GetInstance().GetAllTransferConfirmationReports();
             var reservations = FlightService.GetInstance().GetUnpaidReservations();
+            var reportedReservations = reservations.Where(rsv => reports.Exists(rep => rep.RsvNo == rsv.RsvNo)).ToList();
+            var unreportedReservations = reservations.Except(reportedReservations);
             var temporary = new CheckPaymentViewModel
             {
                 Reports = reports,
-                Reservation = reservations
+                ReportedReservations = reportedReservations,
+                UnreportedReservations = unreportedReservations.ToList()
             };
             return View(temporary);
         }
