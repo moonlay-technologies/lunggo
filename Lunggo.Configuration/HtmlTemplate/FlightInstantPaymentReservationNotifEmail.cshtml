@@ -102,80 +102,80 @@
                                 </td>
                             </tr>
                         </table>
-
-                        <p>Untuk mendapatkan e-ticket, lakukan pembayaran lalu konfirmasikan pembayaran sesuai 2 langkah berikut:</p>
-
-                        <table width="100%" style="margin-bottom: 10px;">
+                        <p>Untuk mendapatkan e-ticket, lakukan pembayaran sesuai langkah berikut:</p>
+                        
+                        <table width="100%" style="margin-bottom: 0px;">
                             <tr>
-                                <td width="5%">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/no-1.png")" />
-                                </td>
                                 <td>
-                                    <p>Transfer tepat sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b> ke salah satu rekening di bawah ini :</p>
+                                    <p style="margin-bottom:0px;">Melakukan pembayaran sejumlah total tagihan : Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")) </b>ke nomor akun virtual tujuan.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                @{ var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
+                                <td>
+                                    <p style="font-style: italic; font-size: 11px; margin-bottom: 0px;margin-top:2px;">Batas waktu pembayaran anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm")</span>.</p>
+                                    <p style="font-size: 10px; opacity: 0.5; font-style: italic;margin-top: 1px; margin-bottom: 20px;">Jika lewat, booking Anda akan dibatalkan otomatis oleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan berubah.</p>
                                 </td>
                             </tr>
                         </table>
-
-                        <table width="94%" style="margin-left: 6%" cellpadding="0" cellspacing="0">
+                        <table>
                             <tr>
                                 <td>
-                                    <hr style="border-color: #f5f5f5; " />
-                                </td>
-                                <td width="5%"></td>
-                                <td>
-                                    <hr style="border-color: #f5f5f5; " />
-                                </td>
-                                <td width="5%"></td>
-                                <td>
-                                    <hr style="border-color: #f5f5f5; " />
+                                    <p style ="margin-left:4px;">Cara Pembayaran lewat <b>ATM Mandiri/Jaringan ATM Bersama</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya </b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
+                                        <li><p>Masukkan nomor kode 013 dan 16 digit nomor akun virtual pembayaran.</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
                                 </td>
                             </tr>
                             <tr>
-                                <td width="20%">
-                                    <p style="">Bank,</p>
-                                    <p style="">Bank Central Asia</p>
+                                <td>
+                                    <p>Cara Pembayaran lewat <b>ATM BCA/Jaringan ATM PRIMA</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transfer</b>.</p></li>
+                                        <li><p>Pilih <b>Ke Rek Bank Lain</b>.</p></li>
+                                        <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan Benar.</p></li>
+                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar Rp. <b>@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran lalu tekan Benar.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
                                 </td>
-                                <td width="5%"></td>
-                                <td width="20%">
-                                    <p style="">No Rekening,</p>
-                                    <p style="">084 777 8800</p>
-                                </td>
-                                <td width="5%"></td>
-                                <td width="20%">
-                                    <p style="">Atas Nama,</p>
-                                    <p style="">PT Travelmadezy</p>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Cara Pembayaran lewat <b>ATM Bank Permata/Jaringan ATM Alto</b>:</p>
+                                    <ol>
+                                        <li><p>Masukkan PIN Anda.</p></li>
+                                        <li><p>Di Menu utama, pilih <b>Transaksi Lainnya</b>.</p></li>
+                                        <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
+                                        <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
+                                        <li><p>Masukkan 16 digit nomor akun virtual pembayaran.</p></li>
+                                        <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok tekan <b>Benar</b>.</p></li>
+                                        <li><p>Transaksi berhasil.</p></li>
+                                    </ol>
                                 </td>
                             </tr>
                         </table>
-
-                        @{ var jamTimeLimit = @Model.Payment.TimeLimit.GetValueOrDefault().AddHours(7);}
-                        <p style="font-style: italic; font-size: 11px; margin-left: 6%; margin-bottom: 0px;">Batas waktu transfer anda adalah sebelum <span style="color: #15b1e4">@Model.Payment.TimeLimit.GetValueOrDefault().ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Payment.TimeLimit.GetValueOrDefault().ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamTimeLimit.ToString("HH:mm")</span>.</p>
-                        <p style="font-size: 10px; opacity: 0.5; font-style: italic; margin-left: 6%; margin-top: 1px; margin-bottom: 50px;">Jika lewat, booking Anda akan dibatalkan otomatisoleh sistem kami. Untuk booking yang sama, Anda harus melakukan pemesanan ulang dan harga kemungkinan besar akan naik</p>
 
                         <table width="100%" style="margin-bottom: 30px">
-                            <tr>
-                                <td width="5%" rowspan="3" style="padding-top: 7px; vertical-align: top">
-                                    <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/no-2.png")" />
-                                </td>
-                                <td>
-                                    <p style="padding-left: 0.3%">Konfirmasikan pembayaran Anda dengan cukup meng-klik link ini :</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a style="color: #15b1e4" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)">@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/id/Flight/Confirmation?RsvNo=" + @Model.RsvNo)</a>
-                                </td>
-                            </tr>
                             <tr>
                                 <td>
                                     <p>Setelah itu, mohon tunggu hingga e-ticket/voucher diterbitkan dan dikirim ke email Anda maks. 60 menit</p>
                                 </td>
                             </tr>
                         </table>
-
-                        
-                        
-                        <p style="margin-left: 6%; opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> customercare@travorama.com </span> atau hubungi CS kami di <span style="color: #15b1e4">1500-650 </span>dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
+                    
+                        <p style="opacity: 0.8; font-size: 10px; font-style: italic; margin-bottom: 40px;">Jika ada pertanyaan dapat mengirimkan email ke <span style="color: #15b1e4"> cs@travorama.com </span> dengan mencantumkan <span style="color: #15b1e4">No. Pesanan Travorama @Model.RsvNo</span></p>
                         <hr style="border-color: #15b1e4; border-style: dotted; margin-bottom: 20px;" width="100%" />
                         <p>Email tagihan ini bukan merupakan bukti pembayaran yang sah dan tidak dapat ditukar menjadi tiket apapun.</p>
                         <p style=" font-size: 11px; font-style: italic; margin-bottom: 50px;">Email ini ditujukan hanya untuk @Model.Contact.Name, karna Anda telah melakukan pemesanan melalui Travorama</p>
