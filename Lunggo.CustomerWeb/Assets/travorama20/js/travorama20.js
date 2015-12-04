@@ -170,6 +170,11 @@ function flightPageFunctions() {
         $('.search-result-filter .filter-content>div').removeClass('active');
         $('.search-result-filter .filter-content>div#'+targetFilter).addClass('active');
     });
+    // close filter
+    $('.search-result-filter .close-filter').click(function() {
+        $(this).parent().removeClass('active');
+        $(this).parent().parent().siblings('.filter-trigger').children().removeClass('active');
+    });
 }
 
 var flightPageSearchFormParam = {

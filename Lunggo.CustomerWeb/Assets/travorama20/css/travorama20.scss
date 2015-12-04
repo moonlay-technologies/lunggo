@@ -200,8 +200,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 // slider
 .slider {margin-top:10px; margin-bottom:10px; background:#666;
-    .ui-slider-range {background:$color-main-blue;}
-    .ui-slider-handle {background:#dedede; @include border-radius($border-radius-default);}
+    .ui-slider-range {background:#fed446;}
+    .ui-slider-handle {background:#dedede; @include border-radius(20px); width:15px; height:15px; color:#fff;
+        &:focus {border:0;}
+    }
 }
 
 // page overlay
