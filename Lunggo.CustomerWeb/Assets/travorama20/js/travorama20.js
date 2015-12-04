@@ -750,6 +750,11 @@ function staticPageFunctions() {
 //********************
 // flight form search function
 function flightFormSearchFunctions() {
+
+    $(document).ready(function () {
+        $('.flight-submit-button').removeProp('disabled');
+    });
+
     //*****
     // index page config
     FlightSearchConfig.autocomplete = {    
