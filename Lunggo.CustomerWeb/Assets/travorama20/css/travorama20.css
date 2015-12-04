@@ -3718,6 +3718,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
       border: 1px solid #ccc;
       text-align: center;
       background: #fff; }
+    .payment-wrapper .payment.disabled {
+      opacity: 0.5; }
 
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
