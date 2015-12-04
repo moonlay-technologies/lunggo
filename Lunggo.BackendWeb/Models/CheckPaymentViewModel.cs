@@ -7,6 +7,7 @@ namespace Lunggo.BackendWeb.Models
     public class CheckPaymentViewModel
     {
         public List<TransferConfirmationReport> Reports;
-        public List<FlightReservation> Reservation;
+        public List<FlightReservation> ReportedReservations;
+        public List<FlightReservation> UnreportedReservations;
     }
 }

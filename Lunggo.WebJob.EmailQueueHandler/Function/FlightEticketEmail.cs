@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.BlobStorage;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;
@@ -15,6 +16,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightEticketEmail([QueueTrigger("flighteticketemail")] string rsvNo)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var sw = new Stopwatch();
             Console.WriteLine("Processing Flight Eticket Email for RsvNo " + rsvNo + "...");
 
@@ -34,7 +38,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {summary.Contact.Email},
-                Subject = "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
+                Subject = envPrefix + "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>

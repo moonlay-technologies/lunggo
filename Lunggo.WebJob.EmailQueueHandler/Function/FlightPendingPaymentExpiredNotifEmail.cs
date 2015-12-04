@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 
@@ -12,6 +14,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightPendingPaymentExpiredNotifEmail([QueueTrigger("flightpendingpaymentexpirednotifemail")] string rsvNo)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
             Console.WriteLine("Processing Flight Pending Payment Expired Notif Email for RsvNo " + rsvNo + "...");
@@ -29,12 +34,13 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 {
                     Status = PaymentStatus.Expired
                 });
+                PaymentService.GetInstance().UpdateTransferConfirmationReportStatus(rsvNo, TransferConfirmationReportStatus.Invalid);
                 var mailService = MailService.GetInstance();
                 var mailModel = new MailModel
                 {
                     RecipientList = new[] {reservation.Contact.Email},
                     Subject =
-                        "[Travorama] Reservasi Anda Kadaluarsa - No. Pemesanan " + reservation.RsvNo,
+                        envPrefix + "[Travorama] Reservasi Anda Kadaluarsa - No. Pemesanan " + reservation.RsvNo,
                     FromMail = "booking@travorama.com",
                     FromName = "Travorama"
                 };

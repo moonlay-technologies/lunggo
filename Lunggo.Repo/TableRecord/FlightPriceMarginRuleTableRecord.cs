@@ -353,6 +353,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
+		public Boolean? IsFlat
+		{
+		    get { return _IsFlat; }
+		    set
+		    {
+		        _IsFlat = value;
+		        IncrementLog("IsFlat");
+		    }
+		}
 
 		
 		private long? _RuleId;
@@ -393,6 +402,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
+		private Boolean? _IsFlat;
 
 
 		public static FlightPriceMarginRuleTableRecord CreateNewInstance()
@@ -462,6 +472,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
+				new ColumnMetadata("IsFlat", false),
 
             };
         }

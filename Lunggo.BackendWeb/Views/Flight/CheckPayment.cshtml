@@ -1,4 +1,5 @@
-﻿@using Lunggo.ApCommon.Payment.Constant
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Payment.Constant
 @model Lunggo.BackendWeb.Models.CheckPaymentViewModel
 
 @{
@@ -11,6 +12,54 @@
 
 
 <h2>Check Payment</h2>
+
+<div class="row showback">
+    <table>
+        <thead>
+            <tr>
+                <td>RsvNo</td>
+                <td>Date</td>
+                <td>Name</td>
+                <td>Bank</td>
+                <td>Account No.</td>
+                <td>Confirmed Amount</td>
+                <td>Price</td>
+                <td>Actual Amount</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var reports = Model.Reports;
+                var rsvs = Model.ReportedReservations;
+            }
+            @for (var i = 0; i < Model.Reports.Count; i++)
+            {
+                <tr>
+                    <td>@reports[i].RsvNo</td>
+                    <td>@reports[i].PaymentTime.ToString("dd MMM yy")</td>
+                    <td>@reports[i].RemitterName</td>
+                    <td>@reports[i].RemitterBank</td>
+                    <td>@reports[i].RemitterAccount</td>
+                    <td>Rp @reports[i].Amount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>@rsvs[i].Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                    <td>
+                        <input type="number" />
+                    </td>
+                    <td>
+                        @Html.DropDownList("[" + i + "].Status", new List<SelectListItem>
+                        {
+                            new SelectListItem {Text = "Uncheck", Value = TransferConfirmationReportStatus.Unchecked.ToString()},
+                            new SelectListItem {Text = "Confirmed", Value = TransferConfirmationReportStatus.Confirmed.ToString()},
+                            new SelectListItem {Text = "Invalid", Value = TransferConfirmationReportStatus.Invalid.ToString()},
+                        })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <div class="row">
     <button class='flip'>Switch Table</button>
 </div>
@@ -67,7 +116,7 @@
                         @Html.DisplayFor(isi => x.RsvNo, "RsvNo")
                     </td>
                     <td width="100px" align="center">
-                        @Html.DropDownList("["+ i +"].Status", new List<SelectListItem>
+                        @Html.DropDownList("[" + i + "].Status", new List<SelectListItem>
                     {
                         new SelectListItem {Text = "Uncheck", Value = TransferConfirmationReportStatus.Unchecked.ToString()},
                         new SelectListItem {Text = "Confirmed", Value = TransferConfirmationReportStatus.Confirmed.ToString()},
@@ -85,7 +134,7 @@
         </div>
     </div>
 }
-
+@*
 @using (Html.BeginForm("CheckReservation", "Flight", FormMethod.Post))
 {
     int i = 0;
@@ -98,13 +147,13 @@
                 <td width="100px" align="center">Paid Amount</td>
                 <td width="100px" align="center">Status</td>
             </tr>
-           
+
             @foreach (var x in Model.Reservation)
             {
                 <tr>
                     <td width="100px">
                         @Html.DisplayFor(isi => x.RsvNo)
-                        @Html.Hidden("["+ i +"].NoRsv", "" + x.RsvNo + "")
+                        @Html.Hidden("[" + i + "].NoRsv", "" + x.RsvNo + "")
                     </td>
                     <td width="150px">
                         @Html.DisplayFor(isi => x.RsvTime, "RsvTime")
@@ -125,7 +174,7 @@
             }
         </table>
     </div>
-    
+
     <div class="panel2 row">
         <div class="col-md-offset-10 col-md-1">
             <input type="submit" value="Submit" />
@@ -133,6 +182,6 @@
     </div>
 }
 
-        
-  
 
+
+*@

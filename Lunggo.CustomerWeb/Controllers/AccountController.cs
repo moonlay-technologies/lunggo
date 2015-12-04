@@ -60,27 +60,31 @@ namespace Lunggo.CustomerWeb.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
+
+            var returnPage = (ActionResult) View(model);
+            if (returnUrl.Contains("/Flight/Checkout"))
+                returnPage = Redirect(String.IsNullOrEmpty(returnUrl) || returnUrl.Contains("/Account/") ? defaultReturnUrl : returnUrl);
 
             if (!ModelState.IsValid)
             {
                 ViewBag.Message = "InvalidInputData";
-                return View(model);
+                return returnPage;
             }
 
             var foundUser = await UserManager.FindByEmailAsync(model.Email);
             if (foundUser == null)
             {
                 ViewBag.Message = "NotRegistered";
-                return View(model);
+                return returnPage;
             }
 
             if (!foundUser.EmailConfirmed)
             {
                 ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                return View(model);
+                return returnPage;
             }
 
-            var defaultReturnUrl = OnlineContext.GetDefaultHomePageUrl();
             var result =
                 await
                     SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
@@ -90,14 +94,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 case SignInStatus.Success:
                     return Redirect(String.IsNullOrEmpty(returnUrl) || returnUrl.Contains("/Account/") ? defaultReturnUrl : returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    return returnPage;
                 case SignInStatus.RequiresVerification:
                     ViewBag.Message = "AlreadyRegisteredButUnconfirmed";
-                    return View(model);
+                    return returnPage;
                 case SignInStatus.Failure:
                 default:
                     ViewBag.Message = "Failed";
-                    return View(model);
+                    return returnPage;
             }
 
         }

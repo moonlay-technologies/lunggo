@@ -254,6 +254,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
+		public Boolean? MarginIsFlat
+		{
+		    get { return _MarginIsFlat; }
+		    set
+		    {
+		        _MarginIsFlat = value;
+		        IncrementLog("MarginIsFlat");
+		    }
+		}
 
 		
 		private long? _ItineraryId;
@@ -283,6 +292,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
+		private Boolean? _MarginIsFlat;
 
 
 		public static FlightItineraryTableRecord CreateNewInstance()
@@ -341,6 +351,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
+				new ColumnMetadata("MarginIsFlat", false),
 
             };
         }

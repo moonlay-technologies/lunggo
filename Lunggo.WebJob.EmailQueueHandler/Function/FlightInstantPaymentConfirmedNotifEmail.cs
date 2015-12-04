@@ -11,6 +11,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightInstantPaymentConfirmedNotifEmail([QueueTrigger("flightinstantpaymentconfirmednotifemail")] string rsvNo)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var flightService = FlightService.GetInstance();
             var sw = new Stopwatch();
             Console.WriteLine("Processing Flight Instant Payment Confirmed Notif Email for RsvNo " + rsvNo + "...");
@@ -26,15 +29,14 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailModel = new MailModel
             {
                 RecipientList = new[] {reservation.Contact.Email},
-                Subject = "[Travorama] Terima Kasih Sudah Memesan di Travorama - No. Pemesanan " + reservation.RsvNo,
+                Subject = envPrefix + "[Travorama] Terima Kasih Sudah Memesan di Travorama - No. Pemesanan " + reservation.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var mailModel2 = new MailModel
             {
                 RecipientList = new[] { "rama.adhitia@travelmadezy.com", "developer@travelmadezy.com" },
-                Subject = env == "production" ? "Pelunasan Reservasi No. " + rsvNo : "[TEST] Ignore This Email",
+                Subject = envPrefix + env == "production" ? "Pelunasan Reservasi No. " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"
             };

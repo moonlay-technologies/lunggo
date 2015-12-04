@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Subscriber;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
@@ -11,6 +12,9 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void InitialSubscriberEmail([QueueTrigger("initialsubscriberemail")] string messageJson)
         {
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
+
             var sw = new Stopwatch();
             var message = JsonConvert.DeserializeObject<SubscriberEmailModel>(messageJson);
             var address = message.Email;
@@ -23,7 +27,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 RecipientList = new[] {address},
                 FromMail = "no-reply@travorama.com",
                 FromName = "Travorama.com",
-                Subject = "[Travorama] Terima Kasih Telah Berlangganan Newsletter Travorama"
+                Subject = envPrefix + "[Travorama] Terima Kasih Telah Berlangganan Newsletter Travorama"
             };
             mailService.SendEmail(message, mailModel, "InitialSubscriberEmail");
             sw.Stop();

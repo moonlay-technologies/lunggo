@@ -138,13 +138,24 @@ namespace Lunggo.ApCommon.Flight.Service
         private static void ApplyMarginRule(FlightItinerary fare, MarginRule rule)
         {
             fare.MarginId = rule.RuleId;
-            var modifiedFare = fare.OriginalIdrPrice*(1M + rule.Coefficient) + rule.Constant;
-            var roundingAmount = RoundingOrder - (modifiedFare%RoundingOrder);
-            var finalFare = modifiedFare + roundingAmount;
-            fare.MarginCoefficient = rule.Coefficient;
-            fare.MarginConstant = rule.Constant + roundingAmount;
-            fare.MarginNominal = finalFare - fare.OriginalIdrPrice;
-            fare.FinalIdrPrice = finalFare;
+            fare.MarginIsFlat = rule.IsFlat;
+            if (rule.IsFlat)
+            {
+                fare.FinalIdrPrice = rule.Constant;
+                fare.MarginCoefficient = 0M;
+                fare.MarginConstant = rule.Constant;
+                fare.MarginNominal = fare.OriginalIdrPrice - fare.FinalIdrPrice;    
+            }
+            else
+            {
+                var modifiedFare = fare.OriginalIdrPrice*(1M + rule.Coefficient) + rule.Constant;
+                var roundingAmount = RoundingOrder - (modifiedFare%RoundingOrder);
+                var finalFare = modifiedFare + roundingAmount;
+                fare.MarginCoefficient = rule.Coefficient;
+                fare.MarginConstant = rule.Constant + roundingAmount;
+                fare.MarginNominal = finalFare - fare.OriginalIdrPrice;
+                fare.FinalIdrPrice = finalFare;
+            }
         }
 
         private static MarginRule GetFirstMatchingRule(FlightItinerary fare, List<MarginRule> rules)
