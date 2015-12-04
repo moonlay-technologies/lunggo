@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
+@using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 
 <!DOCTYPE html>
@@ -96,16 +97,10 @@
                         <tbody>
                             <tr>
                                 <td class="number">@Model.RsvNo</td>
-                                <td class="payment-method">@Model.Payment.Method</td>
+                                <td class="payment-method">@EnumDisplay.PaymentMethod(Model.Payment.Method)</td>
                                 <td class="payment-status">Lunas</td>
                                 <td class="terms">Due on Receipt</td>
                             </tr>
-                            <!--<tr>
-                                <td class="number">1234567890</td>
-                                <td class="payment-method">Mandiri ClickPay</td>
-                                <td class="payment-status">Lunas</td>
-                                <td class="terms">Due on Receipt</td>
-                            </tr>-->
                         </tbody>
                     </table>
                 </div>

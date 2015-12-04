@@ -1,6 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Constant
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
 @{
@@ -118,8 +119,8 @@
                         var passenger = Model.Passengers[j];
                         <tr>
                             <td class="no">@(j + 1)</td>
-                            <td class="name">@passenger.Title @passenger.FirstName @passenger.LastName</td>
-                            <td class="type">@passenger.Type</td>
+                            <td class="name">@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</td>
+                            <td class="type">@EnumDisplay.PassengerType(passenger.Type)</td>
                         </tr>
                     }
                 </tbody>

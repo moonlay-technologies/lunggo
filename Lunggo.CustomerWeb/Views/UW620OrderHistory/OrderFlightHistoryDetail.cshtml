@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Identity.User
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Extension
@@ -94,13 +95,13 @@
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Method</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.Payment.Method</p>
+                                            <p class="form-control-static">@EnumDisplay.PaymentMethod(Model.Payment.Method)</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-xs-3">Payment Status</label>
                                         <div class="col-xs-9">
-                                            <p class="form-control-static">@Model.Payment.Status</p>
+                                            <p class="form-control-static">@EnumDisplay.PaymentStatus(Model.Payment.Status)</p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -112,10 +113,10 @@
                                                     <li>
                                                         <div class="row">
                                                             <div class="col-xs-9">
-                                                                <p>@passenger.Title @passenger.FirstName @passenger.LastName</p>
+                                                                <p>@EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p>
                                                             </div>
                                                             <div class="col-xs-3">
-                                                                <span>@passenger.Type</span>
+                                                                <span>@EnumDisplay.PassengerType(passenger.Type)</span>
                                                             </div>
                                                         </div>
                                                     </li>

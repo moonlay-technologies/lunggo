@@ -7,7 +7,16 @@
         BankTransfer = 2,
         MandiriClickPay = 3,
         CimbClicks = 4,
-        VirtualAccount = 5
+        VirtualAccount = 5,
+        BcaKlikpay = 6,
+        EpayBri = 7,
+        TelkomselTcash = 8,
+        XlTunai = 9,
+        BbmMoney = 10,
+        IndosatDompetku = 11,
+        MandiriEcash = 12,
+        MandiriBillPayment = 13,
+        Indomaret = 14
     }
 
     internal class PaymentMethodCd
@@ -26,6 +35,24 @@
                     return "CCL";
                 case PaymentMethod.VirtualAccount:
                     return "VIR";
+                case PaymentMethod.BcaKlikpay:
+                    return "BKP";
+                case PaymentMethod.EpayBri:
+                    return "EPB";
+                case PaymentMethod.TelkomselTcash:
+                    return "TTC";
+                case PaymentMethod.XlTunai:
+                    return "XLT";
+                case PaymentMethod.BbmMoney:
+                    return "BBM";
+                case PaymentMethod.IndosatDompetku:
+                    return "IND";
+                case PaymentMethod.MandiriEcash:
+                    return "MEC";
+                case PaymentMethod.MandiriBillPayment:
+                    return "MBP";
+                case PaymentMethod.Indomaret:
+                    return "IDM";
                 default:
                     return "";
             }
@@ -44,6 +71,24 @@
                     return PaymentMethod.CimbClicks;
                 case "VIR":
                     return PaymentMethod.VirtualAccount;
+                case "BKP":
+                    return PaymentMethod.BcaKlikpay;
+                case "EPB":
+                    return PaymentMethod.EpayBri;
+                case "TTC":
+                    return PaymentMethod.TelkomselTcash;
+                case "XLT":
+                    return PaymentMethod.XlTunai;
+                case "BBM":
+                    return PaymentMethod.BbmMoney;
+                case "IND":
+                    return PaymentMethod.IndosatDompetku;
+                case "MEC":
+                    return PaymentMethod.MandiriEcash;
+                case "MBP":
+                    return PaymentMethod.MandiriBillPayment;
+                case "IDM":
+                    return PaymentMethod.Indomaret;
                 default:
                     return PaymentMethod.Undefined;
             }

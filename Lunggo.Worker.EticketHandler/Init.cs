@@ -5,6 +5,7 @@ using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
@@ -19,6 +20,7 @@ namespace Lunggo.Worker.EticketHandler
             InitConfigurationManager();
             InitDatabaseService();
             InitDictionaryService();
+            InitI18NMessageManager();
             InitQueueService();
             InitTableStorageService();
             InitHtmlTemplateService();
@@ -51,6 +53,12 @@ namespace Lunggo.Worker.EticketHandler
         {
             var dict = DictionaryService.GetInstance();
             dict.Init("Config/");
+        }
+
+        private static void InitI18NMessageManager()
+        {
+            var messageManager = MessageManager.GetInstance();
+            messageManager.Init("Config/");
         }
 
         private static void InitQueueService()

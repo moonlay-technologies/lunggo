@@ -1,5 +1,60 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Messages>
+  <Message code="AC00001" lang="en_US" value="Mr." />
+  <Message code="AC00001" lang="id_ID" value="Tn." />
+  <Message code="AC00002" lang="en_US" value="Mrs." />
+  <Message code="AC00002" lang="id_ID" value="Ny." />
+  <Message code="AC00003" lang="en_US" value="Ms." />
+  <Message code="AC00003" lang="id_ID" value="Nn." />
+  <Message code="AC00004" lang="en_US" value="Bank Transfer" />
+  <Message code="AC00004" lang="id_ID" value="Transfer Bank" />
+  <Message code="AC00005" lang="en_US" value="Credit Card" />
+  <Message code="AC00005" lang="id_ID" value="Kartu Kredit" />
+  <Message code="AC00006" lang="en_US" value="ATM / Virtual Account" />
+  <Message code="AC00006" lang="id_ID" value="ATM / Virtual Account" />
+  <Message code="AC00007" lang="en_US" value="Mandiri Clickpay" />
+  <Message code="AC00007" lang="id_ID" value="Mandiri Clickpay" />
+  <Message code="AC00008" lang="en_US" value="CIMB Clicks" />
+  <Message code="AC00008" lang="id_ID" value="CIMB Clicks" />
+  <Message code="AC00009" lang="en_US" value="BCA Klikpay" />
+  <Message code="AC00009" lang="id_ID" value="BCA Klikpay" />
+  <Message code="AC00010" lang="en_US" value="e-Pay BRI" />
+  <Message code="AC00010" lang="id_ID" value="e-Pay BRI" />
+  <Message code="AC00011" lang="en_US" value="Telkomsel T-Cash" />
+  <Message code="AC00011" lang="id_ID" value="Telkomsel T-Cash" />
+  <Message code="AC00012" lang="en_US" value="XL Tunai" />
+  <Message code="AC00012" lang="id_ID" value="XL Tunai" />
+  <Message code="AC00013" lang="en_US" value="BBM Money" />
+  <Message code="AC00013" lang="id_ID" value="BBM Money" />
+  <Message code="AC00014" lang="en_US" value="Indosat Dompetku" />
+  <Message code="AC00014" lang="id_ID" value="Indosat Dompetku" />
+  <Message code="AC00015" lang="en_US" value="Mandiri e-cash" />
+  <Message code="AC00015" lang="id_ID" value="Mandiri e-cash" />
+  <Message code="AC00016" lang="en_US" value="Mandiri Bill Payment" />
+  <Message code="AC00016" lang="id_ID" value="Mandiri Bill Payment" />
+  <Message code="AC00017" lang="en_US" value="Indomaret" />
+  <Message code="AC00017" lang="id_ID" value="Indomaret" />
+  <Message code="AC00018" lang="en_US" value="Pending" />
+  <Message code="AC00018" lang="id_ID" value="Menunggu Pembayaran" />
+  <Message code="AC00019" lang="en_US" value="Settled" />
+  <Message code="AC00019" lang="id_ID" value="Lunas" />
+  <Message code="AC00020" lang="en_US" value="Denied" />
+  <Message code="AC00020" lang="id_ID" value="Ditolak" />
+  <Message code="AC00021" lang="en_US" value="Expired" />
+  <Message code="AC00021" lang="id_ID" value="Kadaluarsa" />
+  <Message code="AC00022" lang="en_US" value="Verifying" />
+  <Message code="AC00022" lang="id_ID" value="Memverifikasi Pembayaran" />
+  <Message code="AC00023" lang="en_US" value="Challenged" />
+  <Message code="AC00023" lang="id_ID" value="Menunggu Konfirmasi Ulang" />
+  <Message code="AC00024" lang="en_US" value="Canceled" />
+  <Message code="AC00024" lang="id_ID" value="Dibatalkan" />
+  <Message code="AC00025" lang="en_US" value="Adult" />
+  <Message code="AC00025" lang="id_ID" value="Dewasa" />
+  <Message code="AC00026" lang="en_US" value="Child" />
+  <Message code="AC00026" lang="id_ID" value="Anak" />
+  <Message code="AC00027" lang="en_US" value="Infant" />
+  <Message code="AC00027" lang="id_ID" value="Bayi" />
+  
   <Message code="CW00001" lang="en_US" value="Filter" />
   <Message code="CW00001" lang="id_ID" value="Filter" />
   <Message code="CW00002" lang="en_US" value="Stops" />
