@@ -116,6 +116,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
             h5 {color:#fff; color:#fff; margin:0; padding:10px; padding-left:40px; font-size:12px; font-weight:600;}
         }
         section {padding:12px; border:$border-default; text-align:center; background:#fff;}
+        // if disabled
+        &.disabled {opacity:0.5;}
     }
 }
 

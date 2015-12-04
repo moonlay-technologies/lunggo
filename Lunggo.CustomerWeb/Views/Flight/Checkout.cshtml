@@ -2,6 +2,7 @@
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
+@using Lunggo.Framework.Config
 @model Lunggo.CustomerWeb.Models.FlightCheckoutData
 
 @{
@@ -52,6 +53,8 @@
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
+        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
+        //var transferWindow = [ '1100', '1124' ];
         // messages
         var message = '@ViewBag.Message';
         // possible values : 
@@ -446,10 +449,10 @@
                                     <div class="row">
 
                                         <div class="payment transfer col-xs-4">
-                                            <label>
+                                            <label ng-class="{ 'disabled' : !transferWindowOpen }">
                                                 <header>
                                                     <div class="input-wrapper">
-                                                        <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked />
+                                                        <input ng-disabled="!transferWindowOpen" type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" checked />
                                                     </div>
                                                     <h5>Bank Transfer</h5>
                                                 </header>

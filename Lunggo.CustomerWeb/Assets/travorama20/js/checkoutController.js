@@ -429,6 +429,23 @@ app.controller('checkoutController', [
             console.log($scope);
         }
 
+        //********************
+        // transfer window
+        $scope.transferWindow = transferWindow;
+        $scope.rightNow = new Date();
+        $scope.rightNow = ($scope.rightNow.getHours() + '' + $scope.rightNow.getMinutes());
+        $scope.rightNow = parseInt($scope.rightNow);
+        $scope.transferWindowOpen = true;
+        if ( $scope.rightNow >= parseInt($scope.transferWindow[0]) && $scope.rightNow <= parseInt($scope.transferWindow[1]) ) {
+            $scope.transferWindowOpen = true;
+        } else {
+            $scope.transferWindowOpen = false;
+        }
+        console.log($scope.rightNow);
+        console.log(parseInt($scope.transferWindow[0]));
+        console.log(parseInt($scope.transferWindow[1]));
+        console.log( $scope.transferWindowOpen );
+
     }
 ]);// checkout controller
 
