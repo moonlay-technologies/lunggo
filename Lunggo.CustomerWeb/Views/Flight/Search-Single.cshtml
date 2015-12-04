@@ -232,27 +232,26 @@
                         </div>
                         <div class="filter-content">
                             <div id="filter-transit" class="filter-transit">
-                                <h3>Saring Berdasarkan Pemberhentian</h3>
+                                <div class="close-filter">X</div>
+                                <h3>Saring Berdasarkan Pemberhentian 
+                                    <span class="pull-right">
+                                        <label class="select-all" ng-click="stopFilterParam.direct = true; stopFilterParam.one = true; stopFilterParam.two = true">Pilih Semua</label>
+                                        <label class="select-none" ng-click="stopFilterParam.direct = false; stopFilterParam.one = false; stopFilterParam.two = false">Nihil</label>
+                                    </span>
+                                </h3>
                                 <div class="tab-detail">
                                     <label><input type="checkbox" value="" ng-model="stopFilterParam.direct" /> Penerbangan Langsung</label>
                                     <label><input type="checkbox" value="" ng-model="stopFilterParam.one" /> 1x Transit</label>
                                     <label><input type="checkbox" value="" ng-model="stopFilterParam.two" /> Lebih Dari 1x Transit</label>
                                 </div>
-                                <div class="tab-option">
-                                    <label class="select-all" ng-click="stopFilterParam.direct = true; stopFilterParam.one = true; stopFilterParam.two = true">Pilih Semua</label>
-                                    <label class="select-none" ng-click="stopFilterParam.direct = false; stopFilterParam.one = false; stopFilterParam.two = false">Nihil</label>
-                                </div>
                             </div>
                             <div id="filter-price" class="filter-price">
+                                <div class="close-filter">X</div>
                                 <h3>Saring Berdasarkan Harga</h3>
-                                <div class="slider-value">
-                                    <span>Rp {{priceFilterParam.current[0] | number}}</span>
-                                    <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>
-                                </div>
                                 <div class="slider price-slider" id="price-slider"></div>
                                 <div class="slider-minmax">
-                                    <span>Rp {{priceFilterParam.initial[0] | number}}</span>
-                                    <span class="pull-right">Rp {{priceFilterParam.initial[1] | number}}</span>
+                                    <span>Rp {{priceFilterParam.current[0] | number}}</span>
+                                    <span class="pull-right">Rp {{priceFilterParam.current[1] | number}}</span>
                                 </div>
                                 <div class="hidden">
                                     <input type="text" name="priceSliderValueMin" value="" class="price-slider-min" ng-model="priceFilterParam.current[0]" />
@@ -260,7 +259,13 @@
                                 </div>
                             </div>
                             <div id="filter-airline" class="filter-airline">
-                                <h3>Saring Berdasarkan Maskapai</h3>
+                                <div class="close-filter">X</div>
+                                <h3>Saring Berdasarkan Maskapai
+                                    <span class="pull-right">
+                                        <label class="select-all" ng-click="setAirlineFilter('all')">Pilih Semua</label>
+                                        <label class="select-none" ng-click="setAirlineFilter('none')">Nihil</label>
+                                    </span>
+                                </h3>
                                 <div class="tab-detail">
                                     <div class="row" ng-repeat="airline in airlineFilterParam.airlines" ng-if="$index % 4 == 0">
                                         <div class="col-sm-3">
@@ -293,26 +298,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-option">
-                                    <label class="select-all" ng-click="setAirlineFilter('all')">Pilih Semua</label>
-                                    <label class="select-none" ng-click="setAirlineFilter('none')">Nihil</label>
-                                </div>
                             </div>
                             <div id="filter-time" class="filter-time">
+                                <div class="close-filter">X</div>
                                 <h3>Saring Berdasarkan Waktu</h3>
                                 <div class="tab-detail">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="departure">
                                                 <h5>Waktu keberangkatan</h5>
-                                                <div class="slider-value">
-                                                    <span>{{timeFilterParam.departure[0]}}:00</span>
-                                                    <span class="pull-right">{{timeFilterParam.departure[1]}}:00</span>
-                                                </div>
                                                 <div class="slider departure-slider"></div>
                                                 <div class="slider-minmax">
-                                                    <span>00:00</span>
-                                                    <span class="pull-right">24:00</span>
+                                                    <span>{{timeFilterParam.departure[0]}}:00</span>
+                                                    <span class="pull-right">{{timeFilterParam.departure[1]}}:00</span>
                                                 </div>
                                                 <div class="hidden">
                                                     <input type="text" name="departureMin" value="" class="departure-slider-min" ng-model="timeFilterParam.departure[0]" />
@@ -323,14 +321,10 @@
                                         <div class="col-sm-6">
                                             <div class="arrival">
                                                 <h5>Waktu kedatangan</h5>
-                                                <div class="slider-value">
-                                                    <span>{{timeFilterParam.arrival[0]}}:00</span>
-                                                    <span class="pull-right">{{timeFilterParam.arrival[1]}}:00</span>
-                                                </div>
                                                 <div class="slider arrival-slider"></div>
                                                 <div class="slider-minmax">
-                                                    <span>00:00</span>
-                                                    <span class="pull-right">24:00</span>
+                                                    <span>{{timeFilterParam.arrival[0]}}:00</span>
+                                                    <span class="pull-right">{{timeFilterParam.arrival[1]}}:00</span>
                                                 </div>
                                                 <div class="hidden">
                                                     <input type="text" name="arrivalMin" value="" class="arrival-slider-min" ng-model="timeFilterParam.arrival[0]" />

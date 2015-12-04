@@ -351,12 +351,17 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 10px;
   background: #666; }
   .slider .ui-slider-range {
-    background: #1daee4; }
+    background: #fed446; }
   .slider .ui-slider-handle {
     background: #dedede;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px; }
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+    color: #fff; }
+    .slider .ui-slider-handle:focus {
+      border: 0; }
 
 .page-overlay {
   position: fixed;
@@ -1694,8 +1699,32 @@ file: /Assets/travorama20/css/_page_flight.scss
       padding: 25px;
       position: relative;
       display: none; }
+      .page-flight .search-result-filter .filter-right .filter-content > div .close-filter {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #fff;
+        background: #525252;
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 2px; }
       .page-flight .search-result-filter .filter-right .filter-content > div h3 {
-        margin-top: 0; }
+        margin-top: 0;
+        font-weight: bold;
+        font-size: 14px; }
+        .page-flight .search-result-filter .filter-right .filter-content > div h3 span {
+          padding-right: 20px; }
+          .page-flight .search-result-filter .filter-right .filter-content > div h3 span label {
+            font-weight: normal;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            color: #fed446;
+            margin-left: 10px; }
       .page-flight .search-result-filter .filter-right .filter-content > div.active {
         display: block; }
       .page-flight .search-result-filter .filter-right .filter-content > div .tab-option {
@@ -1718,18 +1747,29 @@ file: /Assets/travorama20/css/_page_flight.scss
           display: block;
           cursor: pointer; }
       .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail {
-        width: 590px; }
+        width: 740px; }
         .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .row {
           margin-bottom: 15px; }
-        .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline label {
-          cursor: pointer; }
-        .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline input {
-          float: left; }
-        .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline img {
-          width: 50px;
-          display: block; }
-        .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline span {
-          display: block; }
+        .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline {
+          text-align: center;
+          background: #fff; }
+          .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline label {
+            cursor: pointer;
+            display: block;
+            padding: 5px;
+            position: relative; }
+          .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline input {
+            float: left;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            margin: 0; }
+          .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline img {
+            width: 50px;
+            display: inline-block; }
+          .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-detail .airline span {
+            display: block;
+            color: #2bafe1; }
       .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-option {
         padding: 15px; }
         .page-flight .search-result-filter .filter-right .filter-content > div.filter-airline .tab-option label {
@@ -1739,6 +1779,8 @@ file: /Assets/travorama20/css/_page_flight.scss
         padding-right: 15px; }
       .page-flight .search-result-filter .filter-right .filter-content > div.filter-time .tab-detail .arrival {
         padding-left: 15px; }
+      .page-flight .search-result-filter .filter-right .filter-content > div .slider-minmax {
+        color: #fed446; }
 
 .page-flight .search-result-warning {
   margin-bottom: 10px; }
@@ -2912,7 +2954,7 @@ file: /Assets/travorama20/css/_page_flight.scss
       margin-left: 0;
       padding-left: 0; }
     .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-content .filter-airline .tab-detail {
-      width: 300px; }
+      width: 420px; }
     .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-content .filter-duration .departure {
       padding-right: 10px; }
     .page-flight.page-flight-return .search-result-container .search-result-filter .filter-right .filter-content .filter-duration .arrival {
@@ -3718,6 +3760,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
       border: 1px solid #ccc;
       text-align: center;
       background: #fff; }
+    .payment-wrapper .payment.disabled {
+      opacity: 0.5; }
 
 .widget-container .widget .widget-content {
   background: #f4f4f4; }
