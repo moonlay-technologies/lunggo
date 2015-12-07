@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.User;
 using Lunggo.ApCommon.Payment;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
@@ -135,19 +136,25 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Confirmation(string rsvNo)
         {
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            return View(new FlightPaymentConfirmationData
+            if (reservation.Payment.Method == PaymentMethod.BankTransfer &&
+                (reservation.Payment.Status == PaymentStatus.Pending || reservation.Payment.Status == PaymentStatus.Challenged))
+            {
+                return View(new FlightPaymentConfirmationData
                 {
                     RsvNo = rsvNo,
                     FinalPrice = reservation.Payment.FinalPrice,
                     TimeLimit = reservation.Payment.TimeLimit.GetValueOrDefault()
                 });
+            }
+            else
+                return RedirectToAction("Index", "UW000TopPage");
         }
 
         [HttpPost]
         public ActionResult Confirmation(TransferConfirmationReport report, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("Confirmation", "Flight", new {report.RsvNo});
+                return RedirectToAction("Confirmation", "Flight", new { report.RsvNo });
             var fileInfo = file != null && file.ContentLength > 0
                 ? new FileInfo
                 {

@@ -37,7 +37,7 @@ namespace Lunggo.BackendWeb.Controllers
 
         public ActionResult CheckPayment()
         {
-            var reports = PaymentService.GetInstance().GetAllTransferConfirmationReports();
+            var reports = PaymentService.GetInstance().GetUncheckedTransferConfirmationReports();
             var reservations = FlightService.GetInstance().GetUnpaidReservations();
             var reportedReservations = reservations.Where(rsv => reports.Exists(rep => rep.RsvNo == rsv.RsvNo)).ToList();
             var unreportedReservations = reservations.Except(reportedReservations);
@@ -51,32 +51,26 @@ namespace Lunggo.BackendWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckReservation(List<CheckReservationControllerModel> reservationPayments)
-        {
-            var useReservation = FlightService.GetInstance();
-            foreach (var Payment in reservationPayments)
-            {
-                Payment.PaymentInfo.Status = Payment.Status;
-                useReservation.UpdateFlightPayment(Payment.NoRsv, Payment.PaymentInfo);
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
         public ActionResult CheckPayment(List<CheckPaymentControllerModel> payments)
         {
-            var usePayment = PaymentService.GetInstance();
+            var payment = PaymentService.GetInstance();
+            var flight = FlightService.GetInstance();
             foreach (var listPayment in payments)
             {
-                usePayment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
-                if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
-                    FlightService.GetInstance().UpdateFlightPayment(listPayment.RsvNo, new PaymentInfo
+                if (listPayment.Status != TransferConfirmationReportStatus.Unchecked)
+                {
+                    payment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
+                    if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
                     {
-                        PaidAmount = listPayment.Amount,
-                        Status = PaymentStatus.Settled
-                    });
+                        var updatedInfo = new PaymentInfo {PaidAmount = listPayment.Amount};
+                        var reservation = flight.GetReservationForDisplay(listPayment.RsvNo);
+                        if (listPayment.Amount >= reservation.Payment.FinalPrice)
+                            updatedInfo.Status = PaymentStatus.Settled;
+                        FlightService.GetInstance().UpdateFlightPayment(listPayment.RsvNo, updatedInfo);
+                    }   
+                }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("CheckPayment", "Flight");
         }
 
         public ActionResult ExchangeRate()

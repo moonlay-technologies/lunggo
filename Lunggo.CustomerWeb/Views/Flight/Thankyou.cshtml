@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.Framework.Config
@@ -202,7 +203,7 @@ else
                                     @switch (Model.Payment.Method)
                                     {
                                         case PaymentMethod.CreditCard:
-                                            <h5>Credit Card</h5>
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
                                             <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
                                             break;
                                     }

@@ -2,6 +2,7 @@
 using System.Linq;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Veritrans;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
@@ -108,13 +109,12 @@ namespace Lunggo.ApCommon.Payment
             return BlobStorageService.GetInstance().WriteFileToBlob(fileDto);
         }
 
-        public List<TransferConfirmationReport> GetAllTransferConfirmationReports()
+        public List<TransferConfirmationReport> GetUncheckedTransferConfirmationReports()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 return
-                    TransferConfirmationReportTableRepo.GetInstance()
-                        .FindAll(conn)
+                    GetUncheckedTransferConfirmationReportsQuery.GetInstance().Execute(conn, null)
                         .Select(record => new TransferConfirmationReport
                         {
                             RsvNo = record.RsvNo,

@@ -381,6 +381,7 @@
     <Compile Include="Payment\Model\RefundInfo.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
     <Compile Include="Payment\PaymentService.cs" />
+    <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs" />
     <Compile Include="Sequence\ActivityIdSequence.cs" />
     <Compile Include="Sequence\FlightBookingIdSequence.cs" />
     <Compile Include="Sequence\FlightPriceMarginRuleIdSequence.cs" />
