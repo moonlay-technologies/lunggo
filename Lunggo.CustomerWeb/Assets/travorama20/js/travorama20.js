@@ -466,9 +466,10 @@ function flightPageSearchFormFunctions() {
         $('.form-flight-departure .year').html(DepartureDate.getFullYear());
         flightPageSearchFormParam.departureDate = DepartureDate;
         // set default date for return flight
-        var ReturnDate = FlightData.ReturnDate || DepartureDate.setDate(DepartureDate.getDate() + 2);
+        var PreReturnDate = new Date(DepartureDate);
+        PreReturnDate = new Date(PreReturnDate.setDate( PreReturnDate.getDate() + 2));
+        var ReturnDate = FlightData.ReturnDate || PreReturnDate;
         ReturnDate = new Date(ReturnDate);
-        console.log(ReturnDate);
         $('.form-flight-return .date').html(('0' + (ReturnDate.getDate())).slice(-2));
         $('.form-flight-return .month').html(translateMonth(ReturnDate.getMonth()));
         $('.form-flight-return .year').html(ReturnDate.getFullYear());
