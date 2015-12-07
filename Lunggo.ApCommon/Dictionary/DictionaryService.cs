@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.WebPages;
-using CsQuery.ExtensionMethods.Internal;
 
 namespace Lunggo.ApCommon.Dictionary
 {
@@ -59,7 +58,7 @@ namespace Lunggo.ApCommon.Dictionary
             {
                 _configPath = HttpContext.Current != null
                     ? HttpContext.Current.Server.MapPath(@"~/" + folderName + @"/")
-                    : folderName.IsNullOrEmpty()
+                    : string.IsNullOrEmpty(folderName)
                         ? ""
                         : folderName + @"\";
                 _airlineFilePath = Path.Combine(_configPath, AirlineFileName);

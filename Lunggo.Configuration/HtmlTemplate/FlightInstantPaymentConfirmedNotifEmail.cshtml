@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Flight.Model.FlightReservationForDisplay
 
@@ -74,7 +75,7 @@
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5;">Metode Pembayaran.</p>
-                                <p style=""><b>@Model.Payment.Method</b></p>
+                                <p style=""><b>@EnumDisplay.PaymentMethod(Model.Payment.Method)</b></p>
                             </td>
                         </tr>
                     </table>
@@ -174,7 +175,7 @@
                                 <hr style="border-color:#15b1e4;" />
                             </td>
                             <td width="7%">
-                                @Model.Passengers[0].Type
+                                @EnumDisplay.PassengerType(Model.Passengers[0].Type)
                             </td>
                         </tr>
                         @for (int k = 1; k < i; k++)
@@ -191,7 +192,7 @@
                                     <hr style="border-color:#15b1e4;" />
                                 </td>
                                 <td width="7%">
-                                    @Model.Passengers[k].Type
+                                    @EnumDisplay.PassengerType(Model.Passengers[k].Type)
                                 </td>
                             </tr>
                         }

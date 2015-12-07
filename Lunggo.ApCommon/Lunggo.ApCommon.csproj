@@ -159,6 +159,7 @@
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
+    <Compile Include="Constant\EnumDisplay.cs" />
     <Compile Include="Constant\EnumReservationType.cs" />
     <Compile Include="Constant\Supplier.cs" />
     <Compile Include="Constant\PaymentConstant.cs" />

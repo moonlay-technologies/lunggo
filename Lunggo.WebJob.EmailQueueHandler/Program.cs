@@ -9,6 +9,7 @@ using Lunggo.Framework.Core;
 using Lunggo.Framework.Core.CustomTraceListener;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.TableStorage;
@@ -40,6 +41,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitDatabaseService();
             InitQueueService();
             InitHtmlTemplateService();
+            InitI18NMessageManager();
             InitMailService();
             InitBlobStorageService();
             InitDictionaryService();
@@ -63,6 +65,12 @@ namespace Lunggo.WebJob.EmailQueueHandler
         {
             var dict = DictionaryService.GetInstance();
             dict.Init("");
+        }
+
+        private static void InitI18NMessageManager()
+        {
+            var messageManager = MessageManager.GetInstance();
+            messageManager.Init("");
         }
 
         private static void InitQueueService()

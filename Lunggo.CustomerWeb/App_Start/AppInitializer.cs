@@ -78,9 +78,8 @@ namespace Lunggo.CustomerWeb
 
         private static void InitI18NMessageManager()
         {
-            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
             var messageManager = MessageManager.GetInstance();
-            messageManager.Init(configDirectoryPath);
+            messageManager.Init("Config");
         }
 
         private static void InitUniqueIdGenerator()

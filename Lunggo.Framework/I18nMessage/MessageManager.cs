@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Xml.Linq;
 
 namespace Lunggo.Framework.I18nMessage
@@ -29,7 +30,12 @@ namespace Lunggo.Framework.I18nMessage
         {
             if (!_isInitialized)
             {
-                _messageDictionary = LoadMessageFileToDictionary(Path.Combine(directoryPath, MessageXmlUrl));
+                var path = HttpContext.Current != null
+                    ? HttpContext.Current.Server.MapPath(@"~/" + directoryPath + @"/")
+                    : string.IsNullOrEmpty(directoryPath)
+                        ? ""
+                        : directoryPath + @"\";
+                _messageDictionary = LoadMessageFileToDictionary(Path.Combine(path, MessageXmlUrl));
                 _isInitialized = true;
             }
             else
