@@ -21,7 +21,7 @@ namespace Lunggo.BackendWeb
             InitI18NMessageManager();
             InitDatabaseService();
             InitRedisService();
-            //InitQueueService();
+            InitQueueService();
             //InitLogger();
             InitDictionaryService();
             InitFlightService();
