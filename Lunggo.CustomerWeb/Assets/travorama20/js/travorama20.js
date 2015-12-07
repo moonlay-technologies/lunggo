@@ -752,9 +752,16 @@ function staticPageFunctions() {
 // flight form search function
 function flightFormSearchFunctions() {
 
-    $(document).ready(function () {
-        $('.flight-submit-button').removeProp('disabled');
+    //$(document).ready(function () {
+    //    $('.flight-submit-button').removeProp('disabled');
+    //});
+    $(window).bind("pageshow", function (event) {
+        if (event.originalEvent.persisted) {
+            $('.flight-submit-button').removeProp('disabled');
+            window.location.reload();
+        }
     });
+
 
     //*****
     // index page config
