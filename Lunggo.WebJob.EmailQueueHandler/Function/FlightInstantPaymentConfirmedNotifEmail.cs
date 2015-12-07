@@ -20,7 +20,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
-            var reservation = flightService.GetOverviewReservation(rsvNo);
+            var reservation = flightService.GetReservationForDisplay(rsvNo);
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
