@@ -4143,6 +4143,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
       background: url(/Assets/images/print-image.png) top left no-repeat;
       padding-left: 36px;
       font-size: 18px; }
+  .page-thankyou .countdown p {
+    margin-top: 15px; }
 
 .page-thankyou .order-detail header {
   background: #1daee4;
