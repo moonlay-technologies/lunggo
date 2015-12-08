@@ -29,10 +29,7 @@
 
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.ToString("u")');
-        //paymentTimeout.setMinutes(paymentTimeout.getMinutes() + 15);
-        // development only end
-        console.log(new Date());
-        console.log(paymentTimeout);
+        
         // countdown timer
         $('.timer').countdown(paymentTimeout, function (event) {
             $('.timer .hour').text(event.strftime('%H'));
