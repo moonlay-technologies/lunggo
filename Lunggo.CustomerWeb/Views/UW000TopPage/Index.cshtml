@@ -80,11 +80,16 @@
 
 }
 
+@section AdditionalCSS{
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css" />
+}
+
 @section AdditionalJS{
     <!-- additional Angular JS-->
     <script src="/Assets/js/angular.min.js"></script>
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 }
 @section PageJS{
     <script>
@@ -94,6 +99,17 @@
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
+
+        // slider
+        $('.slider-wrapper').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            dots: true,
+            prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+            nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+        });
+
+
     </script>
     <script src="/Assets/Travorama20/js/homeController.js"></script>
 }
@@ -321,9 +337,17 @@
     @if (ViewBag.DestinationName == null || ViewBag.DestinationName == "" )
     {
         <div class="page-slider">
-            <div class="slider-text hidden">
-                <h1><img src="/Assets/images/enjoyyoureverymoment.png" alt="Enjoy Your Every Moment" /></h1>
-                <p>Ke mana pun Anda ingin bepergian, kami menyediakan pilihan penerbangan <br /> domestik dan internasional dari 900 maskapai</p>
+            <div class="slider-wrapper" id="index-wrapper">
+                <div class="slider">
+                    <a href="#1">
+                        <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="#2">
+                        <img src="/Assets/images/slider/slider-winner-20151002.jpg" alt="Pemenang Beta Test" />
+                    </a>
+                </div>
             </div>
         </div><!-- .slider -->
     }else{

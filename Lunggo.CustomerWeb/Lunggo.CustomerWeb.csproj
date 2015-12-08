@@ -970,6 +970,7 @@
     <Content Include="Assets\js\jquery.range-min.js" />
     <Content Include="Assets\js\jquery.sticky.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
+    <Content Include="Assets\js\jssor.slider.mini.js" />
     <Content Include="Assets\js\mobile-app.js" />
     <Content Include="Assets\js\plax.js" />
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
