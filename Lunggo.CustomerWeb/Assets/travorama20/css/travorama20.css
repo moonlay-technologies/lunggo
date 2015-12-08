@@ -4075,6 +4075,36 @@ file : /Assets/travorama20/css/_page_checkout.scss
     padding: 9px 48px;
     font-size: 14px; }
 
+.page-confirmation .ui-datepicker {
+  padding: 15px;
+  display: none; }
+  .page-confirmation .ui-datepicker .ui-datepicker-header {
+    padding-bottom: 10px; }
+    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+      display: none; }
+    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+      color: #1daee4;
+      font-size: 14px;
+      font-weight: 600; }
+  .page-confirmation .ui-datepicker .ui-datepicker-calendar thead tr th {
+    width: 32px;
+    text-align: center; }
+  .page-confirmation .ui-datepicker .ui-datepicker-calendar tbody tr td {
+    text-align: center;
+    height: 25px; }
+  .page-confirmation .ui-datepicker .ui-datepicker-calendar a {
+    color: #fff;
+    display: block;
+    padding-top: 4px;
+    height: 25px;
+    width: 25px; }
+    .page-confirmation .ui-datepicker .ui-datepicker-calendar a:hover {
+      background: #fff;
+      color: #333;
+      text-decoration: none; }
+  .page-confirmation .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable {
+    color: #666; }
+
 .page-thankyou .site-content {
   padding: 24px 0; }
 

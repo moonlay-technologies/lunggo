@@ -275,6 +275,33 @@ file : /Assets/travorama20/css/_page_checkout.scss
     .confirmation-form {border-top:$border-default; margin-top:24px;
         .btn.btn-yellow {padding:9px 48px; font-size:14px;}
     }
+    // datepicker
+    .ui-datepicker {padding:15px; display:none;
+        .ui-datepicker-header {padding-bottom:10px;
+            .ui-datepicker-prev, .ui-datepicker-next {display:none;}
+            .ui-datepicker-title {color:$color-main-blue; font-size:14px; font-weight:600;
+                .ui-datepicker-month {}
+                .ui-datepicker-year {}
+            }
+        }
+        .ui-datepicker-calendar {
+            thead {
+                tr {
+                    th {width:32px; text-align:center;}
+                }
+            }
+            tbody {
+                tr {
+                    td {text-align:center; height:25px;}
+                }
+            }
+            // content
+            a {color:#fff; display:block; padding-top:4px; height:25px; width:25px;
+                &:hover {background:#fff; color:#333; text-decoration:none;}
+            }
+            .ui-datepicker-unselectable {color:#666;}
+        }
+    }
 }
 
 

@@ -29,12 +29,17 @@
 
         // development only start
         paymentTimeout = new Date('@Model.TimeLimit.ToString("u")');
-        
+
         // countdown timer
-        $('.timer').countdown(paymentTimeout, function (event) {
+        $('.timer').countdown(paymentTimeout, function(event) {
             $('.timer .hour').text(event.strftime('%H'));
             $('.timer .minute').text(event.strftime('%M'));
             $('.timer .second').text(event.strftime('%S'));
+        });
+
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
         });
 
     </script>
@@ -124,9 +129,15 @@
                                     <label class="important control-label">Jumlah Transfer:</label>
                                     <input type="text" name="report.Amount" value="" class="form-control" placeholder="Jumlah Transfer" />
                                 </div>
+                                <!--
                                 <div class="form-group">
                                     <label class="important control-label">Tanggal Transfer:</label>
                                     <input type="date" name="report.PaymentTime" class="form-control" />
+                                </div>
+                                -->
+                                <div class="form-group">
+                                    <label class="important control-label">Tanggal Transfer:</label>
+                                    <input type="text" name="report.PaymentTime" class="form-control date-picker" />
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-yellow" type="submit" value="KONFIRMASI" />
