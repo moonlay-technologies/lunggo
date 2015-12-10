@@ -370,27 +370,31 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 //var tunjukDataTimeLimit1 = tunjukDataTimeLimit["p:nth-child(1)"];
                 var ambilTimeLimit = tunjukDataTimeLimit.Select(x => x.Cq().Text()).FirstOrDefault();
                 var timelimitIndex = ambilTimeLimit.IndexOf("[");
+                var timelimitIndex2 = ambilTimeLimit.IndexOf("]");
                 var timelimitParse3 = ambilTimeLimit.Split(' ');
-                var timelimitString = ambilTimeLimit.Substring(timelimitIndex + 1, 20);
-                var timelimitParse = timelimitString.Split(',');
-                var timelimitParse2 = timelimitParse[1].Split(' ');
-                var ambiltahun = timelimitParse[2].Trim();
-                var timeLimitUTC = timelimitParse3[54].Substring(4, 2);
+                var timelimitString = ambilTimeLimit.Substring(timelimitIndex + 1, timelimitIndex2 - timelimitIndex - 1);
+                var timelimitSplitComma = timelimitString.Split(',');
+                var timelimit1SplitSpace = timelimitSplitComma[1].Trim().Split(' ');
+                var timelimit2SplitSpace = timelimitSplitComma[2].Trim().Split(' ');
+                var timelimitDate = timelimit1SplitSpace[1].Trim();
+                var timelimitMonth = timelimit1SplitSpace[0].Trim();
+                var timelimitYear = timelimit2SplitSpace[0].Trim();
+                var timelimitTime = timelimit2SplitSpace[28].Trim();
                 string tahun;
-                if (ambiltahun.Length > 4)
+                if (timelimitYear.Length > 4)
                 {
-                    tahun = ambiltahun.Substring(0, 4);
+                    tahun = timelimitYear.Substring(0, 4);
                 }
                 else
                 {
-                    tahun = ambiltahun;
+                    tahun = timelimitYear;
                 }
 
 
-                if (timelimitParse2[1] == "Nop")
-                    timelimitParse2[1] = "Nov";
+                if (timelimitMonth == "Nop")
+                    timelimitMonth = "Nov";
 
-                var timelimit = DateTime.Parse(timelimitParse2[2] + "-" + timelimitParse2[1] + "-" + tahun + " " + timelimitParse3[41] + " " + timeLimitUTC, CultureInfo.CreateSpecificCulture("id-ID"));
+                var timelimit = DateTime.Parse(timelimitDate + "-" + timelimitMonth + "-" + tahun + " " + timelimitTime, CultureInfo.CreateSpecificCulture("id-ID"));
 
                 var status = new BookingStatusInfo();
                 status.BookingId = NomorBooking;
