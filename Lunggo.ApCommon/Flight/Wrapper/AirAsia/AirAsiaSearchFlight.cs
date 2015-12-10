@@ -10,7 +10,9 @@ using Lunggo.ApCommon.Dictionary;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.Framework.Web;
+using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
@@ -28,7 +30,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
-                var client = new ExtendedWebClient();
+                var client = CreateCustomerClient();
 
                 // Airport Generalizing
                 var trip0 = new FlightTrip
@@ -49,27 +51,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var availableFares = new CQ();
                 if (originCountry == "ID")
                 {
-                   var url = @"http://booking.airasia.com/Flight/InternalSelect" +
-                              @"?o1=" + trip0.OriginAirport +
-                              @"&d1=" + trip0.DestinationAirport +
-                              @"&dd1=" + trip0.DepartureDate.ToString("yyyy-MM-dd") +
-                              @"&ADT=" + conditions.AdultCount +
-                              @"&CHD=" + conditions.ChildCount +
-                              @"&inl=" + conditions.InfantCount +
-                              @"&s=true" +
-                              @"&mon=true" +
-                              @"&culture=id-ID" +
-                              @"&cc=IDR";
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/Payment.aspx";
-                    var html = client.DownloadString(url);
+                    var url = @"Flight/InternalSelect";
+                    var searchRequest = new RestRequest(url, Method.GET);
+                    searchRequest.AddQueryParameter("o1", trip0.OriginAirport);
+                    searchRequest.AddQueryParameter("d1", trip0.DestinationAirport);
+                    searchRequest.AddQueryParameter("dd1", trip0.DepartureDate.ToString("yyyy-MM-dd"));
+                    searchRequest.AddQueryParameter("ADT", conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("CHD", conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("inl", conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
+                    searchRequest.AddQueryParameter("s", "true");
+                    searchRequest.AddQueryParameter("mon", "true");
+                    searchRequest.AddQueryParameter("culture", "id-ID");
+                    searchRequest.AddQueryParameter("cc", "IDR");
+                    var searchResponse = client.Execute(searchRequest);
 
-                    if (client.ResponseUri.AbsolutePath != "/Flight/Select" && (client.StatusCode == HttpStatusCode.OK || client.StatusCode == HttpStatusCode.Redirect))
+                    var html = searchResponse.Content;
+
+                    if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" && (searchResponse.StatusCode == HttpStatusCode.OK || searchResponse.StatusCode == HttpStatusCode.Redirect))
                         return new SearchFlightResult { Errors = new List<FlightError> { FlightError.InvalidInputData } };
 
                     var searchedHtml = (CQ)html;
@@ -113,12 +111,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         Itineraries = new List<FlightItinerary>()
                     };
                 }
-                
+
                 // [Scrape]
 
                 try
                 {
-                    
+
                     IEnumerable<string> fareIds;
                     switch (conditions.CabinClass)
                     {
@@ -139,9 +137,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                        FlightService.ParseCabinClass(conditions.CabinClass) + ".";
                     foreach (var fareId in fareIds)
                     {
-                        var url = "https://booking.airasia.com/Flight/PriceItinerary" +
-                              "?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
-                        var itinHtml = (CQ) client.DownloadString(url);
+                        var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                        var fareRequest = new RestRequest(url, Method.GET);
+                        var itinHtml = (CQ)client.Execute(fareRequest).Content;
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'),
                                 CultureInfo.CreateSpecificCulture("id-ID"));
@@ -157,9 +155,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 CabinClass = conditions.CabinClass,
                                 Rbd = fareId.Split('~')[1],
                                 DepartureAirport = splittedSegmentFareId[4],
-                                DepartureTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]),DateTimeKind.Utc),
+                                DepartureTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]), DateTimeKind.Utc),
                                 ArrivalAirport = splittedSegmentFareId[6],
-                                ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]),DateTimeKind.Utc),
+                                ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
                                 OperatingAirlineCode = splittedSegmentFareId[0],
                                 StopQuantity = 0
                             });

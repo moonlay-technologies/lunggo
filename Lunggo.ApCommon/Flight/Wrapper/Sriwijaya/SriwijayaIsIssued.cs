@@ -4,6 +4,7 @@ using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -18,51 +19,34 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var isIssued = (bool?)null;
                 while (counter++ < maxRetryCount && isIssued == null)
                 {
-                    var client = new ExtendedWebClient();
+                    var clientx = CreateAgentClient();
 
-                    Client.CreateSession(client);
+                    Login(clientx);
 
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId + "";
-                    client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                    client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                    client.AutoRedirect = true;
-
-                    var issueparams =
+                    var url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
+                    var selectRequest = new RestRequest(url, Method.POST);
+                    var postData =
                         "Submit=Issue" +
                         "&action=ticketing" +
                         "&reffNo=ZEdsamEyVjBhVzVuT2tsR1RFMVZSenBUVkVWUU1nPT0%3D";
-
-                    client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo="+ bookingId +"", issueparams);
-                    if (!(client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check")))
+                    selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var selectResponse = clientx.Execute(selectRequest);
+                    if (!(selectResponse.ResponseUri.AbsoluteUri.Contains("/application/?action=Check")))
                     {
                         continue;
                     }
 
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //client.Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "http://agent.sriwijayaair.co.id/SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId + "";
-                    client.Headers["Host"] = "agent.sriwijayaair.co.id";
-                    client.Headers["Origin"] = "https://www.sriwijayaair.co.id";
-                    client.AutoRedirect = true;
-
-                    var cekparams =
+                    url = "SJ-Eticket/application/?";
+                    var checkRequest = new RestRequest(url, Method.POST);
+                    postData = 
                         "reffNo=" + bookingId +
                         "&action=CheckBCode" +
                         "&step=STEP2";
+                    checkRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var checkResponse = clientx.Execute(checkRequest);
+                    var cekresult = checkResponse.Content;
 
-                    var cekresult = client.UploadString("http://agent.sriwijayaair.co.id/SJ-Eticket/application/?", cekparams);
-
-                    if (!(client.ResponseUri.AbsoluteUri.Contains("/application/?action=Check")))
+                    if (!(checkResponse.ResponseUri.AbsoluteUri.Contains("/application/?action=Check")))
                     {
                         continue;
                     }

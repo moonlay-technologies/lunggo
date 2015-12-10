@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using CsQuery;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
@@ -15,41 +16,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var isIssued = (bool?) null;
                 while (counter++ < maxRetryCount && isIssued == null)
                 {
-                    var client = new ExtendedWebClient();
+                    var clientx = CreateAgentClient();
 
-                    if (!Login(client))
+                    if (!Login(clientx))
                         continue;
 
                     // [GET] BookingList
 
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept"] =
-                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Accept-Encoding"] = "";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/AgentHome.aspx";
+                    var url = "BookingList.aspx";
+                    var listRequest = new RestRequest(url, Method.GET);
+                    var listResponse = clientx.Execute(listRequest);
 
-                    client.DownloadString("https://booking2.airasia.com/BookingList.aspx");
-
-                    if (client.ResponseUri.AbsolutePath != "/BookingList.aspx")
+                    if (listResponse.ResponseUri.AbsolutePath != "/BookingList.aspx")
                         continue;
 
                     // [POST] BookingList
 
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept"] =
-                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Accept-Encoding"] = "";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/BookingList.aspx";
+                    url = "BookingList.aspx";
+                    var selectRequest = new RestRequest(url, Method.POST);
                     var postData =
                         @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView%24LinkButtonFindBooking" +
                         @"&__EVENTARGUMENT=" +
@@ -59,24 +43,16 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         @"&ControlGroupBookingListView%24BookingListSearchInputView%24DropDownListTypeOfSearch=0" +
                         @"&ControlGroupBookingListView%24BookingListSearchInputView%24TextBoxKeyword=KEYWORD" +
                         @"&__VIEWSTATEGENERATOR=05F9A2B0";
+                    selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var selectResponse = clientx.Execute(selectRequest);
 
-                    client.UploadString("https://booking2.airasia.com/BookingList.aspx", postData);
-
-                    if (client.ResponseUri.AbsolutePath != "/BookingList.aspx")
+                    if (selectResponse.ResponseUri.AbsolutePath != "/BookingList.aspx")
                         continue;
 
                     // [POST] BookingList -> ChangeItinerary
 
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-                    client.Headers["Accept"] =
-                        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Accept-Encoding"] = "";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Origin"] = "https://booking2.airasia.com";
-                    client.Headers["Referer"] = "https://booking2.airasia.com/BookingList.aspx";
+                    url = "BookingList.aspx";
+                    var itinRequest = new RestRequest(url, Method.POST);
                     postData =
                         @"__EVENTTARGET=ControlGroupBookingListView%24BookingListSearchInputView" +
                         @"&__EVENTARGUMENT=Edit%3A" + bookingId +
@@ -86,11 +62,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         @"&ControlGroupBookingListView%24BookingListSearchInputView%24DropDownListTypeOfSearch=0" +
                         @"&ControlGroupBookingListView%24BookingListSearchInputView%24TextBoxKeyword=KEYWORD" +
                         @"&__VIEWSTATEGENERATOR=05F9A2B0";
+                    itinRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var itinResponse = clientx.Execute(itinRequest);
+                    var bookingList = itinResponse.Content;
 
-                    var bookingList = client.UploadString("https://booking2.airasia.com/BookingList.aspx", postData);
-
-                    if (client.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" &&
-                        client.StatusCode != HttpStatusCode.OK)
+                    if (itinResponse.ResponseUri.AbsolutePath != "/ChangeItinerary.aspx" &&
+                        itinResponse.StatusCode != HttpStatusCode.OK)
                         continue;
 
                     var bookingListCq = (CQ) bookingList;

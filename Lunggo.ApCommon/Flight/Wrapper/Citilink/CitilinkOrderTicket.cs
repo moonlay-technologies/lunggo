@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -37,21 +38,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var bulanIni7 = DateTime.Now.Date.AddDays(7).Month;
                 var tahunIni7 = DateTime.Now.Date.AddDays(7).Year;
 
-                var client = new ExtendedWebClient();
-                Client.CreateSession(client);
+                var clientx = CreateAgentClient();
+                Login(clientx);
 
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                client.Headers["Host"] = "book.citilink.co.id";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-                var myBooking =
+                var url = "BookingListTravelAgent.aspx";
+                var listRequest = new RestRequest(url, Method.POST);
+                var postData =
                     "__EVENTTARGET=ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24LinkButtonFindBooking" +
                     "&__EVENTARGUMENT=" +
                     "&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFWkNvbnRyb2xHcm91cEJvb2tpbmdMaXN0VHJhdmVsQWdlbnRWaWV3JEJvb2tpbmdMaXN0Qm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckUmFkaW9Gb3JBZ2VudAVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeQVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeTXhy2ltZry%2FVwOL4DGYiD%2Br%2FS9H" +
@@ -78,28 +70,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24Search=ForAgent" +
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24DropDownListTypeOfSearch=0" +
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24TextBoxKeyword=";
-
-                client.UploadString("https://book.citilink.co.id/BookingListTravelAgent.aspx", myBooking);
-                if (client.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
+                listRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var listResponse = clientx.Execute(listRequest);
+                if (listResponse.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                     };
 
-                client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                //Headers["Accept-Encoding"] = "gzip, deflate";
-                client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
-                client.Headers["User-Agent"] =
-                    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Referer"] = "https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                client.Headers["Host"] = "book.citilink.co.id";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-                var pilihBooking =
+                url = "BookingListTravelAgent.aspx";
+                var selectRequest = new RestRequest(url, Method.POST);
+                postData = 
                     "__EVENTTARGET=ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView" +
                     "&__EVENTARGUMENT=payment:" + bookingId +
                     "&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFWkNvbnRyb2xHcm91cEJvb2tpbmdMaXN0VHJhdmVsQWdlbnRWaWV3JEJvb2tpbmdMaXN0Qm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckUmFkaW9Gb3JBZ2VudAVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeQVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeTXhy2ltZry%2FVwOL4DGYiD%2Br%2FS9H" +
@@ -126,9 +108,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24Search=ForAgent" +
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24DropDownListTypeOfSearch=0" +
                     "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24TextBoxKeyword=";
-
-                client.UploadString("https://book.citilink.co.id/BookingListTravelAgent.aspx", pilihBooking);
-                if (client.ResponseUri.AbsolutePath != "/Payment.aspx")
+                selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                var selectResponse = clientx.Execute(selectRequest);
+                if (selectResponse.ResponseUri.AbsolutePath != "/Payment.aspx")
                     return new OrderTicketResult
                     {
                         IsSuccess = false,
@@ -137,19 +119,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 try
                 {
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "https://book.citilink.co.id/Payment.aspx";
-                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                    client.Headers["Host"] = "book.citilink.co.id";
-                    client.Headers["Origin"] = "https://book.citilink.co.id";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-                    var confirmBook =
+                    url = "Payment.aspx";
+                    var paymentRequest = new RestRequest(url, Method.POST);
+                    postData =
                         "__EVENTTARGET=" +
                         "&__EVENTARGUMENT=" +
                         "&__VIEWSTATE=%2FwEPDwUBMGRkBsrCYiDYbQKCOcoq%2FUTudEf14vk%3D&pageToken=" +
@@ -174,21 +146,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         "&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24AgreementPaymentInputViewPaymentView%24CheckBoxAgreement=on" +
                         "&CONTROLGROUPPAYMENTBOTTOM%24ControlGroupPaymentInputViewPaymentView%24storedPaymentId=" +
                         "&CONTROLGROUPPAYMENTBOTTOM%24ButtonSubmit=Lanjutkan";
+                    paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var paymentResponse = clientx.Execute(paymentRequest);
 
-                    client.UploadString("https://book.citilink.co.id/Payment.aspx", confirmBook);
-
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                    client.Headers["Host"] = "book.citilink.co.id";
-                    client.Headers["Origin"] = "https://book.citilink.co.id";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-                    var myBooking2 =
+                    url = "BookingListTravelAgent.aspx";
+                    var listRequest2 = new RestRequest(url, Method.POST);
+                    postData =
                         "__EVENTTARGET=ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24LinkButtonFindBooking" +
                         "&__EVENTARGUMENT=" +
                         "&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFWkNvbnRyb2xHcm91cEJvb2tpbmdMaXN0VHJhdmVsQWdlbnRWaWV3JEJvb2tpbmdMaXN0Qm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckUmFkaW9Gb3JBZ2VudAVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeQVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeTXhy2ltZry%2FVwOL4DGYiD%2Br%2FS9H" +
@@ -215,28 +178,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24Search=ForAgent" +
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24DropDownListTypeOfSearch=0" +
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24TextBoxKeyword=";
-
-                    client.UploadString("https://book.citilink.co.id/BookingListTravelAgent.aspx", myBooking2);
-                    if (client.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
+                    listRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var listResponse2 = clientx.Execute(listRequest2);
+                    if (listResponse2.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
                         return new OrderTicketResult
                         {
                             IsSuccess = false,
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier }
                         };
 
-                    client.Headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                    //Headers["Accept-Encoding"] = "gzip, deflate";
-                    client.Headers["Accept-Language"] = "en-GB,en-US;q=0.8,en;q=0.6";
-                    client.Headers["Upgrade-Insecure-Requests"] = "1";
-                    client.Headers["User-Agent"] =
-                        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                    client.Headers["Referer"] = "Referer: https://book.citilink.co.id/BookingListTravelAgent.aspx";
-                    client.Headers["X-Requested-With"] = "XMLHttpRequest";
-                    client.Headers["Host"] = "book.citilink.co.id";
-                    client.Headers["Origin"] = "https://book.citilink.co.id";
-                    client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-                    var cekItinerary =
+                    url = "BookingListTravelAgent.aspx";
+                    var checkRequest = new RestRequest(url, Method.POST);
+                    postData =
                         "__EVENTTARGET=ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView" +
                         "&__EVENTARGUMENT=View:" + bookingId +
                         "&__VIEWSTATE=%2FwEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFWkNvbnRyb2xHcm91cEJvb2tpbmdMaXN0VHJhdmVsQWdlbnRWaWV3JEJvb2tpbmdMaXN0Qm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckUmFkaW9Gb3JBZ2VudAVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeQVbQ29udHJvbEdyb3VwQm9va2luZ0xpc3RUcmF2ZWxBZ2VudFZpZXckQm9va2luZ0xpc3RCb29raW5nTGlzdFRyYXZlbEFnZW50VmlldyRSYWRpb0ZvckFnZW5jeTXhy2ltZry%2FVwOL4DGYiD%2Br%2FS9H" +
@@ -263,11 +216,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24Search=ForAgent" +
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24DropDownListTypeOfSearch=0" +
                         "&ControlGroupBookingListTravelAgentView%24BookingListBookingListTravelAgentView%24TextBoxKeyword=";
-
-                    var htmlRespon = client.UploadString("https://book.citilink.co.id/BookingListTravelAgent.aspx", cekItinerary);
+                    checkRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var checkResponse = clientx.Execute(checkRequest);
+                    var htmlRespon = checkResponse.Content;
 
                     //var htmlRespon = System.IO.File.ReadAllText(@"C:\Users\User\Documents\Kerja\Crawl\ItineraryCek.txt");
-                    CQ ambilDataRespon = (CQ)htmlRespon;
+                    var ambilDataRespon = (CQ)htmlRespon;
 
                     var tunjukStatus = ambilDataRespon["#itineraryBody>"];
                     var tunjukTr = tunjukStatus.MakeRoot()["tr:nth-child(2)>td:nth-child(2)"];

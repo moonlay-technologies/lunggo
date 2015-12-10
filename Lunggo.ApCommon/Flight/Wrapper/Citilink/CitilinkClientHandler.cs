@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Web;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -33,27 +34,44 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
             }
 
-            internal void CreateSession(ExtendedWebClient client)
+            private static RestClient CreateCustomerClient()
             {
-                string URI = "https://book.citilink.co.id/LoginAgent.aspx";
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers[HttpRequestHeader.Accept] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-                client.Headers[HttpRequestHeader.Host] = "book.citilink.co.id";
-                client.Headers[HttpRequestHeader.Referer] = "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID";
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "en-GB,en-US;q=0.8,en;q=0.6";
-                client.Headers["Origin"] = "https://book.citilink.co.id";
-                //Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
-                client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
-                client.Headers["Upgrade-Insecure-Requests"] = "1";
+                var client = new RestClient("https://book.citilink.co.id");
+                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Referer", "https://www.citilink.co.id/");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
 
-                string myParameters = @"ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In" +
+            private static RestClient CreateAgentClient()
+            {
+                var client = new RestClient("https://book.citilink.co.id");
+                client.AddDefaultHeader("Content-Type", "application/x-www-form-urlencoded");
+                client.AddDefaultHeader("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6");
+                client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
+                client.AddDefaultHeader("Host", "book.citilink.co.id");
+                client.AddDefaultHeader("Origin", "https://book.citilink.co.id");
+                client.AddDefaultHeader("Referer", "https://book.citilink.co.id/LoginAgent.aspx?culture=id-ID");
+                client.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+                client.CookieContainer = new CookieContainer();
+                return client;
+            }
+
+            private static void Login(RestClient client)
+            {
+                var url = "LoginAgent.aspx";
+                var request = new RestRequest(url, Method.POST);
+                string postData = @"ControlGroupLoginAgentView$AgentLoginView$ButtonLogIn=Log+In" +
                      @"&ControlGroupLoginAgentView$AgentLoginView$PasswordFieldPassword=" + _password +
                      @"&ControlGroupLoginAgentView$AgentLoginView$TextBoxUserID=" + _userName +
                      @"&__EVENTARGUMENT=" +
                      @"&__EVENTTARGET=" +
                      @"&__VIEWSTATE=/wEPDwUBMGRkBsrCYiDYbQKCOcoq/UTudEf14vk=" +
                      @"&pageToken";
-                client.UploadString(URI, "POST", myParameters);
+                request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                client.Execute(request);
             }
         }
     }
