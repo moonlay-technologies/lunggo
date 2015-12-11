@@ -1,0 +1,83 @@
+﻿
+@model Lunggo.CustomerWeb.Models.CalendarRecipientData
+
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-static page-contact";
+}
+
+@if (ViewBag.Message == null) 
+{ 
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <br />
+            <!--<p style="margin-left:60px;"><b>Silahkan isi data diri anda</b></p>-->
+            <br/>
+            <br/>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Email)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5" style="align-content:center">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5" style="align-content:center">
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5">
+                    <input type="submit" value="Submit" class="btn btn-yellow btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (ViewBag.Message == "InputSuccess")
+{
+    <div class="col-sm-8">
+        <p align="center" style="font-size:20px; margin-bottom:40px;margin-top:50px;">Terima kasih,Kami akan mengirimkan kalendar ke alamat yang telah anda masukkan</p>
+        <div class="col-sm-4 col-sm-offset-4">
+            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+        </div>
+    </div>
+}
+else if (ViewBag.Message == "MasaBerlakuTelahHabis")
+{
+    <div class="col-sm-8">
+         <p align="center" style="font-size:20px; margin-bottom:40px;margin-top:50px;">Mohon Maaf, Masa berlaku event ini telah habis.</p>
+        <div class="col-sm-4 col-sm-offset-4">
+            <br /><br />
+            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-sm-8">
+         <p align="center" style="font-size:20px; margin-bottom:40px; margin-top:50px;">Anda telah terdaftar di data kami</p>
+        <div class="col-sm-4 col-sm-offset-4">
+            <br/><br/>
+            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+        </div>
+    </div>
+}
+

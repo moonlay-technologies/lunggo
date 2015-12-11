@@ -125,6 +125,7 @@
     <Compile Include="Function\FlightInstantPaymentReservationNotifEmail.cs" />
     <Compile Include="Function\FlightPendingPaymentReservationNotifEmail.cs" />
     <Compile Include="Function\FlightInstantPaymentConfirmedNotifEmail.cs" />
+    <Compile Include="Function\GetCalendarEmail.cs" />
     <Compile Include="Function\TransferConfirmationEmail.cs" />
     <Compile Include="Function\ForgotPasswordEmail.cs" />
     <Compile Include="Function\VoucherEmail.cs" />

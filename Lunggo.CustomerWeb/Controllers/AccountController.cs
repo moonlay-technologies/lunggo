@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRepository;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -212,6 +217,10 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
             var isConfirmed = await UserManager.IsEmailConfirmedAsync(userId);
+            //var queueService = QueueService.GetInstance();
+            //var queue = queueService.GetQueueByReference("GetCalendar");
+            //queue.AddMessage(new CloudQueueMessage(userId));
+
             if (isConfirmed)
             {
                 ViewBag.Message = "AlreadyConfirmed";
@@ -227,6 +236,21 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     Email = await UserManager.GetEmailAsync(userId)
                 };
+
+                DateTime Date = DateTime.Now; 
+                DateTime endDate = new DateTime(2016,12,15);
+                using (var con = DbService.GetInstance().GetOpenConnection())
+                {
+
+                    var EmailList = CalendarRecipientTableRepo.GetInstance().FindAll(con).ToList();
+                    if (EmailList.Count <500 && Date<endDate)
+                    {
+                        var queueService = QueueService.GetInstance();
+                        var queue = queueService.GetQueueByReference("GetCalendar");
+                        queue.AddMessage(new CloudQueueMessage(email));
+                    }
+
+                }
                 return RedirectToAction("ResetPassword", "Account", model);
             }
             else
