@@ -117,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Init.cs" />
     <Compile Include="Function\FlightChangedEticketEmail.cs" />
     <Compile Include="Function\FlightEticketEmail.cs" />
     <Compile Include="Function\FlightPendingPaymentExpiredNotifEmail.cs" />

@@ -1,41 +1,44 @@
-﻿using Lunggo.ApCommon.Constant;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using log4net;
 using Lunggo.ApCommon.Dictionary;
-using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Core;
+using Lunggo.Framework.Core.CustomTraceListener;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
+using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
-using Lunggo.Framework.Redis;
+using Lunggo.Framework.TableStorage;
 
-namespace Lunggo.WebJob.FlightProcessor
+namespace Lunggo.WebJob.EmailQueueHandler
 {
     partial class Program
     {
         public static void Init()
         {
             InitConfigurationManager();
-            InitFlightService();
+            InitTableStorageService();
             InitDatabaseService();
-            InitDictionaryService();
             InitQueueService();
             InitHtmlTemplateService();
+            InitI18NMessageManager();
             InitMailService();
-            InitRedisService();
             InitBlobStorageService();
+            InitDictionaryService();
+            //InitTraceListener();
         }
 
         private static void InitConfigurationManager()
         {
             var configManager = ConfigManager.GetInstance();
-            configManager.Init("");
-        }
-
-        private static void InitFlightService()
-        {
-            var flight = FlightService.GetInstance();
-            flight.Init();
+            configManager.Init(@"");
         }
 
         private static void InitDatabaseService()
@@ -49,6 +52,12 @@ namespace Lunggo.WebJob.FlightProcessor
         {
             var dict = DictionaryService.GetInstance();
             dict.Init("");
+        }
+
+        private static void InitI18NMessageManager()
+        {
+            var messageManager = MessageManager.GetInstance();
+            messageManager.Init("");
         }
 
         private static void InitQueueService()
@@ -77,24 +86,28 @@ namespace Lunggo.WebJob.FlightProcessor
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
-        private static void InitRedisService()
+
+        public static void InitTableStorageService()
         {
-            var redisService = RedisService.GetInstance();
-            redisService.Init(new RedisConnectionProperty[]
-            {
-                new RedisConnectionProperty
+            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var tableStorageService = TableStorageService.GetInstance();
+            tableStorageService.Init(connString);
+        }
+
+        private static void InitTraceListener()
+        {
+            Trace.Listeners.Clear();
+            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            string traceName = typeof(TableTraceListener).Name;
+            var listener =
+                new TableTraceListener(connectionString, "webjobTrace")
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
-                },
-                
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
-                }, 
-                 
-            });
+                    Name = traceName
+                };
+            Trace.Listeners.Add(listener);
+            log4net.Config.XmlConfigurator.Configure();
+            ILog Log = log4net.LogManager.GetLogger("Log");
+            LunggoLogger.GetInstance().init(Log);
         }
     }
 }

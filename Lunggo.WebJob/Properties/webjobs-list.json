@@ -6,6 +6,9 @@
     },
     {
       "filePath": "../Lunggo.WebJob.EmailQueueHandler/Lunggo.WebJob.EmailQueueHandler.csproj"
+    },
+    {
+      "filePath": "../Lunggo.WebJob.FlightProcessor/Lunggo.WebJob.FlightProcessor.csproj"
     }
   ]
 }
