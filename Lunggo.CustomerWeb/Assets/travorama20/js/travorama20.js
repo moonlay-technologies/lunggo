@@ -1227,4 +1227,9 @@ function flightFormSearchFunctions() {
         $('.form-flight').submit();
     }
 
+    // save to cookie
+    function saveCookie() {
+        
+    }
+
 }
