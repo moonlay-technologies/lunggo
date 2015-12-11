@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
     <Compile Include="TableRecord\CampaignVoucherTableRecord.cs" />
     <Compile Include="TableRecord\ClientTableRecord.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="TableRecord\UsersTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />
     <Compile Include="TableRepository\CampaignVoucherRepository.cs" />
     <Compile Include="TableRepository\ClientRepository.cs" />

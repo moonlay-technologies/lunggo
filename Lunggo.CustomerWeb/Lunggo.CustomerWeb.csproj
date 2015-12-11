@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\CalendarRecipientData.cs" />
     <Compile Include="Models\FlightCheckoutData.cs" />
     <Compile Include="Models\FlightPaymentConfirmationData.cs" />
     <Compile Include="Models\FlightSearchData.cs" />
@@ -2484,6 +2485,7 @@
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
