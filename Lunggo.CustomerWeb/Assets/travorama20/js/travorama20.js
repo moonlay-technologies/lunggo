@@ -615,6 +615,7 @@ function flightPageSearchFormFunctions() {
             flightPageSearchFormParam.returnDate = new Date();
         }
         if (flightPageSearchFormParam.origin && flightPageSearchFormParam.destination) {
+            // setCookie();
             generateFlightSearchParam();
         } else {
             if (!flightPageSearchFormParam.origin) {
@@ -625,6 +626,26 @@ function flightPageSearchFormFunctions() {
                 alert('Please select your destination airpot');
                 $('.flight-submit-button').removeProp('disabled');
             }
+        }
+    }
+
+    function setCookie() {
+        Cookies.set('origin', FlightSearchConfig.flightForm.origin, { expires: 9999 });
+        Cookies.set('originCity', FlightSearchConfig.flightForm.originCity, { expires: 9999 });
+        Cookies.set('destination', FlightSearchConfig.flightForm.destination, { expires: 9999 });
+        Cookies.set('destinationCity', FlightSearchConfig.flightForm.destinationCity, { expires: 9999 });
+        Cookies.set('departure', FlightSearchConfig.flightForm.departureDate, { expires: 9999 });
+        Cookies.set('return', FlightSearchConfig.flightForm.returnDate, { expires: 9999 });
+        Cookies.set('type', FlightSearchConfig.flightForm.type, { expires: 9999 });
+        Cookies.set('cabin', FlightSearchConfig.flightForm.cabin, { expires: 9999 });
+        if (typeof FlightSearchConfig.flightForm.departureFlightParam == 'object') {
+            Cookies.set('adult', FlightSearchConfig.flightForm.departureFlightParam.AdultCount, { expires: 9999 });
+            Cookies.set('child', FlightSearchConfig.flightForm.departureFlightParam.ChildCount, { expires: 9999 });
+            Cookies.set('infant', FlightSearchConfig.flightForm.departureFlightParam.InfantCount, { expires: 9999 });
+        } else {
+            Cookies.set('adult', FlightSearchConfig.flightForm.passenger[0], { expires: 9999 });
+            Cookies.set('child', FlightSearchConfig.flightForm.passenger[1], { expires: 9999 });
+            Cookies.set('infant', FlightSearchConfig.flightForm.passenger[2], { expires: 9999 });
         }
     }
 
@@ -663,6 +684,7 @@ function indexPageFunctions() {
         changeTheme(target);
     });
     */
+
     // change header background
     function changeTheme(location) {
         location = location.toLowerCase();
@@ -1020,29 +1042,95 @@ function flightFormSearchFunctions() {
     // set current date as default
     $(document).ready(function () {
         // set default date for departure flight
-        var tomorrowDate = new Date();
-        tomorrowDate = tomorrowDate.setDate( tomorrowDate.getDate() + 1 );
-        tomorrowDate = new Date(tomorrowDate);
-        $('.form-flight-departure .date').html(('0' + tomorrowDate.getDate()).slice(-2));
-        $('.form-flight-departure .month').html(translateMonth(tomorrowDate.getMonth()));
-        $('.form-flight-departure .year').html(tomorrowDate.getFullYear());
-        FlightSearchConfig.flightForm.departureDate = tomorrowDate;
+        var departureDate = '';
+        if (Cookies.get('departure')) {
+            departureDate = new Date(Cookies.get('departure'));
+        } else {
+            departureDate = new Date();
+            departureDate = departureDate.setDate(departureDate.getDate() + 1);
+            departureDate = new Date(departureDate);
+        }
+        $('.form-flight-departure .date').html(('0' + departureDate.getDate()).slice(-2));
+        $('.form-flight-departure .month').html(translateMonth(departureDate.getMonth()));
+        $('.form-flight-departure .year').html(departureDate.getFullYear());
+        FlightSearchConfig.flightForm.departureDate = departureDate;
         // set default date for return flight
-        var afterTomorrow = new Date();
-        afterTomorrow = afterTomorrow.setDate( afterTomorrow.getDate() + 2 );
-        afterTomorrow = new Date(afterTomorrow);
-        $('.form-flight-return .date').html(('0' + (afterTomorrow.getDate())).slice(-2));
-        $('.form-flight-return .month').html(translateMonth(afterTomorrow.getMonth()));
-        $('.form-flight-return .year').html(afterTomorrow.getFullYear());
-        FlightSearchConfig.flightForm.returnDate = afterTomorrow;
+        var returnDate = '';
+        if (Cookies.get('return')) {
+            returnDate = new Date(Cookies.get('return'));
+        } else {
+            returnDate = new Date();
+            returnDate = returnDate.setDate(returnDate.getDate() + 2);
+            returnDate = new Date(returnDate);
+        }
+        $('.form-flight-return .date').html(('0' + (returnDate.getDate())).slice(-2));
+        $('.form-flight-return .month').html(translateMonth(returnDate.getMonth()));
+        $('.form-flight-return .year').html(returnDate.getFullYear());
+        FlightSearchConfig.flightForm.returnDate = returnDate;
 
         // set default flight and return flight
-        $('.form-flight-origin').val('Jakarta (CGK)');
-        FlightSearchConfig.flightForm.origin = 'CGK';
-        FlightSearchConfig.flightForm.originCity = 'Jakarta';
-        $('.form-flight-destination').val('Denpasar, Bali (DPS)');
-        FlightSearchConfig.flightForm.destination = 'DPS';
-        FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
+        if (Cookies.get('origin')) {
+            $('.form-flight-origin').val(Cookies.get('originCity') +'('+Cookies.get('origin')+')');
+            FlightSearchConfig.flightForm.origin = Cookies.get('origin');
+            FlightSearchConfig.flightForm.originCity = Cookies.get('originCity');
+        } else {
+            $('.form-flight-origin').val('Jakarta (CGK)');
+            FlightSearchConfig.flightForm.origin = 'CGK';
+            FlightSearchConfig.flightForm.originCity = 'Jakarta';
+        }
+        if (Cookies.get('destination')) {
+            $('.form-flight-destination').val(Cookies.get('destinationCity') + '(' + Cookies.get('destination') + ')');
+            FlightSearchConfig.flightForm.destination = Cookies.get('destination');
+            FlightSearchConfig.flightForm.destinationCity = Cookies.get('destinationCity');
+        } else {
+            $('.form-flight-destination').val('Denpasar, Bali (DPS)');
+            FlightSearchConfig.flightForm.destination = 'DPS';
+            FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
+        }
+
+        // flight type
+        if (Cookies.get('type').toLowerCase() == 'return') {
+            $('.form-flight-type[value="return"]').click();
+        } else {
+            $('.form-flight-type[value="oneway"]').click();
+            $('.form-flight-return').addClass('disabled');
+        }
+
+        // flight passenger
+        if (Cookies.get('adult')) {
+            $('.passenger-input.adult').text(Cookies.get('adult'));
+            FlightSearchConfig.flightForm.adult = Cookies.get('adult');
+        } else {
+            $('.passenger-input.adult').text('1');
+        }
+        if (Cookies.get('child')) {
+            $('.passenger-input.child').text(Cookies.get('child'));
+            FlightSearchConfig.flightForm.child = Cookies.get('child');
+        } else {
+            $('.passenger-input.child').text('0');
+        }
+        if (Cookies.get('infant')) {
+            $('.passenger-input.infant').text(Cookies.get('infant'));
+            FlightSearchConfig.flightForm.infant = Cookies.get('infant');
+        } else {
+            $('.passenger-input.infant').text('0');
+        }
+
+        // flight cabin
+        if (Cookies.get('cabin')) {
+            switch (Cookies.get('cabin')) {
+                case 'y':
+                    $('.form-flight-class>span').text($('.form-flight-class .option .economy').text());
+                    break;
+                case 'c':
+                    $('.form-flight-class>span').text($('.form-flight-class .option .business').text());
+                    break;
+                case 'f':
+                    $('.form-flight-class>span').text($('.form-flight-class .option .first').text());
+                    break;
+            }
+            FlightSearchConfig.flightForm.cabin = Cookies.get('cabin');
+        }
 
         // navigation
         $('.home-nav .nav-prev').click(function () {
@@ -1196,6 +1284,7 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.returnDate = new Date();
         }
         if (FlightSearchConfig.flightForm.origin && FlightSearchConfig.flightForm.destination) {
+            setCookie();
             generateFlightSearchParam();
         } else {
             if (!FlightSearchConfig.flightForm.origin) {
@@ -1207,6 +1296,21 @@ function flightFormSearchFunctions() {
                 $('.flight-submit-button').removeProp('disabled');
             }
         }
+    }
+
+    // set cookie
+    function setCookie() {
+        Cookies.set('origin', FlightSearchConfig.flightForm.origin, { expires: 9999 });
+        Cookies.set('originCity', FlightSearchConfig.flightForm.originCity, { expires: 9999 });
+        Cookies.set('destination', FlightSearchConfig.flightForm.destination, { expires: 9999 });
+        Cookies.set('destinationCity', FlightSearchConfig.flightForm.destinationCity, { expires: 9999 });
+        Cookies.set('departure', FlightSearchConfig.flightForm.departureDate, { expires: 9999 });
+        Cookies.set('return', FlightSearchConfig.flightForm.returnDate, { expires: 9999 });
+        Cookies.set('type', FlightSearchConfig.flightForm.type, { expires: 9999 });
+        Cookies.set('adult', FlightSearchConfig.flightForm.passenger.adult, { expires: 9999 });
+        Cookies.set('child', FlightSearchConfig.flightForm.passenger.child, { expires: 9999 });
+        Cookies.set('infant', FlightSearchConfig.flightForm.passenger.infant, { expires: 9999 });
+        Cookies.set('cabin', FlightSearchConfig.flightForm.cabin, { expires: 9999 });
     }
 
     function generateFlightSearchParam() {
@@ -1227,9 +1331,5 @@ function flightFormSearchFunctions() {
         $('.form-flight').submit();
     }
 
-    // save to cookie
-    function saveCookie() {
-        
-    }
 
 }
