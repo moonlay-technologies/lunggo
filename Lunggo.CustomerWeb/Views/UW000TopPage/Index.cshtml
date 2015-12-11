@@ -90,6 +90,7 @@
     <script src="/Assets/js/angular-animate.min.js"></script>
     <script src="/Assets/js/angular-route.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
 }
 @section PageJS{
     <script>
@@ -100,6 +101,7 @@
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
 
+        // slider
         $('.page-slider .slider a').each(function() {
             var bgImage = $(this).children('img').attr('src');
             $(this).css({
@@ -108,7 +110,6 @@
             $(this).children('img').remove();
         });
 
-        // slider
         $('.slider-wrapper').slick({
             autoplay: true,
             autoplaySpeed: 3000,
