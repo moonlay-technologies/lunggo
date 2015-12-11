@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.Payment.Medium = PaymentService.GetInstance().GetPaymentMedium(input.Payment.Method);
             reservation.Payment.TimeLimit = output.BookResults.Min(res => res.TimeLimit);
             var originalPrice = reservation.Itineraries.Sum(itin => itin.LocalPrice);
-            var campaign = CampaignService.GetInstance().ValidateVoucherRequest(new VoucherRequest
+            var campaign = CampaignService.GetInstance().UseVoucherRequest(new VoucherRequest
             {
                 Email = input.Contact.Email,
                 Price = originalPrice,
