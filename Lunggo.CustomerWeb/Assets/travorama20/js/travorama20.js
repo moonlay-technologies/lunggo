@@ -1120,16 +1120,19 @@ function flightFormSearchFunctions() {
         if (Cookies.get('cabin')) {
             switch (Cookies.get('cabin')) {
                 case 'y':
+                    FlightSearchConfig.flightForm.cabin = 'y';
                     $('.form-flight-class>span').text($('.form-flight-class .option .economy').text());
                     break;
                 case 'c':
+                    FlightSearchConfig.flightForm.cabin = 'c';
                     $('.form-flight-class>span').text($('.form-flight-class .option .business').text());
                     break;
                 case 'f':
+                    FlightSearchConfig.flightForm.cabin = 'f';
                     $('.form-flight-class>span').text($('.form-flight-class .option .first').text());
                     break;
             }
-            FlightSearchConfig.flightForm.cabin = Cookies.get('cabin');
+            // FlightSearchConfig.flightForm.cabin = Cookies.get('cabin');
         }
 
         // navigation
