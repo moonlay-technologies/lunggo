@@ -11,9 +11,13 @@ namespace Lunggo.WebAPI.ApiSrc.v1.Flights.Logic
             if (IsValid(request))
             {
                 var issueServiceRequest = PreprocessServiceRequest(request);
-                var issueServiceResponse = FlightService.GetInstance().IssueTicket(issueServiceRequest);
-                var apiResponse = AssembleApiResponse(issueServiceResponse, request);
-                return apiResponse;
+                FlightService.GetInstance().IssueTicket(issueServiceRequest);
+                //var apiResponse = AssembleApiResponse(issueServiceResponse, request);
+                return new FlightIssueApiResponse
+                {
+                    IsSuccess = true,
+                    OriginalRequest = request
+                };
             }
             else
             {
