@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Microsoft.Azure.WebJobs;
@@ -12,7 +14,11 @@ namespace Lunggo.WebJob.FlightProcessor
         public static void FlightIssueTicket([QueueTrigger("flightissueticket")] string rsvNo)
         {
             var flight = FlightService.GetInstance();
+            Console.WriteLine("Processing Flight Issue Ticket for RsvNo " + rsvNo + "...");
+            var sw = Stopwatch.StartNew();
             flight.CommenceIssueTicket(new IssueTicketInput {RsvNo = rsvNo});
+            sw.Stop();
+            Console.WriteLine("Done Processing Flight Issue Ticket for RsvNo " + rsvNo + "... (" + sw.Elapsed.TotalSeconds + "s)");
         }
     }
 }

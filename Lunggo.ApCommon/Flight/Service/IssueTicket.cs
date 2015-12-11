@@ -40,6 +40,16 @@ namespace Lunggo.ApCommon.Flight.Service
                             ? BookingStatus.Ticketed
                             : BookingStatus.Ticketing;
                         orderResult.IsInstantIssuance = response.IsInstantIssuance;
+                        UpdateBookingIdQuery.GetInstance().Execute(conn, new
+                        {
+                            BookingId = bookingId,
+                            NewBookingId = orderResult.BookingId,
+                        });
+                        UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
+                    {
+                        BookingId = orderResult.BookingId,
+                        BookingStatus = orderResult.BookingStatus
+                    }});
                     }
                     else
                     {
@@ -49,16 +59,6 @@ namespace Lunggo.ApCommon.Flight.Service
                         output.Errors = response.Errors;
                         output.ErrorMessages = response.ErrorMessages;
                     }
-                    UpdateBookingIdQuery.GetInstance().Execute(conn, new
-                    {
-                        BookingId = bookingId,
-                        NewBookingId = orderResult.BookingId,
-                    });
-                    UpdateDb.BookingStatus(new List<BookingStatusInfo> {new BookingStatusInfo
-                    {
-                        BookingId = orderResult.BookingId,
-                        BookingStatus = orderResult.BookingStatus
-                    }});
                     output.OrderResults.Add(orderResult);
                 }
                 if (output.OrderResults.TrueForAll(result => result.IsSuccess))
