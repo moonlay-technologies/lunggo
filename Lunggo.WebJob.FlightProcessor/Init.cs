@@ -16,14 +16,14 @@ namespace Lunggo.WebJob.FlightProcessor
         public static void Init()
         {
             InitConfigurationManager();
-            InitFlightService();
             InitDatabaseService();
-            InitDictionaryService();
             InitQueueService();
-            InitHtmlTemplateService();
-            InitMailService();
             InitRedisService();
             InitBlobStorageService();
+            InitHtmlTemplateService();
+            InitMailService();
+            InitDictionaryService();
+            InitFlightService();
         }
 
         private static void InitConfigurationManager()

@@ -178,94 +178,94 @@
     <None Include="Config\WebJob.EmailQueueHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\airAsia.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\Airline.csv" />
-    <None Include="Config\WebJob.FlightCrawler4\Airport.csv" />
-    <None Include="Config\WebJob.FlightCrawler4\azureStorage.properties" />
-    <None Include="Config\WebJob.FlightCrawler4\citilink.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\citilink.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\Country.csv" />
-    <None Include="Config\WebJob.FlightCrawler4\db.properties" />
-    <None Include="Config\WebJob.FlightCrawler4\flight.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\general.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\HotelLocation.csv" />
-    <None Include="Config\WebJob.FlightCrawler4\mystifly.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\redis.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\redis.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler4\sriwijaya.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\airAsia.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\Airline.csv" />
-    <None Include="Config\WebJob.FlightCrawler3\Airport.csv" />
-    <None Include="Config\WebJob.FlightCrawler3\azureStorage.properties" />
-    <None Include="Config\WebJob.FlightCrawler3\citilink.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\citilink.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\Country.csv" />
-    <None Include="Config\WebJob.FlightCrawler3\db.properties" />
-    <None Include="Config\WebJob.FlightCrawler3\flight.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\general.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\HotelLocation.csv" />
-    <None Include="Config\WebJob.FlightCrawler3\mystifly.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\redis.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\redis.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler3\sriwijaya.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\airAsia.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\Airline.csv" />
-    <None Include="Config\WebJob.FlightCrawler2\Airport.csv" />
-    <None Include="Config\WebJob.FlightCrawler2\azureStorage.properties" />
-    <None Include="Config\WebJob.FlightCrawler2\citilink.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\citilink.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\Country.csv" />
-    <None Include="Config\WebJob.FlightCrawler2\db.properties" />
-    <None Include="Config\WebJob.FlightCrawler2\flight.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\general.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\HotelLocation.csv" />
-    <None Include="Config\WebJob.FlightCrawler2\mystifly.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\redis.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\redis.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler2\sriwijaya.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\airAsia.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\citilink.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\citilink.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\sriwijaya.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.FlightCrawlScheduler\airAsia.properties">
@@ -277,22 +277,22 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\Airline.csv" />
-    <None Include="Config\WebJob.FlightCrawler1\Airport.csv" />
-    <None Include="Config\WebJob.FlightCrawler1\azureStorage.properties" />
-    <None Include="Config\WebJob.FlightCrawler1\Country.csv" />
-    <None Include="Config\WebJob.FlightCrawler1\db.properties" />
-    <None Include="Config\WebJob.FlightCrawler1\flight.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\flight.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\general.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\general.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\HotelLocation.csv" />
-    <None Include="Config\WebJob.FlightCrawler1\mystifly.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\WebJob.FlightCrawler1\redis.properties">
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\redis.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.FlightCrawlScheduler\azureStorage.properties" />

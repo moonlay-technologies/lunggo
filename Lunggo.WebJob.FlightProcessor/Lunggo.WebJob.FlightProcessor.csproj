@@ -139,6 +139,8 @@
     <Content Include="HotelLocation.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
     <None Include="packages.config" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
