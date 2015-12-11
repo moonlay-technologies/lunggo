@@ -493,13 +493,13 @@ function flightPageSearchFormFunctions() {
         // set flight cabin
         switch (FlightData.Cabin) {
             case 'Economy':
-                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(1)').text());
+                $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(1)').text());
                 break;
             case 'Business':
-                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(2)').text());
+                $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(2)').text());
                 break;
             case 'First':
-                $('.form-flight-class span').text($('.form-flight-class .option span:nth-child(3)').text());
+                $('.form-flight-class>span').text($('.form-flight-class .option span:nth-child(3)').text());
                 break;
         }
         
@@ -1225,6 +1225,11 @@ function flightFormSearchFunctions() {
         $('.form-flight input[name="info"]').val(flightSearchParam);
         //console.log(flightSearchParam);
         $('.form-flight').submit();
+    }
+
+    // save to cookie
+    function saveCookie() {
+        
     }
 
 }

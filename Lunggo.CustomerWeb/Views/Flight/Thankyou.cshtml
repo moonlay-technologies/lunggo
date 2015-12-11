@@ -67,30 +67,40 @@ else
             <p>Telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-ticket Anda melalui tombol berikut atau mengunduhnya di email setelah :</p>
 
             <section class="countdown">
-
-                <div class="row">
+            
+                <!--
+                    <div class="row">
                     
-                    <div class="col-xs-5 col-xs-offset-2">
-                        <div class="timer">
-                            <div class="hour">
-                                <h5>00</h5>
-                                <span>Jam</span>
+                        <div class="col-xs-5 col-xs-offset-2">
+                            <div class="timer">
+                                <div class="hour">
+                                    <h5>00</h5>
+                                    <span>Jam</span>
+                                </div>
+                                <div class="separator">:</div>
+                                <div class="minute">
+                                    <h5>00</h5>
+                                    <span>Menit</span>
+                                </div>
+                                <div class="separator">:</div>
+                                <div class="second">
+                                    <h5>00</h5>
+                                    <span>Detik</span>
+                                </div>
                             </div>
-                            <div class="separator">:</div>
-                            <div class="minute">
-                                <h5>00</h5>
-                                <span>Menit</span>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="print">
+                                <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
                             </div>
-                            <div class="separator">:</div>
-                            <div class="second">
-                                <h5>00</h5>
-                                <span>Detik</span>
-                            </div>
-                        </div><!-- .timer -->
+                        </div>
                     </div>
-                    <div class="col-xs-4">
+                    -->
+            
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
                         <div class="print">
-                            <a href="@Url.Action("OrderFlightHistoryDetailPrint", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" target="_blank" class="btn btn-yellow block disabled"><span>CETAK eTICKET</span></a>
+                            <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" class="btn btn-yellow block"><span>CEK PESANAN</span></a>
                         </div>
                     </div>
                 </div>
@@ -101,7 +111,7 @@ else
 
             <section class="order-detail">
                 <header>
-                    <h4><b>Tanda Bukti Pembayaran</b> <span class="pull-right">Order ID: <b>@Model.RsvNo</b></span></h4>
+                    <h4><b>Detail Pesanan</b> <span class="pull-right">Order ID: <b>@Model.RsvNo</b></span></h4>
                 </header>
                 <section>
 
@@ -147,7 +157,7 @@ else
 
                                 </div>
                                 <div class="order">
-                                    <h4>DETAIL PESANAN</h4>
+                                    <h4>DETAIL PENERBANGAN</h4>
 
                                     <div class="flight departure">
                                         @foreach (var segment in Model.Itinerary.Trips[0].Segments)
