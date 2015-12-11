@@ -18,7 +18,7 @@ using Microsoft.Azure.WebJobs;
 namespace Lunggo.WebJob.EmailQueueHandler
 {
     // To learn more about Microsoft Azure WebJobs, please see http://go.microsoft.com/fwlink/?LinkID=401557
-    class Program
+    partial class Program
     {
         static void Main()
         {
@@ -33,94 +33,6 @@ namespace Lunggo.WebJob.EmailQueueHandler
             JobHost host = new JobHost(configuration);
             host.RunAndBlock();
 
-        }
-        public static void Init()
-        {
-            InitConfigurationManager();
-            InitTableStorageService();
-            InitDatabaseService();
-            InitQueueService();
-            InitHtmlTemplateService();
-            InitI18NMessageManager();
-            InitMailService();
-            InitBlobStorageService();
-            InitDictionaryService();
-            //InitTraceListener();
-        }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"");
-        }
-
-        private static void InitDatabaseService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
-            var db = DbService.GetInstance();
-            db.Init(connString);
-        }
-
-        private static void InitDictionaryService()
-        {
-            var dict = DictionaryService.GetInstance();
-            dict.Init("");
-        }
-
-        private static void InitI18NMessageManager()
-        {
-            var messageManager = MessageManager.GetInstance();
-            messageManager.Init("");
-        }
-
-        private static void InitQueueService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var queue = QueueService.GetInstance();
-            queue.Init(connString);
-        }
-
-        private static void InitMailService()
-        {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
-            var mailService = MailService.GetInstance();
-            mailService.Init(apiKey);
-        }
-
-        public static void InitHtmlTemplateService()
-        {
-            var htmlTemplateService = HtmlTemplateService.GetInstance();
-            htmlTemplateService.Init();
-        }
-
-        public static void InitBlobStorageService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var blobStorageService = BlobStorageService.GetInstance();
-            blobStorageService.Init(connString);
-        }
-
-        public static void InitTableStorageService()
-        {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var tableStorageService = TableStorageService.GetInstance();
-            tableStorageService.Init(connString);
-        }
-
-        private static void InitTraceListener()
-        {
-            Trace.Listeners.Clear();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
-            string traceName = typeof(TableTraceListener).Name;
-            var listener =
-                new TableTraceListener(connectionString, "webjobTrace")
-                {
-                    Name = traceName
-                };
-            Trace.Listeners.Add(listener);
-            log4net.Config.XmlConfigurator.Configure();
-            ILog Log = log4net.LogManager.GetLogger("Log");
-            LunggoLogger.GetInstance().init(Log);
         }
     }
 }

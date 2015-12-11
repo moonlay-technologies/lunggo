@@ -51,7 +51,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (notif.order_id.IsFlightRsvNo())
                 {
                     var flight = FlightService.GetInstance();
-                    Task.Run(() => flight.UpdateFlightPayment(notif.order_id, paymentInfo));
+                    flight.UpdateFlightPayment(notif.order_id, paymentInfo);
                 }
             }
             return new EmptyResult();

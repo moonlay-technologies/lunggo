@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Flight.Service;
 using Microsoft.Azure.WebJobs;
 
 namespace Lunggo.WebJob.FlightProcessor
@@ -7,9 +9,10 @@ namespace Lunggo.WebJob.FlightProcessor
     {
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
-        public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
+        public static void FlightIssueTicket([QueueTrigger("flightissueticket")] string rsvNo)
         {
-            log.WriteLine(message);
+            var flight = FlightService.GetInstance();
+            flight.CommenceIssueTicket(new IssueTicketInput {RsvNo = rsvNo});
         }
     }
 }

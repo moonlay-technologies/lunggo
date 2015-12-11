@@ -6,12 +6,21 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
-        public IssueTicketOutput IssueTicket(IssueTicketInput input)
+        public void IssueTicket(IssueTicketInput input)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightIssueTicket");
+            queue.AddMessage(new CloudQueueMessage(input.RsvNo));
+        }
+
+        public IssueTicketOutput CommenceIssueTicket(IssueTicketInput input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
