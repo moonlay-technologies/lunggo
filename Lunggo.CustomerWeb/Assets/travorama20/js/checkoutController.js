@@ -128,7 +128,33 @@ app.controller('checkoutController', [
 
                 console.log($scope.book.postData);
 
-                
+                // send form
+                $http({
+                    method: 'POST',
+                    url: $scope.book.url,
+                    data: $.param($scope.book.postData),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).then(function(returnData) {
+                    console.log(returnData);
+
+                    $scope.book.checked = true;
+
+                    if (returnData.data.IsSuccess) {
+                        $scope.book.isSuccess = true;
+                        $scope.book.rsvNo = returnData.data.RsvNo;
+
+                        $('form#rsvno input#rsvno-input').val(returnData.data.RsvNo);
+                        $('form#rsvno').submit();
+
+                    } else {
+                        $scope.book.isSuccess = false;
+                    }
+
+                }, function(returnData) {
+                    console.log(returnData);
+                    $scope.book.checked = true;
+                    $scope.book.isSuccess = false;
+                });
 
             }
         };
