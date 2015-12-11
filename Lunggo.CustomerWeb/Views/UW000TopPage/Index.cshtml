@@ -100,6 +100,14 @@
         var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
 
+        $('.page-slider .slider a').each(function() {
+            var bgImage = $(this).children('img').attr('src');
+            $(this).css({
+                'background-image' : 'url('+bgImage+')'
+            });
+            $(this).children('img').remove();
+        });
+
         // slider
         $('.slider-wrapper').slick({
             autoplay: true,

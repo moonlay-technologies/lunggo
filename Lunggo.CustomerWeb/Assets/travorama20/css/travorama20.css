@@ -1046,9 +1046,17 @@ file : /Assets/travorama20/css/_page_index.scss
         text-align: center;
         width: 100%;
         height: 100%; }
+        .page-index .section-search .page-slider .slider-wrapper .slider a {
+          display: block;
+          width: 100%;
+          height: 520px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: cover; }
         .page-index .section-search .page-slider .slider-wrapper .slider img {
           height: 100%;
-          width: auto; }
+          width: auto;
+          display: none; }
     .page-index .section-search .page-slider .slick-prev {
       position: absolute;
       top: 50%;
