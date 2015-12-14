@@ -160,10 +160,13 @@
                                     <dt>Total Tiket</dt>
                                     <dd><sup>Rp</sup> @((Model.FinalPrice + reservation.Discount).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                 </dl>
-                                <dl>
-                                    <dt>Potongan Harga</dt>
-                                    <dd><sup>Rp</sup>- @reservation.Discount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                                </dl>
+                                @if (reservation.Discount != 0)
+                                {
+                                    <dl>
+                                        <dt>Potongan Harga</dt>
+                                        <dd><sup>Rp</sup>- @reservation.Discount.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                    </dl>
+                                }
                                 <dl class="total-price">
                                     <dt>Total</dt>
                                     <dd><sup>Rp</sup> @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>

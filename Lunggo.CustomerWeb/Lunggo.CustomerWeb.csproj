@@ -667,12 +667,12 @@
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
-    <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
+    <Content Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\bca-logo.jpg" />
     <Content Include="Assets\images\bed-bg.png" />
@@ -723,6 +723,7 @@
     <Content Include="Assets\images\campaign\yogyakarta-text.png" />
     <Content Include="Assets\images\campaign\yogyakarta-thumb.jpg" />
     <Content Include="Assets\images\campaign\yogyakarta.jpg" />
+    <Content Include="Assets\images\checkin.png" />
     <Content Include="Assets\images\child-icon.png" />
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
@@ -791,6 +792,7 @@
     <Content Include="Assets\images\flight-toggle-up.png" />
     <Content Include="Assets\images\flight-weight.png" />
     <Content Include="Assets\images\form-selection-sprite.png" />
+    <Content Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
@@ -850,12 +852,14 @@
     <Content Include="Assets\images\payment-method.jpg" />
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
+    <Content Include="Assets\images\payment-veritrans.png" />
+    <Content Include="Assets\images\payment-veritrans.png" />
     <Content Include="Assets\images\penerbangan-pergi.jpg" />
     <Content Include="Assets\images\penerbangan-pulang.jpg" />
+    <Content Include="Assets\images\peringatan.png" />
+    <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
-    <Content Include="Assets\images\payment-veritrans.png" />
-    <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
@@ -877,6 +881,9 @@
     <Content Include="Assets\images\quote-close.png" />
     <Content Include="Assets\images\quote-open.png" />
     <Content Include="Assets\images\rapidSsl.jpg" />
+    <Content Include="Assets\images\reason-2-icon.png" />
+    <Content Include="Assets\images\reason-3-icon.png" />
+    <Content Include="Assets\images\reason-4-icon.png" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\register-bg.jpg" />
     <Content Include="Assets\images\sad-image.png" />
@@ -892,6 +899,7 @@
     <Content Include="Assets\images\section-arrow-left.png" />
     <Content Include="Assets\images\section-arrow-right.png" />
     <Content Include="Assets\images\select-arrow.png" />
+    <Content Include="Assets\images\showticket.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
     <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
@@ -936,7 +944,6 @@
     <Content Include="Assets\images\user-icon.png" />
     <Content Include="Assets\images\user-login-bg.jpg" />
     <Content Include="Assets\images\user-register-bg.jpg" />
-    <Content Include="Assets\images\payment-veritrans.png" />
     <Content Include="Assets\images\verisign-bg.jpg" />
     <Content Include="Assets\images\verisign-pin.png" />
     <Content Include="Assets\images\verisign.jpg" />
@@ -1080,8 +1087,6 @@
     <Content Include="Config\HotelLocation.csv" />
     <Content Include="Config\Country.csv" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <Content Include="Assets\images\backtotop.jpg.bak" />
-    <Content Include="Assets\images\form-selection-sprite.png.bak" />
     <Content Include="Assets\script\2bbkwqh1.cad" />
     <Content Include="Assets\script\b3r4rs2h.rlx" />
     <Content Include="Assets\script\jx0xoqwq.o1w" />
@@ -1174,6 +1179,8 @@
     <Content Include="Assets\mobile\css\application.scss" />
     <Content Include="Assets\mobile\css\_page_flight.scss" />
     <Content Include="Assets\mobile\css\_page_checkout.scss" />
+    <None Include="Assets\images\backtotop.jpg.bak" />
+    <Content Include="Assets\images\subscribe-bg.jpg.bak" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
