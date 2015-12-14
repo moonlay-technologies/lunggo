@@ -1089,11 +1089,13 @@ function flightFormSearchFunctions() {
         }
 
         // flight type
-        if (Cookies.get('type').toLowerCase() == 'return') {
+        if (Cookies.get('type')) {
+            if (Cookies.get('type').toLowerCase() == 'return') {
             $('.form-flight-type[value="return"]').click();
         } else {
             $('.form-flight-type[value="oneway"]').click();
             $('.form-flight-return').addClass('disabled');
+        }
         }
 
         // flight passenger
