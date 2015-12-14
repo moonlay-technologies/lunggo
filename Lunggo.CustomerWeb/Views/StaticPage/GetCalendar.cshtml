@@ -4,52 +4,76 @@
 @{
     Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
     ViewBag.BodyClass = "page-static page-contact";
+    ViewBag.Title = "Get 2016 Calendar Campaign";
 }
 
-@if (ViewBag.Message == null) 
-{ 
-    using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@if (ViewBag.Message == null)
+{
 
-        <div class="form-horizontal">
-            <br />
-            <!--<p style="margin-left:60px;"><b>Silahkan isi data diri anda</b></p>-->
-            <br/>
-            <br/>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Email)
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-5" style="align-content:center">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    <div class="container">
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-5" style="align-content:center">
-                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <h1 class="text-center section-title stripe">GET <span>2016</span> CALENDAR</h1>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-5">
-                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-5">
-                    <input type="submit" value="Submit" class="btn btn-yellow btn-block" />
-                </div>
-            </div>
-        </div>
-    }
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Email)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Alamat</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Kode Pos</label>
+                            <div class="col-sm-9">
+                                <input type="number" value="" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Kota</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <input type="submit" value="Submit" class="btn btn-yellow btn-block" />
+                            </div>
+                        </div>
+                    </div><!-- .form-horizontal -->
+                }
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+    </div><!-- .container -->
+    
 }
 else if (ViewBag.Message == "InputSuccess")
 {
