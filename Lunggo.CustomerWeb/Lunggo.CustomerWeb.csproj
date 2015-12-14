@@ -697,6 +697,14 @@
     <Content Include="Assets\images\campaign\bandung-text.png" />
     <Content Include="Assets\images\campaign\bandung-thumb.jpg" />
     <Content Include="Assets\images\campaign\bandung.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\campaign-2016_calendar.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\1.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\2.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\3.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\4.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\5.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\6.jpg" />
+    <Content Include="Assets\images\campaign\free2016calendar\RegisterStep\7.jpg" />
     <Content Include="Assets\images\campaign\hongkong-text.png" />
     <Content Include="Assets\images\campaign\hongkong-thumb.jpg" />
     <Content Include="Assets\images\campaign\hongkong.jpg" />
@@ -886,6 +894,7 @@
     <Content Include="Assets\images\select-arrow.png" />
     <Content Include="Assets\images\slider-arrow-left.png" />
     <Content Include="Assets\images\slider-arrow-right.png" />
+    <Content Include="Assets\images\slider\slider-happy_hew_year.jpg" />
     <Content Include="Assets\images\slider\slider-winner-20151002.jpg" />
     <Content Include="Assets\images\smile-image.png" />
     <Content Include="Assets\images\social-facebook.png" />
@@ -2489,6 +2498,8 @@
     <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
+    <Content Include="Views\Template\DisableBack.cshtml" />
+    <Content Include="Views\StaticPage\GetCalendarTerms.cshtml" />
     <None Include="Views\Template\eticket.cshtml" />
     <Content Include="Views\Template\OrderFlightHistory.cshtml" />
     <Content Include="Views\Template\PrivacyPolicy.cshtml" />
