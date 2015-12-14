@@ -82,7 +82,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         RsvNo = displayReservation.RsvNo
                     };
-                    TempData["AllowThisReservationCheck"] = true;
+                    TempData["AllowThisReservationCheck"] = rsvNo;
                     return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNoSet);
                 }
             }
