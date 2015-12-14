@@ -8,34 +8,8 @@ namespace Lunggo.Generator.VoucherGenerator
 {
     class VoucherGenerator
     {
-        private enum CharactersPosition
-        {
-            Front,
-            Back
-        }
-
-        //FORMATNYA NIH
-        const char RANDOM_NUMBER = 'X';
-        const char ALPHA_RANDOM = 'Y';
-        const char SEQUENCE_NUMBER = 'Z';
-        //NIH FORMATNYA
-
-        private static readonly object syncLock = new object();
-        private static Random rnd = new Random();
-        private string AddFixedCharacters(string param)
-        {
-            switch(POSITION)
-            {
-                case CharactersPosition.Front:
-                    return FIXED_CHARACTERS + param;
-                case CharactersPosition.Back:
-                    return param + FIXED_CHARACTERS;
-            }
-            return param;
-        }
-        
         //  BEGIN REGION SETTING
-        //  ONLY THIS THAT MATTERS
+        //  ONLY THIS PART THAT MATTERS
         //
         //  CARI PERHATIAN
         //  CARI PERHATIAN
@@ -48,7 +22,7 @@ namespace Lunggo.Generator.VoucherGenerator
         //  CARI PERHATIAN
         const CharactersPosition POSITION = CharactersPosition.Front;
         const string FIXED_CHARACTERS = "TRVM";
-        const string FORMAT_VOUCHER = "YZZZ";//FORMAT VOUCHER LIAT DI ATAS
+        const string FORMAT_VOUCHER = "YZZZ";//FORMAT VOUCHER LIAT DI BAWAH
         static int sequenceStartFrom = 1;
         static int sequenceEndAt = 500;
         //  CARI PERHATIAN
@@ -64,6 +38,12 @@ namespace Lunggo.Generator.VoucherGenerator
         //  END REGION SETTING
 
 
+        //FORMATNYA NIH
+        const char RANDOM_NUMBER = 'X';
+        const char ALPHA_RANDOM = 'Y';
+        const char SEQUENCE_NUMBER = 'Z';
+        //NIH FORMATNYA
+
         static void Main(string[] args)
         {
             List<string> listResult = new List<string>();
@@ -78,6 +58,26 @@ namespace Lunggo.Generator.VoucherGenerator
                 Console.WriteLine(voucher);
 
             Console.ReadLine();
+        }
+
+        private enum CharactersPosition
+        {
+            Front,
+            Back
+        }
+
+        private static readonly object syncLock = new object();
+        private static Random rnd = new Random();
+        private string AddFixedCharacters(string param)
+        {
+            switch(POSITION)
+            {
+                case CharactersPosition.Front:
+                    return FIXED_CHARACTERS + param;
+                case CharactersPosition.Back:
+                    return param + FIXED_CHARACTERS;
+            }
+            return param;
         }
 
         private static IList<string> GetListString()
