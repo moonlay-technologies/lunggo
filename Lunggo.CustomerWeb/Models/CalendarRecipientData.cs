@@ -15,6 +15,12 @@ namespace Lunggo.CustomerWeb.Models
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+
         [Display(Name = "Address")]
         [DataType(DataType.MultilineText)] 
         public string Address { get; set; }
