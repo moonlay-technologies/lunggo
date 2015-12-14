@@ -1,0 +1,30 @@
+﻿@using System.Collections.Specialized
+@{
+    Layout = "/Views/Shared/Travorama20/_Layout20150929.cshtml";
+    ViewBag.BodyClass = "page-flight page-flight-oneway";
+    ViewBag.Title = "Pencarian Penerbangan Sejalan";
+}
+
+@section PageJS{
+    <script>
+        // on document ready
+        $(document).ready(function() {
+            
+            window.onbeforeunload = function () { return "Are you sure ?"; };
+
+        });
+    </script>
+}
+
+<div class="container">
+    
+    <h1 class="text-center section-title stripe">DISABLE <span>BACK BUTTON</span></h1>
+    
+    <p class="text-center">Testing page for disabling back button</p>
+    
+    <p class="text-center">
+        <a href="/" class="btn btn-yellow">KE HALAMAN DEPAN</a>
+    </p>
+
+</div><!-- .container -->
+

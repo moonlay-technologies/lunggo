@@ -81,5 +81,10 @@ namespace Lunggo.CustomerWeb.Controllers
             }
         }
 
+        public ActionResult GetCalendarTerms()
+        {
+            return View();
+        }
+
     }
 }

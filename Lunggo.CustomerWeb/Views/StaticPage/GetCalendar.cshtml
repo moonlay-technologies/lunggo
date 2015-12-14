@@ -7,17 +7,30 @@
     ViewBag.Title = "Get 2016 Calendar Campaign";
 }
 
+@section AdditionalJS{
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-animate.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/homeController.js"></script>
+}
+
+
 @if (ViewBag.Message == null)
 {
-
-    <div class="container">
+    <div class="container" ng-app="travorama" ng-controller="campaignController">
 
         <h1 class="text-center section-title stripe">GET <span>2016</span> CALENDAR</h1>
+
+        <p class="text-center">Silahkan isi data alamat pengiriman kalender ekslusif berikut :</p>
 
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
 
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("GetCalendar", "StaticPage", FormMethod.Post, new { novalidate = "novalidate" , name = "userForm" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
@@ -25,50 +38,57 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.Email)
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <label class="control-label col-sm-3">Nama</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", ng_model = "user.name", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <label class="control-label col-sm-3">Nomor Telepon</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", ng_model = "user.phone", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                
+
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <label class="control-label col-sm-3">Alamat</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", ng_model = "user.address", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <label class="control-label col-sm-3">Kode Pos</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", ng_model = "user.zip", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <label class="control-label col-sm-3">Kota</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", ng_model = "user.city", required = "required" } })
                                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-5">
-                                <input type="submit" value="Submit" class="btn btn-yellow btn-block" />
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <p>Pastikan data diisi dengan lengkap untuk memastikan kalender terkirim ke alamat Anda.</p>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <input type="submit" value="Submit" class="btn btn-yellow btn-block" ng-disabled="!userForm.$valid" />
+                            </div>
+                        </div>
+
                     </div><!-- .form-horizontal -->
                 }
             </div><!-- .col -->

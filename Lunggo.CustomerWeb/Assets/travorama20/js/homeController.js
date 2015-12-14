@@ -11,3 +11,10 @@ app.controller('homeController', [
 
     }
 ]);
+
+// Calendar 2016 Controller
+app.controller('campaignController', [
+    '$scope', function ($scope) {
+        
+    }
+]);

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Antlr.Runtime.Misc;
 using Lunggo.ApCommon.Flight.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -153,6 +154,11 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         public ActionResult CheckOrder()
+        {
+            return View();
+        }
+
+        public ActionResult DisableBack()
         {
             return View();
         }
