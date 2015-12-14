@@ -50,7 +50,7 @@
 
                     <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;
                             width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
-                       href="@(ConfigManager.GetInstance().GetConfigValue("azureStorage", "rootUrl") + @"/eticket/"+@(Model.RsvNo)+".pdf")" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
+                       href="@(ConfigManager.GetInstance().GetConfigValue("azureStorage", "rootUrl") + @"/eticket/"+(Model.RsvNo)+".pdf")" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
 
                     <p style="font-size: 9px; text-align: center; margin-bottom: 30px;"><b>Print e-tiket Anda di atas kertas ukuran A4 untuk ditunjukkan pada proses check-in di bandara.</b></p>
                     <p style="font-size: 9px; text-align: center; ">*(Invoice / kwitansi pembayaran juga telah disertakan sebagai attachment)</p>
@@ -68,7 +68,7 @@
                         <tr>
                             <td width="20%">
                                 <p style="opacity: 0.5">Maskapai</p>
-                                @if (@Model.Itinerary.Trips.Count > 1)
+                                @if (Model.Itinerary.Trips.Count > 1)
                                 {
                                     <p style=""><b>@Model.Itinerary.Trips[0].Segments[0].AirlineName (@Model.Itinerary.Trips[0].Segments[0].AirlineCode-@Model.Itinerary.Trips[0].Segments[0].FlightNumber)</b></p>
                                     <p style=""><b>@Model.Itinerary.Trips[1].Segments[0].AirlineName (@Model.Itinerary.Trips[1].Segments[0].AirlineCode-@Model.Itinerary.Trips[1].Segments[0].FlightNumber)</b></p>
@@ -81,7 +81,7 @@
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Rute</p>
-                                @if (@Model.Itinerary.Trips.Count > 1)
+                                @if (Model.Itinerary.Trips.Count > 1)
                                 {
                                     <p style=""><b>@Model.Itinerary.Trips[0].OriginAirport - @Model.Itinerary.Trips[0].DestinationAirport</b></p>
                                     <p style=""><b>@Model.Itinerary.Trips[1].OriginAirport - @Model.Itinerary.Trips[1].DestinationAirport</b></p>
@@ -107,16 +107,16 @@
                         <tr>
                             <td width="20%">
                                 <p style="opacity: 0.5">Waktu Penerbangan</p>
-                                @if (@Model.Itinerary.Trips.Count > 1)
+                                @if (Model.Itinerary.Trips.Count > 1)
                                 {
-                                    var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;
-                                    var jamKembali = @Model.Itinerary.Trips[1].Segments[0].DepartureTime;
+                                    var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
+                                    var jamKembali = Model.Itinerary.Trips[1].Segments[0].DepartureTime;
                                     <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</b></p>
                                     <p style=""><b>@Model.Itinerary.Trips[1].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[1].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamKembali.ToString("hh:mm")</b></p>
                                 }
                                 else
                                 {
-                                    var jamBerangkat = @Model.Itinerary.Trips[0].Segments[0].DepartureTime;
+                                    var jamBerangkat = Model.Itinerary.Trips[0].Segments[0].DepartureTime;
                                     <p style=""><b>@Model.Itinerary.Trips[0].DepartureDate.ToString("dddd", CultureInfo.CreateSpecificCulture("id-ID")), @Model.Itinerary.Trips[0].DepartureDate.ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("id-ID")) - Pk @jamBerangkat.ToString("hh:mm")</b></p>
                                 }
 
@@ -124,7 +124,7 @@
                             <td width="5%"></td>
                             <td width="20%">
                                 <p style="opacity: 0.5">Kode Booking Maskpai (PNR)</p>
-                                @if (@Model.Itinerary.Trips.Count > 1)
+                                @if (Model.Itinerary.Trips.Count > 1)
                                 {
                                     <p style=""><b>@Model.Itinerary.Trips[0].Segments[0].Pnr</b></p>
                                     <p style=""><b>@Model.Itinerary.Trips[1].Segments[0].Pnr</b></p>
@@ -145,7 +145,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        @{ var i = @Model.Passengers.Count; }
+                        @{ var i = Model.Passengers.Count; }
                         @{ var j = 1; }
                         <tr>
                             <td width="18.2%" rowspan="@i">

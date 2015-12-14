@@ -121,19 +121,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @{ int i = @Model.Itinerary.Trips.Count;}
+                            @{ int i = Model.Itinerary.Trips.Count;}
                             @for (int k = 0; k < i; k++)
                             {
                                 <tr>
                                     <td class="no">@(k + 1).</td>
                                     <td class="item">Tiket Pesawat</td>
-                                    <td class="description">@Model.Itinerary.Trips[k].Segments[k].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="description">@Model.Itinerary.Trips[k].Segments[0].AirlineName @Model.Itinerary.Trips[k].OriginAirport-@Model.Itinerary.Trips[k].DestinationAirport @Model.Itinerary.Trips[k].DepartureDate.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                     <td class="qty">@Model.Passengers.Count</td>
                                     <td class="price"></td>
                                     <td class="total">@Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 </tr>
                             }
-                            @if (@Model.VoucherCode != null)
+                            @if (Model.VoucherCode != null)
                             {
                                 <tr>
                                     <td class="no"></td>
