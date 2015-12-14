@@ -75,34 +75,44 @@
         </div><!-- .row -->
 
     </div><!-- .container -->
-    
+
 }
 else if (ViewBag.Message == "InputSuccess")
 {
-    <div class="col-sm-8">
-        <p align="center" style="font-size:20px; margin-bottom:40px;margin-top:50px;">Terima kasih,Kami akan mengirimkan kalendar ke alamat yang telah anda masukkan</p>
-        <div class="col-sm-4 col-sm-offset-4">
-            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+    <div class="container">
+        <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="text-center">Terima kasih,Kami akan mengirimkan kalendar ke alamat yang telah anda masukkan</h3>
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
+            </div>
         </div>
     </div>
 }
 else if (ViewBag.Message == "MasaBerlakuTelahHabis")
 {
-    <div class="col-sm-8">
-         <p align="center" style="font-size:20px; margin-bottom:40px;margin-top:50px;">Mohon Maaf, Masa berlaku event ini telah habis.</p>
-        <div class="col-sm-4 col-sm-offset-4">
-            <br /><br />
-            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+    <div class="container">
+        <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="text-center">Maaf, event ini telah habis masa berlakunya</h3>
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
+            </div>
         </div>
     </div>
 }
 else
 {
-    <div class="col-sm-8">
-         <p align="center" style="font-size:20px; margin-bottom:40px; margin-top:50px;">Anda telah terdaftar di data kami</p>
-        <div class="col-sm-4 col-sm-offset-4">
-            <br/><br/>
-            <a class="btn btn-yellow btn-block" href="@Url.Action("Login", "Account")">LOGIN</a>
+    <div class="container">
+        <h1 class="text-center section-title stripe">TERIMA KASIH</h1>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <h3 class="text-center">Anda telah terdaftar dalam sistem kami.</h3>
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-yellow btn-block" href="/">KE HALAMAN DEPAN</a>
+            </div>
         </div>
     </div>
 }
