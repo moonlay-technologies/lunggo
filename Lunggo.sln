@@ -52,15 +52,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawlSc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightProcessor", "Lunggo.WebJob.FlightProcessor\Lunggo.WebJob.FlightProcessor.csproj", "{A2FAA700-930E-43D3-A7C2-866C640CF396}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler1", "Lunggo.WebJob.FlightCrawler1\Lunggo.WebJob.FlightCrawler1.csproj", "{8FC46024-D4D4-440A-A133-698538828B38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler1", "Lunggo.WebJob.FlightCrawler1\Lunggo.WebJob-FlightSearch.FlightCrawler1.csproj", "{8FC46024-D4D4-440A-A133-698538828B38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler2", "Lunggo.WebJob.FlightCrawler2\Lunggo.WebJob.FlightCrawler2.csproj", "{DD4FAF9C-CAE2-45CB-9AEA-AE1D112CF165}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler2", "Lunggo.WebJob.FlightCrawler2\Lunggo.WebJob-FlightSearch.FlightCrawler2.csproj", "{DD4FAF9C-CAE2-45CB-9AEA-AE1D112CF165}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler3", "Lunggo.WebJob.FlightCrawler3\Lunggo.WebJob.FlightCrawler3.csproj", "{34F7E2E7-6F45-40CA-942F-7787F328243F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler3", "Lunggo.WebJob.FlightCrawler3\Lunggo.WebJob-FlightSearch.FlightCrawler3.csproj", "{34F7E2E7-6F45-40CA-942F-7787F328243F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.FlightCrawler4", "Lunggo.WebJob.FlightCrawler4\Lunggo.WebJob.FlightCrawler4.csproj", "{B077F772-60CD-4B7D-8825-836662B9A838}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch.FlightCrawler4", "Lunggo.WebJob.FlightCrawler4\Lunggo.WebJob-FlightSearch.FlightCrawler4.csproj", "{B077F772-60CD-4B7D-8825-836662B9A838}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJobFlightSearch", "Lunggo.WebJobFlightSearch\Lunggo.WebJobFlightSearch.csproj", "{839C8598-4F07-4FA2-94CE-E61739A17700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob-FlightSearch", "Lunggo.WebJobFlightSearch\Lunggo.WebJob-FlightSearch.csproj", "{839C8598-4F07-4FA2-94CE-E61739A17700}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob", "Lunggo.WebJob\Lunggo.WebJob.csproj", "{304B9323-5306-4569-B047-62DB267B0224}"
 EndProject
