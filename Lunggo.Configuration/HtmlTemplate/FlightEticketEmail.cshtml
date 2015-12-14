@@ -50,7 +50,7 @@
 
                     <a style="background-color: #ffd632; border: #e9d14d; display: inline-block; margin-left:15%; text-decoration: none; font-family:arial, helvetica, sans-serif;
                             width: 70%; padding-top: 17px; padding-bottom: 17px; text-align: center; font-size: 11px; color: #333333; margin-top: 10px;"
-                       href="https://lunggostorageprod.blob.core.windows.net/eticket/@(Model.RsvNo).pdf" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
+                       href="@(ConfigManager.GetInstance().GetConfigValue("azureStorage", "rootUrl") + @"/eticket/"+@(Model.RsvNo)+".pdf")" target="_blank"><b>DOWNLOAD E-TICKET</b></a>
 
                     <p style="font-size: 9px; text-align: center; margin-bottom: 30px;"><b>Print e-tiket Anda di atas kertas ukuran A4 untuk ditunjukkan pada proses check-in di bandara.</b></p>
                     <p style="font-size: 9px; text-align: center; ">*(Invoice / kwitansi pembayaran juga telah disertakan sebagai attachment)</p>

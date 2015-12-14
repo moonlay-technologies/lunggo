@@ -68,7 +68,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     if (Date < endDate)
                     {
                         CalendarRecipientTableRepo.GetInstance().Insert(con,
-                        new CalendarRecipientTableRecord { Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber, Address = model.Address });
+                        new CalendarRecipientTableRecord { Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber, Address = model.Address, City = model.City, PostalCode = model.PostalCode});
                         ViewBag.Message = "InputSuccess";
                     }
                     else

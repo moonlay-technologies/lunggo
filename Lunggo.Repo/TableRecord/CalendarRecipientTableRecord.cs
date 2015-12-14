@@ -11,15 +11,6 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public int? Id
-		{
-		    get { return _Id; }
-		    set
-		    {
-		        _Id = value;
-		        IncrementLog("Id");
-		    }
-		}
 		public String Email
 		{
 		    get { return _Email; }
@@ -56,13 +47,32 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Address");
 		    }
 		}
+		public String City
+		{
+		    get { return _City; }
+		    set
+		    {
+		        _City = value;
+		        IncrementLog("City");
+		    }
+		}
+		public String PostalCode
+		{
+		    get { return _PostalCode; }
+		    set
+		    {
+		        _PostalCode = value;
+		        IncrementLog("PostalCode");
+		    }
+		}
 
 		
-		private int? _Id;
 		private String _Email;
 		private String _Name;
 		private String _PhoneNumber;
 		private String _Address;
+		private String _City;
+		private String _PostalCode;
 
 
 		public static CalendarRecipientTableRecord CreateNewInstance()
@@ -94,11 +104,12 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Id", true),
-				new ColumnMetadata("Email", false),
+				new ColumnMetadata("Email", true),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("PhoneNumber", false),
 				new ColumnMetadata("Address", false),
+				new ColumnMetadata("City", false),
+				new ColumnMetadata("PostalCode", false),
 
             };
         }
