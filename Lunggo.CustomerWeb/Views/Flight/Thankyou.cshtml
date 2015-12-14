@@ -100,7 +100,11 @@ else
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-4">
                         <div class="print">
-                            <a href="@Url.Action("OrderFlightHistoryDetail", "UW620OrderHistory", new { rsvNo = Model.RsvNo })" class="btn btn-yellow block"><span>CEK PESANAN</span></a>
+                            @using (Html.BeginForm())
+                            {
+                                <input type="hidden" name="rsvNo" value="@Model.RsvNo" />
+                                <button class="btn btn-yellow block"><span>CEK PESANAN</span></button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -125,33 +129,7 @@ else
                                     <ol>
                                         @foreach (var passenger in Model.Passengers)
                                         {
-                                            var pType = "";
-                                            switch (passenger.Type)
-                                            {
-                                                case PassengerType.Adult:
-                                                    pType = "Dewasa";
-                                                    break;
-                                                case PassengerType.Child:
-                                                    pType = "Anak-Anak";
-                                                    break;
-                                                case PassengerType.Infant:
-                                                    pType = "Bayi";
-                                                    break;
-                                            }
-                                            var pTitle = "";
-                                            switch (passenger.Title)
-                                            {
-                                                case Title.Mister:
-                                                    pTitle = "Tuan";
-                                                    break;
-                                                case Title.Mistress:
-                                                    pTitle = "Nyonya";
-                                                    break;
-                                                case Title.Miss:
-                                                    pTitle = "Nona";
-                                                    break;
-                                            }
-                                            <li><p>@pType : @pTitle @passenger.FirstName @passenger.LastName</p></li>
+                                            <li><p>@EnumDisplay.PassengerType(passenger.Type) : @EnumDisplay.Title(passenger.Title) @passenger.FirstName @passenger.LastName</p></li>
                                         }
                                     </ol>
 

@@ -133,6 +133,14 @@ namespace Lunggo.CustomerWeb.Controllers
             return View(summary);
         }
 
+        [HttpPost]
+        [ActionName("Thankyou")]
+        public ActionResult ThankyouPost(string rsvNo)
+        {
+            TempData["AllowThisReservationCheck"] = rsvNo;
+            return RedirectToAction("OrderFlightHistoryDetail", "Uw620OrderHistory", rsvNo);
+        }
+
         public ActionResult Confirmation(string rsvNo)
         {
             var reservation = FlightService.GetInstance().GetReservationForDisplay(rsvNo);

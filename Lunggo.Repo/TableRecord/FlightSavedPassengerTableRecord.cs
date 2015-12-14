@@ -144,10 +144,10 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ContactEmail", false),
+				new ColumnMetadata("ContactEmail", true),
 				new ColumnMetadata("TitleCd", false),
-				new ColumnMetadata("FirstName", false),
-				new ColumnMetadata("LastName", false),
+				new ColumnMetadata("FirstName", true),
+				new ColumnMetadata("LastName", true),
 				new ColumnMetadata("BirthDate", false),
 				new ColumnMetadata("GenderCd", false),
 				new ColumnMetadata("PassengerTypeCd", false),
