@@ -182,5 +182,10 @@ namespace Lunggo.CustomerWeb.Controllers
             var topDestinations = flightService.GetTopDestination();
             return View(topDestinations);
         }
+
+        public ActionResult Eticket(string rsvNo)
+        {
+            return File(FlightService.GetInstance().GetEticket(rsvNo), "application/pdf");
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using Lunggo.ApCommon.Flight.Constant;
 
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -69,6 +72,15 @@ namespace Lunggo.ApCommon.Flight.Service
         internal void ConfirmReservationRefund(string rsvNo, RefundInfo refund)
         {
             UpdateDb.ConfirmRefund(rsvNo, refund);
+        }
+
+        public byte[] GetEticket(string rsvNo)
+        {
+            var azureConnString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var storageName = azureConnString.Split(';')[1].Split('=')[1];
+            var url = @"https://" + storageName + @".blob.core.windows.net/eticket/" + rsvNo + ".pdf";
+            var client = new WebClient();
+            return client.DownloadData(url);
         }
     }
 }
