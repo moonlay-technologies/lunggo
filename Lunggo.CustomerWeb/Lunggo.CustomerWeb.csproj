@@ -365,6 +365,12 @@
       <DependentUpon>mobile-app.css</DependentUpon>
     </Content>
     <Content Include="Assets\css\mobile-app.scss" />
+    <Content Include="Assets\css\neweticket.css">
+      <DependentUpon>neweticket.scss</DependentUpon>
+    </Content>
+    <Content Include="Assets\css\neweticket.min.css">
+      <DependentUpon>neweticket.css</DependentUpon>
+    </Content>
     <Content Include="Assets\css\tv-desktop-300019.css" />
     <Content Include="Assets\css\tv-style-front-300019.css" />
     <Content Include="Assets\css\_feedback.scss" />
@@ -667,6 +673,7 @@
     <Content Include="Assets\images\ajax-loader.gif" />
     <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down.png" />
+    <Content Include="Assets\css\neweticket.scss" />
     <None Include="Assets\images\backtotop.jpg.bak" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
