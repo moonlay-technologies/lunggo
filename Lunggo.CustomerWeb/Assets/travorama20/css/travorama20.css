@@ -4161,7 +4161,8 @@ file : /Assets/travorama20/css/_page_checkout.scss
 
 .page-thankyou .order-detail section {
   background: #f3f1f2;
-  position: relative; }
+  position: relative;
+  min-height: 350px; }
   .page-thankyou .order-detail section h4 {
     font-weight: bold;
     letter-spacing: 0;
@@ -4950,6 +4951,9 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-campaign.campaign-2016-calendar .step li {
   margin-bottom: 35px; }
+
+.page-campaign.campaign-2016-calendar .step h5 {
+  font-weight: bold; }
 
 .page-campaign.campaign-2016-calendar .step img {
   border: 2px solid #1daee4; }

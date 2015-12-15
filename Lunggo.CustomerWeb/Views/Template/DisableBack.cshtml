@@ -7,12 +7,18 @@
 
 @section PageJS{
     <script>
-        // on document ready
         $(document).ready(function() {
-            
-            window.onbeforeunload = function () { return "Are you sure ?"; };
+
+            // if no hash
+            var currentUrl = window.location.href;
+            if (window.location.hash == "") {
+                window.location.replace(( window.location.href + "#stay"));
+            }
 
         });
+        window.onhashchange = function() {
+            console.log('JEMPING');
+        }
     </script>
 }
 
