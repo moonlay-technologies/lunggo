@@ -4089,11 +4089,16 @@ file : /Assets/travorama20/css/_page_checkout.scss
   .page-confirmation .ui-datepicker .ui-datepicker-header {
     padding-bottom: 10px; }
     .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, .page-confirmation .ui-datepicker .ui-datepicker-header .page-index .search-calendar .calendar-body .ui-datepicker-next, .page-index .search-calendar .calendar-body .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next, .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
-      display: none; }
+      display: inline;
+      color: #fff;
+      cursor: pointer; }
+    .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+      float: right; }
     .page-confirmation .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
       color: #1daee4;
       font-size: 14px;
-      font-weight: 600; }
+      font-weight: 600;
+      margin-top: 10px; }
   .page-confirmation .ui-datepicker .ui-datepicker-calendar thead tr th {
     width: 32px;
     text-align: center; }
