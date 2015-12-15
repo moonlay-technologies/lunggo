@@ -35,7 +35,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             };
             var mailModel2 = new MailModel
             {
-                RecipientList = new[] { "rama.adhitia@travelmadezy.com", "developer@travelmadezy.com" },
+                RecipientList = new[] { "rama.adhitia@travelmadezy.com" },
                 Subject = envPrefix + env == "production" ? "Pelunasan Reservasi No. " + rsvNo : "[TEST] Ignore This Email",
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama"

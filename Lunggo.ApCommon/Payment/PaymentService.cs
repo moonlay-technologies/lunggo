@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
