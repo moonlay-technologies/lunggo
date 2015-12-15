@@ -1,0 +1,119 @@
+﻿/*
+
+Travorama eTicket
+ver 0.1 Alpha
+
+*/
+
+@font-face {
+  font-family: 'din';
+  src: url("../fonts/DINB-webfont.eot");
+  src: url("../fonts/DINB-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINB-webfont.woff2") format("woff2"), url("../fonts/DINB-webfont.woff") format("woff"), url("../fonts/DINB-webfont.ttf") format("truetype"), url("../fonts/DINB-webfont.svg#din-boldregular") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'din';
+  src: url("../fonts/DINR-webfont.eot");
+  src: url("../fonts/DINR-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/DINR-webfont.woff2") format("woff2"), url("../fonts/DINR-webfont.woff") format("woff"), url("../fonts/DINR-webfont.ttf") format("truetype"), url("../fonts/DINR-webfont.svg#din-regularregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@mixin clearfix {content:""; clear:both; width:100%; display:block;}
+
+@page {size:A4; margin:0; position:relative; padding:1cm;}
+
+/**
+General Styling
+*/
+body {font-family:'din', helvetica, arial, sans-serif; width:100%; height:100%; -webkit-print-color-adjust: exact; }
+
+p {margin-bottom:0;}
+
+.page {width:21cm; height:29.6cm; position:absolute; background:url(/Assets/images/eticket-background.png) left 60% no-repeat; -webkit-print-color-adjust:exact;
+    &:before, &:after {@include clearfix;}
+}
+.page.page-2 {top:29.6cm;}
+
+
+/**
+Site Header
+*/
+.page-header {margin:0; padding:1cm 1cm 0; border-bottom:0;
+    .page-header-right {
+        &:before, &:after {@include clearfix;}
+        &>div {float:left;}
+        .page-title {padding-right:3mm;
+            h3 {color:#38B3E3; font-weight:bold; margin:0; margin-top:5.5mm; font-size:24pt; vertical-align:bottom; line-height:100%;}
+        }
+        .page-help {padding-left:3mm; padding-top:15px; border-left:2px solid #ddd;
+            p {margin-bottom:0; line-height:100%; margin-bottom:5px;}
+            p:last-child {margin-bottom:0;}
+            span {color:#38B3E3; font-weight:bold;}
+        }
+    }
+}
+
+/**
+Site Content
+*/
+.page-content {padding:0 1cm;}
+
+/* flight list detail */
+.flight-list-wrapper {width:100%; margin-bottom:25px;
+    .flight-title {text-align:center; position:relative; font-size:12pt; font-weight:bold; color:#666; -webkit-print-color-adjust:exact;
+        &>span {background:url(/Assets/images/white-bg.png) top center repeat #fff; z-index:2; position:relative; padding:0 20px; overflow:hidden; z-index:2; -webkit-print-color-adjust:exact;
+        }
+        &:after {content:""; display:block; clear:both; width:100%; border-top:2px solid #666; position:absolute; margin-top:-10px;}
+    }
+    .flight-list {
+        .flight {width:100%; margin-bottom:3mm;
+            &:before, &:after {@include clearfix;}
+            h3, h4 {margin:0; padding:0;}
+            .flight-icon {text-align:center; float:left; width:12%; margin-right:3%;
+                .flight-airline {width:75%;}
+                .flight-pnr {background:#38B3E3 url(/Assets/images/blue-bg.png) center center repeat; border:1px solid #38B3E3; color:#fff; padding:1mm 0; font-weight:bold; text-align:center; font-size:6pt;}
+            }
+            .flight-detail {float:left; width:85%;
+                .flight-number {border-bottom:1px dashed #666; margin-bottom:10px; padding-bottom:5px; font-size:8pt; font-style:italic;}
+                .flight-route {width:100%;
+                    &:before,&:after {@include clearfix;}
+                    &>div {float:left;
+                        h3:first-child {font-weight:bold;}
+                    }
+                    h3 {font-size:10pt; margin-bottom:1mm;}
+                    .departure-airline {text-align:right; width:15%;}
+                    .departure-date {text-align:right; width:20%;}
+                    .duration {text-align:center; width:30%; padding:0 15px;
+                        :after {content:""; display:block; width:100%; clear:both; border-bottom:1px solid #333; padding-top:5px;}
+                        h3 {font-weight:normal !important; font-size:8pt;}
+                    }
+                    .arrival-date {width:20%;}
+                    .arrival-airline {width:15%;}
+                }
+            }
+        }
+        .transit {border:1px dashed #666; padding:2mm 0; text-align:center; margin-bottom:3mm; font-size:8pt;}
+    }
+}
+
+/* passengers */
+.passenger-wrapper {width:100%; margin-bottom:25px;
+    thead {border:2px solid #666;
+        th {padding:1mm 0; font-size:10pt;}
+    }
+    tbody {
+        td {padding:1mm 0; font-size:10pt;}
+    }
+    .no {width:10%; text-align:center;}
+    .name {width:70%;}
+    .type {width:20%; text-align:center;}
+}
+
+/**
+Site Footer
+*/
+.page-footer {background:#fff; color:#fff; padding:20px; position:absolute; bottom:0; -webkit-print-color-adjust:exact;
+    img {width:100%;}
+}
+
