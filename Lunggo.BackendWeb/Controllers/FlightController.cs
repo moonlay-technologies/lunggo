@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Currency.Service;
@@ -62,11 +63,16 @@ namespace Lunggo.BackendWeb.Controllers
                     payment.UpdateTransferConfirmationReportStatus(listPayment.RsvNo, listPayment.Status);
                     if (listPayment.Status == TransferConfirmationReportStatus.Confirmed)
                     {
-                        var updatedInfo = new PaymentInfo {PaidAmount = listPayment.Amount};
+                        var updatedInfo = new PaymentInfo
+                        {
+                            PaidAmount = listPayment.Amount,
+                            Time = DateTime.UtcNow
+                        };
                         var reservation = flight.GetReservationForDisplay(listPayment.RsvNo);
                         if (listPayment.Amount >= reservation.Payment.FinalPrice)
                             updatedInfo.Status = PaymentStatus.Settled;
                         FlightService.GetInstance().UpdateFlightPayment(listPayment.RsvNo, updatedInfo);
+                        FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(listPayment.RsvNo);
                     }   
                 }
             }
