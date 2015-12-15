@@ -104,7 +104,6 @@
                     </div>
 
                 </div><!-- .flight.flight-list.departure-flight -->
-
                 <table class="passenger-wrapper">
                     <thead>
                         <tr>
@@ -125,9 +124,32 @@
                         }
                     </tbody>
                 </table>
+                
+                <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/penerbangan-pulang.jpg")" alt="Penerbangan Pulang" /></span></h2>
+                <table width="100%" style="margin-bottom:50px;">
+                    <tr>
+                        <td width="10%" rowspan="2"></td>
+                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/showticket.png")" alt="Show Eticket" /></td>
+                        <td width="10%" rowspan="2"></td>
+                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/checkin.png.png")" alt="Check In" /></td>
+                        <td width="10%" rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td width="35%" align="center">Tunjukkan <b>e-ticket</b> dan <b>identitas</b> para<br />penumpang saat check-in</td>
+                        <td width="35%" align="center">Check-in <b>paling lambat 90 menit</b><br />sebelum keberangkatan</td>
+                </table>
             </section><!-- .page-content -->
             <footer class="page-footer">
-                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/email-footer.png")" alt="Email Foter" />
+                <hr style="border-top: dotted 2px;" />
+                <table width="100%">
+                    <tr>
+                        <td rowspan="2" width="80%">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate lectus sapien, at blandit justo cursus id. Aliquam at accumsan libero,</td>
+                        <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/appStore.png")" alt="App Store" /></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/googlePlay.png")" alt="Google Play" /></td>
+                    </tr>
+                </table>
             </footer>
         </div><!-- .page -->
 
