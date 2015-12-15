@@ -1088,16 +1088,6 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.destinationCity = 'Denpasar, Bali';
         }
 
-        // flight type
-        if (Cookies.get('type')) {
-            if (Cookies.get('type').toLowerCase() == 'return') {
-            $('.form-flight-type[value="return"]').click();
-        } else {
-            $('.form-flight-type[value="oneway"]').click();
-            $('.form-flight-return').addClass('disabled');
-        }
-        }
-
         // flight passenger
         if (Cookies.get('adult')) {
             $('.passenger-input.adult').text(Cookies.get('adult'));
@@ -1144,6 +1134,27 @@ function flightFormSearchFunctions() {
         $('.home-nav .nav-next').click(function () {
             $('.ui-datepicker-next').click();
         });
+
+        // flight type
+        if (Cookies.get('type')) {
+            if (Cookies.get('type').toLowerCase() == 'return') {
+                $('.form-flight-type[value="return"]').click();
+            } else {
+                $('.form-flight-type[value="oneway"]').click();
+            }
+        }
+
+    });
+
+    $(window).load(function() {
+        // flight type
+        if (Cookies.get('type')) {
+            if (Cookies.get('type').toLowerCase() == 'return') {
+                $('.form-flight-type[value="return"]').click();
+            } else {
+                $('.form-flight-type[value="oneway"]').click();
+            }
+        }
     });
 
     //*****
