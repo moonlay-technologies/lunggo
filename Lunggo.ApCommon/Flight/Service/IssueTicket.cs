@@ -71,8 +71,6 @@ namespace Lunggo.ApCommon.Flight.Service
                         SendEticketToCustomer(input.RsvNo);
                         if (reservation.Payment.Method != PaymentMethod.BankTransfer)
                             SendInstantPaymentConfirmedNotifToCustomer(input.RsvNo);
-                        else
-                            SendPendingPaymentConfirmedNotifToCustomer(input.RsvNo);
                         InsertDb.SavedPassengers(reservation.Contact.Email, reservation.Passengers);
                     }
                 }

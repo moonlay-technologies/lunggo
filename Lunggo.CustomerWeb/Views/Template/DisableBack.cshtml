@@ -4,19 +4,32 @@
     ViewBag.BodyClass = "page-flight page-flight-oneway";
     ViewBag.Title = "Pencarian Penerbangan Sejalan";
 }
-
+@section AdditionalJS {
+    <!-- additional Angular JS-->
+    <script src="/Assets/js/angular.min.js"></script>
+    <script src="/Assets/js/angular-route.min.js"></script>
+}
 @section PageJS{
     <script>
-        // on document ready
-        $(document).ready(function() {
-            
-            window.onbeforeunload = function () { return "Are you sure ?"; };
 
-        });
+        app.controller('thankyouController', [
+            '$http', '$scope', '$location', function($http, $scope, $location) {
+
+                if ($location.$$hash == '') {
+                    $location.hash('stay');
+                    $location.hash('still');
+                    $location.hash('thankyou');
+                }
+
+                console.log($location.$$hash);
+
+            }
+        ]);
+
     </script>
 }
 
-<div class="container">
+<div class="container" ng-app="travorama" ng-controller="thankyouController">
     
     <h1 class="text-center section-title stripe">DISABLE <span>BACK BUTTON</span></h1>
     
