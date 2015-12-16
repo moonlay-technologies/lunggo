@@ -354,6 +354,11 @@ h1 {font-size:30px;}
                             img {height:30px;}
                             span {}
                         }
+                        // option
+                        .option {margin-top:10px; margin-bottom:10px;}
+                        .select-all, .select-none {text-align:center; border:$border-default; padding:5px;
+                            a {color:#fff;}
+                        }
                     }
                     // filter by onward flight
                     &.filter-onward {}
@@ -713,4 +718,15 @@ h1 {font-size:30px;}
 .loading-overlay {position:fixed; width:100%; height:100%; top:0; left:0; z-index:9999; background:rgba(100,100,100,0.7); display:none;
     #spinner {width:100%; height:100%;}
     .text {position:absolute; top:48%; font-size:16px; display:block; text-align:center; width:100%; font-weight:bold; color:#fff;}
+}
+
+
+.expiry-wrapper {position:fixed; z-index:9999; width:100%; height:100%; top:0; left:0; background:rgba(100,100,100,0.5);
+    .expiry-content {position:absolute; width:90%; height:90%; margin:auto; top:0; right:0; bottom:0; left:0; background:#fff;
+        &>header {padding:15px; background:$color-main-blue; color:#fff;}
+        &>section {padding:15px;}
+        &>footer {padding:15px; position:absolute; width:100%; bottom:0; left:0;
+            .btn {display:block;}
+        }
+    }
 }

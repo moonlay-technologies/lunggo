@@ -49,7 +49,7 @@
     // ******************************
     // fight controller
     app.controller('flightController', [
-        '$http', '$scope', function ($http, $scope) {
+        '$http', '$scope', '$interval', function ($http, $scope, $interval) {
             
             // ********************
             // on document ready
@@ -145,7 +145,29 @@
                 $scope.flightSearchFilter.returnArrivalDisplay = [0, 24];
 
             $scope.getCtrlScope = function() {
-                return $scope
+                return $scope;
+            }
+
+
+            // ********************
+            // search expiry time
+            $scope.pageExpired = false;
+            $scope.pageExpiryDate = '';
+            $scope.pageExpiryStarted = false;
+            $scope.pageExpiryStart = function(expiryDate) {
+                $scope.pageExpiryDate = new Date(expiryDate);
+                if ($scope.pageExpiryStarted == false) {
+                    $scope.pageExpiryStarted = true;
+                    $interval(function() {
+                        if (new Date() >= $scope.pageExpiryDate) {
+                            $scope.pageExpired = true;
+                        }
+                    }, 1000);
+                }
+            }
+            $scope.refreshPage = function () {
+                console.log('JEMPING REFRESH');
+                location.reload();
             }
 
             // ********************
@@ -286,6 +308,18 @@
                 }
             }
 
+            $scope.selectAirline = function (selection) {
+                console.log('JEMPING');
+                for (var i = 0; i < $scope.flightSearchFilter.airlines.length; i++) {
+                    if (selection == 'all') {
+                        $scope.flightSearchFilter.airlines[i].checked = true;
+                    } else if (selection == 'none') {
+                        $scope.flightSearchFilter.airlines[i].checked = false;
+                    }
+                }
+                $scope.checkAirline();
+            }
+
             // airline filter
             $scope.airlineFilter = function(flight) {
                 if ($scope.flightSearchFilter.airlinesFilter.length > 0) {
@@ -401,6 +435,7 @@
                             request: $scope.flightSearchParams
                         }
                     }).success(function (data) {
+                        $scope.pageExpiryStart(data.ExpiryTime);
                         loadingOverlay(false);
                         $scope.flightSearchResult = data;
                         FlightSearchConfig.SearchId = data.SearchId;
