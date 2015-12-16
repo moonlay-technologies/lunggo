@@ -2510,7 +2510,6 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\Flight\Search-Single.mobile.cshtml" />
     <None Include="Views\Flight\Checkout.mobile.cshtml.bak" />
-    <None Include="Views\Flight\SearchResultList-Single.mobile.cshtml.bak" />
     <Content Include="Views\Template\eticket3.cshtml" />
     <Content Include="Views\StaticPage\GetCalendar.cshtml" />
     <Content Include="Views\Template\DisableBack.cshtml" />
